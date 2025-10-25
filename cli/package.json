@@ -1,6 +1,6 @@
 {
   "name": "ndekoui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "CLI to add beautiful, animated components to your app. Built for React, Next.js, and Tailwind CSS.",
   "homepage": "https://ui.ndeko.dev",
   "bin": {

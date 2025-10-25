@@ -13,9 +13,9 @@ const packageJson = JSON.parse(
 );
 
 const MOTION_PRIMITIVES_REGISTRY_URL =
-  'https://raw.githubusercontent.com/ndekocode/ndekoui/main/public/c/registry.json';
+  'https://ui.ndeko.dev/c/registry.json';
 const MOTION_PRIMITIVES_BASE_URL =
-  'https://raw.githubusercontent.com/ndekocode/ndekoui/main/';
+  'https://ui.ndeko.dev/';
 const TARGET_DIR = 'components/ndekoui';
 
 interface FileEntry {
