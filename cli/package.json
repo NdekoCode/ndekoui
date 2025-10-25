@@ -1,0 +1,48 @@
+{
+  "name": "ndekoui",
+  "version": "0.1.0",
+  "description": "CLI to add beautiful, animated components to your app. Built for React, Next.js, and Tailwind CSS.",
+  "homepage": "https://ui.ndeko.dev",
+  "bin": {
+    "ndekoui": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc -w",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "commander": "^9.4.1",
+    "node-fetch": "^2.6.7",
+    "ora": "^5.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@types/node-fetch": "^2.6.2",
+    "eslint-config-prettier": "^10.1.8",
+    "typescript": "^4.9.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ndekocode/ndekoui.git",
+    "directory": "cli"
+  },
+  "bugs": {
+    "url": "https://github.com/ndekocode/ndekoui/issues"
+  },
+  "keywords": [
+    "animation",
+    "components",
+    "tailwindcss",
+    "framer-motion",
+    "three.js",
+    "gsap",
+    "motion",
+    "ui",
+    "react",
+    "cli"
+  ],
+  "author": "ndekocode",
+  "license": "MIT"
+}
