@@ -1,6 +1,4 @@
-import remarkGfm from 'remark-gfm';
 import createMDX from '@next/mdx';
-import { remarkCodeHike } from '@code-hike/mdx';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -11,7 +9,7 @@ const nextConfig = {
 const withMDX = createMDX({
   extension: /\.mdx?$/,
   options: {
-    remarkPlugins: [remarkGfm, [remarkCodeHike, { theme: 'css-variables' }]],
+    remarkPlugins: ['remark-gfm'],
   },
 });
 
