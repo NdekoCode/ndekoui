@@ -1,0 +1,40 @@
+'use client';
+
+import { Collapsible as CollapsiblePrimitive } from '@base-ui/react/collapsible';
+
+import { cn } from '@/registry/ndeko/lib/utils';
+
+type WithClassName<Props> = Omit<Props, 'className'> & { className?: string };
+
+function Collapsible(props: CollapsiblePrimitive.Root.Props) {
+  return <CollapsiblePrimitive.Root data-slot='collapsible' {...props} />;
+}
+
+function CollapsibleTrigger(props: CollapsiblePrimitive.Trigger.Props) {
+  return (
+    <CollapsiblePrimitive.Trigger data-slot='collapsible-trigger' {...props} />
+  );
+}
+
+function CollapsibleContent({
+  className,
+  ...props
+}: WithClassName<CollapsiblePrimitive.Panel.Props>) {
+  return (
+    <CollapsiblePrimitive.Panel
+      data-slot='collapsible-content'
+      className={cn(
+        'h-(--collapsible-panel-height) overflow-hidden transition-[height] duration-200 ease-(--ease-out-strong) data-ending-style:h-0 data-starting-style:h-0',
+        className
+      )}
+      {...props}
+    />
+  );
+}
+
+export {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleContent as CollapsiblePanel,
+  CollapsibleTrigger,
+};
