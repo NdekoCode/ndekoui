@@ -1,0 +1,61 @@
+import { Tabs as TabsPrimitive } from '@base-ui/react/tabs';
+
+import {
+  BoxIcon,
+  HouseIcon,
+  PanelsTopLeftIcon,
+} from '@/registry/ndeko/lib/icons';
+import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
+import { Tabs, TabsPanel, TabsTab } from '@/registry/ndeko/ui/tabs';
+
+const TABS = [
+  {
+    value: 'overview',
+    label: 'Overview',
+    icon: HouseIcon,
+    content: 'Open tasks, recent activity and the next deadlines.',
+  },
+  {
+    value: 'projects',
+    label: 'Projects',
+    icon: PanelsTopLeftIcon,
+    content: 'Three active projects, sorted by their latest update.',
+  },
+  {
+    value: 'packages',
+    label: 'Packages',
+    icon: BoxIcon,
+    content:
+      'Packages published from this workspace, with their latest version.',
+  },
+];
+
+const INDICATOR =
+  'pointer-events-none absolute bottom-0 left-0 h-0.5 w-(--active-tab-width) translate-x-(--active-tab-left) rounded-full bg-primary transition-[translate,width] duration-300 ease-(--ease-out-strong)';
+
+const STACKED_TAB = 'flex-col gap-1.5 rounded-md px-4 py-2 text-xs';
+
+export default function Tabs13() {
+  return (
+    <Tabs defaultValue='overview' className='items-center'>
+      <TabsPrimitive.List className='hairline-b border-border relative flex items-center'>
+        {TABS.map((tab) => (
+          <TabsTab key={tab.value} value={tab.value} className={STACKED_TAB}>
+            <tab.icon className='opacity-60' />
+            {tab.label}
+          </TabsTab>
+        ))}
+        <TabsPrimitive.Indicator className={INDICATOR} />
+      </TabsPrimitive.List>
+      <AnimatedSize>
+        {TABS.map((tab) => (
+          <TabsPanel key={tab.value} value={tab.value}>
+            <p className='text-muted-foreground p-4 text-center text-xs'>
+              {tab.content}
+            </p>
+          </TabsPanel>
+        ))}
+      </AnimatedSize>
+    </Tabs>
+  );
+}
