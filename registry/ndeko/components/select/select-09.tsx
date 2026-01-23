@@ -1,0 +1,25 @@
+import { useId } from 'react';
+
+import { Label } from '@/registry/ndeko/ui/label';
+import { SelectNative } from '@/registry/ndeko/ui/select-native';
+
+export default function Select09() {
+  const id = useId();
+
+  return (
+    <div className='flex w-full max-w-xs flex-col gap-2'>
+      <Label htmlFor={id} className='gap-1'>
+        Framework
+        <span className='text-destructive-ink' aria-hidden='true'>
+          *
+        </span>
+      </Label>
+      <SelectNative id={id} required>
+        <option value='react'>React</option>
+        <option value='nextjs'>Next.js</option>
+        <option value='astro'>Astro</option>
+        <option value='gatsby'>Gatsby</option>
+      </SelectNative>
+    </div>
+  );
+}
