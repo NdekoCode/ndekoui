@@ -1,0 +1,38 @@
+'use client';
+
+import { addDays } from 'date-fns';
+import { useState } from 'react';
+import type { DateRange } from 'react-day-picker';
+
+import { AnimatedCalendar } from './_parts/animated-calendar';
+
+const TWO_MONTHS = {
+  months: 'gap-8',
+  month: [
+    'relative before:absolute before:bg-border first-of-type:before:hidden',
+    'max-sm:before:inset-x-2 max-sm:before:-top-4 max-sm:before:h-(--hairline)',
+    'sm:before:inset-y-2 sm:before:-left-4 sm:before:w-(--hairline)',
+  ].join(' '),
+};
+
+function nextTwentyFiveDays(): DateRange {
+  const today = new Date();
+  return { from: today, to: addDays(today, 25) };
+}
+
+export default function CalendarDatePicker22() {
+  const [range, setRange] = useState<DateRange | undefined>(nextTwentyFiveDays);
+
+  return (
+    <AnimatedCalendar
+      mode='range'
+      selected={range}
+      onSelect={setRange}
+      numberOfMonths={2}
+      pagedNavigation
+      showOutsideDays={false}
+      className='bg-card hairline-ring ring-border rounded-xl p-2 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
+      classNames={TWO_MONTHS}
+    />
+  );
+}

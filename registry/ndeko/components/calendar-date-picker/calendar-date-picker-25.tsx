@@ -1,0 +1,52 @@
+'use client';
+
+import {
+  Button,
+  DatePicker,
+  Dialog,
+  Group,
+  Label,
+  Popover,
+} from 'react-aria-components';
+
+import { CalendarIcon } from '@/registry/ndeko/lib/icons';
+import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
+import { Calendar } from '@/registry/ndeko/ui/calendar-rac';
+import { DateInput } from '@/registry/ndeko/ui/datefield-rac';
+import { LABEL_RECIPE } from '@/registry/ndeko/ui/label';
+
+import { SETTLING_DAYS } from './_parts/settling-days';
+
+const CALENDAR_BUTTON = [
+  'z-10 -ms-8 flex w-8 items-center justify-center rounded-e-md text-muted-foreground outline-none',
+  'transition-[color,box-shadow] data-hovered:text-foreground data-focus-visible:ring-[3px] data-focus-visible:ring-ring/25',
+].join(' ');
+
+const POPOVER = [
+  'surface-raised rounded-xl outline-none',
+  'origin-(--trigger-anchor-point) transition-[opacity,scale] duration-150 ease-(--ease-out-strong)',
+  'data-entering:scale-95 data-entering:opacity-0 data-exiting:scale-95 data-exiting:opacity-0 data-exiting:duration-100',
+].join(' ');
+
+export default function CalendarDatePicker25() {
+  return (
+    <DatePicker className='flex w-full max-w-xs flex-col gap-1.5'>
+      <Label className={LABEL_RECIPE}>Date picker</Label>
+      <div className='flex'>
+        <Group className='w-full'>
+          <DateInput className='pe-8' />
+        </Group>
+        <Button className={CALENDAR_BUTTON}>
+          <CalendarIcon className='size-4' />
+        </Button>
+      </div>
+      <Popover className={POPOVER} offset={6}>
+        <Dialog className='max-h-[inherit] overflow-auto p-2 outline-none'>
+          <AnimatedSize>
+            <Calendar className={SETTLING_DAYS} />
+          </AnimatedSize>
+        </Dialog>
+      </Popover>
+    </DatePicker>
+  );
+}
