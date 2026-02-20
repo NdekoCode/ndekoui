@@ -7,8 +7,9 @@ import {
   Transition,
   Variant,
   Variants,
+  useReducedMotion,
 } from 'motion/react';
-import { createContext, useContext, useState, useId, useEffect } from 'react';
+import { createContext, useContext, useState, useId } from 'react';
 import { cn } from '@/lib/utils';
 
 export type DisclosureContextType = {
@@ -35,10 +36,13 @@ function DisclosureProvider({
   variants,
 }: DisclosureProviderProps) {
   const [internalOpenValue, setInternalOpenValue] = useState<boolean>(openProp);
+  const [syncedOpenProp, setSyncedOpenProp] = useState<boolean>(openProp);
 
-  useEffect(() => {
+  const hasNewOpenProp = openProp !== syncedOpenProp;
+  if (hasNewOpenProp) {
+    setSyncedOpenProp(openProp);
     setInternalOpenValue(openProp);
-  }, [openProp]);
+  }
 
   const toggle = () => {
     const newOpen = !internalOpenValue;
@@ -69,6 +73,14 @@ function useDisclosure() {
   return context;
 }
 
+function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
+  const prefersReducedMotion = useReducedMotion();
+  if (!prefersReducedMotion) {
+    return children;
+  }
+  return <MotionConfig reducedMotion='always'>{children}</MotionConfig>;
+}
+
 export type DisclosureProps = {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -87,20 +99,26 @@ export function Disclosure({
   variants,
 }: DisclosureProps) {
   return (
-    <MotionConfig transition={transition}>
-      <div className={className}>
-        <DisclosureProvider
-          open={openProp}
-          onOpenChange={onOpenChange}
-          variants={variants}
-        >
-          {React.Children.toArray(children)[0]}
-          {React.Children.toArray(children)[1]}
-        </DisclosureProvider>
-      </div>
-    </MotionConfig>
+    <ReducedMotionConfig>
+      <MotionConfig transition={transition}>
+        <div className={className}>
+          <DisclosureProvider
+            open={openProp}
+            onOpenChange={onOpenChange}
+            variants={variants}
+          >
+            {React.Children.toArray(children)[0]}
+            {React.Children.toArray(children)[1]}
+          </DisclosureProvider>
+        </div>
+      </MotionConfig>
+    </ReducedMotionConfig>
   );
 }
+
+type DisclosureTriggerChildProps = {
+  className?: string;
+} & Record<string, unknown>;
 
 export function DisclosureTrigger({
   children,
@@ -114,25 +132,24 @@ export function DisclosureTrigger({
   return (
     <>
       {React.Children.map(children, (child) => {
-        return React.isValidElement(child)
-          ? React.cloneElement(child, {
-              onClick: toggle,
-              role: 'button',
-              'aria-expanded': open,
-              tabIndex: 0,
-              onKeyDown: (e: { key: string; preventDefault: () => void }) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  toggle();
-                }
-              },
-              className: cn(
-                className,
-                (child as React.ReactElement).props.className
-              ),
-              ...(child as React.ReactElement).props,
-            })
-          : child;
+        if (!React.isValidElement<DisclosureTriggerChildProps>(child)) {
+          return child;
+        }
+        return React.cloneElement(child, {
+          onClick: toggle,
+          role: 'button',
+          'aria-expanded': open,
+          tabIndex: 0,
+          onKeyDown: (e: { key: string; preventDefault: () => void }) => {
+            const isActivationKey = e.key === 'Enter' || e.key === ' ';
+            if (isActivationKey) {
+              e.preventDefault();
+              toggle();
+            }
+          },
+          className: cn(className, child.props.className),
+          ...child.props,
+        });
       })}
     </>
   );
@@ -183,9 +200,11 @@ export function DisclosureContent({
   );
 }
 
-export default {
+const DisclosureParts = {
   Disclosure,
   DisclosureProvider,
   DisclosureTrigger,
   DisclosureContent,
 };
+
+export default DisclosureParts;

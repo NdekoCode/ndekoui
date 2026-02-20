@@ -7,6 +7,7 @@ import {
   useMotionValue,
   useSpring,
   useTransform,
+  useReducedMotion,
   MotionStyle,
   SpringOptions,
 } from 'motion/react';
@@ -29,6 +30,7 @@ export function Tilt({
   springOptions,
 }: TiltProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -55,6 +57,7 @@ export function Tilt({
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
+    if (prefersReducedMotion) return;
 
     const rect = ref.current.getBoundingClientRect();
     const width = rect.width;

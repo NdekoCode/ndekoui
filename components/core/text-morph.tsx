@@ -1,6 +1,13 @@
 'use client';
 import { cn } from '@/lib/utils';
-import { AnimatePresence, motion, Transition, Variants } from 'motion/react';
+import {
+  AnimatePresence,
+  motion,
+  MotionConfig,
+  Transition,
+  useReducedMotion,
+  Variants,
+} from 'motion/react';
 import { useMemo, useId } from 'react';
 
 export type TextMorphProps = {
@@ -11,6 +18,14 @@ export type TextMorphProps = {
   variants?: Variants;
   transition?: Transition;
 };
+
+function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
+  const prefersReducedMotion = useReducedMotion();
+  if (!prefersReducedMotion) {
+    return children;
+  }
+  return <MotionConfig reducedMotion='always'>{children}</MotionConfig>;
+}
 
 export function TextMorph({
   children,
@@ -50,24 +65,26 @@ export function TextMorph({
   };
 
   return (
-    <Component className={cn(className)} aria-label={children} style={style}>
-      <AnimatePresence mode='popLayout' initial={false}>
-        {characters.map((character) => (
-          <motion.span
-            key={character.id}
-            layoutId={character.id}
-            className='inline-block'
-            aria-hidden='true'
-            initial='initial'
-            animate='animate'
-            exit='exit'
-            variants={variants || defaultVariants}
-            transition={transition || defaultTransition}
-          >
-            {character.label}
-          </motion.span>
-        ))}
-      </AnimatePresence>
-    </Component>
+    <ReducedMotionConfig>
+      <Component className={cn(className)} aria-label={children} style={style}>
+        <AnimatePresence mode='popLayout' initial={false}>
+          {characters.map((character) => (
+            <motion.span
+              key={character.id}
+              layoutId={character.id}
+              className='inline-block'
+              aria-hidden='true'
+              initial='initial'
+              animate='animate'
+              exit='exit'
+              variants={variants || defaultVariants}
+              transition={transition || defaultTransition}
+            >
+              {character.label}
+            </motion.span>
+          ))}
+        </AnimatePresence>
+      </Component>
+    </ReducedMotionConfig>
   );
 }

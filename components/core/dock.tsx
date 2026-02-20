@@ -8,6 +8,8 @@ import {
   useTransform,
   type SpringOptions,
   AnimatePresence,
+  MotionConfig,
+  useReducedMotion,
 } from 'motion/react';
 import {
   Children,
@@ -41,6 +43,11 @@ export type DockItemProps = {
   onClick?: () => void;
 };
 
+type DockChildProps = {
+  width?: MotionValue<number>;
+  isHovered?: MotionValue<number>;
+};
+
 export type DockLabelProps = {
   className?: string;
   children: React.ReactNode;
@@ -65,6 +72,25 @@ export type DockProviderProps = {
 
 const DockContext = createContext<DocContextType | undefined>(undefined);
 
+function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
+  const prefersReducedMotion = useReducedMotion();
+  if (!prefersReducedMotion) {
+    return children;
+  }
+  return <MotionConfig reducedMotion='always'>{children}</MotionConfig>;
+}
+
+function followerOf(
+  prefersReducedMotion: boolean | null,
+  target: MotionValue<number>,
+  spring: MotionValue<number>
+) {
+  if (prefersReducedMotion) {
+    return target;
+  }
+  return spring;
+}
+
 function DockProvider({ children, value }: DockProviderProps) {
   return <DockContext.Provider value={value}>{children}</DockContext.Provider>;
 }
@@ -87,44 +113,48 @@ function Dock({
 }: DockProps) {
   const mouseX = useMotionValue(Infinity);
   const isHovered = useMotionValue(0);
+  const prefersReducedMotion = useReducedMotion();
 
   const maxHeight = useMemo(() => {
     return Math.max(DOCK_HEIGHT, magnification + magnification / 2 + 4);
   }, [magnification]);
 
   const heightRow = useTransform(isHovered, [0, 1], [panelHeight, maxHeight]);
-  const height = useSpring(heightRow, spring);
+  const heightSpring = useSpring(heightRow, spring);
+  const height = followerOf(prefersReducedMotion, heightRow, heightSpring);
 
   return (
-    <motion.div
-      style={{
-        height: height,
-        scrollbarWidth: 'none',
-      }}
-      className='mx-2 flex max-w-full items-end overflow-x-auto'
-    >
+    <ReducedMotionConfig>
       <motion.div
-        onMouseMove={({ pageX }) => {
-          isHovered.set(1);
-          mouseX.set(pageX);
+        style={{
+          height: height,
+          scrollbarWidth: 'none',
         }}
-        onMouseLeave={() => {
-          isHovered.set(0);
-          mouseX.set(Infinity);
-        }}
-        className={cn(
-          'mx-auto flex w-fit gap-4 rounded-2xl bg-gray-50 px-4 dark:bg-neutral-900',
-          className
-        )}
-        style={{ height: panelHeight }}
-        role='toolbar'
-        aria-label='Application dock'
+        className='mx-2 flex max-w-full items-end overflow-x-auto'
       >
-        <DockProvider value={{ mouseX, spring, distance, magnification }}>
-          {children}
-        </DockProvider>
+        <motion.div
+          onMouseMove={({ pageX }) => {
+            isHovered.set(1);
+            mouseX.set(pageX);
+          }}
+          onMouseLeave={() => {
+            isHovered.set(0);
+            mouseX.set(Infinity);
+          }}
+          className={cn(
+            'bg-card hairline-ring ring-border mx-auto flex w-fit gap-4 rounded-2xl px-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)]',
+            className
+          )}
+          style={{ height: panelHeight }}
+          role='toolbar'
+          aria-label='Application dock'
+        >
+          <DockProvider value={{ mouseX, spring, distance, magnification }}>
+            {children}
+          </DockProvider>
+        </motion.div>
       </motion.div>
-    </motion.div>
+    </ReducedMotionConfig>
   );
 }
 
@@ -132,6 +162,7 @@ function DockItem({ children, className, onClick }: DockItemProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   const { distance, magnification, mouseX, spring } = useDock();
+  const prefersReducedMotion = useReducedMotion();
 
   const isHovered = useMotionValue(0);
 
@@ -146,7 +177,8 @@ function DockItem({ children, className, onClick }: DockItemProps) {
     [40, magnification, 40]
   );
 
-  const width = useSpring(widthTransform, spring);
+  const widthSpring = useSpring(widthTransform, spring);
+  const width = followerOf(prefersReducedMotion, widthTransform, widthSpring);
 
   return (
     <motion.div
@@ -166,7 +198,10 @@ function DockItem({ children, className, onClick }: DockItemProps) {
       onClick={onClick}
     >
       {Children.map(children, (child) =>
-        cloneElement(child as React.ReactElement, { width, isHovered })
+        cloneElement(child as React.ReactElement<DockChildProps>, {
+          width,
+          isHovered,
+        })
       )}
     </motion.div>
   );
@@ -194,7 +229,7 @@ function DockLabel({ children, className, ...rest }: DockLabelProps) {
           exit={{ opacity: 0, y: 0 }}
           transition={{ duration: 0.2 }}
           className={cn(
-            'absolute -top-6 left-1/2 w-fit whitespace-pre rounded-md border border-gray-200 bg-gray-100 px-2 py-0.5 text-xs text-neutral-700 dark:border-neutral-900 dark:bg-neutral-800 dark:text-white',
+            'surface-raised absolute -top-6 left-1/2 w-fit rounded-lg px-2 py-0.5 text-xs font-medium whitespace-pre',
             className
           )}
           role='tooltip'

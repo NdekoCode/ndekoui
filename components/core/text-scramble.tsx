@@ -1,6 +1,6 @@
 'use client';
-import { type JSX, useEffect, useState } from 'react';
-import { motion, MotionProps } from 'motion/react';
+import { useEffect, useEffectEvent, useRef, useState } from 'react';
+import { motion, MotionProps, useReducedMotion } from 'motion/react';
 
 export type TextScrambleProps = {
   children: string;
@@ -27,16 +27,24 @@ export function TextScramble({
   onScrambleComplete,
   ...props
 }: TextScrambleProps) {
-  const MotionComponent = motion.create(
-    Component as keyof JSX.IntrinsicElements
-  );
+  const MotionComponent = motion[
+    Component as keyof typeof motion
+  ] as typeof motion.p;
   const [displayText, setDisplayText] = useState(children);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const isAnimatingRef = useRef(false);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const prefersReducedMotion = useReducedMotion();
   const text = children;
 
-  const scramble = async () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
+  const scramble = useEffectEvent(() => {
+    if (isAnimatingRef.current) return;
+
+    if (prefersReducedMotion) {
+      onScrambleComplete?.();
+      return;
+    }
+
+    isAnimatingRef.current = true;
 
     const steps = duration / speed;
     let step = 0;
@@ -64,18 +72,29 @@ export function TextScramble({
 
       if (step > steps) {
         clearInterval(interval);
+        intervalRef.current = null;
         setDisplayText(text);
-        setIsAnimating(false);
+        isAnimatingRef.current = false;
         onScrambleComplete?.();
       }
     }, speed * 1000);
-  };
+
+    intervalRef.current = interval;
+  });
 
   useEffect(() => {
     if (!trigger) return;
 
     scramble();
   }, [trigger]);
+
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, []);
 
   return (
     <MotionComponent className={className} {...props}>

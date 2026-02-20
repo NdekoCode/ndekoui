@@ -4,7 +4,9 @@ import {
   Transition,
   Variant,
   motion,
+  MotionConfig,
   MotionProps,
+  useReducedMotion,
 } from 'motion/react';
 import { cn } from '@/lib/utils';
 
@@ -16,6 +18,14 @@ export type TransitionPanelProps = {
   variants?: { enter: Variant; center: Variant; exit: Variant };
 } & MotionProps;
 
+function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
+  const prefersReducedMotion = useReducedMotion();
+  if (!prefersReducedMotion) {
+    return children;
+  }
+  return <MotionConfig reducedMotion='always'>{children}</MotionConfig>;
+}
+
 export function TransitionPanel({
   children,
   className,
@@ -25,24 +35,26 @@ export function TransitionPanel({
   ...motionProps
 }: TransitionPanelProps) {
   return (
-    <div className={cn('relative', className)}>
-      <AnimatePresence
-        initial={false}
-        mode='popLayout'
-        custom={motionProps.custom}
-      >
-        <motion.div
-          key={activeIndex}
-          variants={variants}
-          transition={transition}
-          initial='enter'
-          animate='center'
-          exit='exit'
-          {...motionProps}
+    <ReducedMotionConfig>
+      <div className={cn('relative', className)}>
+        <AnimatePresence
+          initial={false}
+          mode='popLayout'
+          custom={motionProps.custom}
         >
-          {children[activeIndex]}
-        </motion.div>
-      </AnimatePresence>
-    </div>
+          <motion.div
+            key={activeIndex}
+            variants={variants}
+            transition={transition}
+            initial='enter'
+            animate='center'
+            exit='exit'
+            {...motionProps}
+          >
+            {children[activeIndex]}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </ReducedMotionConfig>
   );
 }

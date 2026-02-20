@@ -5,6 +5,8 @@ import {
   Target,
   TargetAndTransition,
   Transition,
+  MotionConfig,
+  useReducedMotion,
 } from 'motion/react';
 
 export type TextRollProps = {
@@ -26,6 +28,14 @@ export type TextRollProps = {
   };
   onAnimationComplete?: () => void;
 };
+
+function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
+  const prefersReducedMotion = useReducedMotion();
+  if (!prefersReducedMotion) {
+    return children;
+  }
+  return <MotionConfig reducedMotion='always'>{children}</MotionConfig>;
+}
 
 export function TextRoll({
   children,
@@ -51,52 +61,58 @@ export function TextRoll({
   const letters = children.split('');
 
   return (
-    <span className={className}>
-      {letters.map((letter, i) => {
-        return (
-          <span
-            key={i}
-            className='relative inline-block [perspective:10000px] [transform-style:preserve-3d] [width:auto]'
-            aria-hidden='true'
-          >
-            <motion.span
-              className='absolute inline-block [backface-visibility:hidden] [transform-origin:50%_25%]'
-              initial={
-                variants?.enter?.initial ?? defaultVariants.enter.initial
-              }
-              animate={
-                variants?.enter?.animate ?? defaultVariants.enter.animate
-              }
-              transition={{
-                ...transition,
-                duration,
-                delay: getEnterDelay(i),
-              }}
+    <ReducedMotionConfig>
+      <span className={className}>
+        {letters.map((letter, i) => {
+          return (
+            <span
+              key={i}
+              className='relative inline-block [width:auto] [perspective:10000px] [transform-style:preserve-3d]'
+              aria-hidden='true'
             >
-              {letter === ' ' ? '\u00A0' : letter}
-            </motion.span>
-            <motion.span
-              className='absolute inline-block [backface-visibility:hidden] [transform-origin:50%_100%]'
-              initial={variants?.exit?.initial ?? defaultVariants.exit.initial}
-              animate={variants?.exit?.animate ?? defaultVariants.exit.animate}
-              transition={{
-                ...transition,
-                duration,
-                delay: getExitDelay(i),
-              }}
-              onAnimationComplete={
-                letters.length === i + 1 ? onAnimationComplete : undefined
-              }
-            >
-              {letter === ' ' ? '\u00A0' : letter}
-            </motion.span>
-            <span className='invisible'>
-              {letter === ' ' ? '\u00A0' : letter}
+              <motion.span
+                className='absolute inline-block [transform-origin:50%_25%] [backface-visibility:hidden]'
+                initial={
+                  variants?.enter?.initial ?? defaultVariants.enter.initial
+                }
+                animate={
+                  variants?.enter?.animate ?? defaultVariants.enter.animate
+                }
+                transition={{
+                  ...transition,
+                  duration,
+                  delay: getEnterDelay(i),
+                }}
+              >
+                {letter === ' ' ? '\u00A0' : letter}
+              </motion.span>
+              <motion.span
+                className='absolute inline-block [transform-origin:50%_100%] [backface-visibility:hidden]'
+                initial={
+                  variants?.exit?.initial ?? defaultVariants.exit.initial
+                }
+                animate={
+                  variants?.exit?.animate ?? defaultVariants.exit.animate
+                }
+                transition={{
+                  ...transition,
+                  duration,
+                  delay: getExitDelay(i),
+                }}
+                onAnimationComplete={
+                  letters.length === i + 1 ? onAnimationComplete : undefined
+                }
+              >
+                {letter === ' ' ? '\u00A0' : letter}
+              </motion.span>
+              <span className='invisible'>
+                {letter === ' ' ? '\u00A0' : letter}
+              </span>
             </span>
-          </span>
-        );
-      })}
-      <span className='sr-only'>{children}</span>
-    </span>
+          );
+        })}
+        <span className='sr-only'>{children}</span>
+      </span>
+    </ReducedMotionConfig>
   );
 }

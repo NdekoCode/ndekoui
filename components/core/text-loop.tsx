@@ -6,6 +6,8 @@ import {
   Transition,
   Variants,
   AnimatePresenceProps,
+  MotionConfig,
+  useReducedMotion,
 } from 'motion/react';
 import { useState, useEffect, Children } from 'react';
 
@@ -19,6 +21,14 @@ export type TextLoopProps = {
   trigger?: boolean;
   mode?: AnimatePresenceProps['mode'];
 };
+
+function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
+  const prefersReducedMotion = useReducedMotion();
+  if (!prefersReducedMotion) {
+    return children;
+  }
+  return <MotionConfig reducedMotion='always'>{children}</MotionConfig>;
+}
 
 export function TextLoop({
   children,
@@ -54,19 +64,21 @@ export function TextLoop({
   };
 
   return (
-    <div className={cn('relative inline-block whitespace-nowrap', className)}>
-      <AnimatePresence mode={mode} initial={false}>
-        <motion.div
-          key={currentIndex}
-          initial='initial'
-          animate='animate'
-          exit='exit'
-          transition={transition}
-          variants={variants || motionVariants}
-        >
-          {items[currentIndex]}
-        </motion.div>
-      </AnimatePresence>
-    </div>
+    <ReducedMotionConfig>
+      <div className={cn('relative inline-block whitespace-nowrap', className)}>
+        <AnimatePresence mode={mode} initial={false}>
+          <motion.div
+            key={currentIndex}
+            initial='initial'
+            animate='animate'
+            exit='exit'
+            transition={transition}
+            variants={variants || motionVariants}
+          >
+            {items[currentIndex]}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </ReducedMotionConfig>
   );
 }

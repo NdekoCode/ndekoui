@@ -1,14 +1,37 @@
 'use client';
 import React, { useRef, useState } from 'react';
-import { motion, MotionConfig } from 'motion/react';
+import { motion, MotionConfig, useReducedMotion } from 'motion/react';
 import useClickOutside from '@/hooks/useClickOutside';
-import { ArrowLeft, Search, User } from 'lucide-react';
+import {
+  ArrowLeftIcon,
+  SearchIcon,
+  UserIcon,
+} from '@/registry/ndeko/lib/icons';
 
 const transition = {
-  type: 'spring',
+  type: 'spring' as const,
   bounce: 0.1,
   duration: 0.2,
 };
+
+const OPEN_WIDTH = '300px';
+
+const CLOSED_WIDTH = '98px';
+
+function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
+  const prefersReducedMotion = useReducedMotion();
+  if (!prefersReducedMotion) {
+    return children;
+  }
+  return <MotionConfig reducedMotion='always'>{children}</MotionConfig>;
+}
+
+function toolbarWidthOf(isOpen: boolean) {
+  if (isOpen) {
+    return OPEN_WIDTH;
+  }
+  return CLOSED_WIDTH;
+}
 
 function Button({
   children,
@@ -23,7 +46,7 @@ function Button({
 }) {
   return (
     <button
-      className='relative flex h-9 w-9 shrink-0 scale-100 select-none appearance-none items-center justify-center rounded-lg text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 focus-visible:ring-2 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50'
+      className='text-muted-foreground hover:bg-foreground/5 hover:text-foreground focus-visible:ring-ring relative flex h-9 w-9 shrink-0 scale-100 appearance-none items-center justify-center rounded-lg transition-[color,background-color,scale] duration-150 ease-(--ease-out-strong) select-none focus-visible:ring-2 focus-visible:outline-hidden active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50'
       type='button'
       onClick={onClick}
       disabled={disabled}
@@ -43,48 +66,51 @@ export default function ToolbarDynamic() {
   });
 
   return (
-    <MotionConfig transition={transition}>
-      <div className='absolute bottom-8' ref={containerRef}>
-        <div className='h-full w-full rounded-xl border border-zinc-950/10 bg-white'>
-          <motion.div
-            animate={{
-              // @todo: here I want to remove the width
-              width: isOpen ? '300px' : '98px',
-            }}
-            initial={false}
-          >
-            <div className='overflow-hidden p-2'>
-              {!isOpen ? (
-                <div className='flex space-x-2'>
-                  <Button disabled ariaLabel='User profile'>
-                    <User className='h-5 w-5' />
-                  </Button>
-                  <Button
-                    onClick={() => setIsOpen(true)}
-                    ariaLabel='Search notes'
-                  >
-                    <Search className='h-5 w-5' />
-                  </Button>
-                </div>
-              ) : (
-                <div className='flex space-x-2'>
-                  <Button onClick={() => setIsOpen(false)} ariaLabel='Back'>
-                    <ArrowLeft className='h-5 w-5' />
-                  </Button>
-                  <div className='relative w-full'>
-                    <input
-                      className='h-9 w-full rounded-lg border border-zinc-950/10 bg-transparent p-2 text-zinc-900 placeholder-zinc-500 focus:outline-hidden'
-                      autoFocus
-                      placeholder='Search notes'
-                    />
-                    <div className='absolute right-1 top-0 flex h-full items-center justify-center'></div>
+    <ReducedMotionConfig>
+      <MotionConfig transition={transition}>
+        <div className='absolute bottom-8' ref={containerRef}>
+          <div className='bg-card hairline-ring ring-border h-full w-full rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
+            <motion.div
+              animate={{
+                width: toolbarWidthOf(isOpen),
+              }}
+              initial={false}
+            >
+              <div className='overflow-hidden p-2'>
+                {!isOpen && (
+                  <div className='flex space-x-2'>
+                    <Button disabled ariaLabel='User profile'>
+                      <UserIcon className='size-5' />
+                    </Button>
+                    <Button
+                      onClick={() => setIsOpen(true)}
+                      ariaLabel='Search notes'
+                    >
+                      <SearchIcon className='size-5' />
+                    </Button>
                   </div>
-                </div>
-              )}
-            </div>
-          </motion.div>
+                )}
+                {isOpen && (
+                  <div className='flex space-x-2'>
+                    <Button onClick={() => setIsOpen(false)} ariaLabel='Back'>
+                      <ArrowLeftIcon className='size-5' />
+                    </Button>
+                    <div className='relative w-full'>
+                      <input
+                        className='hairline-ring ring-border text-foreground placeholder:text-muted-foreground focus-visible:ring-ring/25 h-9 w-full rounded-lg bg-transparent p-2 text-base focus:outline-hidden focus-visible:ring-[3px] md:text-[13px]'
+                        autoFocus
+                        aria-label='Search notes'
+                        placeholder='Search notes'
+                      />
+                      <div className='absolute top-0 right-1 flex h-full items-center justify-center'></div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </div>
         </div>
-      </div>
-    </MotionConfig>
+      </MotionConfig>
+    </ReducedMotionConfig>
   );
 }

@@ -1,6 +1,12 @@
 'use client';
 import React, { useRef, useState, useCallback, useEffect } from 'react';
-import { motion, useSpring, useTransform, SpringOptions } from 'motion/react';
+import {
+  motion,
+  useSpring,
+  useTransform,
+  useReducedMotion,
+  SpringOptions,
+} from 'motion/react';
 import { cn } from '@/lib/utils';
 
 export type SpotlightProps = {
@@ -8,6 +14,13 @@ export type SpotlightProps = {
   size?: number;
   springOptions?: SpringOptions;
 };
+
+function visibilityOf(isHovered: boolean) {
+  if (isHovered) {
+    return 'opacity-100';
+  }
+  return 'opacity-0';
+}
 
 export function Spotlight({
   className,
@@ -17,6 +30,7 @@ export function Spotlight({
   const containerRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [parentElement, setParentElement] = useState<HTMLElement | null>(null);
+  const prefersReducedMotion = useReducedMotion();
 
   const mouseX = useSpring(0, springOptions);
   const mouseY = useSpring(0, springOptions);
@@ -39,10 +53,17 @@ export function Spotlight({
     (event: MouseEvent) => {
       if (!parentElement) return;
       const { left, top } = parentElement.getBoundingClientRect();
-      mouseX.set(event.clientX - left);
-      mouseY.set(event.clientY - top);
+      const pointerX = event.clientX - left;
+      const pointerY = event.clientY - top;
+      if (prefersReducedMotion) {
+        mouseX.jump(pointerX);
+        mouseY.jump(pointerY);
+        return;
+      }
+      mouseX.set(pointerX);
+      mouseY.set(pointerY);
     },
-    [mouseX, mouseY, parentElement]
+    [mouseX, mouseY, parentElement, prefersReducedMotion]
   );
 
   useEffect(() => {
@@ -70,8 +91,8 @@ export function Spotlight({
       ref={containerRef}
       className={cn(
         'pointer-events-none absolute rounded-full bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops),transparent_80%)] blur-xl transition-opacity duration-200',
-        'from-zinc-100 via-zinc-200 to-zinc-400 dark:from-zinc-50 dark:via-zinc-100 dark:to-zinc-200',
-        isHovered ? 'opacity-100' : 'opacity-0',
+        'from-foreground/20 via-foreground/10 to-foreground/5',
+        visibilityOf(isHovered),
         className
       )}
       style={{

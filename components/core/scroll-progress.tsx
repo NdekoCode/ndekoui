@@ -1,13 +1,20 @@
 'use client';
 
-import { motion, SpringOptions, useScroll, useSpring } from 'motion/react';
+import {
+  motion,
+  MotionValue,
+  SpringOptions,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+} from 'motion/react';
 import { cn } from '@/lib/utils';
 import { RefObject } from 'react';
 
 export type ScrollProgressProps = {
   className?: string;
   springOptions?: SpringOptions;
-  containerRef?: RefObject<HTMLDivElement>;
+  containerRef?: RefObject<HTMLDivElement | null>;
 };
 
 const DEFAULT_SPRING_OPTIONS: SpringOptions = {
@@ -16,6 +23,17 @@ const DEFAULT_SPRING_OPTIONS: SpringOptions = {
   restDelta: 0.001,
 };
 
+function followerOf(
+  prefersReducedMotion: boolean | null,
+  target: MotionValue<number>,
+  spring: MotionValue<number>
+) {
+  if (prefersReducedMotion) {
+    return target;
+  }
+  return spring;
+}
+
 export function ScrollProgress({
   className,
   springOptions,
@@ -23,13 +41,19 @@ export function ScrollProgress({
 }: ScrollProgressProps) {
   const { scrollYProgress } = useScroll({
     container: containerRef,
-    layoutEffect: Boolean(containerRef?.current),
   });
 
-  const scaleX = useSpring(scrollYProgress, {
+  const prefersReducedMotion = useReducedMotion();
+
+  const springScaleX = useSpring(scrollYProgress, {
     ...DEFAULT_SPRING_OPTIONS,
     ...(springOptions ?? {}),
   });
+  const scaleX = followerOf(
+    prefersReducedMotion,
+    scrollYProgress,
+    springScaleX
+  );
 
   return (
     <motion.div

@@ -8,9 +8,15 @@ import {
   useRef,
   useState,
 } from 'react';
-import { motion, Transition, useMotionValue } from 'motion/react';
+import {
+  motion,
+  MotionConfig,
+  Transition,
+  useMotionValue,
+  useReducedMotion,
+} from 'motion/react';
 import { cn } from '@/lib/utils';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeftIcon, ChevronRightIcon } from '@/registry/ndeko/lib/icons';
 
 export type CarouselContextType = {
   index: number;
@@ -39,6 +45,14 @@ export type CarouselProviderProps = {
   disableDrag?: boolean;
 };
 
+function ReducedMotionConfig({ children }: { children: ReactNode }) {
+  const prefersReducedMotion = useReducedMotion();
+  if (!prefersReducedMotion) {
+    return children;
+  }
+  return <MotionConfig reducedMotion='always'>{children}</MotionConfig>;
+}
+
 function CarouselProvider({
   children,
   initialIndex = 0,
@@ -46,16 +60,20 @@ function CarouselProvider({
   disableDrag = false,
 }: CarouselProviderProps) {
   const [index, setIndex] = useState<number>(initialIndex);
+  const [syncedInitialIndex, setSyncedInitialIndex] =
+    useState<number>(initialIndex);
   const [itemsCount, setItemsCount] = useState<number>(0);
+
+  const hasNewInitialIndex = initialIndex !== syncedInitialIndex;
+  if (hasNewInitialIndex) {
+    setSyncedInitialIndex(initialIndex);
+    setIndex(initialIndex);
+  }
 
   const handleSetIndex = (newIndex: number) => {
     setIndex(newIndex);
     onIndexChange?.(newIndex);
   };
-
-  useEffect(() => {
-    setIndex(initialIndex);
-  }, [initialIndex]);
 
   return (
     <CarouselContext.Provider
@@ -106,11 +124,32 @@ function Carousel({
       onIndexChange={handleIndexChange}
       disableDrag={disableDrag}
     >
-      <div className={cn('group/hover relative', className)}>
-        <div className='overflow-hidden'>{children}</div>
-      </div>
+      <ReducedMotionConfig>
+        <div className={cn('group/hover relative', className)}>
+          <div className='overflow-hidden'>{children}</div>
+        </div>
+      </ReducedMotionConfig>
     </CarouselProvider>
   );
+}
+
+const NAVIGATION_BUTTON =
+  'bg-card hairline-ring ring-border pointer-events-auto h-fit w-fit rounded-full p-2 shadow-[0_1px_2px_rgb(0_0_0/0.05)] transition-opacity duration-300';
+
+const NAVIGATION_ICON = 'stroke-foreground';
+
+function navigationVisibilityOf(alwaysShow?: boolean) {
+  if (alwaysShow) {
+    return 'opacity-100 disabled:opacity-40';
+  }
+  return 'opacity-0 group-hover/hover:opacity-100 group-hover/hover:disabled:opacity-40';
+}
+
+function indicatorToneOf(isActive: boolean) {
+  if (isActive) {
+    return 'bg-foreground';
+  }
+  return 'bg-foreground/20';
 }
 
 export type CarouselNavigationProps = {
@@ -125,27 +164,19 @@ function CarouselNavigation({
   alwaysShow,
 }: CarouselNavigationProps) {
   const { index, setIndex, itemsCount } = useCarousel();
+  const visibility = navigationVisibilityOf(alwaysShow);
 
   return (
     <div
       className={cn(
-        'pointer-events-none absolute left-[-12.5%] top-1/2 flex w-[125%] -translate-y-1/2 justify-between px-2',
+        'pointer-events-none absolute top-1/2 left-[-12.5%] flex w-[125%] -translate-y-1/2 justify-between px-2',
         className
       )}
     >
       <button
         type='button'
         aria-label='Previous slide'
-        className={cn(
-          'pointer-events-auto h-fit w-fit rounded-full bg-zinc-50 p-2 transition-opacity duration-300 dark:bg-zinc-950',
-          alwaysShow
-            ? 'opacity-100'
-            : 'opacity-0 group-hover/hover:opacity-100',
-          alwaysShow
-            ? 'disabled:opacity-40'
-            : 'group-hover/hover:disabled:opacity-40',
-          classNameButton
-        )}
+        className={cn(NAVIGATION_BUTTON, visibility, classNameButton)}
         disabled={index === 0}
         onClick={() => {
           if (index > 0) {
@@ -153,23 +184,11 @@ function CarouselNavigation({
           }
         }}
       >
-        <ChevronLeft
-          className='stroke-zinc-600 dark:stroke-zinc-50'
-          size={16}
-        />
+        <ChevronLeftIcon className={NAVIGATION_ICON} size={16} />
       </button>
       <button
         type='button'
-        className={cn(
-          'pointer-events-auto h-fit w-fit rounded-full bg-zinc-50 p-2 transition-opacity duration-300 dark:bg-zinc-950',
-          alwaysShow
-            ? 'opacity-100'
-            : 'opacity-0 group-hover/hover:opacity-100',
-          alwaysShow
-            ? 'disabled:opacity-40'
-            : 'group-hover/hover:disabled:opacity-40',
-          classNameButton
-        )}
+        className={cn(NAVIGATION_BUTTON, visibility, classNameButton)}
         aria-label='Next slide'
         disabled={index + 1 === itemsCount}
         onClick={() => {
@@ -178,10 +197,7 @@ function CarouselNavigation({
           }
         }}
       >
-        <ChevronRight
-          className='stroke-zinc-600 dark:stroke-zinc-50'
-          size={16}
-        />
+        <ChevronRightIcon className={NAVIGATION_ICON} size={16} />
       </button>
     </div>
   );
@@ -214,9 +230,7 @@ function CarouselIndicator({
             onClick={() => setIndex(i)}
             className={cn(
               'h-2 w-2 rounded-full transition-opacity duration-300',
-              index === i
-                ? 'bg-zinc-950 dark:bg-zinc-50'
-                : 'bg-zinc-900/50 dark:bg-zinc-100/50',
+              indicatorToneOf(index === i),
               classNameButton
             )}
           />

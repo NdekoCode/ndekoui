@@ -1,6 +1,6 @@
 'use client';
 import { ReactNode } from 'react';
-import { motion, Variants } from 'motion/react';
+import { motion, MotionConfig, useReducedMotion, Variants } from 'motion/react';
 import React from 'react';
 
 export type PresetType =
@@ -100,6 +100,14 @@ const addDefaultVariants = (variants: Variants) => ({
   visible: { ...defaultItemVariants.visible, ...variants.visible },
 });
 
+function ReducedMotionConfig({ children }: { children: ReactNode }) {
+  const prefersReducedMotion = useReducedMotion();
+  if (!prefersReducedMotion) {
+    return children;
+  }
+  return <MotionConfig reducedMotion='always'>{children}</MotionConfig>;
+}
+
 function AnimatedGroup({
   children,
   className,
@@ -115,28 +123,28 @@ function AnimatedGroup({
   const containerVariants = variants?.container || selectedVariants.container;
   const itemVariants = variants?.item || selectedVariants.item;
 
-  const MotionComponent = React.useMemo(
-    () => motion.create(as as keyof JSX.IntrinsicElements),
-    [as]
-  );
-  const MotionChild = React.useMemo(
-    () => motion.create(asChild as keyof JSX.IntrinsicElements),
-    [asChild]
-  );
+  const MotionComponent = motion[
+    as as keyof typeof motion
+  ] as typeof motion.div;
+  const MotionChild = motion[
+    asChild as keyof typeof motion
+  ] as typeof motion.div;
 
   return (
-    <MotionComponent
-      initial='hidden'
-      animate='visible'
-      variants={containerVariants}
-      className={className}
-    >
-      {React.Children.map(children, (child, index) => (
-        <MotionChild key={index} variants={itemVariants}>
-          {child}
-        </MotionChild>
-      ))}
-    </MotionComponent>
+    <ReducedMotionConfig>
+      <MotionComponent
+        initial='hidden'
+        animate='visible'
+        variants={containerVariants}
+        className={className}
+      >
+        {React.Children.map(children, (child, index) => (
+          <MotionChild key={index} variants={itemVariants}>
+            {child}
+          </MotionChild>
+        ))}
+      </MotionComponent>
+    </ReducedMotionConfig>
   );
 }
 

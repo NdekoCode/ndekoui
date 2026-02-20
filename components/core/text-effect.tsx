@@ -2,14 +2,16 @@
 import { cn } from '@/lib/utils';
 import {
   AnimatePresence,
-  motion
+  motion,
+  MotionConfig,
+  useReducedMotion,
 } from 'motion/react';
 import type {
   TargetAndTransition,
   Transition,
   Variant,
   Variants,
-} from 'motion/react'
+} from 'motion/react';
 import React from 'react';
 
 export type PresetType = 'blur' | 'fade-in-blur' | 'scale' | 'fade' | 'slide';
@@ -169,10 +171,22 @@ const hasTransition = (
   variant?: Variant
 ): variant is TargetAndTransition & { transition?: Transition } => {
   if (!variant) return false;
-  return (
-    typeof variant === 'object' && 'transition' in variant
-  );
+  return typeof variant === 'object' && 'transition' in variant;
 };
+
+function withoutExitTransition(transition: Transition & { exit?: Transition }) {
+  const mainTransition: Transition & { exit?: Transition } = { ...transition };
+  delete mainTransition.exit;
+  return mainTransition;
+}
+
+function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
+  const prefersReducedMotion = useReducedMotion();
+  if (!prefersReducedMotion) {
+    return children;
+  }
+  return <MotionConfig reducedMotion='always'>{children}</MotionConfig>;
+}
 
 const createVariantsWithTransition = (
   baseVariants: Variants,
@@ -180,7 +194,7 @@ const createVariantsWithTransition = (
 ): Variants => {
   if (!transition) return baseVariants;
 
-  const { exit: _, ...mainTransition } = transition;
+  const mainTransition = withoutExitTransition(transition);
 
   return {
     ...baseVariants,
@@ -265,30 +279,34 @@ export function TextEffect({
   };
 
   return (
-    <AnimatePresence mode='popLayout'>
-      {trigger && (
-        <MotionTag
-          initial='hidden'
-          animate='visible'
-          exit='exit'
-          variants={computedVariants.container}
-          className={className}
-          onAnimationComplete={onAnimationComplete}
-          onAnimationStart={onAnimationStart}
-          style={style}
-        >
-          {per !== 'line' ? <span className='sr-only'>{children}</span> : null}
-          {segments.map((segment, index) => (
-            <AnimationComponent
-              key={`${per}-${index}-${segment}`}
-              segment={segment}
-              variants={computedVariants.item}
-              per={per}
-              segmentWrapperClassName={segmentWrapperClassName}
-            />
-          ))}
-        </MotionTag>
-      )}
-    </AnimatePresence>
+    <ReducedMotionConfig>
+      <AnimatePresence mode='popLayout'>
+        {trigger && (
+          <MotionTag
+            initial='hidden'
+            animate='visible'
+            exit='exit'
+            variants={computedVariants.container}
+            className={className}
+            onAnimationComplete={onAnimationComplete}
+            onAnimationStart={onAnimationStart}
+            style={style}
+          >
+            {per !== 'line' ? (
+              <span className='sr-only'>{children}</span>
+            ) : null}
+            {segments.map((segment, index) => (
+              <AnimationComponent
+                key={`${per}-${index}-${segment}`}
+                segment={segment}
+                variants={computedVariants.item}
+                per={per}
+                segmentWrapperClassName={segmentWrapperClassName}
+              />
+            ))}
+          </MotionTag>
+        )}
+      </AnimatePresence>
+    </ReducedMotionConfig>
   );
 }

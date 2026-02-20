@@ -5,6 +5,7 @@ import {
   motion,
   useMotionValue,
   useSpring,
+  useReducedMotion,
   type SpringOptions,
 } from 'motion/react';
 
@@ -27,6 +28,10 @@ export function Magnetic({
 }: MagneticProps) {
   const [isHovered, setIsHovered] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
+  const isGlobal = actionArea === 'global';
+  const isAttracting = isGlobal || isHovered;
+  const canMove = !prefersReducedMotion;
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -45,7 +50,9 @@ export function Magnetic({
 
         const absoluteDistance = Math.sqrt(distanceX ** 2 + distanceY ** 2);
 
-        if (isHovered && absoluteDistance <= range) {
+        const isWithinRange = absoluteDistance <= range;
+        const shouldPull = canMove && isAttracting && isWithinRange;
+        if (shouldPull) {
           const scale = 1 - absoluteDistance / range;
           x.set(distanceX * intensity * scale);
           y.set(distanceY * intensity * scale);
@@ -61,7 +68,7 @@ export function Magnetic({
     return () => {
       document.removeEventListener('mousemove', calculateDistance);
     };
-  }, [ref, isHovered, intensity, range]);
+  }, [ref, isAttracting, canMove, intensity, range, x, y]);
 
   useEffect(() => {
     if (actionArea === 'parent' && ref.current?.parentElement) {
@@ -77,8 +84,6 @@ export function Magnetic({
         parent.removeEventListener('mouseenter', handleParentEnter);
         parent.removeEventListener('mouseleave', handleParentLeave);
       };
-    } else if (actionArea === 'global') {
-      setIsHovered(true);
     }
   }, [actionArea]);
 

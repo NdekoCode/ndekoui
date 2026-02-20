@@ -8,6 +8,7 @@ import {
   useMotionValue,
   useSpring,
   useTransform,
+  useReducedMotion,
 } from 'motion/react';
 
 const ImageComparisonContext = createContext<
@@ -31,6 +32,17 @@ const DEFAULT_SPRING_OPTIONS = {
   duration: 0,
 };
 
+function followerOf(
+  prefersReducedMotion: boolean | null,
+  target: MotionValue<number>,
+  spring: MotionValue<number>
+) {
+  if (prefersReducedMotion) {
+    return target;
+  }
+  return spring;
+}
+
 function ImageComparison({
   children,
   className,
@@ -39,9 +51,15 @@ function ImageComparison({
 }: ImageComparisonProps) {
   const [isDragging, setIsDragging] = useState(false);
   const motionValue = useMotionValue(50);
-  const motionSliderPosition = useSpring(
+  const prefersReducedMotion = useReducedMotion();
+  const springSliderPosition = useSpring(
     motionValue,
     springOptions ?? DEFAULT_SPRING_OPTIONS
+  );
+  const motionSliderPosition = followerOf(
+    prefersReducedMotion,
+    motionValue,
+    springSliderPosition
   );
   const [sliderPosition, setSliderPosition] = useState(50);
 
@@ -70,7 +88,7 @@ function ImageComparison({
     >
       <div
         className={cn(
-          'relative select-none overflow-hidden',
+          'relative overflow-hidden select-none',
           enableHover && 'cursor-ew-resize',
           className
         )}
@@ -134,7 +152,7 @@ const ImageComparisonSlider = ({
 
   return (
     <motion.div
-      className={cn('absolute bottom-0 top-0 w-1 cursor-ew-resize', className)}
+      className={cn('absolute top-0 bottom-0 w-1 cursor-ew-resize', className)}
       style={{
         left,
       }}

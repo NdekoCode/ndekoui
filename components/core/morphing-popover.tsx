@@ -6,6 +6,7 @@ import {
   useRef,
   useEffect,
   createContext,
+  createElement,
   useContext,
   isValidElement,
 } from 'react';
@@ -14,13 +15,14 @@ import {
   MotionConfig,
   motion,
   Transition,
+  useReducedMotion,
   Variants,
 } from 'motion/react';
 import useClickOutside from '@/hooks/useClickOutside';
 import { cn } from '@/lib/utils';
 
 const TRANSITION = {
-  type: 'spring',
+  type: 'spring' as const,
   bounce: 0.1,
   duration: 0.4,
 };
@@ -32,6 +34,34 @@ type MorphingPopoverContextValue = {
   uniqueId: string;
   variants?: Variants;
 };
+
+type MorphingChildProps = Record<string, unknown>;
+
+const motionTriggers = new Map<
+  React.ElementType,
+  React.ElementType<MorphingChildProps>
+>();
+
+// motion.create returns a new component on every call; one per element type keeps the trigger mounted across renders.
+function motionTriggerFor(type: React.ElementType) {
+  const cached = motionTriggers.get(type);
+  if (cached) {
+    return cached;
+  }
+  const created = motion.create(
+    type as React.ComponentType<MorphingChildProps>
+  ) as React.ElementType<MorphingChildProps>;
+  motionTriggers.set(type, created);
+  return created;
+}
+
+function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
+  const prefersReducedMotion = useReducedMotion();
+  if (!prefersReducedMotion) {
+    return children;
+  }
+  return <MotionConfig reducedMotion='always'>{children}</MotionConfig>;
+}
 
 const MorphingPopoverContext =
   createContext<MorphingPopoverContextValue | null>(null);
@@ -91,15 +121,20 @@ function MorphingPopover({
 
   return (
     <MorphingPopoverContext.Provider value={{ ...popoverLogic, variants }}>
-      <MotionConfig transition={transition}>
-        <div
-          className={cn('relative flex items-center justify-center', className)}
-          key={popoverLogic.uniqueId}
-          {...props}
-        >
-          {children}
-        </div>
-      </MotionConfig>
+      <ReducedMotionConfig>
+        <MotionConfig transition={transition}>
+          <div
+            className={cn(
+              'relative flex items-center justify-center',
+              className
+            )}
+            key={popoverLogic.uniqueId}
+            {...props}
+          >
+            {children}
+          </div>
+        </MotionConfig>
+      </ReducedMotionConfig>
     </MorphingPopoverContext.Provider>
   );
 }
@@ -123,23 +158,20 @@ function MorphingPopoverTrigger({
     );
   }
 
-  if (asChild && isValidElement(children)) {
-    const MotionComponent = motion.create(
-      children.type as React.ForwardRefExoticComponent<any>
-    );
-    const childProps = children.props as Record<string, unknown>;
+  const shouldMergeIntoChild = asChild && isValidElement(children);
+  if (shouldMergeIntoChild) {
+    const childProps = children.props as MorphingChildProps;
+    const childType = children.type as React.ElementType;
 
-    return (
-      <MotionComponent
-        {...childProps}
-        onClick={context.open}
-        layoutId={`popover-trigger-${context.uniqueId}`}
-        className={childProps.className}
-        key={context.uniqueId}
-        aria-expanded={context.isOpen}
-        aria-controls={`popover-content-${context.uniqueId}`}
-      />
-    );
+    return createElement(motionTriggerFor(childType), {
+      ...childProps,
+      onClick: context.open,
+      layoutId: `popover-trigger-${context.uniqueId}`,
+      className: childProps.className,
+      key: context.uniqueId,
+      'aria-expanded': context.isOpen,
+      'aria-controls': `popover-content-${context.uniqueId}`,
+    });
   }
 
   return (
@@ -179,18 +211,19 @@ function MorphingPopoverContent({
     );
 
   const ref = useRef<HTMLDivElement>(null);
-  useClickOutside(ref, context.close);
+  const { isOpen, close } = context;
+  useClickOutside(ref, close);
 
   useEffect(() => {
-    if (!context.isOpen) return;
+    if (!isOpen) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') context.close();
+      if (event.key === 'Escape') close();
     };
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [context.isOpen, context.close]);
+  }, [isOpen, close]);
 
   return (
     <AnimatePresence>
@@ -205,7 +238,7 @@ function MorphingPopoverContent({
             role='dialog'
             aria-modal='true'
             className={cn(
-              'absolute overflow-hidden rounded-md border border-zinc-950/10 bg-white p-2 text-zinc-950 shadow-md dark:border-zinc-50/10 dark:bg-zinc-700 dark:text-zinc-50',
+              'surface-raised absolute overflow-hidden rounded-xl p-2',
               className
             )}
             initial='initial'

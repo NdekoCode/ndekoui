@@ -8,6 +8,7 @@ import React, {
   useMemo,
   useRef,
   useState,
+  useSyncExternalStore,
 } from 'react';
 import {
   motion,
@@ -15,10 +16,11 @@ import {
   MotionConfig,
   Transition,
   Variant,
+  useReducedMotion,
 } from 'motion/react';
 import { createPortal } from 'react-dom';
 import { cn } from '@/lib/utils';
-import { XIcon } from 'lucide-react';
+import { XIcon } from '@/registry/ndeko/lib/icons';
 import useClickOutside from '@/hooks/useClickOutside';
 
 export type MorphingDialogContextType = {
@@ -39,6 +41,26 @@ function useMorphingDialog() {
     );
   }
   return context;
+}
+
+function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
+  const prefersReducedMotion = useReducedMotion();
+  if (!prefersReducedMotion) {
+    return children;
+  }
+  return <MotionConfig reducedMotion='always'>{children}</MotionConfig>;
+}
+
+function subscribeToNothing() {
+  return () => {};
+}
+
+function isOnClient() {
+  return true;
+}
+
+function isOnServer() {
+  return false;
 }
 
 export type MorphingDialogProviderProps = {
@@ -66,7 +88,9 @@ function MorphingDialogProvider({
 
   return (
     <MorphingDialogContext.Provider value={contextValue}>
-      <MotionConfig transition={transition}>{children}</MotionConfig>
+      <ReducedMotionConfig>
+        <MotionConfig transition={transition}>{children}</MotionConfig>
+      </ReducedMotionConfig>
     </MorphingDialogContext.Provider>
   );
 }
@@ -144,10 +168,8 @@ function MorphingDialogContent({
 }: MorphingDialogContentProps) {
   const { setIsOpen, isOpen, uniqueId, triggerRef } = useMorphingDialog();
   const containerRef = useRef<HTMLDivElement>(null!);
-  const [firstFocusableElement, setFirstFocusableElement] =
-    useState<HTMLElement | null>(null);
-  const [lastFocusableElement, setLastFocusableElement] =
-    useState<HTMLElement | null>(null);
+  const firstFocusableRef = useRef<HTMLElement | null>(null);
+  const lastFocusableRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -155,6 +177,8 @@ function MorphingDialogContent({
         setIsOpen(false);
       }
       if (event.key === 'Tab') {
+        const firstFocusableElement = firstFocusableRef.current;
+        const lastFocusableElement = lastFocusableRef.current;
         if (!firstFocusableElement || !lastFocusableElement) return;
 
         if (event.shiftKey) {
@@ -176,7 +200,7 @@ function MorphingDialogContent({
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [setIsOpen, firstFocusableElement, lastFocusableElement]);
+  }, [setIsOpen]);
 
   useEffect(() => {
     if (isOpen) {
@@ -185,10 +209,10 @@ function MorphingDialogContent({
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
       );
       if (focusableElements && focusableElements.length > 0) {
-        setFirstFocusableElement(focusableElements[0] as HTMLElement);
-        setLastFocusableElement(
-          focusableElements[focusableElements.length - 1] as HTMLElement
-        );
+        firstFocusableRef.current = focusableElements[0] as HTMLElement;
+        lastFocusableRef.current = focusableElements[
+          focusableElements.length - 1
+        ] as HTMLElement;
         (focusableElements[0] as HTMLElement).focus();
       }
     } else {
@@ -227,12 +251,11 @@ export type MorphingDialogContainerProps = {
 
 function MorphingDialogContainer({ children }: MorphingDialogContainerProps) {
   const { isOpen, uniqueId } = useMorphingDialog();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    return () => setMounted(false);
-  }, []);
+  const mounted = useSyncExternalStore(
+    subscribeToNothing,
+    isOnClient,
+    isOnServer
+  );
 
   if (!mounted) return null;
 
@@ -242,7 +265,7 @@ function MorphingDialogContainer({ children }: MorphingDialogContainerProps) {
         <>
           <motion.div
             key={`backdrop-${uniqueId}`}
-            className='fixed inset-0 h-full w-full bg-white/40 backdrop-blur-xs dark:bg-black/40'
+            className='bg-background/40 fixed inset-0 h-full w-full backdrop-blur-xs'
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

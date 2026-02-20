@@ -6,6 +6,7 @@ import {
   Variants,
   Variant,
   MotionConfig,
+  useReducedMotion,
 } from 'motion/react';
 import { cn } from '@/lib/utils';
 import React, { createContext, useContext, useState, ReactNode } from 'react';
@@ -65,6 +66,14 @@ function AccordionProvider({
   );
 }
 
+function ReducedMotionConfig({ children }: { children: ReactNode }) {
+  const prefersReducedMotion = useReducedMotion();
+  if (!prefersReducedMotion) {
+    return children;
+  }
+  return <MotionConfig reducedMotion='always'>{children}</MotionConfig>;
+}
+
 export type AccordionProps = {
   children: ReactNode;
   className?: string;
@@ -83,17 +92,19 @@ function Accordion({
   onValueChange,
 }: AccordionProps) {
   return (
-    <MotionConfig transition={transition}>
-      <div className={cn('relative', className)} aria-orientation='vertical'>
-        <AccordionProvider
-          variants={variants}
-          expandedValue={expandedValue}
-          onValueChange={onValueChange}
-        >
-          {children}
-        </AccordionProvider>
-      </div>
-    </MotionConfig>
+    <ReducedMotionConfig>
+      <MotionConfig transition={transition}>
+        <div className={cn('relative', className)} aria-orientation='vertical'>
+          <AccordionProvider
+            variants={variants}
+            expandedValue={expandedValue}
+            onValueChange={onValueChange}
+          >
+            {children}
+          </AccordionProvider>
+        </div>
+      </MotionConfig>
+    </ReducedMotionConfig>
   );
 }
 
@@ -103,6 +114,11 @@ export type AccordionItemProps = {
   className?: string;
 };
 
+type AccordionItemChildProps = {
+  value?: React.Key;
+  expanded?: boolean;
+};
+
 function AccordionItem({ value, children, className }: AccordionItemProps) {
   const { expandedValue } = useAccordion();
   const isExpanded = value === expandedValue;
@@ -110,12 +126,11 @@ function AccordionItem({ value, children, className }: AccordionItemProps) {
   return (
     <div
       className={cn('overflow-hidden', className)}
-      {...(isExpanded ? { 'data-expanded': '' } : {'data-closed': ''})}
+      {...(isExpanded ? { 'data-expanded': '' } : { 'data-closed': '' })}
     >
       {React.Children.map(children, (child) => {
-        if (React.isValidElement(child)) {
+        if (React.isValidElement<AccordionItemChildProps>(child)) {
           return React.cloneElement(child, {
-            ...child.props,
             value,
             expanded: isExpanded,
           });
@@ -146,7 +161,7 @@ function AccordionTrigger({
       aria-expanded={isExpanded}
       type='button'
       className={cn('group', className)}
-      {...(isExpanded ? { 'data-expanded': '' } : {'data-closed': ''})}
+      {...(isExpanded ? { 'data-expanded': '' } : { 'data-closed': '' })}
     >
       {children}
     </button>

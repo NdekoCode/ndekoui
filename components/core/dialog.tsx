@@ -1,10 +1,23 @@
 'use client';
-import { AnimatePresence, motion, Transition, Variants } from 'motion/react';
-import React, { createContext, useContext, useEffect, useRef } from 'react';
+import {
+  AnimatePresence,
+  motion,
+  MotionConfig,
+  Transition,
+  useReducedMotion,
+  Variants,
+} from 'motion/react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useSyncExternalStore,
+} from 'react';
 import { cn } from '@/lib/utils';
 import { useId } from 'react';
 import { createPortal } from 'react-dom';
-import { X } from 'lucide-react';
+import { XIcon } from '@/registry/ndeko/lib/icons';
 import { usePreventScroll } from '@/hooks/usePreventScroll';
 
 const DialogContext = createContext<{
@@ -37,6 +50,26 @@ const defaultTransition: Transition = {
   ease: 'easeOut',
   duration: 0.2,
 };
+
+function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
+  const prefersReducedMotion = useReducedMotion();
+  if (!prefersReducedMotion) {
+    return children;
+  }
+  return <MotionConfig reducedMotion='always'>{children}</MotionConfig>;
+}
+
+function subscribeToNothing() {
+  return () => {};
+}
+
+function isOnClient() {
+  return true;
+}
+
+function isOnServer() {
+  return false;
+}
 
 export type DialogProps = {
   children: React.ReactNode;
@@ -153,8 +186,8 @@ function DialogTrigger({ children, className }: DialogTriggerProps) {
     <button
       onClick={context.handleTrigger}
       className={cn(
-        'inline-flex items-center justify-center rounded-md text-sm font-medium',
-        'transition-colors focus-visible:ring-2 focus-visible:outline-hidden',
+        'inline-flex items-center justify-center rounded-md text-[13px] font-medium',
+        'focus-visible:ring-ring focus-visible:ring-offset-background transition-colors focus-visible:ring-2 focus-visible:outline-hidden',
         'focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
         className
       )}
@@ -169,24 +202,18 @@ export type DialogPortalProps = {
   container?: HTMLElement | null;
 };
 
-function DialogPortal({
-  children,
-  container = typeof window !== 'undefined' ? document.body : null,
-}: DialogPortalProps) {
-  const [mounted, setMounted] = React.useState(false);
-  const [portalContainer, setPortalContainer] =
-    React.useState<HTMLElement | null>(null);
+function DialogPortal({ children, container }: DialogPortalProps) {
+  const isMounted = useSyncExternalStore(
+    subscribeToNothing,
+    isOnClient,
+    isOnServer
+  );
 
-  useEffect(() => {
-    setMounted(true);
-    setPortalContainer(container || document.body);
-    return () => setMounted(false);
-  }, [container]);
-
-  if (!mounted || !portalContainer) {
+  if (!isMounted) {
     return null;
   }
 
+  const portalContainer = container || document.body;
   return createPortal(children, portalContainer);
 }
 export type DialogContentProps = {
@@ -231,8 +258,8 @@ function DialogContent({ children, className, container }: DialogContentProps) {
           transition={transition}
           onAnimationComplete={onAnimationComplete}
           className={cn(
-            'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-lg border border-zinc-200 p-0 shadow-lg dark:border dark:border-zinc-700',
-            'backdrop:bg-black/50 backdrop:backdrop-blur-xs',
+            'bg-card text-card-foreground hairline-ring ring-border fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-2xl p-0 shadow-xl shadow-black/8',
+            'backdrop:bg-black/40 backdrop:backdrop-blur-xs',
             'open:flex open:flex-col',
             className
           )}
@@ -243,7 +270,11 @@ function DialogContent({ children, className, container }: DialogContentProps) {
     </AnimatePresence>
   );
 
-  return <DialogPortal container={container}>{content}</DialogPortal>;
+  return (
+    <DialogPortal container={container}>
+      <ReducedMotionConfig>{content}</ReducedMotionConfig>
+    </DialogPortal>
+  );
 }
 
 export type DialogHeaderProps = {
@@ -269,7 +300,7 @@ function DialogTitle({ children, className }: DialogTitleProps) {
   return (
     <h2
       id={context.ids.title}
-      className={cn('text-base font-medium', className)}
+      className={cn('text-foreground text-lg font-semibold', className)}
     >
       {children}
     </h2>
@@ -288,7 +319,7 @@ function DialogDescription({ children, className }: DialogDescriptionProps) {
   return (
     <p
       id={context.ids.description}
-      className={cn('text-base text-zinc-500', className)}
+      className={cn('text-muted-foreground text-[13px]', className)}
     >
       {children}
     </p>
@@ -311,14 +342,14 @@ function DialogClose({ className, children, disabled }: DialogCloseProps) {
       type='button'
       aria-label='Close dialog'
       className={cn(
-        'absolute top-4 right-4 rounded-xs opacity-70 transition-opacity',
-        'hover:opacity-100 focus:ring-2 focus:outline-hidden',
-        'focus:ring-zinc-500 focus:ring-offset-2 disabled:pointer-events-none',
+        'text-muted-foreground absolute top-4 right-4 rounded-md p-1 transition-colors',
+        'hover:bg-foreground/5 hover:text-foreground focus-visible:ring-2 focus-visible:outline-hidden',
+        'focus-visible:ring-ring focus-visible:ring-offset-background focus-visible:ring-offset-2 disabled:pointer-events-none',
         className
       )}
       disabled={disabled}
     >
-      {children || <X className='h-4 w-4' />}
+      {children || <XIcon className='size-4' />}
       <span className='sr-only'>Close</span>
     </button>
   );

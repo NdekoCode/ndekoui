@@ -1,6 +1,12 @@
 'use client';
 import { cn } from '@/lib/utils';
-import { motion, Transition, Variants } from 'motion/react';
+import {
+  motion,
+  MotionConfig,
+  Transition,
+  useReducedMotion,
+  Variants,
+} from 'motion/react';
 import React, { CSSProperties } from 'react';
 
 export type SpinningTextProps = {
@@ -18,7 +24,7 @@ export type SpinningTextProps = {
   };
 };
 
-const BASE_TRANSITION = {
+const BASE_TRANSITION: Transition = {
   repeat: Infinity,
   ease: 'linear',
 };
@@ -31,6 +37,14 @@ const BASE_ITEM_VARIANTS = {
     opacity: 1,
   },
 };
+
+function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
+  const prefersReducedMotion = useReducedMotion();
+  if (!prefersReducedMotion) {
+    return children;
+  }
+  return <MotionConfig reducedMotion='always'>{children}</MotionConfig>;
+}
 
 export function SpinningText({
   children,
@@ -63,42 +77,44 @@ export function SpinningText({
   };
 
   return (
-    <motion.div
-      className={cn('relative', className)}
-      style={{
-        ...style,
-      }}
-      initial='hidden'
-      animate='visible'
-      variants={containerVariants}
-      transition={finalTransition}
-    >
-      {letters.map((letter, index) => (
-        <motion.span
-          aria-hidden='true'
-          key={`${index}-${letter}`}
-          variants={itemVariants}
-          className='absolute left-1/2 top-1/2 inline-block'
-          style={
-            {
-              '--index': index,
-              '--total': totalLetters,
-              '--font-size': fontSize,
-              '--radius': radius,
-              fontSize: `calc(var(--font-size, 2) * 1rem)`,
-              transform: `
+    <ReducedMotionConfig>
+      <motion.div
+        className={cn('relative', className)}
+        style={{
+          ...style,
+        }}
+        initial='hidden'
+        animate='visible'
+        variants={containerVariants}
+        transition={finalTransition}
+      >
+        {letters.map((letter, index) => (
+          <motion.span
+            aria-hidden='true'
+            key={`${index}-${letter}`}
+            variants={itemVariants}
+            className='absolute top-1/2 left-1/2 inline-block'
+            style={
+              {
+                '--index': index,
+                '--total': totalLetters,
+                '--font-size': fontSize,
+                '--radius': radius,
+                fontSize: `calc(var(--font-size, 2) * 1rem)`,
+                transform: `
                   translate(-50%, -50%)
                   rotate(calc(360deg / var(--total) * var(--index)))
                   translateY(calc(var(--radius, 5) * -1ch))
                 `,
-              transformOrigin: 'center',
-            } as React.CSSProperties
-          }
-        >
-          {letter}
-        </motion.span>
-      ))}
-      <span className='sr-only'>{children}</span>
-    </motion.div>
+                transformOrigin: 'center',
+              } as React.CSSProperties
+            }
+          >
+            {letter}
+          </motion.span>
+        ))}
+        <span className='sr-only'>{children}</span>
+      </motion.div>
+    </ReducedMotionConfig>
   );
 }

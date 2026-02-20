@@ -6,24 +6,39 @@ import {
   useSpring,
   useTransform,
   motionValue,
+  MotionConfig,
+  useReducedMotion,
 } from 'motion/react';
 import useMeasure from 'react-use-measure';
 
 const TRANSITION = {
-  type: 'spring',
+  type: 'spring' as const,
   stiffness: 280,
   damping: 18,
   mass: 0.3,
 };
 
+function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
+  const prefersReducedMotion = useReducedMotion();
+  if (!prefersReducedMotion) {
+    return children;
+  }
+  return <MotionConfig reducedMotion='always'>{children}</MotionConfig>;
+}
+
 function Digit({ value, place }: { value: number; place: number }) {
   const valueRoundedToPlace = Math.floor(value / place) % 10;
   const initial = motionValue(valueRoundedToPlace);
   const animatedValue = useSpring(initial, TRANSITION);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      animatedValue.jump(valueRoundedToPlace);
+      return;
+    }
     animatedValue.set(valueRoundedToPlace);
-  }, [animatedValue, valueRoundedToPlace]);
+  }, [animatedValue, valueRoundedToPlace, prefersReducedMotion]);
 
   return (
     <div className='relative inline-block w-[1ch] overflow-x-visible overflow-y-clip leading-none tabular-nums'>
@@ -96,27 +111,29 @@ export function SlidingNumber({
   );
 
   return (
-    <div className='flex items-center'>
-      {value < 0 && '-'}
-      {integerDigits.map((_, index) => (
-        <Digit
-          key={`pos-${integerPlaces[index]}`}
-          value={integerValue}
-          place={integerPlaces[index]}
-        />
-      ))}
-      {decimalPart && (
-        <>
-          <span>{decimalSeparator}</span>
-          {decimalPart.split('').map((_, index) => (
-            <Digit
-              key={`decimal-${index}`}
-              value={parseInt(decimalPart, 10)}
-              place={Math.pow(10, decimalPart.length - index - 1)}
-            />
-          ))}
-        </>
-      )}
-    </div>
+    <ReducedMotionConfig>
+      <div className='flex items-center'>
+        {value < 0 && '-'}
+        {integerDigits.map((_, index) => (
+          <Digit
+            key={`pos-${integerPlaces[index]}`}
+            value={integerValue}
+            place={integerPlaces[index]}
+          />
+        ))}
+        {decimalPart && (
+          <>
+            <span>{decimalSeparator}</span>
+            {decimalPart.split('').map((_, index) => (
+              <Digit
+                key={`decimal-${index}`}
+                value={parseInt(decimalPart, 10)}
+                place={Math.pow(10, decimalPart.length - index - 1)}
+              />
+            ))}
+          </>
+        )}
+      </div>
+    </ReducedMotionConfig>
   );
 }
