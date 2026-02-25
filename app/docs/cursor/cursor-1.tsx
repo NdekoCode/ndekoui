@@ -1,20 +1,62 @@
 'use client';
 import { useRef, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { Cursor } from '@/components/core/cursor';
-import { AnimatePresence, motion } from 'motion/react';
-import { PlusIcon } from 'lucide-react';
+import { ImageIcon, PlusIcon } from '@/registry/ndeko/lib/icons';
+
+const EASE_OUT_STRONG = [0.23, 1, 0.32, 1] as const;
+
+const INSTANT = { duration: 0 };
+
+function pillTransitionOf(shouldReduceMotion: boolean | null) {
+  if (shouldReduceMotion) {
+    return INSTANT;
+  }
+  return undefined;
+}
+
+function pillSizeOf(isHovering: boolean) {
+  if (isHovering) {
+    return { width: 80, height: 32 };
+  }
+  return { width: 16, height: 16 };
+}
+
+function labelMotionOf(shouldReduceMotion: boolean | null) {
+  if (shouldReduceMotion) {
+    return {
+      initial: { opacity: 0 },
+      animate: { opacity: 1 },
+      exit: { opacity: 0 },
+    };
+  }
+  return {
+    initial: { opacity: 0, scale: 0.6 },
+    animate: { opacity: 1, scale: 1 },
+    exit: { opacity: 0, scale: 0.6 },
+  };
+}
+
+function isPointInside(rect: DOMRect, x: number, y: number) {
+  const isWithinX = x >= rect.left && x <= rect.right;
+  const isWithinY = y >= rect.top && y <= rect.bottom;
+  return isWithinX && isWithinY;
+}
 
 export function Cursor1() {
   const [isHovering, setIsHovering] = useState(false);
   const targetRef = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+  const pillSize = pillSizeOf(isHovering);
+  const labelMotion = labelMotionOf(shouldReduceMotion);
+  const pillTransition = pillTransitionOf(shouldReduceMotion);
 
   const handlePositionChange = (x: number, y: number) => {
-    if (targetRef.current) {
-      const rect = targetRef.current.getBoundingClientRect();
-      const isInside =
-        x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
-      setIsHovering(isInside);
+    if (!targetRef.current) {
+      return;
     }
+    const rect = targetRef.current.getBoundingClientRect();
+    setIsHovering(isPointInside(rect, x, y));
   };
 
   return (
@@ -30,40 +72,46 @@ export function Cursor1() {
           bounce: 0.001,
         }}
         transition={{
-          ease: 'easeInOut',
+          ease: EASE_OUT_STRONG,
           duration: 0.15,
         }}
         onPositionChange={handlePositionChange}
       >
         <motion.div
-          animate={{
-            width: isHovering ? 80 : 16,
-            height: isHovering ? 32 : 16,
-          }}
-          className='flex items-center justify-center rounded-[24px] bg-gray-500/40 backdrop-blur-md dark:bg-gray-300/40'
+          animate={pillSize}
+          transition={pillTransition}
+          className='bg-foreground/70 flex items-center justify-center rounded-full backdrop-blur-md'
         >
           <AnimatePresence>
-            {isHovering ? (
+            {isHovering && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.6 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.6 }}
+                initial={labelMotion.initial}
+                animate={labelMotion.animate}
+                exit={labelMotion.exit}
                 className='inline-flex w-full items-center justify-center'
               >
-                <div className='inline-flex items-center text-sm text-white dark:text-black'>
-                  More <PlusIcon className='ml-1 h-4 w-4' />
+                <div className='text-background inline-flex items-center text-[13px] font-medium'>
+                  More <PlusIcon className='ml-1 size-4' />
                 </div>
               </motion.div>
-            ) : null}
+            )}
           </AnimatePresence>
         </motion.div>
       </Cursor>
       <div ref={targetRef}>
-        <img
-          src='https://i.pinimg.com/564x/75/3c/3f/753c3f1a9f85871ffa7a7a78bcf49f66.jpg'
-          alt='Olympic logo Paris 2024'
-          className='h-52 w-full max-w-48 rounded-[8px] border border-zinc-100 object-cover'
-        />
+        <div className='bg-primary/10 flex h-52 w-48 flex-col justify-between rounded-xl p-4'>
+          <span className='gem-plate grid size-9 place-items-center rounded-lg [--gem:var(--primary)]'>
+            <ImageIcon className='size-4' />
+          </span>
+          <span className='flex flex-col'>
+            <span className='text-foreground text-sm font-medium'>
+              Riverside market
+            </span>
+            <span className='text-muted-foreground text-xs'>
+              Poster series, 2025
+            </span>
+          </span>
+        </div>
       </div>
     </div>
   );

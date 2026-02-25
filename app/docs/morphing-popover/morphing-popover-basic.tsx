@@ -3,9 +3,9 @@ import {
   MorphingPopoverContent,
   MorphingPopoverTrigger,
 } from '@/components/core/morphing-popover';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
+import { Button } from '@/registry/ndeko/ui/button';
+import { Input } from '@/registry/ndeko/ui/input';
+import { Label } from '@/registry/ndeko/ui/label';
 import * as motion from 'motion/react-client';
 
 export function MorphingPopoverBasic() {
@@ -21,17 +21,17 @@ export function MorphingPopoverBasic() {
           </motion.span>
         </Button>
       </MorphingPopoverTrigger>
-      <MorphingPopoverContent className='w-80 p-4 shadow-sm'>
+      <MorphingPopoverContent className='w-80 p-4'>
         <div className='grid gap-4'>
           <div className='space-y-2'>
             <motion.h4
               layoutId='morphing-popover-basic-label'
               layout='position'
-              className='leading-none font-medium'
+              className='text-foreground text-sm leading-none font-medium'
             >
               Dimensions
             </motion.h4>
-            <p className='text-muted-foreground text-sm'>
+            <p className='text-muted-foreground text-[13px]'>
               Set the dimensions for the layer.
             </p>
           </div>
@@ -41,7 +41,7 @@ export function MorphingPopoverBasic() {
               <Input
                 id='width'
                 defaultValue='100%'
-                className='col-span-2 h-8'
+                className='col-span-2'
                 autoFocus
               />
             </div>
@@ -50,23 +50,19 @@ export function MorphingPopoverBasic() {
               <Input
                 id='maxWidth'
                 defaultValue='300px'
-                className='col-span-2 h-8'
+                className='col-span-2'
               />
             </div>
             <div className='grid grid-cols-3 items-center gap-4'>
               <Label htmlFor='height'>Height</Label>
-              <Input
-                id='height'
-                defaultValue='25px'
-                className='col-span-2 h-8'
-              />
+              <Input id='height' defaultValue='25px' className='col-span-2' />
             </div>
             <div className='grid grid-cols-3 items-center gap-4'>
               <Label htmlFor='maxHeight'>Max. height</Label>
               <Input
                 id='maxHeight'
                 defaultValue='none'
-                className='col-span-2 h-8'
+                className='col-span-2'
               />
             </div>
           </div>

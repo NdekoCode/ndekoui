@@ -3,7 +3,7 @@ import { TextShimmerWave } from '@/components/core/text-shimmer-wave';
 export function TextShimmerWaveColor() {
   return (
     <TextShimmerWave
-      className='[--base-color:#0D74CE] [--base-gradient-color:#5EB1EF]'
+      className='[--base-color:var(--info-foreground)] [--base-gradient-color:var(--info)] dark:[--base-color:var(--info-foreground)] dark:[--base-gradient-color:var(--info)]'
       duration={1}
       spread={1}
       zDistance={1}

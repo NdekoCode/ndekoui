@@ -3,7 +3,7 @@ import { TextRoll } from '@/components/core/text-roll';
 export function TextRollCustomVariants() {
   return (
     <TextRoll
-      className='text-4xl text-black dark:text-white'
+      className='text-foreground text-4xl'
       variants={{
         enter: {
           initial: { rotateX: 0, filter: 'blur(0px)' },

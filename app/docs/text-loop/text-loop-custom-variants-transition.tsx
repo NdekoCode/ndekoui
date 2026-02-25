@@ -2,7 +2,7 @@ import { TextLoop } from '@/components/core/text-loop';
 
 export function TextLoopCustomVariantsTransition() {
   return (
-    <p className='inline-flex whitespace-pre-wrap text-sm'>
+    <p className='text-foreground inline-flex text-sm whitespace-pre-wrap'>
       Beautiful templates for{' '}
       <TextLoop
         className='overflow-y-clip'

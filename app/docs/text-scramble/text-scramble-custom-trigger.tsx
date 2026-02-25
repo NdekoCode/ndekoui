@@ -8,7 +8,7 @@ export function TextScrambleCustomTrigger() {
   return (
     <a
       href='#'
-      className='text-zinc-500 transition-colors hover:text-black dark:hover:text-white'
+      className='text-muted-foreground hover:text-foreground transition-colors'
     >
       <TextScramble
         className='text-sm'
@@ -18,7 +18,7 @@ export function TextScrambleCustomTrigger() {
         onHoverStart={() => setIsTrigger(true)}
         onScrambleComplete={() => setIsTrigger(false)}
       >
-        Tyler, The Creator - I Hope You Fin Your Way Home
+        The Harbor Lane Trio: Morning tide
       </TextScramble>
     </a>
   );

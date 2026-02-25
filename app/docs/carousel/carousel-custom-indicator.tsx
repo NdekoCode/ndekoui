@@ -1,12 +1,34 @@
 'use client';
+import { useState } from 'react';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from '@/components/core/carousel';
-import { useState } from 'react';
+import { cn } from '@/registry/ndeko/lib/utils';
 
-const ITEMS = new Array(4).fill(null).map((_, index) => index + 1);
+const STEPS = [
+  {
+    title: 'Connect your calendar',
+    meta: 'Two minutes',
+    tile: 'bg-primary/10',
+  },
+  {
+    title: 'Invite your team',
+    meta: 'Up to 10 members on the free plan',
+    tile: 'bg-success/10',
+  },
+  {
+    title: 'Create a first board',
+    meta: 'Start from a template',
+    tile: 'bg-warning/10',
+  },
+  {
+    title: 'Share the weekly view',
+    meta: 'Read only for guests',
+    tile: 'bg-info/10',
+  },
+];
 
 export function CarouselCustomIndicator() {
   const [index, setIndex] = useState(0);
@@ -15,11 +37,24 @@ export function CarouselCustomIndicator() {
     <div className='relative w-full max-w-xs py-8'>
       <Carousel index={index} onIndexChange={setIndex}>
         <CarouselContent className='relative'>
-          {ITEMS.map((item) => {
+          {STEPS.map((step, stepIndex) => {
             return (
-              <CarouselItem key={item} className='p-4'>
-                <div className='flex aspect-square items-center justify-center border border-zinc-200 dark:border-zinc-800'>
-                  {item}
+              <CarouselItem key={step.title} className='p-4'>
+                <div
+                  className={cn(
+                    'flex aspect-square flex-col justify-end rounded-xl p-4',
+                    step.tile
+                  )}
+                >
+                  <span className='text-muted-foreground text-xs tabular-nums'>
+                    Step {stepIndex + 1} of {STEPS.length}
+                  </span>
+                  <span className='text-foreground text-sm font-medium'>
+                    {step.title}
+                  </span>
+                  <span className='text-muted-foreground text-xs'>
+                    {step.meta}
+                  </span>
                 </div>
               </CarouselItem>
             );
@@ -27,16 +62,22 @@ export function CarouselCustomIndicator() {
         </CarouselContent>
       </Carousel>
       <div className='flex w-full justify-center space-x-3 px-4'>
-        {ITEMS.map((item) => {
+        {STEPS.map((step, stepIndex) => {
+          const isActive = stepIndex === index;
+
           return (
             <button
-              key={item}
+              key={step.title}
               type='button'
-              aria-label={`Go to slide ${item}`}
-              onClick={() => setIndex(item - 1)}
-              className='h-12 w-12 border border-zinc-200 dark:border-zinc-800'
+              aria-label={`Go to step ${stepIndex + 1}`}
+              aria-current={isActive}
+              onClick={() => setIndex(stepIndex)}
+              className={cn(
+                'text-muted-foreground hairline-ring ring-border size-12 rounded-lg text-[13px] font-medium tabular-nums transition-colors',
+                isActive && 'bg-foreground/[0.06] text-foreground'
+              )}
             >
-              {item}
+              {stepIndex + 1}
             </button>
           );
         })}

@@ -9,7 +9,29 @@ import {
   MorphingDialogDescription,
   MorphingDialogContainer,
 } from '@/components/core/morphing-dialog';
-import { PlusIcon } from 'lucide-react';
+import { PlusIcon } from '@/registry/ndeko/lib/icons';
+
+const PRIMARY_TOKEN = 'hsl(239 84% 67%)';
+
+const LAMP_ALT =
+  'The Halden desk lamp drawn in flat shapes: a round base, two arms and a cone shade.';
+
+function drawLampTile() {
+  const shapes = [
+    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 540 360'>",
+    `<rect width='540' height='360' fill='${PRIMARY_TOKEN}' fill-opacity='0.1'/>`,
+    `<rect x='215' y='292' width='110' height='14' rx='7' fill='${PRIMARY_TOKEN}'/>`,
+    `<path d='M270 292 L222 190 L330 112' fill='none' stroke='${PRIMARY_TOKEN}' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/>`,
+    `<circle cx='222' cy='190' r='10' fill='${PRIMARY_TOKEN}'/>`,
+    `<path d='M314 108 L346 108 L374 172 L286 172 Z' fill='${PRIMARY_TOKEN}' fill-opacity='0.85'/>`,
+    '</svg>',
+  ];
+  const svg = shapes.join('');
+  const encoded = encodeURIComponent(svg);
+  return `data:image/svg+xml,${encoded}`;
+}
+
+const LAMP_IMAGE = drawLampTile();
 
 export function MorphingDialogBasicOne() {
   return (
@@ -22,51 +44,50 @@ export function MorphingDialogBasicOne() {
     >
       <MorphingDialogTrigger
         style={{
-          borderRadius: '12px',
+          borderRadius: '14px',
         }}
-        className='flex max-w-[270px] flex-col overflow-hidden border border-zinc-950/10 bg-white dark:border-zinc-50/10 dark:bg-zinc-900'
+        className='hairline-ring ring-border bg-card flex max-w-[270px] flex-col overflow-hidden shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
       >
         <MorphingDialogImage
-          src='/eb-27-lamp-edouard-wilfrid-buquet.jpg'
-          alt='A desk lamp designed by Edouard Wilfrid Buquet in 1925. It features a double-arm design and is made from nickel-plated brass, aluminium and varnished wood.'
+          src={LAMP_IMAGE}
+          alt={LAMP_ALT}
           className='h-48 w-full object-cover'
         />
         <div className='flex grow flex-row items-end justify-between px-3 py-2'>
-          <div>
-            <MorphingDialogTitle className='text-zinc-950 dark:text-zinc-50'>
-              EB27
+          <div className='text-left'>
+            <MorphingDialogTitle className='text-foreground text-sm font-medium'>
+              Halden
             </MorphingDialogTitle>
-            <MorphingDialogSubtitle className='text-zinc-700 dark:text-zinc-400'>
-              Edouard Wilfrid Buquet
+            <MorphingDialogSubtitle className='text-muted-foreground text-xs'>
+              Atelier Ombre
             </MorphingDialogSubtitle>
           </div>
-          <button
-            type='button'
-            className='relative ml-1 flex h-6 w-6 shrink-0 scale-100 select-none appearance-none items-center justify-center rounded-lg border border-zinc-950/10 text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 focus-visible:ring-2 active:scale-[0.98] dark:border-zinc-50/10 dark:bg-zinc-900 dark:text-zinc-500 dark:hover:bg-zinc-800 dark:hover:text-zinc-50 dark:focus-visible:ring-zinc-500'
-            aria-label='Open dialog'
+          <span
+            aria-hidden='true'
+            className='hairline-ring ring-border text-muted-foreground ml-1 grid size-6 shrink-0 place-items-center rounded-md'
           >
-            <PlusIcon size={12} />
-          </button>
+            <PlusIcon className='size-3' />
+          </span>
         </div>
       </MorphingDialogTrigger>
       <MorphingDialogContainer>
         <MorphingDialogContent
           style={{
-            borderRadius: '24px',
+            borderRadius: '18px',
           }}
-          className='pointer-events-auto relative flex h-auto w-full flex-col overflow-hidden border border-zinc-950/10 bg-white dark:border-zinc-50/10 dark:bg-zinc-900 sm:w-[500px]'
+          className='hairline-ring ring-border bg-card pointer-events-auto relative flex h-auto w-full flex-col overflow-hidden shadow-xl shadow-black/8 sm:w-[500px]'
         >
           <MorphingDialogImage
-            src='/eb-27-lamp-edouard-wilfrid-buquet.jpg'
-            alt='A desk lamp designed by Edouard Wilfrid Buquet in 1925. It features a double-arm design and is made from nickel-plated brass, aluminium and varnished wood.'
+            src={LAMP_IMAGE}
+            alt={LAMP_ALT}
             className='h-full w-full'
           />
           <div className='p-6'>
-            <MorphingDialogTitle className='text-2xl text-zinc-950 dark:text-zinc-50'>
-              EB27
+            <MorphingDialogTitle className='text-foreground text-lg font-semibold'>
+              Halden
             </MorphingDialogTitle>
-            <MorphingDialogSubtitle className='text-zinc-700 dark:text-zinc-400'>
-              Edouard Wilfrid Buquet
+            <MorphingDialogSubtitle className='text-muted-foreground text-sm'>
+              Atelier Ombre
             </MorphingDialogSubtitle>
             <MorphingDialogDescription
               disableLayoutAnimation
@@ -76,27 +97,24 @@ export function MorphingDialogBasicOne() {
                 exit: { opacity: 0, scale: 0.8, y: 100 },
               }}
             >
-              <p className='mt-2 text-zinc-500 dark:text-zinc-500'>
-                Little is known about the life of Édouard-Wilfrid Buquet. He was
-                born in France in 1866, but the time and place of his death is
-                unfortunately a mystery.
+              <p className='text-muted-foreground mt-2 text-sm'>
+                Halden is a desk lamp with two jointed arms and a cone shade
+                that turns a full circle. It leans over a keyboard or folds flat
+                against a shelf.
               </p>
-              <p className='text-zinc-500'>
-                Research conducted in the 1970s revealed that he’d designed the
-                “EB 27” double-arm desk lamp in 1925, handcrafting it from
-                nickel-plated brass, aluminium and varnished wood.
+              <p className='text-muted-foreground mt-2 text-sm'>
+                Atelier Ombre makes each one by hand in a small workshop in
+                Lyon, from powder-coated steel and a solid oak base.
               </p>
               <a
-                className='mt-2 inline-flex text-zinc-500 underline'
-                href='https://www.are.na/block/12759029'
-                target='_blank'
-                rel='noopener noreferrer'
+                className='text-primary-ink mt-2 inline-flex text-sm underline-offset-4 hover:underline'
+                href='#'
               >
-                Are.na block
+                Read the care guide
               </a>
             </MorphingDialogDescription>
           </div>
-          <MorphingDialogClose className='text-zinc-50' />
+          <MorphingDialogClose className='text-foreground' />
         </MorphingDialogContent>
       </MorphingDialogContainer>
     </MorphingDialog>

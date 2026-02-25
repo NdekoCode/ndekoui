@@ -1,32 +1,37 @@
-import { Home, PhoneCall, Settings, User } from 'lucide-react';
 import { AnimatedBackground } from '@/components/core/animated-background';
+import {
+  HomeIcon,
+  PhoneIcon,
+  SettingsIcon,
+  UserIcon,
+} from '@/registry/ndeko/lib/icons';
+
+const TABS = [
+  {
+    label: 'Home',
+    icon: <HomeIcon className='size-5' />,
+  },
+  {
+    label: 'About',
+    icon: <UserIcon className='size-5' />,
+  },
+  {
+    label: 'Services',
+    icon: <SettingsIcon className='size-5' />,
+  },
+  {
+    label: 'Contact',
+    icon: <PhoneIcon className='size-5' />,
+  },
+];
 
 export function AnimatedTabs() {
-  const TABS = [
-    {
-      label: 'Home',
-      icon: <Home className='h-5 w-5' />,
-    },
-    {
-      label: 'About',
-      icon: <User className='h-5 w-5' />,
-    },
-    {
-      label: 'Services',
-      icon: <Settings className='h-5 w-5' />,
-    },
-    {
-      label: 'Contact',
-      icon: <PhoneCall className='h-5 w-5' />,
-    },
-  ];
-
   return (
     <div className='absolute bottom-8'>
-      <div className='flex w-full space-x-2 rounded-xl border border-zinc-950/10 bg-white p-2'>
+      <div className='bg-card hairline-ring ring-border flex w-full space-x-2 rounded-xl p-2 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
         <AnimatedBackground
           defaultValue={TABS[0].label}
-          className='rounded-lg bg-zinc-100'
+          className='bg-foreground/[0.06] rounded-lg'
           transition={{
             type: 'spring',
             bounce: 0.2,
@@ -38,7 +43,8 @@ export function AnimatedTabs() {
               key={tab.label}
               data-id={tab.label}
               type='button'
-              className='inline-flex h-9 w-9 items-center justify-center text-zinc-500 transition-colors duration-100 focus-visible:outline-2 data-[checked=true]:text-zinc-950'
+              aria-label={tab.label}
+              className='text-muted-foreground data-[checked=true]:text-foreground inline-flex size-9 items-center justify-center transition-colors duration-100 focus-visible:outline-2'
             >
               {tab.icon}
             </button>

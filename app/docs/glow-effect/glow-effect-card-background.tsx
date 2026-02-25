@@ -5,12 +5,14 @@ export function GlowEffectCardBackground() {
   return (
     <div className='relative h-44 w-64'>
       <GlowEffect
-        colors={['#0894FF', '#C959DD', '#FF2E54', '#FF9004']}
+        colors={['var(--info)', 'var(--success)', 'var(--warning)']}
         mode='static'
         blur='medium'
       />
-      <div className='relative h-44 w-64 rounded-lg bg-black p-2 text-white dark:bg-white dark:text-black'>
-        <NdekoUILLogo className='absolute bottom-4 right-4 h-8 w-8' />
+      <div className='bg-card text-foreground hairline-ring ring-border relative flex h-44 w-64 flex-col rounded-xl p-4'>
+        <span className='text-sm font-medium'>Ndeko UI</span>
+        <span className='text-muted-foreground text-xs'>Motion components</span>
+        <NdekoUILLogo className='absolute right-4 bottom-4 size-8' />
       </div>
     </div>
   );

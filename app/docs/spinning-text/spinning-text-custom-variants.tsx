@@ -1,4 +1,3 @@
-import React from 'react';
 import { SpinningText } from '@/components/core/spinning-text';
 
 export function SpinningTextCustomVariants() {
@@ -34,7 +33,7 @@ export function SpinningTextCustomVariants() {
           },
         },
       }}
-      className='font-[450]'
+      className='text-foreground font-[450]'
     >
       {`pre-order • pre-order • pre-order • `}
     </SpinningText>

@@ -1,25 +1,29 @@
 import { BorderTrail } from '@/components/core/border-trail';
 
+const SKELETON_WIDTHS = ['w-4', 'w-10', 'w-12', 'w-12', 'w-12'];
+
 export function BorderTrailCard1() {
   return (
-    <div className='relative flex h-[200px] w-[300px] flex-col items-center justify-center rounded-md bg-zinc-200 px-5 py-2 dark:bg-zinc-800'>
+    <div className='bg-card hairline-ring ring-border relative flex h-[200px] w-[300px] flex-col items-center justify-center rounded-xl px-5 py-2 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
       <BorderTrail
+        className='bg-foreground/40'
         style={{
           boxShadow:
-            '0px 0px 60px 30px rgb(255 255 255 / 50%), 0 0 100px 60px rgb(0 0 0 / 50%), 0 0 140px 90px rgb(0 0 0 / 50%)',
+            '0 0 32px 12px color-mix(in oklab, var(--foreground) 10%, transparent)',
         }}
         size={100}
       />
       <div
         className='flex h-full animate-pulse flex-col items-start justify-center space-y-2'
         role='status'
-        aria-label='Loading...'
+        aria-label='Loading the weekly report'
       >
-        <div className='h-1 w-4 rounded-[4px] bg-zinc-600'></div>
-        <div className='h-1 w-10 rounded-[4px] bg-zinc-600'></div>
-        <div className='h-1 w-12 rounded-[4px] bg-zinc-600'></div>
-        <div className='h-1 w-12 rounded-[4px] bg-zinc-600'></div>
-        <div className='h-1 w-12 rounded-[4px] bg-zinc-600'></div>
+        {SKELETON_WIDTHS.map((width, index) => (
+          <div
+            key={`${width}-${index}`}
+            className={`bg-foreground/15 h-1 rounded-full ${width}`}
+          />
+        ))}
       </div>
     </div>
   );

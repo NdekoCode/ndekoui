@@ -1,13 +1,13 @@
 import { AnimatedBackground } from '@/components/core/animated-background';
 
-export function AnimatedTabsHover() {
-  const TABS = ['Home', 'About', 'Services', 'Contact'];
+const TABS = ['Home', 'About', 'Services', 'Contact'];
 
+export function AnimatedTabsHover() {
   return (
     <div className='flex flex-row'>
       <AnimatedBackground
         defaultValue={TABS[0]}
-        className='rounded-lg bg-zinc-100 dark:bg-zinc-800'
+        className='bg-foreground/[0.06] rounded-md'
         transition={{
           type: 'spring',
           bounce: 0.2,
@@ -15,12 +15,12 @@ export function AnimatedTabsHover() {
         }}
         enableHover
       >
-        {TABS.map((tab, index) => (
+        {TABS.map((tab) => (
           <button
-            key={index}
+            key={tab}
             data-id={tab}
             type='button'
-            className='px-2 py-0.5 text-zinc-600 transition-colors duration-300 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-zinc-50'
+            className='text-muted-foreground hover:text-foreground px-2.5 py-1 text-[13px] font-medium transition-colors duration-300'
           >
             {tab}
           </button>

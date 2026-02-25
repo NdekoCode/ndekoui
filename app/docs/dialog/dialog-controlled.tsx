@@ -1,4 +1,5 @@
 'use client';
+import { useState } from 'react';
 import {
   Dialog,
   DialogDescription,
@@ -7,42 +8,40 @@ import {
   DialogTitle,
   DialogClose,
 } from '@/components/core/dialog';
-import { useState } from 'react';
+import { Button } from '@/registry/ndeko/ui/button';
+import { Input } from '@/registry/ndeko/ui/input';
 
 export function DialogControlled() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div>
-      <button onClick={() => setIsOpen(true)} type='button' className='text-sm p-2'>
-        Open Dialog
-      </button>
+      <Button variant='outline' onClick={() => setIsOpen(true)}>
+        Open the waitlist form
+      </Button>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className='w-full max-w-md bg-white p-6 dark:bg-zinc-900'>
+        <DialogContent className='bg-card w-full max-w-md p-6'>
           <DialogHeader>
-            <DialogTitle className='text-zinc-900 dark:text-white'>
+            <DialogTitle className='text-foreground'>
               Join the waitlist
             </DialogTitle>
-            <DialogDescription className='text-zinc-600 dark:text-zinc-400'>
-              Enter your email address to receive updates when we launch.
+            <DialogDescription className='text-muted-foreground text-[13px]'>
+              Tidewell opens to new teams in March. Leave your work email and we
+              write once, on launch day.
             </DialogDescription>
           </DialogHeader>
           <div className='mt-6 flex flex-col space-y-4'>
-            <label htmlFor='name' className='sr-only'>
-              Email
+            <label htmlFor='dialog-controlled-email' className='sr-only'>
+              Work email
             </label>
-            <input
-              id='name'
+            <Input
+              id='dialog-controlled-email'
               type='email'
-              className='h-9 w-full rounded-lg border border-zinc-200 bg-white px-3 text-base text-zinc-900 outline-hidden focus:ring-2 focus:ring-black/5 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:ring-white/5 sm:text-sm'
-              placeholder='Enter your email'
+              placeholder='lea@harbor-studio.com'
             />
-            <button
-              className='inline-flex items-center justify-center self-end rounded-lg bg-black px-4 py-2 text-sm font-medium text-zinc-50 dark:bg-white dark:text-zinc-900'
-              type='submit'
-            >
-              Join now
-            </button>
+            <Button type='submit' className='self-end'>
+              Join the waitlist
+            </Button>
           </div>
           <DialogClose />
         </DialogContent>

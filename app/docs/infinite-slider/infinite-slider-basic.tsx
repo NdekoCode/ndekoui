@@ -1,38 +1,40 @@
 import { InfiniteSlider } from '@/components/core/infinite-slider';
+import { cn } from '@/registry/ndeko/lib/utils';
+
+const WORDMARKS = [
+  { name: 'Halden', marks: ['size-5 rounded-full bg-current'] },
+  { name: 'Quillstone', marks: ['size-5 rounded-[4px] bg-current'] },
+  {
+    name: 'Tidewell',
+    marks: [
+      'h-5 w-1 rounded-full bg-current',
+      'h-5 w-1 rounded-full bg-current',
+    ],
+  },
+  {
+    name: 'Ashgrove',
+    marks: ['size-5 rounded-full hairline-ring ring-current'],
+  },
+  { name: 'Brightmoor', marks: ['size-4 rotate-45 rounded-[3px] bg-current'] },
+  { name: 'Fernhill', marks: ['h-5 w-3 rounded-full bg-current'] },
+];
 
 export function InfiniteSliderBasic() {
   return (
     <InfiniteSlider gap={24} reverse>
-      <img
-        src='/apple_music_logo.svg'
-        alt='Apple Music logo'
-        className='h-[120px] w-auto'
-      />
-      <img
-        src='/chrome_logo.svg'
-        alt='Chrome logo'
-        className='h-[120px] w-auto'
-      />
-      <img
-        src='/strava_logo.svg'
-        alt='Strava logo'
-        className='h-[120px] w-auto'
-      />
-      <img
-        src='/nintendo_logo.svg'
-        alt='Nintendo logo'
-        className='h-[120px] w-auto'
-      />
-      <img
-        src='/jquery_logo.svg'
-        alt='Jquery logo'
-        className='h-[120px] w-auto'
-      />
-      <img
-        src='/prada_logo.svg'
-        alt='Prada logo'
-        className='h-[120px] w-auto'
-      />
+      {WORDMARKS.map((wordmark) => (
+        <div
+          key={wordmark.name}
+          className='text-muted-foreground flex h-[120px] items-center gap-2.5 px-4'
+        >
+          <span aria-hidden='true' className='flex items-center gap-1'>
+            {wordmark.marks.map((mark, index) => (
+              <span key={`${wordmark.name}-${index}`} className={cn(mark)} />
+            ))}
+          </span>
+          <span className='text-2xl font-semibold'>{wordmark.name}</span>
+        </div>
+      ))}
     </InfiniteSlider>
   );
 }

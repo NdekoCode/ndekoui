@@ -2,14 +2,22 @@
 import { useRef } from 'react';
 import { ScrollProgress } from '@/components/core/scroll-progress';
 
-const dummyContent = Array.from({ length: 10 }, (_, i) => (
-  <p key={i} className='pb-4 font-mono text-sm text-zinc-500'>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
-    lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra
-    nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget
-    libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut
-    porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies
-    a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+const ARTICLE = [
+  'Harbor Lane started as a spreadsheet. Three volunteers kept the stall bookings for the Saturday market in one shared file, and every Friday night someone overwrote someone else.',
+  'When the market grew to sixty stalls, the file stopped working. Traders called to ask whether their pitch was confirmed, and the answer was often a guess.',
+  'We spent the first week watching. Léa sat at the welcome desk with a notebook and wrote down every question a trader asked before nine in the morning.',
+  'Most questions were the same four: where is my pitch, can I swap with a neighbour, when do I pay, and who do I call if it rains.',
+  'The new booking page answers those four questions on one screen. A trader sees the map of the street, their pitch in the brand colour and the neighbours on either side.',
+  'Swapping became a request instead of a phone call. The other trader gets a message, accepts or declines, and the map updates for both of them.',
+  'Payment moved to the end of the week. Kofi argued for it after noticing that most traders waited for the weather forecast before committing.',
+  'The rain plan is a single switch for the organisers. When it is on, every trader gets the covered pitch assigned to them and a short note with the new time.',
+  'We kept the spreadsheet as an export. The volunteers still like to print it on Saturday morning, and nothing about the new tool should take that away from them.',
+  'Six weeks in, the Friday night calls have stopped. The welcome desk now hands out coffee instead of answers.',
+];
+
+const articleParagraphs = ARTICLE.map((paragraph) => (
+  <p key={paragraph} className='text-muted-foreground pb-4 text-sm'>
+    {paragraph}
   </p>
 ));
 
@@ -17,34 +25,34 @@ export function ScrollProgressBasic2() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className='h-[350px] overflow-auto px-8 pb-4 pt-16' ref={containerRef}>
-      <div className='border-zin-500 absolute left-0 top-0 z-10 h-10 w-full bg-white dark:bg-zinc-950'>
+    <div className='h-[350px] overflow-auto px-8 pt-16 pb-4' ref={containerRef}>
+      <div className='bg-card absolute top-0 left-0 z-10 h-10 w-full'>
         <ScrollProgress
-          className='absolute top-0 h-10 bg-zinc-200 dark:bg-zinc-800'
+          className='bg-foreground/[0.06] absolute top-0 h-10'
           containerRef={containerRef}
         />
-        <div className='absolute left-0 top-0 flex h-10 items-center space-x-6 px-8 font-[450]'>
+        <div className='absolute top-0 left-0 flex h-10 items-center space-x-6 px-8 text-[13px] font-medium'>
           <a
             href='#'
-            className='text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white'
+            className='text-muted-foreground hover:text-foreground transition-colors'
           >
             Magazine
           </a>
           <a
             href='#'
-            className='text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white'
+            className='text-muted-foreground hover:text-foreground transition-colors'
           >
             Blog
           </a>
           <a
             href='#'
-            className='text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white'
+            className='text-muted-foreground hover:text-foreground transition-colors'
           >
             About
           </a>
         </div>
       </div>
-      {dummyContent}
+      {articleParagraphs}
     </div>
   );
 }

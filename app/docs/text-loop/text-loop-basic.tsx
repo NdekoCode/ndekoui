@@ -2,11 +2,11 @@ import { TextLoop } from '@/components/core/text-loop';
 
 export function TextLoopBasic() {
   return (
-    <TextLoop className='font-mono text-sm'>
-      <span>How can I assist you today?</span>
-      <span>Generate a logo</span>
-      <span>Create a component</span>
-      <span>Draw a diagram</span>
+    <TextLoop className='text-muted-foreground text-[13px]'>
+      <span>Search projects</span>
+      <span>Find a teammate</span>
+      <span>Open a recent file</span>
+      <span>Jump to settings</span>
     </TextLoop>
   );
 }

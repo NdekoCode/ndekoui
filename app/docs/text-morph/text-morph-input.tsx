@@ -1,21 +1,23 @@
 'use client';
 import { useState } from 'react';
-import { TextMorph } from '../../../components/core/text-morph';
+import { TextMorph } from '@/components/core/text-morph';
+import { Input } from '@/registry/ndeko/ui/input';
 
 export function TextMorphInput() {
   const [text, setText] = useState('Craft');
 
   return (
     <div className='flex flex-col items-center justify-end space-y-12'>
-      <TextMorph className='text-5xl font-medium text-black dark:text-white'>
+      <TextMorph className='text-foreground text-5xl font-medium'>
         {text}
       </TextMorph>
-      <input
+      <Input
         type='text'
+        size='lg'
+        aria-label='Word to morph'
         value={text}
         onChange={(e) => setText(e.target.value)}
-        className='h-9 w-full rounded-lg border border-zinc-950/10 bg-transparent p-2 text-zinc-900 placeholder-zinc-500 focus:outline-hidden dark:border-zinc-50/10 dark:text-white dark:placeholder-zinc-400'
-        placeholder='Type your text here'
+        placeholder='Type a word'
       />
     </div>
   );

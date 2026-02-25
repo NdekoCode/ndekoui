@@ -2,12 +2,12 @@ import { Spotlight } from '@/components/core/spotlight';
 
 export function SpotlightBorder() {
   return (
-    <div className='relative aspect-video h-[200px] overflow-hidden rounded-xl bg-zinc-300/30 p-[1px] dark:bg-zinc-700/30'>
+    <div className='bg-foreground/10 relative aspect-video h-[200px] overflow-hidden rounded-xl p-px'>
       <Spotlight
-        className='from-blue-600 via-blue-500 to-blue-400 blur-3xl dark:from-blue-200 dark:via-blue-300 dark:to-blue-400'
+        className='from-foreground/60 via-foreground/40 to-foreground/20 blur-3xl'
         size={124}
       />
-      <div className='relative h-full w-full rounded-xl bg-white dark:bg-black'></div>
+      <div className='bg-card relative h-full w-full rounded-xl'></div>
     </div>
   );
 }

@@ -25,9 +25,9 @@ export function SlidingNumberBasic() {
         duration: 1.5,
         delay: 0.3,
       }}
-      className='leading-none text-black dark:text-white'
+      className='text-foreground leading-none'
     >
-      <div className='inline-flex items-center gap-1 font-mono'>
+      <div className='inline-flex items-center gap-1 tabular-nums'>
         <SlidingNumber value={value} />%
       </div>
     </motion.div>

@@ -26,18 +26,19 @@ export function TiltSpotlight() {
             mass: 0.2,
           }}
         />
-        <img
-          // src='https://images.beta.cosmos.so/f7fcb95d-981b-4cb3-897f-e35f6c20e830?format=jpeg'
-          src='https://images.beta.cosmos.so/40fbc749-6796-485b-9588-20204dd7c8f0?format=jpeg'
-          alt='Ghost in the shell - Kôkaku kidôtai'
-          className='h-32 w-full rounded-lg object-cover grayscale duration-700 group-hover:grayscale-0'
-        />
+        <div
+          role='img'
+          aria-label='Poster of Low Orbit: a planet, its ring and a small moon, in flat shapes.'
+          className='bg-primary/10 relative h-32 w-full overflow-hidden rounded-lg grayscale duration-700 group-hover:grayscale-0'
+        >
+          <div className='bg-primary/50 absolute top-6 left-1/2 size-20 -translate-x-1/2 rounded-full' />
+          <div className='bg-primary/30 absolute top-[3.75rem] left-1/2 h-2 w-44 -translate-x-1/2 rounded-full' />
+          <div className='bg-primary/40 absolute top-5 right-16 size-4 rounded-full' />
+        </div>
       </Tilt>
-      <div className='flex flex-col space-y-0.5 pb-0 pt-3'>
-        <h3 className='font-mono text-sm font-medium text-zinc-500 dark:text-zinc-400'>
-          2001: A Space Odyssey
-        </h3>
-        <p className='text-sm text-black dark:text-white'>Stanley Kubrick</p>
+      <div className='flex flex-col space-y-0.5 pt-3 pb-0'>
+        <h3 className='text-muted-foreground text-sm font-medium'>Low Orbit</h3>
+        <p className='text-foreground text-sm'>Directed by Léa Moreau</p>
       </div>
     </div>
   );

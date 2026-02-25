@@ -1,14 +1,21 @@
 'use client';
 import { TextLoop } from '@/components/core/text-loop';
-import { Music } from 'lucide-react';
+import { HeadphonesIcon } from '@/registry/ndeko/lib/icons';
 import { useState } from 'react';
+
+function directionOf(index: number) {
+  if (index === 0) {
+    return -1;
+  }
+  return 1;
+}
 
 export function TextLoopOnIndexChange() {
   const [direction, setDirection] = useState(-1);
 
   return (
     <TextLoop
-      className='text-sm'
+      className='text-foreground text-sm'
       transition={{
         type: 'spring',
         stiffness: 150,
@@ -17,7 +24,7 @@ export function TextLoopOnIndexChange() {
       }}
       interval={2.5}
       onIndexChange={(index) => {
-        setDirection(index === 0 ? -1 : 1);
+        setDirection(directionOf(index));
       }}
       variants={{
         initial: {
@@ -41,8 +48,8 @@ export function TextLoopOnIndexChange() {
       }}
     >
       <span>
-        <Music size={12} className='mr-1 inline-block' />A Little Lost・Arthur
-        Russell
+        <HeadphonesIcon className='mr-1 inline-block size-3' />
+        Morning tide・The Harbor Lane Trio
       </span>
       <span>La Trinité, Martinique</span>
     </TextLoop>

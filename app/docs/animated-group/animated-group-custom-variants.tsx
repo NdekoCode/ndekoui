@@ -1,4 +1,42 @@
 import { AnimatedGroup } from '@/components/core/animated-group';
+import {
+  CompassIcon,
+  FeatherIcon,
+  MoonIcon,
+  SunIcon,
+} from '@/registry/ndeko/lib/icons';
+import { cn } from '@/registry/ndeko/lib/utils';
+
+const ARTWORKS = [
+  {
+    title: 'Morning tide',
+    meta: 'Oil on linen',
+    icon: SunIcon,
+    tile: 'bg-warning/10',
+    gem: '[--gem:var(--warning)]',
+  },
+  {
+    title: 'Orchard in May',
+    meta: 'Gouache',
+    icon: FeatherIcon,
+    tile: 'bg-success/10',
+    gem: '[--gem:var(--success)]',
+  },
+  {
+    title: 'Harbour lights',
+    meta: 'Ink on paper',
+    icon: MoonIcon,
+    tile: 'bg-info/10',
+    gem: '[--gem:var(--info)]',
+  },
+  {
+    title: 'Quiet street',
+    meta: 'Charcoal',
+    icon: CompassIcon,
+    tile: 'bg-foreground/[0.04]',
+    gem: '[--gem:var(--muted-foreground)]',
+  },
+];
 
 export function AnimatedGroupCustomVariants() {
   return (
@@ -29,26 +67,36 @@ export function AnimatedGroupCustomVariants() {
         },
       }}
     >
-      <img
-        src='https://images.beta.cosmos.so/fc6fdd93-552c-47e6-98aa-b8fb3ba070a2?format=jpeg'
-        alt='impressionist painting, uploaded to Cosmos'
-        className='h-auto w-full rounded-[4px]'
-      />
-      <img
-        src='https://images.beta.cosmos.so/cb674d14-ebd1-4408-bab1-79df895017b6?format=jpeg'
-        alt='impressionist painting, uploaded to Cosmos'
-        className='h-auto w-full rounded-[4px]'
-      />
-      <img
-        src='https://images.beta.cosmos.so/e5a6c3ed-82ad-4084-9a11-1eccd7bc91aa?format=jpeg'
-        alt='impressionist painting, uploaded to Cosmos'
-        className='h-auto w-full rounded-[4px]'
-      />
-      <img
-        src='https://images.beta.cosmos.so/4d02a1e7-d1f2-4575-86a9-bed243e59132?format=jpeg'
-        alt='impressionist painting, uploaded to Cosmos'
-        className='h-auto w-full rounded-[4px]'
-      />
+      {ARTWORKS.map((artwork) => {
+        const Glyph = artwork.icon;
+
+        return (
+          <div
+            key={artwork.title}
+            className={cn(
+              'flex aspect-[4/5] w-full flex-col justify-between rounded-lg p-3',
+              artwork.tile
+            )}
+          >
+            <span
+              className={cn(
+                'gem-plate grid size-8 place-items-center rounded-md',
+                artwork.gem
+              )}
+            >
+              <Glyph className='size-4' />
+            </span>
+            <span className='flex flex-col'>
+              <span className='text-foreground text-[13px] font-medium'>
+                {artwork.title}
+              </span>
+              <span className='text-muted-foreground text-xs'>
+                {artwork.meta}
+              </span>
+            </span>
+          </div>
+        );
+      })}
     </AnimatedGroup>
   );
 }

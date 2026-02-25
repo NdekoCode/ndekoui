@@ -1,63 +1,50 @@
-import {
-  Activity,
-  Component,
-  HomeIcon,
-  Mail,
-  Package,
-  ScrollText,
-  SunMoon,
-} from 'lucide-react';
-
 import { Dock, DockIcon, DockItem, DockLabel } from '@/components/core/dock';
+import {
+  BoxIcon,
+  ChartLineIcon,
+  ComponentIcon,
+  EclipseIcon,
+  FileTextIcon,
+  HomeIcon,
+  MailIcon,
+} from '@/registry/ndeko/lib/icons';
+
+const ICON_CLASS = 'text-muted-foreground size-full';
 
 const data = [
   {
     title: 'Home',
-    icon: (
-      <HomeIcon className='h-full w-full text-neutral-600 dark:text-neutral-300' />
-    ),
+    icon: <HomeIcon className={ICON_CLASS} />,
     href: '#',
   },
   {
     title: 'Products',
-    icon: (
-      <Package className='h-full w-full text-neutral-600 dark:text-neutral-300' />
-    ),
+    icon: <BoxIcon className={ICON_CLASS} />,
     href: '#',
   },
   {
     title: 'Components',
-    icon: (
-      <Component className='h-full w-full text-neutral-600 dark:text-neutral-300' />
-    ),
+    icon: <ComponentIcon className={ICON_CLASS} />,
     href: '#',
   },
   {
     title: 'Activity',
-    icon: (
-      <Activity className='h-full w-full text-neutral-600 dark:text-neutral-300' />
-    ),
+    icon: <ChartLineIcon className={ICON_CLASS} />,
     href: '#',
   },
   {
-    title: 'Change Log',
-    icon: (
-      <ScrollText className='h-full w-full text-neutral-600 dark:text-neutral-300' />
-    ),
+    title: 'Change log',
+    icon: <FileTextIcon className={ICON_CLASS} />,
     href: '#',
   },
   {
     title: 'Email',
-    icon: (
-      <Mail className='h-full w-full text-neutral-600 dark:text-neutral-300' />
-    ),
+    icon: <MailIcon className={ICON_CLASS} />,
     href: '#',
   },
   {
     title: 'Theme',
-    icon: (
-      <SunMoon className='h-full w-full text-neutral-600 dark:text-neutral-300' />
-    ),
+    icon: <EclipseIcon className={ICON_CLASS} />,
     href: '#',
   },
 ];
@@ -66,10 +53,10 @@ export function AppleStyleDock() {
   return (
     <div className='absolute bottom-2 left-1/2 max-w-full -translate-x-1/2'>
       <Dock className='items-end pb-3'>
-        {data.map((item, idx) => (
+        {data.map((item) => (
           <DockItem
-            key={idx}
-            className='aspect-square rounded-full bg-gray-200 dark:bg-neutral-800'
+            key={item.title}
+            className='keycap-3d aspect-square rounded-full'
           >
             <DockLabel>{item.title}</DockLabel>
             <DockIcon>{item.icon}</DockIcon>

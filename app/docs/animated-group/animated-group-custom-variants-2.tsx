@@ -1,5 +1,13 @@
 'use client';
 import { AnimatedGroup } from '@/components/core/animated-group';
+import { cn } from '@/registry/ndeko/lib/utils';
+
+const WORDMARKS = [
+  { name: 'Halden', mark: 'size-4 rounded-full bg-current' },
+  { name: 'Quillstone', mark: 'size-4 rounded-[3px] bg-current' },
+  { name: 'Tidewell', mark: 'h-4 w-[3px] rounded-full bg-current' },
+  { name: 'Ashgrove', mark: 'size-4 rounded-full hairline-ring ring-current' },
+];
 
 export function AnimatedGroupCustomVariants2() {
   return (
@@ -34,30 +42,20 @@ export function AnimatedGroupCustomVariants2() {
         },
       }}
     >
-      <div key={1}>
-        <img
-          src='/national_geographic_logo.svg'
-          alt='Apple Music logo'
-          className='h-auto w-full'
-        />
-      </div>
-      <div key={2}>
-        <img src='/sony_logo.svg' alt='Chrome logo' className='h-auto w-full' />
-      </div>
-      <div key={3}>
-        <img
-          src='/strava_logo.svg'
-          alt='Strava logo'
-          className='h-auto w-full'
-        />
-      </div>
-      <div key={4}>
-        <img
-          src='/nintendo_logo.svg'
-          alt='Nintendo logo'
-          className='h-auto w-full'
-        />
-      </div>
+      {WORDMARKS.map((wordmark) => (
+        <div
+          key={wordmark.name}
+          className='text-muted-foreground flex items-center justify-center gap-2'
+        >
+          <span aria-hidden='true' className='flex items-center gap-[3px]'>
+            <span className={cn(wordmark.mark)} />
+            {wordmark.name === 'Tidewell' && (
+              <span className={cn(wordmark.mark)} />
+            )}
+          </span>
+          <span className='text-lg font-semibold'>{wordmark.name}</span>
+        </div>
+      ))}
     </AnimatedGroup>
   );
 }

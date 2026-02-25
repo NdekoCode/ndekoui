@@ -4,7 +4,7 @@ import { TextRoll } from '@/components/core/text-roll';
 export function TextRollCustomTransitionDelay() {
   return (
     <TextRoll
-      className='overflow-clip text-4xl text-black dark:text-white'
+      className='text-foreground overflow-clip text-4xl'
       variants={{
         enter: {
           initial: { y: 0 },

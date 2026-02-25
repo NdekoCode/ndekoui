@@ -1,9 +1,10 @@
 import { Cursor } from '@/components/core/cursor';
+import { CompassIcon } from '@/registry/ndeko/lib/icons';
 
 export function Cursor3() {
   return (
     <div>
-      <div className='p-4'>
+      <div className='text-foreground p-4 text-sm font-medium'>
         <Cursor
           attachToParent
           variants={{
@@ -21,13 +22,21 @@ export function Cursor3() {
             bounce: 0.01,
           }}
         >
-          <img
-            src='https://i.pinimg.com/564x/4c/95/69/4c9569ab2928e5ae400a6a34e7c537a0.jpg'
-            alt='Christian Church, Eastern Europe'
-            className='h-40 w-40'
-          />
+          <div className='bg-info/10 flex size-40 flex-col justify-between rounded-lg p-3'>
+            <span className='gem-plate grid size-8 place-items-center rounded-md [--gem:var(--info)]'>
+              <CompassIcon className='size-4' />
+            </span>
+            <span className='flex flex-col'>
+              <span className='text-foreground text-[13px] font-medium'>
+                Vell Point
+              </span>
+              <span className='text-muted-foreground text-xs'>
+                Lighthouse trail, 6 km
+              </span>
+            </span>
+          </div>
         </Cursor>
-        Christian Church, Eastern Europe
+        Lighthouse at Vell Point
       </div>
     </div>
   );

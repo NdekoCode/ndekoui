@@ -1,8 +1,10 @@
-import { ChevronRight } from 'lucide-react';
-
 import {
-    Accordion, AccordionContent, AccordionItem, AccordionTrigger
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
 } from '@/components/core/accordion';
+import { ChevronRightIcon } from '@/registry/ndeko/lib/icons';
 
 export function AccordionVariant() {
   return (
@@ -21,71 +23,62 @@ export function AccordionVariant() {
       }}
     >
       <AccordionItem value='getting-started' className='py-2'>
-        <AccordionTrigger className='w-full py-0.5 text-left text-zinc-950 dark:text-zinc-50'>
+        <AccordionTrigger className='text-foreground w-full py-0.5 text-left text-sm font-medium'>
           <div className='flex items-center'>
-            <ChevronRight className='group-data-expanded:rotate-90 h-4 w-4 text-zinc-950 transition-transform duration-200 dark:text-zinc-50' />
-            <div className='ml-2 text-zinc-950 dark:text-zinc-50'>
-              How do I start with Ndeko UI?
-            </div>
+            <ChevronRightIcon className='text-muted-foreground size-4 transition-transform duration-200 group-data-expanded:rotate-90' />
+            <div className='ml-2'>How do I move my team to Tidewell?</div>
           </div>
         </AccordionTrigger>
         <AccordionContent className='origin-left'>
-          <p className='pl-6 pr-2 text-zinc-500 dark:text-zinc-400'>
-            Kick off your experience by setting up Ndeko UI. This section covers
-            the basics of installation and how to add animations to your
-            projects. You’ll get familiar with the initial setup and the core
-            features quickly.
+          <p className='text-muted-foreground pt-1 pr-2 pl-6 text-[13px]'>
+            Import your boards from a CSV file or connect your old tool from the
+            import page. Members keep their assignments, and due dates land on
+            the same days in every time zone.
           </p>
         </AccordionContent>
       </AccordionItem>
-      <AccordionItem value='animation-properties' className='py-2'>
-        <AccordionTrigger className='w-full py-0.5 text-left text-zinc-950 dark:text-zinc-50'>
+      <AccordionItem value='notifications' className='py-2'>
+        <AccordionTrigger className='text-foreground w-full py-0.5 text-left text-sm font-medium'>
           <div className='flex items-center'>
-            <ChevronRight className='group-data-expanded:rotate-90 h-4 w-4 text-zinc-950 transition-transform duration-200 dark:text-zinc-50' />
-            <div className='ml-2 text-zinc-950 dark:text-zinc-50'>
-              What are the key animation properties?
-            </div>
+            <ChevronRightIcon className='text-muted-foreground size-4 transition-transform duration-200 group-data-expanded:rotate-90' />
+            <div className='ml-2'>Can I choose which notifications I get?</div>
           </div>
         </AccordionTrigger>
         <AccordionContent className='origin-left'>
-          <p className='pl-6 pr-2 text-zinc-500 dark:text-zinc-400'>
-            Discover a variety of properties to customize your animations. Learn
-            to adjust timing, easing, and delays for smoother effects. This
-            guide will help you tailor these settings to your app’s needs.
+          <p className='text-muted-foreground pt-1 pr-2 pl-6 text-[13px]'>
+            Yes. Pick a channel for each kind of update: mentions by email,
+            assignments in the app, a daily summary at 9 am. Quiet hours mute
+            everything except direct mentions.
           </p>
         </AccordionContent>
       </AccordionItem>
-      <AccordionItem value='advanced-features' className='py-2'>
-        <AccordionTrigger className='w-full py-0.5 text-left text-zinc-950 dark:text-zinc-50'>
+      <AccordionItem value='offline' className='py-2'>
+        <AccordionTrigger className='text-foreground w-full py-0.5 text-left text-sm font-medium'>
           <div className='flex items-center'>
-            <ChevronRight className='group-data-expanded:rotate-90 h-4 w-4 text-zinc-950 transition-transform duration-200 dark:text-zinc-50' />
-            <div className='ml-2 text-zinc-950 dark:text-zinc-50'>
-              How do I use advanced features?
-            </div>
+            <ChevronRightIcon className='text-muted-foreground size-4 transition-transform duration-200 group-data-expanded:rotate-90' />
+            <div className='ml-2'>Does it work offline?</div>
           </div>
         </AccordionTrigger>
         <AccordionContent className='origin-left'>
-          <p className='pl-6 pr-2 text-zinc-500 dark:text-zinc-400'>
-            Advance your skills by using more complex functions of Ndeko UI.
-            Explore how to link animations together, create intricate sequences,
-            and interact with motion sensors for dynamic effects.
+          <p className='text-muted-foreground pt-1 pr-2 pl-6 text-[13px]'>
+            The desktop app keeps the last 30 days of boards on your device.
+            Changes made offline sync as soon as you are back online, and
+            conflicts are listed for you to review.
           </p>
         </AccordionContent>
       </AccordionItem>
-      <AccordionItem value='community-support' className='py-2'>
-        <AccordionTrigger className='w-full py-0.5 text-left text-zinc-950 dark:text-zinc-50'>
+      <AccordionItem value='cancel-plan' className='py-2'>
+        <AccordionTrigger className='text-foreground w-full py-0.5 text-left text-sm font-medium'>
           <div className='flex items-center'>
-            <ChevronRight className='group-data-expanded:rotate-90 h-4 w-4 text-zinc-950 transition-transform duration-200 dark:text-zinc-50' />
-            <div className='ml-2 text-zinc-950 dark:text-zinc-50'>
-              How do I engage with the community?
-            </div>
+            <ChevronRightIcon className='text-muted-foreground size-4 transition-transform duration-200 group-data-expanded:rotate-90' />
+            <div className='ml-2'>What happens if I cancel my plan?</div>
           </div>
         </AccordionTrigger>
         <AccordionContent className='origin-left'>
-          <p className='pl-6 pr-2 text-zinc-500 dark:text-zinc-400'>
-            Connect with the Ndeko UI community for support and collaboration.
-            Learn how to contribute, share knowledge, and access helpful
-            resources. Stay updated on new updates and collective insights.
+          <p className='text-muted-foreground pt-1 pr-2 pl-6 text-[13px]'>
+            Your workspace switches to the free plan at the end of the billing
+            period. Nothing is deleted: boards over the free limit become read
+            only until you upgrade again.
           </p>
         </AccordionContent>
       </AccordionItem>

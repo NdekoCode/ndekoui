@@ -1,5 +1,7 @@
 import { SpinningText } from '@/components/core/spinning-text';
 
+const EASE_IN_OUT_STRONG = [0.77, 0, 0.175, 1] as const;
+
 export function SpinningTextCustomTransition() {
   return (
     <SpinningText
@@ -7,10 +9,10 @@ export function SpinningTextCustomTransition() {
       fontSize={1}
       duration={6}
       transition={{
-        ease: 'easeInOut',
+        ease: EASE_IN_OUT_STRONG,
         repeat: Infinity,
       }}
-      className='font-mono'
+      className='text-foreground font-mono'
     >
       {` •  • `}
     </SpinningText>

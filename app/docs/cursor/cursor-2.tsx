@@ -1,5 +1,8 @@
 import { SVGProps } from 'react';
 import { Cursor } from '@/components/core/cursor';
+import { FeatherIcon } from '@/registry/ndeko/lib/icons';
+
+const EASE_OUT_STRONG = [0.23, 1, 0.32, 1] as const;
 
 const MouseIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
@@ -8,13 +11,13 @@ const MouseIcon = (props: SVGProps<SVGSVGElement>) => {
       width={26}
       height={31}
       fill='none'
+      aria-hidden='true'
       {...props}
     >
-      <g clipPath='url(#a)'>
+      <g clipPath='url(#cursor-2-clip)'>
         <path
-          fill={'#22c55e'}
+          className='fill-primary stroke-primary-foreground'
           fillRule='evenodd'
-          stroke={'#fff'}
           strokeLinecap='square'
           strokeWidth={2}
           d='M21.993 14.425 2.549 2.935l4.444 23.108 4.653-10.002z'
@@ -22,8 +25,8 @@ const MouseIcon = (props: SVGProps<SVGSVGElement>) => {
         />
       </g>
       <defs>
-        <clipPath id='a'>
-          <path fill={'#22c55e'} d='M0 0h26v31H0z' />
+        <clipPath id='cursor-2-clip'>
+          <path d='M0 0h26v31H0z' />
         </clipPath>
       </defs>
     </svg>
@@ -33,7 +36,7 @@ const MouseIcon = (props: SVGProps<SVGSVGElement>) => {
 export function Cursor2() {
   return (
     <div className='py-12'>
-      <div className='overflow-hidden rounded-[12px] bg-white p-2 shadow-md dark:bg-black'>
+      <div className='bg-card hairline-ring ring-border overflow-hidden rounded-xl p-2 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
         <Cursor
           attachToParent
           variants={{
@@ -42,23 +45,26 @@ export function Cursor2() {
             exit: { scale: 0.3, opacity: 0 },
           }}
           transition={{
-            ease: 'easeInOut',
+            ease: EASE_OUT_STRONG,
             duration: 0.15,
           }}
-          className='left-12 top-4'
+          className='top-4 left-12'
         >
           <div>
-            <MouseIcon className='h-6 w-6' />
-            <div className='ml-4 mt-1 rounded-[4px] bg-green-500 px-2 py-0.5 text-neutral-50'>
-              The city below
+            <MouseIcon className='size-6' />
+            <div className='bg-primary text-primary-foreground mt-1 ml-4 rounded-md px-2 py-0.5 text-xs font-medium'>
+              Ama Mensah
             </div>
           </div>
         </Cursor>
-        <img
-          src='https://i.pinimg.com/564x/a0/6a/5f/a06a5f814569fcf4a67f3ad89ae1babf.jpg'
-          alt='Green herbs'
-          className='h-40 w-full max-w-32 rounded-[8px] object-cover'
-        />
+        <div className='bg-success/10 flex h-40 w-32 flex-col justify-between rounded-lg p-3'>
+          <span className='gem-plate grid size-8 place-items-center rounded-md [--gem:var(--success)]'>
+            <FeatherIcon className='size-4' />
+          </span>
+          <span className='text-foreground text-[13px] font-medium'>
+            Herb garden
+          </span>
+        </div>
       </div>
     </div>
   );

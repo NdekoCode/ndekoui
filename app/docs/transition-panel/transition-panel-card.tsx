@@ -1,104 +1,123 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { TransitionPanel } from '@/components/core/transition-panel';
+import { Button } from '@/registry/ndeko/ui/button';
 import useMeasure from 'react-use-measure';
 
-function Button({
-  onClick,
-  children,
-}: {
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      type='button'
-      className='relative flex h-8 shrink-0 scale-100 select-none appearance-none items-center justify-center rounded-lg border border-zinc-950/10 bg-transparent px-2 text-sm text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 focus-visible:ring-2 active:scale-[0.98] dark:border-zinc-50/10 dark:text-zinc-50 dark:hover:bg-zinc-800'
-    >
-      {children}
-    </button>
-  );
+const PANEL_WIDTH = 364;
+
+const FEATURES = [
+  {
+    title: 'Brand',
+    description:
+      'Develop a distinctive brand identity with tailored logos and guidelines to ensure consistent messaging across all platforms.',
+  },
+  {
+    title: 'Product',
+    description:
+      'Design and refine products that excel in user experience, meeting needs effectively and creating memorable interactions. We specialize in web applications.',
+  },
+  {
+    title: 'Website',
+    description:
+      'Create impactful websites that combine beautiful aesthetics with functional design, ensuring a superior online presence.',
+  },
+  {
+    title: 'Design System',
+    description:
+      'Develop a design system that unifies your brand identity, ensuring consistency across all platforms and products.',
+  },
+];
+
+const LAST_INDEX = FEATURES.length - 1;
+
+function clampIndex(index: number) {
+  if (index < 0) {
+    return 0;
+  }
+  if (index > LAST_INDEX) {
+    return LAST_INDEX;
+  }
+  return index;
 }
+
+function directionBetween(fromIndex: number, toIndex: number) {
+  if (toIndex > fromIndex) {
+    return 1;
+  }
+  return -1;
+}
+
+function enterOffsetOf(direction: number) {
+  if (direction > 0) {
+    return PANEL_WIDTH;
+  }
+  return -PANEL_WIDTH;
+}
+
+function exitOffsetOf(direction: number) {
+  if (direction < 0) {
+    return PANEL_WIDTH;
+  }
+  return -PANEL_WIDTH;
+}
+
+function panelHeightOf(measuredHeight: number) {
+  if (measuredHeight > 0) {
+    return measuredHeight;
+  }
+  return 'auto';
+}
+
+function nextLabelOf(isLast: boolean) {
+  if (isLast) {
+    return 'Close';
+  }
+  return 'Next';
+}
+
 export function TransitionPanelCard() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [requestedIndex, setRequestedIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const [ref, bounds] = useMeasure();
-
-  const FEATURES = [
-    {
-      title: 'Brand',
-      description:
-        'Develop a distinctive brand identity with tailored logos and guidelines to ensure consistent messaging across all platforms.',
-    },
-    {
-      title: 'Product',
-      description:
-        'Design and refine products that excel in user experience, meeting needs effectively and creating memorable interactions. We specialize in web applications.',
-    },
-    {
-      title: 'Website',
-      description:
-        'Create impactful websites that combine beautiful aesthetics with functional design, ensuring a superior online presence.',
-    },
-    {
-      title: 'Design System',
-      description:
-        'Develop a design system that unifies your brand identity, ensuring consistency across all platforms and products.',
-    },
-  ];
+  const activeIndex = clampIndex(requestedIndex);
+  const panelHeight = panelHeightOf(bounds.height);
+  const isFirst = activeIndex === 0;
+  const isLast = activeIndex === LAST_INDEX;
+  const nextLabel = nextLabelOf(isLast);
 
   const handleSetActiveIndex = (newIndex: number) => {
-    setDirection(newIndex > activeIndex ? 1 : -1);
-    setActiveIndex(newIndex);
+    setDirection(directionBetween(activeIndex, newIndex));
+    setRequestedIndex(newIndex);
   };
 
-  useEffect(() => {
-    if (activeIndex < 0) setActiveIndex(0);
-    if (activeIndex >= FEATURES.length) setActiveIndex(FEATURES.length - 1);
-  }, [activeIndex]);
-
-  const variants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 364 : -364,
-      opacity: 0,
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
-    },
-    exit: (direction: number) => ({
-      zIndex: 0,
-      x: direction < 0 ? 364 : -364,
-      opacity: 0,
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-    }),
+  const handleNext = () => {
+    if (isLast) {
+      return;
+    }
+    handleSetActiveIndex(activeIndex + 1);
   };
 
   return (
-    <div className='w-[364px] overflow-hidden rounded-xl border border-zinc-950/10 bg-white dark:bg-zinc-700'>
+    <div className='hairline-ring ring-border bg-card w-[364px] overflow-hidden rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
       <TransitionPanel
         activeIndex={activeIndex}
         variants={{
           enter: (direction) => ({
-            x: direction > 0 ? 364 : -364,
+            x: enterOffsetOf(direction),
             opacity: 0,
-            height: bounds.height > 0 ? bounds.height : 'auto',
+            height: panelHeight,
             position: 'initial',
           }),
           center: {
             zIndex: 1,
             x: 0,
             opacity: 1,
-            height: bounds.height > 0 ? bounds.height : 'auto',
+            height: panelHeight,
           },
           exit: (direction) => ({
             zIndex: 0,
-            x: direction < 0 ? 364 : -364,
+            x: exitOffsetOf(direction),
             opacity: 0,
             position: 'absolute',
             top: 0,
@@ -113,31 +132,27 @@ export function TransitionPanelCard() {
       >
         {FEATURES.map((feature, index) => (
           <div key={index} className='px-4 pt-4' ref={ref}>
-            <h3 className='mb-0.5 font-medium text-zinc-800 dark:text-zinc-100'>
+            <h3 className='text-foreground mb-0.5 text-sm font-medium'>
               {feature.title}
             </h3>
-            <p className='text-zinc-600 dark:text-zinc-400'>
+            <p className='text-muted-foreground text-[13px]'>
               {feature.description}
             </p>
           </div>
         ))}
       </TransitionPanel>
       <div className='flex justify-between p-4'>
-        {activeIndex > 0 ? (
-          <Button onClick={() => handleSetActiveIndex(activeIndex - 1)}>
+        {!isFirst && (
+          <Button
+            variant='outline'
+            onClick={() => handleSetActiveIndex(activeIndex - 1)}
+          >
             Previous
           </Button>
-        ) : (
-          <div />
         )}
-        <Button
-          onClick={() =>
-            activeIndex === FEATURES.length - 1
-              ? null
-              : handleSetActiveIndex(activeIndex + 1)
-          }
-        >
-          {activeIndex === FEATURES.length - 1 ? 'Close' : 'Next'}
+        {isFirst && <div />}
+        <Button variant='outline' onClick={handleNext}>
+          {nextLabel}
         </Button>
       </div>
     </div>

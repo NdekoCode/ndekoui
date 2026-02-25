@@ -1,7 +1,8 @@
 'use client';
-import { cn } from '@/lib/utils';
-import { BorderTrail } from '@/components/core/border-trail';
 import { useState } from 'react';
+import { BorderTrail } from '@/components/core/border-trail';
+import { cn } from '@/registry/ndeko/lib/utils';
+import { Button } from '@/registry/ndeko/ui/button';
 
 export function BorderTrailCard2() {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,12 +19,13 @@ export function BorderTrailCard2() {
   };
 
   return (
-    <div className='relative h-[200px] w-[300px] rounded-md border border-zinc-300/40 bg-zinc-100 px-4 py-3 dark:border-zinc-700/40 dark:bg-zinc-900'>
+    <div className='bg-card hairline-ring ring-border relative h-[200px] w-[300px] rounded-xl px-4 py-3 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
       {isVisible && (
         <BorderTrail
           className={cn(
-            'bg-linear-to-l from-green-300 via-green-500 to-green-300 transition-opacity duration-300 dark:from-green-700/30 dark:via-green-500 dark:to-green-700/30',
-            isLoading ? 'opacity-100' : 'opacity-0'
+            'from-success/20 via-success to-success/20 bg-linear-to-l transition-opacity duration-300',
+            isLoading && 'opacity-100',
+            !isLoading && 'opacity-0'
           )}
           size={120}
           transition={{
@@ -34,15 +36,20 @@ export function BorderTrailCard2() {
           onAnimationComplete={handleAnimationComplete}
         />
       )}
-      <div className='flex h-full flex-col items-end justify-end'>
-        <button
-          className='relative ml-1 flex h-8 scale-100 select-none appearance-none items-center justify-center rounded-lg border border-zinc-950/10 bg-white px-2 text-sm text-zinc-500 focus-visible:ring-2 active:scale-[0.96] dark:border-zinc-50/10'
-          type='button'
-          aria-label='Load'
-          onClick={handleLoad}
-        >
-          Submit
-        </button>
+      <div className='flex h-full flex-col justify-between'>
+        <div className='flex flex-col'>
+          <span className='text-foreground text-sm font-medium'>
+            Preview build
+          </span>
+          <span className='text-muted-foreground text-xs'>
+            Branch feat/onboarding-checklist
+          </span>
+        </div>
+        <div className='flex justify-end'>
+          <Button variant='outline' size='sm' onClick={handleLoad}>
+            Run checks
+          </Button>
+        </div>
       </div>
     </div>
   );

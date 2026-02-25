@@ -1,24 +1,27 @@
 import { Tilt } from '@/components/core/tilt';
+import { FilmIcon } from '@/registry/ndeko/lib/icons';
 
 export function TiltCard1() {
   return (
     <Tilt rotationFactor={8} isRevese>
-      <div
-        style={{
-          borderRadius: '12px',
-        }}
-        className='flex max-w-[270px] flex-col overflow-hidden border border-zinc-950/10 bg-white dark:border-zinc-50/10 dark:bg-zinc-900'
-      >
-        <img
-          src='https://images.beta.cosmos.so/f7fcb95d-981b-4cb3-897f-e35f6c20e830?format=jpeg'
-          alt='Ghost in the shell - Kôkaku kidôtai'
-          className='h-48 w-full object-cover'
-        />
-        <div className='p-2'>
-          <h1 className='font-mono leading-snug text-zinc-950 dark:text-zinc-50'>
-            Ghost in the Shell
-          </h1>
-          <p className='text-zinc-700 dark:text-zinc-400'>Kôkaku kidôtai</p>
+      <div className='hairline-ring ring-border bg-card flex max-w-[270px] flex-col overflow-hidden rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
+        <div
+          role='img'
+          aria-label='Still from Night Ferry: a full moon over two bands of water, in flat shapes.'
+          className='bg-primary/10 relative h-48 w-full overflow-hidden'
+        >
+          <div className='bg-primary/45 absolute top-8 right-10 size-16 rounded-full' />
+          <div className='bg-primary/20 absolute bottom-14 left-0 h-6 w-full' />
+          <div className='bg-primary/30 absolute bottom-0 left-0 h-14 w-full' />
+          <span className='gem-plate absolute bottom-4 left-4 grid size-8 place-items-center rounded-lg [--gem:var(--primary)]'>
+            <FilmIcon className='size-4' />
+          </span>
+        </div>
+        <div className='p-3'>
+          <h3 className='text-foreground text-sm leading-snug font-medium'>
+            Night Ferry
+          </h3>
+          <p className='text-muted-foreground text-xs'>Short film, 2026</p>
         </div>
       </div>
     </Tilt>

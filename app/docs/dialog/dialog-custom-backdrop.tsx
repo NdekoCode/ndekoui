@@ -1,44 +1,44 @@
+'use client';
 import {
   Dialog,
   DialogDescription,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogClose,
   DialogTrigger,
+  DialogClose,
 } from '@/components/core/dialog';
+import { Button, buttonVariants } from '@/registry/ndeko/ui/button';
+import { Input } from '@/registry/ndeko/ui/input';
 
 export function DialogCustomBackdrop() {
   return (
     <Dialog>
-      <DialogTrigger className='bg-zinc-950 px-4 py-2 text-sm text-white hover:bg-zinc-900 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100'>
+      <DialogTrigger className={buttonVariants()}>
         Join the waitlist
       </DialogTrigger>
-      <DialogContent className='w-full max-w-md p-6 shadow-[0_4px_12px_#0000001a] backdrop:bg-white/80 backdrop:backdrop-blur-xs'>
+      <DialogContent className='bg-card backdrop:bg-background/80 w-full max-w-md p-6 shadow-xl shadow-black/8 backdrop:backdrop-blur-xs'>
         <DialogHeader>
-          <DialogTitle className='text-zinc-900 dark:text-white'>
+          <DialogTitle className='text-foreground'>
             Join the waitlist
           </DialogTitle>
-          <DialogDescription className='text-zinc-600 dark:text-zinc-400'>
-            Enter your email address to receive updates when we launch.
+          <DialogDescription className='text-muted-foreground text-[13px]'>
+            Tidewell opens to new teams in March. Leave your work email and we
+            write once, on launch day.
           </DialogDescription>
         </DialogHeader>
         <div className='mt-6 flex flex-col space-y-4'>
-          <label htmlFor='name' className='sr-only'>
-            Email
+          <label htmlFor='dialog-custom-backdrop-email' className='sr-only'>
+            Work email
           </label>
-          <input
-            id='name'
+          <Input
+            id='dialog-custom-backdrop-email'
             type='email'
-            className='h-9 w-full rounded-lg border border-zinc-200 bg-white px-3 text-base text-zinc-900 outline-hidden focus:ring-2 focus:ring-black/5 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:ring-white/5 sm:text-sm'
-            placeholder='Enter your email'
+            placeholder='lea@harbor-studio.com'
           />
-          <button
-            className='inline-flex items-center justify-center self-end rounded-lg bg-black px-4 py-2 text-sm font-medium text-zinc-50 dark:bg-white dark:text-zinc-900'
-            type='submit'
-          >
-            Join now
-          </button>
+          <Button type='submit' className='self-end'>
+            Join the waitlist
+          </Button>
         </div>
         <DialogClose />
       </DialogContent>

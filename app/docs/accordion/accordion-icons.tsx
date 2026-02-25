@@ -1,80 +1,77 @@
-import { ChevronUp } from 'lucide-react';
-
 import {
-    Accordion, AccordionContent, AccordionItem, AccordionTrigger
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
 } from '@/components/core/accordion';
+import { ChevronUpIcon } from '@/registry/ndeko/lib/icons';
+
+const EASE_IN_OUT_STRONG = [0.77, 0, 0.175, 1] as const;
 
 export function AccordionIcons() {
   return (
     <Accordion
-      className='flex w-full flex-col divide-y divide-zinc-200 dark:divide-zinc-700'
-      transition={{ duration: 0.2, ease: 'easeInOut' }}
+      className='hairline-divide-y divide-border flex w-full flex-col'
+      transition={{ duration: 0.2, ease: EASE_IN_OUT_STRONG }}
     >
       <AccordionItem value='getting-started' className='py-2'>
-        <AccordionTrigger className='w-full text-left text-zinc-950 dark:text-zinc-50'>
+        <AccordionTrigger className='text-foreground w-full text-left text-sm font-medium'>
           <div className='flex items-center justify-between'>
-            <div>Getting Started</div>
-            <ChevronUp className='group-data-expanded:-rotate-180 h-4 w-4 text-zinc-950 transition-transform duration-200 dark:text-zinc-50' />
+            <div>Getting started</div>
+            <ChevronUpIcon className='text-muted-foreground size-4 transition-transform duration-200 group-data-expanded:-rotate-180' />
           </div>
         </AccordionTrigger>
         <AccordionContent>
-          <p className='text-zinc-500 dark:text-zinc-400'>
-            Discover the fundamental concepts of Ndeko UI. This section guides
-            you through the installation process and provides an overview of how
-            to integrate these components into your projects. Learn about the
-            core functionalities and how to set up your first animation
-            effectively.
+          <p className='text-muted-foreground pt-1 text-[13px]'>
+            Create a workspace, invite two teammates and connect the calendar
+            you already use. Tidewell copies your existing events in the
+            background, so your first week is ready before you finish setting up
+            your profile.
           </p>
         </AccordionContent>
       </AccordionItem>
-      <AccordionItem value='animation-properties' className='py-2'>
-        <AccordionTrigger className='w-full text-left text-zinc-950 dark:text-zinc-50'>
+      <AccordionItem value='sharing-a-workspace' className='py-2'>
+        <AccordionTrigger className='text-foreground w-full text-left text-sm font-medium'>
           <div className='flex items-center justify-between'>
-            <div>Animation Properties</div>
-            <ChevronUp className='group-data-expanded:-rotate-180 h-4 w-4 text-zinc-950 transition-transform duration-200 dark:text-zinc-50' />
+            <div>Sharing a workspace</div>
+            <ChevronUpIcon className='text-muted-foreground size-4 transition-transform duration-200 group-data-expanded:-rotate-180' />
           </div>
         </AccordionTrigger>
         <AccordionContent>
-          <p className='text-zinc-500 dark:text-zinc-400'>
-            Explore the comprehensive range of animation properties available in
-            Ndeko UI. Understand how to manipulate timing, easing, and delays to
-            create smooth, dynamic animations. This segment also covers the
-            customization of animations to fit the flow and style of your web
-            applications.
+          <p className='text-muted-foreground pt-1 text-[13px]'>
+            Every member sees the boards they belong to and nothing else. Guests
+            can comment on a single board without joining the workspace, and you
+            can remove their access at any time from the members page.
           </p>
         </AccordionContent>
       </AccordionItem>
-      <AccordionItem value='advanced-usage' className='py-2'>
-        <AccordionTrigger className='w-full text-left text-zinc-950 dark:text-zinc-50'>
+      <AccordionItem value='billing-and-invoices' className='py-2'>
+        <AccordionTrigger className='text-foreground w-full text-left text-sm font-medium'>
           <div className='flex items-center justify-between'>
-            <div>Advanced Usage</div>
-            <ChevronUp className='group-data-expanded:-rotate-180 h-4 w-4 text-zinc-950 transition-transform duration-200 dark:text-zinc-50' />
+            <div>Billing and invoices</div>
+            <ChevronUpIcon className='text-muted-foreground size-4 transition-transform duration-200 group-data-expanded:-rotate-180' />
           </div>
         </AccordionTrigger>
         <AccordionContent>
-          <p className='text-zinc-500 dark:text-zinc-400'>
-            Dive deeper into advanced techniques and features of Ndeko UI. Learn
-            about chaining animations, creating complex sequences, and utilizing
-            motion sensors for interactive animations. Gain insights on how to
-            leverage these advanced features to enhance user experience and
-            engagement.
+          <p className='text-muted-foreground pt-1 text-[13px]'>
+            You are billed per active member at the start of each month.
+            Invoices are emailed to the workspace owner and stay available in
+            the billing settings, ready to download as PDF.
           </p>
         </AccordionContent>
       </AccordionItem>
-      <AccordionItem value='community-and-support' className='py-2'>
-        <AccordionTrigger className='w-full text-left text-zinc-950 dark:text-zinc-50'>
+      <AccordionItem value='exporting-your-data' className='py-2'>
+        <AccordionTrigger className='text-foreground w-full text-left text-sm font-medium'>
           <div className='flex items-center justify-between'>
-            <div>Community and Support</div>
-            <ChevronUp className='group-data-expanded:-rotate-180 h-4 w-4 text-zinc-950 transition-transform duration-200 dark:text-zinc-50' />
+            <div>Exporting your data</div>
+            <ChevronUpIcon className='text-muted-foreground size-4 transition-transform duration-200 group-data-expanded:-rotate-180' />
           </div>
         </AccordionTrigger>
         <AccordionContent>
-          <p className='text-zinc-500 dark:text-zinc-400'>
-            Engage with the Ndeko UI community to gain additional support and
-            insight. Find out how to participate in discussions, contribute to
-            the project, and access a wealth of shared knowledge and resources.
-            Learn about upcoming features, best practices, and how to get help
-            with your specific use cases.
+          <p className='text-muted-foreground pt-1 text-[13px]'>
+            Export boards, comments and attachments as a single archive from the
+            workspace settings. Large workspaces take a few minutes; we email
+            you a link when the archive is ready.
           </p>
         </AccordionContent>
       </AccordionItem>

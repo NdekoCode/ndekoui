@@ -1,63 +1,59 @@
 import {
-    Accordion, AccordionContent, AccordionItem, AccordionTrigger
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
 } from '@/components/core/accordion';
 
 export function AccordionBasic() {
   return (
-    <Accordion className='flex w-full flex-col divide-y divide-zinc-200 dark:divide-zinc-700'>
-      <AccordionItem value='getting-started'>
-        <AccordionTrigger className='w-full py-0.5 text-left text-zinc-950 dark:text-zinc-50'>
-          Getting Started
+    <Accordion className='hairline-divide-y divide-border flex w-full flex-col'>
+      <AccordionItem value='getting-started' className='py-2'>
+        <AccordionTrigger className='text-foreground w-full py-0.5 text-left text-sm font-medium'>
+          Getting started
         </AccordionTrigger>
         <AccordionContent>
-          <p className='text-zinc-500 dark:text-zinc-400'>
-            Discover the fundamental concepts of Ndeko UI. This section guides
-            you through the installation process and provides an overview of how
-            to integrate these components into your projects. Learn about the
-            core functionalities and how to set up your first animation
-            effectively.
+          <p className='text-muted-foreground pt-1 text-[13px]'>
+            Create a workspace, invite two teammates and connect the calendar
+            you already use. Tidewell copies your existing events in the
+            background, so your first week is ready before you finish setting up
+            your profile.
           </p>
         </AccordionContent>
       </AccordionItem>
-      <AccordionItem value='animation-properties'>
-        <AccordionTrigger className='w-full py-0.5 text-left text-zinc-950 dark:text-zinc-50'>
-          Animation Properties
+      <AccordionItem value='sharing-a-workspace' className='py-2'>
+        <AccordionTrigger className='text-foreground w-full py-0.5 text-left text-sm font-medium'>
+          Sharing a workspace
         </AccordionTrigger>
         <AccordionContent>
-          <p className='text-zinc-500 dark:text-zinc-400'>
-            Explore the comprehensive range of animation properties available in
-            Ndeko UI. Understand how to manipulate timing, easing, and delays to
-            create smooth, dynamic animations. This segment also covers the
-            customization of animations to fit the flow and style of your web
-            applications.
+          <p className='text-muted-foreground pt-1 text-[13px]'>
+            Every member sees the boards they belong to and nothing else. Guests
+            can comment on a single board without joining the workspace, and you
+            can remove their access at any time from the members page.
           </p>
         </AccordionContent>
       </AccordionItem>
-      <AccordionItem value='advanced-usage'>
-        <AccordionTrigger className='w-full py-0.5 text-left text-zinc-950 dark:text-zinc-50'>
-          Advanced Usage
+      <AccordionItem value='billing-and-invoices' className='py-2'>
+        <AccordionTrigger className='text-foreground w-full py-0.5 text-left text-sm font-medium'>
+          Billing and invoices
         </AccordionTrigger>
         <AccordionContent>
-          <p className='text-zinc-500 dark:text-zinc-400'>
-            Dive deeper into advanced techniques and features of Ndeko UI. Learn
-            about chaining animations, creating complex sequences, and utilizing
-            motion sensors for interactive animations. Gain insights on how to
-            leverage these advanced features to enhance user experience and
-            engagement.
+          <p className='text-muted-foreground pt-1 text-[13px]'>
+            You are billed per active member at the start of each month.
+            Invoices are emailed to the workspace owner and stay available in
+            the billing settings, ready to download as PDF.
           </p>
         </AccordionContent>
       </AccordionItem>
-      <AccordionItem value='community-and-support'>
-        <AccordionTrigger className='w-full py-0.5 text-left text-zinc-950 dark:text-zinc-50'>
-          Community and Support
+      <AccordionItem value='exporting-your-data' className='py-2'>
+        <AccordionTrigger className='text-foreground w-full py-0.5 text-left text-sm font-medium'>
+          Exporting your data
         </AccordionTrigger>
         <AccordionContent>
-          <p className='text-zinc-500 dark:text-zinc-400'>
-            Engage with the Ndeko UI community to gain additional support and
-            insight. Find out how to participate in discussions, contribute to
-            the project, and access a wealth of shared knowledge and resources.
-            Learn about upcoming features, best practices, and how to get help
-            with your specific use cases.
+          <p className='text-muted-foreground pt-1 text-[13px]'>
+            Export boards, comments and attachments as a single archive from the
+            workspace settings. Large workspaces take a few minutes; we email
+            you a link when the archive is ready.
           </p>
         </AccordionContent>
       </AccordionItem>

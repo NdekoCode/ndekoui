@@ -1,9 +1,13 @@
 import { InView } from '@/components/core/in-view';
 
+const EASE_OUT_STRONG = [0.23, 1, 0.32, 1] as const;
+
 export function InViewBasicMultiple() {
   return (
-    <div className='h-[350px] w-full overflow-y-auto overflow-x-hidden'>
-      <div className='mb-36 py-12 text-center text-sm'>Scroll down</div>
+    <div className='h-[350px] w-full overflow-x-hidden overflow-y-auto'>
+      <div className='text-muted-foreground mb-36 py-12 text-center text-[13px]'>
+        Scroll down
+      </div>
       <div className='flex h-[350px] items-end justify-center px-4 pb-24'>
         <InView
           variants={{
@@ -20,13 +24,15 @@ export function InViewBasicMultiple() {
               filter: 'blur(0px)',
             },
           }}
-          transition={{ duration: 0.3, ease: 'easeInOut' }}
+          transition={{ duration: 0.3, ease: EASE_OUT_STRONG }}
           viewOptions={{ margin: '0px 0px -350px 0px' }}
         >
-          <div className='max-w-96 bg-zinc-100 p-4'>
-            <p className='text-zinc-600'>
-              <strong className='font-medium text-zinc-900'>Athletics.</strong>{' '}
-              Watch running, jumping, and throwing events. Athletes compete in
+          <div className='bg-foreground/[0.04] max-w-96 rounded-xl p-4'>
+            <p className='text-muted-foreground text-[13px]'>
+              <strong className='text-foreground font-medium'>
+                Athletics.
+              </strong>{' '}
+              Watch running, jumping and throwing events. Athletes compete in
               many different activities.
             </p>
           </div>
@@ -44,12 +50,12 @@ export function InViewBasicMultiple() {
               x: 0,
             },
           }}
-          transition={{ duration: 0.3, ease: 'easeInOut' }}
+          transition={{ duration: 0.3, ease: EASE_OUT_STRONG }}
           viewOptions={{ margin: '0px 0px -350px 0px' }}
         >
-          <div className='max-w-96 bg-zinc-900 p-4'>
-            <p className='text-zinc-400'>
-              <strong className='font-medium text-zinc-50'>Swimming.</strong>{' '}
+          <div className='bg-foreground max-w-96 rounded-xl p-4'>
+            <p className='text-background/70 text-[13px]'>
+              <strong className='text-background font-medium'>Swimming.</strong>{' '}
               See swimmers race in water. They use different styles to swim fast
               and win medals.
             </p>
@@ -68,14 +74,16 @@ export function InViewBasicMultiple() {
               scale: 1,
             },
           }}
-          transition={{ duration: 0.3, ease: 'easeInOut' }}
+          transition={{ duration: 0.3, ease: EASE_OUT_STRONG }}
           viewOptions={{ margin: '0px 0px -350px 0px' }}
         >
-          <div className='max-w-96 bg-zinc-100 p-4'>
-            <p className='text-zinc-600'>
-              <strong className='font-medium'>Gymnastics.</strong> Gymnasts
-              perform amazing flips and jumps. They show strength and balance in
-              their routines.
+          <div className='bg-foreground/[0.04] max-w-96 rounded-xl p-4'>
+            <p className='text-muted-foreground text-[13px]'>
+              <strong className='text-foreground font-medium'>
+                Gymnastics.
+              </strong>{' '}
+              Gymnasts perform flips and jumps. They show strength and balance
+              in their routines.
             </p>
           </div>
         </InView>

@@ -5,7 +5,7 @@ export function SpinningTextBasic() {
     <SpinningText
       radius={5}
       fontSize={1.2}
-      className='font-medium leading-none'
+      className='text-foreground leading-none font-medium'
     >
       {`pre-order • pre-order • pre-order • `}
     </SpinningText>

@@ -4,24 +4,38 @@ import {
   DisclosureTrigger,
 } from '@/components/core/disclosure';
 
+const CHANGES = [
+  'Recurring tasks on every board',
+  'Calendar sync for shared boards',
+  'Search inside attachments',
+];
+
 export function DisclosureBasic() {
   return (
-    <Disclosure className='w-[330px] rounded-md border border-zinc-200 px-3 dark:border-zinc-700'>
+    <Disclosure className='bg-card hairline-ring ring-border w-[330px] rounded-xl px-3 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
       <DisclosureTrigger>
-        <button className='w-full py-2 text-left text-sm' type='button'>
-          Show more
+        <button
+          className='text-foreground w-full py-2.5 text-left text-sm font-medium'
+          type='button'
+        >
+          Release notes, version 2.4
         </button>
       </DisclosureTrigger>
       <DisclosureContent>
         <div className='overflow-hidden pb-3'>
-          <div className='pt-1 font-mono text-sm'>
+          <div className='text-muted-foreground pt-1 text-[13px]'>
             <p>
-              This example demonstrates how you can use{' '}
-              <strong className='font-bold'>Disclosure</strong> component.
+              Version 2.4 shipped on 14 March for every workspace.{' '}
+              <strong className='text-foreground font-medium'>
+                Nothing to install
+              </strong>
+              : the desktop app updates on its next launch.
             </p>
-            <pre className='mt-2 rounded-md bg-zinc-100 p-2 text-xs dark:bg-zinc-950'>
-              {`function DisclosureBasic() {\n  return (\n    <Disclosure>\n      <DisclosureTrigger>\n        <button type='button'>\n          Show more\n        </button>\n      </DisclosureTrigger>\n      <DisclosureContent>\n        <div>hey</div>\n      </DisclosureContent>\n    </Disclosure>\n  );`}
-            </pre>
+            <ul className='bg-foreground/[0.04] mt-2 list-inside list-disc space-y-1 rounded-lg p-2.5'>
+              {CHANGES.map((change) => (
+                <li key={change}>{change}</li>
+              ))}
+            </ul>
           </div>
         </div>
       </DisclosureContent>

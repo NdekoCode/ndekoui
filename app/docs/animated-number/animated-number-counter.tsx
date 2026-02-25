@@ -1,33 +1,40 @@
 'use client';
 import { useState } from 'react';
 import { AnimatedNumber } from '@/components/core/animated-number';
-import { Minus, Plus } from 'lucide-react';
+import { MinusIcon, PlusIcon } from '@/registry/ndeko/lib/icons';
+import { Button } from '@/registry/ndeko/ui/button';
+
+const STEP = 100;
 
 export function AnimatedNumberCounter() {
   const [value, setValue] = useState(1000);
 
   return (
-    <div className='flex w-full items-center justify-center space-x-2 text-zinc-800 dark:text-zinc-50'>
-      <button
-        aria-label='Decrement'
-        onClick={() => setValue((prev) => prev - 100)}
+    <div className='text-foreground flex w-full items-center justify-center space-x-3'>
+      <Button
+        variant='outline'
+        size='icon-sm'
+        aria-label='Decrease by 100'
+        onClick={() => setValue((prev) => prev - STEP)}
       >
-        <Minus className='h-4 w-4' />
-      </button>
+        <MinusIcon />
+      </Button>
       <AnimatedNumber
-        className='inline-flex items-center font-mono text-2xl font-light'
+        className='inline-flex min-w-[5ch] items-center justify-center text-2xl font-medium'
         springOptions={{
           bounce: 0,
           duration: 1000,
         }}
         value={value}
       />
-      <button
-        aria-label='Increment'
-        onClick={() => setValue((prev) => prev + 100)}
+      <Button
+        variant='outline'
+        size='icon-sm'
+        aria-label='Increase by 100'
+        onClick={() => setValue((prev) => prev + STEP)}
       >
-        <Plus className='h-4 w-4' />
-      </button>
+        <PlusIcon />
+      </Button>
     </div>
   );
 }

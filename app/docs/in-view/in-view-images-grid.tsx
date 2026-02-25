@@ -1,11 +1,62 @@
 'use client';
+import { motion, useReducedMotion } from 'motion/react';
 import { InView } from '@/components/core/in-view';
-import { motion } from 'motion/react';
+import {
+  CompassIcon,
+  FeatherIcon,
+  ImageIcon,
+  MoonIcon,
+  SunIcon,
+} from '@/registry/ndeko/lib/icons';
+import { cn } from '@/registry/ndeko/lib/utils';
+
+const TONES = [
+  { tile: 'bg-primary/10', gem: '[--gem:var(--primary)]' },
+  { tile: 'bg-success/10', gem: '[--gem:var(--success)]' },
+  { tile: 'bg-warning/10', gem: '[--gem:var(--warning)]' },
+  { tile: 'bg-info/10', gem: '[--gem:var(--info)]' },
+  { tile: 'bg-foreground/[0.04]', gem: '[--gem:var(--muted-foreground)]' },
+];
+
+const SHOTS = [
+  { label: 'Shoreline', icon: SunIcon, ratio: 'aspect-[3/4]' },
+  { label: 'Ceramics', icon: ImageIcon, ratio: 'aspect-square' },
+  { label: 'Night ferry', icon: MoonIcon, ratio: 'aspect-[4/5]' },
+  { label: 'Orchard', icon: FeatherIcon, ratio: 'aspect-[3/2]' },
+  { label: 'Old map', icon: CompassIcon, ratio: 'aspect-[3/4]' },
+  { label: 'Studio wall', icon: ImageIcon, ratio: 'aspect-[3/2]' },
+  { label: 'Market day', icon: SunIcon, ratio: 'aspect-square' },
+  { label: 'Window light', icon: MoonIcon, ratio: 'aspect-[4/5]' },
+  { label: 'Paper cuts', icon: FeatherIcon, ratio: 'aspect-[3/4]' },
+  { label: 'Harbour', icon: CompassIcon, ratio: 'aspect-square' },
+];
+
+function itemVariantsOf(shouldReduceMotion: boolean | null) {
+  if (shouldReduceMotion) {
+    return {
+      hidden: { opacity: 0 },
+      visible: { opacity: 1 },
+    };
+  }
+  return {
+    hidden: { opacity: 0, scale: 0.8, filter: 'blur(10px)' },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      filter: 'blur(0px)',
+    },
+  };
+}
 
 export function InViewImagesGrid() {
+  const shouldReduceMotion = useReducedMotion();
+  const itemVariants = itemVariantsOf(shouldReduceMotion);
+
   return (
     <div className='h-full w-full overflow-auto'>
-      <div className='mb-20 py-12 text-center text-sm'>Scroll down</div>
+      <div className='text-muted-foreground mb-20 py-12 text-center text-[13px]'>
+        Scroll down
+      </div>
       <div className='flex h-[1200px] items-end justify-center pb-12'>
         <InView
           viewOptions={{ once: true, margin: '0px 0px -250px 0px' }}
@@ -22,36 +73,35 @@ export function InViewImagesGrid() {
           }}
         >
           <div className='columns-2 gap-4 px-8 sm:columns-3'>
-            {[
-              'https://images.beta.cosmos.so/e5ebb6f8-8202-40ec-bc70-976f81153501?format=jpeg',
-              'https://images.beta.cosmos.so/1b6f1bee-1b4c-4035-9e93-c93ef4d445e1?format=jpeg',
-              'https://images.beta.cosmos.so/9968a6cf-d7f6-4ec9-a56d-ac4eef3f8689?format=jpeg',
-              'https://images.beta.cosmos.so/4b88a39c-c657-4911-b843-b473237e83b5?format=jpeg',
-              'https://images.beta.cosmos.so/86af92c0-064d-4801-b7ed-232535b03328?format=jpeg',
-              'https://images.beta.cosmos.so/399e2a4a-e118-4aaf-9c7e-155ed18f6556?format=jpeg',
-              'https://images.beta.cosmos.so/6ff16bc9-dc94-4549-a057-673a603ce203?format=jpeg',
-              'https://images.beta.cosmos.so/d67c3185-4480-4408-8f9d-1cbf541e5d91?format=jpeg',
-              'https://images.beta.cosmos.so/a7b19274-3370-4080-b734-e8ac268d8c8e.?format=jpeg',
-              'https://images.beta.cosmos.so/551daf0d-77e8-472c-9324-468fed15a0ba?format=jpeg',
-            ].map((imgSrc, index) => {
+            {SHOTS.map((shot, index) => {
+              const tone = TONES[index % TONES.length];
+              const Glyph = shot.icon;
+
               return (
                 <motion.div
-                  variants={{
-                    hidden: { opacity: 0, scale: 0.8, filter: 'blur(10px)' },
-                    visible: {
-                      opacity: 1,
-                      scale: 1,
-                      filter: 'blur(0px)',
-                    },
-                  }}
-                  key={index}
+                  variants={itemVariants}
+                  key={shot.label}
                   className='mb-4'
                 >
-                  <img
-                    src={imgSrc}
-                    alt={`Image placeholder from cosmos.so, index:${index}`}
-                    className='size-full rounded-lg object-contain'
-                  />
+                  <div
+                    className={cn(
+                      'flex w-full flex-col justify-between rounded-lg p-3',
+                      shot.ratio,
+                      tone.tile
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        'gem-plate grid size-8 place-items-center rounded-md',
+                        tone.gem
+                      )}
+                    >
+                      <Glyph className='size-4' />
+                    </span>
+                    <span className='text-foreground text-[13px] font-medium'>
+                      {shot.label}
+                    </span>
+                  </div>
                 </motion.div>
               );
             })}

@@ -1,78 +1,103 @@
 'use client';
 
 import { useState } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 import {
   Disclosure,
   DisclosureContent,
   DisclosureTrigger,
 } from '@/components/core/disclosure';
-import { motion } from 'motion/react';
+import { CompassIcon } from '@/registry/ndeko/lib/icons';
+import { Button } from '@/registry/ndeko/ui/button';
 
-export function DisclosureCard() {
-  const [isOpen, setIsOpen] = useState(false);
+const contentVariants = {
+  collapsed: { opacity: 0, y: 0 },
+  expanded: { opacity: 1, y: 0 },
+};
 
-  const imageVariants = {
+const transition = {
+  type: 'spring' as const,
+  stiffness: 26.7,
+  damping: 4.1,
+  mass: 0.2,
+};
+
+function tileVariantsOf(shouldReduceMotion: boolean | null) {
+  if (shouldReduceMotion) {
+    return {
+      collapsed: { scale: 1, filter: 'blur(0px)' },
+      expanded: { scale: 1, filter: 'blur(3px)' },
+    };
+  }
+  return {
     collapsed: { scale: 1, filter: 'blur(0px)' },
     expanded: { scale: 1.1, filter: 'blur(3px)' },
   };
+}
 
-  const contentVariants = {
-    collapsed: { opacity: 0, y: 0 },
-    expanded: { opacity: 1, y: 0 },
-  };
+function variantOf(isOpen: boolean) {
+  if (isOpen) {
+    return 'expanded';
+  }
+  return 'collapsed';
+}
 
-  const transition = {
-    type: 'spring',
-    stiffness: 26.7,
-    damping: 4.1,
-    mass: 0.2,
-  };
+export function DisclosureCard() {
+  const [isOpen, setIsOpen] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
+  const tileVariants = tileVariantsOf(shouldReduceMotion);
 
   return (
     <div className='relative h-[350px] w-[290px] overflow-hidden rounded-xl'>
       <div onClick={() => setIsOpen(!isOpen)}>
-        <motion.img
-          src='https://images.beta.cosmos.so/5b21c112-ed1d-45cd-baf0-38186a15af8e?format=jpeg'
-          alt='Les others studio - Que la montagne est belle ⛰'
-          className='pointer-events-none h-auto w-full select-none'
-          animate={isOpen ? 'expanded' : 'collapsed'}
-          variants={imageVariants}
+        <motion.div
+          role='img'
+          aria-label='Ridge trail at sunrise'
+          className='bg-success/10 pointer-events-none flex h-[350px] w-full items-start gap-3 p-5 select-none'
+          animate={variantOf(isOpen)}
+          variants={tileVariants}
           transition={transition}
-        />
+        >
+          <span className='gem-plate grid size-9 place-items-center rounded-lg [--gem:var(--success)]'>
+            <CompassIcon className='size-4' />
+          </span>
+          <span className='flex flex-col'>
+            <span className='text-foreground text-sm font-medium'>
+              Vell ridge
+            </span>
+            <span className='text-muted-foreground text-xs'>
+              2,000 m, day two
+            </span>
+          </span>
+        </motion.div>
       </div>
       <Disclosure
         onOpenChange={setIsOpen}
         open={isOpen}
-        className='absolute bottom-0 left-0 right-0 rounded-xl bg-zinc-900 px-4 pt-2 dark:bg-zinc-50'
+        className='surface-raised absolute right-0 bottom-0 left-0 rounded-xl px-4 pt-2'
         variants={contentVariants}
         transition={transition}
       >
         <DisclosureTrigger>
           <button
-            className='w-full pb-2 text-left text-[14px] font-medium text-white dark:text-zinc-900'
+            className='text-foreground w-full pb-2 text-left text-sm font-medium'
             type='button'
             onClick={() => setIsOpen(!isOpen)}
           >
-            lesothers.studio
+            Fernhill Outdoor Club
           </button>
         </DisclosureTrigger>
         <DisclosureContent>
-          <div className='flex flex-col pb-4 text-[13px] text-zinc-300 dark:text-zinc-700'>
-            <p>How beautiful the mountain is 🗻</p>
+          <div className='text-muted-foreground flex flex-col pb-4 text-[13px]'>
+            <p className='text-foreground'>Spring trail series</p>
             <p className='line-clamp-3'>
-              The “This is trail running” campaign highlights the new trail
-              collection from <strong className='font-medium'>@salomon</strong>,
-              trying to touch the (strong) sensations experienced by runners.
-              With each model, its natural environment. To capture the Pulsar
-              Trail Pro 2 in real conditions, we chose to take the athletes
-              trudging in the French Alps, at 2,000 meters altitude.
+              Twelve runners, three days on the Vell ridge at 2,000 metres. The
+              series follows the club through fog, scree and one very long
+              descent, with pacing notes from the coaches after each stage.
             </p>
-            <button
-              className='mt-3 w-full rounded-[4px] border border-zinc-700 bg-zinc-900 px-4 py-1 text-zinc-50 transition-colors duration-300 hover:bg-zinc-800'
-              type='button'
-            >
-              Learn More
-            </button>
+            <Button variant='outline' size='sm' className='mt-3 w-full'>
+              Read the trail guide
+            </Button>
           </div>
         </DisclosureContent>
       </Disclosure>
