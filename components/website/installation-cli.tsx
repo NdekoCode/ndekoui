@@ -1,9 +1,5 @@
-'use client';
-
-import { CheckIcon, CopyIcon } from 'lucide-react';
-import { useState } from 'react';
-
-import { Button } from '@/components/ui/button';
+import { CopyButton } from '@/app/_site/copy-button';
+import { installCommandOf } from '@/lib/site';
 import { cn } from '@/lib/utils';
 
 import { NdekoUILLogo } from './icons/ndekoui-logo';
@@ -16,6 +12,8 @@ type Command = {
   code: string;
 };
 
+const MOTION_ITEM_PREFIX = 'motion-';
+
 export type InstallationCliProps = {
   value: string;
   className?: string;
@@ -24,99 +22,52 @@ export type InstallationCliProps = {
 export function InstallationCli({ value, className }: InstallationCliProps) {
   const commands: Command[] = [
     {
+      label: 'shadcn',
+      icon: <ShadcnLogo className='size-4' />,
+      code: installCommandOf(`${MOTION_ITEM_PREFIX}${value}`),
+    },
+    {
       label: 'ndekoui',
       icon: <NdekoUILLogo className='size-4' />,
       code: `npx ndekoui@latest add ${value}`,
     },
-    {
-      label: 'shadcn',
-      icon: <ShadcnLogo className='size-4' />,
-      code: `npx shadcn@latest add "https://ui.ndeko.dev/c/${value}.json"`,
-    },
   ];
-
-  const [activeTab, setActiveTab] = useState(commands[0].label);
-  const [isCopied, setIsCopied] = useState(false);
-  const activeCommand = commands.find((cmd) => cmd.label === activeTab);
-
-  const onCopy = async () => {
-    if (!activeCommand?.code) return;
-
-    try {
-      await navigator.clipboard.writeText(activeCommand.code);
-      setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy:', err);
-    }
-  };
 
   return (
     <Tabs
       defaultValue={commands[0].label}
-      onValueChange={setActiveTab}
-      className={cn('group overflow-hidden rounded-md border-none', className)}
+      className={cn(
+        'not-prose bg-card hairline-ring ring-border overflow-hidden rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04)]',
+        className
+      )}
     >
-      <div className='bg-secondary flex flex-row items-center justify-between overflow-hidden rounded-t-md border border-b-0 border-zinc-200 dark:border-zinc-800'>
-        <TabsList className='rounded-none border-b-0'>
-          {commands.map((command) => (
-            <TabsTrigger
-              key={command.label}
-              value={command.label}
-              className='gap-1.5'
-              classNameIndicator='opacity-0'
-            >
-              <span
-                className={cn(
-                  'flex items-center gap-1',
-                  activeTab === command.label
-                    ? 'text-zinc-950 dark:text-white'
-                    : 'opacity-50'
-                )}
-              >
-                {command.icon}
-                {command.label}
-              </span>
-            </TabsTrigger>
-          ))}
-        </TabsList>
-        <Button
-          variant='ghost'
-          size='icon'
-          onClick={onCopy}
-          className={cn(
-            'relative opacity-0 transition-opacity group-hover:opacity-100',
-            isCopied && 'pointer-events-none'
-          )}
-        >
-          <CopyIcon
-            className={cn(
-              'size-4 transition-all',
-              isCopied && 'scale-0 opacity-0'
-            )}
-          />
-          <CheckIcon
-            className={cn(
-              'size-4 absolute transition-all',
-              isCopied ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
-            )}
-          />
-        </Button>
-      </div>
+      <TabsList className='h-10 px-1'>
+        {commands.map((command) => (
+          <TabsTrigger
+            key={command.label}
+            value={command.label}
+            className='gap-1.5 px-3'
+          >
+            {command.icon}
+            {command.label}
+          </TabsTrigger>
+        ))}
+      </TabsList>
       {commands.map((command) => (
         <TabsContent
           key={command.label}
           value={command.label}
-          className='mb-0 mt-0 border-none'
+          className='mt-0 rounded-none p-3'
         >
-          <pre
-            className='not-prose p-4 font-mono text-sm text-zinc-50'
-            style={{
-              backgroundColor: '#18181b',
-            }}
-          >
-            {command.code}
-          </pre>
+          <div className='bg-foreground/[0.04] flex items-center gap-2 rounded-lg py-1 ps-3 pe-1'>
+            <code className='text-muted-foreground min-w-0 flex-1 overflow-x-auto font-mono text-xs whitespace-nowrap'>
+              {command.code}
+            </code>
+            <CopyButton
+              value={command.code}
+              label={`Copy the ${command.label} command`}
+            />
+          </div>
         </TabsContent>
       ))}
     </Tabs>

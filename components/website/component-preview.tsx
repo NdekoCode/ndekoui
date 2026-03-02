@@ -1,10 +1,15 @@
 'use client';
-import { RotateCw } from 'lucide-react';
 import { cloneElement, useState } from 'react';
 
 import { cn } from '@/lib/utils';
+import { RefreshCwIcon } from '@/registry/ndeko/lib/icons';
+import { Button } from '@/registry/ndeko/ui/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/registry/ndeko/ui/tooltip';
 
-import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 import { OpenInV0Button } from './open-in-v0';
 
 type ComponentPreviewProps = {
@@ -20,44 +25,47 @@ export default function ComponentPreview({
   className,
   filePath,
 }: ComponentPreviewProps) {
-  const [reTriggerKey, setReTriggerKey] = useState<number>(Date.now());
+  const [replayCount, setReplayCount] = useState(0);
 
   const componentName = filePath?.split('/').pop()?.split('.').shift();
   const registryUrl = `https://ui.ndeko.dev/e/${componentName}.json`;
 
-  const reTrigger = () => {
-    setReTriggerKey(Date.now());
+  const replay = () => {
+    setReplayCount((count) => count + 1);
   };
 
   return (
     <div
       className={cn(
-        'group flex min-h-[350px] w-full items-center justify-center rounded-md',
+        'group flex min-h-[350px] w-full items-center justify-center rounded-xl',
         className
       )}
     >
-      <div className='absolute right-4 top-3'>
-        <div className='flex items-center gap-3 opacity-0 transition-opacity group-hover:opacity-100'>
+      <div className='absolute top-3 right-3 z-10'>
+        <div className='flex items-center gap-1 opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100'>
           <OpenInV0Button url={registryUrl} />
           {hasReTrigger && (
             <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  className='cursor-pointer'
-                  onClick={reTrigger}
-                  type='button'
-                >
-                  <RotateCw className='h-4 w-4 text-zinc-600 transition-colors hover:text-black dark:text-zinc-400 dark:hover:text-white' />
-                </button>
+              <TooltipTrigger
+                render={
+                  <Button
+                    variant='ghost'
+                    size='icon-sm'
+                    className='text-muted-foreground'
+                    aria-label='Replay the animation'
+                    onClick={replay}
+                  />
+                }
+              >
+                <RefreshCwIcon />
               </TooltipTrigger>
-              <TooltipContent>Re-trigger</TooltipContent>
+              <TooltipContent>Replay</TooltipContent>
             </Tooltip>
           )}
         </div>
       </div>
-      {hasReTrigger
-        ? cloneElement(component, { key: reTriggerKey })
-        : component}
+      {hasReTrigger && cloneElement(component, { key: replayCount })}
+      {!hasReTrigger && component}
     </div>
   );
 }

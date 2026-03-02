@@ -22,13 +22,13 @@ export default function ComponentCodePreview({
   return (
     <div className='not-prose relative z-0 flex items-center justify-between pb-4'>
       <Tabs defaultValue='preview' className='relative mr-auto w-full'>
-        <TabsList className=''>
+        <TabsList>
           <TabsTrigger value='preview'>Preview</TabsTrigger>
           <TabsTrigger value='code'>Code</TabsTrigger>
         </TabsList>
         <TabsContent
           value='preview'
-          className='border border-zinc-200 dark:border-zinc-800'
+          className='bg-card hairline-ring ring-border shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
         >
           <ComponentPreview
             component={component}
@@ -37,10 +37,7 @@ export default function ComponentCodePreview({
             filePath={filePath}
           />
         </TabsContent>
-        <TabsContent
-          value='code'
-          className='border border-zinc-200 dark:border-zinc-800'
-        >
+        <TabsContent value='code'>
           <CodePreview code={fileContent}>
             <CodeRenderer code={fileContent} lang='tsx' />
           </CodePreview>

@@ -4,7 +4,25 @@ import * as React from 'react';
 import * as TabsPrimitive from '@radix-ui/react-tabs';
 
 import { cn } from '@/lib/utils';
-import { motion } from 'motion/react';
+import { motion, Transition, useReducedMotion } from 'motion/react';
+
+const INDICATOR_TRANSITION: Transition = {
+  type: 'spring',
+  stiffness: 26.7,
+  damping: 4.1,
+  mass: 0.2,
+};
+
+const INSTANT: Transition = {
+  duration: 0,
+};
+
+function indicatorTransitionOf(prefersReducedMotion: boolean | null) {
+  if (prefersReducedMotion) {
+    return INSTANT;
+  }
+  return INDICATOR_TRANSITION;
+}
 
 const Tabs = TabsPrimitive.Root;
 
@@ -29,7 +47,7 @@ const TabsList = React.forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      'inline-flex h-10 w-full items-center justify-start border-b border-zinc-200 bg-transparent text-zinc-900 dark:border-zinc-800 dark:text-zinc-50',
+      'hairline-b border-border text-foreground inline-flex h-10 w-full items-center justify-start bg-transparent',
       className
     )}
     {...props}
@@ -46,6 +64,21 @@ const TabsTrigger = React.forwardRef<
   const triggerRef = React.useRef<HTMLButtonElement>(null);
   const [isActive, setIsActive] = React.useState(false);
   const tabsId = React.useContext(TabsContext);
+  const prefersReducedMotion = useReducedMotion();
+
+  const setTriggerRef = React.useCallback(
+    (element: HTMLButtonElement | null) => {
+      triggerRef.current = element;
+      if (typeof ref === 'function') {
+        ref(element);
+        return;
+      }
+      if (ref) {
+        ref.current = element;
+      }
+    },
+    [ref]
+  );
 
   React.useEffect(() => {
     const element = triggerRef.current;
@@ -64,9 +97,9 @@ const TabsTrigger = React.forwardRef<
 
   return (
     <TabsPrimitive.Trigger
-      ref={triggerRef}
+      ref={setTriggerRef}
       className={cn(
-        'ring-offset-background focus-visible:ring-ring group relative inline-flex h-10 items-center justify-center rounded-none bg-transparent px-4 py-1 pt-2 pb-3 text-sm font-medium whitespace-nowrap text-zinc-500 transition-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-zinc-950 dark:text-zinc-500 dark:data-[state=active]:text-white',
+        'ring-offset-background focus-visible:ring-ring group text-muted-foreground hover:text-foreground data-[state=active]:text-foreground relative inline-flex h-10 items-center justify-center rounded-none bg-transparent px-4 py-1 pt-2 pb-3 text-[13px] font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50',
         className
       )}
       {...props}
@@ -75,17 +108,12 @@ const TabsTrigger = React.forwardRef<
         <motion.div
           layout
           className='absolute bottom-0 flex h-0.5 w-full justify-center'
-          transition={{
-            type: 'spring',
-            stiffness: 26.7,
-            damping: 4.1,
-            mass: 0.2,
-          }}
+          transition={indicatorTransitionOf(prefersReducedMotion)}
           layoutId={`underline-${tabsId}`}
         >
           <div
             className={cn(
-              'h-0.5 w-4/5 bg-zinc-950 dark:bg-white',
+              'bg-foreground h-0.5 w-4/5 rounded-full',
               classNameIndicator
             )}
           />
@@ -104,7 +132,7 @@ const TabsContent = React.forwardRef<
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
-      'focus-visible:ring-ring relative mt-2 rounded-md ring-offset-blue-50 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden',
+      'focus-visible:ring-ring ring-offset-background relative mt-3 rounded-xl focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden',
       className
     )}
     {...props}

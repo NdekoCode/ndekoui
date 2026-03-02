@@ -9,7 +9,7 @@ export function ShadcnLogo(props: SVGProps<SVGSVGElement>) {
       viewBox='0 0 256 256'
       width={70}
       height={70}
-      className={cn('text-zinc-950 dark:text-white', props.className)}
+      className={cn('text-foreground', props.className)}
       fill='none'
       {...props}
     >

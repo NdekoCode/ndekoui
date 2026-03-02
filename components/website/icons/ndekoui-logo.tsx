@@ -7,9 +7,9 @@ import type { SVGProps } from 'react';
 export function NdekoUILLogo(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
-      role='logo-img'
-      aria-label='Ndeko UI Logo'
-      className={cn('text-zinc-950 dark:text-white', props.className)}
+      role='img'
+      aria-label='Ndeko UI'
+      className={cn('text-foreground', props.className)}
       width={92}
       height={92}
       viewBox='0 0 92 92'

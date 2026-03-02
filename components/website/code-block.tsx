@@ -10,21 +10,23 @@ type CodeBlockProps = {
   className?: string;
 };
 
+function sourceOf(filePath: string | undefined, code: string) {
+  if (filePath) {
+    return extractCodeFromFilePath(filePath);
+  }
+  return code;
+}
+
 export default function CodeBlock({
   filePath,
   code = '',
   lang = 'tsx',
   className,
 }: CodeBlockProps) {
-  const fileContent = filePath ? extractCodeFromFilePath(filePath) : code;
+  const fileContent = sourceOf(filePath, code);
 
   return (
-    <div
-      className={cn(
-        'not-prose max-h-[650px] overflow-auto overflow-x-auto overflow-y-hidden rounded-md text-sm dark:border dark:border-zinc-800',
-        className
-      )}
-    >
+    <div className={cn('not-prose rounded-xl text-[13px]', className)}>
       <CodePreview code={fileContent}>
         <CodeRenderer code={fileContent} lang={lang} />
       </CodePreview>

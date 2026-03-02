@@ -89,25 +89,19 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <TabsContent className={cn(className)} {...props} />
     ),
     table: ({ className, ...props }: React.ComponentProps<'table'>) => (
-      <div className='not-prose relative w-full table-auto overflow-auto rounded-lg border border-zinc-200 text-sm dark:border-zinc-800'>
+      <div className='not-prose bg-card hairline-ring ring-border relative w-full table-auto overflow-auto rounded-xl text-sm'>
         <table className={cn('w-full', className)} {...props} />
       </div>
     ),
     thead: ({ className, ...props }: React.ComponentProps<'thead'>) => (
       <thead
-        className={cn(
-          'bg-zinc-100 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100',
-          className
-        )}
+        className={cn('bg-foreground/[0.03] text-foreground', className)}
         {...props}
       />
     ),
     tbody: ({ className, ...props }: React.ComponentProps<'tbody'>) => (
       <tbody
-        className={cn(
-          'divide-y divide-zinc-200 dark:divide-y dark:divide-zinc-600',
-          className
-        )}
+        className={cn('hairline-divide-y divide-border', className)}
         {...props}
       />
     ),
