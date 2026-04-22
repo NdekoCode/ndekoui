@@ -1,0 +1,67 @@
+'use client';
+
+import { motion, type Transition, useReducedMotion } from 'motion/react';
+
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from '@/registry/ndeko/ui/avatar';
+
+import type { Person } from './data';
+
+export const NAV_ROW = [
+  'relative flex h-7 w-full min-w-0 items-center gap-2 rounded-md px-2 text-left text-[13px] font-medium text-foreground outline-none',
+  'transition-colors duration-150 hover:bg-foreground/5 focus-visible:ring-[3px] focus-visible:ring-ring/25',
+  "[&_svg]:pointer-events-none [&_svg]:relative [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-muted-foreground",
+].join(' ');
+
+const INDICATOR_TRAVEL: Transition = {
+  duration: 0.25,
+  ease: [0.77, 0, 0.175, 1],
+};
+
+const INSTANT: Transition = { duration: 0 };
+
+function travelOf(shouldReduceMotion: boolean | null) {
+  if (shouldReduceMotion) {
+    return INSTANT;
+  }
+  return INDICATOR_TRAVEL;
+}
+
+/** The one highlight of the active row. It travels from the old row to the new one. */
+export function ActiveRowIndicator({ layoutId }: { layoutId: string }) {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.span
+      aria-hidden='true'
+      layoutId={layoutId}
+      transition={travelOf(shouldReduceMotion)}
+      className='bg-foreground/[0.07] absolute inset-0 rounded-md'
+    />
+  );
+}
+
+export function PersonAvatar({
+  person,
+  className,
+}: {
+  person: Person;
+  className?: string;
+}) {
+  return (
+    <Avatar className={className}>
+      {person.avatar && <AvatarImage src={person.avatar} alt='' />}
+      <AvatarFallback>{person.initials}</AvatarFallback>
+    </Avatar>
+  );
+}
+
+export function ariaCurrentOf(isActive: boolean) {
+  if (isActive) {
+    return 'page' as const;
+  }
+  return undefined;
+}
