@@ -1,0 +1,57 @@
+import type { ComponentType } from 'react';
+
+import { cn } from '@/registry/ndeko/lib/utils';
+
+import { CodeDialog } from '@/app/_site/code-dialog';
+import {
+  previewWidthOf,
+  widthClassOf,
+  type PreviewWidth,
+} from './preview-widths';
+import type { CatalogEntry } from './types';
+
+type ComponentTileProps = {
+  entry: CatalogEntry;
+  Preview: ComponentType;
+};
+
+const STAGE_CLASSES: Record<PreviewWidth, string> = {
+  compact: 'px-4 py-10',
+  wide: 'p-8',
+  full: 'p-6 max-sm:overflow-x-auto',
+};
+
+export function ComponentTile({ entry, Preview }: ComponentTileProps) {
+  const width = previewWidthOf(entry);
+
+  return (
+    <article
+      className={cn(
+        'bg-foreground/[0.025] flex min-w-0 flex-col rounded-2xl p-1.5',
+        widthClassOf(width)
+      )}
+    >
+      <header className='flex items-center gap-3 py-1.5 ps-3 pe-0.5'>
+        <div className='flex min-w-0 flex-1 flex-col'>
+          <h3 className='truncate text-[13px] font-medium'>{entry.title}</h3>
+          <p className='text-muted-foreground truncate font-mono text-[11px]'>
+            {entry.name}
+          </p>
+        </div>
+        <CodeDialog
+          title={entry.title}
+          description={entry.description}
+          itemName={entry.name}
+        />
+      </header>
+      <div
+        className={cn(
+          'bg-card hairline-ring ring-border flex min-h-48 flex-1 items-center justify-center rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04)]',
+          STAGE_CLASSES[width]
+        )}
+      >
+        <Preview />
+      </div>
+    </article>
+  );
+}
