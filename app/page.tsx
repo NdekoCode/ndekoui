@@ -1,225 +1,238 @@
-import { ChevronRight } from 'lucide-react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import React from 'react';
 
-import { SegmentedControl } from '@/app/docs/animated-background/segmented-control';
-import { AnimatedGroupPreset } from '@/app/docs/animated-group/animated-group-preset';
-import { Cursor1 } from '@/app/docs/cursor/cursor-1';
-import { InViewImagesGrid } from '@/app/docs/in-view/in-view-images-grid';
-import { InfiniteSliderHoverSpeed } from '@/app/docs/infinite-slider/infinite-slider-hover-speed';
-import { MorphingDialogBasicOne } from '@/app/docs/morphing-dialog/morphing-dialog-basic-1';
-import { MorphingPopoverTextarea } from '@/app/docs/morphing-popover/morphing-popover-textarea';
-import { CardExampleLanding } from '@/components/website/card-example-landing';
-import { ProBadge } from '@/components/website/header';
-import GitHubIcon from '@/components/website/icons/github';
-import { NdekoUILLogo } from '@/components/website/icons/ndekoui-logo';
-import XIcon from '@/components/website/icons/x';
-import LaunchBanner from '@/components/website/launch-banner';
-import ThemeSwitch from '@/components/website/theme-switch';
+import { SiteFooter } from '@/app/_site/site-footer';
+import { SiteHeader } from '@/app/_site/site-header';
+import { BundleTileGrid } from '@/app/_site/bundle-tiles';
+import { groupsOf, tilesOf } from '@/app/blocks/_shared/bundles';
+import {
+  countComponents,
+  publishedFamilies,
+} from '@/app/components/_catalog/families';
+import { catalog } from '@/app/components/_generated/catalog';
+import { NAVIGATION } from '@/app/docs/navigation';
+import { countLabel, SYSTEM_FONT_CLASS } from '@/lib/site';
+import { chatItems } from '@/registry/chat-items';
+import { primitiveItems } from '@/registry/items';
+import { Button } from '@/registry/ndeko/ui/button';
+import { Toaster } from '@/registry/ndeko/ui/sonner';
+import { TooltipProvider } from '@/registry/ndeko/ui/tooltip';
 
-import { BorderTrailCard1 } from './docs/border-trail/border-trail-card-1';
-import { TextEffectSpeed } from './docs/text-effect/text-effect-speed';
-import { TextLoopBasic } from './docs/text-loop/text-loop-basic';
-import { TextScrambleBasic } from './docs/text-scramble/text-scramble-basic';
-import { TextShimmerBasic } from './docs/text-shimmer/text-shimmer-basic';
+import { BundlesShowcase, type BundleShelf } from './_home/bundles-showcase';
+import {
+  ComponentsShowcase,
+  type ShowcaseCategory,
+  type ShowcaseShelf,
+} from './_home/components-showcase';
+import { HomeFaq } from './_home/home-faq';
+import { HomeHero } from './_home/home-hero';
+import { InstallSteps } from './_home/install-steps';
+import { LivingWall } from './_home/living-wall';
+import { MotionShowcase } from './_home/motion-showcase';
+import { PrimitivesShowcase } from './_home/primitives-showcase';
+import { SectionHeading } from './_home/section-heading';
 
-function Button({
-  children,
-  variant = 'primary',
-}: {
-  children: React.ReactNode;
-  variant?: 'primary' | 'secondary';
-}) {
-  const buttonVariants = {
-    primary:
-      'bg-zinc-50 border border-zinc-100 text-zinc-950 hover:bg-zinc-100 dark:bg-zinc-700 dark:hover:bg-zinc-600 dark:text-zinc-50 dark:border-zinc-900',
-    secondary:
-      'bg-zinc-900 text-white hover:bg-zinc-700 dark:bg-zinc-100 dark:hover:bg-zinc-300 dark:text-zinc-950',
+export const metadata: Metadata = {
+  title: 'Ndeko UI - React components that animate every change of state',
+  description:
+    'Open-source primitives, components, blocks and templates for React, built on Base UI, motion and Tailwind CSS, installable with the shadcn CLI.',
+};
+
+const MARKETING_GROUPS = new Set([
+  'headers',
+  'heroes',
+  'features',
+  'logo-clouds',
+  'pricing',
+  'faqs',
+  'ctas',
+  'footers',
+  'contact',
+  'changelog',
+]);
+
+const GETTING_STARTED = 'Getting Started';
+
+function showcaseCategoryOf(category: (typeof catalog)[number]) {
+  const showcased: ShowcaseCategory = {
+    slug: category.slug,
+    name: category.name,
+    count: category.entries.length,
   };
+  return showcased;
+}
 
+function componentShelves(): ShowcaseShelf[] {
+  const largestFirst = [...catalog].sort(
+    (first, second) => second.entries.length - first.entries.length
+  );
+  const allShelf: ShowcaseShelf = {
+    name: 'Largest',
+    categories: largestFirst.map(showcaseCategoryOf),
+  };
+  const familyShelves = publishedFamilies(catalog).map((family) => ({
+    name: family.name,
+    categories: family.categories.map(showcaseCategoryOf),
+  }));
+  return [allShelf, ...familyShelves];
+}
+
+function isMarketingGroup(slug: string) {
+  return MARKETING_GROUPS.has(slug);
+}
+
+function blockShelves(): BundleShelf[] {
+  const groups = groupsOf('blocks');
+  const applicationGroups = groups.filter(
+    (group) => !isMarketingGroup(group.slug)
+  );
+  const marketingGroups = groups.filter((group) =>
+    isMarketingGroup(group.slug)
+  );
+  const shelves: BundleShelf[] = [
+    { name: 'Application', tiles: tilesOf('blocks', applicationGroups) },
+    { name: 'Marketing', tiles: tilesOf('blocks', marketingGroups) },
+  ];
+  return shelves.filter((shelf) => shelf.tiles.length > 0);
+}
+
+function entryTotal(kind: 'blocks' | 'templates') {
+  let total = 0;
+  for (const group of groupsOf(kind)) {
+    total += group.entries.length;
+  }
+  return total;
+}
+
+function motionComponentTotal() {
+  let total = 0;
+  for (const group of NAVIGATION) {
+    if (group.name === GETTING_STARTED) {
+      continue;
+    }
+    total += group.children.length;
+  }
+  return total;
+}
+
+function LinkButton({ href, children }: { href: string; children: string }) {
   return (
-    <button
-      className={`inline-flex items-center rounded-md px-2.5 py-1.5 text-sm ${buttonVariants[variant]}`}
+    <Button
+      variant='outline'
+      nativeButton={false}
+      render={<Link href={href} />}
     >
       {children}
-    </button>
+    </Button>
   );
 }
 
-function Header() {
-  return (
-    <header className='relative top-0 z-10 bg-white px-6 py-5 dark:border-white/10 dark:bg-zinc-950 lg:z-10 lg:flex lg:h-16 lg:items-center lg:px-8 lg:py-0'>
-      <div className='mx-auto flex w-full items-center justify-between md:max-w-7xl'>
-        <a href='/' className='relative flex items-center space-x-2'>
-          <NdekoUILLogo className='h-6 w-auto' />
-          <div className='text-sm font-medium text-zinc-950 dark:text-white'>
-            ndekoui
-          </div>
-          <span className='mb-4 ml-0 select-none rounded-sm bg-zinc-800 px-1.5 py-0.5 text-[10px] font-medium text-zinc-50'>
-            beta
-          </span>
-        </a>
+export default function HomePage() {
+  const componentTotal = countComponents(catalog);
+  const primitiveTotal = primitiveItems.length + chatItems.length;
+  const blockTotal = entryTotal('blocks');
+  const blockGroupTotal = groupsOf('blocks').length;
+  const templateTotal = entryTotal('templates');
+  const templateTiles = tilesOf('templates', groupsOf('templates'));
+  const hasTemplates = templateTiles.length > 0;
+  const motionTotal = motionComponentTotal();
 
-        <div className='flex items-center space-x-6'>
-          <nav className='hidden items-center space-x-6 sm:flex'>
-            <a
-              href='https://pro.ui.ndeko.dev/'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='hidden items-center text-sm font-medium text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white md:inline-flex'
-            >
-              Advanced
-              <ProBadge />
-            </a>
-            <a
-              href='https://pro.ui.ndeko.dev/templates'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='inline-flex items-center text-sm font-medium text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white'
-            >
-              Templates
-            </a>
-            <Link
-              href='/docs/text-effect'
-              className='text-sm font-medium text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white'
-            >
-              Components
-            </Link>
-          </nav>
-          <div className='hidden h-8 w-[0.5px] bg-zinc-200 dark:bg-zinc-800 sm:flex' />
-          <nav className='flex items-center space-x-2'>
-            <a
-              href='https://twitter.com/ndekocode'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='inline-flex h-9 w-9 items-center justify-center'
-            >
-              <XIcon className='h-4 w-4 fill-zinc-950 dark:fill-white' />
-            </a>
-            <a
-              href='https://github.com/ndekocode/ndekoui'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='inline-flex h-9 w-9 items-center justify-center'
-            >
-              <GitHubIcon className='h-4 w-4 fill-zinc-950 dark:fill-white' />
-            </a>
-            <ThemeSwitch />
-          </nav>
-        </div>
-      </div>
-    </header>
-  );
-}
-
-export default function Motion() {
   return (
-    <>
-      <LaunchBanner />
-      <Header />
-      <div className='px-6 py-4 pb-20'>
-        <section className='flex h-full flex-col items-center justify-center pt-20'>
-          <div className='flex w-full max-w-lg flex-col items-center justify-center text-center'>
-            <h1 className='relative mb-4 text-4xl font-medium text-zinc-950 dark:text-zinc-50'>
-              UI kit to make beautiful, animated interfaces, faster.
-            </h1>
-            <p className='text-center text-zinc-600 dark:text-zinc-200'>
-              Beautifully designed motions components. Easy copy-paste.
-              Customizable. Open Source. Built for engineers and designers.
-            </p>
+    <TooltipProvider>
+      <div
+        className={`${SYSTEM_FONT_CLASS} bg-background text-foreground min-h-screen antialiased`}
+      >
+        <SiteHeader />
+        <main className='mx-auto flex w-full max-w-6xl flex-col gap-24 px-4 pt-12 pb-24 md:px-6 md:pt-16'>
+          <div className='flex flex-col gap-10'>
+            <HomeHero />
+            <LivingWall />
           </div>
-          <div className='flex items-center space-x-4 py-6'>
-            <Link href='/docs'>
-              <Button>
-                Explore Docs
-                <ChevronRight className='ml-1.5 h-4 w-4' />
-              </Button>
-            </Link>
-            <a
-              href='https://github.com/ndekocode/ndekoui'
-              target='_blank'
-              rel='noopener noreferrer'
+          <section
+            aria-labelledby='components-title'
+            className='flex flex-col gap-8'
+          >
+            <SectionHeading
+              id='components-title'
+              eyebrow={`${countLabel(componentTotal, 'component', 'components')} in ${countLabel(catalog.length, 'category', 'categories')}`}
+              title='Components grouped by what they do'
+              description='Every category shows its variants side by side, each with its code and the command that installs it.'
+              action={
+                <LinkButton href='/components'>
+                  {`All ${catalog.length} categories`}
+                </LinkButton>
+              }
+            />
+            <ComponentsShowcase shelves={componentShelves()} />
+          </section>
+          <section
+            aria-labelledby='primitives-title'
+            className='flex flex-col gap-8'
+          >
+            <SectionHeading
+              id='primitives-title'
+              eyebrow={countLabel(primitiveTotal, 'primitive', 'primitives')}
+              title='Try the pieces before you install them'
+              description='Every component is built from these primitives on Base UI. Press, slide and open them here: the motion you feel is the motion you install.'
+              action={<LinkButton href='/kit'>See every primitive</LinkButton>}
+            />
+            <PrimitivesShowcase />
+          </section>
+          <section
+            aria-labelledby='blocks-title'
+            className='flex flex-col gap-8'
+          >
+            <SectionHeading
+              id='blocks-title'
+              eyebrow={`${countLabel(blockTotal, 'block', 'blocks')} in ${countLabel(blockGroupTotal, 'group', 'groups')}`}
+              title='Whole sections of a product, with fictional data'
+              description='App shells, boards, task lists, settings and marketing sections. Each one installs with its parts and works from a phone to a wide screen.'
+              action={<LinkButton href='/blocks'>All blocks</LinkButton>}
+            />
+            <BundlesShowcase shelves={blockShelves()} />
+          </section>
+          {hasTemplates && (
+            <section
+              aria-labelledby='templates-title'
+              className='flex flex-col gap-8'
             >
-              <Button variant='secondary'>
-                <GitHubIcon className='mr-1.5 h-4 w-4 fill-white dark:fill-zinc-950' />
-                Star on GitHub
-              </Button>
-            </a>
-          </div>
-          <span className='mt-2 text-center text-sm text-zinc-500 dark:text-zinc-400'>
-            Free updates and new components released regularly.
-          </span>
-        </section>
-        <section className='mx-auto max-w-3xl py-32'>
-          <CardExampleLanding>
-            <MorphingDialogBasicOne />
-          </CardExampleLanding>
-        </section>
-        <section className='mx-auto max-w-3xl py-32'>
-          <CardExampleLanding hasReTrigger>
-            <AnimatedGroupPreset />
-          </CardExampleLanding>
-        </section>
-        <section className='mx-auto max-w-3xl py-32'>
-          <CardExampleLanding
-            className='px-8 md:px-20 [&>div]:h-52 [&>div]:justify-start'
-            hasReTrigger
+              <SectionHeading
+                id='templates-title'
+                eyebrow={countLabel(templateTotal, 'template', 'templates')}
+                title='Complete pages to start a product from'
+                description='Landing, pricing, changelog and contact pages assembled from the blocks, one fictional product each.'
+                action={
+                  <LinkButton href='/templates'>All templates</LinkButton>
+                }
+              />
+              <BundleTileGrid tiles={templateTiles} />
+            </section>
+          )}
+          <section
+            aria-labelledby='motion-title'
+            className='flex flex-col gap-8'
           >
-            <TextEffectSpeed />
-          </CardExampleLanding>
-        </section>
-        <section className='mx-auto max-w-3xl py-32'>
-          <CardExampleLanding hasReTrigger>
-            <InViewImagesGrid />
-          </CardExampleLanding>
-        </section>
-        <section className='mx-auto max-w-3xl py-32'>
-          <CardExampleLanding className='px-0'>
-            <InfiniteSliderHoverSpeed />
-          </CardExampleLanding>
-        </section>
-        <section className='mx-auto max-w-3xl py-32'>
-          <CardExampleLanding>
-            <Cursor1 />
-          </CardExampleLanding>
-        </section>
-        <section className='mx-auto max-w-3xl py-32'>
-          <CardExampleLanding className='px-8 md:px-20 [&>div]:h-52 [&>div]:justify-start'>
-            <TextLoopBasic />
-          </CardExampleLanding>
-        </section>
-        <section className='mx-auto max-w-3xl py-32'>
-          <CardExampleLanding className='px-8 md:px-20 [&>div]:h-52 [&>div]:justify-start'>
-            <TextShimmerBasic />
-          </CardExampleLanding>
-        </section>
-        <section className='mx-auto max-w-3xl py-32'>
-          <CardExampleLanding
-            className='px-8 md:px-20 [&>div]:h-52 [&>div]:justify-start'
-            hasReTrigger
-          >
-            <TextScrambleBasic />
-          </CardExampleLanding>
-        </section>
-        <section className='mx-auto max-w-3xl py-32'>
-          <CardExampleLanding>
-            <MorphingPopoverTextarea />
-          </CardExampleLanding>
-        </section>
-        <section className='mx-auto max-w-3xl py-32'>
-          <CardExampleLanding>
-            <BorderTrailCard1 />
-          </CardExampleLanding>
-        </section>
-        <section className='mx-auto max-w-3xl py-32'>
-          <CardExampleLanding>
-            <SegmentedControl />
-          </CardExampleLanding>
-        </section>
-        <div className='text-center text-sm text-zinc-500 dark:text-zinc-400'>
-          <Link href='/docs'>and more...</Link>
-        </div>
+            <SectionHeading
+              id='motion-title'
+              eyebrow={countLabel(
+                motionTotal,
+                'motion component',
+                'motion components'
+              )}
+              title='Motion you can drop into any screen'
+              description='Numbers that slide, labels that morph, highlights that follow the pointer. Each one reads the reduced motion setting.'
+              action={
+                <LinkButton href='/docs'>All motion components</LinkButton>
+              }
+            />
+            <MotionShowcase />
+          </section>
+          <InstallSteps />
+          <HomeFaq />
+        </main>
+        <SiteFooter />
+        <Toaster />
       </div>
-    </>
+    </TooltipProvider>
   );
 }
