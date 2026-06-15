@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider-15",
+  "title": "Slider with reset",
+  "description": "A temperature field and slider with a reset that appears once changed.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/slider.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/tooltip.json",
+    "https://ui.ndeko.dev/r/use-slider-with-input.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/slider/slider-15.tsx",
+      "content": "'use client';\n\nimport {\n  AnimatePresence,\n  motion,\n  type Transition,\n  type Variants,\n  useReducedMotion,\n} from 'motion/react';\nimport { useId, type KeyboardEvent } from 'react';\n\nimport { useSliderWithInput } from '@/registry/ndeko/hooks/use-slider-with-input';\nimport { RotateCcwIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport { Input } from '@/registry/ndeko/ui/input';\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { Slider } from '@/registry/ndeko/ui/slider';\nimport {\n  Tooltip,\n  TooltipContent,\n  TooltipTrigger,\n} from '@/registry/ndeko/ui/tooltip';\n\nconst MIN_TEMPERATURE = 0;\nconst MAX_TEMPERATURE = 2;\nconst INITIAL_TEMPERATURE = [1.25];\nconst DEFAULT_TEMPERATURE = [1];\n\nconst SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };\n\nconst RESET_VARIANTS: Variants = {\n  enter: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },\n  visible: { opacity: 1, scale: 1, filter: 'blur(0px)' },\n  exit: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },\n};\n\nconst FADE_VARIANTS: Variants = {\n  enter: { opacity: 0 },\n  visible: { opacity: 1 },\n  exit: { opacity: 0 },\n};\n\nfunction resetVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return RESET_VARIANTS;\n}\n\nexport default function Slider15() {\n  const inputId = useId();\n  const shouldReduceMotion = useReducedMotion();\n  const resetVariants = resetVariantsOf(shouldReduceMotion);\n  const {\n    sliderValue,\n    inputValues,\n    validateAndUpdateValue,\n    handleInputChange,\n    handleSliderChange,\n    resetToDefault,\n    showReset,\n  } = useSliderWithInput({\n    minValue: MIN_TEMPERATURE,\n    maxValue: MAX_TEMPERATURE,\n    initialValue: INITIAL_TEMPERATURE,\n    defaultValue: DEFAULT_TEMPERATURE,\n  });\n\n  function commitTemperature() {\n    validateAndUpdateValue(inputValues[0], 0);\n  }\n\n  function commitOnEnter(event: KeyboardEvent<HTMLInputElement>) {\n    if (event.key !== 'Enter') {\n      return;\n    }\n    commitTemperature();\n  }\n\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-3'>\n      <div className='flex items-center justify-between gap-2'>\n        <Label htmlFor={inputId}>Temperature</Label>\n        <div className='flex items-center gap-1'>\n          <span className='flex size-7'>\n            <AnimatePresence initial={false}>\n              {showReset && (\n                <motion.span\n                  key='reset'\n                  className='flex'\n                  variants={resetVariants}\n                  initial='enter'\n                  animate='visible'\n                  exit='exit'\n                  transition={SWAP_TRANSITION}\n                >\n                  <Tooltip>\n                    <TooltipTrigger\n                      render={\n                        <Button\n                          variant='ghost'\n                          size='icon-sm'\n                          aria-label='Reset to default'\n                          onClick={resetToDefault}\n                        />\n                      }\n                    >\n                      <RotateCcwIcon />\n                    </TooltipTrigger>\n                    <TooltipContent>Reset to default</TooltipContent>\n                  </Tooltip>\n                </motion.span>\n              )}\n            </AnimatePresence>\n          </span>\n          <Input\n            id={inputId}\n            size='sm'\n            className='w-12 tabular-nums'\n            type='text'\n            inputMode='decimal'\n            value={inputValues[0]}\n            onChange={(event) => handleInputChange(event, 0)}\n            onBlur={commitTemperature}\n            onKeyDown={commitOnEnter}\n          />\n        </div>\n      </div>\n      <Slider\n        value={sliderValue}\n        onValueChange={handleSliderChange}\n        min={MIN_TEMPERATURE}\n        max={MAX_TEMPERATURE}\n        step={0.01}\n        thumbLabels={['Temperature']}\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "slider"
+  ],
+  "type": "registry:component"
+}

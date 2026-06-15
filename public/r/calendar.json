@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "calendar",
+  "title": "Calendar",
+  "description": "A month grid for days and ranges.",
+  "dependencies": [
+    "react-day-picker"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/button.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/calendar.tsx",
+      "content": "'use client';\n\nimport { DayPicker } from 'react-day-picker';\n\nimport { ChevronLeftIcon, ChevronRightIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { buttonVariants } from '@/registry/ndeko/ui/button';\n\ntype CalendarProps = React.ComponentProps<typeof DayPicker>;\n\ntype CalendarClassNames = NonNullable<CalendarProps['classNames']>;\n\nconst NAV_BUTTON = cn(\n  buttonVariants({ variant: 'ghost', size: 'icon' }),\n  'text-muted-foreground hover:text-foreground'\n);\n\nconst DAY_BUTTON = [\n  'relative flex size-9 items-center justify-center whitespace-nowrap rounded-md p-0 text-[13px] tabular-nums text-foreground outline-none',\n  'transition-[color,background-color,border-radius,box-shadow,scale] duration-150 ease-(--ease-out-strong) hover:not-in-data-selected:bg-foreground/5 active:scale-90',\n  'focus-visible:z-10 focus-visible:ring-[3px] focus-visible:ring-ring/25',\n  'group-data-selected:bg-primary group-data-selected:text-primary-foreground',\n  'group-data-disabled:pointer-events-none group-data-disabled:text-foreground/30 group-data-disabled:line-through',\n  'group-data-outside:text-foreground/30 group-data-selected:group-data-outside:text-primary-foreground',\n  'group-[.range-start:not(.range-end)]:rounded-e-none group-[.range-end:not(.range-start)]:rounded-s-none',\n  'group-[.range-middle]:rounded-none group-[.range-middle]:group-data-selected:bg-primary/[0.08] group-[.range-middle]:group-data-selected:text-foreground',\n].join(' ');\n\nconst TODAY = [\n  '*:after:pointer-events-none *:after:absolute *:after:bottom-1 *:after:start-1/2 *:after:z-10 *:after:size-[3px] *:after:-translate-x-1/2 *:after:rounded-full *:after:bg-primary *:after:transition-colors',\n  '[&[data-selected]:not(.range-middle)>*]:after:bg-primary-foreground [&[data-disabled]>*]:after:bg-foreground/30',\n].join(' ');\n\nconst DEFAULT_CLASS_NAMES: Record<string, string> = {\n  months: 'relative flex flex-col gap-4 sm:flex-row',\n  month: 'w-full',\n  month_caption:\n    'relative z-20 mx-10 mb-1 flex h-9 items-center justify-center',\n  caption_label: 'text-[13px] font-medium',\n  nav: 'absolute top-0 z-10 flex w-full justify-between',\n  button_previous: NAV_BUTTON,\n  button_next: NAV_BUTTON,\n  weekday: 'size-9 p-0 text-xs font-medium text-muted-foreground',\n  day_button: DAY_BUTTON,\n  day: 'group size-9 px-0 py-px text-[13px]',\n  range_start: 'range-start',\n  range_end: 'range-end',\n  range_middle: 'range-middle',\n  today: TODAY,\n  outside:\n    'text-muted-foreground data-selected:bg-primary/[0.08] data-selected:text-muted-foreground',\n  hidden: 'invisible',\n  week_number: 'size-9 p-0 text-xs font-medium text-muted-foreground',\n};\n\nfunction mergeClassNames(overrides: CalendarClassNames | undefined) {\n  const merged: Record<string, string> = { ...DEFAULT_CLASS_NAMES };\n  if (!overrides) {\n    return merged;\n  }\n  for (const [key, value] of Object.entries(overrides)) {\n    merged[key] = cn(DEFAULT_CLASS_NAMES[key], value);\n  }\n  return merged;\n}\n\ntype ChevronProps = {\n  className?: string;\n  orientation?: 'left' | 'right' | 'up' | 'down';\n};\n\nfunction CalendarChevron({ className, orientation }: ChevronProps) {\n  if (orientation === 'left') {\n    return <ChevronLeftIcon className={cn('size-4', className)} />;\n  }\n  return <ChevronRightIcon className={cn('size-4', className)} />;\n}\n\nfunction Calendar({\n  className,\n  classNames,\n  showOutsideDays = true,\n  components,\n  ...props\n}: CalendarProps) {\n  return (\n    <DayPicker\n      showOutsideDays={showOutsideDays}\n      className={cn('w-fit', className)}\n      classNames={mergeClassNames(classNames)}\n      components={{ Chevron: CalendarChevron, ...components }}\n      {...props}\n    />\n  );\n}\n\nexport { Calendar };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

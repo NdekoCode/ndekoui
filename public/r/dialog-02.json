@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dialog-02",
+  "title": "Destructive confirmation",
+  "description": "An alert dialog with an error orb that names what gets deleted.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/alert-dialog.json",
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/status-orb.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/dialog/dialog-02.tsx",
+      "content": "import { Trash2Icon } from '@/registry/ndeko/lib/icons';\nimport {\n  AlertDialog,\n  AlertDialogAction,\n  AlertDialogCancel,\n  AlertDialogContent,\n  AlertDialogDescription,\n  AlertDialogFooter,\n  AlertDialogHeader,\n  AlertDialogTitle,\n  AlertDialogTrigger,\n} from '@/registry/ndeko/ui/alert-dialog';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport { StatusOrb } from '@/registry/ndeko/ui/status-orb';\n\nexport default function Dialog02() {\n  return (\n    <AlertDialog>\n      <AlertDialogTrigger render={<Button variant='outline' />}>\n        Delete account\n      </AlertDialogTrigger>\n      <AlertDialogContent>\n        <div className='flex flex-col gap-4 max-sm:items-center max-sm:text-center sm:flex-row'>\n          <StatusOrb tone='error' glyph={<Trash2Icon strokeWidth={2.25} />} />\n          <AlertDialogHeader>\n            <AlertDialogTitle>Delete your account?</AlertDialogTitle>\n            <AlertDialogDescription>\n              Your profile, your 3 workspaces and every file you uploaded are\n              removed for good. This cannot be undone.\n            </AlertDialogDescription>\n          </AlertDialogHeader>\n        </div>\n        <AlertDialogFooter>\n          <AlertDialogCancel>Cancel</AlertDialogCancel>\n          <AlertDialogAction variant='destructive'>\n            Delete account\n          </AlertDialogAction>\n        </AlertDialogFooter>\n      </AlertDialogContent>\n    </AlertDialog>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "dialog"
+  ],
+  "type": "registry:component"
+}

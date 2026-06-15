@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge-06",
+  "title": "Badge with count",
+  "description": "A label followed by a smaller, quieter count.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/badge.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/badge/badge-06.tsx",
+      "content": "import { Badge } from '@/registry/ndeko/ui/badge';\n\nexport default function Badge06() {\n  return (\n    <Badge className='items-baseline gap-1.5 leading-5'>\n      Issues\n      <span className='text-[10px] font-medium tabular-nums opacity-60'>\n        73\n      </span>\n    </Badge>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "badge"
+  ],
+  "type": "registry:component"
+}

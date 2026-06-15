@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "switch-06",
+  "title": "Thin track switch",
+  "description": "A large thumb riding over a thin track, in the Material 2 manner.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/switch/switch-06.tsx",
+      "content": "import { Switch as SwitchPrimitive } from '@base-ui/react/switch';\nimport { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\n\nconst TRACK = [\n  'group/switch relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center outline-none',\n  'before:absolute before:inset-x-0 before:top-1/2 before:h-3 before:-translate-y-1/2 before:rounded-full before:bg-foreground/20 before:transition-colors before:duration-200',\n  'data-checked:before:bg-primary data-disabled:cursor-not-allowed data-disabled:opacity-50',\n].join(' ');\n\nconst THUMB = [\n  'pointer-events-none relative block size-5 rounded-full bg-white shadow-[0_1px_2px_rgb(0_0_0/0.2),0_1px_3px_rgb(0_0_0/0.12)] hairline-ring ring-black/10',\n  'transition-[translate,box-shadow] duration-200 ease-(--ease-standard) data-checked:translate-x-4',\n  'group-focus-visible/switch:ring-[3px] group-focus-visible/switch:ring-ring/25',\n].join(' ');\n\nexport default function Switch06() {\n  const id = useId();\n\n  return (\n    <div className='inline-flex items-center gap-2'>\n      <SwitchPrimitive.Root id={id} className={TRACK}>\n        <SwitchPrimitive.Thumb className={THUMB} />\n      </SwitchPrimitive.Root>\n      <Label htmlFor={id} className='sr-only'>\n        Show weekends\n      </Label>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "switch"
+  ],
+  "type": "registry:component"
+}

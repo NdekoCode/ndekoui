@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs",
+  "title": "Tabs",
+  "description": "Underlined or segmented tabs with one sliding indicator.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/tabs.tsx",
+      "content": "'use client';\n\nimport { Tabs as TabsPrimitive } from '@base-ui/react/tabs';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\n\ntype WithClassName<Props> = Omit<Props, 'className'> & { className?: string };\n\ntype TabsListVariant = 'underline' | 'segmented';\n\nfunction Tabs({\n  className,\n  ...props\n}: WithClassName<TabsPrimitive.Root.Props>) {\n  return (\n    <TabsPrimitive.Root\n      data-slot='tabs'\n      className={cn(\n        'flex flex-col gap-3 data-[orientation=vertical]:flex-row',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nconst LIST_CLASS: Record<TabsListVariant, string> = {\n  underline: 'relative flex items-center gap-5 hairline-b border-border',\n  segmented:\n    'relative inline-flex w-fit items-center gap-0.5 rounded-lg bg-foreground/[0.05] p-0.5',\n};\n\nconst INDICATOR_CLASS: Record<TabsListVariant, string> = {\n  underline:\n    'pointer-events-none absolute bottom-0 left-0 h-0.5 w-(--active-tab-width) translate-x-(--active-tab-left) rounded-full bg-primary transition-[translate,width] duration-300 ease-(--ease-out-strong)',\n  segmented:\n    'pointer-events-none absolute left-0 top-0 h-(--active-tab-height) w-(--active-tab-width) translate-x-(--active-tab-left) translate-y-(--active-tab-top) rounded-md bg-card shadow-[0_1px_2px_rgb(0_0_0/0.08)] hairline-ring ring-foreground/10 transition-[translate,width,height] duration-200 ease-(--ease-out-strong) dark:bg-foreground/[0.09] dark:ring-foreground/15',\n};\n\ntype TabsListProps = WithClassName<TabsPrimitive.List.Props> & {\n  variant?: TabsListVariant;\n};\n\nfunction TabsList({\n  className,\n  variant = 'underline',\n  children,\n  ...props\n}: TabsListProps) {\n  return (\n    <TabsPrimitive.List\n      data-slot='tabs-list'\n      data-variant={variant}\n      className={cn('group/tabs-list', LIST_CLASS[variant], className)}\n      {...props}\n    >\n      {children}\n      <TabsPrimitive.Indicator\n        data-slot='tabs-indicator'\n        className={INDICATOR_CLASS[variant]}\n      />\n    </TabsPrimitive.List>\n  );\n}\n\nconst TAB_CLASS = [\n  'relative z-10 inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-1.5 whitespace-nowrap text-[13px] font-medium text-muted-foreground outline-none',\n  'transition-colors duration-150 hover:text-foreground data-active:text-foreground',\n  'focus-visible:ring-[3px] focus-visible:ring-ring/25 data-disabled:pointer-events-none data-disabled:opacity-50',\n  \"[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\n  'group-data-[variant=underline]/tabs-list:h-9 group-data-[variant=underline]/tabs-list:rounded-sm group-data-[variant=underline]/tabs-list:px-0.5',\n  'group-data-[variant=segmented]/tabs-list:h-7 group-data-[variant=segmented]/tabs-list:rounded-md group-data-[variant=segmented]/tabs-list:px-3',\n].join(' ');\n\nfunction TabsTab({\n  className,\n  ...props\n}: WithClassName<TabsPrimitive.Tab.Props>) {\n  return (\n    <TabsPrimitive.Tab\n      data-slot='tabs-tab'\n      className={cn(TAB_CLASS, className)}\n      {...props}\n    />\n  );\n}\n\nfunction TabsPanel({\n  className,\n  ...props\n}: WithClassName<TabsPrimitive.Panel.Props>) {\n  return (\n    <TabsPrimitive.Panel\n      data-slot='tabs-panel'\n      className={cn(\n        'focus-visible:ring-ring/25 flex-1 rounded-md outline-none focus-visible:ring-[3px]',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nexport {\n  Tabs,\n  TabsPanel as TabsContent,\n  TabsList,\n  TabsPanel,\n  TabsTab,\n  TabsTab as TabsTrigger,\n  type TabsListVariant,\n};\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

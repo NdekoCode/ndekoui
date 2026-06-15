@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pagination-11",
+  "title": "Page select",
+  "description": "A select of every page between the arrows.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/pagination.json",
+    "https://ui.ndeko.dev/r/select.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/pagination/pagination-11.tsx",
+      "content": "'use client';\n\nimport { useState } from 'react';\n\nimport {\n  ChevronFirstIcon,\n  ChevronLastIcon,\n  ChevronLeftIcon,\n  ChevronRightIcon,\n} from '@/registry/ndeko/lib/icons';\nimport {\n  Pagination,\n  PaginationContent,\n  PaginationItem,\n  PaginationLink,\n} from '@/registry/ndeko/ui/pagination';\nimport {\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from '@/registry/ndeko/ui/select';\n\nconst FIRST_PAGE = 1;\nconst TOTAL_PAGES = 10;\n\nconst PAGE_OPTIONS = Array.from({ length: TOTAL_PAGES }, (_, index) => {\n  const page = index + 1;\n  return { value: page, label: `Page ${page}` };\n});\n\nfunction clampPage(page: number) {\n  const atLeastFirst = Math.max(FIRST_PAGE, page);\n  return Math.min(TOTAL_PAGES, atLeastFirst);\n}\n\nfunction hrefOf(page: number) {\n  return `#/page/${page}`;\n}\n\nexport default function Pagination11() {\n  const [currentPage, setCurrentPage] = useState(FIRST_PAGE);\n  const previousPage = currentPage - 1;\n  const nextPage = currentPage + 1;\n  const isFirstPage = currentPage === FIRST_PAGE;\n  const isLastPage = currentPage === TOTAL_PAGES;\n\n  function showPage(page: number) {\n    const target = clampPage(page);\n    setCurrentPage(target);\n  }\n\n  function goToPage(event: React.MouseEvent<HTMLAnchorElement>, page: number) {\n    event.preventDefault();\n    showPage(page);\n  }\n\n  function selectPage(page: number | null) {\n    if (page === null) {\n      return;\n    }\n    showPage(page);\n  }\n\n  return (\n    <Pagination>\n      <PaginationContent>\n        <PaginationItem>\n          <PaginationLink\n            href={hrefOf(FIRST_PAGE)}\n            aria-label='Go to first page'\n            isDisabled={isFirstPage}\n            onClick={(event) => goToPage(event, FIRST_PAGE)}\n            className='rounded-full'\n          >\n            <ChevronFirstIcon />\n          </PaginationLink>\n        </PaginationItem>\n        <PaginationItem>\n          <PaginationLink\n            href={hrefOf(previousPage)}\n            aria-label='Go to previous page'\n            isDisabled={isFirstPage}\n            onClick={(event) => goToPage(event, previousPage)}\n            className='rounded-full'\n          >\n            <ChevronLeftIcon />\n          </PaginationLink>\n        </PaginationItem>\n        <PaginationItem>\n          <Select\n            items={PAGE_OPTIONS}\n            value={currentPage}\n            onValueChange={selectPage}\n          >\n            <SelectTrigger\n              aria-label='Select page'\n              className='w-fit whitespace-nowrap tabular-nums'\n            >\n              <SelectValue />\n            </SelectTrigger>\n            <SelectContent>\n              {PAGE_OPTIONS.map((option) => (\n                <SelectItem\n                  key={option.value}\n                  value={option.value}\n                  className='tabular-nums'\n                >\n                  {option.label}\n                </SelectItem>\n              ))}\n            </SelectContent>\n          </Select>\n        </PaginationItem>\n        <PaginationItem>\n          <PaginationLink\n            href={hrefOf(nextPage)}\n            aria-label='Go to next page'\n            isDisabled={isLastPage}\n            onClick={(event) => goToPage(event, nextPage)}\n            className='rounded-full'\n          >\n            <ChevronRightIcon />\n          </PaginationLink>\n        </PaginationItem>\n        <PaginationItem>\n          <PaginationLink\n            href={hrefOf(TOTAL_PAGES)}\n            aria-label='Go to last page'\n            isDisabled={isLastPage}\n            onClick={(event) => goToPage(event, TOTAL_PAGES)}\n            className='rounded-full'\n          >\n            <ChevronLastIcon />\n          </PaginationLink>\n        </PaginationItem>\n      </PaginationContent>\n    </Pagination>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "pagination"
+  ],
+  "type": "registry:component"
+}

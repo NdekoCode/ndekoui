@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-pagination",
+  "title": "Use pagination",
+  "description": "The use-pagination hook used by Ndeko UI components.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ndeko/hooks/use-pagination.ts",
+      "content": "type UsePaginationProps = {\n  currentPage: number;\n  totalPages: number;\n  paginationItemsToDisplay: number;\n};\n\ntype UsePaginationReturn = {\n  pages: number[];\n  showLeftEllipsis: boolean;\n  showRightEllipsis: boolean;\n};\n\nfunction pageRange(start: number, end: number) {\n  const length = end - start + 1;\n  return Array.from({ length }, (_, index) => start + index);\n}\n\nfunction visibleRange(\n  currentPage: number,\n  totalPages: number,\n  itemsToDisplay: number,\n  showLeftEllipsis: boolean,\n  showRightEllipsis: boolean\n) {\n  const halfDisplay = Math.floor(itemsToDisplay / 2);\n  let start = Math.max(1, currentPage - halfDisplay);\n  let end = Math.min(totalPages, currentPage + halfDisplay);\n\n  if (start === 1) {\n    end = itemsToDisplay;\n  }\n  if (end === totalPages) {\n    start = totalPages - itemsToDisplay + 1;\n  }\n  if (showLeftEllipsis) {\n    start += 1;\n  }\n  if (showRightEllipsis) {\n    end -= 1;\n  }\n  return pageRange(start, end);\n}\n\nexport function usePagination({\n  currentPage,\n  totalPages,\n  paginationItemsToDisplay,\n}: UsePaginationProps): UsePaginationReturn {\n  const halfOfItems = paginationItemsToDisplay / 2;\n  const pagesBefore = currentPage - 1;\n  const pagesAfter = totalPages - currentPage + 1;\n  const showLeftEllipsis = pagesBefore > halfOfItems;\n  const showRightEllipsis = pagesAfter > halfOfItems;\n  const fitsWithoutEllipsis = totalPages <= paginationItemsToDisplay;\n\n  if (fitsWithoutEllipsis) {\n    return {\n      pages: pageRange(1, totalPages),\n      showLeftEllipsis,\n      showRightEllipsis,\n    };\n  }\n\n  const pages = visibleRange(\n    currentPage,\n    totalPages,\n    paginationItemsToDisplay,\n    showLeftEllipsis,\n    showRightEllipsis\n  );\n\n  return { pages, showLeftEllipsis, showRightEllipsis };\n}\n",
+      "type": "registry:hook"
+    }
+  ],
+  "categories": [
+    "hooks"
+  ],
+  "type": "registry:hook"
+}

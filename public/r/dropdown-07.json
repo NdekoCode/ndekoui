@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dropdown-07",
+  "title": "Radio menu",
+  "description": "One option at a time, marked when picked.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/dropdown-menu.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/dropdown/dropdown-07.tsx",
+      "content": "'use client';\n\nimport { useState } from 'react';\n\nimport { ChevronDownIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuRadioGroup,\n  DropdownMenuRadioItem,\n  DropdownMenuTrigger,\n} from '@/registry/ndeko/ui/dropdown-menu';\n\nexport default function Dropdown07() {\n  const [framework, setFramework] = useState('nextjs');\n\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger render={<Button variant='outline' />}>\n        Framework\n        <ChevronDownIcon className='-me-1 opacity-60' />\n      </DropdownMenuTrigger>\n      <DropdownMenuContent>\n        <DropdownMenuRadioGroup value={framework} onValueChange={setFramework}>\n          <DropdownMenuRadioItem value='nextjs' closeOnClick>\n            Next.js\n          </DropdownMenuRadioItem>\n          <DropdownMenuRadioItem value='sveltekit' closeOnClick disabled>\n            SvelteKit\n          </DropdownMenuRadioItem>\n          <DropdownMenuRadioItem value='remix' closeOnClick>\n            Remix\n          </DropdownMenuRadioItem>\n          <DropdownMenuRadioItem value='astro' closeOnClick>\n            Astro\n          </DropdownMenuRadioItem>\n        </DropdownMenuRadioGroup>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "dropdown"
+  ],
+  "type": "registry:component"
+}

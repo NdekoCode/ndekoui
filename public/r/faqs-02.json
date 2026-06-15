@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "faqs-02",
+  "title": "Centered questions with a contact line",
+  "description": "A centred heading, the questions on one card and a line that names who answers the rest.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/accordion.json",
+    "https://ui.ndeko.dev/r/avatar.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/blocks/faqs/faqs-02/index.tsx",
+      "content": "import {\n  Accordion,\n  AccordionContent,\n  AccordionItem,\n  AccordionTrigger,\n} from '@/registry/ndeko/ui/accordion';\nimport {\n  Avatar,\n  AvatarFallback,\n  AvatarImage,\n} from '@/registry/ndeko/ui/avatar';\n\nimport { CONTACT, QUESTIONS, SECTION } from './data';\n\nconst FIRST_QUESTION_ID = QUESTIONS[0].id;\n\nfunction initialsOf(name: string) {\n  const words = name.split(' ');\n  const letters = words.map((word) => word.charAt(0));\n  return letters.join('');\n}\n\nexport default function Faqs02() {\n  return (\n    <section className='px-4 py-16 sm:px-6 sm:py-24 lg:px-8'>\n      <div className='mx-auto flex max-w-2xl flex-col items-center gap-10'>\n        <div className='flex flex-col items-center gap-3 text-center'>\n          <h2 className='text-2xl font-semibold text-balance sm:text-3xl'>\n            {SECTION.title}\n          </h2>\n          <p className='text-muted-foreground text-base text-pretty'>\n            {SECTION.description}\n          </p>\n        </div>\n        <div className='bg-card hairline-ring ring-border dark:bg-foreground/[0.03] w-full rounded-xl px-5 py-1 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>\n          <Accordion defaultValue={[FIRST_QUESTION_ID]}>\n            {QUESTIONS.map((item) => (\n              <AccordionItem key={item.id} value={item.id}>\n                <AccordionTrigger className='py-4 text-sm'>\n                  {item.question}\n                </AccordionTrigger>\n                <AccordionContent className='pb-4 text-sm leading-relaxed text-pretty'>\n                  {item.answer}\n                </AccordionContent>\n              </AccordionItem>\n            ))}\n          </Accordion>\n        </div>\n        <div className='flex flex-col items-center gap-3 text-center sm:flex-row sm:text-left'>\n          <Avatar className='size-8'>\n            <AvatarImage src={CONTACT.person.image} alt={CONTACT.person.name} />\n            <AvatarFallback>{initialsOf(CONTACT.person.name)}</AvatarFallback>\n          </Avatar>\n          <p className='text-muted-foreground text-[13px] text-pretty'>\n            {CONTACT.lead}{' '}\n            <a\n              href={CONTACT.href}\n              className='text-primary-ink focus-visible:ring-ring/25 rounded-sm font-medium underline-offset-4 outline-none hover:underline focus-visible:ring-[3px]'\n            >\n              {CONTACT.linkLabel}\n            </a>{' '}\n            {CONTACT.tail}\n          </p>\n        </div>\n      </div>\n    </section>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/faqs-02/index.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/faqs/faqs-02/data.ts",
+      "content": "export type Question = {\n  id: string;\n  question: string;\n  answer: string;\n};\n\nexport const SECTION = {\n  title: 'Questions about Fernpost',\n  description: 'What writers ask most before sending their first issue',\n};\n\nexport const QUESTIONS: Question[] = [\n  {\n    id: 'import',\n    question: 'Can I bring my subscribers from another service?',\n    answer:\n      'Yes. Upload a CSV or connect your old account. Subscribers keep their sign-up date, and anyone who unsubscribed before stays unsubscribed.',\n  },\n  {\n    id: 'domain',\n    question: 'Do issues go out from my own domain?',\n    answer:\n      'On both plans. Add two DNS records and Fernpost checks them for you. Until then, issues are sent from a shared Fernpost address.',\n  },\n  {\n    id: 'paid',\n    question: 'Can readers pay for some issues?',\n    answer:\n      'On Studio. Mark an issue as paid and free subscribers receive a preview with a link to subscribe.',\n  },\n  {\n    id: 'archive',\n    question: 'Is there a public archive?',\n    answer:\n      'Every newsletter gets a web archive you can turn off. Paid issues stay behind the subscription there too.',\n  },\n  {\n    id: 'leave',\n    question: 'What happens if I leave?',\n    answer:\n      'Export your subscribers and every issue as HTML at any time. Nothing is deleted until you close the account yourself.',\n  },\n];\n\nexport const CONTACT = {\n  person: { name: 'Lucia Ferro', image: '/avatars/avatar-05.svg' },\n  lead: 'Still wondering about something?',\n  linkLabel: 'Write to hello@fernpost.example',\n  href: 'mailto:hello@fernpost.example',\n  tail: 'and a person from the team answers.',\n};\n",
+      "type": "registry:component",
+      "target": "components/blocks/faqs-02/data.ts"
+    }
+  ],
+  "categories": [
+    "blocks",
+    "faqs"
+  ],
+  "type": "registry:block"
+}

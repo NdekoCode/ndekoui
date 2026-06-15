@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chat-source",
+  "title": "Chat Source",
+  "description": "A cited page as a small pill that previews its title and summary after a short pause.",
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/hover-card.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/chat-source.tsx",
+      "content": "// Adapted from prompt-kit (MIT, Copyright (c) 2025 Julien Thibeaut).\n'use client';\n\nimport { createContext, useContext } from 'react';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport {\n  HoverCard,\n  HoverCardContent,\n  HoverCardTrigger,\n} from '@/registry/ndeko/ui/hover-card';\n\ntype SourceContextValue = {\n  href: string;\n  domain: string;\n};\n\nconst SourceContext = createContext<SourceContextValue | null>(null);\n\nfunction useSourceContext() {\n  const context = useContext(SourceContext);\n  if (!context) {\n    throw new Error('Source parts must be used within a Source');\n  }\n  return context;\n}\n\nconst WWW_PREFIX = /^www\\./;\n\nfunction hostOf(href: string) {\n  try {\n    return new URL(href).hostname;\n  } catch {\n    const lastSegment = href.split('/').pop();\n    return lastSegment || href;\n  }\n}\n\nfunction domainOf(href: string) {\n  const host = hostOf(href);\n  return host.replace(WWW_PREFIX, '');\n}\n\nfunction initialOf(domain: string) {\n  const first = domain.charAt(0);\n  return first.toUpperCase();\n}\n\nconst OPEN_DELAY_MS = 150;\n\ntype SourceProps = {\n  href: string;\n  children: React.ReactNode;\n};\n\nfunction Source({ href, children }: SourceProps) {\n  const domain = domainOf(href);\n  const context: SourceContextValue = { href, domain };\n\n  return (\n    <SourceContext.Provider value={context}>\n      <HoverCard>{children}</HoverCard>\n    </SourceContext.Provider>\n  );\n}\n\n/** The first letter of the site on a key cap. Drawn locally, so citing a page never loads anything from it. */\nfunction SourceMark({ className }: { className?: string }) {\n  const { domain } = useSourceContext();\n  const initial = initialOf(domain);\n\n  return (\n    <span\n      aria-hidden='true'\n      className={cn(\n        'keycap-3d text-muted-foreground inline-flex size-3.5 shrink-0 items-center justify-center rounded-[4px] text-[9px] leading-none font-semibold',\n        className\n      )}\n    >\n      {initial}\n    </span>\n  );\n}\n\ntype SourceTriggerProps = {\n  label?: string | number;\n  showMark?: boolean;\n  className?: string;\n};\n\nfunction SourceTrigger({\n  label,\n  showMark = false,\n  className,\n}: SourceTriggerProps) {\n  const { href, domain } = useSourceContext();\n  const visibleLabel = label ?? domain;\n\n  return (\n    <HoverCardTrigger\n      href={href}\n      target='_blank'\n      rel='noreferrer'\n      delay={OPEN_DELAY_MS}\n      closeDelay={0}\n      data-slot='source-trigger'\n      className={cn(\n        'bg-foreground/[0.06] text-muted-foreground hover:bg-foreground/10 hover:text-foreground focus-visible:ring-ring/25 inline-flex h-5 max-w-36 items-center gap-1 overflow-hidden rounded-full px-1.5 align-middle text-xs no-underline transition-colors duration-150 outline-none focus-visible:ring-[3px]',\n        showMark && 'ps-0.5 pe-2',\n        className\n      )}\n    >\n      {showMark && <SourceMark className='rounded-full' />}\n      <span className='truncate text-center tabular-nums'>{visibleLabel}</span>\n    </HoverCardTrigger>\n  );\n}\n\ntype SourceContentProps = {\n  title: string;\n  description: string;\n  className?: string;\n};\n\nfunction SourceContent({ title, description, className }: SourceContentProps) {\n  const { href, domain } = useSourceContext();\n\n  return (\n    <HoverCardContent className={cn('w-80 p-0', className)}>\n      <a\n        href={href}\n        target='_blank'\n        rel='noreferrer'\n        className='focus-visible:ring-ring/25 flex flex-col gap-1.5 rounded-xl p-3 outline-none focus-visible:ring-[3px]'\n      >\n        <span className='flex items-center gap-1.5'>\n          <SourceMark />\n          <span className='text-primary-ink truncate text-xs'>{domain}</span>\n        </span>\n        <span className='line-clamp-2 text-[13px] font-medium'>{title}</span>\n        <span className='text-muted-foreground line-clamp-2 text-[13px]'>\n          {description}\n        </span>\n      </a>\n    </HoverCardContent>\n  );\n}\n\nexport { Source, SourceContent, SourceMark, SourceTrigger };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives",
+    "chat"
+  ],
+  "type": "registry:ui"
+}

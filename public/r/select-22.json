@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-22",
+  "title": "Disabled select",
+  "description": "A trigger and its label dimmed while the choice is locked.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/select.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-22.tsx",
+      "content": "import { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport {\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from '@/registry/ndeko/ui/select';\n\nconst FRAMEWORKS = [\n  { value: 'react', label: 'React' },\n  { value: 'nextjs', label: 'Next.js' },\n  { value: 'astro', label: 'Astro' },\n  { value: 'gatsby', label: 'Gatsby' },\n];\n\nexport default function Select22() {\n  return (\n    <Field disabled className='w-full max-w-xs'>\n      <FieldLabel>Framework</FieldLabel>\n      <Select items={FRAMEWORKS} defaultValue='react' disabled>\n        <SelectTrigger>\n          <SelectValue placeholder='Pick a framework' />\n        </SelectTrigger>\n        <SelectContent>\n          {FRAMEWORKS.map((framework) => (\n            <SelectItem key={framework.value} value={framework.value}>\n              {framework.label}\n            </SelectItem>\n          ))}\n        </SelectContent>\n      </Select>\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

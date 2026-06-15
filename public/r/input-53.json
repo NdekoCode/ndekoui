@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-53",
+  "title": "Read-only input",
+  "description": "A value on a soft fill that can be selected but not edited.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-53.tsx",
+      "content": "import { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport { Input } from '@/registry/ndeko/ui/input';\n\nexport default function Input53() {\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Account ID</FieldLabel>\n      <Input\n        className='read-only:bg-foreground/[0.04] dark:read-only:bg-foreground/[0.02] read-only:shadow-none'\n        defaultValue='acct_8f3k2m9q'\n        readOnly\n      />\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

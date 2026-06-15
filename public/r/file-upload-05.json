@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "file-upload-05",
+  "title": "Image drop zone with button",
+  "description": "A drop zone with a select button that shows the image inside it.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/use-file-upload.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/file-upload/file-upload-05.tsx",
+      "content": "'use client';\n\nimport {\n  formatBytes,\n  useFileUpload,\n} from '@/registry/ndeko/hooks/use-file-upload';\nimport {\n  CircleAlertIcon,\n  ImageIcon,\n  UploadIcon,\n  XIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst MAX_SIZE = 2 * 1024 * 1024;\nconst ACCEPTED_TYPES = 'image/svg+xml,image/png,image/jpeg,image/jpg,image/gif';\n\nconst DROP_ZONE = [\n  'relative flex min-h-52 flex-col items-center justify-center overflow-hidden rounded-xl p-4',\n  'group hairline-border border-dashed border-foreground/20',\n  'transition-[background-color,border-color,scale] duration-200 ease-(--ease-out-strong)',\n  'data-dragging:scale-[1.01] motion-reduce:data-dragging:scale-100',\n  'data-dragging:border-primary/50 data-dragging:bg-primary/[0.04]',\n  'has-[input:focus-visible]:ring-[3px] has-[input:focus-visible]:ring-ring/25',\n].join(' ');\n\nconst ICON_TILE =\n  'keycap-3d text-muted-foreground mb-3 flex size-10 items-center justify-center rounded-full transition-transform duration-200 ease-(--ease-out-strong) group-data-dragging:-translate-y-0.5 motion-reduce:group-data-dragging:translate-y-0';\n\nfunction presenceOf(isPresent: boolean) {\n  if (isPresent) {\n    return true;\n  }\n  return undefined;\n}\n\nfunction backgroundOf(url: string): React.CSSProperties {\n  return { backgroundImage: `url(${url})` };\n}\n\nexport default function FileUpload05() {\n  const [\n    { files, isDragging, errors },\n    {\n      handleDragEnter,\n      handleDragLeave,\n      handleDragOver,\n      handleDrop,\n      openFileDialog,\n      removeFile,\n      getInputProps,\n    },\n  ] = useFileUpload({\n    accept: ACCEPTED_TYPES,\n    maxSize: MAX_SIZE,\n  });\n\n  const image = files[0];\n  const previewUrl = image?.preview;\n  const fileName = image?.file.name;\n  const hasImage = Boolean(previewUrl);\n  const firstError = errors[0];\n\n  function removeImage() {\n    if (!image) {\n      return;\n    }\n    removeFile(image.id);\n  }\n\n  return (\n    <div className='flex w-full flex-col gap-2'>\n      <div className='relative'>\n        <div\n          onDragEnter={handleDragEnter}\n          onDragLeave={handleDragLeave}\n          onDragOver={handleDragOver}\n          onDrop={handleDrop}\n          data-dragging={presenceOf(isDragging)}\n          className={DROP_ZONE}\n        >\n          <input\n            {...getInputProps()}\n            className='sr-only'\n            aria-label='Upload image file'\n          />\n          {previewUrl && (\n            <div className='absolute inset-0 p-4'>\n              <div\n                role='img'\n                aria-label={fileName}\n                className='size-full bg-contain bg-center bg-no-repeat'\n                style={backgroundOf(previewUrl)}\n              />\n            </div>\n          )}\n          {!previewUrl && (\n            <div className='flex flex-col items-center justify-center px-4 py-3 text-center'>\n              <div className={ICON_TILE} aria-hidden='true'>\n                <ImageIcon className='size-4' />\n              </div>\n              <p className='mb-1 text-[13px] font-medium'>\n                Drop your image here\n              </p>\n              <p className='text-muted-foreground text-xs'>\n                SVG, PNG, JPG or GIF (max. {formatBytes(MAX_SIZE)})\n              </p>\n              <Button\n                variant='outline'\n                className='mt-4'\n                onClick={openFileDialog}\n              >\n                <UploadIcon className='-ms-1 opacity-60' />\n                Select image\n              </Button>\n            </div>\n          )}\n        </div>\n        {hasImage && (\n          <Button\n            variant='outline'\n            size='icon-sm'\n            onClick={removeImage}\n            aria-label='Remove image'\n            className='absolute end-3 top-3'\n          >\n            <XIcon />\n          </Button>\n        )}\n      </div>\n      {firstError && (\n        <p\n          role='alert'\n          className='text-destructive-ink flex items-center gap-1.5 text-xs'\n        >\n          <CircleAlertIcon className='size-3.5 shrink-0' />\n          <span>{firstError}</span>\n        </p>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "file-upload"
+  ],
+  "type": "registry:component"
+}

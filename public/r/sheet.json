@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sheet",
+  "title": "Sheet",
+  "description": "A dialog docked to an edge, floating 8px from it.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/button.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/sheet.tsx",
+      "content": "'use client';\n\nimport { Dialog as SheetPrimitive } from '@base-ui/react/dialog';\n\nimport { XIcon } from '@/registry/ndeko/lib/icons';\nimport { OVERLAY_BACKDROP } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Button } from '@/registry/ndeko/ui/button';\n\ntype WithClassName<Props> = Omit<Props, 'className'> & { className?: string };\n\nfunction Sheet(props: SheetPrimitive.Root.Props) {\n  return <SheetPrimitive.Root data-slot='sheet' {...props} />;\n}\n\nfunction SheetTrigger(props: SheetPrimitive.Trigger.Props) {\n  return <SheetPrimitive.Trigger data-slot='sheet-trigger' {...props} />;\n}\n\nfunction SheetClose(props: SheetPrimitive.Close.Props) {\n  return <SheetPrimitive.Close data-slot='sheet-close' {...props} />;\n}\n\nconst SIDE_CLASS = {\n  right:\n    'inset-y-2 right-2 w-[calc(100%-1rem)] max-w-sm data-starting-style:translate-x-[calc(100%+1rem)] data-ending-style:translate-x-[calc(100%+1rem)]',\n  left: 'inset-y-2 left-2 w-[calc(100%-1rem)] max-w-sm data-starting-style:-translate-x-[calc(100%+1rem)] data-ending-style:-translate-x-[calc(100%+1rem)]',\n  top: 'inset-x-2 top-2 max-h-[90dvh] data-starting-style:-translate-y-[calc(100%+1rem)] data-ending-style:-translate-y-[calc(100%+1rem)]',\n  bottom:\n    'inset-x-2 bottom-2 max-h-[90dvh] pb-[max(1.5rem,env(safe-area-inset-bottom))] data-starting-style:translate-y-[calc(100%+1rem)] data-ending-style:translate-y-[calc(100%+1rem)]',\n} as const;\n\ntype SheetSide = keyof typeof SIDE_CLASS;\n\ntype SheetContentProps = WithClassName<SheetPrimitive.Popup.Props> & {\n  side?: SheetSide;\n  showCloseButton?: boolean;\n  closeLabel?: string;\n};\n\nfunction SheetContent({\n  className,\n  children,\n  side = 'right',\n  showCloseButton = true,\n  closeLabel = 'Close',\n  ...props\n}: SheetContentProps) {\n  return (\n    <SheetPrimitive.Portal>\n      <SheetPrimitive.Backdrop className={OVERLAY_BACKDROP} />\n      <SheetPrimitive.Popup\n        data-slot='sheet-content'\n        data-side={side}\n        className={cn(\n          'bg-card text-card-foreground hairline-ring ring-border fixed z-50 flex flex-col gap-4 overflow-y-auto rounded-2xl p-6 shadow-xl shadow-black/8 outline-none',\n          'transition-[translate,opacity] duration-300 ease-(--ease-drawer) data-ending-style:duration-200',\n          SIDE_CLASS[side],\n          className\n        )}\n        {...props}\n      >\n        {children}\n        {showCloseButton && (\n          <SheetPrimitive.Close\n            render={\n              <Button\n                variant='ghost'\n                size='icon-sm'\n                className='text-muted-foreground absolute top-3 right-3'\n              />\n            }\n          >\n            <XIcon />\n            <span className='sr-only'>{closeLabel}</span>\n          </SheetPrimitive.Close>\n        )}\n      </SheetPrimitive.Popup>\n    </SheetPrimitive.Portal>\n  );\n}\n\nfunction SheetHeader({ className, ...props }: React.ComponentProps<'div'>) {\n  return (\n    <div\n      data-slot='sheet-header'\n      className={cn('flex flex-col gap-1.5 pr-8', className)}\n      {...props}\n    />\n  );\n}\n\nfunction SheetFooter({ className, ...props }: React.ComponentProps<'div'>) {\n  return (\n    <div\n      data-slot='sheet-footer'\n      className={cn('mt-auto flex flex-col gap-2', className)}\n      {...props}\n    />\n  );\n}\n\nfunction SheetTitle({\n  className,\n  ...props\n}: WithClassName<SheetPrimitive.Title.Props>) {\n  return (\n    <SheetPrimitive.Title\n      data-slot='sheet-title'\n      className={cn('text-lg leading-tight font-semibold', className)}\n      {...props}\n    />\n  );\n}\n\nfunction SheetDescription({\n  className,\n  ...props\n}: WithClassName<SheetPrimitive.Description.Props>) {\n  return (\n    <SheetPrimitive.Description\n      data-slot='sheet-description'\n      className={cn('text-muted-foreground text-[13px]', className)}\n      {...props}\n    />\n  );\n}\n\nexport {\n  Sheet,\n  SheetClose,\n  SheetContent,\n  SheetDescription,\n  SheetFooter,\n  SheetHeader,\n  SheetTitle,\n  SheetTrigger,\n};\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

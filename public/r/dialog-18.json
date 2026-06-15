@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dialog-18",
+  "title": "Plan dialog",
+  "description": "Plans as choice cards, with what every paid plan includes.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/dialog.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/radio-group.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/dialog/dialog-18.tsx",
+      "content": "import { useId } from 'react';\n\nimport { CheckIcon, RefreshCcwIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport {\n  Dialog,\n  DialogClose,\n  DialogContent,\n  DialogDescription,\n  DialogFooter,\n  DialogHeader,\n  DialogTitle,\n  DialogTrigger,\n} from '@/registry/ndeko/ui/dialog';\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { RadioGroup, RadioGroupItem } from '@/registry/ndeko/ui/radio-group';\n\nconst PLANS = [\n  { value: 'essential', label: 'Essential', price: '$4 per member, monthly' },\n  { value: 'standard', label: 'Standard', price: '$19 per member, monthly' },\n  {\n    value: 'enterprise',\n    label: 'Enterprise',\n    price: '$32 per member, monthly',\n  },\n];\n\nconst FEATURES = [\n  'Unlimited projects',\n  'Exports without a watermark',\n  'Unlimited members and free viewers',\n  'Unlimited file uploads',\n  'Refund within 7 days',\n  'Advanced permissions',\n];\n\nconst ICON_TILE =\n  'keycap-3d text-muted-foreground flex size-10 shrink-0 items-center justify-center rounded-lg';\n\nconst PLAN_CARD = [\n  'relative flex w-full items-center gap-3 rounded-lg bg-card px-3.5 py-3 shadow-[0_1px_2px_rgb(0_0_0/0.04)] hairline-ring ring-border transition-[box-shadow] duration-150',\n  'has-data-checked:shadow-[0_1px_2px_rgb(0_0_0/0.04),0_6px_16px_-8px_color-mix(in_oklab,var(--primary)_35%,transparent)] has-data-checked:ring-primary/45',\n].join(' ');\n\nexport default function Dialog18() {\n  const id = useId();\n\n  return (\n    <Dialog>\n      <DialogTrigger render={<Button variant='outline' />}>\n        Change plan\n      </DialogTrigger>\n      <DialogContent className='max-w-md'>\n        <div className='flex flex-col gap-4'>\n          <span aria-hidden='true' className={ICON_TILE}>\n            <RefreshCcwIcon className='size-5' />\n          </span>\n          <DialogHeader>\n            <DialogTitle>Change your plan</DialogTitle>\n            <DialogDescription>\n              The new price applies from your next invoice.\n            </DialogDescription>\n          </DialogHeader>\n        </div>\n        <form className='flex flex-col gap-5'>\n          <RadioGroup\n            defaultValue='standard'\n            aria-label='Plan'\n            className='gap-2'\n          >\n            {PLANS.map((plan) => {\n              const itemId = `${id}-${plan.value}`;\n              const descriptionId = `${itemId}-description`;\n\n              return (\n                <div key={plan.value} className={PLAN_CARD}>\n                  <RadioGroupItem\n                    value={plan.value}\n                    id={itemId}\n                    aria-describedby={descriptionId}\n                    className='order-1 after:absolute after:inset-0'\n                  />\n                  <div className='grid grow gap-1.5'>\n                    <Label htmlFor={itemId}>{plan.label}</Label>\n                    <p\n                      id={descriptionId}\n                      className='text-muted-foreground text-xs tabular-nums'\n                    >\n                      {plan.price}\n                    </p>\n                  </div>\n                </div>\n              );\n            })}\n          </RadioGroup>\n          <div className='flex flex-col gap-3'>\n            <p className='text-foreground text-[13px] font-medium'>\n              Every paid plan includes:\n            </p>\n            <ul className='text-muted-foreground flex flex-col gap-2 text-[13px]'>\n              {FEATURES.map((feature) => (\n                <li key={feature} className='flex gap-2'>\n                  <CheckIcon className='text-primary-ink mt-0.5 size-4 shrink-0' />\n                  {feature}\n                </li>\n              ))}\n            </ul>\n          </div>\n          <DialogFooter>\n            <DialogClose render={<Button variant='outline' size='lg' />}>\n              Cancel\n            </DialogClose>\n            <DialogClose render={<Button size='lg' />}>Change plan</DialogClose>\n          </DialogFooter>\n        </form>\n      </DialogContent>\n    </Dialog>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "dialog"
+  ],
+  "type": "registry:component"
+}

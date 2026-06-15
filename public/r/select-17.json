@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-17",
+  "title": "Select with icon",
+  "description": "A clock icon before the value in the trigger.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/select.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-17.tsx",
+      "content": "import { ClockIcon } from '@/registry/ndeko/lib/icons';\nimport { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport {\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from '@/registry/ndeko/ui/select';\n\nconst SHIFTS = [\n  { value: 'morning', label: '6:00 AM to 2:00 PM' },\n  { value: 'afternoon', label: '2:00 PM to 10:00 PM' },\n  { value: 'night', label: '10:00 PM to 6:00 AM' },\n];\n\nexport default function Select17() {\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Shift</FieldLabel>\n      <Select items={SHIFTS} defaultValue='morning'>\n        <SelectTrigger>\n          <ClockIcon className='text-muted-foreground' />\n          <SelectValue placeholder='Pick a shift' />\n        </SelectTrigger>\n        <SelectContent>\n          {SHIFTS.map((shift) => (\n            <SelectItem key={shift.value} value={shift.value}>\n              {shift.label}\n            </SelectItem>\n          ))}\n        </SelectContent>\n      </Select>\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

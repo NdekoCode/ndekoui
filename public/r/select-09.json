@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-09",
+  "title": "Required native select",
+  "description": "An asterisk after the label marks a field the form needs.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/select-native.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-09.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { SelectNative } from '@/registry/ndeko/ui/select-native';\n\nexport default function Select09() {\n  const id = useId();\n\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-2'>\n      <Label htmlFor={id} className='gap-1'>\n        Framework\n        <span className='text-destructive-ink' aria-hidden='true'>\n          *\n        </span>\n      </Label>\n      <SelectNative id={id} required>\n        <option value='react'>React</option>\n        <option value='nextjs'>Next.js</option>\n        <option value='astro'>Astro</option>\n        <option value='gatsby'>Gatsby</option>\n      </SelectNative>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

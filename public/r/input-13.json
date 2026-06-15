@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-13",
+  "title": "Input with inline add-ons",
+  "description": "A price between a currency sign and its code.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-13.tsx",
+      "content": "import { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport { Input } from '@/registry/ndeko/ui/input';\n\nexport default function Input13() {\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Price</FieldLabel>\n      <div className='relative'>\n        <Input\n          className='peer ps-6 pe-11 tabular-nums'\n          placeholder='0.00'\n          inputMode='decimal'\n        />\n        <span className='text-muted-foreground pointer-events-none absolute inset-y-0 start-0 flex items-center ps-2.5 text-[13px] select-none peer-disabled:opacity-50'>\n          €\n        </span>\n        <span className='text-muted-foreground pointer-events-none absolute inset-y-0 end-0 flex items-center pe-2.5 text-[13px] select-none peer-disabled:opacity-50'>\n          EUR\n        </span>\n      </div>\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

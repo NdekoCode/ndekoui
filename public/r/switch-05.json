@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "switch-05",
+  "title": "Square switch",
+  "description": "A switch with a rounded square track and thumb.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/switch.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/switch/switch-05.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { Switch } from '@/registry/ndeko/ui/switch';\n\nconst SQUARE_SWITCH = 'rounded-sm [&_[data-slot=switch-thumb]]:rounded-[4px]';\n\nexport default function Switch05() {\n  const id = useId();\n\n  return (\n    <div className='inline-flex items-center gap-2'>\n      <Switch id={id} className={SQUARE_SWITCH} />\n      <Label htmlFor={id} className='sr-only'>\n        Snap to grid\n      </Label>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "switch"
+  ],
+  "type": "registry:component"
+}

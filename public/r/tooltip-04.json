@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip-04",
+  "title": "Hover card with a title",
+  "description": "A term in a sentence that opens its definition on hover.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/hover-card.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/tooltip/tooltip-04.tsx",
+      "content": "import { FOCUS_RING } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport {\n  HoverCard,\n  HoverCardContent,\n  HoverCardTrigger,\n} from '@/registry/ndeko/ui/hover-card';\n\nconst LINK = cn(\n  'text-primary-ink rounded-sm font-medium underline-offset-4 hover:underline',\n  FOCUS_RING\n);\n\nexport default function Tooltip04() {\n  return (\n    <p className='text-muted-foreground max-w-xs text-[13px]'>\n      The Team plan bills{' '}\n      <HoverCard>\n        <HoverCardTrigger href='#' className={LINK}>\n          by build minute\n        </HoverCardTrigger>\n        <HoverCardContent className='flex flex-col gap-1 p-3'>\n          <p className='font-medium'>Build minutes</p>\n          <p className='text-muted-foreground text-xs'>\n            Each build is billed for the minutes it runs, rounded up to the next\n            minute. Time spent in the queue is free.\n          </p>\n        </HoverCardContent>\n      </HoverCard>\n      , with the first 400 included every month.\n    </p>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "tooltip"
+  ],
+  "type": "registry:component"
+}

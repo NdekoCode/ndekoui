@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "field",
+  "title": "Field",
+  "description": "Label, description and error wired to a control.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/label.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/field.tsx",
+      "content": "'use client';\n\nimport { Field as FieldPrimitive } from '@base-ui/react/field';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { LABEL_RECIPE } from '@/registry/ndeko/ui/label';\n\ntype WithClassName<Props> = Omit<Props, 'className'> & { className?: string };\n\nfunction Field({\n  className,\n  ...props\n}: WithClassName<FieldPrimitive.Root.Props>) {\n  return (\n    <FieldPrimitive.Root\n      data-slot='field'\n      className={cn('group flex flex-col gap-1.5', className)}\n      {...props}\n    />\n  );\n}\n\nfunction FieldLabel({\n  className,\n  ...props\n}: WithClassName<FieldPrimitive.Label.Props>) {\n  return (\n    <FieldPrimitive.Label\n      data-slot='field-label'\n      className={cn(LABEL_RECIPE, className)}\n      {...props}\n    />\n  );\n}\n\nfunction FieldDescription({\n  className,\n  ...props\n}: WithClassName<FieldPrimitive.Description.Props>) {\n  return (\n    <FieldPrimitive.Description\n      data-slot='field-description'\n      className={cn('text-muted-foreground text-xs', className)}\n      {...props}\n    />\n  );\n}\n\nfunction FieldError({\n  className,\n  ...props\n}: WithClassName<FieldPrimitive.Error.Props>) {\n  return (\n    <FieldPrimitive.Error\n      data-slot='field-error'\n      className={cn(\n        'text-destructive-ink text-xs',\n        'transition-[opacity,translate] duration-200 ease-(--ease-out-strong) data-ending-style:opacity-0 data-ending-style:duration-150 data-starting-style:-translate-y-0.5 data-starting-style:opacity-0',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nexport { Field, FieldDescription, FieldError, FieldLabel };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge-09",
+  "title": "Pending status badge",
+  "description": "An outline badge with a warning dot.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/badge.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/badge/badge-09.tsx",
+      "content": "import { Badge } from '@/registry/ndeko/ui/badge';\n\nexport default function Badge09() {\n  return (\n    <Badge variant='outline' className='gap-1.5'>\n      <span className='bg-warning size-1.5 rounded-full' aria-hidden='true' />\n      Pending\n    </Badge>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "badge"
+  ],
+  "type": "registry:component"
+}

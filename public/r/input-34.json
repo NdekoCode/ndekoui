@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-34",
+  "title": "Input with character limit",
+  "description": "A counter at the end of the field that slides as you type.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/use-character-limit.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-34.tsx",
+      "content": "'use client';\n\nimport {\n  AnimatePresence,\n  motion,\n  type Transition,\n  type Variants,\n  useReducedMotion,\n} from 'motion/react';\nimport { useId, useState, type ChangeEvent } from 'react';\n\nimport { useCharacterLimit } from '@/registry/ndeko/hooks/use-character-limit';\nimport { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport { Input } from '@/registry/ndeko/ui/input';\n\nconst MAX_LENGTH = 50;\nconst DIGIT_SHIFT_PX = 8;\n\nconst DIGIT_TRANSITION: Transition = { duration: 0.18, ease: [0.2, 0, 0, 1] };\n\nconst DIGIT_VARIANTS: Variants = {\n  enter: (direction: number) => {\n    const offset = direction * DIGIT_SHIFT_PX;\n    return { opacity: 0, y: offset };\n  },\n  visible: { opacity: 1, y: 0 },\n  exit: (direction: number) => {\n    const offset = direction * DIGIT_SHIFT_PX;\n    return { opacity: 0, y: -offset };\n  },\n};\n\nconst FADE_VARIANTS: Variants = {\n  enter: { opacity: 0 },\n  visible: { opacity: 1 },\n  exit: { opacity: 0 },\n};\n\nfunction digitVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return DIGIT_VARIANTS;\n}\n\nfunction directionOf(previous: number, next: number) {\n  if (next < previous) {\n    return -1;\n  }\n  return 1;\n}\n\nexport default function Input34() {\n  const counterId = useId();\n  const [direction, setDirection] = useState(1);\n  const { value, characterCount, handleChange, maxLength } = useCharacterLimit({\n    maxLength: MAX_LENGTH,\n  });\n  const shouldReduceMotion = useReducedMotion();\n  const digitVariants = digitVariantsOf(shouldReduceMotion);\n\n  function changeHeadline(event: ChangeEvent<HTMLInputElement>) {\n    const nextLength = event.currentTarget.value.length;\n    setDirection(directionOf(characterCount, nextLength));\n    handleChange(event);\n  }\n\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Headline</FieldLabel>\n      <div className='relative'>\n        <Input\n          className='peer pe-14'\n          placeholder='Say what your team ships'\n          value={value}\n          maxLength={maxLength}\n          onChange={changeHeadline}\n          aria-describedby={counterId}\n        />\n        <span\n          className='text-muted-foreground pointer-events-none absolute inset-y-0 end-0 flex items-center pe-2.5 text-xs tabular-nums peer-disabled:opacity-50'\n          aria-hidden='true'\n        >\n          <span className='relative flex'>\n            <AnimatePresence\n              mode='popLayout'\n              initial={false}\n              custom={direction}\n            >\n              <motion.span\n                key={characterCount}\n                className='flex'\n                custom={direction}\n                variants={digitVariants}\n                initial='enter'\n                animate='visible'\n                exit='exit'\n                transition={DIGIT_TRANSITION}\n              >\n                {characterCount}\n              </motion.span>\n            </AnimatePresence>\n          </span>\n          /{maxLength}\n        </span>\n        <span id={counterId} className='sr-only' role='status'>\n          {characterCount} of {maxLength} characters used\n        </span>\n      </div>\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

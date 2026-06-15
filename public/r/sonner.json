@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sonner",
+  "title": "Toaster",
+  "description": "Toasts that carry a status orb, bottom right.",
+  "dependencies": [
+    "sonner",
+    "next-themes"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/status-orb.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/sonner.tsx",
+      "content": "'use client';\n\nimport { useTheme } from 'next-themes';\nimport { Toaster as Sonner, type ToasterProps } from 'sonner';\n\nimport { StatusOrb } from '@/registry/ndeko/ui/status-orb';\n\nconst TOAST_BUTTON_PRESS =\n  'transition-[background-color,scale] duration-150 ease-(--ease-out-strong) active:scale-[0.97]';\n\nconst TOAST_CLASS_NAMES = {\n  toast:\n    'surface-raised group/toast flex w-[var(--width)] items-start gap-3 rounded-2xl p-4 text-[13px] text-popover-foreground',\n  title: 'font-medium text-foreground',\n  description: 'mt-0.5 text-[13px] text-muted-foreground',\n  content: 'flex min-w-0 flex-1 flex-col',\n  icon: 'flex shrink-0 [&>*]:shrink-0',\n  actionButton: `ms-auto inline-flex h-7 shrink-0 cursor-pointer items-center rounded-full bg-primary px-3 text-xs font-medium text-primary-foreground shadow-[0_1px_2px_rgb(0_0_0/0.14),inset_0_1px_0_rgb(255_255_255/0.12)] outline-none hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${TOAST_BUTTON_PRESS}`,\n  cancelButton: `inline-flex h-7 shrink-0 cursor-pointer items-center rounded-full bg-card px-3 text-xs font-medium text-foreground hairline-ring ring-foreground/12 outline-none hover:bg-foreground/[0.03] ${TOAST_BUTTON_PRESS}`,\n  closeButton:\n    'absolute -top-1.5 -left-1.5 flex size-5 items-center justify-center rounded-full bg-popover text-muted-foreground hairline-ring ring-border hover:text-foreground',\n};\n\nconst TOAST_ICONS = {\n  success: <StatusOrb tone='success' />,\n  error: <StatusOrb tone='error' />,\n  warning: <StatusOrb tone='warning' />,\n  info: <StatusOrb tone='info' />,\n  loading: <StatusOrb tone='loading' />,\n};\n\nconst TOAST_WIDTH = { '--width': '22rem' } as React.CSSProperties;\n\nfunction Toaster({ toastOptions, ...props }: ToasterProps) {\n  const { resolvedTheme } = useTheme();\n  const theme = resolvedTheme as ToasterProps['theme'];\n\n  return (\n    <Sonner\n      theme={theme}\n      position='bottom-right'\n      visibleToasts={3}\n      gap={8}\n      icons={TOAST_ICONS}\n      style={TOAST_WIDTH}\n      toastOptions={{\n        unstyled: true,\n        classNames: TOAST_CLASS_NAMES,\n        ...toastOptions,\n      }}\n      {...props}\n    />\n  );\n}\n\nexport { Toaster };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives",
+    "feedback"
+  ],
+  "type": "registry:ui"
+}

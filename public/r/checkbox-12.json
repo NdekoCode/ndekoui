@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox-12",
+  "title": "Checkbox with field",
+  "description": "Checking the box opens a field below it and focuses it.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/checkbox.json",
+    "https://ui.ndeko.dev/r/collapsible.json",
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/checkbox/checkbox-12.tsx",
+      "content": "'use client';\n\nimport { useEffect, useId, useRef, useState } from 'react';\n\nimport { Checkbox } from '@/registry/ndeko/ui/checkbox';\nimport { Collapsible, CollapsiblePanel } from '@/registry/ndeko/ui/collapsible';\nimport { Input } from '@/registry/ndeko/ui/input';\nimport { Label } from '@/registry/ndeko/ui/label';\n\nexport default function Checkbox12() {\n  const id = useId();\n  const descriptionId = `${id}-description`;\n  const panelId = `${id}-panel`;\n  const [isChecked, setIsChecked] = useState(false);\n  const inputRef = useRef<HTMLInputElement>(null);\n\n  useEffect(() => {\n    if (isChecked) {\n      inputRef.current?.focus();\n    }\n  }, [isChecked]);\n\n  return (\n    <div className='flex w-full items-start gap-2'>\n      <Checkbox\n        id={id}\n        checked={isChecked}\n        onCheckedChange={setIsChecked}\n        aria-describedby={descriptionId}\n        aria-controls={panelId}\n      />\n      <div className='grow'>\n        <div className='grid gap-1.5'>\n          <Label htmlFor={id}>Use a custom domain</Label>\n          <p id={descriptionId} className='text-muted-foreground text-xs'>\n            Serve the workspace from a domain you own.\n          </p>\n        </div>\n        <Collapsible open={isChecked}>\n          <CollapsiblePanel id={panelId} keepMounted className='-mx-1 px-1'>\n            <div className='pt-3 pb-1'>\n              <Input\n                ref={inputRef}\n                placeholder='projects.example.com'\n                aria-label='Custom domain'\n              />\n            </div>\n          </CollapsiblePanel>\n        </Collapsible>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "checkbox"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-24",
+  "title": "Bookmark toggle",
+  "description": "A toggle that tints when bookmarked, with a tooltip that follows the state.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/toggle.json",
+    "https://ui.ndeko.dev/r/tooltip.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-24.tsx",
+      "content": "'use client';\n\nimport { useState } from 'react';\n\nimport { BookmarkIcon } from '@/registry/ndeko/lib/icons';\nimport { Toggle } from '@/registry/ndeko/ui/toggle';\nimport {\n  Tooltip,\n  TooltipContent,\n  TooltipTrigger,\n} from '@/registry/ndeko/ui/tooltip';\n\nfunction bookmarkHintOf(isBookmarked: boolean) {\n  if (isBookmarked) {\n    return 'Remove bookmark';\n  }\n  return 'Bookmark this';\n}\n\nexport default function Button24() {\n  const [isBookmarked, setIsBookmarked] = useState(false);\n\n  return (\n    <Tooltip>\n      <TooltipTrigger\n        render={\n          <Toggle\n            aria-label='Bookmark this'\n            pressed={isBookmarked}\n            onPressedChange={setIsBookmarked}\n            className='hover:bg-primary/10 hover:text-primary-ink data-pressed:bg-primary/10 data-pressed:text-primary-ink size-8 px-0'\n          />\n        }\n      >\n        <BookmarkIcon />\n      </TooltipTrigger>\n      <TooltipContent>{bookmarkHintOf(isBookmarked)}</TooltipContent>\n    </Tooltip>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

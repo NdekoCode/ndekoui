@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stepper-04",
+  "title": "Controlled stepper",
+  "description": "Previous and next buttons move through the steps.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/stepper.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/stepper/stepper-04.tsx",
+      "content": "'use client';\n\nimport { useState } from 'react';\n\nimport { Button } from '@/registry/ndeko/ui/button';\nimport {\n  Stepper,\n  StepperIndicator,\n  StepperItem,\n  StepperSeparator,\n} from '@/registry/ndeko/ui/stepper';\n\nconst STEPS = [1, 2, 3, 4];\nconst FIRST_STEP = 1;\n\nconst CONNECTOR = [\n  'relative group-data-[state=completed]/step:bg-foreground/10',\n  'after:bg-primary after:absolute after:inset-0 after:origin-left after:scale-x-0 after:rounded-full after:transition-[scale] after:duration-200 after:ease-out-strong rtl:after:origin-right',\n  'group-data-[state=completed]/step:after:scale-x-100 group-data-[state=completed]/step:after:duration-300',\n].join(' ');\n\nexport default function Stepper04() {\n  const [currentStep, setCurrentStep] = useState(2);\n  const isFirstStep = currentStep === FIRST_STEP;\n  const isFinished = currentStep > STEPS.length;\n\n  function goToPreviousStep() {\n    setCurrentStep((step) => step - 1);\n  }\n\n  function goToNextStep() {\n    setCurrentStep((step) => step + 1);\n  }\n\n  return (\n    <div className='mx-auto flex w-full max-w-xl flex-col gap-8'>\n      <Stepper value={currentStep} onValueChange={setCurrentStep}>\n        {STEPS.map((step) => (\n          <StepperItem key={step} step={step} className='not-last:flex-1'>\n            <StepperIndicator />\n            {step < STEPS.length && <StepperSeparator className={CONNECTOR} />}\n          </StepperItem>\n        ))}\n      </Stepper>\n      <div className='flex justify-center gap-3'>\n        <Button\n          variant='outline'\n          className='w-32'\n          onClick={goToPreviousStep}\n          disabled={isFirstStep}\n          focusableWhenDisabled\n        >\n          Previous step\n        </Button>\n        <Button\n          variant='outline'\n          className='w-32'\n          onClick={goToNextStep}\n          disabled={isFinished}\n          focusableWhenDisabled\n        >\n          Next step\n        </Button>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "stepper"
+  ],
+  "type": "registry:component"
+}

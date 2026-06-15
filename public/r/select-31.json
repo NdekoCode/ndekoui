@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-31",
+  "title": "Select with end mark",
+  "description": "The picked row ends with the selected mark.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/select.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-31.tsx",
+      "content": "import { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport {\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from '@/registry/ndeko/ui/select';\n\nconst REGIONS = [\n  { value: 'us-east', label: 'US East (Virginia)' },\n  { value: 'eu-central', label: 'Europe (Frankfurt)' },\n  { value: 'af-south', label: 'Africa (Cape Town)' },\n  { value: 'ap-southeast', label: 'Asia Pacific (Singapore)' },\n];\n\nexport default function Select31() {\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Region</FieldLabel>\n      <Select items={REGIONS} defaultValue='eu-central'>\n        <SelectTrigger>\n          <SelectValue placeholder='Pick a region' />\n        </SelectTrigger>\n        <SelectContent>\n          {REGIONS.map((region) => (\n            <SelectItem key={region.value} value={region.value}>\n              {region.label}\n            </SelectItem>\n          ))}\n        </SelectContent>\n      </Select>\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "navbar-19",
+  "title": "Document navbar",
+  "description": "A back link and title, document tools and the collaborators with their presence.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/avatar.json",
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/navbar/navbar-19.tsx",
+      "content": "import {\n  ChevronLeftIcon,\n  HistoryIcon,\n  MessageSquareTextIcon,\n  UserRoundPlusIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport {\n  Avatar,\n  AvatarFallback,\n  AvatarImage,\n} from '@/registry/ndeko/ui/avatar';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst COLLABORATORS = [\n  {\n    name: 'Kelly King',\n    initials: 'KK',\n    image: '/avatars/avatar-07.svg',\n    isOnline: true,\n  },\n  {\n    name: 'Martha Johnson',\n    initials: 'MJ',\n    image: '/avatars/avatar-06.svg',\n    isOnline: false,\n  },\n  {\n    name: 'Linda Green',\n    initials: 'LG',\n    image: '/avatars/avatar-05.svg',\n    isOnline: false,\n  },\n];\n\nconst HIDDEN_COLLABORATORS = 3;\n\nfunction presenceLabelOf(isOnline: boolean) {\n  if (isOnline) {\n    return 'Online';\n  }\n  return 'Offline';\n}\n\nfunction presenceColorOf(isOnline: boolean) {\n  if (isOnline) {\n    return 'bg-success';\n  }\n  return 'bg-muted-foreground';\n}\n\nexport default function Navbar19() {\n  return (\n    <header className='hairline-b border-border px-4 md:px-6'>\n      <div className='flex h-16 items-center justify-between gap-4'>\n        <div className='flex items-center gap-2'>\n          <Button\n            variant='ghost'\n            size='icon'\n            aria-label='Go back'\n            nativeButton={false}\n            render={<a href='#' />}\n          >\n            <ChevronLeftIcon />\n          </Button>\n          <h1 className='text-sm font-medium'>Basic UI</h1>\n        </div>\n        <div className='flex items-center gap-1'>\n          <Button\n            variant='ghost'\n            size='icon'\n            aria-label='Show history'\n            className='text-muted-foreground'\n          >\n            <HistoryIcon />\n          </Button>\n          <Button\n            variant='ghost'\n            size='icon'\n            aria-label='Open comments'\n            className='text-muted-foreground'\n          >\n            <MessageSquareTextIcon />\n          </Button>\n          <Button\n            variant='ghost'\n            size='icon'\n            aria-label='Invite people'\n            className='text-muted-foreground'\n          >\n            <UserRoundPlusIcon />\n          </Button>\n          <ul className='ml-2 flex items-center gap-2'>\n            {COLLABORATORS.map((collaborator) => (\n              <li key={collaborator.name} className='relative flex'>\n                <Avatar>\n                  <AvatarImage\n                    src={collaborator.image}\n                    alt={collaborator.name}\n                  />\n                  <AvatarFallback>{collaborator.initials}</AvatarFallback>\n                </Avatar>\n                <span\n                  className={cn(\n                    'ring-background absolute -end-0.5 -bottom-0.5 size-2.5 rounded-full ring-2',\n                    presenceColorOf(collaborator.isOnline)\n                  )}\n                >\n                  <span className='sr-only'>\n                    {presenceLabelOf(collaborator.isOnline)}\n                  </span>\n                </span>\n              </li>\n            ))}\n            <li className='flex'>\n              <Button\n                variant='secondary'\n                size='icon'\n                aria-label={`Show ${HIDDEN_COLLABORATORS} more collaborators`}\n                className='text-muted-foreground hover:text-foreground text-xs tabular-nums'\n              >\n                +{HIDDEN_COLLABORATORS}\n              </Button>\n            </li>\n          </ul>\n        </div>\n      </div>\n    </header>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "navbar"
+  ],
+  "type": "registry:component"
+}

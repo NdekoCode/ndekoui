@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-17",
+  "title": "Mood picker",
+  "description": "Five round faces, from angry to laughing.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/radio-group.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/radio/radio-17.tsx",
+      "content": "import { useId } from 'react';\n\nimport { RadioGroup, RadioGroupItem } from '@/registry/ndeko/ui/radio-group';\n\ntype Mood = 'angry' | 'sad' | 'neutral' | 'happy' | 'laughing';\n\nconst MOODS: { value: Mood; label: string }[] = [\n  { value: 'angry', label: 'Angry' },\n  { value: 'sad', label: 'Sad' },\n  { value: 'neutral', label: 'Neutral' },\n  { value: 'happy', label: 'Happy' },\n  { value: 'laughing', label: 'Laughing' },\n];\n\nconst MOOD_OPTION = [\n  'relative flex size-9 cursor-pointer items-center justify-center rounded-full bg-card text-muted-foreground shadow-[0_1px_2px_rgb(0_0_0/0.04)] hairline-ring ring-border transition-[box-shadow,color] duration-150',\n  'has-data-checked:text-primary-ink has-data-checked:shadow-[0_1px_2px_rgb(0_0_0/0.04),0_6px_16px_-8px_color-mix(in_oklab,var(--primary)_35%,transparent)] has-data-checked:ring-primary/45',\n  'has-focus-visible:ring-[3px] has-focus-visible:ring-ring/25',\n].join(' ');\n\nconst ROUND_EYES = (\n  <>\n    <circle cx='9' cy='10' r='1' fill='currentColor' stroke='none' />\n    <circle cx='15' cy='10' r='1' fill='currentColor' stroke='none' />\n  </>\n);\n\nconst FACE_FEATURES: Record<Mood, React.ReactNode> = {\n  angry: (\n    <>\n      <path d='M7.75 7.75 10.25 9M16.25 7.75 13.75 9' />\n      {ROUND_EYES}\n      <path d='M8.75 16.5c1.75-1.6 4.75-1.6 6.5 0' />\n    </>\n  ),\n  sad: (\n    <>\n      {ROUND_EYES}\n      <path d='M8.75 16.25c1.75-1.75 4.75-1.75 6.5 0' />\n    </>\n  ),\n  neutral: (\n    <>\n      {ROUND_EYES}\n      <path d='M9 15.25h6' />\n    </>\n  ),\n  happy: (\n    <>\n      {ROUND_EYES}\n      <path d='M8.5 14.25c1.75 2 5.25 2 7 0' />\n    </>\n  ),\n  laughing: (\n    <>\n      <path d='M7.75 10.25c.6-.8 1.9-.8 2.5 0M13.75 10.25c.6-.8 1.9-.8 2.5 0' />\n      <path d='M8 13.5h8a4 4 0 0 1-8 0Z' />\n    </>\n  ),\n};\n\nfunction MoodFace({ mood }: { mood: Mood }) {\n  return (\n    <svg\n      width={20}\n      height={20}\n      viewBox='0 0 24 24'\n      fill='none'\n      stroke='currentColor'\n      strokeWidth={1.75}\n      strokeLinecap='round'\n      strokeLinejoin='round'\n      aria-hidden='true'\n    >\n      <circle cx='12' cy='12' r='9.25' />\n      {FACE_FEATURES[mood]}\n    </svg>\n  );\n}\n\nexport default function Radio17() {\n  const captionId = useId();\n\n  return (\n    <div className='flex flex-col gap-3'>\n      <span\n        id={captionId}\n        className='text-foreground text-[13px] leading-none font-medium'\n      >\n        How did it go?\n      </span>\n      <RadioGroup\n        defaultValue='neutral'\n        aria-labelledby={captionId}\n        className='flex gap-1.5'\n      >\n        {MOODS.map((mood) => (\n          <label key={mood.value} className={MOOD_OPTION}>\n            <RadioGroupItem value={mood.value} className='sr-only' />\n            <MoodFace mood={mood.value} />\n            <span className='sr-only'>{mood.label}</span>\n          </label>\n        ))}\n      </RadioGroup>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "radio"
+  ],
+  "type": "registry:component"
+}

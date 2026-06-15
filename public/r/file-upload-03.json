@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "file-upload-03",
+  "title": "Avatar drop area",
+  "description": "A round dashed slot that takes a dropped or picked image as the avatar.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/use-file-upload.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/file-upload/file-upload-03.tsx",
+      "content": "'use client';\n\nimport { useFileUpload } from '@/registry/ndeko/hooks/use-file-upload';\nimport { CircleUserRoundIcon, XIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst DROP_AREA = [\n  'relative flex size-16 cursor-pointer items-center justify-center overflow-hidden rounded-full outline-none',\n  'group hairline-border border-dashed border-foreground/20',\n  'transition-[background-color,border-color,scale] duration-200 ease-(--ease-out-strong)',\n  'data-dragging:scale-[1.04] motion-reduce:data-dragging:scale-100',\n  'active:scale-[0.97] motion-reduce:active:scale-100',\n  'hover:bg-foreground/[0.025] data-dragging:border-primary/50 data-dragging:bg-primary/[0.04]',\n  'focus-visible:ring-[3px] focus-visible:ring-ring/25',\n  'has-disabled:pointer-events-none has-disabled:opacity-50',\n  'data-filled:border-solid data-filled:border-border',\n].join(' ');\n\nconst AVATAR_ICON =\n  'text-muted-foreground size-4 transition-transform duration-200 ease-(--ease-out-strong) group-data-dragging:-translate-y-0.5 motion-reduce:group-data-dragging:translate-y-0';\n\nfunction presenceOf(isPresent: boolean) {\n  if (isPresent) {\n    return true;\n  }\n  return undefined;\n}\n\nfunction avatarActionOf(hasImage: boolean) {\n  if (hasImage) {\n    return 'Change image';\n  }\n  return 'Upload image';\n}\n\nfunction backgroundOf(url: string): React.CSSProperties {\n  return { backgroundImage: `url(${url})` };\n}\n\nexport default function FileUpload03() {\n  const [\n    { files, isDragging },\n    {\n      removeFile,\n      openFileDialog,\n      getInputProps,\n      handleDragEnter,\n      handleDragLeave,\n      handleDragOver,\n      handleDrop,\n    },\n  ] = useFileUpload({\n    accept: 'image/*',\n  });\n\n  const image = files[0];\n  const previewUrl = image?.preview;\n  const fileName = image?.file.name;\n  const hasImage = Boolean(previewUrl);\n\n  function removeImage() {\n    if (!image) {\n      return;\n    }\n    removeFile(image.id);\n  }\n\n  return (\n    <div className='flex flex-col items-center gap-2'>\n      <div className='relative inline-flex'>\n        <button\n          type='button'\n          className={DROP_AREA}\n          onClick={openFileDialog}\n          onDragEnter={handleDragEnter}\n          onDragLeave={handleDragLeave}\n          onDragOver={handleDragOver}\n          onDrop={handleDrop}\n          data-dragging={presenceOf(isDragging)}\n          data-filled={presenceOf(hasImage)}\n          aria-label={avatarActionOf(hasImage)}\n        >\n          {previewUrl && (\n            <div\n              role='img'\n              aria-label={fileName}\n              className='size-full bg-cover bg-center'\n              style={backgroundOf(previewUrl)}\n            />\n          )}\n          {!previewUrl && <CircleUserRoundIcon className={AVATAR_ICON} />}\n        </button>\n        {hasImage && (\n          <Button\n            size='icon'\n            onClick={removeImage}\n            aria-label='Remove image'\n            className='border-background absolute -end-1 -top-1 size-6 border-2 ring-0'\n          >\n            <XIcon className='size-3.5' />\n          </Button>\n        )}\n        <input\n          {...getInputProps()}\n          className='sr-only'\n          aria-label='Upload image file'\n          tabIndex={-1}\n        />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "file-upload"
+  ],
+  "type": "registry:component"
+}

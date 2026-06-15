@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-37",
+  "title": "Preview with link",
+  "description": "A preview button joined to a button that opens the link.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-37.tsx",
+      "content": "import { SquareArrowOutUpRightIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst SEGMENT =\n  'rounded-none first:rounded-s-full last:rounded-e-full focus-visible:z-10';\n\nexport default function Button37() {\n  return (\n    <div className='inline-flex -space-x-px'>\n      <Button variant='outline' className={SEGMENT}>\n        Preview\n      </Button>\n      <Button\n        variant='outline'\n        size='icon'\n        aria-label='Open link'\n        className={SEGMENT}\n      >\n        <SquareArrowOutUpRightIcon />\n      </Button>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

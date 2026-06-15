@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chat-chain-of-thought",
+  "title": "Chat Chain of Thought",
+  "description": "Steps of thought on one thread, each opening onto its details.",
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/collapsible.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/chat-chain-of-thought.tsx",
+      "content": "// Adapted from prompt-kit (MIT, Copyright (c) 2025 Julien Thibeaut).\n'use client';\n\nimport { ChevronDownIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport {\n  Collapsible,\n  CollapsibleContent,\n  CollapsibleTrigger,\n} from '@/registry/ndeko/ui/collapsible';\n\ntype ChainOfThoughtProps = React.ComponentProps<'div'>;\n\nfunction ChainOfThought({ className, ...props }: ChainOfThoughtProps) {\n  return (\n    <div\n      data-slot='chain-of-thought'\n      className={cn('flex flex-col', className)}\n      {...props}\n    />\n  );\n}\n\ntype ChainOfThoughtStepProps = Omit<\n  React.ComponentProps<typeof Collapsible>,\n  'className'\n> & {\n  className?: string;\n};\n\nfunction ChainOfThoughtStep({\n  className,\n  children,\n  ...props\n}: ChainOfThoughtStepProps) {\n  return (\n    <Collapsible\n      data-slot='chain-of-thought-step'\n      className={cn('group/step', className)}\n      {...props}\n    >\n      {children}\n      <div\n        aria-hidden='true'\n        className='bg-border ms-[7.5px] h-4 w-px group-last/step:hidden'\n      />\n    </Collapsible>\n  );\n}\n\nconst CHEVRON =\n  'ease-(--ease-out-strong) size-3.5 transition-[rotate,opacity] duration-200 group-data-panel-open/trigger:rotate-180';\n\ntype ChainOfThoughtTriggerProps = Omit<\n  React.ComponentProps<typeof CollapsibleTrigger>,\n  'className'\n> & {\n  className?: string;\n  leftIcon?: React.ReactNode;\n  /** Lets the chevron take the place of the icon while the pointer is over the row. */\n  swapIconOnHover?: boolean;\n};\n\nfunction ChainOfThoughtTrigger({\n  children,\n  className,\n  leftIcon,\n  swapIconOnHover = true,\n  ...props\n}: ChainOfThoughtTriggerProps) {\n  const hasLeftIcon = leftIcon !== undefined;\n  const isSwappingIcon = hasLeftIcon && swapIconOnHover;\n\n  return (\n    <CollapsibleTrigger\n      data-slot='chain-of-thought-trigger'\n      className={cn(\n        'group/trigger text-muted-foreground hover:text-foreground focus-visible:ring-ring/25 flex cursor-pointer items-center gap-2 rounded-md text-start text-[13px] transition-colors outline-none focus-visible:ring-[3px]',\n        className\n      )}\n      {...props}\n    >\n      <span className='relative inline-flex size-4 shrink-0 items-center justify-center [&_svg]:size-4'>\n        {hasLeftIcon && (\n          <span\n            className={cn(\n              'inline-flex transition-opacity duration-150',\n              isSwappingIcon && 'group-hover/trigger:opacity-0'\n            )}\n          >\n            {leftIcon}\n          </span>\n        )}\n        {isSwappingIcon && (\n          <ChevronDownIcon\n            className={cn(\n              CHEVRON,\n              'absolute opacity-0 group-hover/trigger:opacity-100'\n            )}\n          />\n        )}\n        {!hasLeftIcon && (\n          <span className='bg-muted-foreground/60 size-1.5 rounded-full' />\n        )}\n      </span>\n      <span className='min-w-0'>{children}</span>\n      {!hasLeftIcon && <ChevronDownIcon className={CHEVRON} />}\n    </CollapsibleTrigger>\n  );\n}\n\ntype ChainOfThoughtContentProps = Omit<\n  React.ComponentProps<typeof CollapsibleContent>,\n  'className'\n> & {\n  className?: string;\n};\n\nfunction ChainOfThoughtContent({\n  children,\n  className,\n  ...props\n}: ChainOfThoughtContentProps) {\n  return (\n    <CollapsibleContent\n      data-slot='chain-of-thought-content'\n      className={className}\n      {...props}\n    >\n      <div className='grid grid-cols-[min-content_minmax(0,1fr)] gap-x-3'>\n        <div className='bg-border ms-[7.5px] h-full w-px group-last/step:bg-transparent' />\n        <div className='mt-2 min-w-0 space-y-2'>{children}</div>\n      </div>\n    </CollapsibleContent>\n  );\n}\n\ntype ChainOfThoughtItemProps = React.ComponentProps<'div'>;\n\nfunction ChainOfThoughtItem({ className, ...props }: ChainOfThoughtItemProps) {\n  return (\n    <div\n      data-slot='chain-of-thought-item'\n      className={cn(\n        'text-muted-foreground text-[13px] leading-relaxed',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nexport {\n  ChainOfThought,\n  ChainOfThoughtContent,\n  ChainOfThoughtItem,\n  ChainOfThoughtStep,\n  ChainOfThoughtTrigger,\n};\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives",
+    "chat"
+  ],
+  "type": "registry:ui"
+}

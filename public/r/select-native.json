@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-native",
+  "title": "Native Select",
+  "description": "The browser select on the control recipe.",
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/recipes.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/select-native.tsx",
+      "content": "import { ChevronDownIcon } from '@/registry/ndeko/lib/icons';\nimport { CONTROL_RECIPE } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\n\nfunction SelectNative({\n  className,\n  children,\n  multiple,\n  ...props\n}: React.ComponentProps<'select'>) {\n  const isMultiple = Boolean(multiple);\n\n  return (\n    <div className='relative flex'>\n      <select\n        data-slot='select-native'\n        multiple={multiple}\n        className={cn(\n          CONTROL_RECIPE,\n          'peer cursor-pointer appearance-none',\n          isMultiple &&\n            '[&_option:checked]:bg-foreground/5 py-1 *:px-2.5 *:py-1',\n          !isMultiple && 'h-8 ps-2.5 pe-8',\n          className\n        )}\n        {...props}\n      >\n        {children}\n      </select>\n      {!isMultiple && (\n        <span className='text-muted-foreground peer-aria-invalid:text-destructive-ink pointer-events-none absolute inset-y-0 end-0 flex h-full w-8 items-center justify-center peer-disabled:opacity-50'>\n          <ChevronDownIcon className='size-4' />\n        </span>\n      )}\n    </div>\n  );\n}\n\nexport { SelectNative };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

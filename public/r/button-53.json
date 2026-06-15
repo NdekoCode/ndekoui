@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-53",
+  "title": "Directional pad",
+  "description": "Four icon buttons around a centre to pan a camera.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-53.tsx",
+      "content": "import {\n  ChevronDownIcon,\n  ChevronLeftIcon,\n  ChevronRightIcon,\n  ChevronUpIcon,\n  CircleIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nexport default function Button53() {\n  return (\n    <div className='inline-grid w-fit grid-cols-3 gap-1'>\n      <Button\n        variant='outline'\n        size='icon'\n        aria-label='Pan camera up'\n        className='col-start-2'\n      >\n        <ChevronUpIcon />\n      </Button>\n      <Button\n        variant='outline'\n        size='icon'\n        aria-label='Pan camera left'\n        className='col-start-1'\n      >\n        <ChevronLeftIcon />\n      </Button>\n      <div className='flex items-center justify-center' aria-hidden='true'>\n        <CircleIcon className='opacity-60' />\n      </div>\n      <Button variant='outline' size='icon' aria-label='Pan camera right'>\n        <ChevronRightIcon />\n      </Button>\n      <Button\n        variant='outline'\n        size='icon'\n        aria-label='Pan camera down'\n        className='col-start-2'\n      >\n        <ChevronDownIcon />\n      </Button>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

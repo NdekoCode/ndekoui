@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider-25",
+  "title": "Position sliders",
+  "description": "X, Y and Z offsets with number fields and one reset.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/slider.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/use-slider-with-input.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/slider/slider-25.tsx",
+      "content": "'use client';\n\nimport { useId, useState, type KeyboardEvent } from 'react';\n\nimport { useSliderWithInput } from '@/registry/ndeko/hooks/use-slider-with-input';\nimport { RotateCcwIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport { Input } from '@/registry/ndeko/ui/input';\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { Slider } from '@/registry/ndeko/ui/slider';\n\ntype Axis = {\n  name: string;\n  initialOffset: number;\n};\n\nconst AXES: Axis[] = [\n  { name: 'X', initialOffset: -2 },\n  { name: 'Y', initialOffset: 4 },\n  { name: 'Z', initialOffset: 2 },\n];\n\nconst MIN_OFFSET = -10;\nconst MAX_OFFSET = 10;\nconst DEFAULT_OFFSET = [0];\n\nfunction startOffsetOf(axis: Axis, hasBeenReset: boolean) {\n  if (hasBeenReset) {\n    return DEFAULT_OFFSET;\n  }\n  return [axis.initialOffset];\n}\n\ntype AxisSliderProps = {\n  name: string;\n  startOffset: number[];\n};\n\nfunction AxisSlider({ name, startOffset }: AxisSliderProps) {\n  const inputId = useId();\n  const {\n    sliderValue,\n    inputValues,\n    validateAndUpdateValue,\n    handleInputChange,\n    handleSliderChange,\n  } = useSliderWithInput({\n    minValue: MIN_OFFSET,\n    maxValue: MAX_OFFSET,\n    initialValue: startOffset,\n    defaultValue: DEFAULT_OFFSET,\n  });\n\n  function commitOffset() {\n    validateAndUpdateValue(inputValues[0], 0);\n  }\n\n  function commitOnEnter(event: KeyboardEvent<HTMLInputElement>) {\n    if (event.key !== 'Enter') {\n      return;\n    }\n    commitOffset();\n  }\n\n  return (\n    <div className='flex items-center gap-3'>\n      <Label htmlFor={inputId} className='text-muted-foreground w-3 text-xs'>\n        {name}\n      </Label>\n      <Slider\n        className='grow **:data-index:rounded-[5px]'\n        value={sliderValue}\n        onValueChange={handleSliderChange}\n        min={MIN_OFFSET}\n        max={MAX_OFFSET}\n        thumbLabels={[`${name} position`]}\n      />\n      <Input\n        id={inputId}\n        className='w-12 shrink-0 tabular-nums'\n        type='text'\n        inputMode='decimal'\n        value={inputValues[0]}\n        onChange={(event) => handleInputChange(event, 0)}\n        onBlur={commitOffset}\n        onKeyDown={commitOnEnter}\n      />\n    </div>\n  );\n}\n\nexport default function Slider25() {\n  const [resetCount, setResetCount] = useState(0);\n  const hasBeenReset = resetCount > 0;\n\n  function resetPosition() {\n    setResetCount((count) => count + 1);\n  }\n\n  return (\n    <fieldset className='flex w-full max-w-xs flex-col gap-4'>\n      <legend className='mb-4 text-[13px] font-medium'>Object position</legend>\n      <div className='flex flex-col gap-2'>\n        {AXES.map((axis) => (\n          <AxisSlider\n            key={`${axis.name}-${resetCount}`}\n            name={axis.name}\n            startOffset={startOffsetOf(axis, hasBeenReset)}\n          />\n        ))}\n      </div>\n      <Button variant='outline' className='w-full' onClick={resetPosition}>\n        <RotateCcwIcon className='-ms-1 opacity-60' />\n        Reset position\n      </Button>\n    </fieldset>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "slider"
+  ],
+  "type": "registry:component"
+}

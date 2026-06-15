@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chat-system-message",
+  "title": "Chat System Message",
+  "description": "A notice from the app inside the conversation, neutral, warning or error, with an optional action.",
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/button.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/chat-system-message.tsx",
+      "content": "// Adapted from prompt-kit (MIT, Copyright (c) 2025 Julien Thibeaut).\n'use client';\n\nimport {\n  CircleAlertIcon,\n  InfoIcon,\n  TriangleAlertIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Button } from '@/registry/ndeko/ui/button';\n\ntype SystemMessageVariant = 'action' | 'error' | 'warning';\n\ntype SystemMessageCta = {\n  label: string;\n  onClick?: () => void;\n  variant?: 'solid' | 'outline' | 'ghost';\n};\n\nconst FILLED: Record<SystemMessageVariant, string> = {\n  action: 'bg-foreground/[0.04] text-foreground dark:bg-foreground/[0.06]',\n  error: 'bg-destructive/10 text-destructive-ink',\n  warning: 'bg-warning/10 text-warning-foreground',\n};\n\nconst OUTLINED: Record<SystemMessageVariant, string> = {\n  action: 'text-foreground hairline-ring ring-border',\n  error: 'text-destructive-ink hairline-ring ring-destructive/35',\n  warning: 'text-warning-foreground hairline-ring ring-warning/40',\n};\n\nconst ICON_COLOR: Record<SystemMessageVariant, string> = {\n  action: 'text-muted-foreground',\n  error: '',\n  warning: '',\n};\n\nconst DEFAULT_ICON: Record<SystemMessageVariant, React.ReactNode> = {\n  action: <InfoIcon />,\n  error: <CircleAlertIcon />,\n  warning: <TriangleAlertIcon />,\n};\n\nconst CTA_VARIANT = {\n  solid: 'default',\n  outline: 'outline',\n  ghost: 'ghost',\n} as const;\n\nfunction surfaceOf(variant: SystemMessageVariant, fill: boolean) {\n  if (fill) {\n    return FILLED[variant];\n  }\n  return OUTLINED[variant];\n}\n\nfunction iconOf(\n  variant: SystemMessageVariant,\n  icon: React.ReactNode,\n  isIconHidden: boolean\n) {\n  if (isIconHidden) {\n    return null;\n  }\n  return icon ?? DEFAULT_ICON[variant];\n}\n\ntype SystemMessageProps = React.ComponentProps<'div'> & {\n  variant?: SystemMessageVariant;\n  fill?: boolean;\n  icon?: React.ReactNode;\n  isIconHidden?: boolean;\n  cta?: SystemMessageCta;\n};\n\nfunction SystemMessage({\n  children,\n  variant = 'action',\n  fill = false,\n  icon,\n  isIconHidden = false,\n  cta,\n  className,\n  ...props\n}: SystemMessageProps) {\n  const shownIcon = iconOf(variant, icon, isIconHidden);\n  const hasIcon = shownIcon !== null;\n  const ctaVariant = CTA_VARIANT[cta?.variant ?? 'solid'];\n\n  return (\n    <div\n      data-slot='system-message'\n      data-variant={variant}\n      className={cn(\n        'flex items-center gap-3 rounded-xl py-2 ps-3 pe-2 text-[13px] leading-normal',\n        surfaceOf(variant, fill),\n        className\n      )}\n      {...props}\n    >\n      {hasIcon && (\n        <span\n          aria-hidden='true'\n          className={cn(\n            'flex h-[1lh] shrink-0 items-center self-start [&_svg]:size-4',\n            ICON_COLOR[variant]\n          )}\n        >\n          {shownIcon}\n        </span>\n      )}\n      <div className='min-w-0 flex-1'>{children}</div>\n      {cta && (\n        <Button\n          type='button'\n          size='sm'\n          variant={ctaVariant}\n          onClick={cta.onClick}\n        >\n          {cta.label}\n        </Button>\n      )}\n    </div>\n  );\n}\n\nexport { SystemMessage, type SystemMessageProps, type SystemMessageVariant };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives",
+    "chat"
+  ],
+  "type": "registry:ui"
+}

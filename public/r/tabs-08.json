@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs-08",
+  "title": "Segmented tabs with icons and badges",
+  "description": "Icons, a count and a New badge that dim on inactive tabs.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/animated-size.json",
+    "https://ui.ndeko.dev/r/badge.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/scroll-area.json",
+    "https://ui.ndeko.dev/r/tabs.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/tabs/tabs-08.tsx",
+      "content": "import {\n  BoxIcon,\n  HouseIcon,\n  PanelsTopLeftIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { AnimatedSize } from '@/registry/ndeko/ui/animated-size';\nimport { Badge } from '@/registry/ndeko/ui/badge';\nimport { ScrollArea } from '@/registry/ndeko/ui/scroll-area';\nimport { Tabs, TabsList, TabsPanel, TabsTab } from '@/registry/ndeko/ui/tabs';\n\nconst PANELS = [\n  {\n    value: 'overview',\n    content: 'Open tasks, recent activity and the next deadlines.',\n  },\n  {\n    value: 'projects',\n    content: 'Three active projects, sorted by their latest update.',\n  },\n  {\n    value: 'packages',\n    content:\n      'Packages published from this workspace, with their latest version.',\n  },\n];\n\nconst DIMMED_WHEN_INACTIVE =\n  'opacity-50 transition-opacity group-data-active/tab:opacity-100';\n\nconst COUNT = [\n  'keycap-3d inline-flex h-5 min-w-5 items-center justify-center rounded-[5px] px-1 text-[11px] font-medium tabular-nums text-muted-foreground',\n  DIMMED_WHEN_INACTIVE,\n].join(' ');\n\nexport default function Tabs08() {\n  return (\n    <Tabs defaultValue='overview' className='w-full min-w-0'>\n      <ScrollArea>\n        <TabsList variant='segmented' className='mb-2.5'>\n          <TabsTab value='overview'>\n            <HouseIcon className='-ms-0.5 opacity-60' />\n            Overview\n          </TabsTab>\n          <TabsTab value='projects' className='group/tab'>\n            <PanelsTopLeftIcon className='-ms-0.5 opacity-60' />\n            Projects\n            <span className={COUNT}>3</span>\n          </TabsTab>\n          <TabsTab value='packages' className='group/tab'>\n            <BoxIcon className='-ms-0.5 opacity-60' />\n            Packages\n            <Badge className={DIMMED_WHEN_INACTIVE}>New</Badge>\n          </TabsTab>\n        </TabsList>\n      </ScrollArea>\n      <AnimatedSize>\n        {PANELS.map((panel) => (\n          <TabsPanel key={panel.value} value={panel.value}>\n            <p className='text-muted-foreground px-4 pb-4 text-center text-xs'>\n              {panel.content}\n            </p>\n          </TabsPanel>\n        ))}\n      </AnimatedSize>\n    </Tabs>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "tabs"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-45",
+  "title": "Split code input",
+  "description": "Six code slots in two joined groups of three.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/otp-field.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-45.tsx",
+      "content": "import { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport {\n  OTPField,\n  OTPFieldInput,\n  OTPFieldSeparator,\n} from '@/registry/ndeko/ui/otp-field';\n\nconst CODE_LENGTH = 6;\nconst GROUP_SIZE = 3;\n\nconst FIRST_GROUP = Array.from({ length: GROUP_SIZE }, (_, index) => index);\nconst SECOND_GROUP = FIRST_GROUP.map((index) => index + GROUP_SIZE);\n\nconst JOINED_SLOT =\n  'rounded-none first:rounded-s-md last:rounded-e-md focus-visible:z-10';\n\nfunction slotLabelOf(index: number) {\n  if (index === 0) {\n    return undefined;\n  }\n  const position = index + 1;\n  return `Character ${position} of ${CODE_LENGTH}`;\n}\n\nfunction SlotGroup({ slots }: { slots: number[] }) {\n  return (\n    <div className='flex'>\n      {slots.map((index) => (\n        <OTPFieldInput\n          key={index}\n          className={JOINED_SLOT}\n          aria-label={slotLabelOf(index)}\n        />\n      ))}\n    </div>\n  );\n}\n\nexport default function Input45() {\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Verification code</FieldLabel>\n      <OTPField length={CODE_LENGTH} className='gap-3'>\n        <SlotGroup slots={FIRST_GROUP} />\n        <OTPFieldSeparator />\n        <SlotGroup slots={SECOND_GROUP} />\n      </OTPField>\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

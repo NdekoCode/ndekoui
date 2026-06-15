@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox-10",
+  "title": "Trailing checkbox",
+  "description": "A full-width row with the label first and the box at the end.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/checkbox.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/checkbox/checkbox-10.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Checkbox } from '@/registry/ndeko/ui/checkbox';\nimport { Label } from '@/registry/ndeko/ui/label';\n\nexport default function Checkbox10() {\n  const id = useId();\n\n  return (\n    <div className='flex w-full items-center justify-between gap-2'>\n      <Checkbox id={id} className='order-1' />\n      <Label htmlFor={id}>Show completed tasks</Label>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "checkbox"
+  ],
+  "type": "registry:component"
+}

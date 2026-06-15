@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-12",
+  "title": "Cancel and save",
+  "description": "A ghost cancel next to the primary save.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-12.tsx",
+      "content": "import { Button } from '@/registry/ndeko/ui/button';\n\nexport default function Button12() {\n  return (\n    <div className='inline-flex items-center gap-2'>\n      <Button variant='ghost'>Cancel</Button>\n      <Button>Save</Button>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

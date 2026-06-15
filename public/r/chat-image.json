@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chat-image",
+  "title": "Chat Image",
+  "description": "An image a model produced, from base64 or raw bytes, with a placeholder until it is there.",
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/skeleton.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/chat-image.tsx",
+      "content": "// Adapted from prompt-kit (MIT, Copyright (c) 2025 Julien Thibeaut).\n'use client';\n\nimport { useCallback } from 'react';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Skeleton } from '@/registry/ndeko/ui/skeleton';\n\ntype GeneratedImageLike = {\n  base64?: string;\n  uint8Array?: Uint8Array;\n  mediaType?: string;\n};\n\ntype ImageProps = GeneratedImageLike &\n  Omit<React.ComponentProps<'img'>, 'src' | 'ref'> & {\n    alt: string;\n  };\n\nconst DEFAULT_MEDIA_TYPE = 'image/png';\n\nconst PICTURE =\n  'h-auto max-w-full overflow-hidden rounded-lg transition-opacity duration-200 starting:opacity-0';\n\nfunction dataUrlOf(base64: string | undefined, mediaType: string) {\n  if (!base64) {\n    return undefined;\n  }\n  return `data:${mediaType};base64,${base64}`;\n}\n\nfunction rawBytesOf(\n  base64: string | undefined,\n  uint8Array: Uint8Array | undefined\n) {\n  if (base64) {\n    return undefined;\n  }\n  return uint8Array;\n}\n\nfunction Image({\n  base64,\n  uint8Array,\n  mediaType = DEFAULT_MEDIA_TYPE,\n  className,\n  alt,\n  ...props\n}: ImageProps) {\n  const dataUrl = dataUrlOf(base64, mediaType);\n  const rawBytes = rawBytesOf(base64, uint8Array);\n  const hasDataUrl = dataUrl !== undefined;\n  const hasRawBytes = rawBytes !== undefined;\n  const hasPicture = hasDataUrl || hasRawBytes;\n\n  const attachBytes = useCallback(\n    (image: HTMLImageElement | null) => {\n      if (!image) {\n        return;\n      }\n      if (!rawBytes) {\n        return;\n      }\n      const bytes = new Uint8Array(rawBytes);\n      const blob = new Blob([bytes], { type: mediaType });\n      const objectUrl = URL.createObjectURL(blob);\n      image.src = objectUrl;\n      return () => {\n        URL.revokeObjectURL(objectUrl);\n      };\n    },\n    [rawBytes, mediaType]\n  );\n\n  if (!hasPicture) {\n    return (\n      <Skeleton\n        role='img'\n        aria-label={alt}\n        aria-hidden={false}\n        className={cn('aspect-square w-full max-w-sm rounded-lg', className)}\n      />\n    );\n  }\n\n  return (\n    // eslint-disable-next-line @next/next/no-img-element -- registry items land in any React app, where next/image may not exist\n    <img\n      data-slot='image'\n      ref={attachBytes}\n      src={dataUrl}\n      alt={alt}\n      className={cn(PICTURE, className)}\n      {...props}\n    />\n  );\n}\n\nexport { Image, type GeneratedImageLike, type ImageProps };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives",
+    "chat"
+  ],
+  "type": "registry:ui"
+}

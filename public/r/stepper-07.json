@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stepper-07",
+  "title": "Labelled bars",
+  "description": "Bars with a title under each, clickable to jump to a step.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/stepper.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/stepper/stepper-07.tsx",
+      "content": "import { cn } from '@/registry/ndeko/lib/utils';\nimport {\n  Stepper,\n  StepperIndicator,\n  StepperItem,\n  StepperTitle,\n  StepperTrigger,\n} from '@/registry/ndeko/ui/stepper';\n\nconst STEPS = [\n  { step: 1, title: 'Account' },\n  { step: 2, title: 'Workspace' },\n  { step: 3, title: 'Invite team' },\n  { step: 4, title: 'Choose plan' },\n];\n\nconst BAR = [\n  'bg-foreground/10 data-[state=active]:bg-foreground/10 data-[state=completed]:bg-foreground/10 w-full',\n  'after:bg-primary after:absolute after:inset-0 after:origin-left after:scale-x-0 after:rounded-[inherit] after:transition-[scale] after:duration-200 after:ease-out-strong rtl:after:origin-right',\n  'data-[state=active]:after:scale-x-100 data-[state=active]:after:duration-300 data-[state=completed]:after:scale-x-100 data-[state=completed]:after:duration-300',\n].join(' ');\n\nexport default function Stepper07() {\n  return (\n    <Stepper defaultValue={2} className='max-w-xl items-start gap-4'>\n      {STEPS.map(({ step, title }) => (\n        <StepperItem key={step} step={step} className='flex-1'>\n          <StepperTrigger className='w-full flex-col items-start gap-2 rounded-md'>\n            <StepperIndicator className={cn(BAR, 'h-1')}>\n              <span className='sr-only'>{step}</span>\n            </StepperIndicator>\n            <StepperTitle>{title}</StepperTitle>\n          </StepperTrigger>\n        </StepperItem>\n      ))}\n    </Stepper>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "stepper"
+  ],
+  "type": "registry:component"
+}

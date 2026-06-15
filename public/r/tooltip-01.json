@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip-01",
+  "title": "Basic tooltip",
+  "description": "A short hint that says what the button does not show.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/tooltip.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/tooltip/tooltip-01.tsx",
+      "content": "import { Button } from '@/registry/ndeko/ui/button';\nimport {\n  Tooltip,\n  TooltipContent,\n  TooltipTrigger,\n} from '@/registry/ndeko/ui/tooltip';\n\nexport default function Tooltip01() {\n  return (\n    <Tooltip>\n      <TooltipTrigger delay={0} render={<Button variant='outline' size='sm' />}>\n        Publish\n      </TooltipTrigger>\n      <TooltipContent>Anyone with the link can view it</TooltipContent>\n    </Tooltip>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "tooltip"
+  ],
+  "type": "registry:component"
+}

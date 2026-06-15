@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge-05",
+  "title": "Link badge",
+  "description": "A badge that is a link and deepens its tint on hover.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/badge.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/badge/badge-05.tsx",
+      "content": "import { FOCUS_RING } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Badge } from '@/registry/ndeko/ui/badge';\n\nexport default function Badge05() {\n  return (\n    <Badge\n      render={<a href='#' />}\n      className={cn('hover:bg-primary/15 transition-colors', FOCUS_RING)}\n    >\n      Changelog\n    </Badge>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "badge"
+  ],
+  "type": "registry:component"
+}

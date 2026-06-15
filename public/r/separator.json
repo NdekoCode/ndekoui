@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "separator",
+  "title": "Separator",
+  "description": "A one device pixel line.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/separator.tsx",
+      "content": "'use client';\n\nimport { Separator as SeparatorPrimitive } from '@base-ui/react/separator';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\n\ntype SeparatorProps = Omit<SeparatorPrimitive.Props, 'className'> & {\n  className?: string;\n};\n\nfunction Separator({\n  className,\n  orientation = 'horizontal',\n  ...props\n}: SeparatorProps) {\n  return (\n    <SeparatorPrimitive\n      data-slot='separator'\n      orientation={orientation}\n      className={cn(\n        'bg-border shrink-0 data-[orientation=horizontal]:h-(--hairline) data-[orientation=horizontal]:w-full data-[orientation=vertical]:w-(--hairline) data-[orientation=vertical]:self-stretch',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nexport { Separator };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

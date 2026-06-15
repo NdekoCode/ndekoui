@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider-19",
+  "title": "Range slider with inputs",
+  "description": "A distance range with a number field at each end.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/slider.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/use-slider-with-input.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/slider/slider-19.tsx",
+      "content": "'use client';\n\nimport type { KeyboardEvent } from 'react';\n\nimport { useSliderWithInput } from '@/registry/ndeko/hooks/use-slider-with-input';\nimport { Input } from '@/registry/ndeko/ui/input';\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { Slider } from '@/registry/ndeko/ui/slider';\n\nconst MIN_DISTANCE = 0;\nconst MAX_DISTANCE = 200;\nconst INITIAL_DISTANCES = [50, 150];\n\nexport default function Slider19() {\n  const {\n    sliderValue,\n    inputValues,\n    validateAndUpdateValue,\n    handleInputChange,\n    handleSliderChange,\n  } = useSliderWithInput({\n    minValue: MIN_DISTANCE,\n    maxValue: MAX_DISTANCE,\n    initialValue: INITIAL_DISTANCES,\n  });\n\n  function commitInput(index: number) {\n    validateAndUpdateValue(inputValues[index], index);\n  }\n\n  function commitOnEnter(\n    event: KeyboardEvent<HTMLInputElement>,\n    index: number\n  ) {\n    if (event.key !== 'Enter') {\n      return;\n    }\n    commitInput(index);\n  }\n\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-3'>\n      <Label>Distance in km</Label>\n      <div className='flex items-center gap-4'>\n        <Input\n          className='w-12 shrink-0 tabular-nums'\n          type='text'\n          inputMode='decimal'\n          value={inputValues[0]}\n          onChange={(event) => handleInputChange(event, 0)}\n          onBlur={() => commitInput(0)}\n          onKeyDown={(event) => commitOnEnter(event, 0)}\n          aria-label='Minimum distance'\n        />\n        <Slider\n          className='grow'\n          value={sliderValue}\n          onValueChange={handleSliderChange}\n          min={MIN_DISTANCE}\n          max={MAX_DISTANCE}\n          thumbLabels={['Minimum distance', 'Maximum distance']}\n        />\n        <Input\n          className='w-12 shrink-0 tabular-nums'\n          type='text'\n          inputMode='decimal'\n          value={inputValues[1]}\n          onChange={(event) => handleInputChange(event, 1)}\n          onBlur={() => commitInput(1)}\n          onKeyDown={(event) => commitOnEnter(event, 1)}\n          aria-label='Maximum distance'\n        />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "slider"
+  ],
+  "type": "registry:component"
+}

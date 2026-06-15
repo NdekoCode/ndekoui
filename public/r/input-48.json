@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-48",
+  "title": "Card number input",
+  "description": "A card number that formats itself as you type.",
+  "dependencies": [
+    "react-payment-inputs"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-48.tsx",
+      "content": "'use client';\n\nimport { useId } from 'react';\nimport { usePaymentInputs } from 'react-payment-inputs';\n\nimport { CreditCardIcon } from '@/registry/ndeko/lib/icons';\nimport { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport { Input } from '@/registry/ndeko/ui/input';\n\nexport default function Input48() {\n  const id = useId();\n  const { getCardNumberProps } = usePaymentInputs();\n\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Card number</FieldLabel>\n      <div className='relative'>\n        <Input\n          {...getCardNumberProps()}\n          id={`${id}-number`}\n          className='peer ps-8 tabular-nums [direction:inherit]'\n        />\n        <span className='text-muted-foreground pointer-events-none absolute inset-y-0 start-0 flex w-8 items-center justify-center peer-disabled:opacity-50'>\n          <CreditCardIcon className='size-4' />\n        </span>\n      </div>\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

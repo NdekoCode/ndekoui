@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "accordion-09",
+  "title": "Accordion with icon tiles",
+  "description": "Settings sections led by an icon tile, a title and a description.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/accordion.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/accordion/accordion-09.tsx",
+      "content": "import {\n  BellIcon,\n  LifeBuoyIcon,\n  Link2Icon,\n  ShieldCheckIcon,\n} from '@/registry/ndeko/lib/icons';\nimport {\n  Accordion,\n  AccordionContent,\n  AccordionItem,\n  AccordionTrigger,\n} from '@/registry/ndeko/ui/accordion';\n\nconst SECTIONS = [\n  {\n    value: 'accounts',\n    icon: Link2Icon,\n    title: 'Connected accounts',\n    description: 'Manage your linked social and work accounts',\n    content:\n      'Connect a Google, GitHub or Microsoft account to sign in with one click and bring your preferences along. You can revoke access to any connected account at any time.',\n  },\n  {\n    value: 'notifications',\n    icon: BellIcon,\n    title: 'Notifications',\n    description: 'Choose which updates reach you',\n    content:\n      'Pick the updates you want: security alerts, billing updates, product announcements, usage reports and scheduled maintenance. Each one can arrive by email, SMS or push notification.',\n  },\n  {\n    value: 'two-step',\n    icon: ShieldCheckIcon,\n    title: '2-step verification',\n    description: 'Add an extra layer of security to your account',\n    content:\n      'Ask for a second step at sign-in: an authenticator app, a code sent by SMS or a security key. An authenticator app is the most secure choice.',\n  },\n  {\n    value: 'support',\n    icon: LifeBuoyIcon,\n    title: 'Contact support',\n    description: 'Reach the team by chat or email',\n    content:\n      'For billing questions, technical issues or anything else, start a live chat, write to support@example.com or book a call with the technical team.',\n  },\n];\n\nexport default function Accordion09() {\n  return (\n    <Accordion defaultValue={['two-step']}>\n      {SECTIONS.map((section) => (\n        <AccordionItem key={section.value} value={section.value}>\n          <AccordionTrigger>\n            <span className='flex items-center gap-3'>\n              <span className='keycap-3d flex size-9 shrink-0 items-center justify-center rounded-lg'>\n                <section.icon className='text-muted-foreground size-4' />\n              </span>\n              <span className='flex flex-col gap-0.5'>\n                <span>{section.title}</span>\n                <span className='text-muted-foreground text-xs font-normal'>\n                  {section.description}\n                </span>\n              </span>\n            </span>\n          </AccordionTrigger>\n          <AccordionContent className='ps-12'>\n            {section.content}\n          </AccordionContent>\n        </AccordionItem>\n      ))}\n    </Accordion>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "accordion"
+  ],
+  "type": "registry:component"
+}

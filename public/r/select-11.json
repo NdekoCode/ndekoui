@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-11",
+  "title": "Native select with groups",
+  "description": "Options gathered under frontend and backend headings.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/select-native.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-11.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { SelectNative } from '@/registry/ndeko/ui/select-native';\n\nexport default function Select11() {\n  const id = useId();\n\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-2'>\n      <Label htmlFor={id}>Technology</Label>\n      <SelectNative id={id}>\n        <optgroup label='Frontend'>\n          <option value='react'>React</option>\n          <option value='vue'>Vue</option>\n          <option value='angular'>Angular</option>\n        </optgroup>\n        <optgroup label='Backend'>\n          <option value='nodejs'>Node.js</option>\n          <option value='python'>Python</option>\n          <option value='java'>Java</option>\n        </optgroup>\n      </SelectNative>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

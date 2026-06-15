@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "notification-20",
+  "title": "Toast with timer",
+  "description": "A custom toast that closes after 5 seconds and pauses while hovered.",
+  "dependencies": [
+    "sonner"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/status-orb.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/notification/notification-20.tsx",
+      "content": "'use client';\n\nimport { useEffect, useRef, useState } from 'react';\nimport { toast } from 'sonner';\n\nimport { XIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport { StatusOrb } from '@/registry/ndeko/ui/status-orb';\n\nconst TOAST_DURATION_MS = 5000;\nconst TICK_MS = 100;\n\ntype ToastId = string | number;\n\nfunction focusStaysInside(event: React.FocusEvent<HTMLDivElement>) {\n  const nextTarget = event.relatedTarget;\n  if (!(nextTarget instanceof Node)) {\n    return false;\n  }\n  return event.currentTarget.contains(nextTarget);\n}\n\nfunction useRemainingTime(isPaused: boolean, onElapsed: () => void) {\n  const [remainingMs, setRemainingMs] = useState(TOAST_DURATION_MS);\n  const remainingRef = useRef(TOAST_DURATION_MS);\n  const onElapsedRef = useRef(onElapsed);\n\n  useEffect(() => {\n    onElapsedRef.current = onElapsed;\n  }, [onElapsed]);\n\n  useEffect(() => {\n    if (isPaused) {\n      return;\n    }\n    const startedAt = Date.now();\n    const remainingAtStart = remainingRef.current;\n    const interval = window.setInterval(() => {\n      const elapsedMs = Date.now() - startedAt;\n      const nextRemaining = Math.max(0, remainingAtStart - elapsedMs);\n      remainingRef.current = nextRemaining;\n      setRemainingMs(nextRemaining);\n      if (nextRemaining === 0) {\n        window.clearInterval(interval);\n        onElapsedRef.current();\n      }\n    }, TICK_MS);\n    return () => window.clearInterval(interval);\n  }, [isPaused]);\n\n  return remainingMs;\n}\n\nfunction TimedToast({ toastId }: { toastId: ToastId }) {\n  const [isHovered, setIsHovered] = useState(false);\n  const [isFocusWithin, setIsFocusWithin] = useState(false);\n  const isPaused = isHovered || isFocusWithin;\n\n  function close() {\n    toast.dismiss(toastId);\n  }\n\n  const remainingMs = useRemainingTime(isPaused, close);\n  const remainingShare = remainingMs / TOAST_DURATION_MS;\n  const barStyle = { transform: `scaleX(${remainingShare})` };\n\n  function pauseOnHover() {\n    setIsHovered(true);\n  }\n\n  function resumeAfterHover() {\n    setIsHovered(false);\n  }\n\n  function pauseOnFocus() {\n    setIsFocusWithin(true);\n  }\n\n  function resumeAfterFocus(event: React.FocusEvent<HTMLDivElement>) {\n    if (focusStaysInside(event)) {\n      return;\n    }\n    setIsFocusWithin(false);\n  }\n\n  return (\n    <div\n      className='flex w-full gap-3 font-normal'\n      onPointerEnter={pauseOnHover}\n      onPointerLeave={resumeAfterHover}\n      onFocus={pauseOnFocus}\n      onBlur={resumeAfterFocus}\n    >\n      <StatusOrb tone='success' />\n      <div className='flex grow flex-col gap-3 pt-1.5'>\n        <div className='flex flex-col gap-0.5 text-[13px] leading-5'>\n          <p className='text-foreground font-medium'>Homepage published</p>\n          <p className='text-muted-foreground'>\n            Everyone visiting Atlas Redesign now sees the new version.\n          </p>\n        </div>\n        <div>\n          <Button size='sm' onClick={close}>\n            Undo changes\n          </Button>\n        </div>\n        <div\n          aria-hidden='true'\n          className='bg-foreground/10 h-1 overflow-hidden rounded-full'\n        >\n          <div\n            style={barStyle}\n            className='bg-success h-full origin-left rounded-full transition-transform duration-100 ease-linear'\n          />\n        </div>\n      </div>\n      <Button\n        variant='ghost'\n        size='icon-sm'\n        aria-label='Dismiss notification'\n        className='text-muted-foreground -me-1.5 -mt-1.5'\n        onClick={close}\n      >\n        <XIcon />\n      </Button>\n    </div>\n  );\n}\n\nfunction renderTimedToast(toastId: ToastId) {\n  return <TimedToast toastId={toastId} />;\n}\n\nfunction showTimedToast() {\n  toast.custom(renderTimedToast, { duration: Infinity });\n}\n\nexport default function Notification20() {\n  return (\n    <Button variant='outline' onClick={showTimedToast}>\n      Show toast with timer\n    </Button>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "notification"
+  ],
+  "type": "registry:component"
+}

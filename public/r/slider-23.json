@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider-23",
+  "title": "Vertical slider with input",
+  "description": "An upright level with a number field below it.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/slider.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/use-slider-with-input.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/slider/slider-23.tsx",
+      "content": "'use client';\n\nimport { useId, type KeyboardEvent } from 'react';\n\nimport { useSliderWithInput } from '@/registry/ndeko/hooks/use-slider-with-input';\nimport { Input } from '@/registry/ndeko/ui/input';\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { Slider } from '@/registry/ndeko/ui/slider';\n\nconst MIN_LEVEL = 0;\nconst MAX_LEVEL = 100;\nconst INITIAL_LEVEL = [25];\n\nexport default function Slider23() {\n  const inputId = useId();\n  const {\n    sliderValue,\n    inputValues,\n    validateAndUpdateValue,\n    handleInputChange,\n    handleSliderChange,\n  } = useSliderWithInput({\n    minValue: MIN_LEVEL,\n    maxValue: MAX_LEVEL,\n    initialValue: INITIAL_LEVEL,\n  });\n\n  function commitLevel() {\n    validateAndUpdateValue(inputValues[0], 0);\n  }\n\n  function commitOnEnter(event: KeyboardEvent<HTMLInputElement>) {\n    if (event.key !== 'Enter') {\n      return;\n    }\n    commitLevel();\n  }\n\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-3'>\n      <Label htmlFor={inputId}>Tank level</Label>\n      <div className='flex flex-col items-center gap-4'>\n        <div className='flex h-40 justify-center'>\n          <Slider\n            value={sliderValue}\n            onValueChange={handleSliderChange}\n            min={MIN_LEVEL}\n            max={MAX_LEVEL}\n            orientation='vertical'\n            thumbLabels={['Tank level']}\n          />\n        </div>\n        <Input\n          id={inputId}\n          className='w-12 text-center tabular-nums'\n          type='text'\n          inputMode='decimal'\n          value={inputValues[0]}\n          onChange={(event) => handleInputChange(event, 0)}\n          onBlur={commitLevel}\n          onKeyDown={commitOnEnter}\n        />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "slider"
+  ],
+  "type": "registry:component"
+}

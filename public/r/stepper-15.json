@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stepper-15",
+  "title": "Controlled vertical stepper",
+  "description": "A vertical stepper moved with previous and next buttons.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/stepper.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/stepper/stepper-15.tsx",
+      "content": "'use client';\n\nimport { useState } from 'react';\n\nimport { Button } from '@/registry/ndeko/ui/button';\nimport {\n  Stepper,\n  StepperIndicator,\n  StepperItem,\n  StepperSeparator,\n} from '@/registry/ndeko/ui/stepper';\n\nconst STEPS = [1, 2, 3, 4];\nconst FIRST_STEP = 1;\n\nconst CONNECTOR = [\n  'relative group-data-[state=completed]/step:bg-foreground/10',\n  'after:bg-primary after:absolute after:inset-0 after:origin-top after:scale-y-0 after:rounded-full after:transition-[scale] after:duration-200 after:ease-out-strong',\n  'group-data-[state=completed]/step:after:scale-y-100 group-data-[state=completed]/step:after:duration-300',\n].join(' ');\n\nexport default function Stepper15() {\n  const [currentStep, setCurrentStep] = useState(FIRST_STEP);\n  const isFirstStep = currentStep === FIRST_STEP;\n  const isFinished = currentStep > STEPS.length;\n\n  function goToPreviousStep() {\n    setCurrentStep((step) => step - 1);\n  }\n\n  function goToNextStep() {\n    setCurrentStep((step) => step + 1);\n  }\n\n  return (\n    <div className='flex flex-col items-center gap-8'>\n      <Stepper\n        value={currentStep}\n        onValueChange={setCurrentStep}\n        orientation='vertical'\n      >\n        {STEPS.map((step) => (\n          <StepperItem key={step} step={step} className='not-last:flex-1'>\n            <StepperIndicator />\n            {step < STEPS.length && <StepperSeparator className={CONNECTOR} />}\n          </StepperItem>\n        ))}\n      </Stepper>\n      <div className='flex justify-center gap-3'>\n        <Button\n          variant='outline'\n          className='w-32'\n          onClick={goToPreviousStep}\n          disabled={isFirstStep}\n          focusableWhenDisabled\n        >\n          Previous step\n        </Button>\n        <Button\n          variant='outline'\n          className='w-32'\n          onClick={goToNextStep}\n          disabled={isFinished}\n          focusableWhenDisabled\n        >\n          Next step\n        </Button>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "stepper"
+  ],
+  "type": "registry:component"
+}

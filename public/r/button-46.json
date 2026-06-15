@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-46",
+  "title": "Full-width social icons",
+  "description": "The four sign in icon buttons sharing the full width.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-46.tsx",
+      "content": "import {\n  FacebookBrandIcon,\n  GithubIcon,\n  GoogleBrandIcon,\n  TwitterXIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst PROVIDERS = [\n  { name: 'Google', Icon: GoogleBrandIcon },\n  { name: 'Facebook', Icon: FacebookBrandIcon },\n  { name: 'X', Icon: TwitterXIcon },\n  { name: 'GitHub', Icon: GithubIcon },\n];\n\nexport default function Button46() {\n  return (\n    <div className='flex flex-wrap gap-2'>\n      {PROVIDERS.map(({ name, Icon }) => (\n        <Button\n          key={name}\n          variant='outline'\n          size='icon'\n          aria-label={`Sign in with ${name}`}\n          className='flex-1'\n        >\n          <Icon />\n        </Button>\n      ))}\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

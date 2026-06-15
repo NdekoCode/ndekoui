@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "alert-10",
+  "title": "Tinted warning alert with link",
+  "description": "A warning on its soft pair with a link that leads to the fix.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/status-orb.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/alert/alert-10.tsx",
+      "content": "import { ArrowRightIcon } from '@/registry/ndeko/lib/icons';\nimport { FOCUS_RING } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { StatusOrb } from '@/registry/ndeko/ui/status-orb';\n\nexport default function Alert10() {\n  return (\n    <div\n      role='alert'\n      className='bg-warning/10 text-warning-foreground hairline-ring ring-warning/25 flex items-start gap-3 rounded-xl px-4 py-2.5'\n    >\n      <StatusOrb tone='warning' size='sm' />\n      <div className='flex grow justify-between gap-3 py-0.5'>\n        <p className='text-[13px] leading-5'>\n          Some details are missing from your profile.\n        </p>\n        <a\n          href='#'\n          className={cn(\n            'group inline-flex items-center gap-1 rounded-sm text-[13px] leading-5 font-medium whitespace-nowrap',\n            FOCUS_RING\n          )}\n        >\n          Complete profile\n          <ArrowRightIcon className='size-4 opacity-60 transition-transform group-hover:translate-x-0.5' />\n        </a>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "alert"
+  ],
+  "type": "registry:component"
+}

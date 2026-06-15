@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea",
+  "title": "Textarea",
+  "description": "A field that grows with its content.",
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/recipes.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/textarea.tsx",
+      "content": "import { CONTROL_RECIPE } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\n\nfunction Textarea({ className, ...props }: React.ComponentProps<'textarea'>) {\n  return (\n    <textarea\n      data-slot='textarea'\n      className={cn(\n        CONTROL_RECIPE,\n        'field-sizing-content max-h-[12lh] min-h-16 resize-none px-2.5 py-2 leading-normal',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nexport { Textarea };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

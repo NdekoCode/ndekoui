@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider-11",
+  "title": "Range slider",
+  "description": "Two thumbs that pick a minimum and a maximum.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/slider.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/slider/slider-11.tsx",
+      "content": "import { Label } from '@/registry/ndeko/ui/label';\nimport { Slider } from '@/registry/ndeko/ui/slider';\n\nexport default function Slider11() {\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-3'>\n      <Label>Age range</Label>\n      <Slider\n        defaultValue={[20, 70]}\n        step={10}\n        thumbLabels={['Minimum age', 'Maximum age']}\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "slider"
+  ],
+  "type": "registry:component"
+}

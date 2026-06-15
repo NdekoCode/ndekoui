@@ -1,0 +1,30 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-51",
+  "title": "Card details",
+  "description": "Number, expiry and code in one outline, with the card brand once it is known.",
+  "dependencies": [
+    "@base-ui/react",
+    "motion",
+    "react-payment-inputs"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-51.tsx",
+      "content": "'use client';\n\nimport { Input as InputPrimitive } from '@base-ui/react/input';\nimport {\n  AnimatePresence,\n  motion,\n  type Transition,\n  type Variants,\n  useReducedMotion,\n} from 'motion/react';\nimport { useId } from 'react';\nimport { usePaymentInputs } from 'react-payment-inputs';\nimport images, { type CardImages } from 'react-payment-inputs/images';\n\nimport { CreditCardIcon } from '@/registry/ndeko/lib/icons';\nimport { CONTROL_RECIPE } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { LABEL_RECIPE } from '@/registry/ndeko/ui/label';\n\nconst CARD_IMAGES = images as unknown as CardImages;\n\nconst CARD_GROUP = cn(\n  CONTROL_RECIPE,\n  'flex flex-col overflow-hidden',\n  'focus-within:border-foreground/30 focus-within:ring-ring/25 dark:focus-within:border-foreground/25 focus-within:ring-[3px]'\n);\n\nconst BARE_INPUT =\n  'placeholder:text-muted-foreground/75 h-8 w-full min-w-0 bg-transparent px-2.5 tabular-nums outline-none [direction:inherit]';\n\nconst HAIRLINE = 'bg-foreground/12 dark:bg-foreground/15 shrink-0';\n\nconst SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };\n\nconst SWAP_VARIANTS: Variants = {\n  enter: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },\n  visible: { opacity: 1, scale: 1, filter: 'blur(0px)' },\n  exit: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },\n};\n\nconst FADE_VARIANTS: Variants = {\n  enter: { opacity: 0 },\n  visible: { opacity: 1 },\n  exit: { opacity: 0 },\n};\n\nfunction swapVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return SWAP_VARIANTS;\n}\n\nfunction cardKeyOf(cardType: { type: string } | undefined) {\n  if (!cardType) {\n    return 'unknown';\n  }\n  return cardType.type;\n}\n\nexport default function Input51() {\n  const id = useId();\n  const {\n    meta,\n    getCardNumberProps,\n    getExpiryDateProps,\n    getCVCProps,\n    getCardImageProps,\n  } = usePaymentInputs();\n  const shouldReduceMotion = useReducedMotion();\n  const swapVariants = swapVariantsOf(shouldReduceMotion);\n  const hasCardType = Boolean(meta.cardType);\n  const cardKey = cardKeyOf(meta.cardType);\n\n  return (\n    <fieldset className='w-full max-w-xs'>\n      <legend className={cn(LABEL_RECIPE, 'mb-1.5')}>Card details</legend>\n      <div className={CARD_GROUP}>\n        <div className='relative'>\n          <InputPrimitive\n            {...getCardNumberProps()}\n            id={`${id}-number`}\n            className={cn(BARE_INPUT, 'pe-8')}\n          />\n          <span className='text-muted-foreground pointer-events-none absolute inset-y-0 end-0 flex w-8 items-center justify-center'>\n            <AnimatePresence mode='popLayout' initial={false}>\n              <motion.span\n                key={cardKey}\n                className='flex'\n                variants={swapVariants}\n                initial='enter'\n                animate='visible'\n                exit='exit'\n                transition={SWAP_TRANSITION}\n              >\n                {hasCardType && (\n                  <svg\n                    className='overflow-hidden rounded-[3px]'\n                    {...getCardImageProps({ images: CARD_IMAGES })}\n                    width={20}\n                  />\n                )}\n                {!hasCardType && <CreditCardIcon className='size-4' />}\n              </motion.span>\n            </AnimatePresence>\n          </span>\n        </div>\n        <span className={cn(HAIRLINE, 'h-(--hairline)')} aria-hidden='true' />\n        <div className='flex'>\n          <InputPrimitive\n            {...getExpiryDateProps()}\n            id={`${id}-expiry`}\n            className={BARE_INPUT}\n          />\n          <span className={cn(HAIRLINE, 'w-(--hairline)')} aria-hidden='true' />\n          <InputPrimitive\n            {...getCVCProps()}\n            id={`${id}-cvc`}\n            className={BARE_INPUT}\n          />\n        </div>\n      </div>\n    </fieldset>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

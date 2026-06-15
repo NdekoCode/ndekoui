@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "timeline-11",
+  "title": "Horizontal timeline",
+  "description": "Milestones along a horizontal line.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/timeline.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/timeline/timeline-11.tsx",
+      "content": "import {\n  Timeline,\n  TimelineContent,\n  TimelineDate,\n  TimelineHeader,\n  TimelineIndicator,\n  TimelineItem,\n  TimelineSeparator,\n  TimelineTitle,\n} from '@/registry/ndeko/ui/timeline';\n\nconst ITEMS = [\n  {\n    id: 1,\n    date: 'Mar 15, 2024',\n    title: 'Project kickoff',\n    description: 'Initial team meeting.',\n  },\n  {\n    id: 2,\n    date: 'Mar 22, 2024',\n    title: 'Design phase',\n    description: 'Completed wireframes.',\n  },\n  {\n    id: 3,\n    date: 'Apr 5, 2024',\n    title: 'Development sprint',\n    description: 'Backend development.',\n  },\n  {\n    id: 4,\n    date: 'Apr 19, 2024',\n    title: 'Testing and deployment',\n    description: 'Performance optimization.',\n  },\n];\n\nconst DOT = [\n  'border-foreground/15 scale-75 transition-[background-color,border-color,scale] duration-200 ease-out-strong',\n  'group-data-completed/timeline-item:border-primary group-data-completed/timeline-item:bg-primary group-data-completed/timeline-item:scale-100 group-data-completed/timeline-item:duration-300',\n].join(' ');\n\nexport default function Timeline11() {\n  return (\n    <Timeline defaultValue={3} orientation='horizontal'>\n      {ITEMS.map((item) => (\n        <TimelineItem key={item.id} step={item.id}>\n          <TimelineHeader>\n            <TimelineSeparator className='bg-foreground/10' />\n            <TimelineDate>{item.date}</TimelineDate>\n            <TimelineTitle>{item.title}</TimelineTitle>\n            <TimelineIndicator className={DOT} />\n          </TimelineHeader>\n          <TimelineContent>{item.description}</TimelineContent>\n        </TimelineItem>\n      ))}\n    </Timeline>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "timeline"
+  ],
+  "type": "registry:component"
+}

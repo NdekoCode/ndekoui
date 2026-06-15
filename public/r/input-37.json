@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-37",
+  "title": "Time input",
+  "description": "A time typed segment by segment.",
+  "dependencies": [
+    "react-aria-components"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/datefield-rac.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-37.tsx",
+      "content": "'use client';\n\nimport { Label } from 'react-aria-components';\n\nimport { DateInput, TimeField } from '@/registry/ndeko/ui/datefield-rac';\nimport { LABEL_RECIPE } from '@/registry/ndeko/ui/label';\n\nexport default function Input37() {\n  return (\n    <TimeField className='flex w-full max-w-xs flex-col gap-1.5'>\n      <Label className={LABEL_RECIPE}>Meeting time</Label>\n      <DateInput />\n    </TimeField>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

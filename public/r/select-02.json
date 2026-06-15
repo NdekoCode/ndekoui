@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-02",
+  "title": "Native select with placeholder",
+  "description": "A disabled first option asks for a choice until one is made.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/select-native.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-02.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { SelectNative } from '@/registry/ndeko/ui/select-native';\n\nexport default function Select02() {\n  const id = useId();\n\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-2'>\n      <Label htmlFor={id}>Team size</Label>\n      <SelectNative id={id} defaultValue=''>\n        <option value='' disabled>\n          Pick a team size\n        </option>\n        <option value='small'>1 to 5 people</option>\n        <option value='medium'>6 to 10 people</option>\n        <option value='large'>More than 10 people</option>\n      </SelectNative>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

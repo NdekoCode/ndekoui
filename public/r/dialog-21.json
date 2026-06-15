@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dialog-21",
+  "title": "Command palette",
+  "description": "Commands opened from a search field or with Cmd K.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/command.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/kbd.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/dialog/dialog-21.tsx",
+      "content": "'use client';\n\nimport { useEffect, useState } from 'react';\n\nimport {\n  ArrowUpRightIcon,\n  CircleFadingPlusIcon,\n  FileInputIcon,\n  FolderPlusIcon,\n  SearchIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { CONTROL_RECIPE, CONTROL_SIZES } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport {\n  CommandDialog,\n  CommandEmpty,\n  CommandGroup,\n  CommandInput,\n  CommandItem,\n  CommandList,\n  CommandSeparator,\n  CommandShortcut,\n} from '@/registry/ndeko/ui/command';\nimport { Kbd } from '@/registry/ndeko/ui/kbd';\n\nconst QUICK_ACTIONS = [\n  { label: 'New folder', shortcut: '⌘N', Icon: FolderPlusIcon },\n  { label: 'Import document', shortcut: '⌘I', Icon: FileInputIcon },\n  { label: 'Add block', shortcut: '⌘B', Icon: CircleFadingPlusIcon },\n];\n\nconst DESTINATIONS = ['Go to dashboard', 'Go to apps', 'Go to connections'];\n\nconst SEARCH_TRIGGER = cn(\n  CONTROL_RECIPE,\n  CONTROL_SIZES.default,\n  'text-muted-foreground inline-flex w-64 cursor-pointer items-center gap-2 text-start'\n);\n\nfunction isPaletteShortcut(event: KeyboardEvent) {\n  const isKKey = event.key.toLowerCase() === 'k';\n  const hasModifier = event.metaKey || event.ctrlKey;\n  return isKKey && hasModifier;\n}\n\nexport default function Dialog21() {\n  const [isOpen, setIsOpen] = useState(false);\n\n  useEffect(() => {\n    function togglePalette(event: KeyboardEvent) {\n      if (!isPaletteShortcut(event)) {\n        return;\n      }\n      event.preventDefault();\n      setIsOpen((current) => !current);\n    }\n\n    document.addEventListener('keydown', togglePalette);\n    return () => document.removeEventListener('keydown', togglePalette);\n  }, []);\n\n  function openPalette() {\n    setIsOpen(true);\n  }\n\n  function closePalette() {\n    setIsOpen(false);\n  }\n\n  return (\n    <>\n      <button type='button' className={SEARCH_TRIGGER} onClick={openPalette}>\n        <SearchIcon className='text-muted-foreground/80 size-4 shrink-0' />\n        <span className='grow'>Search</span>\n        <Kbd>⌘K</Kbd>\n      </button>\n      <CommandDialog open={isOpen} onOpenChange={setIsOpen}>\n        <CommandInput placeholder='Type a command or search' />\n        <CommandList>\n          <CommandEmpty>No command matches this search.</CommandEmpty>\n          <CommandGroup heading='Quick start'>\n            {QUICK_ACTIONS.map((action) => (\n              <CommandItem key={action.label} onSelect={closePalette}>\n                <action.Icon />\n                <span>{action.label}</span>\n                <CommandShortcut>{action.shortcut}</CommandShortcut>\n              </CommandItem>\n            ))}\n          </CommandGroup>\n          <CommandSeparator />\n          <CommandGroup heading='Navigation'>\n            {DESTINATIONS.map((destination) => (\n              <CommandItem key={destination} onSelect={closePalette}>\n                <ArrowUpRightIcon />\n                <span>{destination}</span>\n              </CommandItem>\n            ))}\n          </CommandGroup>\n        </CommandList>\n      </CommandDialog>\n    </>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "dialog"
+  ],
+  "type": "registry:component"
+}

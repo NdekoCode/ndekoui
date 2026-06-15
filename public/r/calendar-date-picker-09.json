@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "calendar-date-picker-09",
+  "title": "Round range ends",
+  "description": "Circular range ends joined by a tinted band.",
+  "dependencies": [
+    "date-fns",
+    "motion",
+    "react-day-picker"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/animated-size.json",
+    "https://ui.ndeko.dev/r/calendar.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/calendar-date-picker/calendar-date-picker-09.tsx",
+      "content": "'use client';\n\nimport { addDays } from 'date-fns';\nimport { useState } from 'react';\nimport type { DateRange } from 'react-day-picker';\n\nimport { AnimatedCalendar } from './_parts/animated-calendar';\n\nconst ROUND_ENDS_WITH_BAND = {\n  day: [\n    'relative before:absolute before:inset-x-0 before:inset-y-px',\n    'before:from-transparent before:from-50% before:to-primary/[0.08] before:to-50%',\n    '[&.range-start:not(.range-end)]:before:bg-linear-to-r [&.range-end:not(.range-start)]:before:bg-linear-to-l',\n  ].join(' '),\n  day_button:\n    'rounded-full group-[.range-start:not(.range-end)]:rounded-e-full group-[.range-end:not(.range-start)]:rounded-s-full',\n};\n\nfunction threeDaysFromToday(): DateRange {\n  const today = new Date();\n  return { from: today, to: addDays(today, 3) };\n}\n\nexport default function CalendarDatePicker09() {\n  const [range, setRange] = useState<DateRange | undefined>(threeDaysFromToday);\n\n  return (\n    <AnimatedCalendar\n      mode='range'\n      selected={range}\n      onSelect={setRange}\n      className='bg-card hairline-ring ring-border rounded-xl p-2 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'\n      classNames={ROUND_ENDS_WITH_BAND}\n    />\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/calendar-date-picker/calendar-date-picker-09.tsx"
+    },
+    {
+      "path": "registry/ndeko/components/calendar-date-picker/_parts/animated-calendar.tsx",
+      "content": "'use client';\n\nimport { differenceInCalendarDays } from 'date-fns';\nimport {\n  motion,\n  useReducedMotion,\n  type TargetAndTransition,\n  type Transition,\n} from 'motion/react';\nimport { useState } from 'react';\nimport {\n  Day,\n  useDayPicker,\n  type DayProps,\n  type MonthProps,\n} from 'react-day-picker';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { AnimatedSize } from '@/registry/ndeko/ui/animated-size';\nimport { Calendar } from '@/registry/ndeko/ui/calendar';\n\ntype CalendarProps = React.ComponentProps<typeof Calendar>;\n\ntype ShownMonth = { time: number; direction: number };\n\nconst MONTH_SHIFT_PX = 12;\nconst RANGE_STEP_MS = 12;\nconst RANGE_GROWTH_MAX_MS = 240;\n\nconst MONTH_TRANSITION: Transition = {\n  duration: 0.2,\n  ease: [0.23, 1, 0.32, 1],\n};\n\nconst MONTH_AT_REST: TargetAndTransition = { opacity: 1, x: 0 };\n\nconst SETTLING_DAY_BUTTON = [\n  'transition-[color,background-color,border-radius,box-shadow,scale] ease-(--ease-out-strong) active:scale-90',\n  'group-[.range-middle]:[transition-delay:var(--range-delay),var(--range-delay),0ms,0ms,0ms]',\n].join(' ');\n\nfunction rangeStartOf(selected: unknown) {\n  if (!selected) {\n    return undefined;\n  }\n  if (typeof selected !== 'object') {\n    return undefined;\n  }\n  if (!('from' in selected)) {\n    return undefined;\n  }\n  return selected.from as Date | undefined;\n}\n\nfunction rangeDelayOf(day: Date, rangeStart: Date | undefined) {\n  if (!rangeStart) {\n    return '0ms';\n  }\n  const step = differenceInCalendarDays(day, rangeStart);\n  const delay = Math.min(step * RANGE_STEP_MS, RANGE_GROWTH_MAX_MS);\n  const positiveDelay = Math.max(0, delay);\n  return `${positiveDelay}ms`;\n}\n\nfunction monthEnterOf(direction: number, shouldReduceMotion: boolean | null) {\n  if (direction === 0) {\n    return false;\n  }\n  if (shouldReduceMotion) {\n    return { opacity: 0 };\n  }\n  const offset = direction * MONTH_SHIFT_PX;\n  return { opacity: 0, x: offset };\n}\n\nfunction GrowingRangeDay({ style, ...props }: DayProps) {\n  const { selected } = useDayPicker();\n  const rangeStart = rangeStartOf(selected);\n  const delay = rangeDelayOf(props.day.date, rangeStart);\n  const dayStyle = { ...style, '--range-delay': delay } as React.CSSProperties;\n\n  return <Day {...props} style={dayStyle} />;\n}\n\nfunction SlidingMonth({\n  calendarMonth,\n  displayIndex,\n  children,\n  ...props\n}: MonthProps) {\n  const time = calendarMonth.date.getTime();\n  const [shown, setShown] = useState<ShownMonth>({ time, direction: 0 });\n  const shouldReduceMotion = useReducedMotion();\n\n  if (shown.time !== time) {\n    const direction = Math.sign(time - shown.time);\n    setShown({ time, direction });\n  }\n\n  return (\n    <div data-display-index={displayIndex} {...props}>\n      <AnimatedSize>\n        <motion.div\n          key={time}\n          initial={monthEnterOf(shown.direction, shouldReduceMotion)}\n          animate={MONTH_AT_REST}\n          transition={MONTH_TRANSITION}\n        >\n          {children}\n        </motion.div>\n      </AnimatedSize>\n    </div>\n  );\n}\n\nfunction withSettlingDays(classNames: CalendarProps['classNames']) {\n  const dayButton = cn(SETTLING_DAY_BUTTON, classNames?.day_button);\n  return { ...classNames, day_button: dayButton };\n}\n\n/**\n * The calendar primitive with the date picker micro-interactions: a picked day settles in,\n * a range grows from its start to its end, a new month slides in from the side it comes from\n * and the card resizes to the number of weeks.\n */\nfunction AnimatedCalendar({ classNames, components, ...props }: CalendarProps) {\n  return (\n    <Calendar\n      classNames={withSettlingDays(classNames)}\n      components={{ Day: GrowingRangeDay, Month: SlidingMonth, ...components }}\n      {...props}\n    />\n  );\n}\n\nexport { AnimatedCalendar };\n",
+      "type": "registry:component",
+      "target": "components/calendar-date-picker/_parts/animated-calendar.tsx"
+    }
+  ],
+  "categories": [
+    "components",
+    "calendar-date-picker"
+  ],
+  "type": "registry:component"
+}

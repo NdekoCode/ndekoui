@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chip",
+  "title": "Chip",
+  "description": "A 3D label in any colour, for assigned values.",
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/chip.tsx",
+      "content": "import { cn } from '@/registry/ndeko/lib/utils';\n\ntype ChipProps = React.ComponentProps<'span'> & {\n  /** Any CSS colour: a token such as `var(--success)` or a colour coming from your data. */\n  color?: string;\n};\n\nconst DEFAULT_CHIP_COLOR = 'var(--primary)';\n\nfunction Chip({\n  className,\n  color = DEFAULT_CHIP_COLOR,\n  style,\n  ...props\n}: ChipProps) {\n  const chipStyle = { '--chip': color, ...style } as React.CSSProperties;\n\n  return (\n    <span\n      data-slot='chip'\n      style={chipStyle}\n      className={cn(\n        \"chip-3d inline-flex h-5 w-fit shrink-0 items-center gap-1 rounded-md px-1.5 text-xs font-medium whitespace-nowrap [&_svg:not([class*='size-'])]:size-3\",\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nexport { Chip, type ChipProps };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

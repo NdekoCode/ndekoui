@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "calendar-date-picker-01",
+  "title": "Calendar",
+  "description": "A react-aria calendar with today picked.",
+  "dependencies": [
+    "@internationalized/date",
+    "react-aria-components"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/calendar-rac.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/calendar-date-picker/calendar-date-picker-01.tsx",
+      "content": "'use client';\n\nimport { getLocalTimeZone, today } from '@internationalized/date';\nimport { useState } from 'react';\nimport type { DateValue } from 'react-aria-components';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Calendar } from '@/registry/ndeko/ui/calendar-rac';\n\nimport { SETTLING_DAYS } from './_parts/settling-days';\n\nexport default function CalendarDatePicker01() {\n  const [date, setDate] = useState<DateValue | null>(() =>\n    today(getLocalTimeZone())\n  );\n\n  return (\n    <Calendar\n      className={cn(\n        'bg-card hairline-ring ring-border rounded-xl p-2 shadow-[0_1px_2px_rgb(0_0_0/0.04)]',\n        SETTLING_DAYS\n      )}\n      value={date}\n      onChange={setDate}\n    />\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/calendar-date-picker/calendar-date-picker-01.tsx"
+    },
+    {
+      "path": "registry/ndeko/components/calendar-date-picker/_parts/settling-days.ts",
+      "content": "/**\n * The react-aria calendar cells cannot take classes from outside, so the press that lets a picked\n * day settle in is applied from the calendar root.\n */\nexport const SETTLING_DAYS =\n  '[&_td>div]:transition-[color,background-color,border-radius,box-shadow,scale] [&_td>div]:ease-(--ease-out-strong) [&_td>[data-pressed]]:scale-90';\n",
+      "type": "registry:component",
+      "target": "components/calendar-date-picker/_parts/settling-days.ts"
+    }
+  ],
+  "categories": [
+    "components",
+    "calendar-date-picker"
+  ],
+  "type": "registry:component"
+}

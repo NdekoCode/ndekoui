@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-19",
+  "title": "Responsive add button",
+  "description": "An add button that keeps only its icon on small screens.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-19.tsx",
+      "content": "import { PlusIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nexport default function Button19() {\n  return (\n    <Button variant='outline' className='aspect-square max-sm:p-0'>\n      <PlusIcon className='opacity-60 sm:-ms-1' />\n      <span className='max-sm:sr-only'>Add item</span>\n    </Button>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

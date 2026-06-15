@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-34",
+  "title": "Toggle group",
+  "description": "Three joined outline toggles that can all be off.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/toggle-group.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-34.tsx",
+      "content": "import { ToggleGroup, ToggleGroupItem } from '@/registry/ndeko/ui/toggle-group';\n\nconst ITEM =\n  'rounded-none first:rounded-s-md last:rounded-e-md focus-visible:z-10';\n\nexport default function Button34() {\n  return (\n    <ToggleGroup\n      variant='outline'\n      aria-label='Text alignment'\n      className='gap-0 -space-x-px'\n    >\n      <ToggleGroupItem value='left' className={ITEM}>\n        Left\n      </ToggleGroupItem>\n      <ToggleGroupItem value='center' className={ITEM}>\n        Center\n      </ToggleGroupItem>\n      <ToggleGroupItem value='right' className={ITEM}>\n        Right\n      </ToggleGroupItem>\n    </ToggleGroup>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

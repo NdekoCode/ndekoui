@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-23",
+  "title": "Menu button",
+  "description": "Three lines that fold into a cross when the menu opens.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-23.tsx",
+      "content": "'use client';\n\nimport { useState } from 'react';\n\nimport { Button } from '@/registry/ndeko/ui/button';\n\nfunction menuLabelOf(isOpen: boolean) {\n  if (isOpen) {\n    return 'Close menu';\n  }\n  return 'Open menu';\n}\n\nexport default function Button23() {\n  const [isOpen, setIsOpen] = useState(false);\n\n  function toggleMenu() {\n    setIsOpen((current) => !current);\n  }\n\n  return (\n    <Button\n      variant='outline'\n      size='icon'\n      onClick={toggleMenu}\n      aria-expanded={isOpen}\n      aria-label={menuLabelOf(isOpen)}\n    >\n      <svg\n        width={16}\n        height={16}\n        viewBox='0 0 24 24'\n        fill='none'\n        stroke='currentColor'\n        strokeWidth='1.75'\n        strokeLinecap='round'\n        strokeLinejoin='round'\n        aria-hidden='true'\n      >\n        <path\n          d='M4 12L20 12'\n          className='origin-center -translate-y-[7px] transition-[translate,rotate] duration-300 ease-(--ease-out-strong) group-aria-expanded/button:translate-x-0 group-aria-expanded/button:translate-y-0 group-aria-expanded/button:rotate-[315deg]'\n        />\n        <path\n          d='M4 12H20'\n          className='origin-center transition-[rotate] duration-300 ease-(--ease-out-strong) group-aria-expanded/button:rotate-45'\n        />\n        <path\n          d='M4 12H20'\n          className='origin-center translate-y-[7px] transition-[translate,rotate] duration-300 ease-(--ease-out-strong) group-aria-expanded/button:translate-y-0 group-aria-expanded/button:rotate-[135deg]'\n        />\n      </svg>\n    </Button>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

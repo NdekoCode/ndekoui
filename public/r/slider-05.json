@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider-05",
+  "title": "Slider with narrow thumb",
+  "description": "A tall, narrow brand thumb carved out of the surface.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/slider.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/slider/slider-05.tsx",
+      "content": "import { Label } from '@/registry/ndeko/ui/label';\nimport { Slider } from '@/registry/ndeko/ui/slider';\n\nconst NARROW_THUMB = [\n  '**:data-index:h-6 **:data-index:w-2.5 **:data-index:rounded-full',\n  '**:data-index:border-[3px] **:data-index:border-card **:data-index:bg-primary **:data-index:shadow-none',\n].join(' ');\n\nexport default function Slider05() {\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-3'>\n      <Label>Blur radius</Label>\n      <Slider\n        defaultValue={25}\n        thumbLabels={['Blur radius']}\n        className={NARROW_THUMB}\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "slider"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox-19",
+  "title": "Weekday picker",
+  "description": "Round day chips that fill with the primary when picked.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/checkbox.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/checkbox/checkbox-19.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Checkbox } from '@/registry/ndeko/ui/checkbox';\n\ntype Day = {\n  value: string;\n  label: string;\n  defaultChecked?: boolean;\n  disabled?: boolean;\n};\n\nconst DAYS: Day[] = [\n  { value: 'monday', label: 'Monday', defaultChecked: true },\n  { value: 'tuesday', label: 'Tuesday', defaultChecked: true },\n  { value: 'wednesday', label: 'Wednesday' },\n  { value: 'thursday', label: 'Thursday', defaultChecked: true },\n  { value: 'friday', label: 'Friday', defaultChecked: true },\n  { value: 'saturday', label: 'Saturday' },\n  { value: 'sunday', label: 'Sunday', disabled: true },\n];\n\nconst DAY_CHIP = [\n  'relative flex size-8 cursor-pointer items-center justify-center rounded-full bg-card text-[13px] font-medium text-foreground shadow-[0_1px_2px_rgb(0_0_0/0.05)] hairline-ring ring-foreground/15',\n  'transition-[background-color,color,box-shadow] duration-150',\n  'has-data-checked:bg-primary has-data-checked:text-primary-foreground has-data-checked:ring-(--ring-color)',\n  '[--ring-color:color-mix(in_oklab,black_15%,var(--primary))] dark:[--ring-color:color-mix(in_oklab,white_15%,var(--primary))]',\n  'has-focus-visible:ring-[3px] has-focus-visible:ring-ring/25',\n  'has-data-disabled:cursor-not-allowed has-data-disabled:opacity-50',\n].join(' ');\n\nexport default function Checkbox19() {\n  const id = useId();\n\n  return (\n    <fieldset className='space-y-3'>\n      <legend className='text-foreground text-[13px] leading-none font-medium'>\n        Days of the week\n      </legend>\n      <div className='flex gap-1.5'>\n        {DAYS.map((day) => {\n          const itemId = `${id}-${day.value}`;\n          const initial = day.label.charAt(0);\n\n          return (\n            <label key={day.value} className={DAY_CHIP}>\n              <Checkbox\n                id={itemId}\n                value={day.value}\n                defaultChecked={day.defaultChecked}\n                disabled={day.disabled}\n                className='sr-only'\n              />\n              <span aria-hidden='true'>{initial}</span>\n              <span className='sr-only'>{day.label}</span>\n            </label>\n          );\n        })}\n      </div>\n    </fieldset>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "checkbox"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-10",
+  "title": "Provider picker",
+  "description": "Radio cards for database providers, each led by its logo on a key cap.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/radio-group.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/radio/radio-10.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { RadioGroup, RadioGroupItem } from '@/registry/ndeko/ui/radio-group';\n\nconst CHOICE_CARD = [\n  'relative flex w-full items-start gap-2 rounded-xl bg-card p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)] hairline-ring ring-border transition-[box-shadow] duration-150',\n  'has-data-checked:shadow-[0_1px_2px_rgb(0_0_0/0.04),0_6px_16px_-8px_color-mix(in_oklab,var(--primary)_35%,transparent)] has-data-checked:ring-primary/45',\n].join(' ');\n\nconst MARK_TILE =\n  'keycap-3d text-foreground inline-flex size-8 shrink-0 items-center justify-center rounded-lg';\n\nfunction SupabaseMark() {\n  return (\n    <span aria-hidden='true' className={MARK_TILE}>\n      <svg width={18} height={18} viewBox='6 6 20 20' fill='currentColor'>\n        <path\n          fillOpacity={0.55}\n          d='M17.63 25.52c-.506.637-1.533.287-1.545-.526l-.178-11.903h8.003c1.45 0 2.259 1.674 1.357 2.81l-7.637 9.618Z'\n        />\n        <path d='M14.375 6.367c.506-.638 1.532-.289 1.544.525l.078 11.903H8.094c-1.45 0-2.258-1.674-1.357-2.81l7.638-9.618Z' />\n      </svg>\n    </span>\n  );\n}\n\nfunction PrismaMark() {\n  return (\n    <span aria-hidden='true' className={MARK_TILE}>\n      <svg width={18} height={18} viewBox='6 6 20 20' fill='currentColor'>\n        <path\n          fillRule='evenodd'\n          clipRule='evenodd'\n          d='M8.004 19.728a.996.996 0 0 1-.008-1.054l7.478-12.199a.996.996 0 0 1 1.753.104l6.832 14.82a.996.996 0 0 1-.618 1.37l-10.627 3.189a.996.996 0 0 1-1.128-.42l-3.682-5.81Zm8.333-9.686a.373.373 0 0 1 .709-.074l4.712 10.904a.374.374 0 0 1-.236.506L14.18 23.57a.373.373 0 0 1-.473-.431l2.63-13.097Z'\n        />\n      </svg>\n    </span>\n  );\n}\n\nconst PROVIDERS = [\n  {\n    value: 'supabase',\n    label: 'Supabase',\n    note: 'Hosted',\n    description: 'Postgres with auth and storage, managed for you.',\n    Mark: SupabaseMark,\n  },\n  {\n    value: 'prisma',\n    label: 'Prisma',\n    note: 'Bring your database',\n    description: 'A typed client on top of the database you already run.',\n    Mark: PrismaMark,\n  },\n];\n\nexport default function Radio10() {\n  const id = useId();\n\n  return (\n    <RadioGroup\n      defaultValue='supabase'\n      aria-label='Database provider'\n      className='w-full gap-2'\n    >\n      {PROVIDERS.map((provider) => {\n        const itemId = `${id}-${provider.value}`;\n        const descriptionId = `${itemId}-description`;\n\n        return (\n          <div key={provider.value} className={CHOICE_CARD}>\n            <RadioGroupItem\n              value={provider.value}\n              id={itemId}\n              aria-describedby={descriptionId}\n              className='order-1 after:absolute after:inset-0'\n            />\n            <div className='flex grow items-center gap-3'>\n              <provider.Mark />\n              <div className='grid grow gap-1.5'>\n                <Label htmlFor={itemId}>\n                  {provider.label}{' '}\n                  <span className='text-muted-foreground text-xs leading-[inherit] font-normal'>\n                    ({provider.note})\n                  </span>\n                </Label>\n                <p id={descriptionId} className='text-muted-foreground text-xs'>\n                  {provider.description}\n                </p>\n              </div>\n            </div>\n          </div>\n        );\n      })}\n    </RadioGroup>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "radio"
+  ],
+  "type": "registry:component"
+}

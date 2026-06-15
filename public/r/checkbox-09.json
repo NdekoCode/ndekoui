@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox-09",
+  "title": "Stacked checkbox group",
+  "description": "Three checkboxes in a column for picking notifications.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/checkbox.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/checkbox/checkbox-09.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Checkbox } from '@/registry/ndeko/ui/checkbox';\nimport { Label } from '@/registry/ndeko/ui/label';\n\nconst EVENTS = [\n  { value: 'comments', label: 'Comments' },\n  { value: 'mentions', label: 'Mentions' },\n  { value: 'status', label: 'Status changes' },\n];\n\nexport default function Checkbox09() {\n  const id = useId();\n\n  return (\n    <div role='group' aria-label='Notify me about' className='grid gap-3'>\n      {EVENTS.map((event) => {\n        const itemId = `${id}-${event.value}`;\n\n        return (\n          <div key={event.value} className='flex items-center gap-2'>\n            <Checkbox id={itemId} value={event.value} />\n            <Label htmlFor={itemId}>{event.label}</Label>\n          </div>\n        );\n      })}\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "checkbox"
+  ],
+  "type": "registry:component"
+}

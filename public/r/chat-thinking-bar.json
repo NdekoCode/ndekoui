@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chat-thinking-bar",
+  "title": "Chat Thinking Bar",
+  "description": "A live Thinking line with a way to open the reasoning or to get the answer now.",
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/chat-loader.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/chat-thinking-bar.tsx",
+      "content": "// Adapted from prompt-kit (MIT, Copyright (c) 2025 Julien Thibeaut).\n'use client';\n\nimport { ChevronRightIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport { TextLoader } from '@/registry/ndeko/ui/chat-loader';\n\ntype ThinkingBarProps = {\n  className?: string;\n  text?: string;\n  /** Lets the reader cut the thinking short and get the answer now. */\n  onStop?: () => void;\n  stopLabel?: string;\n  /** Makes the label a button, for example to open the reasoning. */\n  onClick?: () => void;\n};\n\nfunction ThinkingBar({\n  className,\n  text = 'Thinking',\n  onStop,\n  stopLabel = 'Answer now',\n  onClick,\n}: ThinkingBarProps) {\n  const isClickable = onClick !== undefined;\n  const isStoppable = onStop !== undefined;\n\n  return (\n    <div\n      data-slot='thinking-bar'\n      className={cn(\n        'flex w-full items-center justify-between gap-3',\n        className\n      )}\n    >\n      {isClickable && (\n        <button\n          type='button'\n          onClick={onClick}\n          className='group/thinking focus-visible:ring-ring/25 -ms-1 inline-flex cursor-pointer items-center gap-0.5 rounded-md px-1 outline-none focus-visible:ring-[3px]'\n        >\n          <TextLoader text={text} />\n          <ChevronRightIcon className='text-muted-foreground group-hover/thinking:text-foreground size-3.5 transition-colors' />\n        </button>\n      )}\n      {!isClickable && <TextLoader text={text} />}\n      {isStoppable && (\n        <Button\n          type='button'\n          variant='ghost'\n          size='sm'\n          onClick={onStop}\n          className='text-muted-foreground'\n        >\n          {stopLabel}\n        </Button>\n      )}\n    </div>\n  );\n}\n\nexport { ThinkingBar, type ThinkingBarProps };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives",
+    "chat"
+  ],
+  "type": "registry:ui"
+}

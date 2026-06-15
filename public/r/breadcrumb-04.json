@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "breadcrumb-04",
+  "title": "Breadcrumb with icons",
+  "description": "Each parent page carries an icon before its name.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/breadcrumb.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/breadcrumb/breadcrumb-04.tsx",
+      "content": "'use client';\n\nimport { ComponentIcon, HomeIcon } from '@/registry/ndeko/lib/icons';\nimport {\n  Breadcrumb,\n  BreadcrumbItem,\n  BreadcrumbLink,\n  BreadcrumbList,\n  BreadcrumbPage,\n  BreadcrumbSeparator,\n} from '@/registry/ndeko/ui/breadcrumb';\n\nexport default function Breadcrumb04() {\n  return (\n    <Breadcrumb>\n      <BreadcrumbList>\n        <BreadcrumbItem>\n          <BreadcrumbLink href='#' className='inline-flex items-center gap-1.5'>\n            <HomeIcon className='size-4' />\n            Home\n          </BreadcrumbLink>\n        </BreadcrumbItem>\n        <BreadcrumbSeparator />\n        <BreadcrumbItem>\n          <BreadcrumbLink href='#' className='inline-flex items-center gap-1.5'>\n            <ComponentIcon className='size-4' />\n            Components\n          </BreadcrumbLink>\n        </BreadcrumbItem>\n        <BreadcrumbSeparator />\n        <BreadcrumbItem>\n          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>\n        </BreadcrumbItem>\n      </BreadcrumbList>\n    </Breadcrumb>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "breadcrumb"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs-19",
+  "title": "Vertical tabs with icons",
+  "description": "Icon rows that tint on hover, marked by a sliding primary line.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/tabs.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/tabs/tabs-19.tsx",
+      "content": "import { Tabs as TabsPrimitive } from '@base-ui/react/tabs';\n\nimport {\n  BoxIcon,\n  HouseIcon,\n  PanelsTopLeftIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { Tabs, TabsPanel, TabsTab } from '@/registry/ndeko/ui/tabs';\n\nconst TABS = [\n  {\n    value: 'overview',\n    label: 'Overview',\n    icon: HouseIcon,\n    content: 'Open tasks, recent activity and the next deadlines.',\n  },\n  {\n    value: 'projects',\n    label: 'Projects',\n    icon: PanelsTopLeftIcon,\n    content: 'Three active projects, sorted by their latest update.',\n  },\n  {\n    value: 'packages',\n    label: 'Packages',\n    icon: BoxIcon,\n    content:\n      'Packages published from this workspace, with their latest version.',\n  },\n];\n\nconst INDICATOR =\n  'pointer-events-none absolute top-0 left-0 h-(--active-tab-height) w-0.5 translate-y-(--active-tab-top) rounded-full bg-primary transition-[translate,height] duration-300 ease-(--ease-out-strong)';\n\nconst TAB = 'h-8 w-full justify-start rounded-md px-2.5 hover:bg-foreground/5';\n\nconst PANEL_CARD =\n  'grow rounded-xl bg-card shadow-[0_1px_2px_rgb(0_0_0/0.04)] hairline-ring ring-border';\n\nexport default function Tabs19() {\n  return (\n    <Tabs defaultValue='overview' orientation='vertical' className='w-full'>\n      <TabsPrimitive.List className='relative flex flex-col gap-1 self-start ps-1.5'>\n        {TABS.map((tab) => (\n          <TabsTab key={tab.value} value={tab.value} className={TAB}>\n            <tab.icon className='-ms-0.5 opacity-60' />\n            {tab.label}\n          </TabsTab>\n        ))}\n        <TabsPrimitive.Indicator className={INDICATOR} />\n      </TabsPrimitive.List>\n      <div className={PANEL_CARD}>\n        {TABS.map((tab) => (\n          <TabsPanel key={tab.value} value={tab.value}>\n            <p className='text-muted-foreground px-4 py-3 text-xs'>\n              {tab.content}\n            </p>\n          </TabsPanel>\n        ))}\n      </div>\n    </Tabs>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "tabs"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "label",
+  "title": "Label",
+  "description": "The label of a control.",
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/label.tsx",
+      "content": "import { cn } from '@/registry/ndeko/lib/utils';\n\nconst LABEL_RECIPE =\n  'flex select-none items-center gap-2 text-[13px] font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-50 peer-data-disabled:cursor-not-allowed peer-data-disabled:opacity-50 group-data-disabled:pointer-events-none group-data-disabled:opacity-50';\n\nfunction Label({ className, ...props }: React.ComponentProps<'label'>) {\n  return (\n    <label\n      data-slot='label'\n      className={cn(LABEL_RECIPE, className)}\n      {...props}\n    />\n  );\n}\n\nexport { Label, LABEL_RECIPE };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

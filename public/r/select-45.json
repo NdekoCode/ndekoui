@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-45",
+  "title": "Searchable select with counts",
+  "description": "Service categories with an icon and a count on each row.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/combobox.json",
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-45.tsx",
+      "content": "'use client';\n\nimport {\n  BlocksIcon,\n  BrainIcon,\n  CpuIcon,\n  DatabaseIcon,\n  GlobeIcon,\n  LayoutIcon,\n  LineChartIcon,\n  NetworkIcon,\n  SearchIcon,\n  ServerIcon,\n  type Icon,\n} from '@/registry/ndeko/lib/icons';\nimport {\n  Combobox,\n  ComboboxContent,\n  ComboboxEmpty,\n  ComboboxInput,\n  ComboboxItem,\n  ComboboxList,\n  ComboboxSelectTrigger,\n  ComboboxValue,\n} from '@/registry/ndeko/ui/combobox';\nimport { Field, FieldLabel } from '@/registry/ndeko/ui/field';\n\ntype Service = {\n  value: string;\n  label: string;\n  icon: Icon;\n  count: number;\n};\n\nconst SERVICES: Service[] = [\n  {\n    value: 'analytics',\n    label: 'Analytics platform',\n    icon: LineChartIcon,\n    count: 2451,\n  },\n  { value: 'ai', label: 'AI services', icon: BrainIcon, count: 1832 },\n  {\n    value: 'databases',\n    label: 'Database systems',\n    icon: DatabaseIcon,\n    count: 1654,\n  },\n  { value: 'compute', label: 'Compute resources', icon: CpuIcon, count: 943 },\n  {\n    value: 'network',\n    label: 'Network services',\n    icon: NetworkIcon,\n    count: 832,\n  },\n  { value: 'web', label: 'Web services', icon: GlobeIcon, count: 654 },\n  {\n    value: 'monitoring',\n    label: 'Monitoring tools',\n    icon: SearchIcon,\n    count: 432,\n  },\n  {\n    value: 'servers',\n    label: 'Server management',\n    icon: ServerIcon,\n    count: 321,\n  },\n  {\n    value: 'infrastructure',\n    label: 'Infrastructure',\n    icon: BlocksIcon,\n    count: 234,\n  },\n  {\n    value: 'frontend',\n    label: 'Frontend services',\n    icon: LayoutIcon,\n    count: 123,\n  },\n];\n\nconst COUNT_FORMAT = new Intl.NumberFormat('en-US');\n\nfunction ServiceName({ service }: { service: Service }) {\n  const ServiceIcon = service.icon;\n\n  return (\n    <span className='flex min-w-0 items-center gap-2'>\n      <ServiceIcon className='text-muted-foreground size-4 shrink-0' />\n      <span className='truncate'>{service.label}</span>\n    </span>\n  );\n}\n\nfunction selectedServiceOf(service: Service | null) {\n  if (!service) {\n    return 'Pick a service category';\n  }\n  return <ServiceName service={service} />;\n}\n\nexport default function Select45() {\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Service category</FieldLabel>\n      <Combobox items={SERVICES}>\n        <ComboboxSelectTrigger>\n          <ComboboxValue>{selectedServiceOf}</ComboboxValue>\n        </ComboboxSelectTrigger>\n        <ComboboxContent className='flex flex-col p-0'>\n          <div className='hairline-b border-border flex h-10 shrink-0 items-center gap-2 px-3'>\n            <SearchIcon className='text-muted-foreground size-4 shrink-0' />\n            <ComboboxInput\n              aria-label='Search services'\n              placeholder='Search services'\n              className='h-full px-0'\n            />\n          </div>\n          <ComboboxEmpty>No service matches your search.</ComboboxEmpty>\n          <ComboboxList className='max-h-72 overflow-y-auto p-1 empty:hidden'>\n            {(service: Service) => (\n              <ComboboxItem key={service.value} value={service}>\n                <ServiceName service={service} />\n                <span className='keycap-3d text-muted-foreground ms-auto inline-flex h-5 shrink-0 items-center rounded-[5px] px-1.5 text-[11px] font-medium tabular-nums'>\n                  {COUNT_FORMAT.format(service.count)}\n                </span>\n              </ComboboxItem>\n            )}\n          </ComboboxList>\n        </ComboboxContent>\n      </Combobox>\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

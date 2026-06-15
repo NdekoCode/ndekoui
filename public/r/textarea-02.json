@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea-02",
+  "title": "Required textarea",
+  "description": "A required field marked with an asterisk after its label.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/textarea.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/textarea/textarea-02.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { Textarea } from '@/registry/ndeko/ui/textarea';\n\nexport default function Textarea02() {\n  const id = useId();\n\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-2'>\n      <Label htmlFor={id} className='gap-1'>\n        Message\n        <span className='text-destructive-ink' aria-hidden='true'>\n          *\n        </span>\n      </Label>\n      <Textarea id={id} placeholder='Tell us what happened' required />\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "textarea"
+  ],
+  "type": "registry:component"
+}

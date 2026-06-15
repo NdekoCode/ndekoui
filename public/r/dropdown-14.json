@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dropdown-14",
+  "title": "Add block menu",
+  "description": "Block types on key cap tiles with a one line description.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/dropdown-menu.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/dropdown/dropdown-14.tsx",
+      "content": "import {\n  Heading1Icon,\n  Heading2Icon,\n  MinusIcon,\n  PlusIcon,\n  TextQuoteIcon,\n  TypeIcon,\n  type Icon,\n} from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuGroup,\n  DropdownMenuGroupLabel,\n  DropdownMenuItem,\n  DropdownMenuTrigger,\n} from '@/registry/ndeko/ui/dropdown-menu';\n\ntype BlockKind = {\n  title: string;\n  description: string;\n  icon: Icon;\n};\n\nconst BLOCK_KINDS: BlockKind[] = [\n  {\n    title: 'Text',\n    description: 'Start writing with plain text',\n    icon: TypeIcon,\n  },\n  {\n    title: 'Quote',\n    description: 'Capture a quote',\n    icon: TextQuoteIcon,\n  },\n  {\n    title: 'Divider',\n    description: 'Visually divide blocks',\n    icon: MinusIcon,\n  },\n  {\n    title: 'Heading 1',\n    description: 'Big section heading',\n    icon: Heading1Icon,\n  },\n  {\n    title: 'Heading 2',\n    description: 'Medium section subheading',\n    icon: Heading2Icon,\n  },\n];\n\nexport default function Dropdown14() {\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger\n        render={<Button variant='ghost' size='icon' aria-label='Add block' />}\n      >\n        <PlusIcon />\n      </DropdownMenuTrigger>\n      <DropdownMenuContent className='w-64'>\n        <DropdownMenuGroup>\n          <DropdownMenuGroupLabel>Add block</DropdownMenuGroupLabel>\n          {BLOCK_KINDS.map((block) => (\n            <DropdownMenuItem\n              key={block.title}\n              label={block.title}\n              className='h-auto py-1.5'\n            >\n              <span\n                className='keycap-3d flex size-8 shrink-0 items-center justify-center rounded-md'\n                aria-hidden='true'\n              >\n                <block.icon />\n              </span>\n              <span className='flex min-w-0 flex-col gap-0.5'>\n                <span className='font-medium'>{block.title}</span>\n                <span className='text-muted-foreground truncate text-xs'>\n                  {block.description}\n                </span>\n              </span>\n            </DropdownMenuItem>\n          ))}\n        </DropdownMenuGroup>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "dropdown"
+  ],
+  "type": "registry:component"
+}

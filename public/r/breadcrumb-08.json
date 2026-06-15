@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "breadcrumb-08",
+  "title": "Breadcrumb with select",
+  "description": "The last step is a select that switches between databases.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/breadcrumb.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/select.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/breadcrumb/breadcrumb-08.tsx",
+      "content": "'use client';\n\nimport { DatabaseIcon } from '@/registry/ndeko/lib/icons';\nimport {\n  Breadcrumb,\n  BreadcrumbItem,\n  BreadcrumbLink,\n  BreadcrumbList,\n  BreadcrumbSeparator,\n} from '@/registry/ndeko/ui/breadcrumb';\nimport {\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from '@/registry/ndeko/ui/select';\n\nconst DATABASES = [\n  { value: 'orion', label: 'Orion' },\n  { value: 'sigma', label: 'Sigma' },\n  { value: 'dorado', label: 'Dorado' },\n];\n\nexport default function Breadcrumb08() {\n  return (\n    <Breadcrumb>\n      <BreadcrumbList>\n        <BreadcrumbItem>\n          <BreadcrumbLink href='#'>Databases</BreadcrumbLink>\n        </BreadcrumbItem>\n        <BreadcrumbSeparator />\n        <BreadcrumbItem>\n          <Select items={DATABASES} defaultValue='orion'>\n            <SelectTrigger\n              aria-label='Select database'\n              className='w-fit min-w-36'\n            >\n              <DatabaseIcon className='text-muted-foreground' />\n              <SelectValue />\n            </SelectTrigger>\n            <SelectContent>\n              {DATABASES.map((database) => (\n                <SelectItem key={database.value} value={database.value}>\n                  {database.label}\n                </SelectItem>\n              ))}\n            </SelectContent>\n          </Select>\n        </BreadcrumbItem>\n      </BreadcrumbList>\n    </Breadcrumb>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "breadcrumb"
+  ],
+  "type": "registry:component"
+}

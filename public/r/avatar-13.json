@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "avatar-13",
+  "title": "28px avatar stack",
+  "description": "Four overlapping avatars at 28px.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/avatar.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/avatar/avatar-13.tsx",
+      "content": "import {\n  Avatar,\n  AvatarFallback,\n  AvatarImage,\n} from '@/registry/ndeko/ui/avatar';\n\nconst MEMBERS = [\n  { name: 'Jordan Hayes', initials: 'JH', image: '/avatars/avatar-03.svg' },\n  { name: 'Anna Novak', initials: 'AN', image: '/avatars/avatar-04.svg' },\n  { name: 'Lina Haddad', initials: 'LH', image: '/avatars/avatar-05.svg' },\n  { name: 'Ama Mensah', initials: 'AM', image: '/avatars/avatar-06.svg' },\n];\n\nexport default function Avatar13() {\n  return (\n    <div className='flex -space-x-[0.525rem]'>\n      {MEMBERS.map((member) => (\n        <Avatar\n          key={member.name}\n          className='ring-card size-7 text-[11px] ring-2'\n        >\n          <AvatarImage src={member.image} alt={member.name} />\n          <AvatarFallback>{member.initials}</AvatarFallback>\n        </Avatar>\n      ))}\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "avatar"
+  ],
+  "type": "registry:component"
+}

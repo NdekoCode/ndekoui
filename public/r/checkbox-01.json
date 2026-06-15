@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox-01",
+  "title": "Basic checkbox",
+  "description": "A checkbox with its label beside it.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/checkbox.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/checkbox/checkbox-01.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Checkbox } from '@/registry/ndeko/ui/checkbox';\nimport { Label } from '@/registry/ndeko/ui/label';\n\nexport default function Checkbox01() {\n  const id = useId();\n\n  return (\n    <div className='flex items-center gap-2'>\n      <Checkbox id={id} />\n      <Label htmlFor={id}>Remember me</Label>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "checkbox"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-30",
+  "title": "File input",
+  "description": "A native file picker with its button inside the field.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-30.tsx",
+      "content": "import { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport { Input } from '@/registry/ndeko/ui/input';\n\nexport default function Input30() {\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Attachment</FieldLabel>\n      <Input\n        type='file'\n        className='text-muted-foreground file:border-foreground/12 dark:file:border-foreground/15 cursor-pointer p-0 pe-2.5 file:me-2.5 file:cursor-pointer file:border-e-(length:--hairline) file:px-2.5'\n      />\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

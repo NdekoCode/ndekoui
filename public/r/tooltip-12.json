@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip-12",
+  "title": "Article hover card",
+  "description": "A cover link that previews the article with an arrow.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/hover-card.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/tooltip/tooltip-12.tsx",
+      "content": "import { BookOpenIcon } from '@/registry/ndeko/lib/icons';\nimport { FOCUS_RING } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport {\n  HoverCard,\n  HoverCardContent,\n  HoverCardTrigger,\n} from '@/registry/ndeko/ui/hover-card';\n\nexport default function Tooltip12() {\n  return (\n    <HoverCard>\n      <HoverCardTrigger\n        href='#'\n        aria-label='Building a design system with tokens and hairlines'\n        className={cn(\n          'bg-foreground/[0.04] hairline-ring ring-border flex size-16 items-center justify-center rounded-lg',\n          FOCUS_RING\n        )}\n      >\n        <span className='gem-plate flex size-8 items-center justify-center rounded-lg [--gem:var(--primary)]'>\n          <BookOpenIcon className='size-4' />\n        </span>\n      </HoverCardTrigger>\n      <HoverCardContent showArrow className='flex w-72 flex-col gap-3'>\n        <div className='flex flex-col gap-1'>\n          <p className='text-sm font-medium text-balance'>\n            Building a design system with tokens and hairlines\n          </p>\n          <p className='text-muted-foreground'>\n            How to set up colour tokens, one-pixel lines and floating surfaces\n            that read the same in light and dark themes.\n          </p>\n        </div>\n        <p className='text-muted-foreground flex items-center gap-2 text-xs'>\n          <span>8 min read</span>\n          <span aria-hidden='true'>·</span>\n          <span>Updated 2 days ago</span>\n        </p>\n      </HoverCardContent>\n    </HoverCard>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "tooltip"
+  ],
+  "type": "registry:component"
+}

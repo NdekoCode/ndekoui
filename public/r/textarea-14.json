@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea-14",
+  "title": "Textarea with floating label",
+  "description": "A label that rises to the top edge on focus or once filled.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/textarea.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/textarea/textarea-14.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Textarea } from '@/registry/ndeko/ui/textarea';\n\nconst FLOATING_LABEL = [\n  'pointer-events-none absolute start-1.5 top-0 z-10 origin-left px-1 text-[13px] leading-5 text-muted-foreground',\n  'translate-y-2 transition-[translate,scale,color] duration-150 ease-(--ease-standard)',\n  'group-focus-within:-translate-y-1/2 group-focus-within:scale-[0.85] group-focus-within:bg-card group-focus-within:text-foreground',\n  'has-[+textarea:not(:placeholder-shown)]:-translate-y-1/2 has-[+textarea:not(:placeholder-shown)]:scale-[0.85]',\n  'has-[+textarea:not(:placeholder-shown)]:bg-card has-[+textarea:not(:placeholder-shown)]:text-foreground',\n].join(' ');\n\nexport default function Textarea14() {\n  const id = useId();\n\n  return (\n    <div className='group relative w-full max-w-xs'>\n      <label htmlFor={id} className={FLOATING_LABEL}>\n        Describe the issue\n      </label>\n      <Textarea id={id} placeholder=' ' />\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "textarea"
+  ],
+  "type": "registry:component"
+}

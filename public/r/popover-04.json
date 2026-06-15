@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "popover-04",
+  "title": "Hint popover",
+  "description": "A compact explanation with one action, too rich for a tooltip.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/popover.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/popover/popover-04.tsx",
+      "content": "import { Button } from '@/registry/ndeko/ui/button';\nimport {\n  Popover,\n  PopoverContent,\n  PopoverDescription,\n  PopoverTitle,\n  PopoverTrigger,\n} from '@/registry/ndeko/ui/popover';\n\nexport default function Popover04() {\n  return (\n    <Popover>\n      <PopoverTrigger render={<Button variant='outline' />}>\n        About previews\n      </PopoverTrigger>\n      <PopoverContent side='top' className='flex w-64 flex-col gap-3 p-3'>\n        <div className='flex flex-col gap-1'>\n          <PopoverTitle className='text-[13px]'>Branch previews</PopoverTitle>\n          <PopoverDescription className='text-xs'>\n            Every pull request gets its own preview link. Turn them on in the\n            project settings.\n          </PopoverDescription>\n        </div>\n        <Button size='sm' className='self-start'>\n          Open settings\n        </Button>\n      </PopoverContent>\n    </Popover>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "popover"
+  ],
+  "type": "registry:component"
+}

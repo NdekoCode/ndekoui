@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "accordion-07",
+  "title": "Accordion with descriptions",
+  "description": "Settings sections with a one-line description under each title.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/accordion.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/accordion/accordion-07.tsx",
+      "content": "import {\n  Accordion,\n  AccordionContent,\n  AccordionItem,\n  AccordionTrigger,\n} from '@/registry/ndeko/ui/accordion';\n\nconst SECTIONS = [\n  {\n    value: 'accounts',\n    title: 'Connected accounts',\n    description: 'Manage your linked social and work accounts',\n    content:\n      'Connect a Google, GitHub or Microsoft account to sign in with one click and bring your preferences along. You can revoke access to any connected account at any time.',\n  },\n  {\n    value: 'notifications',\n    title: 'Notifications',\n    description: 'Choose which updates reach you',\n    content:\n      'Pick the updates you want: security alerts, billing updates, product announcements, usage reports and scheduled maintenance. Each one can arrive by email, SMS or push notification.',\n  },\n  {\n    value: 'two-step',\n    title: '2-step verification',\n    description: 'Add an extra layer of security to your account',\n    content:\n      'Ask for a second step at sign-in: an authenticator app, a code sent by SMS or a security key. An authenticator app is the most secure choice.',\n  },\n  {\n    value: 'support',\n    title: 'Contact support',\n    description: 'Reach the team by chat or email',\n    content:\n      'For billing questions, technical issues or anything else, start a live chat, write to support@example.com or book a call with the technical team.',\n  },\n];\n\nexport default function Accordion07() {\n  return (\n    <Accordion defaultValue={['two-step']}>\n      {SECTIONS.map((section) => (\n        <AccordionItem key={section.value} value={section.value}>\n          <AccordionTrigger>\n            <span className='flex flex-col gap-0.5'>\n              <span>{section.title}</span>\n              <span className='text-muted-foreground text-xs font-normal'>\n                {section.description}\n              </span>\n            </span>\n          </AccordionTrigger>\n          <AccordionContent>{section.content}</AccordionContent>\n        </AccordionItem>\n      ))}\n    </Accordion>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "accordion"
+  ],
+  "type": "registry:component"
+}

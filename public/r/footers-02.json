@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "footers-02",
+  "title": "Compact footer",
+  "description": "The mark and the copyright, one row of links and the social links, centred and stacked on phones.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/blocks/footers/footers-02/index.tsx",
+      "content": "import { Button } from '@/registry/ndeko/ui/button';\n\nimport { TallyfoldMark } from './brand-mark';\nimport { BRAND, LINKS, SOCIAL_LINKS } from './data';\n\nexport default function Footers02() {\n  return (\n    <footer className='px-4 py-8 sm:px-6 lg:px-8'>\n      <div className='mx-auto flex max-w-6xl flex-col items-center gap-6 md:flex-row md:justify-between md:gap-8'>\n        <div className='flex items-center gap-3'>\n          <a\n            href='#'\n            className='focus-visible:ring-ring/25 flex items-center gap-2 rounded-md text-sm font-semibold outline-none focus-visible:ring-[3px]'\n          >\n            <TallyfoldMark />\n            {BRAND.name}\n          </a>\n          <p className='text-muted-foreground text-xs'>{BRAND.copyright}</p>\n        </div>\n        <nav aria-label='Footer'>\n          <ul className='flex flex-wrap justify-center gap-x-5 gap-y-2'>\n            {LINKS.map((link) => (\n              <li key={link.label}>\n                <a\n                  href={link.href}\n                  className='text-muted-foreground hover:text-foreground focus-visible:ring-ring/25 rounded-sm text-[13px] transition-colors outline-none focus-visible:ring-[3px]'\n                >\n                  {link.label}\n                </a>\n              </li>\n            ))}\n          </ul>\n        </nav>\n        <ul className='flex items-center gap-1'>\n          {SOCIAL_LINKS.map((link) => (\n            <li key={link.label}>\n              <Button\n                variant='ghost'\n                size='icon'\n                className='text-muted-foreground'\n                aria-label={link.label}\n                nativeButton={false}\n                render={<a href={link.href} />}\n              >\n                <link.icon />\n              </Button>\n            </li>\n          ))}\n        </ul>\n      </div>\n    </footer>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/footers-02/index.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/footers/footers-02/brand-mark.tsx",
+      "content": "import { cn } from '@/registry/ndeko/lib/utils';\n\nexport function TallyfoldMark({ className }: { className?: string }) {\n  return (\n    <svg\n      viewBox='0 0 24 24'\n      aria-hidden='true'\n      className={cn('size-6 shrink-0', className)}\n    >\n      <rect width='24' height='24' rx='7' className='fill-primary' />\n      <path\n        d='M7.5 5.5h6l3 3v9a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-11a1 1 0 0 1 1-1Z'\n        className='fill-white'\n      />\n      <path d='M13.5 5.5v3h3Z' className='fill-white/60' />\n      <path\n        d='M9 12h6M9 15h4'\n        fill='none'\n        strokeWidth='1.5'\n        strokeLinecap='round'\n        className='stroke-primary'\n      />\n    </svg>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/footers-02/brand-mark.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/footers/footers-02/data.ts",
+      "content": "import {\n  GithubIcon,\n  type Icon,\n  LinkedinBrandIcon,\n  YoutubeBrandIcon,\n} from '@/registry/ndeko/lib/icons';\n\nexport type FooterLink = {\n  label: string;\n  href: string;\n};\n\nexport type SocialLink = {\n  label: string;\n  href: string;\n  icon: Icon;\n};\n\nexport const BRAND = {\n  name: 'Tallyfold',\n  copyright: '© 2026 Tallyfold',\n};\n\nexport const LINKS: FooterLink[] = [\n  { label: 'Pricing', href: '#' },\n  { label: 'Changelog', href: '#' },\n  { label: 'Status', href: '#' },\n  { label: 'Privacy', href: '#' },\n  { label: 'Terms', href: '#' },\n  { label: 'Contact', href: '#' },\n];\n\nexport const SOCIAL_LINKS: SocialLink[] = [\n  { label: 'Tallyfold on GitHub', href: '#', icon: GithubIcon },\n  { label: 'Tallyfold on LinkedIn', href: '#', icon: LinkedinBrandIcon },\n  { label: 'Tallyfold on YouTube', href: '#', icon: YoutubeBrandIcon },\n];\n",
+      "type": "registry:component",
+      "target": "components/blocks/footers-02/data.ts"
+    }
+  ],
+  "categories": [
+    "blocks",
+    "footers"
+  ],
+  "type": "registry:block"
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs-14",
+  "title": "Tabs with counts",
+  "description": "A count above each label, dimmed until its tab is active.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/animated-size.json",
+    "https://ui.ndeko.dev/r/tabs.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/tabs/tabs-14.tsx",
+      "content": "import { Tabs as TabsPrimitive } from '@base-ui/react/tabs';\n\nimport { AnimatedSize } from '@/registry/ndeko/ui/animated-size';\nimport { Tabs, TabsPanel, TabsTab } from '@/registry/ndeko/ui/tabs';\n\nconst QUEUES = [\n  { value: 'to-do', label: 'To do', count: 3 },\n  { value: 'in-review', label: 'In review', count: 0 },\n  { value: 'done', label: 'Done', count: 7 },\n];\n\nconst INDICATOR =\n  'pointer-events-none absolute top-0 left-0 h-(--active-tab-height) w-(--active-tab-width) translate-x-(--active-tab-left) rounded-lg bg-foreground/[0.05] transition-[translate,width] duration-200 ease-(--ease-out-strong)';\n\nconst STACKED_TAB = 'group/tab flex-1 flex-col gap-1.5 rounded-lg p-3 text-xs';\n\nconst COUNT = [\n  'keycap-3d inline-flex h-5 min-w-5 items-center justify-center rounded-[5px] px-1 text-[11px] font-medium tabular-nums text-muted-foreground',\n  'opacity-50 transition-opacity group-data-active/tab:opacity-100',\n].join(' ');\n\nfunction summaryOf(count: number) {\n  if (count === 0) {\n    return 'No tasks in this list.';\n  }\n  if (count === 1) {\n    return '1 task in this list.';\n  }\n  return `${count} tasks in this list.`;\n}\n\nexport default function Tabs14() {\n  return (\n    <Tabs defaultValue='to-do' className='w-full'>\n      <TabsPrimitive.List className='relative mx-auto flex w-full max-w-xs'>\n        {QUEUES.map((queue) => (\n          <TabsTab\n            key={queue.value}\n            value={queue.value}\n            className={STACKED_TAB}\n          >\n            <span className={COUNT}>{queue.count}</span>\n            {queue.label}\n          </TabsTab>\n        ))}\n        <TabsPrimitive.Indicator className={INDICATOR} />\n      </TabsPrimitive.List>\n      <AnimatedSize>\n        {QUEUES.map((queue) => (\n          <TabsPanel key={queue.value} value={queue.value}>\n            <p className='text-muted-foreground p-4 text-center text-xs'>\n              {summaryOf(queue.count)}\n            </p>\n          </TabsPanel>\n        ))}\n      </AnimatedSize>\n    </Tabs>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "tabs"
+  ],
+  "type": "registry:component"
+}

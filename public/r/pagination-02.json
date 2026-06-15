@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pagination-02",
+  "title": "Previous and next with arrows",
+  "description": "Ghost pills whose arrow leans towards the page they open.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/pagination.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/pagination/pagination-02.tsx",
+      "content": "'use client';\n\nimport { useState } from 'react';\n\nimport { ArrowLeftIcon, ArrowRightIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport {\n  Pagination,\n  PaginationContent,\n  PaginationItem,\n} from '@/registry/ndeko/ui/pagination';\n\nconst FIRST_PAGE = 1;\nconst TOTAL_PAGES = 10;\n\nexport default function Pagination02() {\n  const [currentPage, setCurrentPage] = useState(FIRST_PAGE);\n  const isFirstPage = currentPage === FIRST_PAGE;\n  const isLastPage = currentPage === TOTAL_PAGES;\n\n  function goToPreviousPage() {\n    setCurrentPage((page) => {\n      const previousPage = page - 1;\n      return Math.max(FIRST_PAGE, previousPage);\n    });\n  }\n\n  function goToNextPage() {\n    setCurrentPage((page) => {\n      const nextPage = page + 1;\n      return Math.min(TOTAL_PAGES, nextPage);\n    });\n  }\n\n  return (\n    <Pagination>\n      <PaginationContent className='w-full justify-between gap-3'>\n        <PaginationItem>\n          <Button\n            variant='ghost'\n            className='rounded-full ps-2.5'\n            disabled={isFirstPage}\n            onClick={goToPreviousPage}\n          >\n            <ArrowLeftIcon className='opacity-60 transition-transform duration-150 group-hover/button:-translate-x-0.5' />\n            Previous\n          </Button>\n        </PaginationItem>\n        <PaginationItem>\n          <Button\n            variant='ghost'\n            className='rounded-full pe-2.5'\n            disabled={isLastPage}\n            onClick={goToNextPage}\n          >\n            Next\n            <ArrowRightIcon className='opacity-60 transition-transform duration-150 group-hover/button:translate-x-0.5' />\n          </Button>\n        </PaginationItem>\n      </PaginationContent>\n    </Pagination>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "pagination"
+  ],
+  "type": "registry:component"
+}

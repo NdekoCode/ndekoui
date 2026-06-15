@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "motion-animated-number",
+  "title": "Animated number",
+  "description": "A component that animates number changes with smooth transitions.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/core/animated-number.tsx",
+      "content": "'use client';\nimport { cn } from '@/lib/utils';\nimport {\n  motion,\n  SpringOptions,\n  useReducedMotion,\n  useSpring,\n  useTransform,\n} from 'motion/react';\nimport { useEffect } from 'react';\n\nexport type AnimatedNumberProps = {\n  value: number;\n  className?: string;\n  springOptions?: SpringOptions;\n  as?: React.ElementType;\n};\n\nexport function AnimatedNumber({\n  value,\n  className,\n  springOptions,\n  as = 'span',\n}: AnimatedNumberProps) {\n  const MotionComponent = motion[\n    as as keyof typeof motion\n  ] as typeof motion.span;\n  const prefersReducedMotion = useReducedMotion();\n\n  const spring = useSpring(value, springOptions);\n  const display = useTransform(spring, (current) =>\n    Math.round(current).toLocaleString()\n  );\n\n  useEffect(() => {\n    if (prefersReducedMotion) {\n      spring.jump(value);\n      return;\n    }\n    spring.set(value);\n  }, [spring, value, prefersReducedMotion]);\n\n  return (\n    <MotionComponent className={cn('tabular-nums', className)}>\n      {display}\n    </MotionComponent>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/motion/animated-number.tsx"
+    }
+  ],
+  "categories": [
+    "motion"
+  ],
+  "type": "registry:component"
+}

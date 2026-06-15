@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "accordion-19",
+  "title": "Nested accordion",
+  "description": "Each question opens on follow-up questions that open on their own.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/accordion.json",
+    "https://ui.ndeko.dev/r/collapsible.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/accordion/accordion-19.tsx",
+      "content": "import { ChevronDownIcon } from '@/registry/ndeko/lib/icons';\nimport { FOCUS_RING } from '@/registry/ndeko/lib/recipes';\nimport {\n  Accordion,\n  AccordionContent,\n  AccordionItem,\n  AccordionTrigger,\n} from '@/registry/ndeko/ui/accordion';\nimport {\n  Collapsible,\n  CollapsibleContent,\n  CollapsibleTrigger,\n} from '@/registry/ndeko/ui/collapsible';\n\ntype Answer = {\n  title: string;\n  content: string;\n  isOpenByDefault?: boolean;\n};\n\ntype Question = {\n  value: string;\n  title: string;\n  answers: Answer[];\n};\n\nconst QUESTIONS: Question[] = [\n  {\n    value: 'free-plan',\n    title: 'What is included in the free plan?',\n    answers: [\n      {\n        title: 'Is there a limit on teammates?',\n        content:\n          'No. Every plan lets you invite as many teammates as you need.',\n      },\n      {\n        title: 'What happens at the fourth project?',\n        content:\n          'You are asked to upgrade before creating it. Existing projects stay as they are.',\n      },\n    ],\n  },\n  {\n    value: 'change-plan',\n    title: 'Can I change my plan later?',\n    answers: [\n      {\n        title: 'Are upgrades prorated?',\n        content:\n          'Yes. You pay only for the days left in the current billing period.',\n      },\n      {\n        title: 'Can I switch to yearly billing?',\n        content:\n          'Yes, at any time from the Billing page. The switch applies at the next renewal.',\n      },\n    ],\n  },\n  {\n    value: 'export',\n    title: 'How do I export my data?',\n    answers: [\n      {\n        title: 'Which formats are available?',\n        content:\n          'CSV for projects and tasks, and the original files for attachments.',\n        isOpenByDefault: true,\n      },\n      {\n        title: 'Can exports run on a schedule?',\n        content:\n          'Yes. A weekly or monthly export can be sent to the workspace owner by email.',\n      },\n    ],\n  },\n  {\n    value: 'access',\n    title: 'Who can see my projects?',\n    answers: [\n      {\n        title: 'Can I share a project with a guest?',\n        content: 'Yes. A guest sees only the projects they are invited to.',\n      },\n      {\n        title: 'Can I make a project private?',\n        content:\n          'Yes. A private project is hidden from everyone who is not a member.',\n      },\n    ],\n  },\n];\n\nconst ROWS =\n  'rounded-xl bg-card shadow-[0_1px_2px_rgb(0_0_0/0.04)] hairline-ring ring-border';\n\nconst ROW_ITEM = [\n  'relative overflow-hidden outline-none first:rounded-t-xl last:rounded-b-xl',\n  'has-[[data-slot=accordion-trigger]:focus-visible]:z-10',\n  'has-[[data-slot=accordion-trigger]:focus-visible]:ring-[3px]',\n  'has-[[data-slot=accordion-trigger]:focus-visible]:ring-ring/25',\n].join(' ');\n\nconst ANSWER_TRIGGER = [\n  'group/answer flex w-full cursor-pointer gap-2 rounded-md text-left text-[13px] font-medium text-foreground',\n  FOCUS_RING,\n].join(' ');\n\nfunction AnswerRow({ answer }: { answer: Answer }) {\n  return (\n    <Collapsible\n      defaultOpen={answer.isOpenByDefault}\n      className='hairline-t border-border bg-foreground/[0.025] px-4 py-3'\n    >\n      <CollapsibleTrigger className={ANSWER_TRIGGER}>\n        <ChevronDownIcon className='text-muted-foreground mt-0.5 size-4 shrink-0 transition-[rotate] duration-200 ease-(--ease-out-strong) group-data-panel-open/answer:rotate-180' />\n        {answer.title}\n      </CollapsibleTrigger>\n      <CollapsibleContent>\n        <p className='ps-6 pt-1'>{answer.content}</p>\n      </CollapsibleContent>\n    </Collapsible>\n  );\n}\n\nexport default function Accordion19() {\n  return (\n    <Accordion defaultValue={['export']} className={ROWS}>\n      {QUESTIONS.map((question) => (\n        <AccordionItem\n          key={question.value}\n          value={question.value}\n          className={ROW_ITEM}\n        >\n          <AccordionTrigger className='px-4 focus-visible:ring-0'>\n            {question.title}\n          </AccordionTrigger>\n          <AccordionContent className='pb-0'>\n            {question.answers.map((answer) => (\n              <AnswerRow key={answer.title} answer={answer} />\n            ))}\n          </AccordionContent>\n        </AccordionItem>\n      ))}\n    </Accordion>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "accordion"
+  ],
+  "type": "registry:component"
+}

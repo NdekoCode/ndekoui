@@ -1,0 +1,47 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "navbar-10",
+  "title": "Navbar with voice search",
+  "description": "A centred search field with a microphone button, two actions and a theme toggle.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/navbar/navbar-10.tsx",
+      "content": "import { LogoLink } from '@/registry/ndeko/components/navbar/_parts/logo';\nimport { SearchField } from '@/registry/ndeko/components/navbar/_parts/search-field';\nimport { ThemeToggle } from '@/registry/ndeko/components/navbar/_parts/theme-toggle';\nimport { MicIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nexport default function Navbar10() {\n  return (\n    <header className='hairline-b border-border px-4 md:px-6'>\n      <div className='flex h-16 items-center justify-between gap-4'>\n        <div className='flex-1'>\n          <LogoLink className='w-fit' />\n        </div>\n        <div className='grow max-sm:hidden'>\n          <SearchField\n            containerClassName='mx-auto w-full max-w-xs'\n            end={\n              <Button\n                variant='ghost'\n                size='icon-sm'\n                aria-label='Search by voice'\n                className='text-muted-foreground'\n              >\n                <MicIcon />\n              </Button>\n            }\n          />\n        </div>\n        <div className='flex flex-1 items-center justify-end gap-2'>\n          <Button variant='ghost' nativeButton={false} render={<a href='#' />}>\n            Community\n          </Button>\n          <Button nativeButton={false} render={<a href='#' />}>\n            Get started\n          </Button>\n          <ThemeToggle />\n        </div>\n      </div>\n    </header>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/navbar/navbar-10.tsx"
+    },
+    {
+      "path": "registry/ndeko/components/navbar/_parts/logo.tsx",
+      "content": "import { cn } from '@/registry/ndeko/lib/utils';\n\nfunction Logo({ className }: { className?: string }) {\n  return (\n    <svg\n      viewBox='0 0 32 32'\n      fill='none'\n      aria-hidden='true'\n      className={cn('size-8', className)}\n    >\n      <rect width='32' height='32' rx='9' fill='currentColor' />\n      <circle\n        cx='16'\n        cy='16'\n        r='6.25'\n        strokeWidth='2.5'\n        className='stroke-background'\n      />\n      <circle cx='16' cy='16' r='1.75' className='fill-background' />\n    </svg>\n  );\n}\n\nfunction LogoLink({ className }: { className?: string }) {\n  return (\n    <a\n      href='#'\n      aria-label='Home'\n      className={cn(\n        'text-foreground focus-visible:ring-ring/25 flex shrink-0 rounded-[9px] outline-none focus-visible:ring-[3px]',\n        className\n      )}\n    >\n      <Logo />\n    </a>\n  );\n}\n\nexport { Logo, LogoLink };\n",
+      "type": "registry:component",
+      "target": "components/navbar/_parts/logo.tsx"
+    },
+    {
+      "path": "registry/ndeko/components/navbar/_parts/search-field.tsx",
+      "content": "import { SearchIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Input, type InputProps } from '@/registry/ndeko/ui/input';\n\ntype SearchFieldProps = Omit<InputProps, 'type'> & {\n  end?: React.ReactNode;\n  containerClassName?: string;\n};\n\nfunction SearchField({\n  end,\n  className,\n  containerClassName,\n  ...props\n}: SearchFieldProps) {\n  const hasEnd = end !== undefined;\n\n  return (\n    <div className={cn('relative', containerClassName)}>\n      <Input\n        type='search'\n        placeholder='Search…'\n        aria-label='Search'\n        className={cn('peer ps-8', hasEnd && 'pe-10', className)}\n        {...props}\n      />\n      <span\n        aria-hidden='true'\n        className='text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center ps-2.5 peer-disabled:opacity-50'\n      >\n        <SearchIcon className='size-4' />\n      </span>\n      {hasEnd && (\n        <span className='absolute inset-y-0 end-0 flex items-center pe-1.5'>\n          {end}\n        </span>\n      )}\n    </div>\n  );\n}\n\nexport { SearchField };\n",
+      "type": "registry:component",
+      "target": "components/navbar/_parts/search-field.tsx"
+    },
+    {
+      "path": "registry/ndeko/components/navbar/_parts/theme-toggle.tsx",
+      "content": "'use client';\n\nimport {\n  AnimatePresence,\n  motion,\n  type Transition,\n  type Variants,\n  useReducedMotion,\n} from 'motion/react';\nimport { useState } from 'react';\n\nimport { MoonIcon, SunIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\ntype Theme = 'light' | 'dark';\n\nconst SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };\nconst EXIT_TRANSITION: Transition = { duration: 0.1, ease: [0.2, 0, 0, 1] };\n\nconst ICON_VARIANTS: Variants = {\n  enter: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },\n  visible: { opacity: 1, scale: 1, filter: 'blur(0px)' },\n  exit: {\n    opacity: 0,\n    scale: 0.6,\n    filter: 'blur(2px)',\n    transition: EXIT_TRANSITION,\n  },\n};\n\nconst FADE_VARIANTS: Variants = {\n  enter: { opacity: 0 },\n  visible: { opacity: 1 },\n  exit: { opacity: 0, transition: EXIT_TRANSITION },\n};\n\nfunction iconVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return ICON_VARIANTS;\n}\n\nfunction oppositeOf(theme: Theme): Theme {\n  if (theme === 'dark') {\n    return 'light';\n  }\n  return 'dark';\n}\n\nfunction ThemeIcon({ theme }: { theme: Theme }) {\n  if (theme === 'dark') {\n    return <MoonIcon />;\n  }\n  return <SunIcon />;\n}\n\nfunction ThemeToggle() {\n  const [theme, setTheme] = useState<Theme>('light');\n  const shouldReduceMotion = useReducedMotion();\n  const iconVariants = iconVariantsOf(shouldReduceMotion);\n  const nextTheme = oppositeOf(theme);\n\n  function toggleTheme() {\n    setTheme(oppositeOf);\n  }\n\n  return (\n    <Button\n      variant='ghost'\n      size='icon'\n      aria-label={`Switch to ${nextTheme} mode`}\n      onClick={toggleTheme}\n      className='text-muted-foreground'\n    >\n      <span className='relative flex'>\n        <AnimatePresence mode='popLayout' initial={false}>\n          <motion.span\n            key={theme}\n            className='flex'\n            variants={iconVariants}\n            initial='enter'\n            animate='visible'\n            exit='exit'\n            transition={SWAP_TRANSITION}\n          >\n            <ThemeIcon theme={theme} />\n          </motion.span>\n        </AnimatePresence>\n      </span>\n    </Button>\n  );\n}\n\nexport { ThemeToggle };\n",
+      "type": "registry:component",
+      "target": "components/navbar/_parts/theme-toggle.tsx"
+    }
+  ],
+  "categories": [
+    "components",
+    "navbar"
+  ],
+  "type": "registry:component"
+}

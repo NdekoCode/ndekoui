@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "alert-02",
+  "title": "Tinted warning alert",
+  "description": "The same warning drawn on the soft warning pair.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/status-orb.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/alert/alert-02.tsx",
+      "content": "import { StatusOrb } from '@/registry/ndeko/ui/status-orb';\n\nexport default function Alert02() {\n  return (\n    <div\n      role='alert'\n      className='bg-warning/10 text-warning-foreground hairline-ring ring-warning/25 flex items-start gap-3 rounded-xl px-4 py-2.5'\n    >\n      <StatusOrb tone='warning' size='sm' />\n      <p className='py-0.5 text-[13px] leading-5'>\n        Some details are missing from your profile.\n      </p>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "alert"
+  ],
+  "type": "registry:component"
+}

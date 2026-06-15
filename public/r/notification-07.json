@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "notification-07",
+  "title": "Success notice with link",
+  "description": "The success notice with a link to the result.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/status-orb.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/notification/notification-07.tsx",
+      "content": "'use client';\n\nimport {\n  AnimatePresence,\n  motion,\n  type Transition,\n  type Variants,\n  useReducedMotion,\n} from 'motion/react';\nimport { useState } from 'react';\n\nimport { ArrowRightIcon, XIcon } from '@/registry/ndeko/lib/icons';\nimport { FOCUS_RING } from '@/registry/ndeko/lib/recipes';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport { StatusOrb } from '@/registry/ndeko/ui/status-orb';\n\nconst LEAVE_TRANSITION: Transition = {\n  duration: 0.15,\n  ease: [0.23, 1, 0.32, 1],\n};\n\nconst LEAVE_VARIANTS: Variants = {\n  shown: { opacity: 1, height: 'auto' },\n  hidden: { opacity: 0, height: 0, paddingTop: 0, paddingBottom: 0 },\n};\n\nconst FADE_VARIANTS: Variants = {\n  shown: { opacity: 1 },\n  hidden: { opacity: 0 },\n};\n\nconst LINK = [\n  'group text-primary-ink inline-flex items-center gap-1 rounded-sm text-[13px] leading-5 font-medium whitespace-nowrap',\n  FOCUS_RING,\n].join(' ');\n\nfunction leaveVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return LEAVE_VARIANTS;\n}\n\nexport default function Notification07() {\n  const [isVisible, setIsVisible] = useState(true);\n  const shouldReduceMotion = useReducedMotion();\n  const leaveVariants = leaveVariantsOf(shouldReduceMotion);\n\n  function dismiss() {\n    setIsVisible(false);\n  }\n\n  return (\n    <AnimatePresence initial={false}>\n      {isVisible && (\n        <motion.div\n          key='notification'\n          role='status'\n          className='surface-raised flex w-full max-w-100 items-center gap-3 overflow-hidden rounded-2xl py-2.5 ps-3.5 pe-2'\n          variants={leaveVariants}\n          initial='hidden'\n          animate='shown'\n          exit='hidden'\n          transition={LEAVE_TRANSITION}\n        >\n          <StatusOrb tone='success' size='sm' />\n          <div className='flex grow items-center justify-between gap-4'>\n            <p className='text-[13px] leading-5'>Your changes were saved.</p>\n            <a href='#' className={LINK}>\n              View\n              <ArrowRightIcon className='size-4 opacity-60 transition-transform group-hover:translate-x-0.5' />\n            </a>\n          </div>\n          <Button\n            variant='ghost'\n            size='icon-sm'\n            aria-label='Dismiss notification'\n            className='text-muted-foreground'\n            onClick={dismiss}\n          >\n            <XIcon />\n          </Button>\n        </motion.div>\n      )}\n    </AnimatePresence>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "notification"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox-16",
+  "title": "Integration checkbox",
+  "description": "A checkbox card for an integration, led by its logo on a key cap.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/checkbox.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/checkbox/checkbox-16.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Checkbox } from '@/registry/ndeko/ui/checkbox';\nimport { Label } from '@/registry/ndeko/ui/label';\n\nconst CHOICE_CARD = [\n  'relative flex w-full items-start gap-2 rounded-xl bg-card p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)] hairline-ring ring-border transition-[box-shadow] duration-150',\n  'has-data-checked:shadow-[0_1px_2px_rgb(0_0_0/0.04),0_6px_16px_-8px_color-mix(in_oklab,var(--primary)_35%,transparent)] has-data-checked:ring-primary/45',\n].join(' ');\n\nfunction SupabaseMark() {\n  return (\n    <span\n      aria-hidden='true'\n      className='keycap-3d text-foreground inline-flex size-8 shrink-0 items-center justify-center rounded-lg'\n    >\n      <svg width={18} height={18} viewBox='6 6 20 20' fill='currentColor'>\n        <path\n          fillOpacity={0.55}\n          d='M17.63 25.52c-.506.637-1.533.287-1.545-.526l-.178-11.903h8.003c1.45 0 2.259 1.674 1.357 2.81l-7.637 9.618Z'\n        />\n        <path d='M14.375 6.367c.506-.638 1.532-.289 1.544.525l.078 11.903H8.094c-1.45 0-2.258-1.674-1.357-2.81l7.638-9.618Z' />\n      </svg>\n    </span>\n  );\n}\n\nexport default function Checkbox16() {\n  const id = useId();\n  const descriptionId = `${id}-description`;\n\n  return (\n    <div className={CHOICE_CARD}>\n      <Checkbox\n        id={id}\n        aria-describedby={descriptionId}\n        className='order-1 after:absolute after:inset-0'\n      />\n      <div className='flex grow items-center gap-3'>\n        <SupabaseMark />\n        <div className='grid gap-1.5'>\n          <Label htmlFor={id}>\n            Supabase{' '}\n            <span className='text-muted-foreground text-xs leading-[inherit] font-normal'>\n              (Database)\n            </span>\n          </Label>\n          <p id={descriptionId} className='text-muted-foreground text-xs'>\n            Add Postgres, auth and storage to the new project.\n          </p>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "checkbox"
+  ],
+  "type": "registry:component"
+}

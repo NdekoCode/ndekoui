@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-10",
+  "title": "Email button",
+  "description": "A grey pill with a mail icon and an arrow that nudges on hover.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-10.tsx",
+      "content": "import { ArrowRightIcon, MailIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nexport default function Button10() {\n  return (\n    <Button variant='secondary'>\n      <MailIcon className='-ms-1 opacity-60' />\n      Email\n      <ArrowRightIcon className='-me-1 opacity-60 transition-transform group-hover/button:translate-x-0.5' />\n    </Button>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

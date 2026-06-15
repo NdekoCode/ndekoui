@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-06",
+  "title": "Review filter",
+  "description": "Filter reviews by star rating, each option with its count.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/radio-group.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/radio/radio-06.tsx",
+      "content": "import { useId } from 'react';\n\nimport { StarIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { RadioGroup, RadioGroupItem } from '@/registry/ndeko/ui/radio-group';\n\nconst STAR_POSITIONS = [1, 2, 3, 4, 5];\n\nconst RATING_FILTERS = [\n  { rating: 5, count: '5,168' },\n  { rating: 4, count: '4,726' },\n  { rating: 3, count: '3,234' },\n  { rating: 2, count: '1,842' },\n  { rating: 1, count: '452' },\n];\n\nconst COUNT =\n  'text-muted-foreground text-xs leading-[inherit] font-normal tabular-nums';\n\nfunction starsLabelOf(rating: number) {\n  if (rating === 1) {\n    return '1 star';\n  }\n  return `${rating} stars`;\n}\n\nfunction starToneOf(position: number, rating: number) {\n  if (position <= rating) {\n    return 'text-warning';\n  }\n  return 'text-foreground/15';\n}\n\nfunction Stars({ rating }: { rating: number }) {\n  return (\n    <span aria-hidden='true' className='inline-flex items-center'>\n      {STAR_POSITIONS.map((position) => {\n        const tone = starToneOf(position, rating);\n\n        return (\n          <StarIcon\n            key={position}\n            fill='currentColor'\n            className={cn('size-4', tone)}\n          />\n        );\n      })}\n    </span>\n  );\n}\n\nexport default function Radio06() {\n  const id = useId();\n  const allId = `${id}-all`;\n\n  return (\n    <RadioGroup defaultValue='all' aria-label='Filter reviews'>\n      <div className='flex items-center gap-2'>\n        <RadioGroupItem value='all' id={allId} />\n        <Label htmlFor={allId}>\n          All reviews <span className={COUNT}>(12,921)</span>\n        </Label>\n      </div>\n      {RATING_FILTERS.map((filter) => {\n        const value = String(filter.rating);\n        const itemId = `${id}-${value}`;\n\n        return (\n          <div key={value} className='flex items-center gap-2'>\n            <RadioGroupItem value={value} id={itemId} />\n            <Label htmlFor={itemId} className='gap-1'>\n              <Stars rating={filter.rating} />\n              <span className='sr-only'>{starsLabelOf(filter.rating)}</span>\n              <span className={COUNT}>({filter.count})</span>\n            </Label>\n          </div>\n        );\n      })}\n    </RadioGroup>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "radio"
+  ],
+  "type": "registry:component"
+}

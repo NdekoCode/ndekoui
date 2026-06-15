@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "otp-field",
+  "title": "OTP Field",
+  "description": "One box per character of a code.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/recipes.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/otp-field.tsx",
+      "content": "'use client';\n\nimport { OTPField as OTPFieldPrimitive } from '@base-ui/react/otp-field';\n\nimport { CONTROL_RECIPE } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\n\ntype WithClassName<Props> = Omit<Props, 'className'> & { className?: string };\n\nfunction OTPField({\n  className,\n  ...props\n}: WithClassName<OTPFieldPrimitive.Root.Props>) {\n  return (\n    <OTPFieldPrimitive.Root\n      data-slot='otp-field'\n      className={cn('flex items-center gap-2', className)}\n      {...props}\n    />\n  );\n}\n\nfunction OTPFieldInput({\n  className,\n  ...props\n}: WithClassName<OTPFieldPrimitive.Input.Props>) {\n  return (\n    <OTPFieldPrimitive.Input\n      data-slot='otp-field-input'\n      className={cn(\n        CONTROL_RECIPE,\n        'size-10 p-0 text-center text-base font-medium tabular-nums md:text-base',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nfunction OTPFieldSeparator({\n  className,\n  ...props\n}: WithClassName<OTPFieldPrimitive.Separator.Props>) {\n  return (\n    <OTPFieldPrimitive.Separator\n      data-slot='otp-field-separator'\n      className={cn('bg-foreground/20 h-0.5 w-2 rounded-full', className)}\n      {...props}\n    />\n  );\n}\n\nexport { OTPField, OTPFieldInput, OTPFieldSeparator };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

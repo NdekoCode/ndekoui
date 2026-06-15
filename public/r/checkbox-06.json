@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox-06",
+  "title": "Animated todo item",
+  "description": "A round success checkbox that draws a line through its task.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/checkbox.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/checkbox/checkbox-06.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Checkbox } from '@/registry/ndeko/ui/checkbox';\nimport { Label } from '@/registry/ndeko/ui/label';\n\nconst STRUCK_LABEL = [\n  'relative transition-colors duration-200 peer-data-checked:text-muted-foreground',\n  'after:absolute after:inset-x-0 after:top-1/2 after:h-px after:-translate-y-1/2 after:origin-left after:scale-x-0 after:bg-muted-foreground rtl:after:origin-right',\n  'after:transition-[scale] after:duration-200 after:ease-(--ease-standard) peer-data-checked:after:scale-x-100',\n].join(' ');\n\nexport default function Checkbox06() {\n  const id = useId();\n\n  return (\n    <div className='flex items-center gap-2 [--primary:var(--success)] [--ring:var(--success)]'>\n      <Checkbox id={id} defaultChecked className='rounded-full' />\n      <Label htmlFor={id} className={STRUCK_LABEL}>\n        Book the venue\n      </Label>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "checkbox"
+  ],
+  "type": "registry:component"
+}

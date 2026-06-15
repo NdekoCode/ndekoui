@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-39",
+  "title": "Select with initials",
+  "description": "Members without a photo get a coloured plate with their initial.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/select.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-39.tsx",
+      "content": "import { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport {\n  Select,\n  SelectContent,\n  SelectGroup,\n  SelectItem,\n  SelectLabel,\n  SelectTrigger,\n  SelectValue,\n} from '@/registry/ndeko/ui/select';\n\ntype Member = {\n  value: string;\n  name: string;\n  gem: string;\n};\n\nconst MEMBERS: Member[] = [\n  { value: 'frank', name: 'Frank Morris', gem: 'var(--primary)' },\n  { value: 'xavier', name: 'Xavier Guerra', gem: 'var(--info)' },\n  { value: 'anne', name: 'Anne Kelley', gem: 'var(--success)' },\n];\n\nfunction initialOf(name: string) {\n  return name.charAt(0);\n}\n\nfunction MemberName({ member }: { member: Member }) {\n  const gemStyle = { '--gem': member.gem } as React.CSSProperties;\n\n  return (\n    <span className='flex min-w-0 items-center gap-2'>\n      <span\n        aria-hidden='true'\n        style={gemStyle}\n        className='gem-plate inline-flex size-5 shrink-0 items-center justify-center rounded-[5px] text-[10px] font-semibold'\n      >\n        {initialOf(member.name)}\n      </span>\n      <span className='truncate'>{member.name}</span>\n    </span>\n  );\n}\n\nconst MEMBER_ITEMS = MEMBERS.map((member) => ({\n  value: member.value,\n  label: <MemberName member={member} />,\n}));\n\nexport default function Select39() {\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Assignee</FieldLabel>\n      <Select items={MEMBER_ITEMS} defaultValue='frank'>\n        <SelectTrigger className='ps-1.5'>\n          <SelectValue placeholder='Pick a team member' />\n        </SelectTrigger>\n        <SelectContent>\n          <SelectGroup>\n            <SelectLabel>Team members</SelectLabel>\n            {MEMBERS.map((member) => (\n              <SelectItem\n                key={member.value}\n                value={member.value}\n                label={member.name}\n              >\n                <MemberName member={member} />\n              </SelectItem>\n            ))}\n          </SelectGroup>\n        </SelectContent>\n      </Select>\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

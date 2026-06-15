@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-11",
+  "title": "Input with start inline add-on",
+  "description": "The protocol written inside the field before the address.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-11.tsx",
+      "content": "import { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport { Input } from '@/registry/ndeko/ui/input';\n\nexport default function Input11() {\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Website</FieldLabel>\n      <div className='relative'>\n        <Input className='peer ps-15' placeholder='acme.dev' />\n        <span className='text-muted-foreground pointer-events-none absolute inset-y-0 start-0 flex items-center ps-2.5 text-[13px] select-none peer-disabled:opacity-50'>\n          https://\n        </span>\n      </div>\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-48",
+  "title": "Native multiple select",
+  "description": "A browser list where several options can be picked.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/select-native.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-48.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { SelectNative } from '@/registry/ndeko/ui/select-native';\n\nexport default function Select48() {\n  const id = useId();\n\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-2'>\n      <Label htmlFor={id}>Frameworks</Label>\n      <SelectNative id={id} multiple defaultValue={['react', 'astro']}>\n        <option value='react'>React</option>\n        <option value='nextjs'>Next.js</option>\n        <option value='astro'>Astro</option>\n        <option value='gatsby'>Gatsby</option>\n        <option value='vue'>Vue</option>\n        <option value='angular'>Angular</option>\n      </SelectNative>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

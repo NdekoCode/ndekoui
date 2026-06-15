@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-17",
+  "title": "Profile button",
+  "description": "A primary pill that starts with an avatar and shows a handle.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/avatar.json",
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-17.tsx",
+      "content": "import { Avatar, AvatarFallback } from '@/registry/ndeko/ui/avatar';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nexport default function Button17() {\n  return (\n    <Button className='ps-1'>\n      <Avatar className='size-6 text-[10px]'>\n        <AvatarFallback>LM</AvatarFallback>\n      </Avatar>\n      @lena.moss\n    </Button>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

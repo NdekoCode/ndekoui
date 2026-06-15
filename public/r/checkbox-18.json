@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox-18",
+  "title": "Checkbox tree",
+  "description": "Nested checkboxes where a parent shows when only some children are on.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/checkbox.json",
+    "https://ui.ndeko.dev/r/checkbox-tree.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/checkbox/checkbox-18.tsx",
+      "content": "'use client';\n\nimport { Fragment, useId } from 'react';\n\nimport { Checkbox } from '@/registry/ndeko/ui/checkbox';\nimport {\n  CheckboxTree,\n  type CheckboxTreeNode,\n  type CheckboxTreeRenderProps,\n} from '@/registry/ndeko/ui/checkbox-tree';\nimport { Label } from '@/registry/ndeko/ui/label';\n\nconst PROJECTS: CheckboxTreeNode = {\n  id: 'all',\n  label: 'All projects',\n  children: [\n    { id: 'website', label: 'Website redesign', defaultChecked: true },\n    {\n      id: 'mobile',\n      label: 'Mobile app',\n      children: [\n        { id: 'ios', label: 'iOS release' },\n        { id: 'android', label: 'Android release', defaultChecked: true },\n      ],\n    },\n    { id: 'brand', label: 'Brand refresh' },\n  ],\n};\n\nexport default function Checkbox18() {\n  const id = useId();\n\n  function renderNode({\n    node,\n    checked,\n    indeterminate,\n    onCheckedChange,\n    children,\n  }: CheckboxTreeRenderProps) {\n    const nodeId = `${id}-${node.id}`;\n\n    return (\n      <Fragment key={nodeId}>\n        <div className='flex items-center gap-2'>\n          <Checkbox\n            id={nodeId}\n            checked={checked}\n            indeterminate={indeterminate}\n            onCheckedChange={onCheckedChange}\n          />\n          <Label htmlFor={nodeId}>{node.label}</Label>\n        </div>\n        {children && <div className='ms-6 space-y-3'>{children}</div>}\n      </Fragment>\n    );\n  }\n\n  return (\n    <div className='space-y-3'>\n      <CheckboxTree tree={PROJECTS} renderNode={renderNode} />\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "checkbox"
+  ],
+  "type": "registry:component"
+}

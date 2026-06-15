@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-18",
+  "title": "Score scale",
+  "description": "A joined scale from 0 to 5 with its two ends named below.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/radio-group.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/radio/radio-18.tsx",
+      "content": "import { useId } from 'react';\n\nimport { RadioGroup, RadioGroupItem } from '@/registry/ndeko/ui/radio-group';\n\nconst SCORES = ['0', '1', '2', '3', '4', '5'];\n\nconst SCORE_SEGMENT = [\n  'relative flex h-8 flex-1 cursor-pointer items-center justify-center bg-card text-[13px] font-medium text-foreground tabular-nums shadow-[0_1px_2px_rgb(0_0_0/0.05)] hairline-ring ring-foreground/12 transition-[box-shadow,color] duration-150',\n  'first:rounded-s-full last:rounded-e-full',\n  'has-data-checked:z-10 has-data-checked:text-primary-ink has-data-checked:ring-primary/45',\n  'has-focus-visible:z-10 has-focus-visible:ring-[3px] has-focus-visible:ring-ring/25',\n].join(' ');\n\nexport default function Radio18() {\n  const captionId = useId();\n\n  return (\n    <div className='flex w-full flex-col gap-3'>\n      <span\n        id={captionId}\n        className='text-foreground text-[13px] leading-none font-medium'\n      >\n        How likely are you to recommend us?\n      </span>\n      <RadioGroup\n        aria-labelledby={captionId}\n        className='flex gap-0 -space-x-px'\n      >\n        {SCORES.map((score) => (\n          <label key={score} className={SCORE_SEGMENT}>\n            <RadioGroupItem value={score} className='sr-only' />\n            {score}\n          </label>\n        ))}\n      </RadioGroup>\n      <div className='text-muted-foreground flex justify-between text-xs'>\n        <span>Not likely</span>\n        <span>Very likely</span>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "radio"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-47",
+  "title": "Social sign in buttons",
+  "description": "Stacked outline buttons that name each sign in provider.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-47.tsx",
+      "content": "import {\n  FacebookBrandIcon,\n  GithubIcon,\n  GoogleBrandIcon,\n  TwitterXIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst PROVIDERS = [\n  { name: 'Google', Icon: GoogleBrandIcon },\n  { name: 'X', Icon: TwitterXIcon },\n  { name: 'Facebook', Icon: FacebookBrandIcon },\n  { name: 'GitHub', Icon: GithubIcon },\n];\n\nexport default function Button47() {\n  return (\n    <div className='flex flex-col gap-2'>\n      {PROVIDERS.map(({ name, Icon }) => (\n        <Button key={name} variant='outline'>\n          <Icon className='me-1' />\n          Sign in with {name}\n        </Button>\n      ))}\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

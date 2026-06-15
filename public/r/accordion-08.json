@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "accordion-08",
+  "title": "Accordion with descriptions and plus",
+  "description": "Settings sections with a description and a plus that becomes a minus.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/accordion.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/accordion/accordion-08.tsx",
+      "content": "import { Accordion as AccordionPrimitive } from '@base-ui/react/accordion';\nimport type { ReactNode } from 'react';\n\nimport { PlusIcon } from '@/registry/ndeko/lib/icons';\nimport { FOCUS_RING } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport {\n  Accordion,\n  AccordionContent,\n  AccordionItem,\n} from '@/registry/ndeko/ui/accordion';\n\nconst SECTIONS = [\n  {\n    value: 'accounts',\n    title: 'Connected accounts',\n    description: 'Manage your linked social and work accounts',\n    content:\n      'Connect a Google, GitHub or Microsoft account to sign in with one click and bring your preferences along. You can revoke access to any connected account at any time.',\n  },\n  {\n    value: 'notifications',\n    title: 'Notifications',\n    description: 'Choose which updates reach you',\n    content:\n      'Pick the updates you want: security alerts, billing updates, product announcements, usage reports and scheduled maintenance. Each one can arrive by email, SMS or push notification.',\n  },\n  {\n    value: 'two-step',\n    title: '2-step verification',\n    description: 'Add an extra layer of security to your account',\n    content:\n      'Ask for a second step at sign-in: an authenticator app, a code sent by SMS or a security key. An authenticator app is the most secure choice.',\n  },\n  {\n    value: 'support',\n    title: 'Contact support',\n    description: 'Reach the team by chat or email',\n    content:\n      'For billing questions, technical issues or anything else, start a live chat, write to support@example.com or book a call with the technical team.',\n  },\n];\n\nconst TRIGGER = [\n  'group/accordion-trigger flex flex-1 cursor-pointer items-center justify-between gap-4 rounded-md py-3 text-left text-[13px] font-medium text-foreground transition-colors',\n  'data-disabled:pointer-events-none data-disabled:opacity-50',\n  FOCUS_RING,\n].join(' ');\n\n// PlusIcon draws its vertical stroke first: turning it flat and fading it leaves a minus.\nconst PLUS_MINUS = [\n  'size-4 shrink-0 text-muted-foreground transition-[rotate] duration-200 ease-(--ease-out-strong) group-data-panel-open/accordion-trigger:rotate-180',\n  '[&>path:first-child]:origin-center [&>path:first-child]:transition-[rotate,opacity] [&>path:first-child]:duration-200 [&>path:first-child]:ease-(--ease-out-strong)',\n  'group-data-panel-open/accordion-trigger:[&>path:first-child]:rotate-90 group-data-panel-open/accordion-trigger:[&>path:first-child]:opacity-0',\n].join(' ');\n\ntype PlusMinusTriggerProps = {\n  className?: string;\n  children: ReactNode;\n};\n\nfunction PlusMinusTrigger({ className, children }: PlusMinusTriggerProps) {\n  return (\n    <AccordionPrimitive.Header className='flex'>\n      <AccordionPrimitive.Trigger className={cn(TRIGGER, className)}>\n        {children}\n        <PlusIcon className={PLUS_MINUS} />\n      </AccordionPrimitive.Trigger>\n    </AccordionPrimitive.Header>\n  );\n}\n\nexport default function Accordion08() {\n  return (\n    <Accordion defaultValue={['two-step']}>\n      {SECTIONS.map((section) => (\n        <AccordionItem key={section.value} value={section.value}>\n          <PlusMinusTrigger>\n            <span className='flex flex-col gap-0.5'>\n              <span>{section.title}</span>\n              <span className='text-muted-foreground text-xs font-normal'>\n                {section.description}\n              </span>\n            </span>\n          </PlusMinusTrigger>\n          <AccordionContent>{section.content}</AccordionContent>\n        </AccordionItem>\n      ))}\n    </Accordion>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "accordion"
+  ],
+  "type": "registry:component"
+}

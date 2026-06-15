@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-50",
+  "title": "Multiple listbox",
+  "description": "An always open list where several options are picked.",
+  "dependencies": [
+    "react-aria-components"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/selected-mark.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-50.tsx",
+      "content": "'use client';\n\nimport { useId } from 'react';\nimport { ListBox, ListBoxItem } from 'react-aria-components';\n\nimport { CONTROL_RECIPE, MENU_ITEM } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { SelectedMark } from '@/registry/ndeko/ui/selected-mark';\n\nconst FRAMEWORKS = [\n  { id: 'react', label: 'React' },\n  { id: 'vue', label: 'Vue' },\n  { id: 'angular', label: 'Angular' },\n  { id: 'svelte', label: 'Svelte' },\n];\n\nconst LIST_BOX = cn(\n  CONTROL_RECIPE,\n  'flex max-h-72 min-h-20 flex-col gap-0.5 overflow-y-auto p-1 outline-none',\n  'has-[[data-focus-visible]]:border-foreground/30 has-[[data-focus-visible]]:ring-ring/25 has-[[data-focus-visible]]:ring-[3px]'\n);\n\nconst OPTION = cn(\n  MENU_ITEM,\n  'cursor-pointer pr-8 data-focused:bg-foreground/5 data-hovered:bg-foreground/5'\n);\n\nconst MARK =\n  'absolute right-1.5 transition-[scale,opacity] duration-150 ease-(--ease-out-strong)';\n\nfunction markStateOf(isSelected: boolean) {\n  if (isSelected) {\n    return 'scale-100 opacity-100';\n  }\n  return 'scale-75 opacity-0 duration-100';\n}\n\nexport default function Select50() {\n  const labelId = useId();\n\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-2'>\n      <Label id={labelId}>Frameworks</Label>\n      <ListBox\n        aria-labelledby={labelId}\n        selectionMode='multiple'\n        defaultSelectedKeys={['react', 'vue']}\n        className={LIST_BOX}\n      >\n        {FRAMEWORKS.map((framework) => (\n          <ListBoxItem\n            key={framework.id}\n            id={framework.id}\n            textValue={framework.label}\n            className={OPTION}\n          >\n            {({ isSelected }) => (\n              <>\n                {framework.label}\n                <SelectedMark className={cn(MARK, markStateOf(isSelected))} />\n              </>\n            )}\n          </ListBoxItem>\n        ))}\n      </ListBox>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

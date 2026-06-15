@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "switch-15",
+  "title": "Switch card",
+  "description": "A setting card that you switch as a whole and that takes a primary hairline.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/switch.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/switch/switch-15.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { Switch } from '@/registry/ndeko/ui/switch';\n\nconst CHOICE_CARD = [\n  'relative flex w-full items-start gap-2 rounded-xl bg-card p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)] hairline-ring ring-border transition-[box-shadow] duration-150',\n  'has-data-checked:shadow-[0_1px_2px_rgb(0_0_0/0.04),0_6px_16px_-8px_color-mix(in_oklab,var(--primary)_35%,transparent)] has-data-checked:ring-primary/45',\n].join(' ');\n\nexport default function Switch15() {\n  const id = useId();\n  const descriptionId = `${id}-description`;\n\n  return (\n    <div className={CHOICE_CARD}>\n      <Switch\n        id={id}\n        aria-describedby={descriptionId}\n        className='order-1 after:absolute after:inset-0'\n      />\n      <div className='grid grow gap-1.5'>\n        <Label htmlFor={id}>\n          Two-factor authentication{' '}\n          <span className='text-muted-foreground text-xs leading-[inherit] font-normal'>\n            (Recommended)\n          </span>\n        </Label>\n        <p id={descriptionId} className='text-muted-foreground text-xs'>\n          Ask for a code from your phone at every sign in.\n        </p>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "switch"
+  ],
+  "type": "registry:component"
+}

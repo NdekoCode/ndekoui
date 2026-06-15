@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dialog-01",
+  "title": "Confirmation dialog",
+  "description": "An alert dialog that asks before an invoice goes out.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/alert-dialog.json",
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/dialog/dialog-01.tsx",
+      "content": "import {\n  AlertDialog,\n  AlertDialogAction,\n  AlertDialogCancel,\n  AlertDialogContent,\n  AlertDialogDescription,\n  AlertDialogFooter,\n  AlertDialogHeader,\n  AlertDialogTitle,\n  AlertDialogTrigger,\n} from '@/registry/ndeko/ui/alert-dialog';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nexport default function Dialog01() {\n  return (\n    <AlertDialog>\n      <AlertDialogTrigger render={<Button variant='outline' />}>\n        Send invoice\n      </AlertDialogTrigger>\n      <AlertDialogContent>\n        <AlertDialogHeader>\n          <AlertDialogTitle>Send invoice INV-2041?</AlertDialogTitle>\n          <AlertDialogDescription>\n            Fernhill Studio receives it by email and can pay online right away.\n            You can still edit it until it is paid.\n          </AlertDialogDescription>\n        </AlertDialogHeader>\n        <AlertDialogFooter>\n          <AlertDialogCancel>Cancel</AlertDialogCancel>\n          <AlertDialogAction>Send invoice</AlertDialogAction>\n        </AlertDialogFooter>\n      </AlertDialogContent>\n    </AlertDialog>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "dialog"
+  ],
+  "type": "registry:component"
+}

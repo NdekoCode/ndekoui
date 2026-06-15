@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chat-feedback-bar",
+  "title": "Chat Feedback Bar",
+  "description": "Asks whether a reply helped and becomes a thank you once you answer.",
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/animated-size.json",
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/chat-motion.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/chat-feedback-bar.tsx",
+      "content": "// Adapted from prompt-kit (MIT, Copyright (c) 2025 Julien Thibeaut).\n'use client';\n\nimport { useState } from 'react';\n\nimport { ThumbsUpIcon, XIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { AnimatedSize } from '@/registry/ndeko/ui/animated-size';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport { Swap } from '@/registry/ndeko/ui/chat-motion';\n\ntype FeedbackChoice = 'helpful' | 'not-helpful';\n\ntype FeedbackBarProps = {\n  className?: string;\n  title?: string;\n  icon?: React.ReactNode;\n  /** Replaces the title once a choice is made. */\n  thanks?: string;\n  onHelpful?: () => void;\n  onNotHelpful?: () => void;\n  onClose?: () => void;\n};\n\nfunction FeedbackBar({\n  className,\n  title = 'Was this reply helpful?',\n  icon,\n  thanks = 'Thanks for telling us',\n  onHelpful,\n  onNotHelpful,\n  onClose,\n}: FeedbackBarProps) {\n  const [choice, setChoice] = useState<FeedbackChoice | null>(null);\n  const hasChosen = choice !== null;\n  const hasClose = onClose !== undefined;\n\n  function chooseHelpful() {\n    setChoice('helpful');\n    onHelpful?.();\n  }\n\n  function chooseNotHelpful() {\n    setChoice('not-helpful');\n    onNotHelpful?.();\n  }\n\n  return (\n    <div\n      data-slot='feedback-bar'\n      className={cn(\n        'bg-card hairline-ring ring-border inline-flex items-center rounded-xl text-[13px] shadow-[0_1px_2px_rgb(0_0_0/0.04)]',\n        className\n      )}\n    >\n      <AnimatedSize as='span' axis='width' contentClassName='flex items-center'>\n        <span className='flex items-center gap-3 py-2.5 ps-4 pe-2'>\n          {icon}\n          <span\n            aria-live='polite'\n            className='text-foreground font-medium whitespace-nowrap'\n          >\n            <Swap swapKey={String(hasChosen)}>\n              {hasChosen && thanks}\n              {!hasChosen && title}\n            </Swap>\n          </span>\n        </span>\n        {!hasChosen && (\n          <span className='flex items-center gap-0.5 pe-2'>\n            <Button\n              type='button'\n              variant='ghost'\n              size='icon'\n              aria-label='Helpful'\n              onClick={chooseHelpful}\n              className='text-muted-foreground'\n            >\n              <ThumbsUpIcon />\n            </Button>\n            <Button\n              type='button'\n              variant='ghost'\n              size='icon'\n              aria-label='Not helpful'\n              onClick={chooseNotHelpful}\n              className='text-muted-foreground'\n            >\n              <ThumbsUpIcon className='rotate-180' />\n            </Button>\n          </span>\n        )}\n      </AnimatedSize>\n      {hasClose && (\n        <Button\n          type='button'\n          variant='ghost'\n          size='icon'\n          aria-label='Close'\n          onClick={onClose}\n          className='text-muted-foreground me-1.5'\n        >\n          <XIcon />\n        </Button>\n      )}\n    </div>\n  );\n}\n\nexport { FeedbackBar, type FeedbackBarProps, type FeedbackChoice };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives",
+    "chat"
+  ],
+  "type": "registry:ui"
+}

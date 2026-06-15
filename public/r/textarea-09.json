@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea-09",
+  "title": "Disabled textarea",
+  "description": "A dimmed field and label that cannot be edited.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/textarea.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/textarea/textarea-09.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { Textarea } from '@/registry/ndeko/ui/textarea';\n\nexport default function Textarea09() {\n  const id = useId();\n\n  return (\n    <div className='group flex w-full max-w-xs flex-col gap-2'>\n      <Label htmlFor={id} className='group-has-disabled:opacity-50'>\n        Comment\n      </Label>\n      <Textarea id={id} disabled placeholder='Comments are closed' />\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "textarea"
+  ],
+  "type": "registry:component"
+}

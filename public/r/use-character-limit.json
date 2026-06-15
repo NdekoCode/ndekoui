@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-character-limit",
+  "title": "Use character limit",
+  "description": "The use-character-limit hook used by Ndeko UI components.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ndeko/hooks/use-character-limit.ts",
+      "content": "'use client';\n\nimport { useState, type ChangeEvent } from 'react';\n\nexport type CharacterLimitOptions = {\n  maxLength: number;\n  initialValue?: string;\n};\n\nexport function useCharacterLimit({\n  maxLength,\n  initialValue = '',\n}: CharacterLimitOptions) {\n  const [value, setValue] = useState(initialValue);\n  const characterCount = value.length;\n\n  function handleChange(\n    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>\n  ) {\n    const nextValue = event.currentTarget.value;\n    const fitsLimit = nextValue.length <= maxLength;\n    if (fitsLimit) {\n      setValue(nextValue);\n    }\n  }\n\n  return {\n    value,\n    characterCount,\n    handleChange,\n    maxLength,\n  };\n}\n",
+      "type": "registry:hook"
+    }
+  ],
+  "categories": [
+    "hooks"
+  ],
+  "type": "registry:hook"
+}

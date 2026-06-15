@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea-07",
+  "title": "Filled textarea",
+  "description": "A tinted field without an outline until it takes focus.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/textarea.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/textarea/textarea-07.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { Textarea } from '@/registry/ndeko/ui/textarea';\n\nconst FILLED = [\n  'bg-foreground/[0.04] shadow-none ring-transparent',\n  'dark:bg-foreground/[0.06] dark:ring-transparent',\n  'focus-visible:bg-card dark:focus-visible:bg-foreground/[0.04]',\n].join(' ');\n\nexport default function Textarea07() {\n  const id = useId();\n\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-2'>\n      <Label htmlFor={id}>Note to self</Label>\n      <Textarea id={id} placeholder='Jot something down' className={FILLED} />\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "textarea"
+  ],
+  "type": "registry:component"
+}

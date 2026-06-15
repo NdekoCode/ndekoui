@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pagination-06",
+  "title": "Numbered pages",
+  "description": "Page numbers with ellipses and an outline pill that travels to the current page.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/pagination.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/use-pagination.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/pagination/pagination-06.tsx",
+      "content": "'use client';\n\nimport {\n  LayoutGroup,\n  motion,\n  type Transition,\n  useReducedMotion,\n} from 'motion/react';\nimport { useId, useState } from 'react';\n\nimport { usePagination } from '@/registry/ndeko/hooks/use-pagination';\nimport {\n  Pagination,\n  PaginationContent,\n  PaginationEllipsis,\n  PaginationItem,\n  PaginationLink,\n  PaginationNext,\n  PaginationPrevious,\n} from '@/registry/ndeko/ui/pagination';\n\nconst FIRST_PAGE = 1;\nconst TOTAL_PAGES = 10;\nconst PAGES_TO_DISPLAY = 5;\n\nconst TRAVEL_TRANSITION: Transition = {\n  type: 'spring',\n  bounce: 0,\n  duration: 0.3,\n};\nconst INSTANT_TRANSITION: Transition = { duration: 0 };\n\nconst CURRENT_PILL =\n  'bg-card hairline-ring ring-foreground/12 dark:bg-foreground/[0.04] dark:ring-foreground/15 absolute inset-0 rounded-full shadow-[0_1px_2px_rgb(0_0_0/0.05)]';\n\nfunction travelTransitionOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return INSTANT_TRANSITION;\n  }\n  return TRAVEL_TRANSITION;\n}\n\nfunction ariaCurrentOf(isCurrent: boolean) {\n  if (isCurrent) {\n    return 'page' as const;\n  }\n  return undefined;\n}\n\nfunction clampPage(page: number) {\n  const atLeastFirst = Math.max(FIRST_PAGE, page);\n  return Math.min(TOTAL_PAGES, atLeastFirst);\n}\n\nfunction hrefOf(page: number) {\n  return `#/page/${page}`;\n}\n\nexport default function Pagination06() {\n  const layoutGroupId = useId();\n  const shouldReduceMotion = useReducedMotion();\n  const travelTransition = travelTransitionOf(shouldReduceMotion);\n  const [currentPage, setCurrentPage] = useState(FIRST_PAGE);\n  const { pages, showLeftEllipsis, showRightEllipsis } = usePagination({\n    currentPage,\n    totalPages: TOTAL_PAGES,\n    paginationItemsToDisplay: PAGES_TO_DISPLAY,\n  });\n  const previousPage = currentPage - 1;\n  const nextPage = currentPage + 1;\n  const isFirstPage = currentPage === FIRST_PAGE;\n  const isLastPage = currentPage === TOTAL_PAGES;\n\n  function goToPage(event: React.MouseEvent<HTMLAnchorElement>, page: number) {\n    event.preventDefault();\n    const target = clampPage(page);\n    setCurrentPage(target);\n  }\n\n  return (\n    <LayoutGroup id={layoutGroupId}>\n      <Pagination>\n        <PaginationContent>\n          <PaginationItem>\n            <PaginationPrevious\n              href={hrefOf(previousPage)}\n              isDisabled={isFirstPage}\n              onClick={(event) => goToPage(event, previousPage)}\n              className='rounded-full'\n            />\n          </PaginationItem>\n          {showLeftEllipsis && (\n            <PaginationItem>\n              <PaginationEllipsis />\n            </PaginationItem>\n          )}\n          {pages.map((page) => {\n            const isCurrent = page === currentPage;\n\n            return (\n              <PaginationItem key={page}>\n                <PaginationLink\n                  href={hrefOf(page)}\n                  aria-current={ariaCurrentOf(isCurrent)}\n                  onClick={(event) => goToPage(event, page)}\n                  className='rounded-full'\n                >\n                  {isCurrent && (\n                    <motion.span\n                      layoutId='current-page'\n                      transition={travelTransition}\n                      className={CURRENT_PILL}\n                    />\n                  )}\n                  <span className='relative'>{page}</span>\n                </PaginationLink>\n              </PaginationItem>\n            );\n          })}\n          {showRightEllipsis && (\n            <PaginationItem>\n              <PaginationEllipsis />\n            </PaginationItem>\n          )}\n          <PaginationItem>\n            <PaginationNext\n              href={hrefOf(nextPage)}\n              isDisabled={isLastPage}\n              onClick={(event) => goToPage(event, nextPage)}\n              className='rounded-full'\n            />\n          </PaginationItem>\n        </PaginationContent>\n      </Pagination>\n    </LayoutGroup>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "pagination"
+  ],
+  "type": "registry:component"
+}

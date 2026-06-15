@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "breadcrumb-07",
+  "title": "Breadcrumb bar",
+  "description": "The trail on a small card with a hairline ring.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/breadcrumb.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/breadcrumb/breadcrumb-07.tsx",
+      "content": "'use client';\n\nimport { HomeIcon } from '@/registry/ndeko/lib/icons';\nimport {\n  Breadcrumb,\n  BreadcrumbItem,\n  BreadcrumbLink,\n  BreadcrumbList,\n  BreadcrumbPage,\n  BreadcrumbSeparator,\n} from '@/registry/ndeko/ui/breadcrumb';\n\nexport default function Breadcrumb07() {\n  return (\n    <Breadcrumb>\n      <BreadcrumbList className='bg-card hairline-ring ring-border rounded-lg px-3 py-2 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>\n        <BreadcrumbItem>\n          <BreadcrumbLink href='#' aria-label='Home'>\n            <HomeIcon className='size-4' />\n          </BreadcrumbLink>\n        </BreadcrumbItem>\n        <BreadcrumbSeparator />\n        <BreadcrumbItem>\n          <BreadcrumbLink href='#'>Components</BreadcrumbLink>\n        </BreadcrumbItem>\n        <BreadcrumbSeparator />\n        <BreadcrumbItem>\n          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>\n        </BreadcrumbItem>\n      </BreadcrumbList>\n    </Breadcrumb>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "breadcrumb"
+  ],
+  "type": "registry:component"
+}

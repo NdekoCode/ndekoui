@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dropdown-02",
+  "title": "Menu as wide as its trigger",
+  "description": "The menu takes at least the width of the button that opens it.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/dropdown-menu.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/dropdown/dropdown-02.tsx",
+      "content": "import { ChevronDownIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuItem,\n  DropdownMenuTrigger,\n} from '@/registry/ndeko/ui/dropdown-menu';\n\nexport default function Dropdown02() {\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger render={<Button variant='outline' />}>\n        Export 1,284 contacts\n        <ChevronDownIcon className='-me-1 opacity-60' />\n      </DropdownMenuTrigger>\n      <DropdownMenuContent className='min-w-(--anchor-width)'>\n        <DropdownMenuItem>CSV file</DropdownMenuItem>\n        <DropdownMenuItem>Excel workbook</DropdownMenuItem>\n        <DropdownMenuItem>vCard file</DropdownMenuItem>\n        <DropdownMenuItem>Plain text</DropdownMenuItem>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "dropdown"
+  ],
+  "type": "registry:component"
+}

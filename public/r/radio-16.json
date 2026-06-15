@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-16",
+  "title": "Star rating",
+  "description": "Five stars that light up under the pointer and keep the chosen rating.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/radio-group.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/radio/radio-16.tsx",
+      "content": "'use client';\n\nimport { useId, useState } from 'react';\n\nimport { StarIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { RadioGroup, RadioGroupItem } from '@/registry/ndeko/ui/radio-group';\n\nconst STARS = [1, 2, 3, 4, 5];\n\nconst STAR =\n  'size-6 transition-[color,scale] duration-150 group-hover:scale-110';\n\nconst STAR_OPTION =\n  'group relative cursor-pointer rounded-md p-0.5 outline-none has-focus-visible:ring-[3px] has-focus-visible:ring-ring/25';\n\nfunction starsLabelOf(stars: number) {\n  if (stars === 1) {\n    return '1 star';\n  }\n  return `${stars} stars`;\n}\n\nfunction shownRatingOf(hoverRating: number, rating: number) {\n  if (hoverRating > 0) {\n    return hoverRating;\n  }\n  return rating;\n}\n\nfunction starToneOf(star: number, shownRating: number) {\n  if (star <= shownRating) {\n    return 'text-warning';\n  }\n  return 'text-foreground/15';\n}\n\nexport default function Radio16() {\n  const captionId = useId();\n  const [rating, setRating] = useState(0);\n  const [hoverRating, setHoverRating] = useState(0);\n  const shownRating = shownRatingOf(hoverRating, rating);\n\n  function clearHoverRating() {\n    setHoverRating(0);\n  }\n\n  return (\n    <div className='flex flex-col gap-3'>\n      <span\n        id={captionId}\n        className='text-foreground text-[13px] leading-none font-medium'\n      >\n        Rate your experience\n      </span>\n      <RadioGroup\n        aria-labelledby={captionId}\n        onValueChange={setRating}\n        onMouseLeave={clearHoverRating}\n        className='inline-flex gap-0'\n      >\n        {STARS.map((star) => {\n          const tone = starToneOf(star, shownRating);\n\n          return (\n            <label\n              key={star}\n              className={STAR_OPTION}\n              onMouseEnter={() => setHoverRating(star)}\n            >\n              <RadioGroupItem value={star} className='sr-only' />\n              <StarIcon fill='currentColor' className={cn(STAR, tone)} />\n              <span className='sr-only'>{starsLabelOf(star)}</span>\n            </label>\n          );\n        })}\n      </RadioGroup>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "radio"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea-18",
+  "title": "Read-only textarea",
+  "description": "A flat, tinted field whose text can be read and copied.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/textarea.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/textarea/textarea-18.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { Textarea } from '@/registry/ndeko/ui/textarea';\n\nconst READ_ONLY = [\n  'read-only:bg-foreground/[0.03] read-only:shadow-none',\n  'dark:read-only:bg-foreground/[0.02]',\n].join(' ');\n\nexport default function Textarea18() {\n  const id = useId();\n\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-2'>\n      <Label htmlFor={id}>Release notes</Label>\n      <Textarea\n        id={id}\n        className={READ_ONLY}\n        defaultValue='Version 2.4 adds offline drafts and fixes the sync delay on large projects.'\n        readOnly\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "textarea"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge-08",
+  "title": "Active status badge",
+  "description": "An outline badge with a success dot.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/badge.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/badge/badge-08.tsx",
+      "content": "import { Badge } from '@/registry/ndeko/ui/badge';\n\nexport default function Badge08() {\n  return (\n    <Badge variant='outline' className='gap-1.5'>\n      <span className='bg-success size-1.5 rounded-full' aria-hidden='true' />\n      Active\n    </Badge>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "badge"
+  ],
+  "type": "registry:component"
+}

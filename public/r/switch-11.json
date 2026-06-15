@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "switch-11",
+  "title": "Switch between icons",
+  "description": "A sun and a moon on each side of a dark mode switch.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/switch.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/switch/switch-11.tsx",
+      "content": "'use client';\n\nimport { useState } from 'react';\n\nimport { MoonIcon, SunIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Switch } from '@/registry/ndeko/ui/switch';\n\nconst SIDE_ICON = 'flex cursor-pointer transition-colors duration-150';\n\nfunction sideToneOf(isActive: boolean) {\n  if (isActive) {\n    return 'text-foreground';\n  }\n  return 'text-muted-foreground';\n}\n\nexport default function Switch11() {\n  const [isDark, setIsDark] = useState(false);\n  const lightTone = sideToneOf(!isDark);\n  const darkTone = sideToneOf(isDark);\n\n  function chooseLight() {\n    setIsDark(false);\n  }\n\n  function chooseDark() {\n    setIsDark(true);\n  }\n\n  return (\n    <div className='inline-flex items-center gap-2'>\n      <span\n        aria-hidden='true'\n        className={cn(SIDE_ICON, lightTone)}\n        onClick={chooseLight}\n      >\n        <SunIcon />\n      </span>\n      <Switch\n        checked={isDark}\n        onCheckedChange={setIsDark}\n        aria-label='Dark mode'\n      />\n      <span\n        aria-hidden='true'\n        className={cn(SIDE_ICON, darkTone)}\n        onClick={chooseDark}\n      >\n        <MoonIcon />\n      </span>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "switch"
+  ],
+  "type": "registry:component"
+}

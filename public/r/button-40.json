@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-40",
+  "title": "Split merge button",
+  "description": "A merge button whose menu picks the method, and the label resizes to the choice.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/animated-size.json",
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/dropdown-menu.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-40.tsx",
+      "content": "'use client';\n\nimport {\n  AnimatePresence,\n  motion,\n  type Transition,\n  type Variants,\n  useReducedMotion,\n} from 'motion/react';\nimport { useState } from 'react';\n\nimport { ChevronDownIcon } from '@/registry/ndeko/lib/icons';\nimport { AnimatedSize } from '@/registry/ndeko/ui/animated-size';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuRadioGroup,\n  DropdownMenuRadioItem,\n  DropdownMenuTrigger,\n} from '@/registry/ndeko/ui/dropdown-menu';\n\nconst MERGE_METHODS = ['merge', 'squash', 'rebase'] as const;\n\ntype MergeMethod = (typeof MERGE_METHODS)[number];\n\nconst MERGE_OPTIONS: Record<\n  MergeMethod,\n  { label: string; description: string }\n> = {\n  merge: {\n    label: 'Merge pull request',\n    description:\n      'All commits from this branch will be added to the base branch via a merge commit.',\n  },\n  squash: {\n    label: 'Squash and merge',\n    description:\n      'The 6 commits from this branch will be combined into one commit in the base branch.',\n  },\n  rebase: {\n    label: 'Rebase and merge',\n    description:\n      'The 6 commits from this branch will be rebased and added to the base branch.',\n  },\n};\n\nconst SEGMENT =\n  'rounded-none first:rounded-s-full last:rounded-e-full focus-visible:z-10';\n\nconst SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };\n\nconst LABEL_VARIANTS: Variants = {\n  enter: { opacity: 0, filter: 'blur(2px)' },\n  visible: { opacity: 1, filter: 'blur(0px)' },\n  exit: { opacity: 0, filter: 'blur(2px)' },\n};\n\nconst FADE_VARIANTS: Variants = {\n  enter: { opacity: 0 },\n  visible: { opacity: 1 },\n  exit: { opacity: 0 },\n};\n\nfunction labelVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return LABEL_VARIANTS;\n}\n\nexport default function Button40() {\n  const [method, setMethod] = useState<MergeMethod>('merge');\n  const shouldReduceMotion = useReducedMotion();\n  const labelVariants = labelVariantsOf(shouldReduceMotion);\n  const selectedLabel = MERGE_OPTIONS[method].label;\n\n  function selectMethod(nextMethod: MergeMethod) {\n    setMethod(nextMethod);\n  }\n\n  return (\n    <div className='inline-flex -space-x-px'>\n      <Button className={SEGMENT}>\n        <AnimatedSize axis='width' as='span' contentClassName='relative flex'>\n          <AnimatePresence mode='popLayout' initial={false}>\n            <motion.span\n              key={method}\n              className='flex'\n              variants={labelVariants}\n              initial='enter'\n              animate='visible'\n              exit='exit'\n              transition={SWAP_TRANSITION}\n            >\n              {selectedLabel}\n            </motion.span>\n          </AnimatePresence>\n        </AnimatedSize>\n      </Button>\n      <DropdownMenu>\n        <DropdownMenuTrigger\n          render={\n            <Button\n              size='icon'\n              aria-label='Merge options'\n              className={SEGMENT}\n            />\n          }\n        >\n          <ChevronDownIcon />\n        </DropdownMenuTrigger>\n        <DropdownMenuContent\n          align='end'\n          sideOffset={4}\n          className='max-w-64 md:max-w-xs'\n        >\n          <DropdownMenuRadioGroup value={method} onValueChange={selectMethod}>\n            {MERGE_METHODS.map((value) => {\n              const option = MERGE_OPTIONS[value];\n\n              return (\n                <DropdownMenuRadioItem\n                  key={value}\n                  value={value}\n                  closeOnClick\n                  className='h-auto items-start py-2'\n                >\n                  <span className='flex flex-col gap-1'>\n                    <span className='font-medium'>{option.label}</span>\n                    <span className='text-muted-foreground text-xs'>\n                      {option.description}\n                    </span>\n                  </span>\n                </DropdownMenuRadioItem>\n              );\n            })}\n          </DropdownMenuRadioGroup>\n        </DropdownMenuContent>\n      </DropdownMenu>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

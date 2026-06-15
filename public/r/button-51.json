@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-51",
+  "title": "Image upload button",
+  "description": "Picks an image, previews it and lets you remove it.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/animated-size.json",
+    "https://ui.ndeko.dev/r/avatar.json",
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/use-file-upload.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-51.tsx",
+      "content": "'use client';\n\nimport {\n  AnimatePresence,\n  motion,\n  type Transition,\n  type Variants,\n  useReducedMotion,\n} from 'motion/react';\n\nimport { useFileUpload } from '@/registry/ndeko/hooks/use-file-upload';\nimport { CircleUserRoundIcon } from '@/registry/ndeko/lib/icons';\nimport {\n  Avatar,\n  AvatarFallback,\n  AvatarImage,\n} from '@/registry/ndeko/ui/avatar';\nimport { AnimatedSize } from '@/registry/ndeko/ui/animated-size';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };\n\nconst LABEL_VARIANTS: Variants = {\n  enter: { opacity: 0, filter: 'blur(2px)' },\n  visible: { opacity: 1, filter: 'blur(0px)' },\n  exit: { opacity: 0, filter: 'blur(2px)' },\n};\n\nconst FADE_VARIANTS: Variants = {\n  enter: { opacity: 0 },\n  visible: { opacity: 1 },\n  exit: { opacity: 0 },\n};\n\nconst ROW_ENTER_TRANSITION: Transition = {\n  duration: 0.2,\n  ease: [0.23, 1, 0.32, 1],\n};\nconst ROW_EXIT_TRANSITION: Transition = {\n  duration: 0.15,\n  ease: [0.23, 1, 0.32, 1],\n};\n\nconst ROW_VARIANTS: Variants = {\n  hidden: { height: 0, opacity: 0, transition: ROW_EXIT_TRANSITION },\n  shown: { height: 'auto', opacity: 1, transition: ROW_ENTER_TRANSITION },\n};\n\nconst ROW_FADE_VARIANTS: Variants = {\n  hidden: { opacity: 0, transition: ROW_EXIT_TRANSITION },\n  shown: { opacity: 1, transition: ROW_ENTER_TRANSITION },\n};\n\nfunction labelVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return LABEL_VARIANTS;\n}\n\nfunction rowVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return ROW_FADE_VARIANTS;\n  }\n  return ROW_VARIANTS;\n}\n\nfunction uploadLabelOf(hasImage: boolean) {\n  if (hasImage) {\n    return 'Change image';\n  }\n  return 'Upload image';\n}\n\nexport default function Button51() {\n  const [{ files }, { removeFile, openFileDialog, getInputProps }] =\n    useFileUpload({\n      accept: 'image/*',\n    });\n  const shouldReduceMotion = useReducedMotion();\n  const labelVariants = labelVariantsOf(shouldReduceMotion);\n  const rowVariants = rowVariantsOf(shouldReduceMotion);\n\n  const image = files[0];\n  const previewUrl = image?.preview;\n  const fileName = image?.file.name;\n  const hasImage = Boolean(image);\n  const label = uploadLabelOf(hasImage);\n\n  function removeImage() {\n    if (!image) {\n      return;\n    }\n    removeFile(image.id);\n  }\n\n  return (\n    <div className='flex flex-col items-center'>\n      <div className='inline-flex items-center gap-2 align-top'>\n        <Avatar className='rounded-md'>\n          {previewUrl && (\n            <AvatarImage src={previewUrl} alt='Preview of uploaded image' />\n          )}\n          <AvatarFallback>\n            <CircleUserRoundIcon className='opacity-60' />\n          </AvatarFallback>\n        </Avatar>\n        <div className='relative inline-block'>\n          <Button onClick={openFileDialog} aria-haspopup='dialog'>\n            <AnimatedSize\n              axis='width'\n              as='span'\n              contentClassName='relative flex'\n            >\n              <AnimatePresence mode='popLayout' initial={false}>\n                <motion.span\n                  key={label}\n                  className='flex'\n                  variants={labelVariants}\n                  initial='enter'\n                  animate='visible'\n                  exit='exit'\n                  transition={SWAP_TRANSITION}\n                >\n                  {label}\n                </motion.span>\n              </AnimatePresence>\n            </AnimatedSize>\n          </Button>\n          <input\n            {...getInputProps()}\n            className='sr-only'\n            aria-label='Upload image file'\n            tabIndex={-1}\n          />\n        </div>\n      </div>\n      <AnimatePresence initial={false}>\n        {fileName && (\n          <motion.div\n            key='file-name'\n            className='-mx-1 -mb-1 overflow-hidden'\n            variants={rowVariants}\n            initial='hidden'\n            animate='shown'\n            exit='hidden'\n          >\n            <div className='inline-flex gap-2 px-1 pt-2 pb-1 text-xs'>\n              <p className='text-muted-foreground truncate' aria-live='polite'>\n                {fileName}\n              </p>\n              <Button\n                variant='link'\n                size='sm'\n                onClick={removeImage}\n                aria-label={`Remove ${fileName}`}\n                className='text-destructive-ink h-auto px-0'\n              >\n                Remove\n              </Button>\n            </div>\n          </motion.div>\n        )}\n      </AnimatePresence>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

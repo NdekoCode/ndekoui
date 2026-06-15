@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip-06",
+  "title": "Hover card with a cover",
+  "description": "A changelog link that previews a cover, a title and a summary.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/hover-card.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/tooltip/tooltip-06.tsx",
+      "content": "import { LayersIcon } from '@/registry/ndeko/lib/icons';\nimport { FOCUS_RING } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport {\n  HoverCard,\n  HoverCardContent,\n  HoverCardTrigger,\n} from '@/registry/ndeko/ui/hover-card';\n\nconst LINK = cn(\n  'text-primary-ink rounded-sm text-[13px] font-medium underline-offset-4 hover:underline',\n  FOCUS_RING\n);\n\nexport default function Tooltip06() {\n  return (\n    <HoverCard>\n      <HoverCardTrigger href='#' className={LINK}>\n        What&apos;s new in 2.4\n      </HoverCardTrigger>\n      <HoverCardContent className='flex w-72 flex-col gap-3 p-3'>\n        <div\n          className='bg-foreground/[0.04] flex aspect-video items-center justify-center rounded-lg'\n          aria-hidden='true'\n        >\n          <span className='gem-plate flex size-10 items-center justify-center rounded-xl [--gem:var(--primary)]'>\n            <LayersIcon className='size-5' />\n          </span>\n        </div>\n        <div className='flex flex-col gap-1'>\n          <p className='font-medium'>Saved views</p>\n          <p className='text-muted-foreground text-xs'>\n            Keep any mix of filters and sorting as a view, then share it with\n            your team in one link.\n          </p>\n        </div>\n      </HoverCardContent>\n    </HoverCard>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "tooltip"
+  ],
+  "type": "registry:component"
+}

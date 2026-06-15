@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider-09",
+  "title": "Slider with end labels",
+  "description": "Low and high written above the two ends of the track.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/slider.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/slider/slider-09.tsx",
+      "content": "import { Label } from '@/registry/ndeko/ui/label';\nimport { Slider } from '@/registry/ndeko/ui/slider';\n\nexport default function Slider09() {\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-3'>\n      <Label>Image quality</Label>\n      <div className='flex flex-col gap-2'>\n        <span\n          className='text-muted-foreground flex w-full items-center justify-between gap-2 text-xs font-medium'\n          aria-hidden='true'\n        >\n          <span>Low</span>\n          <span>High</span>\n        </span>\n        <Slider defaultValue={50} step={10} thumbLabels={['Image quality']} />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "slider"
+  ],
+  "type": "registry:component"
+}

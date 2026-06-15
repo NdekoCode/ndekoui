@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "status-orb",
+  "title": "Status Orb",
+  "description": "The mark of a message kind: success, error, warning, info.",
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/icons.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/status-orb.tsx",
+      "content": "import {\n  CheckIcon,\n  InfoIcon,\n  LoaderIcon,\n  TriangleAlertIcon,\n  XIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\n\ntype StatusOrbTone =\n  'success' | 'error' | 'warning' | 'info' | 'loading' | 'neutral' | 'brand';\n\nconst TONE_COLOR: Record<StatusOrbTone, string> = {\n  success: 'var(--success)',\n  error: 'var(--destructive)',\n  warning: 'var(--warning)',\n  info: 'var(--info)',\n  loading: 'var(--primary)',\n  neutral: 'var(--muted-foreground)',\n  brand: 'var(--primary)',\n};\n\nconst DEFAULT_GLYPH: Record<StatusOrbTone, React.ReactNode> = {\n  success: <CheckIcon strokeWidth={2.5} />,\n  error: <XIcon strokeWidth={2.5} />,\n  warning: <TriangleAlertIcon strokeWidth={2.25} />,\n  info: <InfoIcon strokeWidth={2.25} />,\n  loading: <LoaderIcon strokeWidth={2.25} className='animate-spin' />,\n  neutral: <InfoIcon strokeWidth={2.25} />,\n  brand: <InfoIcon strokeWidth={2.25} />,\n};\n\nconst SIZE_CLASS = {\n  md: {\n    bezel:\n      'size-8 p-[3px] shadow-[0_0_0_var(--hairline)_var(--border),0_0_0_4px_color-mix(in_oklab,var(--orb)_10%,transparent),0_0_0_8px_color-mix(in_oklab,var(--orb)_5%,transparent),0_1px_2px_rgb(0_0_0/0.08),0_3px_8px_-2px_color-mix(in_oklab,var(--orb)_45%,transparent)]',\n    glyph: '[&_svg]:size-3.5',\n  },\n  sm: {\n    bezel:\n      'size-6 p-0.5 shadow-[0_0_0_var(--hairline)_var(--border),0_1px_2px_rgb(0_0_0/0.08),0_3px_8px_-2px_color-mix(in_oklab,var(--orb)_45%,transparent)]',\n    glyph: '[&_svg]:size-3',\n  },\n} as const;\n\nconst DISC =\n  'flex size-full animate-orb-arrive items-center justify-center rounded-full text-[color-mix(in_oklab,var(--orb)_12%,white)] bg-[radial-gradient(circle_at_50%_18%,color-mix(in_oklab,var(--orb)_62%,white),var(--orb)_58%,color-mix(in_oklab,var(--orb)_82%,black))] shadow-[inset_0_1px_0_rgb(255_255_255/0.35),inset_0_-1px_1px_rgb(0_0_0/0.12)]';\n\ntype StatusOrbProps = Omit<React.ComponentProps<'span'>, 'children'> & {\n  tone: StatusOrbTone;\n  glyph?: React.ReactNode;\n  size?: keyof typeof SIZE_CLASS;\n};\n\n/** The mark of a message's kind, in toasts, notices and confirmations. It arrives out of focus and settles when it mounts. */\nfunction StatusOrb({\n  tone,\n  glyph,\n  size = 'md',\n  className,\n  style,\n  ...props\n}: StatusOrbProps) {\n  const orbStyle = {\n    '--orb': TONE_COLOR[tone],\n    ...style,\n  } as React.CSSProperties;\n  const sizeClass = SIZE_CLASS[size];\n  const content = glyph ?? DEFAULT_GLYPH[tone];\n\n  return (\n    <span\n      data-slot='status-orb'\n      aria-hidden='true'\n      style={orbStyle}\n      className={cn(\n        'bg-popover dark:bg-foreground/[0.06] inline-flex shrink-0 rounded-full',\n        sizeClass.bezel,\n        className\n      )}\n      {...props}\n    >\n      <span key={tone} className={cn(DISC, sizeClass.glyph)}>\n        {content}\n      </span>\n    </span>\n  );\n}\n\nexport { StatusOrb, type StatusOrbTone };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives",
+    "feedback"
+  ],
+  "type": "registry:ui"
+}

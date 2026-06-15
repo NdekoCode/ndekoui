@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stepper-03",
+  "title": "Compact stepper",
+  "description": "Small dots, a ring on the current step and a check on done ones.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/stepper.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/stepper/stepper-03.tsx",
+      "content": "import {\n  Stepper,\n  StepperIndicator,\n  StepperItem,\n  StepperSeparator,\n  StepperTrigger,\n} from '@/registry/ndeko/ui/stepper';\n\nconst STEPS = [1, 2, 3, 4];\n\nconst DOT = [\n  'size-4 transition-[color,background-color,box-shadow] [&_span]:sr-only [&_svg]:size-3',\n  'data-[state=active]:ring-primary data-[state=active]:bg-transparent data-[state=active]:ring-2 data-[state=active]:ring-inset',\n].join(' ');\n\nconst CONNECTOR = [\n  'relative group-data-[state=completed]/step:bg-foreground/10',\n  'after:bg-primary after:absolute after:inset-0 after:origin-left after:scale-x-0 after:rounded-full after:transition-[scale] after:duration-200 after:ease-out-strong rtl:after:origin-right',\n  'group-data-[state=completed]/step:after:scale-x-100 group-data-[state=completed]/step:after:duration-300',\n].join(' ');\n\nexport default function Stepper03() {\n  return (\n    <Stepper defaultValue={2} className='max-w-xl'>\n      {STEPS.map((step) => (\n        <StepperItem key={step} step={step} className='not-last:flex-1'>\n          <StepperTrigger>\n            <StepperIndicator className={DOT} />\n          </StepperTrigger>\n          {step < STEPS.length && <StepperSeparator className={CONNECTOR} />}\n        </StepperItem>\n      ))}\n    </Stepper>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "stepper"
+  ],
+  "type": "registry:component"
+}

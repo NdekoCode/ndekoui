@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dialog-03",
+  "title": "Scrollable dialog",
+  "description": "A long FAQ that scrolls with the native scrollbar.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/dialog.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/dialog/dialog-03.tsx",
+      "content": "import { Button } from '@/registry/ndeko/ui/button';\nimport {\n  Dialog,\n  DialogClose,\n  DialogContent,\n  DialogDescription,\n  DialogFooter,\n  DialogHeader,\n  DialogTitle,\n  DialogTrigger,\n} from '@/registry/ndeko/ui/dialog';\n\nconst FAQ_ITEMS = [\n  {\n    question: 'Creating an account',\n    answer:\n      'Sign up with your work email and open the link we send you. You can also join with Google if your company uses it.',\n  },\n  {\n    question: 'Resetting your password',\n    answer:\n      'Choose Forgot password on the sign-in page and follow the link in the email. The link works for 30 minutes.',\n  },\n  {\n    question: 'Plans and billing',\n    answer:\n      'The Free plan covers up to 3 projects. The Team plan adds unlimited projects, guests and version history, billed per member each month.',\n  },\n  {\n    question: 'Getting help',\n    answer:\n      'Write to support from the help menu at any time. We answer within one business day.',\n  },\n  {\n    question: 'Keeping your data safe',\n    answer:\n      'Data is encrypted in transit and at rest. Admins can require single sign-on and see a log of every sign-in.',\n  },\n  {\n    question: 'Supported devices',\n    answer:\n      'The web app runs in any current browser. Desktop apps exist for macOS and Windows, mobile apps for iOS and Android.',\n  },\n  {\n    question: 'Cancelling a subscription',\n    answer:\n      'Cancel from Settings, then Billing. Your workspace stays on the paid plan until the end of the period you paid for.',\n  },\n  {\n    question: 'Payment methods',\n    answer:\n      'We accept major credit cards, and bank transfers for yearly plans. Invoices go to the billing email every month.',\n  },\n  {\n    question: 'Exporting your work',\n    answer:\n      'Export any project as CSV or JSON from its settings. Exports include tasks, comments and links to attachments.',\n  },\n];\n\nexport default function Dialog03() {\n  return (\n    <Dialog>\n      <DialogTrigger render={<Button variant='outline' />}>\n        Open FAQ\n      </DialogTrigger>\n      <DialogContent\n        showCloseButton={false}\n        className='max-h-[min(640px,80dvh)]'\n      >\n        <DialogHeader className='pr-0'>\n          <DialogTitle>Frequently asked questions</DialogTitle>\n        </DialogHeader>\n        <DialogDescription\n          render={<div />}\n          className='flex flex-col gap-4 leading-relaxed'\n        >\n          {FAQ_ITEMS.map((item) => (\n            <section key={item.question} className='flex flex-col gap-1'>\n              <h3 className='text-foreground font-medium'>{item.question}</h3>\n              <p>{item.answer}</p>\n            </section>\n          ))}\n        </DialogDescription>\n        <DialogFooter>\n          <Button\n            variant='outline'\n            size='lg'\n            render={<a href='#' />}\n            nativeButton={false}\n          >\n            Contact support\n          </Button>\n          <DialogClose render={<Button size='lg' />}>Close</DialogClose>\n        </DialogFooter>\n      </DialogContent>\n    </Dialog>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "dialog"
+  ],
+  "type": "registry:component"
+}

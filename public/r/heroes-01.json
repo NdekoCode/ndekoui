@@ -1,0 +1,32 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "heroes-01",
+  "title": "Split hero",
+  "description": "The title on the left, a short paragraph and two actions on the right, under an announcement link.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/chip.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/blocks/heroes/heroes-01/index.tsx",
+      "content": "import { ArrowRightIcon, ChevronRightIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport { Chip } from '@/registry/ndeko/ui/chip';\n\nimport { HERO } from './data';\n\nexport default function Heroes01() {\n  return (\n    <section className='px-4 py-16 sm:px-6 sm:py-24 lg:px-8'>\n      <div className='mx-auto grid max-w-6xl gap-8 md:grid-cols-2 md:items-end md:gap-12'>\n        <div className='flex flex-col items-start gap-5'>\n          <a\n            href={HERO.announcement.href}\n            className='bg-card hairline-ring ring-border hover:bg-foreground/[0.03] focus-visible:ring-ring/25 dark:bg-foreground/[0.04] inline-flex max-w-full items-center gap-2 rounded-full py-1 ps-1 pe-3 text-xs font-medium shadow-[0_1px_2px_rgb(0_0_0/0.04)] transition-[background-color,scale] duration-150 ease-(--ease-out-strong) outline-none focus-visible:ring-[3px] active:scale-[0.97]'\n          >\n            <Chip color='var(--muted-foreground)' className='rounded-full'>\n              {HERO.announcement.label}\n            </Chip>\n            <span className='truncate'>{HERO.announcement.text}</span>\n            <ChevronRightIcon className='text-muted-foreground size-3.5 shrink-0' />\n          </a>\n          <h1 className='text-4xl font-semibold text-balance sm:text-5xl'>\n            {HERO.title}\n          </h1>\n        </div>\n        <div className='flex flex-col gap-6 md:pb-1.5'>\n          <p className='text-muted-foreground max-w-md text-base text-pretty'>\n            {HERO.description}\n          </p>\n          <div className='flex flex-wrap gap-2'>\n            <Button size='lg' nativeButton={false} render={<a href='#' />}>\n              {HERO.primaryAction}\n              <ArrowRightIcon />\n            </Button>\n            <Button\n              size='lg'\n              variant='outline'\n              nativeButton={false}\n              render={<a href='#' />}\n            >\n              {HERO.secondaryAction}\n            </Button>\n          </div>\n          <p className='text-muted-foreground text-xs'>{HERO.note}</p>\n        </div>\n      </div>\n    </section>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/heroes-01/index.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/heroes/heroes-01/data.ts",
+      "content": "export const HERO = {\n  announcement: {\n    label: 'New',\n    text: 'Recurring invoices for retainers',\n    href: '#',\n  },\n  title: 'Invoices that match the hours your studio worked',\n  description:\n    'Tallyfold turns tracked time into a draft invoice, sends it in the currency your client pays in and reminds them until it is settled. You check every line before anything leaves.',\n  primaryAction: 'Start a free month',\n  secondaryAction: 'See a sample invoice',\n  note: 'No card needed, cancel from the billing page at any time',\n};\n",
+      "type": "registry:component",
+      "target": "components/blocks/heroes-01/data.ts"
+    }
+  ],
+  "categories": [
+    "blocks",
+    "heroes"
+  ],
+  "type": "registry:block"
+}

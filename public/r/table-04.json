@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "table-04",
+  "title": "Striped table",
+  "description": "Every other row is tinted instead of lined.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/badge.json",
+    "https://ui.ndeko.dev/r/table.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/table/table-04.tsx",
+      "content": "import { Badge } from '@/registry/ndeko/ui/badge';\nimport {\n  Table,\n  TableBody,\n  TableCell,\n  TableFooter,\n  TableHead,\n  TableHeader,\n  TableRow,\n} from '@/registry/ndeko/ui/table';\n\ntype Status = 'Active' | 'Inactive' | 'Pending';\n\ntype Account = {\n  id: string;\n  name: string;\n  email: string;\n  location: string;\n  status: Status;\n  balance: number;\n};\n\nconst STATUS_VARIANTS = {\n  Active: 'success',\n  Inactive: 'secondary',\n  Pending: 'warning',\n} as const;\n\nconst ACCOUNTS: Account[] = [\n  {\n    id: '1',\n    name: 'Jordan Hayes',\n    email: 'jordan.hayes@example.com',\n    location: 'Toronto, Canada',\n    status: 'Active',\n    balance: 1250,\n  },\n  {\n    id: '2',\n    name: 'Anna Novak',\n    email: 'anna.novak@example.com',\n    location: 'Prague, Czechia',\n    status: 'Active',\n    balance: 600,\n  },\n  {\n    id: '3',\n    name: 'Kenji Watanabe',\n    email: 'kenji.watanabe@example.com',\n    location: 'Osaka, Japan',\n    status: 'Inactive',\n    balance: 650,\n  },\n  {\n    id: '4',\n    name: 'Lina Haddad',\n    email: 'lina.haddad@example.com',\n    location: 'Lyon, France',\n    status: 'Active',\n    balance: 0,\n  },\n  {\n    id: '5',\n    name: 'Ama Mensah',\n    email: 'ama.mensah@example.com',\n    location: 'Accra, Ghana',\n    status: 'Pending',\n    balance: -1000,\n  },\n];\n\nconst CURRENCY = new Intl.NumberFormat('en-US', {\n  style: 'currency',\n  currency: 'USD',\n});\n\nfunction totalBalanceOf(accounts: Account[]) {\n  let total = 0;\n  for (const account of accounts) {\n    total += account.balance;\n  }\n  return total;\n}\n\nexport default function Table04() {\n  const totalBalance = totalBalanceOf(ACCOUNTS);\n\n  return (\n    <div className='w-full'>\n      <Table>\n        <TableHeader>\n          <TableRow className='hover:bg-transparent'>\n            <TableHead>Name</TableHead>\n            <TableHead>Email</TableHead>\n            <TableHead>Location</TableHead>\n            <TableHead>Status</TableHead>\n            <TableHead className='text-right'>Balance</TableHead>\n          </TableRow>\n        </TableHeader>\n        <tbody aria-hidden='true' className='table-row h-2' />\n        <TableBody className='[&_td:first-child]:rounded-s-lg [&_td:last-child]:rounded-e-lg'>\n          {ACCOUNTS.map((account) => (\n            <TableRow\n              key={account.id}\n              className='odd:bg-foreground/[0.03] odd:hover:bg-foreground/[0.03] border-0 hover:bg-transparent'\n            >\n              <TableCell className='py-2.5 font-medium'>\n                {account.name}\n              </TableCell>\n              <TableCell className='text-muted-foreground py-2.5'>\n                {account.email}\n              </TableCell>\n              <TableCell className='py-2.5'>{account.location}</TableCell>\n              <TableCell className='py-2.5'>\n                <Badge variant={STATUS_VARIANTS[account.status]}>\n                  {account.status}\n                </Badge>\n              </TableCell>\n              <TableCell className='py-2.5 text-right tabular-nums'>\n                {CURRENCY.format(account.balance)}\n              </TableCell>\n            </TableRow>\n          ))}\n        </TableBody>\n        <tbody aria-hidden='true' className='table-row h-2' />\n        <TableFooter>\n          <TableRow className='hover:bg-transparent'>\n            <TableCell colSpan={4}>Total</TableCell>\n            <TableCell className='text-right tabular-nums'>\n              {CURRENCY.format(totalBalance)}\n            </TableCell>\n          </TableRow>\n        </TableFooter>\n      </Table>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "table"
+  ],
+  "type": "registry:component"
+}

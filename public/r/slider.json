@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider",
+  "title": "Slider",
+  "description": "One or several thumbs on a thin track.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/slider.tsx",
+      "content": "'use client';\n\nimport { Slider as SliderPrimitive } from '@base-ui/react/slider';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\n\ntype SliderValue = number | readonly number[];\n\ntype SliderProps = Omit<SliderPrimitive.Root.Props, 'className'> & {\n  className?: string;\n  thumbLabels?: readonly string[];\n  thumbClassName?: string;\n  /** Content drawn inside each thumb, such as a `SliderThumbValue`. */\n  thumbContent?: (index: number) => React.ReactNode;\n  /** The value each thumb announces, for example \"3 stars\" instead of \"3\". */\n  getAriaValueText?: SliderPrimitive.Thumb.Props['getAriaValueText'];\n};\n\nfunction countThumbs(value: SliderValue | undefined) {\n  if (Array.isArray(value)) {\n    return value.length;\n  }\n  return 1;\n}\n\nconst THUMB = [\n  'block size-4 shrink-0 rounded-full bg-white shadow-[0_1px_3px_rgb(0_0_0/0.18)] hairline-ring ring-foreground/15 outline-none',\n  'transition-[scale,box-shadow] duration-150 ease-(--ease-out-strong) has-focus-visible:ring-[3px] has-focus-visible:ring-ring/30 data-dragging:scale-110',\n  'data-disabled:pointer-events-none',\n].join(' ');\n\nconst THUMB_VALUE = [\n  'pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 rounded-md bg-foreground px-1.5 py-0.5 text-xs font-medium whitespace-nowrap text-background tabular-nums',\n  'origin-bottom scale-95 opacity-0 transition-[opacity,scale] duration-150 ease-(--ease-out-strong)',\n  'group-data-dragging/thumb:scale-100 group-data-dragging/thumb:opacity-100 group-has-focus-visible/thumb:scale-100 group-has-focus-visible/thumb:opacity-100',\n].join(' ');\n\n/** A value bubble above the thumb, shown while it is dragged or focused from the keyboard. */\nfunction SliderThumbValue({\n  className,\n  ...props\n}: React.ComponentProps<'span'>) {\n  return (\n    <span\n      data-slot='slider-thumb-value'\n      aria-hidden\n      className={cn(THUMB_VALUE, className)}\n      {...props}\n    />\n  );\n}\n\nfunction Slider({\n  className,\n  value,\n  defaultValue,\n  thumbLabels,\n  thumbClassName,\n  thumbContent,\n  getAriaValueText,\n  ...props\n}: SliderProps) {\n  const thumbCount = countThumbs(value ?? defaultValue);\n  const thumbIndexes = Array.from({ length: thumbCount }, (_, index) => index);\n\n  return (\n    <SliderPrimitive.Root\n      data-slot='slider'\n      value={value}\n      defaultValue={defaultValue}\n      className={cn(\n        'data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full',\n        className\n      )}\n      {...props}\n    >\n      <SliderPrimitive.Control className='relative flex touch-none items-center select-none data-disabled:opacity-50 data-[orientation=horizontal]:w-full data-[orientation=horizontal]:py-2 data-[orientation=vertical]:h-full data-[orientation=vertical]:min-h-40 data-[orientation=vertical]:flex-col data-[orientation=vertical]:px-2'>\n        <SliderPrimitive.Track className='bg-foreground/10 relative grow rounded-full data-[orientation=horizontal]:h-1 data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-1'>\n          <SliderPrimitive.Indicator className='bg-primary rounded-full' />\n          {thumbIndexes.map((index) => (\n            <SliderPrimitive.Thumb\n              key={index}\n              index={index}\n              aria-label={thumbLabels?.[index]}\n              getAriaValueText={getAriaValueText}\n              className={cn(THUMB, 'group/thumb relative', thumbClassName)}\n            >\n              {thumbContent?.(index)}\n            </SliderPrimitive.Thumb>\n          ))}\n        </SliderPrimitive.Track>\n      </SliderPrimitive.Control>\n    </SliderPrimitive.Root>\n  );\n}\n\nexport { Slider, SliderThumbValue, type SliderProps };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-25",
+  "title": "Notifications button",
+  "description": "A bell with an unread count that clears when clicked.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/badge.json",
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-25.tsx",
+      "content": "'use client';\n\nimport {\n  AnimatePresence,\n  motion,\n  type Transition,\n  type Variants,\n  useReducedMotion,\n} from 'motion/react';\nimport { useState } from 'react';\n\nimport { BellIcon } from '@/registry/ndeko/lib/icons';\nimport { Badge } from '@/registry/ndeko/ui/badge';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst INITIAL_UNREAD_COUNT = 3;\nconst MAX_SHOWN_COUNT = 99;\n\nconst SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };\n\nconst BADGE_VARIANTS: Variants = {\n  enter: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },\n  visible: { opacity: 1, scale: 1, filter: 'blur(0px)' },\n  exit: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },\n};\n\nconst FADE_VARIANTS: Variants = {\n  enter: { opacity: 0 },\n  visible: { opacity: 1 },\n  exit: { opacity: 0 },\n};\n\nfunction badgeVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return BADGE_VARIANTS;\n}\n\nfunction notificationsLabelOf(unreadCount: number) {\n  if (unreadCount === 0) {\n    return 'Notifications';\n  }\n  if (unreadCount === 1) {\n    return 'Notifications, 1 unread';\n  }\n  return `Notifications, ${unreadCount} unread`;\n}\n\nfunction badgeTextOf(unreadCount: number) {\n  if (unreadCount > MAX_SHOWN_COUNT) {\n    return `${MAX_SHOWN_COUNT}+`;\n  }\n  return String(unreadCount);\n}\n\nexport default function Button25() {\n  const [unreadCount, setUnreadCount] = useState(INITIAL_UNREAD_COUNT);\n  const shouldReduceMotion = useReducedMotion();\n  const badgeVariants = badgeVariantsOf(shouldReduceMotion);\n  const hasUnread = unreadCount > 0;\n\n  function markAllAsRead() {\n    setUnreadCount(0);\n  }\n\n  return (\n    <Button\n      variant='outline'\n      size='icon'\n      onClick={markAllAsRead}\n      aria-label={notificationsLabelOf(unreadCount)}\n    >\n      <BellIcon />\n      <AnimatePresence initial={false}>\n        {hasUnread && (\n          <motion.span\n            key='unread-count'\n            className='absolute -top-2 left-full -translate-x-1/2'\n            variants={badgeVariants}\n            initial='enter'\n            animate='visible'\n            exit='exit'\n            transition={SWAP_TRANSITION}\n          >\n            <Badge className='bg-primary text-primary-foreground min-w-5 px-1 tabular-nums'>\n              {badgeTextOf(unreadCount)}\n            </Badge>\n          </motion.span>\n        )}\n      </AnimatePresence>\n    </Button>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

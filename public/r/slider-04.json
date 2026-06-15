@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider-04",
+  "title": "Slider with solid thumb",
+  "description": "A thumb filled with the brand colour of the track.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/slider.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/slider/slider-04.tsx",
+      "content": "import { Label } from '@/registry/ndeko/ui/label';\nimport { Slider } from '@/registry/ndeko/ui/slider';\n\nexport default function Slider04() {\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-3'>\n      <Label>Saturation</Label>\n      <Slider\n        defaultValue={25}\n        thumbLabels={['Saturation']}\n        className='**:data-index:bg-primary'\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "slider"
+  ],
+  "type": "registry:component"
+}

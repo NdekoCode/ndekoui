@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "notification-22",
+  "title": "Custom toast",
+  "description": "A sent message in a custom toast with View and Undo.",
+  "dependencies": [
+    "sonner"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/status-orb.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/notification/notification-22.tsx",
+      "content": "'use client';\n\nimport { toast } from 'sonner';\n\nimport { XIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport { StatusOrb } from '@/registry/ndeko/ui/status-orb';\n\nconst TEXT_ACTION = 'h-auto px-0 text-[13px] leading-5';\n\ntype ToastId = string | number;\n\nfunction MessageSentToast({ toastId }: { toastId: ToastId }) {\n  function close() {\n    toast.dismiss(toastId);\n  }\n\n  return (\n    <div className='flex w-full items-center gap-3 font-normal'>\n      <StatusOrb tone='success' size='sm' />\n      <div className='flex grow items-center justify-between gap-4'>\n        <p className='text-foreground text-[13px] leading-5'>Message sent</p>\n        <div className='flex items-center gap-1.5 whitespace-nowrap'>\n          <Button variant='link' size='sm' className={TEXT_ACTION}>\n            View\n          </Button>\n          <span aria-hidden='true' className='text-muted-foreground'>\n            ·\n          </span>\n          <Button\n            variant='link'\n            size='sm'\n            className={TEXT_ACTION}\n            onClick={close}\n          >\n            Undo\n          </Button>\n        </div>\n      </div>\n      <Button\n        variant='ghost'\n        size='icon-sm'\n        aria-label='Dismiss notification'\n        className='text-muted-foreground -my-1 -me-1.5'\n        onClick={close}\n      >\n        <XIcon />\n      </Button>\n    </div>\n  );\n}\n\nfunction renderMessageSent(toastId: ToastId) {\n  return <MessageSentToast toastId={toastId} />;\n}\n\nfunction showMessageSent() {\n  toast.custom(renderMessageSent);\n}\n\nexport default function Notification22() {\n  return (\n    <Button variant='outline' onClick={showMessageSent}>\n      Show custom toast\n    </Button>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "notification"
+  ],
+  "type": "registry:component"
+}

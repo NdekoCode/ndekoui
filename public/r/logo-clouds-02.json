@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "logo-clouds-02",
+  "title": "Static row of placeholder marks",
+  "description": "A short line on the left and six drawn marks with fictional names in one row, two columns on phones.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/blocks/logo-clouds/logo-clouds-02/index.tsx",
+      "content": "import { MARKS, SECTION } from './data';\nimport { MarkShape } from './mark-shape';\n\nexport default function LogoClouds02() {\n  return (\n    <section className='px-4 py-12 sm:px-6 sm:py-16 lg:px-8'>\n      <div className='mx-auto flex max-w-6xl flex-col gap-6'>\n        <div className='grid gap-8 lg:grid-cols-[13rem_minmax(0,1fr)] lg:items-center lg:gap-12'>\n          <h2 className='text-sm font-medium text-balance'>{SECTION.title}</h2>\n          <ul className='grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:flex lg:items-center lg:justify-between'>\n            {MARKS.map((mark) => (\n              <li\n                key={mark.name}\n                className='text-foreground/55 flex items-center gap-2'\n              >\n                <MarkShape shape={mark.shape} />\n                <span className='text-sm font-semibold whitespace-nowrap'>\n                  {mark.name}\n                </span>\n              </li>\n            ))}\n          </ul>\n        </div>\n        <p className='text-muted-foreground text-xs'>{SECTION.note}</p>\n      </div>\n    </section>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/logo-clouds-02/index.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/logo-clouds/logo-clouds-02/mark-shape.tsx",
+      "content": "import { type ShapeId } from './data';\n\nfunction LeafShape() {\n  return (\n    <>\n      <path\n        d='M4 20C4 10 10 4 20 4c0 10-6 16-16 16Z'\n        className='fill-current'\n      />\n      <path\n        d='M6 18 15 9'\n        fill='none'\n        strokeWidth='1.75'\n        strokeLinecap='round'\n        className='stroke-background'\n      />\n    </>\n  );\n}\n\nfunction WaveShape() {\n  return (\n    <>\n      <path\n        d='M2 9c3.33-3 6.67-3 10 0s6.67 3 10 0'\n        fill='none'\n        strokeWidth='2.5'\n        strokeLinecap='round'\n        className='stroke-current'\n      />\n      <path\n        d='M2 16c3.33-3 6.67-3 10 0s6.67 3 10 0'\n        fill='none'\n        strokeWidth='2.5'\n        strokeLinecap='round'\n        className='stroke-current'\n      />\n    </>\n  );\n}\n\nfunction BoltShape() {\n  return (\n    <>\n      <rect width='24' height='24' rx='6' className='fill-current' />\n      <path\n        d='M13.5 4 7 13.5h4.5L10.5 20 17 10.5h-4.5Z'\n        className='fill-background'\n      />\n    </>\n  );\n}\n\nfunction RingShape() {\n  return (\n    <>\n      <path\n        d='M12 4a8 8 0 1 1-8 8'\n        fill='none'\n        strokeWidth='3'\n        strokeLinecap='round'\n        className='stroke-current'\n      />\n      <circle cx='5.5' cy='5.5' r='2.5' className='fill-current' />\n    </>\n  );\n}\n\nfunction QuarterShape() {\n  return (\n    <>\n      <path d='M3 21V3a18 18 0 0 1 18 18Z' className='fill-current' />\n      <circle cx='18' cy='6' r='3' className='fill-current' />\n    </>\n  );\n}\n\nfunction DiamondShape() {\n  return (\n    <>\n      <path\n        d='m12 3 9 9-9 9-9-9Z'\n        fill='none'\n        strokeWidth='2'\n        strokeLinejoin='round'\n        className='stroke-current'\n      />\n      <path d='m12 8 4 4-4 4-4-4Z' className='fill-current' />\n    </>\n  );\n}\n\nconst SHAPES: Record<ShapeId, () => React.ReactNode> = {\n  leaf: LeafShape,\n  wave: WaveShape,\n  bolt: BoltShape,\n  ring: RingShape,\n  quarter: QuarterShape,\n  diamond: DiamondShape,\n};\n\nexport function MarkShape({ shape }: { shape: ShapeId }) {\n  const Shape = SHAPES[shape];\n\n  return (\n    <svg viewBox='0 0 24 24' aria-hidden='true' className='size-5 shrink-0'>\n      <Shape />\n    </svg>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/logo-clouds-02/mark-shape.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/logo-clouds/logo-clouds-02/data.ts",
+      "content": "export type ShapeId = 'leaf' | 'wave' | 'bolt' | 'ring' | 'quarter' | 'diamond';\n\nexport type PlaceholderMark = {\n  name: string;\n  shape: ShapeId;\n};\n\nexport const SECTION = {\n  title: 'Studios that send their invoices with Tallyfold',\n  note: 'Example marks with fictional names',\n};\n\nexport const MARKS: PlaceholderMark[] = [\n  { name: 'Fenwick Hall', shape: 'leaf' },\n  { name: 'Saltmarsh & Co', shape: 'wave' },\n  { name: 'Ninefold Press', shape: 'bolt' },\n  { name: 'Arden Vale', shape: 'ring' },\n  { name: 'Kiln Works', shape: 'quarter' },\n  { name: 'Pellucid', shape: 'diamond' },\n];\n",
+      "type": "registry:component",
+      "target": "components/blocks/logo-clouds-02/data.ts"
+    }
+  ],
+  "categories": [
+    "blocks",
+    "logo-clouds"
+  ],
+  "type": "registry:block"
+}

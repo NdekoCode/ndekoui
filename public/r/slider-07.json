@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider-07",
+  "title": "Slider with ticks",
+  "description": "A tick for every month and a number on every other one.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/slider.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/slider/slider-07.tsx",
+      "content": "import { cn } from '@/registry/ndeko/lib/utils';\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { Slider } from '@/registry/ndeko/ui/slider';\n\nconst MAX_MONTHS = 12;\nconst LABEL_EVERY = 2;\n\nconst TICKS = Array.from({ length: MAX_MONTHS + 1 }, (_, index) => index);\n\nfunction isLabelledTick(tick: number) {\n  const remainder = tick % LABEL_EVERY;\n  return remainder === 0;\n}\n\nexport default function Slider07() {\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-3'>\n      <Label>Retention in months</Label>\n      <div className='flex flex-col gap-1.5'>\n        <Slider\n          defaultValue={5}\n          max={MAX_MONTHS}\n          thumbLabels={['Retention in months']}\n        />\n        <span\n          className='text-muted-foreground flex w-full items-start justify-between text-xs font-medium tabular-nums'\n          aria-hidden='true'\n        >\n          {TICKS.map((tick) => {\n            const isLabelled = isLabelledTick(tick);\n            return (\n              <span\n                key={tick}\n                className='flex w-0 flex-col items-center gap-1.5'\n              >\n                <span\n                  className={cn(\n                    'bg-muted-foreground/60 h-1 w-px',\n                    !isLabelled && 'h-0.5'\n                  )}\n                />\n                {isLabelled && <span>{tick}</span>}\n              </span>\n            );\n          })}\n        </span>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "slider"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select",
+  "title": "Select",
+  "description": "A select on the control recipe with a menu popup.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/selected-mark.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/select.tsx",
+      "content": "'use client';\n\nimport { Select as SelectPrimitive } from '@base-ui/react/select';\n\nimport {\n  ChevronDownIcon,\n  ChevronsUpDownIcon,\n  ChevronUpIcon,\n} from '@/registry/ndeko/lib/icons';\nimport {\n  CONTROL_RECIPE,\n  CONTROL_SIZES,\n  MENU_ITEM,\n  MENU_LABEL,\n  MENU_POPUP,\n  MENU_SEPARATOR,\n  type ControlSize,\n} from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { SelectedMark } from '@/registry/ndeko/ui/selected-mark';\n\ntype WithClassName<Props> = Omit<Props, 'className'> & { className?: string };\n\nconst Select = SelectPrimitive.Root;\n\ntype SelectTriggerProps = WithClassName<SelectPrimitive.Trigger.Props> & {\n  size?: ControlSize;\n};\n\nfunction SelectTrigger({\n  className,\n  children,\n  size = 'default',\n  ...props\n}: SelectTriggerProps) {\n  return (\n    <SelectPrimitive.Trigger\n      data-slot='select-trigger'\n      className={cn(\n        CONTROL_RECIPE,\n        CONTROL_SIZES[size],\n        'data-popup-open:border-foreground/30 data-placeholder:text-muted-foreground/75 flex cursor-pointer items-center justify-between gap-2 text-left',\n        \"[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n      <SelectPrimitive.Icon className='text-muted-foreground'>\n        <ChevronsUpDownIcon className='size-3.5' />\n      </SelectPrimitive.Icon>\n    </SelectPrimitive.Trigger>\n  );\n}\n\nfunction SelectValue({\n  className,\n  ...props\n}: WithClassName<SelectPrimitive.Value.Props>) {\n  return (\n    <SelectPrimitive.Value\n      data-slot='select-value'\n      className={cn('flex-1 truncate', className)}\n      {...props}\n    />\n  );\n}\n\ntype SelectContentProps = WithClassName<SelectPrimitive.Popup.Props> &\n  Pick<\n    SelectPrimitive.Positioner.Props,\n    'side' | 'sideOffset' | 'align' | 'alignItemWithTrigger'\n  >;\n\nconst SCROLL_ARROW =\n  'flex h-5 w-full cursor-default items-center justify-center text-muted-foreground [&_svg]:size-3.5';\n\nfunction SelectContent({\n  className,\n  children,\n  side = 'bottom',\n  sideOffset = 6,\n  align = 'start',\n  alignItemWithTrigger = false,\n  ...props\n}: SelectContentProps) {\n  return (\n    <SelectPrimitive.Portal>\n      <SelectPrimitive.Positioner\n        side={side}\n        sideOffset={sideOffset}\n        align={align}\n        alignItemWithTrigger={alignItemWithTrigger}\n        className='z-50 outline-none'\n      >\n        <SelectPrimitive.Popup\n          data-slot='select-content'\n          className={cn(MENU_POPUP, 'min-w-(--anchor-width)', className)}\n          {...props}\n        >\n          <SelectPrimitive.ScrollUpArrow className={SCROLL_ARROW}>\n            <ChevronUpIcon />\n          </SelectPrimitive.ScrollUpArrow>\n          <SelectPrimitive.List>{children}</SelectPrimitive.List>\n          <SelectPrimitive.ScrollDownArrow className={SCROLL_ARROW}>\n            <ChevronDownIcon />\n          </SelectPrimitive.ScrollDownArrow>\n        </SelectPrimitive.Popup>\n      </SelectPrimitive.Positioner>\n    </SelectPrimitive.Portal>\n  );\n}\n\nfunction SelectItem({\n  className,\n  children,\n  ...props\n}: WithClassName<SelectPrimitive.Item.Props>) {\n  return (\n    <SelectPrimitive.Item\n      data-slot='select-item'\n      className={cn(MENU_ITEM, 'pr-8', className)}\n      {...props}\n    >\n      <SelectPrimitive.ItemText className='flex min-w-0 flex-1 items-center gap-2.5 truncate'>\n        {children}\n      </SelectPrimitive.ItemText>\n      <SelectPrimitive.ItemIndicator className='absolute right-1.5 flex items-center transition-[scale,opacity] duration-150 ease-(--ease-out-strong) data-ending-style:scale-75 data-ending-style:opacity-0 data-starting-style:scale-75 data-starting-style:opacity-0'>\n        <SelectedMark />\n      </SelectPrimitive.ItemIndicator>\n    </SelectPrimitive.Item>\n  );\n}\n\nfunction SelectGroup(props: SelectPrimitive.Group.Props) {\n  return <SelectPrimitive.Group data-slot='select-group' {...props} />;\n}\n\nfunction SelectLabel({\n  className,\n  ...props\n}: WithClassName<SelectPrimitive.GroupLabel.Props>) {\n  return (\n    <SelectPrimitive.GroupLabel\n      data-slot='select-label'\n      className={cn(MENU_LABEL, className)}\n      {...props}\n    />\n  );\n}\n\nfunction SelectSeparator({\n  className,\n  ...props\n}: WithClassName<SelectPrimitive.Separator.Props>) {\n  return (\n    <SelectPrimitive.Separator\n      data-slot='select-separator'\n      className={cn(MENU_SEPARATOR, className)}\n      {...props}\n    />\n  );\n}\n\nexport {\n  Select,\n  SelectContent,\n  SelectGroup,\n  SelectItem,\n  SelectLabel,\n  SelectSeparator,\n  SelectTrigger,\n  SelectValue,\n};\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

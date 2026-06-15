@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-36",
+  "title": "Select with descriptions",
+  "description": "Each plan has a line of detail in the list; the trigger keeps the name.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/select.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-36.tsx",
+      "content": "import { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport {\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from '@/registry/ndeko/ui/select';\n\nconst PLANS = [\n  {\n    value: 'starter',\n    label: 'Starter',\n    description: 'For one person trying things out',\n  },\n  {\n    value: 'pro',\n    label: 'Pro',\n    description: 'For freelancers and small studios',\n  },\n  {\n    value: 'team',\n    label: 'Team',\n    description: 'For teams that share projects',\n  },\n];\n\nexport default function Select36() {\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Plan</FieldLabel>\n      <Select items={PLANS} defaultValue='pro'>\n        <SelectTrigger>\n          <SelectValue placeholder='Pick a plan' />\n        </SelectTrigger>\n        <SelectContent>\n          {PLANS.map((plan) => (\n            <SelectItem\n              key={plan.value}\n              value={plan.value}\n              label={plan.label}\n              className='h-auto py-1.5'\n            >\n              <span className='flex min-w-0 flex-col gap-0.5'>\n                <span className='truncate'>{plan.label}</span>\n                <span className='text-muted-foreground truncate text-xs'>\n                  {plan.description}\n                </span>\n              </span>\n            </SelectItem>\n          ))}\n        </SelectContent>\n      </Select>\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-19",
+  "title": "Theme picker",
+  "description": "Small sketches of the light, dark and system themes to pick from.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/radio-group.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/radio/radio-19.tsx",
+      "content": "import { useId } from 'react';\n\nimport { CheckIcon, MinusIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { RadioGroup, RadioGroupItem } from '@/registry/ndeko/ui/radio-group';\n\ntype ThemeName = 'light' | 'dark' | 'system';\n\nconst THEMES: { value: ThemeName; label: string }[] = [\n  { value: 'light', label: 'Light' },\n  { value: 'dark', label: 'Dark' },\n  { value: 'system', label: 'System' },\n];\n\nconst PREVIEW = [\n  'relative block h-18 w-22 overflow-hidden rounded-lg shadow-[0_1px_2px_rgb(0_0_0/0.04)] hairline-ring ring-border transition-[box-shadow] duration-150',\n  'peer-data-checked:shadow-[0_1px_2px_rgb(0_0_0/0.04),0_6px_16px_-8px_color-mix(in_oklab,var(--primary)_35%,transparent)] peer-data-checked:ring-primary/45',\n  'peer-focus-visible:ring-[3px] peer-focus-visible:ring-ring/25',\n].join(' ');\n\nconst STATE_GLYPH =\n  'col-start-1 row-start-1 size-4 transition-[opacity,scale,filter] duration-150 ease-(--ease-out-strong)';\n\nconst CHECKED_GLYPH = [\n  'scale-60 opacity-0 blur-[2px]',\n  'group-has-data-checked/theme:scale-100 group-has-data-checked/theme:opacity-100 group-has-data-checked/theme:blur-[0px]',\n].join(' ');\n\nconst UNCHECKED_GLYPH =\n  'group-has-data-checked/theme:scale-60 group-has-data-checked/theme:opacity-0 group-has-data-checked/theme:blur-[2px]';\n\nconst LIGHT_WINDOW = 'bg-white text-black/10';\n\nconst DARK_WINDOW = 'dark bg-background text-foreground/15';\n\nfunction WindowSketch({ className }: { className?: string }) {\n  return (\n    <span className={cn('absolute inset-0 flex gap-1.5 p-2', className)}>\n      <span className='flex w-4 flex-col gap-1'>\n        <span className='h-1 rounded-full bg-current' />\n        <span className='h-1 rounded-full bg-current' />\n        <span className='h-1 rounded-full bg-current' />\n      </span>\n      <span className='flex flex-1 flex-col gap-1'>\n        <span className='h-1.5 w-2/3 rounded-full bg-current' />\n        <span className='h-1 rounded-full bg-current' />\n        <span className='h-1 w-4/5 rounded-full bg-current' />\n        <span className='bg-primary mt-auto h-2.5 w-6 rounded-full' />\n      </span>\n    </span>\n  );\n}\n\nfunction ThemeSketch({ theme }: { theme: ThemeName }) {\n  if (theme === 'light') {\n    return <WindowSketch className={LIGHT_WINDOW} />;\n  }\n  if (theme === 'dark') {\n    return <WindowSketch className={DARK_WINDOW} />;\n  }\n  return (\n    <>\n      <WindowSketch className={LIGHT_WINDOW} />\n      <WindowSketch\n        className={cn(DARK_WINDOW, '[clip-path:inset(0_0_0_50%)]')}\n      />\n    </>\n  );\n}\n\nexport default function Radio19() {\n  const captionId = useId();\n\n  return (\n    <div className='flex flex-col gap-3'>\n      <span\n        id={captionId}\n        className='text-foreground text-[13px] leading-none font-medium'\n      >\n        Theme\n      </span>\n      <RadioGroup\n        defaultValue='light'\n        aria-labelledby={captionId}\n        className='flex gap-3'\n      >\n        {THEMES.map((theme) => (\n          <label\n            key={theme.value}\n            className='group/theme flex cursor-pointer flex-col'\n          >\n            <RadioGroupItem value={theme.value} className='sr-only' />\n            <span className={PREVIEW}>\n              <ThemeSketch theme={theme.value} />\n            </span>\n            <span className='text-muted-foreground group-has-data-checked/theme:text-foreground mt-2 flex items-center gap-1 transition-colors duration-150'>\n              <span className='grid'>\n                <CheckIcon className={cn(STATE_GLYPH, CHECKED_GLYPH)} />\n                <MinusIcon className={cn(STATE_GLYPH, UNCHECKED_GLYPH)} />\n              </span>\n              <span className='text-xs font-medium'>{theme.label}</span>\n            </span>\n          </label>\n        ))}\n      </RadioGroup>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "radio"
+  ],
+  "type": "registry:component"
+}

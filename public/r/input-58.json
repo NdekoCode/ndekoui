@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-58",
+  "title": "Input with tags",
+  "description": "A tag is added on Enter and removed from its chip under the field.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/chip.json",
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-58.tsx",
+      "content": "'use client';\n\nimport {\n  AnimatePresence,\n  motion,\n  type Transition,\n  type Variants,\n  useReducedMotion,\n} from 'motion/react';\nimport { useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';\n\nimport { XIcon } from '@/registry/ndeko/lib/icons';\nimport { Chip } from '@/registry/ndeko/ui/chip';\nimport { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport { Input } from '@/registry/ndeko/ui/input';\n\nconst INITIAL_TAGS = ['Sport', 'Coding', 'Travel'];\n\nconst LIST_TRANSITION: Transition = { duration: 0.2, ease: [0.2, 0, 0, 1] };\nconst EXIT_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };\n\nconst TAG_VARIANTS: Variants = {\n  enter: { opacity: 0, scale: 0.8 },\n  visible: { opacity: 1, scale: 1 },\n  exit: { opacity: 0, scale: 0.8, transition: EXIT_TRANSITION },\n};\n\nconst FADE_VARIANTS: Variants = {\n  enter: { opacity: 0 },\n  visible: { opacity: 1 },\n  exit: { opacity: 0, transition: EXIT_TRANSITION },\n};\n\nfunction tagVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return TAG_VARIANTS;\n}\n\nfunction hasTag(tags: string[], candidate: string) {\n  const normalized = candidate.toLocaleLowerCase();\n  return tags.some((tag) => tag.toLocaleLowerCase() === normalized);\n}\n\nexport default function Input58() {\n  const inputRef = useRef<HTMLInputElement>(null);\n  const [tags, setTags] = useState(INITIAL_TAGS);\n  const [draft, setDraft] = useState('');\n  const shouldReduceMotion = useReducedMotion();\n  const tagVariants = tagVariantsOf(shouldReduceMotion);\n\n  function changeDraft(event: ChangeEvent<HTMLInputElement>) {\n    setDraft(event.currentTarget.value);\n  }\n\n  function addDraftTag(event: KeyboardEvent<HTMLInputElement>) {\n    if (event.key !== 'Enter') {\n      return;\n    }\n    if (event.nativeEvent.isComposing) {\n      return;\n    }\n    event.preventDefault();\n    const tag = draft.trim();\n    setDraft('');\n    if (tag === '') {\n      return;\n    }\n    if (hasTag(tags, tag)) {\n      return;\n    }\n    setTags((current) => [...current, tag]);\n  }\n\n  function removeTag(tagToRemove: string) {\n    setTags((current) => current.filter((tag) => tag !== tagToRemove));\n    inputRef.current?.focus();\n  }\n\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Interests</FieldLabel>\n      <Input\n        ref={inputRef}\n        placeholder='Add a tag and press Enter'\n        value={draft}\n        onChange={changeDraft}\n        onKeyDown={addDraftTag}\n      />\n      <ul\n        className='relative mt-1 flex flex-wrap gap-1 empty:hidden'\n        aria-label='Tags'\n      >\n        <AnimatePresence mode='popLayout' initial={false}>\n          {tags.map((tag) => (\n            <motion.li\n              key={tag}\n              layout={!shouldReduceMotion}\n              className='flex'\n              variants={tagVariants}\n              initial='enter'\n              animate='visible'\n              exit='exit'\n              transition={LIST_TRANSITION}\n            >\n              <Chip className='h-6 gap-0.5 pe-0.5'>\n                {tag}\n                <button\n                  type='button'\n                  className='focus-visible:ring-ring/50 flex size-5 cursor-pointer items-center justify-center rounded-[5px] opacity-70 transition-opacity outline-none hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-2'\n                  onClick={() => removeTag(tag)}\n                  aria-label={`Remove ${tag}`}\n                >\n                  <XIcon />\n                </button>\n              </Chip>\n            </motion.li>\n          ))}\n        </AnimatePresence>\n      </ul>\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

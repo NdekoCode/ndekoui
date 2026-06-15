@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-12",
+  "title": "Native time zone select",
+  "description": "Every time zone of the browser, sorted by its offset from GMT.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/select-native.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-12.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { SelectNative } from '@/registry/ndeko/ui/select-native';\n\ntype TimezoneOption = {\n  value: string;\n  label: string;\n  offsetHours: number;\n};\n\nfunction offsetNameOf(timezone: string, now: Date) {\n  const formatter = new Intl.DateTimeFormat('en', {\n    timeZone: timezone,\n    timeZoneName: 'shortOffset',\n  });\n  const parts = formatter.formatToParts(now);\n  const namePart = parts.find((part) => part.type === 'timeZoneName');\n  const offsetName = namePart?.value ?? 'GMT';\n  if (offsetName === 'GMT') {\n    return 'GMT+0';\n  }\n  return offsetName;\n}\n\nfunction offsetHoursOf(offsetName: string) {\n  const signedOffset = offsetName.replace('GMT', '');\n  return Number.parseInt(signedOffset, 10);\n}\n\nfunction timezoneOptionOf(timezone: string, now: Date): TimezoneOption {\n  const offsetName = offsetNameOf(timezone, now);\n  const placeName = timezone.replaceAll('_', ' ');\n  const offsetHours = offsetHoursOf(offsetName);\n  return {\n    value: timezone,\n    label: `(${offsetName}) ${placeName}`,\n    offsetHours,\n  };\n}\n\nfunction byOffset(first: TimezoneOption, second: TimezoneOption) {\n  return first.offsetHours - second.offsetHours;\n}\n\nfunction timezoneOptionsOf(now: Date) {\n  const timezones = Intl.supportedValuesOf('timeZone');\n  const options = timezones.map((timezone) => timezoneOptionOf(timezone, now));\n  return options.sort(byOffset);\n}\n\nconst TIMEZONES = timezoneOptionsOf(new Date());\n\nexport default function Select12() {\n  const id = useId();\n\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-2'>\n      <Label htmlFor={id}>Time zone</Label>\n      <SelectNative id={id} defaultValue='Europe/London'>\n        {TIMEZONES.map((timezone) => (\n          <option key={timezone.value} value={timezone.value}>\n            {timezone.label}\n          </option>\n        ))}\n      </SelectNative>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

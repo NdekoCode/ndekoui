@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip-09",
+  "title": "Chart readout",
+  "description": "Bars that show the visits of their day when hovered or pressed.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/popover.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/tooltip/tooltip-09.tsx",
+      "content": "import { cn } from '@/registry/ndeko/lib/utils';\nimport {\n  Popover,\n  PopoverContent,\n  PopoverTitle,\n  PopoverTrigger,\n} from '@/registry/ndeko/ui/popover';\n\ntype Source = 'direct' | 'search' | 'referral';\n\ntype DayVisits = {\n  day: string;\n  date: string;\n  visits: Record<Source, number>;\n};\n\nconst SOURCES: { key: Source; label: string; colorClass: string }[] = [\n  { key: 'direct', label: 'Direct', colorClass: 'bg-chart-1' },\n  { key: 'search', label: 'Search', colorClass: 'bg-chart-2' },\n  { key: 'referral', label: 'Referral', colorClass: 'bg-chart-3' },\n];\n\nconst WEEK: DayVisits[] = [\n  {\n    day: 'Mon',\n    date: 'Monday, Aug 12',\n    visits: { direct: 380, search: 690, referral: 110 },\n  },\n  {\n    day: 'Tue',\n    date: 'Tuesday, Aug 13',\n    visits: { direct: 412, search: 736, referral: 128 },\n  },\n  {\n    day: 'Wed',\n    date: 'Wednesday, Aug 14',\n    visits: { direct: 356, search: 640, referral: 96 },\n  },\n  {\n    day: 'Thu',\n    date: 'Thursday, Aug 15',\n    visits: { direct: 440, search: 802, referral: 150 },\n  },\n  {\n    day: 'Fri',\n    date: 'Friday, Aug 16',\n    visits: { direct: 398, search: 710, referral: 134 },\n  },\n  {\n    day: 'Sat',\n    date: 'Saturday, Aug 17',\n    visits: { direct: 210, search: 388, referral: 64 },\n  },\n  {\n    day: 'Sun',\n    date: 'Sunday, Aug 18',\n    visits: { direct: 186, search: 342, referral: 58 },\n  },\n];\n\nfunction totalOf(day: DayVisits) {\n  const { direct, search, referral } = day.visits;\n  return direct + search + referral;\n}\n\nconst DAY_TOTALS = WEEK.map(totalOf);\nconst BUSIEST_DAY_TOTAL = Math.max(...DAY_TOTALS);\n\nfunction percentOf(part: number, whole: number) {\n  const ratio = part / whole;\n  return `${ratio * 100}%`;\n}\n\nfunction formatVisits(count: number) {\n  return count.toLocaleString('en-US');\n}\n\nfunction DayBar({ day }: { day: DayVisits }) {\n  const total = totalOf(day);\n  const barHeight = percentOf(total, BUSIEST_DAY_TOTAL);\n\n  return (\n    <Popover>\n      <PopoverTrigger\n        openOnHover\n        delay={0}\n        aria-label={day.date}\n        className='hover:bg-foreground/5 data-popup-open:bg-foreground/5 focus-visible:ring-ring focus-visible:ring-offset-background flex h-full w-9 flex-col items-center gap-1.5 rounded-md px-2 pt-2 pb-1 outline-none focus-visible:ring-2 focus-visible:ring-offset-2'\n      >\n        <span className='flex w-full flex-1 items-end'>\n          <span\n            className='flex w-full flex-col-reverse overflow-hidden rounded-[3px]'\n            style={{ height: barHeight }}\n          >\n            {SOURCES.map((source) => (\n              <span\n                key={source.key}\n                className={source.colorClass}\n                style={{ height: percentOf(day.visits[source.key], total) }}\n              />\n            ))}\n          </span>\n        </span>\n        <span className='text-muted-foreground text-[11px]'>{day.day}</span>\n      </PopoverTrigger>\n      <PopoverContent side='top' className='flex w-48 flex-col gap-2 p-3'>\n        <PopoverTitle className='text-[13px]'>{day.date}</PopoverTitle>\n        <ul className='flex flex-col gap-1.5 text-xs'>\n          {SOURCES.map((source) => (\n            <li key={source.key} className='flex items-center gap-2'>\n              <span\n                className={cn(\n                  'size-2 shrink-0 rounded-full',\n                  source.colorClass\n                )}\n                aria-hidden='true'\n              />\n              {source.label}\n              <span className='ml-auto font-medium tabular-nums'>\n                {formatVisits(day.visits[source.key])}\n              </span>\n            </li>\n          ))}\n        </ul>\n      </PopoverContent>\n    </Popover>\n  );\n}\n\nexport default function Tooltip09() {\n  return (\n    <figure className='flex flex-col gap-2'>\n      <figcaption className='text-muted-foreground text-xs'>\n        Visits by source, week of Aug 12\n      </figcaption>\n      <div className='flex h-36 items-end gap-0.5'>\n        {WEEK.map((day) => (\n          <DayBar key={day.day} day={day} />\n        ))}\n      </div>\n    </figure>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "tooltip"
+  ],
+  "type": "registry:component"
+}

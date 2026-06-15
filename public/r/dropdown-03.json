@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dropdown-03",
+  "title": "Menu with icons",
+  "description": "Each action leads with a muted icon.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/dropdown-menu.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/dropdown/dropdown-03.tsx",
+      "content": "import {\n  BoltIcon,\n  ChevronDownIcon,\n  CopyPlusIcon,\n  FilesIcon,\n  Layers2Icon,\n} from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuItem,\n  DropdownMenuTrigger,\n} from '@/registry/ndeko/ui/dropdown-menu';\n\nexport default function Dropdown03() {\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger render={<Button variant='outline' />}>\n        Layer options\n        <ChevronDownIcon className='-me-1 opacity-60' />\n      </DropdownMenuTrigger>\n      <DropdownMenuContent>\n        <DropdownMenuItem>\n          <CopyPlusIcon />\n          Copy\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <BoltIcon />\n          Edit\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <Layers2Icon />\n          Group\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <FilesIcon />\n          Clone\n        </DropdownMenuItem>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "dropdown"
+  ],
+  "type": "registry:component"
+}

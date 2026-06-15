@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "banner-12",
+  "title": "Update banner",
+  "description": "A new version notice whose button shows the update running.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/banner/banner-12.tsx",
+      "content": "'use client';\n\nimport {\n  AnimatePresence,\n  motion,\n  type Transition,\n  type Variants,\n  useReducedMotion,\n} from 'motion/react';\nimport { useEffect, useState } from 'react';\n\nimport { DownloadIcon, LoaderCircleIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst UPDATE_DURATION_MS = 2000;\n\nconst SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };\nconst SHIFT_TRANSITION: Transition = {\n  type: 'spring',\n  bounce: 0,\n  duration: 0.3,\n};\nconst INSTANT_TRANSITION: Transition = { duration: 0 };\n\nconst SWAP_VARIANTS: Variants = {\n  enter: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },\n  visible: { opacity: 1, scale: 1, filter: 'blur(0px)' },\n  exit: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },\n};\n\nconst LABEL_VARIANTS: Variants = {\n  enter: { opacity: 0, filter: 'blur(2px)' },\n  visible: { opacity: 1, filter: 'blur(0px)' },\n  exit: { opacity: 0, filter: 'blur(2px)' },\n};\n\nconst FADE_VARIANTS: Variants = {\n  enter: { opacity: 0 },\n  visible: { opacity: 1 },\n  exit: { opacity: 0 },\n};\n\nfunction swapVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return SWAP_VARIANTS;\n}\n\nfunction labelVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return LABEL_VARIANTS;\n}\n\nfunction shiftTransitionOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return INSTANT_TRANSITION;\n  }\n  return SHIFT_TRANSITION;\n}\n\nfunction updateStateOf(isUpdating: boolean) {\n  if (isUpdating) {\n    return {\n      key: 'updating',\n      icon: <LoaderCircleIcon className='animate-spin' />,\n      label: 'Updating…',\n    };\n  }\n  return { key: 'idle', icon: <DownloadIcon />, label: 'Update now' };\n}\n\nexport default function Banner12() {\n  const [isUpdating, setIsUpdating] = useState(false);\n  const shouldReduceMotion = useReducedMotion();\n  const swapVariants = swapVariantsOf(shouldReduceMotion);\n  const labelVariants = labelVariantsOf(shouldReduceMotion);\n  const shiftTransition = shiftTransitionOf(shouldReduceMotion);\n  const updateState = updateStateOf(isUpdating);\n\n  useEffect(() => {\n    if (!isUpdating) {\n      return;\n    }\n    const timeout = window.setTimeout(() => {\n      setIsUpdating(false);\n    }, UPDATE_DURATION_MS);\n    return () => window.clearTimeout(timeout);\n  }, [isUpdating]);\n\n  function startUpdate() {\n    setIsUpdating(true);\n  }\n\n  return (\n    <div className='bg-info/10 text-info-foreground hairline-ring ring-info/20 w-full rounded-xl px-4 py-3'>\n      <div className='flex flex-wrap items-center justify-center gap-x-4 gap-y-2'>\n        <p className='text-[13px]'>\n          <span className='font-medium'>v2.1.0</span>\n          <span className='mx-2 opacity-60' aria-hidden='true'>\n            •\n          </span>\n          New features and improvements available\n        </p>\n        <Button\n          variant='outline'\n          size='sm'\n          onClick={startUpdate}\n          disabled={isUpdating}\n          focusableWhenDisabled\n          className='min-w-28'\n        >\n          <motion.span\n            layout\n            transition={shiftTransition}\n            className='relative -ms-0.5 flex'\n          >\n            <AnimatePresence mode='popLayout' initial={false}>\n              <motion.span\n                key={updateState.key}\n                className='flex'\n                variants={swapVariants}\n                initial='enter'\n                animate='visible'\n                exit='exit'\n                transition={SWAP_TRANSITION}\n              >\n                {updateState.icon}\n              </motion.span>\n            </AnimatePresence>\n          </motion.span>\n          <span className='relative flex'>\n            <AnimatePresence mode='popLayout' initial={false}>\n              <motion.span\n                key={updateState.key}\n                className='flex'\n                variants={labelVariants}\n                initial='enter'\n                animate='visible'\n                exit='exit'\n                transition={SWAP_TRANSITION}\n              >\n                {updateState.label}\n              </motion.span>\n            </AnimatePresence>\n          </span>\n        </Button>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "banner"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "accordion-13",
+  "title": "Accordion of cards with leading chevron",
+  "description": "Each question on its own card, the chevron before the text.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/accordion.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/accordion/accordion-13.tsx",
+      "content": "import {\n  Accordion,\n  AccordionContent,\n  AccordionItem,\n  AccordionTrigger,\n} from '@/registry/ndeko/ui/accordion';\n\nconst QUESTIONS = [\n  {\n    value: 'free-plan',\n    title: 'What is included in the free plan?',\n    content:\n      'Three projects, unlimited tasks and 30 days of activity history. Invite as many teammates as you need; billing starts only when you create a fourth project.',\n  },\n  {\n    value: 'change-plan',\n    title: 'Can I change my plan later?',\n    content:\n      'Yes. An upgrade applies right away and the difference is prorated on the next invoice. A downgrade takes effect at the end of the current billing period.',\n  },\n  {\n    value: 'export',\n    title: 'How do I export my data?',\n    content:\n      'Open Settings, then Export. You receive a ZIP archive with every project as a CSV file and every attachment in its original format, usually within a few minutes.',\n  },\n  {\n    value: 'access',\n    title: 'Who can see my projects?',\n    content:\n      'Only the members you invite. Each project keeps its own access list, and a guest sees only the projects they were added to.',\n  },\n];\n\nconst CARD_ITEM = [\n  'rounded-xl border-b-0 bg-card px-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)] hairline-ring ring-border outline-none',\n  'has-focus-visible:ring-[3px] has-focus-visible:ring-ring/25',\n].join(' ');\n\nexport default function Accordion13() {\n  return (\n    <Accordion defaultValue={['export']} className='gap-2'>\n      {QUESTIONS.map((question) => (\n        <AccordionItem\n          key={question.value}\n          value={question.value}\n          className={CARD_ITEM}\n        >\n          <AccordionTrigger className='justify-start gap-3 focus-visible:ring-0 [&>svg]:-order-1'>\n            {question.title}\n          </AccordionTrigger>\n          <AccordionContent className='ps-7'>\n            {question.content}\n          </AccordionContent>\n        </AccordionItem>\n      ))}\n    </Accordion>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "accordion"
+  ],
+  "type": "registry:component"
+}

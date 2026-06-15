@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "alert-05",
+  "title": "Success alert",
+  "description": "A card with a success orb that confirms a saved change.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/status-orb.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/alert/alert-05.tsx",
+      "content": "import { StatusOrb } from '@/registry/ndeko/ui/status-orb';\n\nexport default function Alert05() {\n  return (\n    <div\n      role='status'\n      className='bg-card hairline-ring ring-border flex items-start gap-3 rounded-xl px-4 py-2.5 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'\n    >\n      <StatusOrb tone='success' size='sm' />\n      <p className='py-0.5 text-[13px] leading-5'>\n        Your changes have been saved.\n      </p>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "alert"
+  ],
+  "type": "registry:component"
+}

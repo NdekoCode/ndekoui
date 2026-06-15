@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "selected-mark",
+  "title": "Selected Mark",
+  "description": "The mark of the picked row in a menu.",
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/icons.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/selected-mark.tsx",
+      "content": "import { CheckIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\n\ntype SelectedMarkProps = React.ComponentProps<'span'> & {\n  /** Read by screen readers. Leave it out when the row already says it is selected (aria-checked, aria-selected). */\n  label?: string;\n};\n\nfunction SelectedMark({ className, label, ...props }: SelectedMarkProps) {\n  const hasLabel = Boolean(label);\n\n  return (\n    <span\n      data-slot='selected-mark'\n      aria-hidden={!hasLabel}\n      className={cn(\n        'chip-3d inline-flex size-[18px] shrink-0 items-center justify-center rounded-full [--chip:var(--primary)]',\n        className\n      )}\n      {...props}\n    >\n      <CheckIcon strokeWidth={2.5} className='size-3' />\n      {hasLabel && <span className='sr-only'>{label}</span>}\n    </span>\n  );\n}\n\nexport { SelectedMark };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

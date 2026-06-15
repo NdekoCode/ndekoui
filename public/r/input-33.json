@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-33",
+  "title": "Input with inset label",
+  "description": "The label and the value inside one outline.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-33.tsx",
+      "content": "import { Input as InputPrimitive } from '@base-ui/react/input';\n\nimport { CONTROL_RECIPE } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Field, FieldLabel } from '@/registry/ndeko/ui/field';\n\nconst INSET_FIELD = cn(\n  CONTROL_RECIPE,\n  'w-full max-w-xs gap-1 py-2',\n  'focus-within:border-foreground/30 focus-within:ring-ring/25 dark:focus-within:border-foreground/25 focus-within:ring-[3px]'\n);\n\nexport default function Input33() {\n  return (\n    <Field className={INSET_FIELD}>\n      <FieldLabel className='px-2.5 text-xs'>Email</FieldLabel>\n      <InputPrimitive\n        className='placeholder:text-muted-foreground/75 h-5 w-full bg-transparent px-2.5 outline-none'\n        type='email'\n        placeholder='you@example.com'\n      />\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

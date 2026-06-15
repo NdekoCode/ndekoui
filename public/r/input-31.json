@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-31",
+  "title": "Input with overlapping label",
+  "description": "A small label sitting on the top edge of the field.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-31.tsx",
+      "content": "import { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport { Input } from '@/registry/ndeko/ui/input';\n\nexport default function Input31() {\n  return (\n    <Field className='relative w-full max-w-xs'>\n      <FieldLabel className='bg-card absolute start-2 top-0 z-10 -translate-y-1/2 px-1 text-xs'>\n        Email\n      </FieldLabel>\n      <Input size='lg' type='email' placeholder='you@example.com' />\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

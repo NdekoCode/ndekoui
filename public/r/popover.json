@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "popover",
+  "title": "Popover",
+  "description": "A raised panel anchored to its trigger.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/recipes.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/popover.tsx",
+      "content": "'use client';\n\nimport { Popover as PopoverPrimitive } from '@base-ui/react/popover';\n\nimport { POPUP_TRANSITION } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\n\ntype WithClassName<Props> = Omit<Props, 'className'> & { className?: string };\n\nfunction Popover(props: PopoverPrimitive.Root.Props) {\n  return <PopoverPrimitive.Root data-slot='popover' {...props} />;\n}\n\nfunction PopoverTrigger(props: PopoverPrimitive.Trigger.Props) {\n  return <PopoverPrimitive.Trigger data-slot='popover-trigger' {...props} />;\n}\n\ntype PopoverContentProps = WithClassName<PopoverPrimitive.Popup.Props> &\n  Pick<\n    PopoverPrimitive.Positioner.Props,\n    'side' | 'sideOffset' | 'align' | 'alignOffset'\n  >;\n\nfunction PopoverContent({\n  className,\n  side = 'bottom',\n  sideOffset = 6,\n  align = 'center',\n  alignOffset = 0,\n  ...props\n}: PopoverContentProps) {\n  return (\n    <PopoverPrimitive.Portal>\n      <PopoverPrimitive.Positioner\n        side={side}\n        sideOffset={sideOffset}\n        align={align}\n        alignOffset={alignOffset}\n        className='z-50'\n      >\n        <PopoverPrimitive.Popup\n          data-slot='popover-content'\n          className={cn(\n            'surface-raised w-72 rounded-xl p-4 text-[13px] outline-none',\n            POPUP_TRANSITION,\n            className\n          )}\n          {...props}\n        />\n      </PopoverPrimitive.Positioner>\n    </PopoverPrimitive.Portal>\n  );\n}\n\nfunction PopoverTitle({\n  className,\n  ...props\n}: WithClassName<PopoverPrimitive.Title.Props>) {\n  return (\n    <PopoverPrimitive.Title\n      data-slot='popover-title'\n      className={cn('text-sm leading-none font-medium', className)}\n      {...props}\n    />\n  );\n}\n\nfunction PopoverDescription({\n  className,\n  ...props\n}: WithClassName<PopoverPrimitive.Description.Props>) {\n  return (\n    <PopoverPrimitive.Description\n      data-slot='popover-description'\n      className={cn('text-muted-foreground text-[13px]', className)}\n      {...props}\n    />\n  );\n}\n\nfunction PopoverClose(props: PopoverPrimitive.Close.Props) {\n  return <PopoverPrimitive.Close data-slot='popover-close' {...props} />;\n}\n\nexport {\n  Popover,\n  PopoverClose,\n  PopoverContent,\n  PopoverDescription,\n  PopoverTitle,\n  PopoverTrigger,\n};\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

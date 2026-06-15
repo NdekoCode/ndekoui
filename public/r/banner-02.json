@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "banner-02",
+  "title": "Announcement link",
+  "description": "A centred announcement that links to the news.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/status-orb.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/banner/banner-02.tsx",
+      "content": "import { ArrowRightIcon, MailIcon } from '@/registry/ndeko/lib/icons';\nimport { FOCUS_RING } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { StatusOrb } from '@/registry/ndeko/ui/status-orb';\n\nexport default function Banner02() {\n  return (\n    <div className='bg-primary/[0.06] hairline-ring ring-primary/15 dark:bg-primary/10 w-full rounded-xl px-4 py-2.5'>\n      <p className='flex justify-center text-[13px]'>\n        <a\n          href='#'\n          className={cn(\n            'group inline-flex items-center gap-2.5 rounded-md',\n            FOCUS_RING\n          )}\n        >\n          <StatusOrb\n            tone='brand'\n            size='sm'\n            glyph={<MailIcon strokeWidth={2.25} />}\n          />\n          Introducing transactional and marketing emails\n          <ArrowRightIcon className='size-4 shrink-0 opacity-60 transition-transform group-hover:translate-x-0.5' />\n        </a>\n      </p>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "banner"
+  ],
+  "type": "registry:component"
+}

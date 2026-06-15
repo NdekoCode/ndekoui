@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-08",
+  "title": "Disabled native select",
+  "description": "A field and its label dimmed while the choice is locked.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/select-native.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-08.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { SelectNative } from '@/registry/ndeko/ui/select-native';\n\nexport default function Select08() {\n  const id = useId();\n\n  return (\n    <div className='group flex w-full max-w-xs flex-col gap-2'>\n      <Label htmlFor={id} className='group-has-disabled:opacity-50'>\n        Framework\n      </Label>\n      <SelectNative id={id} disabled>\n        <option value='react'>React</option>\n        <option value='nextjs'>Next.js</option>\n        <option value='astro'>Astro</option>\n        <option value='gatsby'>Gatsby</option>\n      </SelectNative>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

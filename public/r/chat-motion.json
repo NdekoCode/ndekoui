@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chat-motion",
+  "title": "Chat Motion",
+  "description": "The swap and the fold the chat pieces share: an icon that becomes another, a panel that folds into its trigger.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/animated-size.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/chat-motion.tsx",
+      "content": "// Adapted from prompt-kit (MIT, Copyright (c) 2025 Julien Thibeaut).\n'use client';\n\nimport {\n  AnimatePresence,\n  motion,\n  useReducedMotion,\n  type Transition,\n  type Variants,\n} from 'motion/react';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { AnimatedSize } from '@/registry/ndeko/ui/animated-size';\n\nconst SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };\n\nconst SWAP_VARIANTS: Variants = {\n  hidden: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },\n  shown: { opacity: 1, scale: 1, filter: 'blur(0px)' },\n};\n\nconst FADE_VARIANTS: Variants = {\n  hidden: { opacity: 0 },\n  shown: { opacity: 1 },\n};\n\nfunction swapVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return SWAP_VARIANTS;\n}\n\ntype SwapProps = {\n  /** Changing the key swaps the old content for the new one. */\n  swapKey: string;\n  children: React.ReactNode;\n  className?: string;\n};\n\nfunction Swap({ swapKey, children, className }: SwapProps) {\n  const shouldReduceMotion = useReducedMotion();\n  const variants = swapVariantsOf(shouldReduceMotion);\n\n  return (\n    <span\n      data-slot='swap'\n      className={cn('relative inline-flex items-center', className)}\n    >\n      <AnimatePresence mode='popLayout' initial={false}>\n        <motion.span\n          key={swapKey}\n          variants={variants}\n          initial='hidden'\n          animate='shown'\n          exit='hidden'\n          transition={SWAP_TRANSITION}\n          className='inline-flex items-center'\n        >\n          {children}\n        </motion.span>\n      </AnimatePresence>\n    </span>\n  );\n}\n\nconst FOLD_OPEN = 'opacity-100 duration-200';\n\nconst FOLD_CLOSED = 'h-0 opacity-0 duration-100';\n\nfunction foldStateOf(open: boolean) {\n  if (open) {\n    return FOLD_OPEN;\n  }\n  return FOLD_CLOSED;\n}\n\ntype FoldProps = {\n  open: boolean;\n  children: React.ReactNode;\n  id?: string;\n  className?: string;\n  contentClassName?: string;\n};\n\n/** Closed, the content keeps its place at zero height and the resizing box clips it, so it folds instead of vanishing. */\nfunction Fold({ open, children, id, className, contentClassName }: FoldProps) {\n  return (\n    <AnimatedSize className={className}>\n      <div\n        id={id}\n        data-slot='fold'\n        data-open={open}\n        inert={!open}\n        className={cn(\n          'transition-opacity ease-(--ease-out-strong)',\n          foldStateOf(open),\n          contentClassName\n        )}\n      >\n        {children}\n      </div>\n    </AnimatedSize>\n  );\n}\n\nexport { Fold, Swap, type FoldProps, type SwapProps };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives",
+    "chat"
+  ],
+  "type": "registry:ui"
+}

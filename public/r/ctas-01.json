@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ctas-01",
+  "title": "Call to action band",
+  "description": "One lifted band with a title, a short line and a single primary action, stacked on phones.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/blocks/ctas/ctas-01/index.tsx",
+      "content": "import { ArrowRightIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nimport { BAND } from './data';\n\nexport default function Ctas01() {\n  return (\n    <section className='px-4 py-12 sm:px-6 sm:py-16 lg:px-8'>\n      <div className='surface-brand mx-auto flex max-w-6xl flex-col items-start gap-6 rounded-2xl p-6 sm:p-10 md:flex-row md:items-center md:justify-between md:gap-10'>\n        <div className='flex max-w-xl flex-col gap-2'>\n          <h2 className='text-2xl font-semibold text-balance sm:text-3xl'>\n            {BAND.title}\n          </h2>\n          <p className='text-muted-foreground text-base text-pretty'>\n            {BAND.description}\n          </p>\n        </div>\n        <Button\n          size='lg'\n          className='shrink-0'\n          nativeButton={false}\n          render={<a href='#' />}\n        >\n          {BAND.action}\n          <ArrowRightIcon />\n        </Button>\n      </div>\n    </section>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/ctas-01/index.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/ctas/ctas-01/data.ts",
+      "content": "export const BAND = {\n  title: 'Bring Monday’s plan onto one board',\n  description:\n    'Import cards from a spreadsheet or start from a template. Your first board stays free for as long as you use it.',\n  action: 'Create your first board',\n};\n",
+      "type": "registry:component",
+      "target": "components/blocks/ctas-01/data.ts"
+    }
+  ],
+  "categories": [
+    "blocks",
+    "ctas"
+  ],
+  "type": "registry:block"
+}

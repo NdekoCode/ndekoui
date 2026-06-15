@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "accordion-18",
+  "title": "Accordion in one card with leading plus",
+  "description": "Rows of a single card with the plus before each question.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/accordion.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/accordion/accordion-18.tsx",
+      "content": "import { Accordion as AccordionPrimitive } from '@base-ui/react/accordion';\nimport type { ReactNode } from 'react';\n\nimport { PlusIcon } from '@/registry/ndeko/lib/icons';\nimport { FOCUS_RING } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport {\n  Accordion,\n  AccordionContent,\n  AccordionItem,\n} from '@/registry/ndeko/ui/accordion';\n\nconst QUESTIONS = [\n  {\n    value: 'free-plan',\n    title: 'What is included in the free plan?',\n    content:\n      'Three projects, unlimited tasks and 30 days of activity history. Invite as many teammates as you need; billing starts only when you create a fourth project.',\n  },\n  {\n    value: 'change-plan',\n    title: 'Can I change my plan later?',\n    content:\n      'Yes. An upgrade applies right away and the difference is prorated on the next invoice. A downgrade takes effect at the end of the current billing period.',\n  },\n  {\n    value: 'export',\n    title: 'How do I export my data?',\n    content:\n      'Open Settings, then Export. You receive a ZIP archive with every project as a CSV file and every attachment in its original format, usually within a few minutes.',\n  },\n  {\n    value: 'access',\n    title: 'Who can see my projects?',\n    content:\n      'Only the members you invite. Each project keeps its own access list, and a guest sees only the projects they were added to.',\n  },\n];\n\nconst TRIGGER = [\n  'group/accordion-trigger flex flex-1 cursor-pointer items-center justify-between gap-4 rounded-md py-3 text-left text-[13px] font-medium text-foreground transition-colors',\n  'data-disabled:pointer-events-none data-disabled:opacity-50',\n  FOCUS_RING,\n].join(' ');\n\n// PlusIcon draws its vertical stroke first: turning it flat and fading it leaves a minus.\nconst PLUS_MINUS = [\n  'size-4 shrink-0 text-muted-foreground transition-[rotate] duration-200 ease-(--ease-out-strong) group-data-panel-open/accordion-trigger:rotate-180',\n  '[&>path:first-child]:origin-center [&>path:first-child]:transition-[rotate,opacity] [&>path:first-child]:duration-200 [&>path:first-child]:ease-(--ease-out-strong)',\n  'group-data-panel-open/accordion-trigger:[&>path:first-child]:rotate-90 group-data-panel-open/accordion-trigger:[&>path:first-child]:opacity-0',\n].join(' ');\n\ntype PlusMinusTriggerProps = {\n  className?: string;\n  children: ReactNode;\n};\n\nfunction PlusMinusTrigger({ className, children }: PlusMinusTriggerProps) {\n  return (\n    <AccordionPrimitive.Header className='flex'>\n      <AccordionPrimitive.Trigger className={cn(TRIGGER, className)}>\n        {children}\n        <PlusIcon className={PLUS_MINUS} />\n      </AccordionPrimitive.Trigger>\n    </AccordionPrimitive.Header>\n  );\n}\n\nconst ROWS =\n  'rounded-xl bg-card shadow-[0_1px_2px_rgb(0_0_0/0.04)] hairline-ring ring-border';\n\nconst ROW_ITEM = [\n  'relative px-4 outline-none first:rounded-t-xl last:rounded-b-xl',\n  'has-focus-visible:z-10 has-focus-visible:ring-[3px] has-focus-visible:ring-ring/25',\n].join(' ');\n\nexport default function Accordion18() {\n  return (\n    <Accordion defaultValue={['export']} className={ROWS}>\n      {QUESTIONS.map((question) => (\n        <AccordionItem\n          key={question.value}\n          value={question.value}\n          className={ROW_ITEM}\n        >\n          <PlusMinusTrigger className='justify-start gap-3 focus-visible:ring-0 [&>svg]:-order-1'>\n            {question.title}\n          </PlusMinusTrigger>\n          <AccordionContent className='ps-7'>\n            {question.content}\n          </AccordionContent>\n        </AccordionItem>\n      ))}\n    </Accordion>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "accordion"
+  ],
+  "type": "registry:component"
+}

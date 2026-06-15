@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-06",
+  "title": "Native select with error",
+  "description": "An invalid field with the message that says how to fix it.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/select-native.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-06.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { SelectNative } from '@/registry/ndeko/ui/select-native';\n\nexport default function Select06() {\n  const id = useId();\n  const errorId = useId();\n\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-2'>\n      <Label htmlFor={id}>Framework</Label>\n      <SelectNative\n        id={id}\n        defaultValue='gatsby'\n        aria-invalid\n        aria-describedby={errorId}\n      >\n        <option value='react'>React</option>\n        <option value='nextjs'>Next.js</option>\n        <option value='astro'>Astro</option>\n        <option value='gatsby'>Gatsby</option>\n      </SelectNative>\n      <p id={errorId} className='text-destructive-ink text-xs'>\n        Gatsby is not available on the free plan. Pick another framework.\n      </p>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

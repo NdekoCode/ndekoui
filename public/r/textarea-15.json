@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea-15",
+  "title": "Textarea with inset label",
+  "description": "A label drawn inside the field, above the text.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/textarea/textarea-15.tsx",
+      "content": "import { useId } from 'react';\n\nconst INSET_FIELD = [\n  'relative w-full max-w-xs rounded-md border border-transparent bg-card shadow-[0_1px_2px_rgb(0_0_0/0.05)] hairline-ring ring-foreground/12',\n  'transition-[box-shadow,border-color] duration-150',\n  'dark:bg-foreground/[0.04] dark:ring-foreground/15',\n  'focus-within:border-foreground/30 focus-within:ring-[3px] focus-within:ring-ring/25 dark:focus-within:border-foreground/25',\n  'has-aria-invalid:border-destructive/60 has-aria-invalid:ring-destructive/20 dark:has-aria-invalid:ring-destructive/40',\n  'has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50',\n].join(' ');\n\nconst INSET_TEXTAREA = [\n  'field-sizing-content block max-h-[12lh] min-h-14 w-full resize-none bg-transparent px-2.5 pb-2 leading-normal outline-none',\n  'text-base text-foreground placeholder:text-muted-foreground/75 md:text-[13px]',\n  'selection:bg-primary selection:text-primary-foreground',\n].join(' ');\n\nexport default function Textarea15() {\n  const id = useId();\n\n  return (\n    <div className={INSET_FIELD}>\n      <label\n        htmlFor={id}\n        className='text-foreground block px-2.5 pt-2 pb-0.5 text-xs font-medium'\n      >\n        Shipping instructions\n      </label>\n      <textarea\n        id={id}\n        className={INSET_TEXTAREA}\n        placeholder='Leave it with the front desk'\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "textarea"
+  ],
+  "type": "registry:component"
+}

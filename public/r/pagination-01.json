@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pagination-01",
+  "title": "Previous and next",
+  "description": "Two ghost pills at both ends that step through the pages.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/pagination.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/pagination/pagination-01.tsx",
+      "content": "'use client';\n\nimport { useState } from 'react';\n\nimport {\n  Pagination,\n  PaginationContent,\n  PaginationItem,\n  PaginationNext,\n  PaginationPrevious,\n} from '@/registry/ndeko/ui/pagination';\n\nconst FIRST_PAGE = 1;\nconst TOTAL_PAGES = 10;\n\nfunction clampPage(page: number) {\n  const atLeastFirst = Math.max(FIRST_PAGE, page);\n  return Math.min(TOTAL_PAGES, atLeastFirst);\n}\n\nfunction hrefOf(page: number) {\n  return `#/page/${page}`;\n}\n\nexport default function Pagination01() {\n  const [currentPage, setCurrentPage] = useState(FIRST_PAGE);\n  const previousPage = currentPage - 1;\n  const nextPage = currentPage + 1;\n  const isFirstPage = currentPage === FIRST_PAGE;\n  const isLastPage = currentPage === TOTAL_PAGES;\n\n  function goToPage(event: React.MouseEvent<HTMLAnchorElement>, page: number) {\n    event.preventDefault();\n    const target = clampPage(page);\n    setCurrentPage(target);\n  }\n\n  return (\n    <Pagination>\n      <PaginationContent className='w-full justify-between gap-3'>\n        <PaginationItem>\n          <PaginationPrevious\n            href={hrefOf(previousPage)}\n            isDisabled={isFirstPage}\n            onClick={(event) => goToPage(event, previousPage)}\n            className='rounded-full'\n          />\n        </PaginationItem>\n        <PaginationItem>\n          <PaginationNext\n            href={hrefOf(nextPage)}\n            isDisabled={isLastPage}\n            onClick={(event) => goToPage(event, nextPage)}\n            className='rounded-full'\n          />\n        </PaginationItem>\n      </PaginationContent>\n    </Pagination>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "pagination"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox-08",
+  "title": "Inline checkbox group",
+  "description": "Three checkboxes side by side.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/checkbox.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/checkbox/checkbox-08.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Checkbox } from '@/registry/ndeko/ui/checkbox';\nimport { Label } from '@/registry/ndeko/ui/label';\n\nconst FRAMEWORKS = [\n  { value: 'react', label: 'React' },\n  { value: 'next', label: 'Next.js' },\n  { value: 'astro', label: 'Astro' },\n];\n\nexport default function Checkbox08() {\n  const id = useId();\n\n  return (\n    <div role='group' aria-label='Frameworks' className='flex gap-6'>\n      {FRAMEWORKS.map((framework) => {\n        const itemId = `${id}-${framework.value}`;\n\n        return (\n          <div key={framework.value} className='flex items-center gap-2'>\n            <Checkbox id={itemId} value={framework.value} />\n            <Label htmlFor={itemId}>{framework.label}</Label>\n          </div>\n        );\n      })}\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "checkbox"
+  ],
+  "type": "registry:component"
+}

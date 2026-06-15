@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chat-message",
+  "title": "Chat Message",
+  "description": "A message with its avatar or glyph, a bubble or plain body, and actions explained by tooltips.",
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/avatar.json",
+    "https://ui.ndeko.dev/r/tooltip.json",
+    "https://ui.ndeko.dev/r/chat-markdown.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/chat-message.tsx",
+      "content": "// Adapted from prompt-kit (MIT, Copyright (c) 2025 Julien Thibeaut).\n'use client';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport {\n  Avatar,\n  AvatarFallback,\n  AvatarImage,\n} from '@/registry/ndeko/ui/avatar';\nimport { Markdown } from '@/registry/ndeko/ui/chat-markdown';\nimport {\n  Tooltip,\n  TooltipContent,\n  TooltipProvider,\n  TooltipTrigger,\n} from '@/registry/ndeko/ui/tooltip';\n\ntype MessageProps = React.ComponentProps<'div'>;\n\nfunction Message({ className, ...props }: MessageProps) {\n  return (\n    <div\n      data-slot='message'\n      className={cn('flex gap-3', className)}\n      {...props}\n    />\n  );\n}\n\ntype MessageAvatarProps = {\n  alt: string;\n  fallback: string;\n  src?: string;\n  className?: string;\n};\n\nfunction MessageAvatar({ src, alt, fallback, className }: MessageAvatarProps) {\n  return (\n    <Avatar className={cn('size-8 shrink-0', className)}>\n      {src && <AvatarImage src={src} alt={alt} />}\n      <AvatarFallback>{fallback}</AvatarFallback>\n    </Avatar>\n  );\n}\n\ntype MessageGlyphProps = React.ComponentProps<'span'> & {\n  /** The hue of the plate; any CSS colour or token. */\n  color?: string;\n};\n\nconst DEFAULT_GLYPH_COLOR = 'var(--primary)';\n\nfunction MessageGlyph({\n  color = DEFAULT_GLYPH_COLOR,\n  className,\n  style,\n  ...props\n}: MessageGlyphProps) {\n  const plateStyle = { '--gem': color, ...style } as React.CSSProperties;\n\n  return (\n    <span\n      data-slot='message-glyph'\n      aria-hidden='true'\n      style={plateStyle}\n      className={cn(\n        'gem-plate inline-flex size-8 shrink-0 items-center justify-center rounded-full [&_svg]:size-4',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\ntype MessageVariant = 'bubble' | 'plain';\n\nconst CONTENT_VARIANT: Record<MessageVariant, string> = {\n  bubble:\n    'rounded-xl bg-foreground/[0.05] px-3.5 py-2 dark:bg-foreground/[0.07]',\n  plain: '',\n};\n\ntype MessageContentProps = Omit<React.ComponentProps<'div'>, 'children'> & {\n  children: React.ReactNode;\n  /** Applies to string children only. */\n  markdown?: boolean;\n  variant?: MessageVariant;\n};\n\nfunction isMarkdownText(\n  children: React.ReactNode,\n  markdown: boolean\n): children is string {\n  const isText = typeof children === 'string';\n  return markdown && isText;\n}\n\nfunction MessageContent({\n  children,\n  markdown = false,\n  variant = 'bubble',\n  className,\n  ...props\n}: MessageContentProps) {\n  const classNames = cn(\n    'text-foreground min-w-0 text-sm leading-relaxed break-words',\n    CONTENT_VARIANT[variant],\n    className\n  );\n\n  if (isMarkdownText(children, markdown)) {\n    return (\n      <div data-slot='message-content' className={classNames} {...props}>\n        <Markdown>{children}</Markdown>\n      </div>\n    );\n  }\n\n  return (\n    <div\n      data-slot='message-content'\n      className={cn('whitespace-pre-wrap', classNames)}\n      {...props}\n    >\n      {children}\n    </div>\n  );\n}\n\ntype MessageActionsProps = React.ComponentProps<'div'>;\n\nfunction MessageActions({ className, ...props }: MessageActionsProps) {\n  return (\n    <TooltipProvider>\n      <div\n        data-slot='message-actions'\n        className={cn(\n          'text-muted-foreground flex items-center gap-0.5',\n          className\n        )}\n        {...props}\n      />\n    </TooltipProvider>\n  );\n}\n\ntype MessageActionProps = {\n  tooltip: React.ReactNode;\n  /** The control the tooltip explains, usually an icon `Button` with an `aria-label`. */\n  children: React.ReactElement;\n  side?: 'top' | 'bottom' | 'left' | 'right';\n  className?: string;\n};\n\nfunction MessageAction({\n  tooltip,\n  children,\n  side = 'top',\n  className,\n}: MessageActionProps) {\n  return (\n    <Tooltip>\n      <TooltipTrigger render={children} />\n      <TooltipContent side={side} className={className}>\n        {tooltip}\n      </TooltipContent>\n    </Tooltip>\n  );\n}\n\nexport {\n  Message,\n  MessageAction,\n  MessageActions,\n  MessageAvatar,\n  MessageContent,\n  MessageGlyph,\n  type MessageVariant,\n};\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives",
+    "chat"
+  ],
+  "type": "registry:ui"
+}

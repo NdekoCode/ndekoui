@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "switch-09",
+  "title": "Switch between labels",
+  "description": "Off and On on each side, the current one in full ink.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/switch.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/switch/switch-09.tsx",
+      "content": "'use client';\n\nimport { useState } from 'react';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Switch } from '@/registry/ndeko/ui/switch';\n\nconst SIDE_LABEL =\n  'cursor-pointer text-[13px] font-medium transition-colors duration-150';\n\nfunction sideToneOf(isActive: boolean) {\n  if (isActive) {\n    return 'text-foreground';\n  }\n  return 'text-muted-foreground';\n}\n\nexport default function Switch09() {\n  const [isOn, setIsOn] = useState(false);\n  const offTone = sideToneOf(!isOn);\n  const onTone = sideToneOf(isOn);\n\n  function turnOff() {\n    setIsOn(false);\n  }\n\n  function turnOn() {\n    setIsOn(true);\n  }\n\n  return (\n    <div className='inline-flex items-center gap-2'>\n      <span\n        aria-hidden='true'\n        className={cn(SIDE_LABEL, offTone)}\n        onClick={turnOff}\n      >\n        Off\n      </span>\n      <Switch\n        checked={isOn}\n        onCheckedChange={setIsOn}\n        aria-label='Email notifications'\n      />\n      <span\n        aria-hidden='true'\n        className={cn(SIDE_LABEL, onTone)}\n        onClick={turnOn}\n      >\n        On\n      </span>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "switch"
+  ],
+  "type": "registry:component"
+}

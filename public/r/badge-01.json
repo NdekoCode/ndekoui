@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge-01",
+  "title": "Badge",
+  "description": "The default badge on the soft brand pair.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/badge.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/badge/badge-01.tsx",
+      "content": "import { Badge } from '@/registry/ndeko/ui/badge';\n\nexport default function Badge01() {\n  return <Badge>Beta</Badge>;\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "badge"
+  ],
+  "type": "registry:component"
+}

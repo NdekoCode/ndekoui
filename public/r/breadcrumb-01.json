@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "breadcrumb-01",
+  "title": "Collapsed breadcrumb",
+  "description": "A trail whose middle pages fold into a menu behind an ellipsis.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/breadcrumb.json",
+    "https://ui.ndeko.dev/r/dropdown-menu.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/breadcrumb/breadcrumb-01.tsx",
+      "content": "'use client';\n\nimport { Menu } from '@base-ui/react/menu';\n\nimport { MENU_ITEM } from '@/registry/ndeko/lib/recipes';\nimport {\n  Breadcrumb,\n  BreadcrumbEllipsis,\n  BreadcrumbItem,\n  BreadcrumbLink,\n  BreadcrumbList,\n  BreadcrumbPage,\n  BreadcrumbSeparator,\n} from '@/registry/ndeko/ui/breadcrumb';\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuTrigger,\n} from '@/registry/ndeko/ui/dropdown-menu';\n\nconst HIDDEN_PAGES = ['Documentation', 'Themes', 'GitHub'];\n\nconst MENU_TRIGGER =\n  'hover:text-foreground focus-visible:ring-ring/50 data-popup-open:text-foreground flex rounded-sm outline-none transition-colors focus-visible:ring-[3px]';\n\nexport default function Breadcrumb01() {\n  return (\n    <Breadcrumb>\n      <BreadcrumbList>\n        <BreadcrumbItem>\n          <BreadcrumbLink href='#'>Home</BreadcrumbLink>\n        </BreadcrumbItem>\n        <BreadcrumbSeparator />\n        <BreadcrumbItem>\n          <DropdownMenu>\n            <DropdownMenuTrigger\n              aria-label='Show hidden pages'\n              className={MENU_TRIGGER}\n            >\n              <BreadcrumbEllipsis />\n            </DropdownMenuTrigger>\n            <DropdownMenuContent>\n              {HIDDEN_PAGES.map((page) => (\n                <Menu.LinkItem\n                  key={page}\n                  href='#'\n                  closeOnClick\n                  className={MENU_ITEM}\n                >\n                  {page}\n                </Menu.LinkItem>\n              ))}\n            </DropdownMenuContent>\n          </DropdownMenu>\n        </BreadcrumbItem>\n        <BreadcrumbSeparator />\n        <BreadcrumbItem>\n          <BreadcrumbLink href='#'>Components</BreadcrumbLink>\n        </BreadcrumbItem>\n        <BreadcrumbSeparator />\n        <BreadcrumbItem>\n          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>\n        </BreadcrumbItem>\n      </BreadcrumbList>\n    </Breadcrumb>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "breadcrumb"
+  ],
+  "type": "registry:component"
+}

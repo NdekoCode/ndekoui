@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-37",
+  "title": "Country select",
+  "description": "Countries grouped by continent, each with its two-letter code.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/select.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-37.tsx",
+      "content": "import { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport {\n  Select,\n  SelectContent,\n  SelectGroup,\n  SelectItem,\n  SelectLabel,\n  SelectTrigger,\n  SelectValue,\n} from '@/registry/ndeko/ui/select';\n\ntype Country = {\n  value: string;\n  name: string;\n};\n\nconst CONTINENTS: { name: string; countries: Country[] }[] = [\n  {\n    name: 'America',\n    countries: [\n      { value: 'US', name: 'United States' },\n      { value: 'CA', name: 'Canada' },\n      { value: 'MX', name: 'Mexico' },\n    ],\n  },\n  {\n    name: 'Africa',\n    countries: [\n      { value: 'ZA', name: 'South Africa' },\n      { value: 'NG', name: 'Nigeria' },\n      { value: 'MA', name: 'Morocco' },\n    ],\n  },\n  {\n    name: 'Asia',\n    countries: [\n      { value: 'CN', name: 'China' },\n      { value: 'JP', name: 'Japan' },\n      { value: 'IN', name: 'India' },\n    ],\n  },\n  {\n    name: 'Europe',\n    countries: [\n      { value: 'GB', name: 'United Kingdom' },\n      { value: 'FR', name: 'France' },\n      { value: 'DE', name: 'Germany' },\n    ],\n  },\n  {\n    name: 'Oceania',\n    countries: [\n      { value: 'AU', name: 'Australia' },\n      { value: 'NZ', name: 'New Zealand' },\n    ],\n  },\n];\n\nfunction CountryName({ country }: { country: Country }) {\n  return (\n    <span className='flex min-w-0 items-center gap-2'>\n      <span\n        aria-hidden='true'\n        className='bg-foreground/[0.06] text-muted-foreground inline-flex h-4 w-6 shrink-0 items-center justify-center rounded-sm text-[10px] font-medium'\n      >\n        {country.value}\n      </span>\n      <span className='truncate'>{country.name}</span>\n    </span>\n  );\n}\n\nfunction countryItemOf(country: Country) {\n  return {\n    value: country.value,\n    label: <CountryName country={country} />,\n  };\n}\n\nconst COUNTRIES = CONTINENTS.flatMap((continent) => continent.countries);\n\nconst COUNTRY_ITEMS = COUNTRIES.map(countryItemOf);\n\nexport default function Select37() {\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Country</FieldLabel>\n      <Select items={COUNTRY_ITEMS} defaultValue='CA'>\n        <SelectTrigger>\n          <SelectValue placeholder='Pick a country' />\n        </SelectTrigger>\n        <SelectContent>\n          {CONTINENTS.map((continent) => (\n            <SelectGroup key={continent.name}>\n              <SelectLabel>{continent.name}</SelectLabel>\n              {continent.countries.map((country) => (\n                <SelectItem\n                  key={country.value}\n                  value={country.value}\n                  label={country.name}\n                >\n                  <CountryName country={country} />\n                </SelectItem>\n              ))}\n            </SelectGroup>\n          ))}\n        </SelectContent>\n      </Select>\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-05",
+  "title": "Radio with field",
+  "description": "Picking the first option opens a field below it and focuses it.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/collapsible.json",
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/radio-group.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/radio/radio-05.tsx",
+      "content": "'use client';\n\nimport { useEffect, useId, useRef, useState } from 'react';\n\nimport { Collapsible, CollapsiblePanel } from '@/registry/ndeko/ui/collapsible';\nimport { Input } from '@/registry/ndeko/ui/input';\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { RadioGroup, RadioGroupItem } from '@/registry/ndeko/ui/radio-group';\n\nexport default function Radio05() {\n  const id = useId();\n  const pickupId = `${id}-pickup`;\n  const homeId = `${id}-home`;\n  const panelId = `${id}-panel`;\n  const [delivery, setDelivery] = useState('home');\n  const isPickup = delivery === 'pickup';\n  const inputRef = useRef<HTMLInputElement>(null);\n\n  useEffect(() => {\n    if (isPickup) {\n      inputRef.current?.focus();\n    }\n  }, [isPickup]);\n\n  return (\n    <RadioGroup\n      value={delivery}\n      onValueChange={setDelivery}\n      aria-label='Delivery'\n      className='w-full gap-6'\n    >\n      <div className='flex items-start gap-2'>\n        <RadioGroupItem\n          value='pickup'\n          id={pickupId}\n          aria-describedby={`${pickupId}-description`}\n          aria-controls={panelId}\n        />\n        <div className='grow'>\n          <div className='grid gap-1.5'>\n            <Label htmlFor={pickupId}>Deliver to a pickup point</Label>\n            <p\n              id={`${pickupId}-description`}\n              className='text-muted-foreground text-xs'\n            >\n              Collect the parcel from a shop near you.\n            </p>\n          </div>\n          <Collapsible open={isPickup}>\n            <CollapsiblePanel id={panelId} keepMounted className='-mx-1 px-1'>\n              <div className='pt-3 pb-1'>\n                <Input\n                  ref={inputRef}\n                  placeholder='Postcode'\n                  aria-label='Postcode of the pickup point'\n                />\n              </div>\n            </CollapsiblePanel>\n          </Collapsible>\n        </div>\n      </div>\n      <div className='flex items-start gap-2'>\n        <RadioGroupItem\n          value='home'\n          id={homeId}\n          aria-describedby={`${homeId}-description`}\n        />\n        <div className='grid grow gap-1.5'>\n          <Label htmlFor={homeId}>Deliver to my address</Label>\n          <p\n            id={`${homeId}-description`}\n            className='text-muted-foreground text-xs'\n          >\n            The courier brings it to your door.\n          </p>\n        </div>\n      </div>\n    </RadioGroup>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "radio"
+  ],
+  "type": "registry:component"
+}

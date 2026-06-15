@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge-07",
+  "title": "Verified badge",
+  "description": "An outline badge with a success check.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/badge.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/badge/badge-07.tsx",
+      "content": "import { CheckIcon } from '@/registry/ndeko/lib/icons';\nimport { Badge } from '@/registry/ndeko/ui/badge';\n\nexport default function Badge07() {\n  return (\n    <Badge variant='outline'>\n      <CheckIcon strokeWidth={2.5} className='text-success-foreground' />\n      Verified\n    </Badge>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "badge"
+  ],
+  "type": "registry:component"
+}

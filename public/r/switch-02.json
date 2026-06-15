@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "switch-02",
+  "title": "Small switch",
+  "description": "A smaller track and thumb for dense rows.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/switch.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/switch/switch-02.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { Switch } from '@/registry/ndeko/ui/switch';\n\nconst SMALL_SWITCH = [\n  'h-4 w-6',\n  '[&_[data-slot=switch-thumb]]:size-3',\n  '[&_[data-slot=switch-thumb][data-checked]]:translate-x-2',\n  'active:[&_[data-slot=switch-thumb]]:w-4',\n  'active:[&_[data-slot=switch-thumb][data-checked]]:translate-x-1',\n].join(' ');\n\nexport default function Switch02() {\n  const id = useId();\n\n  return (\n    <div className='inline-flex items-center gap-2'>\n      <Switch id={id} className={SMALL_SWITCH} />\n      <Label htmlFor={id} className='sr-only'>\n        Compact mode\n      </Label>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "switch"
+  ],
+  "type": "registry:component"
+}

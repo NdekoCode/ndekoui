@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stepper-17",
+  "title": "Vertical stepper with descriptions",
+  "description": "A title and a description beside each vertical step.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/stepper.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/stepper/stepper-17.tsx",
+      "content": "import { cn } from '@/registry/ndeko/lib/utils';\nimport {\n  Stepper,\n  StepperDescription,\n  StepperIndicator,\n  StepperItem,\n  StepperSeparator,\n  StepperTitle,\n  StepperTrigger,\n} from '@/registry/ndeko/ui/stepper';\n\nconst STEPS = [\n  { step: 1, title: 'Account', description: 'Your name and email' },\n  { step: 2, title: 'Workspace', description: 'Name and web address' },\n  { step: 3, title: 'Invite team', description: 'Add a few teammates' },\n];\n\nconst SEPARATOR =\n  'absolute inset-y-0 top-[calc(1.5rem+0.125rem)] left-3 -order-1 m-0 -translate-x-1/2 group-data-[orientation=horizontal]/stepper:w-[calc(100%-1.5rem-0.25rem)] group-data-[orientation=horizontal]/stepper:flex-none group-data-[orientation=vertical]/stepper:h-[calc(100%-1.5rem-0.25rem)]';\n\nconst CONNECTOR = [\n  'relative group-data-[state=completed]/step:bg-foreground/10',\n  'after:bg-primary after:absolute after:inset-0 after:origin-top after:scale-y-0 after:rounded-full after:transition-[scale] after:duration-200 after:ease-out-strong',\n  'group-data-[state=completed]/step:after:scale-y-100 group-data-[state=completed]/step:after:duration-300',\n].join(' ');\n\nexport default function Stepper17() {\n  return (\n    <Stepper defaultValue={2} orientation='vertical'>\n      {STEPS.map(({ step, title, description }) => (\n        <StepperItem\n          key={step}\n          step={step}\n          className='relative items-start not-last:flex-1'\n        >\n          <StepperTrigger className='items-start rounded-md pb-12 last:pb-0'>\n            <StepperIndicator />\n            <div className='mt-0.5 flex flex-col gap-0.5 px-2 text-left'>\n              <StepperTitle>{title}</StepperTitle>\n              <StepperDescription>{description}</StepperDescription>\n            </div>\n          </StepperTrigger>\n          {step < STEPS.length && (\n            <StepperSeparator className={cn(CONNECTOR, SEPARATOR)} />\n          )}\n        </StepperItem>\n      ))}\n    </Stepper>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "stepper"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-07",
+  "title": "Colour swatches",
+  "description": "Round swatches in the theme hues for picking a label colour.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/radio-group.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/radio/radio-07.tsx",
+      "content": "import { useId } from 'react';\n\nimport { RadioGroup, RadioGroupItem } from '@/registry/ndeko/ui/radio-group';\n\nconst SWATCHES = [\n  { value: 'indigo', label: 'Indigo', color: 'var(--primary)' },\n  { value: 'blue', label: 'Blue', color: 'var(--info)' },\n  { value: 'green', label: 'Green', color: 'var(--success)' },\n  { value: 'amber', label: 'Amber', color: 'var(--warning)' },\n  { value: 'red', label: 'Red', color: 'var(--destructive)' },\n  { value: 'grey', label: 'Grey', color: 'var(--muted-foreground)' },\n];\n\nconst SWATCH = [\n  'size-6 bg-(--swatch) shadow-none ring-(--swatch-ring) dark:bg-(--swatch) dark:ring-(--swatch-ring) data-checked:bg-(--swatch) data-checked:ring-(--swatch-ring)',\n  '[--swatch-ring:color-mix(in_oklab,black_15%,var(--swatch))] dark:[--swatch-ring:color-mix(in_oklab,white_15%,var(--swatch))]',\n  '[&_[data-slot=radio-group-indicator]]:size-2',\n].join(' ');\n\nexport default function Radio07() {\n  const captionId = useId();\n\n  return (\n    <div className='flex flex-col gap-3'>\n      <span\n        id={captionId}\n        className='text-foreground text-[13px] leading-none font-medium'\n      >\n        Label colour\n      </span>\n      <RadioGroup\n        defaultValue='indigo'\n        aria-labelledby={captionId}\n        className='flex gap-1.5'\n      >\n        {SWATCHES.map((swatch) => {\n          const swatchStyle = {\n            '--swatch': swatch.color,\n          } as React.CSSProperties;\n\n          return (\n            <RadioGroupItem\n              key={swatch.value}\n              value={swatch.value}\n              aria-label={swatch.label}\n              style={swatchStyle}\n              className={SWATCH}\n            />\n          );\n        })}\n      </RadioGroup>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "radio"
+  ],
+  "type": "registry:component"
+}

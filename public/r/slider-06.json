@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider-06",
+  "title": "Slider with reference labels",
+  "description": "A storage limit with its minimum, middle and maximum below.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/slider.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/slider/slider-06.tsx",
+      "content": "import { Label } from '@/registry/ndeko/ui/label';\nimport { Slider } from '@/registry/ndeko/ui/slider';\n\nconst GIGABYTES = { style: 'unit', unit: 'gigabyte' } as const;\n\nexport default function Slider06() {\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-3'>\n      <Label>Storage limit</Label>\n      <div className='flex flex-col gap-2'>\n        <Slider\n          defaultValue={15}\n          min={5}\n          max={35}\n          format={GIGABYTES}\n          thumbLabels={['Storage limit']}\n        />\n        <span\n          className='text-muted-foreground flex w-full items-center justify-between gap-1 text-xs font-medium tabular-nums'\n          aria-hidden='true'\n        >\n          <span>5 GB</span>\n          <span>20 GB</span>\n          <span>35 GB</span>\n        </span>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "slider"
+  ],
+  "type": "registry:component"
+}

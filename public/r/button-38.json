@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-38",
+  "title": "Pinned with options",
+  "description": "A primary pinned button with an options chevron at its start.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-38.tsx",
+      "content": "import { ChevronDownIcon, PinIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst SEGMENT =\n  'rounded-none first:rounded-s-full last:rounded-e-full focus-visible:z-10';\n\nexport default function Button38() {\n  return (\n    <div className='inline-flex -space-x-px'>\n      <Button size='icon' aria-label='Options' className={SEGMENT}>\n        <ChevronDownIcon />\n      </Button>\n      <Button className={SEGMENT}>\n        <PinIcon className='-ms-1 opacity-60' />\n        Pinned\n      </Button>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

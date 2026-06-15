@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-14",
+  "title": "Radio chips",
+  "description": "Small cards in a row for picking a server location.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/radio-group.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/radio/radio-14.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { RadioGroup, RadioGroupItem } from '@/registry/ndeko/ui/radio-group';\n\nconst LOCATIONS = [\n  { value: 'usa', label: 'USA' },\n  { value: 'uk', label: 'UK' },\n  { value: 'france', label: 'France' },\n];\n\nconst LOCATION_CHIP = [\n  'relative flex items-center gap-2 rounded-lg bg-card p-3 shadow-[0_1px_2px_rgb(0_0_0/0.04)] hairline-ring ring-border transition-[box-shadow] duration-150',\n  'has-data-checked:shadow-[0_1px_2px_rgb(0_0_0/0.04),0_6px_16px_-8px_color-mix(in_oklab,var(--primary)_35%,transparent)] has-data-checked:ring-primary/45',\n].join(' ');\n\nexport default function Radio14() {\n  const id = useId();\n  const captionId = `${id}-caption`;\n\n  return (\n    <div className='flex flex-col gap-3'>\n      <span\n        id={captionId}\n        className='text-foreground text-[13px] leading-none font-medium'\n      >\n        Server location\n      </span>\n      <RadioGroup\n        defaultValue='usa'\n        aria-labelledby={captionId}\n        className='flex flex-wrap gap-2'\n      >\n        {LOCATIONS.map((location) => {\n          const itemId = `${id}-${location.value}`;\n\n          return (\n            <div key={location.value} className={LOCATION_CHIP}>\n              <RadioGroupItem\n                value={location.value}\n                id={itemId}\n                className='after:absolute after:inset-0'\n              />\n              <Label htmlFor={itemId}>{location.label}</Label>\n            </div>\n          );\n        })}\n      </RadioGroup>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "radio"
+  ],
+  "type": "registry:component"
+}

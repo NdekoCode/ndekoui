@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chat-steps",
+  "title": "Chat Steps",
+  "description": "Steps the assistant took, on a thin line, behind a trigger that opens and closes them.",
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/collapsible.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/chat-steps.tsx",
+      "content": "// Adapted from prompt-kit (MIT, Copyright (c) 2025 Julien Thibeaut).\n'use client';\n\nimport { ChevronDownIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport {\n  Collapsible,\n  CollapsibleContent,\n  CollapsibleTrigger,\n} from '@/registry/ndeko/ui/collapsible';\n\ntype StepsProps = React.ComponentProps<typeof Collapsible>;\n\nfunction Steps({ defaultOpen = true, ...props }: StepsProps) {\n  return <Collapsible data-slot='steps' defaultOpen={defaultOpen} {...props} />;\n}\n\nconst CHEVRON =\n  'ease-(--ease-out-strong) size-3.5 transition-[rotate,opacity] duration-200 group-data-panel-open/steps:rotate-180';\n\ntype StepsTriggerProps = Omit<\n  React.ComponentProps<typeof CollapsibleTrigger>,\n  'className'\n> & {\n  className?: string;\n  /** Shown before the label; it gives way to the chevron while the pointer is over the row. */\n  leftIcon?: React.ReactNode;\n  swapIconOnHover?: boolean;\n};\n\nfunction StepsTrigger({\n  children,\n  className,\n  leftIcon,\n  swapIconOnHover = true,\n  ...props\n}: StepsTriggerProps) {\n  const hasLeftIcon = leftIcon !== undefined;\n  const isSwappingIcon = hasLeftIcon && swapIconOnHover;\n\n  return (\n    <CollapsibleTrigger\n      data-slot='steps-trigger'\n      className={cn(\n        'group/steps text-muted-foreground hover:text-foreground focus-visible:ring-ring/25 flex w-full cursor-pointer items-center gap-2 rounded-md text-start text-[13px] transition-colors outline-none focus-visible:ring-[3px]',\n        className\n      )}\n      {...props}\n    >\n      {hasLeftIcon && (\n        <span className='relative inline-flex size-4 shrink-0 items-center justify-center [&_svg]:size-4'>\n          <span\n            className={cn(\n              'inline-flex transition-opacity duration-150',\n              isSwappingIcon && 'group-hover/steps:opacity-0'\n            )}\n          >\n            {leftIcon}\n          </span>\n          {isSwappingIcon && (\n            <ChevronDownIcon\n              className={cn(\n                CHEVRON,\n                'absolute opacity-0 group-hover/steps:opacity-100'\n              )}\n            />\n          )}\n        </span>\n      )}\n      <span className='min-w-0'>{children}</span>\n      {!hasLeftIcon && <ChevronDownIcon className={CHEVRON} />}\n    </CollapsibleTrigger>\n  );\n}\n\ntype StepsBarProps = React.ComponentProps<'div'>;\n\nfunction StepsBar({ className, ...props }: StepsBarProps) {\n  return (\n    <div\n      data-slot='steps-bar'\n      aria-hidden='true'\n      className={cn('bg-border ms-[7.5px] h-full w-px', className)}\n      {...props}\n    />\n  );\n}\n\ntype StepsContentProps = Omit<\n  React.ComponentProps<typeof CollapsibleContent>,\n  'className'\n> & {\n  className?: string;\n  /** Replaces the line drawn beside the steps. */\n  bar?: React.ReactNode;\n};\n\nfunction StepsContent({\n  children,\n  className,\n  bar,\n  ...props\n}: StepsContentProps) {\n  const sideBar = bar ?? <StepsBar />;\n\n  return (\n    <CollapsibleContent\n      data-slot='steps-content'\n      className={className}\n      {...props}\n    >\n      <div className='mt-2.5 grid max-w-full min-w-0 grid-cols-[min-content_minmax(0,1fr)] items-start gap-x-3'>\n        <div className='min-w-0 self-stretch'>{sideBar}</div>\n        <div className='min-w-0 space-y-2'>{children}</div>\n      </div>\n    </CollapsibleContent>\n  );\n}\n\ntype StepsItemProps = React.ComponentProps<'div'>;\n\nfunction StepsItem({ className, ...props }: StepsItemProps) {\n  return (\n    <div\n      data-slot='steps-item'\n      className={cn(\n        'text-muted-foreground text-[13px] leading-relaxed',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nexport { Steps, StepsBar, StepsContent, StepsItem, StepsTrigger };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives",
+    "chat"
+  ],
+  "type": "registry:ui"
+}

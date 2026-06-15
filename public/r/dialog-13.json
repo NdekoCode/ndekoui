@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dialog-13",
+  "title": "Sign-up dialog",
+  "description": "Name, email and password, with Google as the other way in.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/dialog.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/dialog/dialog-13.tsx",
+      "content": "import { useId } from 'react';\n\nimport { GoogleBrandIcon } from '@/registry/ndeko/lib/icons';\nimport { FOCUS_RING } from '@/registry/ndeko/lib/recipes';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport {\n  Dialog,\n  DialogContent,\n  DialogDescription,\n  DialogHeader,\n  DialogTitle,\n  DialogTrigger,\n} from '@/registry/ndeko/ui/dialog';\nimport { Input } from '@/registry/ndeko/ui/input';\nimport { Label } from '@/registry/ndeko/ui/label';\n\nconst BRAND_STYLE = { '--gem': 'var(--primary)' } as React.CSSProperties;\n\nconst LINK = [\n  'text-primary-ink rounded-sm font-medium underline-offset-4 hover:underline',\n  FOCUS_RING,\n].join(' ');\n\nconst OR_DIVIDER =\n  'text-muted-foreground flex items-center gap-3 text-xs before:h-(--hairline) before:flex-1 before:bg-border after:h-(--hairline) after:flex-1 after:bg-border';\n\nfunction AcmeMark() {\n  return (\n    <span\n      aria-hidden='true'\n      style={BRAND_STYLE}\n      className='gem-plate flex size-10 shrink-0 items-center justify-center rounded-xl'\n    >\n      <svg\n        viewBox='0 0 24 24'\n        fill='none'\n        stroke='currentColor'\n        strokeWidth={2.25}\n        strokeLinecap='round'\n        strokeLinejoin='round'\n        className='size-5'\n      >\n        <path d='M12 4.5 20 19H4l8-14.5Z' />\n        <path d='M8.75 14h6.5' />\n      </svg>\n    </span>\n  );\n}\n\nexport default function Dialog13() {\n  const id = useId();\n  const nameId = `${id}-name`;\n  const emailId = `${id}-email`;\n  const passwordId = `${id}-password`;\n\n  return (\n    <Dialog>\n      <DialogTrigger render={<Button variant='outline' />}>\n        Sign up\n      </DialogTrigger>\n      <DialogContent className='max-w-md'>\n        <div className='flex flex-col items-center gap-4'>\n          <AcmeMark />\n          <DialogHeader className='px-8 text-center'>\n            <DialogTitle>Create your Acme account</DialogTitle>\n            <DialogDescription>\n              We only need a few details to get you started.\n            </DialogDescription>\n          </DialogHeader>\n        </div>\n        <form className='flex flex-col gap-5'>\n          <div className='flex flex-col gap-4'>\n            <div className='grid gap-2'>\n              <Label htmlFor={nameId}>Full name</Label>\n              <Input\n                id={nameId}\n                autoComplete='name'\n                placeholder='Amara Okafor'\n                required\n              />\n            </div>\n            <div className='grid gap-2'>\n              <Label htmlFor={emailId}>Email</Label>\n              <Input\n                id={emailId}\n                type='email'\n                autoComplete='email'\n                placeholder='amara@example.com'\n                required\n              />\n            </div>\n            <div className='grid gap-2'>\n              <Label htmlFor={passwordId}>Password</Label>\n              <Input\n                id={passwordId}\n                type='password'\n                autoComplete='new-password'\n                placeholder='At least 8 characters'\n                required\n              />\n            </div>\n          </div>\n          <Button type='button' size='lg' className='w-full'>\n            Create account\n          </Button>\n        </form>\n        <div className={OR_DIVIDER}>or</div>\n        <Button variant='outline' size='lg'>\n          <GoogleBrandIcon />\n          Continue with Google\n        </Button>\n        <p className='text-muted-foreground text-center text-xs'>\n          By signing up you agree to our{' '}\n          <a href='#' className={LINK}>\n            Terms\n          </a>\n          .\n        </p>\n      </DialogContent>\n    </Dialog>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "dialog"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "motion-in-view",
+  "title": "In view",
+  "description": "A component that triggers animations when elements enter the viewport.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "components/core/in-view.tsx",
+      "content": "'use client';\nimport { ReactNode, useRef, useState } from 'react';\nimport {\n  motion,\n  MotionConfig,\n  useInView,\n  useReducedMotion,\n  Variant,\n  Transition,\n  UseInViewOptions,\n} from 'motion/react';\n\nexport type InViewProps = {\n  children: ReactNode;\n  variants?: {\n    hidden: Variant;\n    visible: Variant;\n  };\n  transition?: Transition;\n  viewOptions?: UseInViewOptions;\n  as?: React.ElementType;\n  once?: boolean;\n};\n\nconst defaultVariants = {\n  hidden: { opacity: 0 },\n  visible: { opacity: 1 },\n};\n\nfunction ReducedMotionConfig({ children }: { children: ReactNode }) {\n  const prefersReducedMotion = useReducedMotion();\n  if (!prefersReducedMotion) {\n    return children;\n  }\n  return <MotionConfig reducedMotion='always'>{children}</MotionConfig>;\n}\n\nexport function InView({\n  children,\n  variants = defaultVariants,\n  transition,\n  viewOptions,\n  as = 'div',\n  once,\n}: InViewProps) {\n  const ref = useRef(null);\n  const isInView = useInView(ref, viewOptions);\n\n  const [isViewed, setIsViewed] = useState(false);\n\n  const MotionComponent = motion[as as keyof typeof motion] as typeof as;\n\n  return (\n    <ReducedMotionConfig>\n      <MotionComponent\n        ref={ref}\n        initial='hidden'\n        onAnimationComplete={() => {\n          if (once) setIsViewed(true);\n        }}\n        animate={isInView || isViewed ? 'visible' : 'hidden'}\n\n        variants={variants}\n        transition={transition}\n      >\n        {children}\n      </MotionComponent>\n    </ReducedMotionConfig>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/motion/in-view.tsx"
+    }
+  ],
+  "categories": [
+    "motion"
+  ],
+  "type": "registry:component"
+}

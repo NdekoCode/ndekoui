@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-50",
+  "title": "Security code input",
+  "description": "A card security code field.",
+  "dependencies": [
+    "react-payment-inputs"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-50.tsx",
+      "content": "'use client';\n\nimport { useId } from 'react';\nimport { usePaymentInputs } from 'react-payment-inputs';\n\nimport { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport { Input } from '@/registry/ndeko/ui/input';\n\nexport default function Input50() {\n  const id = useId();\n  const { getCVCProps } = usePaymentInputs();\n\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Security code</FieldLabel>\n      <Input\n        {...getCVCProps()}\n        id={`${id}-cvc`}\n        className='tabular-nums [direction:inherit]'\n      />\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

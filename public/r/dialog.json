@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dialog",
+  "title": "Dialog",
+  "description": "A modal dialog that fades and scales in and resizes with its content.",
+  "dependencies": [
+    "@base-ui/react",
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/animated-size.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/dialog.tsx",
+      "content": "'use client';\n\nimport { Dialog as DialogPrimitive } from '@base-ui/react/dialog';\n\nimport { XIcon } from '@/registry/ndeko/lib/icons';\nimport { OVERLAY_BACKDROP } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { AnimatedSize } from '@/registry/ndeko/ui/animated-size';\nimport { Button } from '@/registry/ndeko/ui/button';\n\ntype WithClassName<Props> = Omit<Props, 'className'> & { className?: string };\n\nfunction Dialog(props: DialogPrimitive.Root.Props) {\n  return <DialogPrimitive.Root data-slot='dialog' {...props} />;\n}\n\nfunction DialogTrigger(props: DialogPrimitive.Trigger.Props) {\n  return <DialogPrimitive.Trigger data-slot='dialog-trigger' {...props} />;\n}\n\nfunction DialogClose(props: DialogPrimitive.Close.Props) {\n  return <DialogPrimitive.Close data-slot='dialog-close' {...props} />;\n}\n\nconst DIALOG_POPUP = [\n  'fixed left-1/2 top-1/2 z-50 max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 overflow-x-hidden overflow-y-auto',\n  'rounded-2xl bg-card p-6 text-card-foreground outline-none hairline-ring ring-border shadow-xl shadow-black/8',\n  'transition-[opacity,scale] duration-200 ease-(--ease-out-strong) data-ending-style:duration-150',\n  'data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0',\n  'data-instant:transition-none',\n].join(' ');\n\nconst DIALOG_BODY = 'flex flex-col gap-4';\n\ntype DialogContentProps = WithClassName<DialogPrimitive.Popup.Props> & {\n  showCloseButton?: boolean;\n  closeLabel?: string;\n  /** Classes of the body that holds the children: its layout and gap. */\n  contentClassName?: string;\n  /** Animates the dialog's height when its content changes. On by default. */\n  animateSize?: boolean;\n  /** Opens and closes without motion, for a layer opened many times a day from the keyboard. */\n  instant?: boolean;\n};\n\nfunction DialogBody({\n  animateSize,\n  className,\n  children,\n}: {\n  animateSize: boolean;\n  className?: string;\n  children: React.ReactNode;\n}) {\n  if (animateSize) {\n    return (\n      <AnimatedSize contentClassName={cn(DIALOG_BODY, className)}>\n        {children}\n      </AnimatedSize>\n    );\n  }\n  return <div className={cn(DIALOG_BODY, className)}>{children}</div>;\n}\n\nfunction DialogContent({\n  className,\n  contentClassName,\n  children,\n  showCloseButton = true,\n  closeLabel = 'Close',\n  animateSize = true,\n  instant = false,\n  ...props\n}: DialogContentProps) {\n  return (\n    <DialogPrimitive.Portal>\n      <DialogPrimitive.Backdrop\n        data-slot='dialog-backdrop'\n        data-instant={instant || undefined}\n        className={cn(OVERLAY_BACKDROP, 'data-instant:transition-none')}\n      />\n      <DialogPrimitive.Popup\n        data-slot='dialog-content'\n        data-instant={instant || undefined}\n        className={cn(DIALOG_POPUP, className)}\n        {...props}\n      >\n        <DialogBody animateSize={animateSize} className={contentClassName}>\n          {children}\n        </DialogBody>\n        {showCloseButton && (\n          <DialogPrimitive.Close\n            render={\n              <Button\n                variant='ghost'\n                size='icon-sm'\n                className='text-muted-foreground absolute top-3 right-3'\n              />\n            }\n          >\n            <XIcon />\n            <span className='sr-only'>{closeLabel}</span>\n          </DialogPrimitive.Close>\n        )}\n      </DialogPrimitive.Popup>\n    </DialogPrimitive.Portal>\n  );\n}\n\nfunction DialogHeader({ className, ...props }: React.ComponentProps<'div'>) {\n  return (\n    <div\n      data-slot='dialog-header'\n      className={cn('flex flex-col gap-1.5 pr-8 text-left', className)}\n      {...props}\n    />\n  );\n}\n\nfunction DialogFooter({ className, ...props }: React.ComponentProps<'div'>) {\n  return (\n    <div\n      data-slot='dialog-footer'\n      className={cn(\n        'flex flex-col-reverse gap-2 sm:flex-row sm:justify-end',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nfunction DialogTitle({\n  className,\n  ...props\n}: WithClassName<DialogPrimitive.Title.Props>) {\n  return (\n    <DialogPrimitive.Title\n      data-slot='dialog-title'\n      className={cn(\n        'text-lg leading-tight font-semibold text-balance',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nfunction DialogDescription({\n  className,\n  ...props\n}: WithClassName<DialogPrimitive.Description.Props>) {\n  return (\n    <DialogPrimitive.Description\n      data-slot='dialog-description'\n      className={cn('text-muted-foreground text-[13px]', className)}\n      {...props}\n    />\n  );\n}\n\nexport {\n  Dialog,\n  DialogClose,\n  DialogContent,\n  DialogDescription,\n  DialogFooter,\n  DialogHeader,\n  DialogTitle,\n  DialogTrigger,\n};\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

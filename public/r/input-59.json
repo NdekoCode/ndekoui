@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-59",
+  "title": "Input with inner tags",
+  "description": "Tags sit inside the field and Backspace removes the last one.",
+  "dependencies": [
+    "@base-ui/react",
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/combobox.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-59.tsx",
+      "content": "'use client';\n\nimport type { BaseUIEvent } from '@base-ui/react/types';\nimport {\n  AnimatePresence,\n  motion,\n  type Transition,\n  type Variants,\n  useReducedMotion,\n} from 'motion/react';\nimport { useId, useState, type KeyboardEvent } from 'react';\n\nimport {\n  Combobox,\n  ComboboxChip,\n  ComboboxChipRemove,\n  ComboboxChips,\n  ComboboxInput,\n  ComboboxInputGroup,\n} from '@/registry/ndeko/ui/combobox';\nimport { Label } from '@/registry/ndeko/ui/label';\n\nconst INITIAL_TAGS = ['Red'];\n\nconst CHIP_TRANSITION: Transition = { duration: 0.2, ease: [0.2, 0, 0, 1] };\nconst CHIP_EXIT_TRANSITION: Transition = {\n  duration: 0.15,\n  ease: [0.2, 0, 0, 1],\n};\n\nconst CHIP_VARIANTS: Variants = {\n  hidden: { opacity: 0, scale: 0.9 },\n  shown: { opacity: 1, scale: 1 },\n  gone: { opacity: 0, scale: 0.9, transition: CHIP_EXIT_TRANSITION },\n};\n\nconst FADE_VARIANTS: Variants = {\n  hidden: { opacity: 0 },\n  shown: { opacity: 1 },\n  gone: { opacity: 0, transition: CHIP_EXIT_TRANSITION },\n};\n\nfunction chipVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return CHIP_VARIANTS;\n}\n\nfunction hasTag(tags: string[], candidate: string) {\n  const normalized = candidate.toLocaleLowerCase();\n  return tags.some((tag) => tag.toLocaleLowerCase() === normalized);\n}\n\nexport default function Input59() {\n  const inputId = useId();\n  const [tags, setTags] = useState(INITIAL_TAGS);\n  const [draft, setDraft] = useState('');\n  const shouldReduceMotion = useReducedMotion();\n  const chipVariants = chipVariantsOf(shouldReduceMotion);\n  const isLayoutAnimated = !shouldReduceMotion;\n\n  function changeTags(nextTags: string[]) {\n    setTags(nextTags);\n  }\n\n  function handleKeyDown(event: BaseUIEvent<KeyboardEvent<HTMLInputElement>>) {\n    if (event.key === 'Escape') {\n      event.preventBaseUIHandler();\n      setDraft('');\n      return;\n    }\n    if (event.key !== 'Enter') {\n      return;\n    }\n    if (event.nativeEvent.isComposing) {\n      return;\n    }\n    event.preventDefault();\n    const tag = draft.trim();\n    setDraft('');\n    if (tag === '') {\n      return;\n    }\n    if (hasTag(tags, tag)) {\n      return;\n    }\n    setTags((current) => [...current, tag]);\n  }\n\n  return (\n    <Combobox\n      multiple\n      open={false}\n      value={tags}\n      onValueChange={changeTags}\n      inputValue={draft}\n      onInputValueChange={setDraft}\n    >\n      <div className='flex w-full max-w-xs flex-col gap-1.5'>\n        <Label htmlFor={inputId}>Colors</Label>\n        <ComboboxInputGroup>\n          <ComboboxChips className='relative'>\n            <AnimatePresence mode='popLayout' initial={false}>\n              {tags.map((tag) => (\n                <ComboboxChip\n                  key={tag}\n                  aria-label={tag}\n                  render={\n                    <motion.div\n                      layout={isLayoutAnimated}\n                      variants={chipVariants}\n                      initial='hidden'\n                      animate='shown'\n                      exit='gone'\n                      transition={CHIP_TRANSITION}\n                    />\n                  }\n                >\n                  {tag}\n                  <ComboboxChipRemove aria-label={`Remove ${tag}`} />\n                </ComboboxChip>\n              ))}\n            </AnimatePresence>\n            <ComboboxInput\n              id={inputId}\n              placeholder='Add a tag'\n              onKeyDown={handleKeyDown}\n            />\n          </ComboboxChips>\n        </ComboboxInputGroup>\n      </div>\n    </Combobox>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

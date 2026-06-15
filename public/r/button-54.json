@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-54",
+  "title": "Card button",
+  "description": "A two-line outline button with a title, a hint and a chevron.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-54.tsx",
+      "content": "import { ChevronRightIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nexport default function Button54() {\n  return (\n    <Button variant='outline' className='h-auto gap-4 px-5 py-3 text-start'>\n      <span className='flex flex-col gap-1'>\n        <span>Talent Agency</span>\n        <span className='text-muted-foreground font-normal whitespace-break-spaces'>\n          Matches for your roster\n        </span>\n      </span>\n      <ChevronRightIcon className='opacity-60 transition-transform group-hover/button:translate-x-0.5' />\n    </Button>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

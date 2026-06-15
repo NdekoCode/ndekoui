@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-02",
+  "title": "Disabled button",
+  "description": "A primary pill that cannot be pressed yet.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-02.tsx",
+      "content": "import { Button } from '@/registry/ndeko/ui/button';\n\nexport default function Button02() {\n  return <Button disabled>Save changes</Button>;\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

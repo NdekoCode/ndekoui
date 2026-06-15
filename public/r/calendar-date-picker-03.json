@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "calendar-date-picker-03",
+  "title": "Calendar with unavailable dates",
+  "description": "A react-aria range calendar that skips weekends, past days and booked days.",
+  "dependencies": [
+    "@internationalized/date",
+    "react-aria",
+    "react-aria-components"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/calendar-rac.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/calendar-date-picker/calendar-date-picker-03.tsx",
+      "content": "'use client';\n\nimport { getLocalTimeZone, isWeekend, today } from '@internationalized/date';\nimport { useLocale } from 'react-aria';\nimport type { DateValue } from 'react-aria-components';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { RangeCalendar } from '@/registry/ndeko/ui/calendar-rac';\n\nimport { SETTLING_DAYS } from './_parts/settling-days';\n\nconst BOOKED_DAY_OFFSETS = [0, 14, 23];\n\nexport default function CalendarDatePicker03() {\n  const { locale } = useLocale();\n  const now = today(getLocalTimeZone());\n  const bookedDays = BOOKED_DAY_OFFSETS.map((offset) =>\n    now.add({ days: offset })\n  );\n\n  function isDateUnavailable(date: DateValue) {\n    const isOnWeekend = isWeekend(date, locale);\n    const isBooked = bookedDays.some((day) => date.compare(day) === 0);\n    return isOnWeekend || isBooked;\n  }\n\n  return (\n    <RangeCalendar\n      className={cn(\n        'bg-card hairline-ring ring-border rounded-xl p-2 shadow-[0_1px_2px_rgb(0_0_0/0.04)]',\n        SETTLING_DAYS\n      )}\n      isDateUnavailable={isDateUnavailable}\n      minValue={now}\n    />\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/calendar-date-picker/calendar-date-picker-03.tsx"
+    },
+    {
+      "path": "registry/ndeko/components/calendar-date-picker/_parts/settling-days.ts",
+      "content": "/**\n * The react-aria calendar cells cannot take classes from outside, so the press that lets a picked\n * day settle in is applied from the calendar root.\n */\nexport const SETTLING_DAYS =\n  '[&_td>div]:transition-[color,background-color,border-radius,box-shadow,scale] [&_td>div]:ease-(--ease-out-strong) [&_td>[data-pressed]]:scale-90';\n",
+      "type": "registry:component",
+      "target": "components/calendar-date-picker/_parts/settling-days.ts"
+    }
+  ],
+  "categories": [
+    "components",
+    "calendar-date-picker"
+  ],
+  "type": "registry:component"
+}

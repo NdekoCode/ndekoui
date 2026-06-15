@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs-12",
+  "title": "Scrolling underline tabs",
+  "description": "Six tabs with icons, a count and a badge that scroll sideways when space runs out.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/animated-size.json",
+    "https://ui.ndeko.dev/r/badge.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/scroll-area.json",
+    "https://ui.ndeko.dev/r/tabs.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/tabs/tabs-12.tsx",
+      "content": "import { Tabs as TabsPrimitive } from '@base-ui/react/tabs';\n\nimport {\n  BoxIcon,\n  ChartLineIcon,\n  HouseIcon,\n  PanelsTopLeftIcon,\n  SettingsIcon,\n  UsersRoundIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { AnimatedSize } from '@/registry/ndeko/ui/animated-size';\nimport { Badge } from '@/registry/ndeko/ui/badge';\nimport { ScrollArea } from '@/registry/ndeko/ui/scroll-area';\nimport { Tabs, TabsPanel, TabsTab } from '@/registry/ndeko/ui/tabs';\n\nconst PANELS = [\n  {\n    value: 'overview',\n    content: 'Open tasks, recent activity and the next deadlines.',\n  },\n  {\n    value: 'projects',\n    content: 'Three active projects, sorted by their latest update.',\n  },\n  {\n    value: 'packages',\n    content:\n      'Packages published from this workspace, with their latest version.',\n  },\n  {\n    value: 'team',\n    content: 'Members of the workspace and the role of each one.',\n  },\n  {\n    value: 'insights',\n    content: 'Weekly throughput and cycle time for every project.',\n  },\n  {\n    value: 'settings',\n    content: 'Workspace name, billing contact and connected apps.',\n  },\n];\n\nconst LIST =\n  'hairline-b border-border relative mb-2.5 flex w-max min-w-full items-center gap-1 py-1';\n\nconst INDICATOR =\n  'pointer-events-none absolute bottom-0 left-0 h-0.5 w-(--active-tab-width) translate-x-(--active-tab-left) rounded-full bg-primary transition-[translate,width] duration-300 ease-(--ease-out-strong)';\n\nconst TAB = 'h-8 rounded-md px-2.5 hover:bg-foreground/5';\n\nconst COUNT =\n  'keycap-3d inline-flex h-5 min-w-5 items-center justify-center rounded-[5px] px-1 text-[11px] font-medium tabular-nums text-muted-foreground';\n\nexport default function Tabs12() {\n  return (\n    <Tabs defaultValue='overview' className='w-full min-w-0'>\n      <ScrollArea>\n        <TabsPrimitive.List className={LIST}>\n          <TabsTab value='overview' className={TAB}>\n            <HouseIcon className='-ms-0.5 opacity-60' />\n            Overview\n          </TabsTab>\n          <TabsTab value='projects' className={TAB}>\n            <PanelsTopLeftIcon className='-ms-0.5 opacity-60' />\n            Projects\n            <span className={COUNT}>3</span>\n          </TabsTab>\n          <TabsTab value='packages' className={TAB}>\n            <BoxIcon className='-ms-0.5 opacity-60' />\n            Packages\n            <Badge>New</Badge>\n          </TabsTab>\n          <TabsTab value='team' className={TAB}>\n            <UsersRoundIcon className='-ms-0.5 opacity-60' />\n            Team\n          </TabsTab>\n          <TabsTab value='insights' className={TAB}>\n            <ChartLineIcon className='-ms-0.5 opacity-60' />\n            Insights\n          </TabsTab>\n          <TabsTab value='settings' className={TAB}>\n            <SettingsIcon className='-ms-0.5 opacity-60' />\n            Settings\n          </TabsTab>\n          <TabsPrimitive.Indicator className={INDICATOR} />\n        </TabsPrimitive.List>\n      </ScrollArea>\n      <AnimatedSize>\n        {PANELS.map((panel) => (\n          <TabsPanel key={panel.value} value={panel.value}>\n            <p className='text-muted-foreground px-4 pb-4 text-center text-xs'>\n              {panel.content}\n            </p>\n          </TabsPanel>\n        ))}\n      </AnimatedSize>\n    </Tabs>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "tabs"
+  ],
+  "type": "registry:component"
+}

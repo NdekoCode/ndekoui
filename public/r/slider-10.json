@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider-10",
+  "title": "Slider with value bubble",
+  "description": "End labels and a bubble that shows the value while dragging.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/slider.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/slider/slider-10.tsx",
+      "content": "'use client';\n\nimport { useState } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { Slider, SliderThumbValue } from '@/registry/ndeko/ui/slider';\n\ntype SliderValue = number | readonly number[];\n\nconst BUBBLE_LOOK = [\n  'mb-2.5 rounded-lg bg-transparent px-2 py-1 text-popover-foreground',\n  '[--bubble-top:var(--popover)] [--bubble-bottom:color-mix(in_oklab,var(--popover),var(--primary)_9%)]',\n  'bg-linear-to-b from-(--bubble-top) to-(--bubble-bottom) hairline-ring ring-border shadow-md shadow-black/6',\n].join(' ');\n\nfunction firstValueOf(value: SliderValue) {\n  if (typeof value === 'number') {\n    return value;\n  }\n  return value[0];\n}\n\nexport default function Slider10() {\n  const [strength, setStrength] = useState(50);\n\n  function changeStrength(value: SliderValue) {\n    const nextStrength = firstValueOf(value);\n    setStrength(nextStrength);\n  }\n\n  function renderStrength() {\n    return (\n      <SliderThumbValue className={BUBBLE_LOOK}>{strength}</SliderThumbValue>\n    );\n  }\n\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-3'>\n      <Label>Noise reduction</Label>\n      <div className='flex flex-col gap-2'>\n        <span\n          className='text-muted-foreground flex w-full items-center justify-between gap-2 text-xs font-medium'\n          aria-hidden='true'\n        >\n          <span>Low</span>\n          <span>High</span>\n        </span>\n        <Slider\n          value={strength}\n          onValueChange={changeStrength}\n          step={10}\n          thumbLabels={['Noise reduction']}\n          thumbContent={renderStrength}\n        />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "slider"
+  ],
+  "type": "registry:component"
+}

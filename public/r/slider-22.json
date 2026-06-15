@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider-22",
+  "title": "Vertical slider",
+  "description": "One thumb on an upright track.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/slider.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/slider/slider-22.tsx",
+      "content": "import { Label } from '@/registry/ndeko/ui/label';\nimport { Slider } from '@/registry/ndeko/ui/slider';\n\nexport default function Slider22() {\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-3'>\n      <Label>Gain</Label>\n      <div className='flex h-40 justify-center'>\n        <Slider\n          defaultValue={5}\n          max={10}\n          orientation='vertical'\n          thumbLabels={['Gain']}\n        />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "slider"
+  ],
+  "type": "registry:component"
+}

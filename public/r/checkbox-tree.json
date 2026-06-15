@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox-tree",
+  "title": "Checkbox Tree",
+  "description": "Nested checkboxes where a parent reflects its children.",
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/checkbox-tree.tsx",
+      "content": "'use client';\n\nimport { useCallback, useMemo, useState } from 'react';\n\ntype CheckboxTreeNode = {\n  id: string;\n  label: string;\n  defaultChecked?: boolean;\n  children?: CheckboxTreeNode[];\n};\n\ntype CheckedState = boolean | 'indeterminate';\n\nfunction collectDefaultChecked(node: CheckboxTreeNode, checked: Set<string>) {\n  if (node.defaultChecked) {\n    checked.add(node.id);\n  }\n  node.children?.forEach((child) => collectDefaultChecked(child, checked));\n}\n\nfunction setNodeChecked(\n  node: CheckboxTreeNode,\n  isChecked: boolean,\n  checked: Set<string>\n) {\n  if (isChecked) {\n    checked.add(node.id);\n  } else {\n    checked.delete(node.id);\n  }\n  node.children?.forEach((child) => setNodeChecked(child, isChecked, checked));\n}\n\nfunction isFullyChecked(state: CheckedState) {\n  return state === true;\n}\n\nfunction isPartlyChecked(state: CheckedState) {\n  const isChecked = state === true;\n  const isIndeterminate = state === 'indeterminate';\n  return isChecked || isIndeterminate;\n}\n\nfunction stateOfNode(\n  node: CheckboxTreeNode,\n  checkedIds: Set<string>\n): CheckedState {\n  if (!node.children) {\n    return checkedIds.has(node.id);\n  }\n  const childStates = node.children.map((child) =>\n    stateOfNode(child, checkedIds)\n  );\n  if (childStates.every(isFullyChecked)) {\n    return true;\n  }\n  if (childStates.some(isPartlyChecked)) {\n    return 'indeterminate';\n  }\n  return false;\n}\n\nfunction useCheckboxTree(tree: CheckboxTreeNode) {\n  const initialChecked = useMemo(() => {\n    const checked = new Set<string>();\n    collectDefaultChecked(tree, checked);\n    return checked;\n  }, [tree]);\n\n  const [checkedIds, setCheckedIds] = useState(initialChecked);\n\n  const stateOf = useCallback(\n    (node: CheckboxTreeNode) => stateOfNode(node, checkedIds),\n    [checkedIds]\n  );\n\n  const toggle = useCallback(\n    (node: CheckboxTreeNode) => {\n      const nextChecked = new Set(checkedIds);\n      const shouldCheck = stateOf(node) !== true;\n      setNodeChecked(node, shouldCheck, nextChecked);\n      setCheckedIds(nextChecked);\n    },\n    [checkedIds, stateOf]\n  );\n\n  return { stateOf, toggle };\n}\n\ntype CheckboxTreeRenderProps = {\n  node: CheckboxTreeNode;\n  checked: boolean;\n  indeterminate: boolean;\n  onCheckedChange: () => void;\n  children: React.ReactNode;\n};\n\ntype CheckboxTreeProps = {\n  tree: CheckboxTreeNode;\n  renderNode: (props: CheckboxTreeRenderProps) => React.ReactNode;\n};\n\nfunction CheckboxTree({ tree, renderNode }: CheckboxTreeProps) {\n  const { stateOf, toggle } = useCheckboxTree(tree);\n\n  function renderTreeNode(node: CheckboxTreeNode): React.ReactNode {\n    const state = stateOf(node);\n    const children = node.children?.map(renderTreeNode);\n    return renderNode({\n      node,\n      checked: state === true,\n      indeterminate: state === 'indeterminate',\n      onCheckedChange: () => toggle(node),\n      children,\n    });\n  }\n\n  return renderTreeNode(tree);\n}\n\nexport { CheckboxTree, type CheckboxTreeNode, type CheckboxTreeRenderProps };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

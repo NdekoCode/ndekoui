@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-25",
+  "title": "Search with shortcut",
+  "description": "A search field that shows its keyboard shortcut on a key cap.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/kbd.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-25.tsx",
+      "content": "import { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport { Input } from '@/registry/ndeko/ui/input';\nimport { Kbd } from '@/registry/ndeko/ui/kbd';\n\nexport default function Input25() {\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Search</FieldLabel>\n      <div className='relative'>\n        <Input className='pe-10' type='search' placeholder='Search docs' />\n        <span className='pointer-events-none absolute inset-y-0 end-0 flex items-center pe-1.5'>\n          <Kbd>⌘K</Kbd>\n        </span>\n      </div>\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-02",
+  "title": "Coloured radio group",
+  "description": "A radio group whose picked option takes the info hue.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/radio-group.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/radio/radio-02.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { RadioGroup, RadioGroupItem } from '@/registry/ndeko/ui/radio-group';\n\nconst DENSITY_OPTIONS = [\n  { value: 'comfortable', label: 'Comfortable' },\n  { value: 'compact', label: 'Compact' },\n  { value: 'spacious', label: 'Spacious' },\n];\n\nexport default function Radio02() {\n  const id = useId();\n\n  return (\n    <RadioGroup\n      defaultValue='comfortable'\n      aria-label='Row density'\n      className='[--primary:var(--info)] [--ring:var(--info)]'\n    >\n      {DENSITY_OPTIONS.map((option) => {\n        const itemId = `${id}-${option.value}`;\n\n        return (\n          <div key={option.value} className='flex items-center gap-2'>\n            <RadioGroupItem value={option.value} id={itemId} />\n            <Label htmlFor={itemId}>{option.label}</Label>\n          </div>\n        );\n      })}\n    </RadioGroup>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "radio"
+  ],
+  "type": "registry:component"
+}

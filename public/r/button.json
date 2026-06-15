@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button",
+  "title": "Button",
+  "description": "Pill buttons in six variants and six sizes.",
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/button.tsx",
+      "content": "'use client';\n\nimport { Button as ButtonPrimitive } from '@base-ui/react/button';\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport { isValidElement } from 'react';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\n\nconst PRIMARY = [\n  'bg-primary text-primary-foreground hover:bg-primary/90',\n  'shadow-[0_1px_2px_rgb(0_0_0/0.14),inset_0_1px_0_rgb(255_255_255/0.12)]',\n  'hairline-ring ring-(--ring-color) [--ring-color:color-mix(in_oklab,black_18%,var(--primary))]',\n  'dark:[--ring-color:color-mix(in_oklab,white_15%,var(--primary))]',\n].join(' ');\n\nconst DESTRUCTIVE = [\n  'bg-destructive text-white hover:bg-destructive/90',\n  'shadow-[0_1px_2px_rgb(0_0_0/0.14),inset_0_1px_0_rgb(255_255_255/0.12)]',\n  'hairline-ring ring-(--ring-color) [--ring-color:color-mix(in_oklab,black_18%,var(--destructive))]',\n  'dark:[--ring-color:color-mix(in_oklab,white_15%,var(--destructive))]',\n].join(' ');\n\nconst OUTLINE = [\n  'bg-card text-foreground shadow-[0_1px_2px_rgb(0_0_0/0.05)] hairline-ring ring-foreground/12',\n  'hover:bg-foreground/[0.03] data-popup-open:bg-foreground/[0.04] aria-expanded:bg-foreground/[0.04]',\n  'dark:bg-foreground/[0.04] dark:ring-foreground/15 dark:hover:bg-foreground/[0.07] dark:data-popup-open:bg-foreground/[0.08] dark:aria-expanded:bg-foreground/[0.08] dark:focus-visible:ring-ring',\n].join(' ');\n\nconst GHOST =\n  'rounded-md hover:bg-foreground/5 hover:text-foreground data-popup-open:bg-foreground/5 aria-expanded:bg-foreground/5';\n\nconst buttonVariants = cva(\n  [\n    'group/button relative inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium',\n    'outline-none transition-[color,background-color,box-shadow,scale] duration-150 ease-(--ease-out-strong)',\n    'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',\n    'active:not-aria-[haspopup]:scale-[0.97]',\n    'disabled:pointer-events-none disabled:opacity-50 data-disabled:pointer-events-none data-disabled:opacity-50',\n    \"[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\n  ].join(' '),\n  {\n    variants: {\n      variant: {\n        default: PRIMARY,\n        destructive: DESTRUCTIVE,\n        outline: OUTLINE,\n        secondary:\n          'bg-foreground/[0.06] text-foreground hover:bg-foreground/[0.09]',\n        ghost: GHOST,\n        link: 'rounded-md text-primary-ink underline-offset-4 hover:underline',\n      },\n      size: {\n        sm: 'h-7 px-2.5 text-xs',\n        default: 'h-8 px-3.5 text-[13px]',\n        lg: 'h-9 px-4 text-[13px]',\n        'icon-sm': 'size-7',\n        icon: 'size-8',\n        'icon-lg': 'size-9',\n      },\n    },\n    defaultVariants: {\n      variant: 'default',\n      size: 'default',\n    },\n  }\n);\n\ntype ButtonProps = Omit<ButtonPrimitive.Props, 'className'> &\n  VariantProps<typeof buttonVariants> & {\n    className?: string;\n  };\n\nconst LINK_ROLE = { role: 'link' } as const;\n\nconst NO_ROLE = {};\n\nfunction rendersLink(render: ButtonPrimitive.Props['render']) {\n  if (!isValidElement<{ href?: unknown }>(render)) {\n    return false;\n  }\n  return render.props.href !== undefined;\n}\n\n/** Base UI gives every non-native button `role=\"button\"`; a link drawn as a button stays a link for screen readers. */\nfunction defaultRoleOf(render: ButtonPrimitive.Props['render']) {\n  if (rendersLink(render)) {\n    return LINK_ROLE;\n  }\n  return NO_ROLE;\n}\n\nfunction Button({ className, variant, size, ...props }: ButtonProps) {\n  return (\n    <ButtonPrimitive\n      data-slot='button'\n      className={cn(buttonVariants({ variant, size }), className)}\n      {...defaultRoleOf(props.render)}\n      {...props}\n    />\n  );\n}\n\nexport { Button, buttonVariants, type ButtonProps };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

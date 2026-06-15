@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-44",
+  "title": "Star button",
+  "description": "A primary star button with a quiet count.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-44.tsx",
+      "content": "'use client';\n\nimport {\n  AnimatePresence,\n  motion,\n  type Transition,\n  type Variants,\n  useReducedMotion,\n} from 'motion/react';\nimport { useState } from 'react';\n\nimport { StarIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst BASE_STARS = 729;\nconst DIGIT_SHIFT_PX = 8;\n\nconst DIGIT_TRANSITION: Transition = { duration: 0.18, ease: [0.2, 0, 0, 1] };\n\nconst DIGIT_VARIANTS: Variants = {\n  enter: (direction: number) => {\n    const offset = direction * DIGIT_SHIFT_PX;\n    return { opacity: 0, y: offset };\n  },\n  visible: { opacity: 1, y: 0 },\n  exit: (direction: number) => {\n    const offset = direction * DIGIT_SHIFT_PX;\n    return { opacity: 0, y: -offset };\n  },\n};\n\nconst FADE_VARIANTS: Variants = {\n  enter: { opacity: 0 },\n  visible: { opacity: 1 },\n  exit: { opacity: 0 },\n};\n\nfunction digitVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return DIGIT_VARIANTS;\n}\n\nfunction directionOf(isStarred: boolean) {\n  if (isStarred) {\n    return 1;\n  }\n  return -1;\n}\n\nexport default function Button44() {\n  const [isStarred, setIsStarred] = useState(false);\n  const shouldReduceMotion = useReducedMotion();\n  const digitVariants = digitVariantsOf(shouldReduceMotion);\n  const direction = directionOf(isStarred);\n  const ownStar = Number(isStarred);\n  const starCount = BASE_STARS + ownStar;\n\n  function toggleStar() {\n    setIsStarred((current) => !current);\n  }\n\n  return (\n    <Button aria-pressed={isStarred} onClick={toggleStar}>\n      <StarIcon className='-ms-1 opacity-60 transition-opacity duration-150 group-aria-pressed/button:opacity-100' />\n      <span className='flex items-baseline gap-2'>\n        Star\n        <span className='text-primary-foreground/70 relative flex text-xs tabular-nums'>\n          <span className='flex' aria-hidden='true'>\n            <AnimatePresence\n              mode='popLayout'\n              initial={false}\n              custom={direction}\n            >\n              <motion.span\n                key={starCount}\n                className='flex'\n                custom={direction}\n                variants={digitVariants}\n                initial='enter'\n                animate='visible'\n                exit='exit'\n                transition={DIGIT_TRANSITION}\n              >\n                {starCount}\n              </motion.span>\n            </AnimatePresence>\n          </span>\n          <span className='sr-only'>{starCount} stars</span>\n        </span>\n      </span>\n    </Button>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

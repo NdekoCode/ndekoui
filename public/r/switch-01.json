@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "switch-01",
+  "title": "Basic switch",
+  "description": "A switch named for screen readers only.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/switch.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/switch/switch-01.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { Switch } from '@/registry/ndeko/ui/switch';\n\nexport default function Switch01() {\n  const id = useId();\n\n  return (\n    <div className='inline-flex items-center gap-2'>\n      <Switch id={id} />\n      <Label htmlFor={id} className='sr-only'>\n        Enable notifications\n      </Label>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "switch"
+  ],
+  "type": "registry:component"
+}

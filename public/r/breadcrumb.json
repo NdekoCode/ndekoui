@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "breadcrumb",
+  "title": "Breadcrumb",
+  "description": "Where the page sits, as links.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/icons.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/breadcrumb.tsx",
+      "content": "'use client';\n\nimport { mergeProps } from '@base-ui/react/merge-props';\nimport { useRender } from '@base-ui/react/use-render';\n\nimport { ChevronRightIcon, EllipsisIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\n\nfunction Breadcrumb(props: React.ComponentProps<'nav'>) {\n  return <nav aria-label='Breadcrumb' data-slot='breadcrumb' {...props} />;\n}\n\nfunction BreadcrumbList({ className, ...props }: React.ComponentProps<'ol'>) {\n  return (\n    <ol\n      data-slot='breadcrumb-list'\n      className={cn(\n        'text-muted-foreground flex flex-wrap items-center gap-1.5 text-[13px] break-words',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nfunction BreadcrumbItem({ className, ...props }: React.ComponentProps<'li'>) {\n  return (\n    <li\n      data-slot='breadcrumb-item'\n      className={cn('inline-flex items-center gap-1.5', className)}\n      {...props}\n    />\n  );\n}\n\nfunction BreadcrumbLink({\n  className,\n  render,\n  ...props\n}: useRender.ComponentProps<'a'>) {\n  const defaultProps = {\n    'data-slot': 'breadcrumb-link',\n    className: cn(\n      'rounded-sm outline-none transition-colors hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50',\n      className\n    ),\n  };\n\n  return useRender({\n    defaultTagName: 'a',\n    render,\n    props: mergeProps<'a'>(defaultProps, props),\n  });\n}\n\nfunction BreadcrumbPage({ className, ...props }: React.ComponentProps<'span'>) {\n  return (\n    <span\n      data-slot='breadcrumb-page'\n      aria-current='page'\n      className={cn('text-foreground font-medium', className)}\n      {...props}\n    />\n  );\n}\n\nfunction BreadcrumbSeparator({\n  children,\n  className,\n  ...props\n}: React.ComponentProps<'li'>) {\n  return (\n    <li\n      data-slot='breadcrumb-separator'\n      role='presentation'\n      aria-hidden='true'\n      className={cn('text-muted-foreground/70 [&>svg]:size-3.5', className)}\n      {...props}\n    >\n      {children ?? <ChevronRightIcon />}\n    </li>\n  );\n}\n\nfunction BreadcrumbEllipsis({\n  className,\n  ...props\n}: React.ComponentProps<'span'>) {\n  return (\n    <span\n      data-slot='breadcrumb-ellipsis'\n      role='presentation'\n      aria-hidden='true'\n      className={cn('flex size-5 items-center justify-center', className)}\n      {...props}\n    >\n      <EllipsisIcon className='size-4' />\n    </span>\n  );\n}\n\nexport {\n  Breadcrumb,\n  BreadcrumbEllipsis,\n  BreadcrumbItem,\n  BreadcrumbLink,\n  BreadcrumbList,\n  BreadcrumbPage,\n  BreadcrumbSeparator,\n};\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

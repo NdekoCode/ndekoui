@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs-11",
+  "title": "Folder tabs with icons",
+  "description": "Folder tabs with an icon before each label.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/animated-size.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/scroll-area.json",
+    "https://ui.ndeko.dev/r/tabs.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/tabs/tabs-11.tsx",
+      "content": "import { Tabs as TabsPrimitive } from '@base-ui/react/tabs';\n\nimport {\n  BoxIcon,\n  HouseIcon,\n  PanelsTopLeftIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { AnimatedSize } from '@/registry/ndeko/ui/animated-size';\nimport { ScrollArea } from '@/registry/ndeko/ui/scroll-area';\nimport { Tabs, TabsPanel, TabsTab } from '@/registry/ndeko/ui/tabs';\n\nconst TABS = [\n  {\n    value: 'overview',\n    label: 'Overview',\n    icon: HouseIcon,\n    content: 'Open tasks, recent activity and the next deadlines.',\n  },\n  {\n    value: 'projects',\n    label: 'Projects',\n    icon: PanelsTopLeftIcon,\n    content: 'Three active projects, sorted by their latest update.',\n  },\n  {\n    value: 'packages',\n    label: 'Packages',\n    icon: BoxIcon,\n    content:\n      'Packages published from this workspace, with their latest version.',\n  },\n];\n\nconst LIST =\n  'relative mb-2.5 flex w-max min-w-full gap-0.5 before:pointer-events-none before:absolute before:inset-x-0 before:bottom-0 before:h-(--hairline) before:bg-border';\n\nconst FOLDER_TAB = [\n  'h-8 rounded-t-lg px-3 hairline-x hairline-t border-border bg-foreground/[0.03]',\n  'data-active:bg-card',\n].join(' ');\n\nexport default function Tabs11() {\n  return (\n    <Tabs defaultValue='overview' className='w-full min-w-0'>\n      <ScrollArea>\n        <TabsPrimitive.List className={LIST}>\n          {TABS.map((tab) => (\n            <TabsTab key={tab.value} value={tab.value} className={FOLDER_TAB}>\n              <tab.icon className='-ms-0.5 opacity-60' />\n              {tab.label}\n            </TabsTab>\n          ))}\n        </TabsPrimitive.List>\n      </ScrollArea>\n      <AnimatedSize>\n        {TABS.map((tab) => (\n          <TabsPanel key={tab.value} value={tab.value}>\n            <p className='text-muted-foreground px-4 pb-4 text-center text-xs'>\n              {tab.content}\n            </p>\n          </TabsPanel>\n        ))}\n      </AnimatedSize>\n    </Tabs>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "tabs"
+  ],
+  "type": "registry:component"
+}

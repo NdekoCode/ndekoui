@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "motion-animated-background",
+  "title": "Animated background",
+  "description": "A component that provides animated background effects for UI elements.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/core/animated-background.tsx",
+      "content": "'use client';\nimport { cn } from '@/lib/utils';\nimport {\n  AnimatePresence,\n  MotionConfig,\n  Transition,\n  motion,\n  useReducedMotion,\n} from 'motion/react';\nimport {\n  Children,\n  cloneElement,\n  ReactElement,\n  ReactNode,\n  useState,\n  useId,\n} from 'react';\n\nexport type AnimatedBackgroundProps = {\n  children:\n    ReactElement<{ 'data-id': string }>[] | ReactElement<{ 'data-id': string }>;\n  defaultValue?: string;\n  onValueChange?: (newActiveId: string | null) => void;\n  className?: string;\n  transition?: Transition;\n  enableHover?: boolean;\n};\n\ntype AnimatedBackgroundChild = ReactElement<\n  {\n    'data-id': string;\n    className?: string;\n    children?: ReactNode;\n  } & Record<string, unknown>\n>;\n\nfunction ReducedMotionConfig({ children }: { children: ReactNode }) {\n  const prefersReducedMotion = useReducedMotion();\n  if (!prefersReducedMotion) {\n    return children;\n  }\n  return <MotionConfig reducedMotion='always'>{children}</MotionConfig>;\n}\n\nfunction initialOpacityOf(defaultValue?: string) {\n  if (defaultValue) {\n    return 1;\n  }\n  return 0;\n}\n\nexport function AnimatedBackground({\n  children,\n  defaultValue,\n  onValueChange,\n  className,\n  transition,\n  enableHover = false,\n}: AnimatedBackgroundProps) {\n  const [activeId, setActiveId] = useState<string | null>(defaultValue ?? null);\n  const [syncedDefaultValue, setSyncedDefaultValue] = useState(defaultValue);\n  const uniqueId = useId();\n\n  const hasNewDefaultValue = defaultValue !== syncedDefaultValue;\n  if (hasNewDefaultValue) {\n    setSyncedDefaultValue(defaultValue);\n    if (defaultValue !== undefined) {\n      setActiveId(defaultValue);\n    }\n  }\n\n  const handleSetActiveId = (id: string | null) => {\n    setActiveId(id);\n\n    if (onValueChange) {\n      onValueChange(id);\n    }\n  };\n\n  const interactionPropsOf = (id: string) => {\n    if (enableHover) {\n      return {\n        onMouseEnter: () => handleSetActiveId(id),\n        onMouseLeave: () => handleSetActiveId(null),\n      };\n    }\n    return {\n      onClick: () => handleSetActiveId(id),\n    };\n  };\n\n  const initialOpacity = initialOpacityOf(defaultValue);\n\n  return (\n    <ReducedMotionConfig>\n      {Children.map(children, (child, index) => {\n        const element = child as AnimatedBackgroundChild;\n        const id = element.props['data-id'];\n        const isActive = activeId === id;\n\n        return cloneElement(\n          element,\n          {\n            key: index,\n            className: cn('relative inline-flex', element.props.className),\n            'data-checked': String(isActive),\n            ...interactionPropsOf(id),\n          },\n          <>\n            <AnimatePresence initial={false}>\n              {isActive && (\n                <motion.div\n                  layoutId={`background-${uniqueId}`}\n                  className={cn('absolute inset-0', className)}\n                  transition={transition}\n                  initial={{ opacity: initialOpacity }}\n                  animate={{\n                    opacity: 1,\n                  }}\n                  exit={{\n                    opacity: 0,\n                  }}\n                />\n              )}\n            </AnimatePresence>\n            <div className='z-10'>{element.props.children}</div>\n          </>\n        );\n      })}\n    </ReducedMotionConfig>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/motion/animated-background.tsx"
+    }
+  ],
+  "categories": [
+    "motion"
+  ],
+  "type": "registry:component"
+}

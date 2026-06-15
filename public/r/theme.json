@@ -1,0 +1,286 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme",
+  "title": "Ndeko UI theme",
+  "description": "Tokens for light and dark, ink colours that pass AA, hairlines and the 3D materials.",
+  "cssVars": {
+    "theme": {
+      "color-background": "var(--background)",
+      "color-foreground": "var(--foreground)",
+      "color-card": "var(--card)",
+      "color-card-foreground": "var(--card-foreground)",
+      "color-popover": "var(--popover)",
+      "color-popover-foreground": "var(--popover-foreground)",
+      "color-primary": "var(--primary)",
+      "color-primary-foreground": "var(--primary-foreground)",
+      "color-primary-ink": "var(--primary-ink)",
+      "color-secondary": "var(--secondary)",
+      "color-secondary-foreground": "var(--secondary-foreground)",
+      "color-muted": "var(--muted)",
+      "color-muted-foreground": "var(--muted-foreground)",
+      "color-accent": "var(--accent)",
+      "color-accent-foreground": "var(--accent-foreground)",
+      "color-destructive": "var(--destructive)",
+      "color-destructive-foreground": "var(--destructive-foreground)",
+      "color-destructive-ink": "var(--destructive-ink)",
+      "color-success": "var(--success)",
+      "color-success-foreground": "var(--success-foreground)",
+      "color-warning": "var(--warning)",
+      "color-warning-foreground": "var(--warning-foreground)",
+      "color-info": "var(--info)",
+      "color-info-foreground": "var(--info-foreground)",
+      "color-border": "var(--border)",
+      "color-input": "var(--input)",
+      "color-ring": "var(--ring)",
+      "color-sidebar": "var(--sidebar)",
+      "color-sidebar-foreground": "var(--sidebar-foreground)",
+      "color-sidebar-primary": "var(--sidebar-primary)",
+      "color-sidebar-primary-foreground": "var(--sidebar-primary-foreground)",
+      "color-sidebar-accent": "var(--sidebar-accent)",
+      "color-sidebar-accent-foreground": "var(--sidebar-accent-foreground)",
+      "color-sidebar-border": "var(--sidebar-border)",
+      "color-sidebar-ring": "var(--sidebar-ring)",
+      "color-chart-1": "var(--chart-1)",
+      "color-chart-2": "var(--chart-2)",
+      "color-chart-3": "var(--chart-3)",
+      "color-chart-4": "var(--chart-4)",
+      "color-chart-5": "var(--chart-5)",
+      "radius-sm": "calc(var(--radius) - 4px)",
+      "radius-md": "calc(var(--radius) - 2px)",
+      "radius-lg": "var(--radius)",
+      "radius-xl": "calc(var(--radius) + 4px)",
+      "radius-2xl": "calc(var(--radius) + 8px)",
+      "ease-out-quint": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+      "ease-out-strong": "cubic-bezier(0.23, 1, 0.32, 1)",
+      "ease-in-out-strong": "cubic-bezier(0.77, 0, 0.175, 1)",
+      "ease-drawer": "cubic-bezier(0.32, 0.72, 0, 1)",
+      "animate-orb-arrive": "orb-arrive 280ms cubic-bezier(0.23, 1, 0.32, 1)",
+      "animate-marquee": "marquee var(--marquee-duration, 40s) linear infinite",
+      "animate-marquee-y": "marquee-y var(--marquee-duration, 60s) linear infinite",
+      "animate-float": "float 6s ease-in-out infinite"
+    },
+    "light": {
+      "radius": "0.625rem",
+      "hairline": "1px",
+      "background": "hsl(240 11% 98%)",
+      "foreground": "hsl(240 6% 10%)",
+      "card": "hsl(0 0% 100%)",
+      "card-foreground": "hsl(240 6% 10%)",
+      "popover": "hsl(0 0% 100%)",
+      "popover-foreground": "hsl(240 6% 10%)",
+      "primary": "hsl(239 84% 67%)",
+      "primary-foreground": "hsl(0 0% 100%)",
+      "secondary": "hsl(240 5% 95%)",
+      "secondary-foreground": "hsl(240 6% 10%)",
+      "muted": "hsl(240 5% 95%)",
+      "muted-foreground": "hsl(240 4% 42%)",
+      "accent": "hsl(240 5% 95%)",
+      "accent-foreground": "hsl(240 6% 10%)",
+      "destructive": "hsl(0 84% 60%)",
+      "destructive-foreground": "hsl(0 0% 100%)",
+      "border": "hsl(240 3% 89%)",
+      "input": "hsl(240 3% 89%)",
+      "ring": "hsl(239 84% 67%)",
+      "primary-ink": "hsl(243 75% 59%)",
+      "destructive-ink": "hsl(0 74% 42%)",
+      "success": "hsl(161 100% 37%)",
+      "success-foreground": "hsl(163 100% 24%)",
+      "warning": "hsl(38 100% 49%)",
+      "warning-foreground": "hsl(26 100% 36%)",
+      "info": "hsl(200 98% 39%)",
+      "info-foreground": "hsl(201 96% 32%)",
+      "sidebar": "hsl(240 3% 94%)",
+      "sidebar-foreground": "hsl(240 6% 10%)",
+      "sidebar-primary": "hsl(240 6% 10%)",
+      "sidebar-primary-foreground": "hsl(0 0% 98%)",
+      "sidebar-accent": "hsl(240 3% 88%)",
+      "sidebar-accent-foreground": "hsl(240 6% 10%)",
+      "sidebar-border": "hsl(240 3% 89%)",
+      "sidebar-ring": "hsl(239 84% 67%)",
+      "chart-1": "hsl(239 84% 67%)",
+      "chart-2": "hsl(234 89% 74%)",
+      "chart-3": "hsl(230 94% 82%)",
+      "chart-4": "hsl(228 96% 89%)",
+      "chart-5": "hsl(240 5% 65%)"
+    },
+    "dark": {
+      "background": "hsl(240 5% 7%)",
+      "foreground": "hsl(240 5% 90%)",
+      "card": "hsl(240 5% 10%)",
+      "card-foreground": "hsl(240 5% 90%)",
+      "popover": "hsl(240 5% 11%)",
+      "popover-foreground": "hsl(240 5% 90%)",
+      "primary": "hsl(239 84% 67%)",
+      "primary-foreground": "hsl(0 0% 100%)",
+      "secondary": "hsl(240 4% 13%)",
+      "secondary-foreground": "hsl(240 5% 90%)",
+      "muted": "hsl(240 4% 13%)",
+      "muted-foreground": "hsl(240 5% 62%)",
+      "accent": "hsl(240 4% 13%)",
+      "accent-foreground": "hsl(0 0% 100%)",
+      "destructive": "hsl(0 72% 51%)",
+      "destructive-foreground": "hsl(0 0% 100%)",
+      "border": "hsl(240 4% 16%)",
+      "input": "hsl(240 4% 18%)",
+      "ring": "hsl(0 0% 40%)",
+      "primary-ink": "hsl(234 89% 74%)",
+      "destructive-ink": "hsl(0 91% 71%)",
+      "success": "hsl(161 100% 37%)",
+      "success-foreground": "hsl(158 76% 64%)",
+      "warning": "hsl(38 100% 49%)",
+      "warning-foreground": "hsl(47 100% 61%)",
+      "info": "hsl(198 93% 60%)",
+      "info-foreground": "hsl(199 95% 74%)",
+      "sidebar": "hsl(240 6% 4%)",
+      "sidebar-foreground": "hsl(240 5% 90%)",
+      "sidebar-primary": "hsl(239 84% 67%)",
+      "sidebar-primary-foreground": "hsl(0 0% 100%)",
+      "sidebar-accent": "hsl(240 4% 14%)",
+      "sidebar-accent-foreground": "hsl(0 0% 100%)",
+      "sidebar-border": "hsl(240 4% 16%)",
+      "sidebar-ring": "hsl(0 0% 40%)"
+    }
+  },
+  "css": {
+    "@media (min-resolution: 2dppx)": {
+      ":root": {
+        "--hairline": "0.5px"
+      }
+    },
+    "@keyframes orb-arrive": {
+      "from": {
+        "filter": "blur(3px) saturate(0.6)",
+        "scale": "0.82",
+        "opacity": "0.4"
+      },
+      "to": {
+        "filter": "blur(0) saturate(1)",
+        "scale": "1",
+        "opacity": "1"
+      }
+    },
+    "@keyframes marquee": {
+      "to": {
+        "translate": "-50% 0"
+      }
+    },
+    "@keyframes marquee-y": {
+      "to": {
+        "translate": "0 -50%"
+      }
+    },
+    "@keyframes float": {
+      "0%,\n    100%": {
+        "translate": "0 0"
+      },
+      "50%": {
+        "translate": "0 -6px"
+      }
+    },
+    "@utility hairline-border": {
+      "border-style": "var(--tw-border-style, solid)",
+      "border-width": "var(--hairline)"
+    },
+    "@utility hairline-t": {
+      "border-top-style": "var(--tw-border-style, solid)",
+      "border-top-width": "var(--hairline)"
+    },
+    "@utility hairline-b": {
+      "border-bottom-style": "var(--tw-border-style, solid)",
+      "border-bottom-width": "var(--hairline)"
+    },
+    "@utility hairline-l": {
+      "border-left-style": "var(--tw-border-style, solid)",
+      "border-left-width": "var(--hairline)"
+    },
+    "@utility hairline-r": {
+      "border-right-style": "var(--tw-border-style, solid)",
+      "border-right-width": "var(--hairline)"
+    },
+    "@utility hairline-x": {
+      "border-inline-style": "var(--tw-border-style, solid)",
+      "border-inline-width": "var(--hairline)"
+    },
+    "@utility hairline-y": {
+      "border-block-style": "var(--tw-border-style, solid)",
+      "border-block-width": "var(--hairline)"
+    },
+    "@utility hairline-divide-y": {
+      ":where(& > :not(:last-child))": {
+        "border-top-width": "0px",
+        "border-bottom-style": "var(--tw-border-style, solid)",
+        "border-bottom-width": "var(--hairline)"
+      }
+    },
+    "@utility hairline-divide-x": {
+      ":where(& > :not(:last-child))": {
+        "border-left-width": "0px",
+        "border-right-style": "var(--tw-border-style, solid)",
+        "border-right-width": "var(--hairline)"
+      }
+    },
+    "@utility hairline-ring": {
+      "--tw-ring-shadow": "var(--tw-ring-inset,) 0 0 0\n    calc(var(--hairline) + var(--tw-ring-offset-width, 0px))\n    var(--tw-ring-color, currentcolor)",
+      "box-shadow": "var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000),\n    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow),\n    var(--tw-shadow, 0 0 #0000)"
+    },
+    "@utility chip-3d": {
+      "color": "color-mix(in oklab, var(--chip, currentcolor) 72%, black)",
+      "background-image": "linear-gradient(\n    to bottom,\n    color-mix(in oklab, var(--chip, currentcolor) 7%, white),\n    color-mix(in oklab, var(--chip, currentcolor) 17%, white)\n  )",
+      "box-shadow": "inset 0 0 0 var(--hairline)\n      color-mix(in oklab, var(--chip, currentcolor) 30%, transparent),\n    inset 0 -1px 0\n      color-mix(in oklab, var(--chip, currentcolor) 26%, transparent),\n    0 1px 1.5px color-mix(in oklab, var(--chip, currentcolor) 16%, transparent)",
+      "&:where(.dark, .dark *)": {
+        "color": "color-mix(in oklab, var(--chip, currentcolor) 62%, white)",
+        "background-image": "linear-gradient(\n      to bottom,\n      color-mix(in oklab, var(--chip, currentcolor) 16%, transparent),\n      color-mix(in oklab, var(--chip, currentcolor) 24%, transparent)\n    )",
+        "box-shadow": "inset 0 0 0 var(--hairline)\n        color-mix(in oklab, var(--chip, currentcolor) 36%, transparent),\n      inset 0 1px 0 rgb(255 255 255 / 6%)"
+      }
+    },
+    "@utility keycap-3d": {
+      "background-image": "linear-gradient(to bottom, #ffffff, #f1f2f4)",
+      "box-shadow": "inset 0 0 0 var(--hairline) var(--border),\n    inset 0 -1px 0 rgb(0 0 0 / 5%),\n    0 1px 1.5px rgb(0 0 0 / 5%)",
+      "&:where(.dark, .dark *)": {
+        "background-image": "linear-gradient(\n      to bottom,\n      hsl(240 5% 16%),\n      hsl(240 5% 12%)\n    )",
+        "box-shadow": "inset 0 0 0 var(--hairline) var(--border),\n      inset 0 1px 0 rgb(255 255 255 / 6%)"
+      }
+    },
+    "@utility gem-plate": {
+      "color": "white",
+      "background-image": "linear-gradient(\n      135deg,\n      rgb(255 255 255 / 30%) 0%,\n      rgb(255 255 255 / 0%) 50%\n    ),\n    linear-gradient(\n      to bottom,\n      color-mix(in oklab, var(--gem, currentcolor) 78%, white),\n      var(--gem, currentcolor)\n    )",
+      "box-shadow": "inset 0 0 0 var(--hairline) rgb(255 255 255 / 28%),\n    inset 0 1px 0 rgb(255 255 255 / 22%),\n    0 0 0 var(--hairline)\n      color-mix(in oklab, var(--gem, currentcolor) 40%, transparent),\n    0 1px 1.5px color-mix(in oklab, var(--gem, currentcolor) 28%, transparent)",
+      "&:where(.dark, .dark *)": {
+        "box-shadow": "inset 0 0 0 var(--hairline) rgb(255 255 255 / 22%),\n      inset 0 1px 0 rgb(255 255 255 / 16%)"
+      }
+    },
+    "@utility surface-raised": {
+      "background-color": "var(--popover)",
+      "color": "var(--popover-foreground)",
+      "box-shadow": "0 0 0 var(--hairline) var(--border),\n    0 4px 8px -2px rgb(0 0 0 / 6%),\n    0 12px 32px -4px rgb(0 0 0 / 10%)",
+      "&:where(.dark, .dark *)": {
+        "box-shadow": "0 0 0 var(--hairline) var(--border),\n      0 12px 32px -4px rgb(0 0 0 / 50%)"
+      }
+    },
+    "@utility surface-brand": {
+      "background-color": "var(--card)",
+      "background-image": "radial-gradient(\n    120% 70% at 0% 0%,\n    color-mix(in oklab, var(--primary) 7%, transparent),\n    transparent 60%\n  )",
+      "box-shadow": "0 0 0 var(--hairline) var(--border),\n    inset 0 1px 0 rgb(255 255 255 / 70%),\n    0 1px 2px rgb(0 0 0 / 4%),\n    0 8px 24px -12px color-mix(in oklab, var(--primary) 18%, transparent)",
+      "&:where(.dark, .dark *)": {
+        "box-shadow": "0 0 0 var(--hairline) var(--border),\n      inset 0 1px 0 rgb(255 255 255 / 5%),\n      0 8px 24px -12px color-mix(in oklab, var(--primary) 24%, transparent)"
+      }
+    },
+    "@media (prefers-reduced-motion: reduce)": {
+      "*,\n  ::before,\n  ::after": {
+        "animation-duration": "0.01ms",
+        "animation-iteration-count": "1",
+        "transition-property": "opacity, color, background-color, border-color, outline-color, box-shadow,\n      fill, stroke",
+        "scroll-behavior": "auto"
+      },
+      ".animate-spin": {
+        "animation-duration": "1s",
+        "animation-iteration-count": "infinite"
+      }
+    }
+  },
+  "categories": [
+    "foundations"
+  ],
+  "type": "registry:theme"
+}

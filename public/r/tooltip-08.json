@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip-08",
+  "title": "Hover card with stats",
+  "description": "A deployment link that previews its status and figures.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/chip.json",
+    "https://ui.ndeko.dev/r/hover-card.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/tooltip/tooltip-08.tsx",
+      "content": "import { FOCUS_RING } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Chip } from '@/registry/ndeko/ui/chip';\nimport {\n  HoverCard,\n  HoverCardContent,\n  HoverCardTrigger,\n} from '@/registry/ndeko/ui/hover-card';\n\nconst LINK = cn(\n  'inline-flex items-center gap-2 rounded-sm text-[13px] font-medium text-foreground underline-offset-4 hover:underline',\n  FOCUS_RING\n);\n\nconst STATS = [\n  { label: 'Code coverage', value: '94.3%' },\n  { label: 'Last deploy', value: 'Today at 15:42' },\n  { label: 'Performance score', value: '98/100' },\n];\n\nexport default function Tooltip08() {\n  return (\n    <HoverCard>\n      <HoverCardTrigger href='#' className={LINK}>\n        <span className='bg-success size-2 rounded-full' aria-hidden='true' />\n        Production\n        <span className='text-muted-foreground font-normal tabular-nums'>\n          4f2a9c1\n        </span>\n      </HoverCardTrigger>\n      <HoverCardContent className='w-56 p-3'>\n        <dl className='grid gap-3 text-xs'>\n          <div className='grid justify-items-start gap-1'>\n            <dt className='text-muted-foreground'>Status</dt>\n            <dd>\n              <Chip color='var(--success)'>Completed</Chip>\n            </dd>\n          </div>\n          {STATS.map((stat) => (\n            <div key={stat.label} className='grid gap-0.5'>\n              <dt className='text-muted-foreground'>{stat.label}</dt>\n              <dd className='font-medium tabular-nums'>{stat.value}</dd>\n            </div>\n          ))}\n        </dl>\n      </HoverCardContent>\n    </HoverCard>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "tooltip"
+  ],
+  "type": "registry:component"
+}

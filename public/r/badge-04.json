@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge-04",
+  "title": "Count badge",
+  "description": "A compact badge that holds a single count.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/badge.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/badge/badge-04.tsx",
+      "content": "import { Badge } from '@/registry/ndeko/ui/badge';\n\nexport default function Badge04() {\n  return <Badge className='min-w-5 px-1 tabular-nums'>6</Badge>;\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "badge"
+  ],
+  "type": "registry:component"
+}

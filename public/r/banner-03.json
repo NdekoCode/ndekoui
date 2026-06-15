@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "banner-03",
+  "title": "Upgrade banner",
+  "description": "A centred line that points to a plan upgrade.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/status-orb.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/banner/banner-03.tsx",
+      "content": "import { EclipseIcon } from '@/registry/ndeko/lib/icons';\nimport { FOCUS_RING } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { StatusOrb } from '@/registry/ndeko/ui/status-orb';\n\nexport default function Banner03() {\n  return (\n    <div className='bg-primary/[0.06] hairline-ring ring-primary/15 dark:bg-primary/10 w-full rounded-xl px-4 py-2.5'>\n      <div className='flex items-center justify-center gap-3'>\n        <StatusOrb\n          tone='brand'\n          size='sm'\n          glyph={<EclipseIcon strokeWidth={2.25} />}\n        />\n        <p className='text-[13px]'>\n          Get real-time updates and analytics on the Team plan{' '}\n          <span className='text-muted-foreground' aria-hidden='true'>\n            ·\n          </span>{' '}\n          <a\n            href='#'\n            className={cn(\n              'text-primary-ink rounded-sm font-medium underline underline-offset-4 hover:no-underline',\n              FOCUS_RING\n            )}\n          >\n            Upgrade\n          </a>\n        </p>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "banner"
+  ],
+  "type": "registry:component"
+}

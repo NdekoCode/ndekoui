@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox",
+  "title": "Checkbox",
+  "description": "A checkbox whose mark scales in.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/icons.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/checkbox.tsx",
+      "content": "'use client';\n\nimport { Checkbox as CheckboxPrimitive } from '@base-ui/react/checkbox';\n\nimport { CheckIcon, MinusIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\n\ntype CheckboxProps = Omit<CheckboxPrimitive.Root.Props, 'className'> & {\n  className?: string;\n};\n\nconst CHECKED_FILL = [\n  'data-checked:bg-primary data-checked:text-primary-foreground data-indeterminate:bg-primary data-indeterminate:text-primary-foreground',\n  'data-checked:ring-(--ring-color) data-indeterminate:ring-(--ring-color)',\n  'dark:data-checked:bg-primary dark:data-indeterminate:bg-primary dark:data-checked:ring-(--ring-color) dark:data-indeterminate:ring-(--ring-color) dark:focus-visible:ring-ring/25',\n  '[--ring-color:color-mix(in_oklab,black_15%,var(--primary))] dark:[--ring-color:color-mix(in_oklab,white_15%,var(--primary))]',\n].join(' ');\n\nconst MARK_SWAP =\n  'transition-[scale,opacity] duration-150 ease-(--ease-out-strong)';\n\nconst MARK = [\n  'relative flex items-center justify-center',\n  MARK_SWAP,\n  'data-starting-style:scale-60 data-starting-style:opacity-0 data-ending-style:scale-60 data-ending-style:opacity-0 data-ending-style:duration-100',\n].join(' ');\n\nconst CHECK_GLYPH = [\n  'size-3',\n  MARK_SWAP,\n  'in-data-indeterminate:scale-60 in-data-indeterminate:opacity-0',\n].join(' ');\n\nconst MINUS_GLYPH = [\n  'absolute size-3 scale-60 opacity-0',\n  MARK_SWAP,\n  'in-data-indeterminate:scale-100 in-data-indeterminate:opacity-100',\n].join(' ');\n\nfunction Checkbox({ className, ...props }: CheckboxProps) {\n  return (\n    <CheckboxPrimitive.Root\n      data-slot='checkbox'\n      className={cn(\n        'peer bg-card hairline-ring ring-foreground/20 inline-flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-[4px] shadow-[0_1px_2px_rgb(0_0_0/0.05)] transition-[background-color,box-shadow] duration-150 outline-none',\n        'focus-visible:ring-ring/25 data-invalid:ring-destructive/50 dark:bg-foreground/[0.04] dark:ring-foreground/25 focus-visible:ring-[3px] data-disabled:cursor-not-allowed data-disabled:opacity-50',\n        CHECKED_FILL,\n        className\n      )}\n      {...props}\n    >\n      <CheckboxPrimitive.Indicator\n        data-slot='checkbox-indicator'\n        className={MARK}\n      >\n        <CheckIcon strokeWidth={2.5} className={CHECK_GLYPH} />\n        <MinusIcon strokeWidth={2.5} className={MINUS_GLYPH} />\n      </CheckboxPrimitive.Indicator>\n    </CheckboxPrimitive.Root>\n  );\n}\n\nexport { Checkbox, type CheckboxProps };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-05",
+  "title": "Native select with brand outline",
+  "description": "The hairline and the focus halo take the brand colour.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/select-native.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-05.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { SelectNative } from '@/registry/ndeko/ui/select-native';\n\nexport default function Select05() {\n  const id = useId();\n\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-2'>\n      <Label htmlFor={id}>Framework</Label>\n      <SelectNative\n        id={id}\n        className='ring-primary/40 focus-visible:border-primary/60 focus-visible:ring-primary/25 dark:ring-primary/45 dark:focus-visible:border-primary/60'\n      >\n        <option value='react'>React</option>\n        <option value='nextjs'>Next.js</option>\n        <option value='astro'>Astro</option>\n        <option value='gatsby'>Gatsby</option>\n      </SelectNative>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

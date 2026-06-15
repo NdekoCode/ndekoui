@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-32",
+  "title": "Alignment toggle group",
+  "description": "Four joined primary toggles where one alignment stays selected.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/toggle-group.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-32.tsx",
+      "content": "'use client';\n\nimport { useState } from 'react';\n\nimport {\n  AlignCenterIcon,\n  AlignJustifyIcon,\n  AlignLeftIcon,\n  AlignRightIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { ToggleGroup, ToggleGroupItem } from '@/registry/ndeko/ui/toggle-group';\n\nconst ITEM = [\n  'rounded-none first:rounded-s-md last:rounded-e-md focus-visible:z-10',\n  'bg-primary/80 text-primary-foreground hover:bg-primary hover:text-primary-foreground',\n  'data-pressed:bg-primary data-pressed:text-primary-foreground',\n].join(' ');\n\nexport default function Button32() {\n  const [alignment, setAlignment] = useState(['center']);\n\n  function selectAlignment(nextAlignment: string[]) {\n    const hasSelection = nextAlignment.length > 0;\n    if (hasSelection) {\n      setAlignment(nextAlignment);\n    }\n  }\n\n  return (\n    <ToggleGroup\n      value={alignment}\n      onValueChange={selectAlignment}\n      aria-label='Text alignment'\n      className='hairline-divide-x divide-background gap-0'\n    >\n      <ToggleGroupItem value='left' aria-label='Align left' className={ITEM}>\n        <AlignLeftIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem\n        value='center'\n        aria-label='Align center'\n        className={ITEM}\n      >\n        <AlignCenterIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem value='right' aria-label='Align right' className={ITEM}>\n        <AlignRightIcon />\n      </ToggleGroupItem>\n      <ToggleGroupItem\n        value='justify'\n        aria-label='Align justify'\n        className={ITEM}\n      >\n        <AlignJustifyIcon />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

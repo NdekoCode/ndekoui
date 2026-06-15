@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "accordion",
+  "title": "Accordion",
+  "description": "Panels that open by animating their height.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/icons.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/accordion.tsx",
+      "content": "'use client';\n\nimport { Accordion as AccordionPrimitive } from '@base-ui/react/accordion';\n\nimport { ChevronDownIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\n\ntype WithClassName<Props> = Omit<Props, 'className'> & { className?: string };\n\nfunction Accordion({\n  className,\n  ...props\n}: WithClassName<AccordionPrimitive.Root.Props>) {\n  return (\n    <AccordionPrimitive.Root\n      data-slot='accordion'\n      className={cn('flex w-full flex-col', className)}\n      {...props}\n    />\n  );\n}\n\nfunction AccordionItem({\n  className,\n  ...props\n}: WithClassName<AccordionPrimitive.Item.Props>) {\n  return (\n    <AccordionPrimitive.Item\n      data-slot='accordion-item'\n      className={cn('hairline-b border-border last:border-b-0', className)}\n      {...props}\n    />\n  );\n}\n\nfunction AccordionTrigger({\n  className,\n  children,\n  ...props\n}: WithClassName<AccordionPrimitive.Trigger.Props>) {\n  return (\n    <AccordionPrimitive.Header className='flex'>\n      <AccordionPrimitive.Trigger\n        data-slot='accordion-trigger'\n        className={cn(\n          'group/accordion-trigger text-foreground flex flex-1 cursor-pointer items-center justify-between gap-4 rounded-md py-3 text-left text-[13px] font-medium transition-colors outline-none',\n          'focus-visible:ring-ring/25 focus-visible:ring-[3px] data-disabled:pointer-events-none data-disabled:opacity-50',\n          className\n        )}\n        {...props}\n      >\n        {children}\n        <ChevronDownIcon className='text-muted-foreground size-4 shrink-0 transition-transform duration-200 ease-(--ease-out-strong) group-data-panel-open/accordion-trigger:rotate-180' />\n      </AccordionPrimitive.Trigger>\n    </AccordionPrimitive.Header>\n  );\n}\n\nfunction AccordionContent({\n  className,\n  children,\n  ...props\n}: WithClassName<AccordionPrimitive.Panel.Props>) {\n  return (\n    <AccordionPrimitive.Panel\n      data-slot='accordion-content'\n      className='text-muted-foreground h-(--accordion-panel-height) overflow-hidden text-[13px] transition-[height] duration-200 ease-(--ease-out-strong) data-ending-style:h-0 data-starting-style:h-0'\n      {...props}\n    >\n      <div className={cn('pb-3', className)}>{children}</div>\n    </AccordionPrimitive.Panel>\n  );\n}\n\nexport {\n  Accordion,\n  AccordionContent,\n  AccordionContent as AccordionPanel,\n  AccordionItem,\n  AccordionTrigger,\n};\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

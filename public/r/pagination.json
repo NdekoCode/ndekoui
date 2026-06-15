@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pagination",
+  "title": "Pagination",
+  "description": "Pages as pill links, the current one outlined.",
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/button.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/pagination.tsx",
+      "content": "import {\n  ChevronLeftIcon,\n  ChevronRightIcon,\n  EllipsisIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Button, type ButtonProps } from '@/registry/ndeko/ui/button';\n\nfunction Pagination({ className, ...props }: React.ComponentProps<'nav'>) {\n  return (\n    <nav\n      aria-label='Pagination'\n      data-slot='pagination'\n      className={cn('mx-auto flex w-full justify-center', className)}\n      {...props}\n    />\n  );\n}\n\nfunction PaginationContent({\n  className,\n  ...props\n}: React.ComponentProps<'ul'>) {\n  return (\n    <ul\n      data-slot='pagination-content'\n      className={cn('flex flex-row items-center gap-1', className)}\n      {...props}\n    />\n  );\n}\n\nfunction PaginationItem(props: React.ComponentProps<'li'>) {\n  return <li data-slot='pagination-item' {...props} />;\n}\n\ntype PaginationLinkProps = Omit<React.ComponentProps<'a'>, 'ref'> &\n  Pick<ButtonProps, 'size'> & {\n    isActive?: boolean;\n    isDisabled?: boolean;\n  };\n\nfunction variantOf(isActive: boolean | undefined) {\n  if (isActive) {\n    return 'outline' as const;\n  }\n  return 'ghost' as const;\n}\n\nfunction ariaCurrentOf(isActive: boolean | undefined) {\n  if (isActive) {\n    return 'page' as const;\n  }\n  return undefined;\n}\n\nfunction PaginationLink({\n  className,\n  isActive,\n  isDisabled,\n  size = 'icon',\n  children,\n  ...props\n}: PaginationLinkProps) {\n  return (\n    <Button\n      variant={variantOf(isActive)}\n      size={size}\n      nativeButton={false}\n      disabled={isDisabled}\n      data-slot='pagination-link'\n      data-active={isActive}\n      className={cn('tabular-nums', className)}\n      render={\n        <a\n          aria-current={ariaCurrentOf(isActive)}\n          aria-disabled={isDisabled}\n          {...props}\n        />\n      }\n    >\n      {children}\n    </Button>\n  );\n}\n\nfunction PaginationPrevious({\n  className,\n  label = 'Previous',\n  ...props\n}: PaginationLinkProps & { label?: string }) {\n  return (\n    <PaginationLink\n      aria-label='Go to previous page'\n      size='default'\n      className={cn('gap-1 ps-2.5', className)}\n      {...props}\n    >\n      <ChevronLeftIcon />\n      <span>{label}</span>\n    </PaginationLink>\n  );\n}\n\nfunction PaginationNext({\n  className,\n  label = 'Next',\n  ...props\n}: PaginationLinkProps & { label?: string }) {\n  return (\n    <PaginationLink\n      aria-label='Go to next page'\n      size='default'\n      className={cn('gap-1 pe-2.5', className)}\n      {...props}\n    >\n      <span>{label}</span>\n      <ChevronRightIcon />\n    </PaginationLink>\n  );\n}\n\nfunction PaginationEllipsis({\n  className,\n  ...props\n}: React.ComponentProps<'span'>) {\n  return (\n    <span\n      aria-hidden='true'\n      data-slot='pagination-ellipsis'\n      className={cn(\n        'text-muted-foreground flex size-8 items-center justify-center',\n        className\n      )}\n      {...props}\n    >\n      <EllipsisIcon className='size-4' />\n    </span>\n  );\n}\n\nexport {\n  Pagination,\n  PaginationContent,\n  PaginationEllipsis,\n  PaginationItem,\n  PaginationLink,\n  PaginationNext,\n  PaginationPrevious,\n};\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

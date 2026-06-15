@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-40",
+  "title": "Date and time input",
+  "description": "A date with hours and minutes on a 24 hour clock.",
+  "dependencies": [
+    "react-aria-components"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/datefield-rac.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-40.tsx",
+      "content": "'use client';\n\nimport { Label } from 'react-aria-components';\n\nimport { DateField, DateInput } from '@/registry/ndeko/ui/datefield-rac';\nimport { LABEL_RECIPE } from '@/registry/ndeko/ui/label';\n\nexport default function Input40() {\n  return (\n    <DateField\n      className='flex w-full max-w-xs flex-col gap-1.5'\n      granularity='minute'\n      hourCycle={24}\n    >\n      <Label className={LABEL_RECIPE}>Publish at</Label>\n      <DateInput />\n    </DateField>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "calendar-date-picker-25",
+  "title": "Date picker",
+  "description": "A react-aria date field that opens a calendar.",
+  "dependencies": [
+    "react-aria-components"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/animated-size.json",
+    "https://ui.ndeko.dev/r/calendar-rac.json",
+    "https://ui.ndeko.dev/r/datefield-rac.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/calendar-date-picker/calendar-date-picker-25.tsx",
+      "content": "'use client';\n\nimport {\n  Button,\n  DatePicker,\n  Dialog,\n  Group,\n  Label,\n  Popover,\n} from 'react-aria-components';\n\nimport { CalendarIcon } from '@/registry/ndeko/lib/icons';\nimport { AnimatedSize } from '@/registry/ndeko/ui/animated-size';\nimport { Calendar } from '@/registry/ndeko/ui/calendar-rac';\nimport { DateInput } from '@/registry/ndeko/ui/datefield-rac';\nimport { LABEL_RECIPE } from '@/registry/ndeko/ui/label';\n\nimport { SETTLING_DAYS } from './_parts/settling-days';\n\nconst CALENDAR_BUTTON = [\n  'z-10 -ms-8 flex w-8 items-center justify-center rounded-e-md text-muted-foreground outline-none',\n  'transition-[color,box-shadow] data-hovered:text-foreground data-focus-visible:ring-[3px] data-focus-visible:ring-ring/25',\n].join(' ');\n\nconst POPOVER = [\n  'surface-raised rounded-xl outline-none',\n  'origin-(--trigger-anchor-point) transition-[opacity,scale] duration-150 ease-(--ease-out-strong)',\n  'data-entering:scale-95 data-entering:opacity-0 data-exiting:scale-95 data-exiting:opacity-0 data-exiting:duration-100',\n].join(' ');\n\nexport default function CalendarDatePicker25() {\n  return (\n    <DatePicker className='flex w-full max-w-xs flex-col gap-1.5'>\n      <Label className={LABEL_RECIPE}>Date picker</Label>\n      <div className='flex'>\n        <Group className='w-full'>\n          <DateInput className='pe-8' />\n        </Group>\n        <Button className={CALENDAR_BUTTON}>\n          <CalendarIcon className='size-4' />\n        </Button>\n      </div>\n      <Popover className={POPOVER} offset={6}>\n        <Dialog className='max-h-[inherit] overflow-auto p-2 outline-none'>\n          <AnimatedSize>\n            <Calendar className={SETTLING_DAYS} />\n          </AnimatedSize>\n        </Dialog>\n      </Popover>\n    </DatePicker>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/calendar-date-picker/calendar-date-picker-25.tsx"
+    },
+    {
+      "path": "registry/ndeko/components/calendar-date-picker/_parts/settling-days.ts",
+      "content": "/**\n * The react-aria calendar cells cannot take classes from outside, so the press that lets a picked\n * day settle in is applied from the calendar root.\n */\nexport const SETTLING_DAYS =\n  '[&_td>div]:transition-[color,background-color,border-radius,box-shadow,scale] [&_td>div]:ease-(--ease-out-strong) [&_td>[data-pressed]]:scale-90';\n",
+      "type": "registry:component",
+      "target": "components/calendar-date-picker/_parts/settling-days.ts"
+    }
+  ],
+  "categories": [
+    "components",
+    "calendar-date-picker"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-39",
+  "title": "Fork button",
+  "description": "A primary fork button with a count and an options chevron.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-39.tsx",
+      "content": "import { ChevronDownIcon, GitForkIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst SEGMENT =\n  'rounded-none first:rounded-s-full last:rounded-e-full focus-visible:z-10';\n\nexport default function Button39() {\n  return (\n    <div className='inline-flex -space-x-px'>\n      <Button className={SEGMENT}>\n        <GitForkIcon className='opacity-60' />\n        Fork\n        <span className='bg-primary-foreground/15 text-primary-foreground ms-1 -me-1 inline-flex h-5 min-w-5 items-center justify-center rounded-[5px] px-1 text-[11px] font-medium tabular-nums'>\n          18\n        </span>\n      </Button>\n      <Button size='icon' aria-label='Options' className={SEGMENT}>\n        <ChevronDownIcon />\n      </Button>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

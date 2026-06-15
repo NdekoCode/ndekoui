@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-51",
+  "title": "Listbox with groups",
+  "description": "An always open list of options under headings and hairlines.",
+  "dependencies": [
+    "react-aria-components"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/selected-mark.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-51.tsx",
+      "content": "'use client';\n\nimport { Fragment, useId } from 'react';\nimport {\n  Header,\n  ListBox,\n  ListBoxItem,\n  ListBoxSection,\n  Separator,\n} from 'react-aria-components';\n\nimport {\n  CONTROL_RECIPE,\n  MENU_ITEM,\n  MENU_LABEL,\n  MENU_SEPARATOR,\n} from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { SelectedMark } from '@/registry/ndeko/ui/selected-mark';\n\nconst SECTIONS = [\n  {\n    name: 'Veggies',\n    items: [\n      { id: 'lettuce', label: 'Lettuce' },\n      { id: 'tomato', label: 'Tomato' },\n      { id: 'onion', label: 'Onion' },\n    ],\n  },\n  {\n    name: 'Protein',\n    items: [\n      { id: 'ham', label: 'Ham' },\n      { id: 'tuna', label: 'Tuna' },\n      { id: 'tofu', label: 'Tofu' },\n    ],\n  },\n  {\n    name: 'Condiments',\n    items: [\n      { id: 'mayonnaise', label: 'Mayonnaise' },\n      { id: 'mustard', label: 'Mustard' },\n      { id: 'ranch', label: 'Ranch' },\n    ],\n  },\n];\n\nconst LIST_BOX = cn(\n  CONTROL_RECIPE,\n  'flex max-h-72 min-h-20 flex-col overflow-y-auto p-1 outline-none',\n  'has-[[data-focus-visible]]:border-foreground/30 has-[[data-focus-visible]]:ring-ring/25 has-[[data-focus-visible]]:ring-[3px]'\n);\n\nconst OPTION = cn(\n  MENU_ITEM,\n  'cursor-pointer pr-8 data-focused:bg-foreground/5 data-hovered:bg-foreground/5'\n);\n\nconst MARK =\n  'absolute right-1.5 transition-[scale,opacity] duration-150 ease-(--ease-out-strong)';\n\nfunction markStateOf(isSelected: boolean) {\n  if (isSelected) {\n    return 'scale-100 opacity-100';\n  }\n  return 'scale-75 opacity-0 duration-100';\n}\n\nexport default function Select51() {\n  const labelId = useId();\n\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-2'>\n      <Label id={labelId}>Sandwich fillings</Label>\n      <ListBox\n        aria-labelledby={labelId}\n        selectionMode='multiple'\n        defaultSelectedKeys={['lettuce', 'tuna']}\n        className={LIST_BOX}\n      >\n        {SECTIONS.map((section, index) => (\n          <Fragment key={section.name}>\n            {index > 0 && <Separator className={MENU_SEPARATOR} />}\n            <ListBoxSection className='flex flex-col gap-0.5'>\n              <Header className={MENU_LABEL}>{section.name}</Header>\n              {section.items.map((item) => (\n                <ListBoxItem\n                  key={item.id}\n                  id={item.id}\n                  textValue={item.label}\n                  className={OPTION}\n                >\n                  {({ isSelected }) => (\n                    <>\n                      {item.label}\n                      <SelectedMark\n                        className={cn(MARK, markStateOf(isSelected))}\n                      />\n                    </>\n                  )}\n                </ListBoxItem>\n              ))}\n            </ListBoxSection>\n          </Fragment>\n        ))}\n      </ListBox>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

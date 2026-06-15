@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-09",
+  "title": "Payment card picker",
+  "description": "Radio cards for saved cards, each led by its brand mark.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/radio-group.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/radio/radio-09.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { RadioGroup, RadioGroupItem } from '@/registry/ndeko/ui/radio-group';\n\nconst CHOICE_CARD = [\n  'relative flex w-full items-start gap-2 rounded-xl bg-card p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)] hairline-ring ring-border transition-[box-shadow] duration-150',\n  'has-data-checked:shadow-[0_1px_2px_rgb(0_0_0/0.04),0_6px_16px_-8px_color-mix(in_oklab,var(--primary)_35%,transparent)] has-data-checked:ring-primary/45',\n].join(' ');\n\nconst MARK_TILE =\n  'keycap-3d text-foreground inline-flex h-6 w-8 shrink-0 items-center justify-center rounded-sm';\n\nfunction MastercardMark() {\n  return (\n    <span aria-hidden='true' className={MARK_TILE}>\n      <svg width={20} height={12.5} viewBox='0 0 24 15' fill='currentColor'>\n        <circle cx='7.5' cy='7.5' r='7.5' fillOpacity={0.85} />\n        <circle cx='16.5' cy='7.5' r='7.5' fillOpacity={0.45} />\n      </svg>\n    </span>\n  );\n}\n\nfunction VisaMark() {\n  return (\n    <span aria-hidden='true' className={MARK_TILE}>\n      <svg width={24} height={9} viewBox='4 7.5 24 9' fill='currentColor'>\n        <path d='m15.884 8.262-1.604 7.496h-1.94l1.604-7.496h1.94Z' />\n        <path\n          fillRule='evenodd'\n          clipRule='evenodd'\n          d='M26.207 15.758H28l-1.567-7.496H24.78a.882.882 0 0 0-.826.55l-2.91 6.946h2.037l.404-1.12h2.488l.235 1.12Zm-2.165-2.656 1.021-2.815.587 2.815h-1.608Z'\n        />\n        <path d='M21.144 13.31c.005-1.183-.975-1.698-1.76-2.11-.526-.276-.964-.506-.957-.861.007-.27.263-.555.823-.628.277-.036 1.044-.065 1.913.335l.34-1.59a5.23 5.23 0 0 0-1.815-.331c-1.917 0-3.265 1.018-3.276 2.477-.013 1.08.963 1.681 1.697 2.04.756.368 1.01.604 1.006.932-.005.503-.604.726-1.16.734-.945.015-1.506-.247-1.95-.454l-.042-.02-.352 1.643c.454.208 1.29.39 2.156.398 2.038 0 3.371-1.006 3.377-2.565ZM13.112 8.262 9.97 15.758H7.92L6.374 9.775c-.094-.368-.175-.503-.46-.658-.467-.253-1.237-.49-1.914-.638l.046-.217h3.3c.42 0 .798.28.894.763l.817 4.338 2.018-5.101h2.037Z' />\n      </svg>\n    </span>\n  );\n}\n\nconst SAVED_CARDS = [\n  {\n    value: 'mastercard',\n    label: 'Mastercard ending in 8821',\n    note: 'Expires 09/28',\n    description: 'Used for the last three invoices.',\n    Mark: MastercardMark,\n  },\n  {\n    value: 'visa',\n    label: 'Visa ending in 4242',\n    note: 'Expires 04/29',\n    description: 'Added by Amara Okafor in March.',\n    Mark: VisaMark,\n  },\n];\n\nexport default function Radio09() {\n  const id = useId();\n\n  return (\n    <RadioGroup\n      defaultValue='mastercard'\n      aria-label='Payment card'\n      className='w-full gap-2'\n    >\n      {SAVED_CARDS.map((card) => {\n        const itemId = `${id}-${card.value}`;\n        const descriptionId = `${itemId}-description`;\n\n        return (\n          <div key={card.value} className={CHOICE_CARD}>\n            <RadioGroupItem\n              value={card.value}\n              id={itemId}\n              aria-describedby={descriptionId}\n              className='order-1 after:absolute after:inset-0'\n            />\n            <div className='flex grow items-start gap-3'>\n              <card.Mark />\n              <div className='grid grow gap-1.5'>\n                <Label htmlFor={itemId}>\n                  {card.label}{' '}\n                  <span className='text-muted-foreground text-xs leading-[inherit] font-normal'>\n                    ({card.note})\n                  </span>\n                </Label>\n                <p id={descriptionId} className='text-muted-foreground text-xs'>\n                  {card.description}\n                </p>\n              </div>\n            </div>\n          </div>\n        );\n      })}\n    </RadioGroup>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "radio"
+  ],
+  "type": "registry:component"
+}

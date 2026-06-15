@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "timeline-04",
+  "title": "Pull request timeline",
+  "description": "Review steps with the time under each description.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/timeline.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/timeline/timeline-04.tsx",
+      "content": "import {\n  Timeline,\n  TimelineContent,\n  TimelineDate,\n  TimelineHeader,\n  TimelineIndicator,\n  TimelineItem,\n  TimelineSeparator,\n  TimelineTitle,\n} from '@/registry/ndeko/ui/timeline';\n\ntype Event = {\n  id: number;\n  date?: string;\n  title: string;\n  description: string;\n};\n\nconst ITEMS: Event[] = [\n  {\n    id: 1,\n    date: '15 minutes ago',\n    title: 'Pull request submitted',\n    description:\n      'Submitted PR #342 with the new feature. Waiting for a code review from the team leads.',\n  },\n  {\n    id: 2,\n    date: '10 minutes ago',\n    title: 'CI pipeline started',\n    description:\n      'Automated tests and build started. Running unit tests and code quality checks.',\n  },\n  {\n    id: 3,\n    date: '5 minutes ago',\n    title: 'Code review feedback',\n    description:\n      'Received comments on the PR. Minor changes needed in error handling and documentation.',\n  },\n  {\n    id: 4,\n    title: 'Changes pushed',\n    description:\n      'Implemented the requested changes and pushed them to the feature branch. Awaiting final approval.',\n  },\n];\n\nconst DOT = [\n  'border-foreground/15 scale-75 transition-[background-color,border-color,scale] duration-200 ease-out-strong',\n  'group-data-completed/timeline-item:border-primary group-data-completed/timeline-item:bg-primary group-data-completed/timeline-item:scale-100 group-data-completed/timeline-item:duration-300',\n].join(' ');\n\nexport default function Timeline04() {\n  return (\n    <Timeline defaultValue={3}>\n      {ITEMS.map((item) => (\n        <TimelineItem key={item.id} step={item.id}>\n          <TimelineHeader>\n            <TimelineSeparator className='bg-foreground/10' />\n            <TimelineTitle className='-mt-0.5'>{item.title}</TimelineTitle>\n            <TimelineIndicator className={DOT} />\n          </TimelineHeader>\n          <TimelineContent>\n            {item.description}\n            {item.date && (\n              <TimelineDate className='mt-2 mb-0'>{item.date}</TimelineDate>\n            )}\n          </TimelineContent>\n        </TimelineItem>\n      ))}\n    </Timeline>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "timeline"
+  ],
+  "type": "registry:component"
+}

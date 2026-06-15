@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "switch-07",
+  "title": "Outlined track switch",
+  "description": "A small grey thumb that grows and turns white as the track fills, in the Material 3 manner.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/switch/switch-07.tsx",
+      "content": "import { Switch as SwitchPrimitive } from '@base-ui/react/switch';\nimport { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\n\nconst TRACK = [\n  'relative inline-flex h-6 w-10 shrink-0 cursor-pointer items-center rounded-full bg-card hairline-ring ring-foreground/30 outline-none transition-[background-color,box-shadow] duration-200',\n  'data-checked:bg-primary data-checked:ring-(--ring-color) [--ring-color:color-mix(in_oklab,black_15%,var(--primary))] dark:[--ring-color:color-mix(in_oklab,white_15%,var(--primary))]',\n  'focus-visible:ring-[3px] focus-visible:ring-ring/25 focus-visible:data-checked:ring-ring/25',\n  'data-disabled:cursor-not-allowed data-disabled:opacity-50',\n].join(' ');\n\nconst THUMB = [\n  'pointer-events-none absolute top-1/2 left-0 block size-5 -translate-y-1/2 translate-x-0.5 scale-60 rounded-full bg-foreground/45',\n  'transition-[translate,scale,background-color] duration-200 ease-(--ease-out-strong)',\n  'data-checked:translate-x-4.5 data-checked:scale-100 data-checked:bg-white',\n].join(' ');\n\nexport default function Switch07() {\n  const id = useId();\n\n  return (\n    <div className='inline-flex items-center gap-2'>\n      <SwitchPrimitive.Root id={id} className={TRACK}>\n        <SwitchPrimitive.Thumb className={THUMB} />\n      </SwitchPrimitive.Root>\n      <Label htmlFor={id} className='sr-only'>\n        Show week numbers\n      </Label>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "switch"
+  ],
+  "type": "registry:component"
+}

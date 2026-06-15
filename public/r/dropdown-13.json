@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dropdown-13",
+  "title": "Help menu",
+  "description": "Links to documentation, support and contact.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/dropdown-menu.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/dropdown/dropdown-13.tsx",
+      "content": "import { Menu } from '@base-ui/react/menu';\n\nimport {\n  BookIcon,\n  InfoIcon,\n  LifeBuoyIcon,\n  MessageCircleMoreIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { MENU_ITEM } from '@/registry/ndeko/lib/recipes';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuGroup,\n  DropdownMenuGroupLabel,\n  DropdownMenuTrigger,\n} from '@/registry/ndeko/ui/dropdown-menu';\n\nexport default function Dropdown13() {\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger\n        render={<Button variant='ghost' size='icon' aria-label='Get help' />}\n      >\n        <InfoIcon />\n      </DropdownMenuTrigger>\n      <DropdownMenuContent>\n        <DropdownMenuGroup>\n          <DropdownMenuGroupLabel>Need help?</DropdownMenuGroupLabel>\n          <Menu.LinkItem href='#' closeOnClick className={MENU_ITEM}>\n            <BookIcon />\n            Documentation\n          </Menu.LinkItem>\n          <Menu.LinkItem href='#' closeOnClick className={MENU_ITEM}>\n            <LifeBuoyIcon />\n            Support\n          </Menu.LinkItem>\n          <Menu.LinkItem href='#' closeOnClick className={MENU_ITEM}>\n            <MessageCircleMoreIcon />\n            Contact us\n          </Menu.LinkItem>\n        </DropdownMenuGroup>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "dropdown"
+  ],
+  "type": "registry:component"
+}

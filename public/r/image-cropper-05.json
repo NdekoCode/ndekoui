@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "image-cropper-05",
+  "title": "Light mask cropper",
+  "description": "A light mask in the card colour around the crop area.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/cropper.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/image-cropper/image-cropper-05.tsx",
+      "content": "'use client';\n\nimport { useSyncExternalStore } from 'react';\n\nimport {\n  Cropper,\n  CropperCropArea,\n  CropperDescription,\n  CropperImage,\n} from '@/registry/ndeko/ui/cropper';\n\nconst PLACEHOLDER_WIDTH = 1200;\nconst PLACEHOLDER_HEIGHT = 800;\nconst WASH_ALPHA = 0.35;\nconst BRAND_CIRCLE = { x: 840, y: 280, radius: 150, alpha: 0.45 };\nconst INFO_CIRCLE = { x: 360, y: 640, radius: 260, alpha: 0.3 };\nconst FULL_TURN = Math.PI * 2;\nconst THEME_ATTRIBUTES = ['class', 'style', 'data-theme'];\n\ntype Circle = typeof BRAND_CIRCLE;\n\ntype DrawnImage = { key: string; url: string | null };\n\nlet drawnImage: DrawnImage | null = null;\n\nfunction tokenOf(styles: CSSStyleDeclaration, name: string) {\n  const value = styles.getPropertyValue(name);\n  return value.trim();\n}\n\nfunction fillCircle(\n  context: CanvasRenderingContext2D,\n  circle: Circle,\n  color: string\n) {\n  context.globalAlpha = circle.alpha;\n  context.fillStyle = color;\n  context.beginPath();\n  context.arc(circle.x, circle.y, circle.radius, 0, FULL_TURN);\n  context.fill();\n}\n\nfunction drawPlaceholderImage() {\n  const styles = getComputedStyle(document.documentElement);\n  const base = tokenOf(styles, '--card');\n  const brand = tokenOf(styles, '--primary');\n  const info = tokenOf(styles, '--info');\n  const canvas = document.createElement('canvas');\n  canvas.width = PLACEHOLDER_WIDTH;\n  canvas.height = PLACEHOLDER_HEIGHT;\n  const context = canvas.getContext('2d');\n  if (!context) {\n    return null;\n  }\n  context.fillStyle = base;\n  context.fillRect(0, 0, PLACEHOLDER_WIDTH, PLACEHOLDER_HEIGHT);\n  const wash = context.createLinearGradient(\n    0,\n    0,\n    PLACEHOLDER_WIDTH,\n    PLACEHOLDER_HEIGHT\n  );\n  wash.addColorStop(0, brand);\n  wash.addColorStop(1, info);\n  context.globalAlpha = WASH_ALPHA;\n  context.fillStyle = wash;\n  context.fillRect(0, 0, PLACEHOLDER_WIDTH, PLACEHOLDER_HEIGHT);\n  fillCircle(context, BRAND_CIRCLE, brand);\n  fillCircle(context, INFO_CIRCLE, info);\n  return canvas.toDataURL('image/png');\n}\n\nfunction placeholderSnapshot() {\n  const key = document.documentElement.className;\n  const cachedImage = drawnImage;\n  const isCurrent = cachedImage?.key === key;\n  if (cachedImage && isCurrent) {\n    return cachedImage.url;\n  }\n  const url = drawPlaceholderImage();\n  drawnImage = { key, url };\n  return url;\n}\n\nfunction serverSnapshot() {\n  return null;\n}\n\nfunction subscribeToTheme(onThemeChange: () => void) {\n  const observer = new MutationObserver(onThemeChange);\n  observer.observe(document.documentElement, {\n    attributes: true,\n    attributeFilter: THEME_ATTRIBUTES,\n  });\n  return () => observer.disconnect();\n}\n\nfunction usePlaceholderImage() {\n  return useSyncExternalStore(\n    subscribeToTheme,\n    placeholderSnapshot,\n    serverSnapshot\n  );\n}\n\nexport default function ImageCropper05() {\n  const image = usePlaceholderImage();\n\n  return (\n    <div className='w-full'>\n      {image && (\n        <Cropper className='h-80' image={image}>\n          <CropperDescription />\n          <CropperImage />\n          <CropperCropArea className='border-primary shadow-[0_0_0_9999px_color-mix(in_oklab,var(--card)_70%,transparent)]' />\n        </Cropper>\n      )}\n      {!image && (\n        <div\n          aria-hidden='true'\n          className='bg-foreground/[0.04] h-80 w-full rounded-xl'\n        />\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "image-cropper"
+  ],
+  "type": "registry:component"
+}

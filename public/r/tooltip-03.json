@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip-03",
+  "title": "Tooltip on a disabled button",
+  "description": "Explains why the button cannot be pressed yet.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/tooltip.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/tooltip/tooltip-03.tsx",
+      "content": "import { Button } from '@/registry/ndeko/ui/button';\nimport {\n  Tooltip,\n  TooltipContent,\n  TooltipTrigger,\n} from '@/registry/ndeko/ui/tooltip';\n\nexport default function Tooltip03() {\n  return (\n    <Tooltip>\n      <TooltipTrigger\n        delay={0}\n        closeOnClick={false}\n        render={\n          <Button\n            variant='outline'\n            size='sm'\n            disabled\n            focusableWhenDisabled\n            className='data-disabled:pointer-events-auto data-disabled:cursor-not-allowed'\n          />\n        }\n      >\n        Merge\n      </TooltipTrigger>\n      <TooltipContent>Needs one more approval to merge</TooltipContent>\n    </Tooltip>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "tooltip"
+  ],
+  "type": "registry:component"
+}

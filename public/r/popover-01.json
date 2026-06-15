@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "popover-01",
+  "title": "Filter popover",
+  "description": "Checkboxes to pick widgets, with clear and apply.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/checkbox.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/popover.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/popover/popover-01.tsx",
+      "content": "'use client';\n\nimport { useState } from 'react';\n\nimport { ListFilterIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport { Checkbox } from '@/registry/ndeko/ui/checkbox';\nimport { Label } from '@/registry/ndeko/ui/label';\nimport {\n  Popover,\n  PopoverClose,\n  PopoverContent,\n  PopoverTitle,\n  PopoverTrigger,\n} from '@/registry/ndeko/ui/popover';\n\nconst WIDGETS = [\n  { value: 'real-time', label: 'Real time' },\n  { value: 'top-channels', label: 'Top channels' },\n  { value: 'last-orders', label: 'Last orders' },\n  { value: 'total-spent', label: 'Total spent' },\n];\n\nexport default function Popover01() {\n  const [shownWidgets, setShownWidgets] = useState<string[]>([]);\n  const hasSelection = shownWidgets.length > 0;\n\n  function toggleWidget(value: string, isChecked: boolean) {\n    setShownWidgets((current) => {\n      const others = current.filter((widget) => widget !== value);\n      if (isChecked) {\n        return [...others, value];\n      }\n      return others;\n    });\n  }\n\n  function clearWidgets() {\n    setShownWidgets([]);\n  }\n\n  return (\n    <Popover>\n      <PopoverTrigger\n        render={\n          <Button variant='outline' size='icon' aria-label='Filter widgets' />\n        }\n      >\n        <ListFilterIcon />\n      </PopoverTrigger>\n      <PopoverContent className='flex w-44 flex-col gap-3 p-3'>\n        <PopoverTitle className='text-muted-foreground text-xs'>\n          Filters\n        </PopoverTitle>\n        <div className='flex flex-col gap-3'>\n          {WIDGETS.map((widget) => {\n            const isChecked = shownWidgets.includes(widget.value);\n\n            return (\n              <Label key={widget.value} className='font-normal'>\n                <Checkbox\n                  checked={isChecked}\n                  onCheckedChange={(checked) =>\n                    toggleWidget(widget.value, checked)\n                  }\n                />\n                {widget.label}\n              </Label>\n            );\n          })}\n        </div>\n        <div className='flex justify-between gap-2 pt-1'>\n          <Button\n            variant='outline'\n            size='sm'\n            onClick={clearWidgets}\n            disabled={!hasSelection}\n            focusableWhenDisabled\n          >\n            Clear\n          </Button>\n          <PopoverClose render={<Button size='sm' />}>Apply</PopoverClose>\n        </div>\n      </PopoverContent>\n    </Popover>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "popover"
+  ],
+  "type": "registry:component"
+}

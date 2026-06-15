@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-03",
+  "title": "Native select with icon",
+  "description": "A clock icon sits at the start of the field.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/select-native.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-03.tsx",
+      "content": "import { useId } from 'react';\n\nimport { ClockIcon } from '@/registry/ndeko/lib/icons';\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { SelectNative } from '@/registry/ndeko/ui/select-native';\n\nexport default function Select03() {\n  const id = useId();\n\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-2'>\n      <Label htmlFor={id}>Shift</Label>\n      <div className='group relative'>\n        <SelectNative id={id} className='ps-8'>\n          <option value='morning'>6:00 AM to 2:00 PM</option>\n          <option value='afternoon'>2:00 PM to 10:00 PM</option>\n          <option value='night'>10:00 PM to 6:00 AM</option>\n        </SelectNative>\n        <span className='text-muted-foreground pointer-events-none absolute inset-y-0 start-0 flex items-center ps-2.5 group-has-disabled:opacity-50'>\n          <ClockIcon className='size-4' />\n        </span>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

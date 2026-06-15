@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input",
+  "title": "Input",
+  "description": "A text field on the shared control recipe.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/recipes.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/input.tsx",
+      "content": "'use client';\n\nimport { Input as InputPrimitive } from '@base-ui/react/input';\n\nimport {\n  CONTROL_RECIPE,\n  CONTROL_SIZES,\n  type ControlSize,\n} from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\n\ntype InputProps = Omit<InputPrimitive.Props, 'className' | 'size'> & {\n  className?: string;\n  size?: ControlSize;\n};\n\nconst FILE_INPUT =\n  'file:me-2 file:inline-flex file:h-full file:border-0 file:bg-transparent file:text-[13px] file:font-medium file:text-foreground';\n\nconst SEARCH_INPUT =\n  '[&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none';\n\nfunction Input({ className, size = 'default', ...props }: InputProps) {\n  return (\n    <InputPrimitive\n      data-slot='input'\n      className={cn(\n        CONTROL_RECIPE,\n        CONTROL_SIZES[size],\n        FILE_INPUT,\n        SEARCH_INPUT,\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nexport { Input, type InputProps };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

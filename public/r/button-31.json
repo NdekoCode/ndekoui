@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-31",
+  "title": "Flip buttons",
+  "description": "Two joined icon buttons to flip horizontally or vertically.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-31.tsx",
+      "content": "import {\n  FlipHorizontalIcon,\n  FlipVerticalIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst SEGMENT =\n  'rounded-none first:rounded-s-full last:rounded-e-full focus-visible:z-10';\n\nexport default function Button31() {\n  return (\n    <div className='inline-flex -space-x-px'>\n      <Button\n        variant='outline'\n        size='icon'\n        aria-label='Flip horizontal'\n        className={SEGMENT}\n      >\n        <FlipHorizontalIcon />\n      </Button>\n      <Button\n        variant='outline'\n        size='icon'\n        aria-label='Flip vertical'\n        className={SEGMENT}\n      >\n        <FlipVerticalIcon />\n      </Button>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

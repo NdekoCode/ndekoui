@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-57",
+  "title": "Range input",
+  "description": "Minimum and maximum prices side by side in one outline.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-57.tsx",
+      "content": "import { Input as InputPrimitive } from '@base-ui/react/input';\nimport { useId } from 'react';\n\nimport { CONTROL_RECIPE } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Label } from '@/registry/ndeko/ui/label';\n\nconst GROUP = cn(\n  CONTROL_RECIPE,\n  'flex h-8 items-stretch overflow-hidden',\n  'focus-within:border-foreground/30 focus-within:ring-ring/25 dark:focus-within:border-foreground/25 focus-within:ring-[3px]'\n);\n\nconst NUMBER_INPUT =\n  'placeholder:text-muted-foreground/75 h-full min-w-0 flex-1 bg-transparent px-2.5 tabular-nums outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none';\n\nexport default function Input57() {\n  const labelId = useId();\n\n  return (\n    <div\n      className='flex w-full max-w-xs flex-col gap-1.5'\n      role='group'\n      aria-labelledby={labelId}\n    >\n      <Label id={labelId}>Price range</Label>\n      <div className={GROUP}>\n        <InputPrimitive\n          className={NUMBER_INPUT}\n          type='number'\n          inputMode='decimal'\n          placeholder='From'\n          aria-label='Minimum price'\n        />\n        <span\n          className='bg-foreground/12 dark:bg-foreground/15 w-(--hairline) shrink-0'\n          aria-hidden='true'\n        />\n        <InputPrimitive\n          className={NUMBER_INPUT}\n          type='number'\n          inputMode='decimal'\n          placeholder='To'\n          aria-label='Maximum price'\n        />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-33",
+  "title": "Button group",
+  "description": "Files, media and a more button joined into one pill.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-33.tsx",
+      "content": "import { EllipsisIcon, FilesIcon, FilmIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst SEGMENT =\n  'rounded-none first:rounded-s-full last:rounded-e-full focus-visible:z-10';\n\nexport default function Button33() {\n  return (\n    <div className='inline-flex -space-x-px'>\n      <Button variant='outline' className={SEGMENT}>\n        <FilesIcon className='-ms-1 opacity-60' />\n        Files\n      </Button>\n      <Button variant='outline' className={SEGMENT}>\n        <FilmIcon className='-ms-1 opacity-60' />\n        Media\n      </Button>\n      <Button\n        variant='outline'\n        size='icon'\n        aria-label='More options'\n        className={SEGMENT}\n      >\n        <EllipsisIcon />\n      </Button>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-22",
+  "title": "Icon button with tooltip",
+  "description": "A round add button that names itself in a tooltip.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/tooltip.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-22.tsx",
+      "content": "import { PlusIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport {\n  Tooltip,\n  TooltipContent,\n  TooltipTrigger,\n} from '@/registry/ndeko/ui/tooltip';\n\nexport default function Button22() {\n  return (\n    <Tooltip>\n      <TooltipTrigger\n        delay={0}\n        render={<Button variant='outline' size='icon' aria-label='Add item' />}\n      >\n        <PlusIcon />\n      </TooltipTrigger>\n      <TooltipContent>Add item</TooltipContent>\n    </Tooltip>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

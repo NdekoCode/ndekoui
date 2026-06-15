@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "features-02",
+  "title": "Six small features",
+  "description": "A split heading above six short items, each led by a key cap icon tile, two of them with their shortcut.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/kbd.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/blocks/features/features-02/index.tsx",
+      "content": "import { Kbd } from '@/registry/ndeko/ui/kbd';\n\nimport { FEATURES, SECTION } from './data';\n\nexport default function Features02() {\n  return (\n    <section className='px-4 py-16 sm:px-6 sm:py-24 lg:px-8'>\n      <div className='mx-auto flex max-w-6xl flex-col gap-12 sm:gap-16'>\n        <div className='grid gap-4 md:grid-cols-2 md:items-end md:gap-12'>\n          <div className='flex flex-col gap-3'>\n            <p className='text-primary-ink text-xs font-medium'>\n              {SECTION.eyebrow}\n            </p>\n            <h2 className='text-2xl font-semibold text-balance sm:text-3xl'>\n              {SECTION.title}\n            </h2>\n          </div>\n          <p className='text-muted-foreground max-w-md text-base text-pretty md:justify-self-end'>\n            {SECTION.description}\n          </p>\n        </div>\n        <ul className='grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3'>\n          {FEATURES.map((feature) => (\n            <li key={feature.title} className='flex flex-col gap-3'>\n              <div className='flex items-center gap-3'>\n                <span className='keycap-3d text-muted-foreground flex size-9 shrink-0 items-center justify-center rounded-lg'>\n                  <feature.icon />\n                </span>\n                <h3 className='text-sm font-medium'>{feature.title}</h3>\n                {feature.shortcut && (\n                  <Kbd className='ms-auto'>\n                    <span className='sr-only'>Shortcut</span>\n                    {feature.shortcut}\n                  </Kbd>\n                )}\n              </div>\n              <p className='text-muted-foreground text-[13px] leading-relaxed text-pretty'>\n                {feature.description}\n              </p>\n            </li>\n          ))}\n        </ul>\n      </div>\n    </section>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/features-02/index.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/features/features-02/data.ts",
+      "content": "import {\n  CommandIcon,\n  HistoryIcon,\n  type Icon,\n  MessageSquareTextIcon,\n  MoonIcon,\n  ShuffleIcon,\n  UsersIcon,\n} from '@/registry/ndeko/lib/icons';\n\nexport type Feature = {\n  icon: Icon;\n  title: string;\n  description: string;\n  shortcut?: string;\n};\n\nexport const SECTION = {\n  eyebrow: 'Inside Driftdesk',\n  title: 'A shared inbox that stays calm on a busy Monday',\n  description:\n    'Small decisions, made once, so the team answers faster without stepping on each other.',\n};\n\nexport const FEATURES: Feature[] = [\n  {\n    icon: UsersIcon,\n    title: 'Collision notice',\n    description:\n      'See that a teammate is already replying before you write a word',\n  },\n  {\n    icon: CommandIcon,\n    title: 'Saved replies',\n    description: 'Type a slash to insert an answer, then edit it like your own',\n    shortcut: '/',\n  },\n  {\n    icon: ShuffleIcon,\n    title: 'Routing rules',\n    description:\n      'Billing questions go to billing, bug reports to whoever is on call',\n  },\n  {\n    icon: MoonIcon,\n    title: 'Quiet hours',\n    description:\n      'Notifications pause outside each person’s working hours, then catch up',\n  },\n  {\n    icon: HistoryIcon,\n    title: 'Customer history',\n    description:\n      'Earlier conversations and orders sit beside the one you are reading',\n  },\n  {\n    icon: MessageSquareTextIcon,\n    title: 'Private notes',\n    description:\n      'Mention a colleague inside a thread without the customer seeing it',\n    shortcut: 'N',\n  },\n];\n",
+      "type": "registry:component",
+      "target": "components/blocks/features-02/data.ts"
+    }
+  ],
+  "categories": [
+    "blocks",
+    "features"
+  ],
+  "type": "registry:block"
+}

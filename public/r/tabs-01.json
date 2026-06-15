@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs-01",
+  "title": "Segmented tabs",
+  "description": "A raised plate slides to the active tab on a grey track.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/animated-size.json",
+    "https://ui.ndeko.dev/r/tabs.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/tabs/tabs-01.tsx",
+      "content": "import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';\nimport { Tabs, TabsList, TabsPanel, TabsTab } from '@/registry/ndeko/ui/tabs';\n\nconst TABS = [\n  {\n    value: 'overview',\n    label: 'Overview',\n    content: 'Open tasks, recent activity and the next deadlines.',\n  },\n  {\n    value: 'projects',\n    label: 'Projects',\n    content: 'Three active projects, sorted by their latest update.',\n  },\n  {\n    value: 'packages',\n    label: 'Packages',\n    content:\n      'Packages published from this workspace, with their latest version.',\n  },\n];\n\nexport default function Tabs01() {\n  return (\n    <Tabs defaultValue='overview' className='items-center'>\n      <TabsList variant='segmented'>\n        {TABS.map((tab) => (\n          <TabsTab key={tab.value} value={tab.value}>\n            {tab.label}\n          </TabsTab>\n        ))}\n      </TabsList>\n      <AnimatedSize>\n        {TABS.map((tab) => (\n          <TabsPanel key={tab.value} value={tab.value}>\n            <p className='text-muted-foreground p-4 text-center text-xs'>\n              {tab.content}\n            </p>\n          </TabsPanel>\n        ))}\n      </AnimatedSize>\n    </Tabs>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "tabs"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-43",
+  "title": "Searchable time zone select",
+  "description": "Every time zone of the browser, found by typing part of its name.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/combobox.json",
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-43.tsx",
+      "content": "'use client';\n\nimport { SearchIcon } from '@/registry/ndeko/lib/icons';\nimport {\n  Combobox,\n  ComboboxContent,\n  ComboboxEmpty,\n  ComboboxInput,\n  ComboboxItem,\n  ComboboxList,\n  ComboboxSelectTrigger,\n} from '@/registry/ndeko/ui/combobox';\nimport { Field, FieldLabel } from '@/registry/ndeko/ui/field';\n\ntype TimezoneOption = {\n  value: string;\n  label: string;\n  offsetHours: number;\n};\n\nfunction offsetNameOf(timezone: string, now: Date) {\n  const formatter = new Intl.DateTimeFormat('en', {\n    timeZone: timezone,\n    timeZoneName: 'shortOffset',\n  });\n  const parts = formatter.formatToParts(now);\n  const namePart = parts.find((part) => part.type === 'timeZoneName');\n  const offsetName = namePart?.value ?? 'GMT';\n  if (offsetName === 'GMT') {\n    return 'GMT+0';\n  }\n  return offsetName;\n}\n\nfunction offsetHoursOf(offsetName: string) {\n  const signedOffset = offsetName.replace('GMT', '');\n  return Number.parseInt(signedOffset, 10);\n}\n\nfunction timezoneOptionOf(timezone: string, now: Date): TimezoneOption {\n  const offsetName = offsetNameOf(timezone, now);\n  const placeName = timezone.replaceAll('_', ' ');\n  const offsetHours = offsetHoursOf(offsetName);\n  return {\n    value: timezone,\n    label: `(${offsetName}) ${placeName}`,\n    offsetHours,\n  };\n}\n\nfunction byOffset(first: TimezoneOption, second: TimezoneOption) {\n  return first.offsetHours - second.offsetHours;\n}\n\nfunction timezoneOptionsOf(now: Date) {\n  const timezones = Intl.supportedValuesOf('timeZone');\n  const options = timezones.map((timezone) => timezoneOptionOf(timezone, now));\n  return options.sort(byOffset);\n}\n\nfunction isLondon(timezone: TimezoneOption) {\n  return timezone.value === 'Europe/London';\n}\n\nconst TIMEZONES = timezoneOptionsOf(new Date());\n\nconst DEFAULT_TIMEZONE = TIMEZONES.find(isLondon) ?? null;\n\nexport default function Select43() {\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Time zone</FieldLabel>\n      <Combobox items={TIMEZONES} defaultValue={DEFAULT_TIMEZONE}>\n        <ComboboxSelectTrigger placeholder='Pick a time zone' />\n        <ComboboxContent className='flex flex-col p-0'>\n          <div className='hairline-b border-border flex h-10 shrink-0 items-center gap-2 px-3'>\n            <SearchIcon className='text-muted-foreground size-4 shrink-0' />\n            <ComboboxInput\n              aria-label='Search time zones'\n              placeholder='Search time zones'\n              className='h-full px-0'\n            />\n          </div>\n          <ComboboxEmpty>No time zone matches your search.</ComboboxEmpty>\n          <ComboboxList className='max-h-72 overflow-y-auto p-1 empty:hidden'>\n            {(timezone: TimezoneOption) => (\n              <ComboboxItem key={timezone.value} value={timezone}>\n                <span className='truncate'>{timezone.label}</span>\n              </ComboboxItem>\n            )}\n          </ComboboxList>\n        </ComboboxContent>\n      </Combobox>\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

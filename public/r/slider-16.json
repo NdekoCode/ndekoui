@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider-16",
+  "title": "Slider with input",
+  "description": "A slider and a number field that follow each other.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/slider.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/use-slider-with-input.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/slider/slider-16.tsx",
+      "content": "'use client';\n\nimport { useId, type KeyboardEvent } from 'react';\n\nimport { useSliderWithInput } from '@/registry/ndeko/hooks/use-slider-with-input';\nimport { Input } from '@/registry/ndeko/ui/input';\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { Slider } from '@/registry/ndeko/ui/slider';\n\nconst MIN_COMPRESSION = 0;\nconst MAX_COMPRESSION = 100;\nconst INITIAL_COMPRESSION = [25];\n\nexport default function Slider16() {\n  const inputId = useId();\n  const {\n    sliderValue,\n    inputValues,\n    validateAndUpdateValue,\n    handleInputChange,\n    handleSliderChange,\n  } = useSliderWithInput({\n    minValue: MIN_COMPRESSION,\n    maxValue: MAX_COMPRESSION,\n    initialValue: INITIAL_COMPRESSION,\n  });\n\n  function commitCompression() {\n    validateAndUpdateValue(inputValues[0], 0);\n  }\n\n  function commitOnEnter(event: KeyboardEvent<HTMLInputElement>) {\n    if (event.key !== 'Enter') {\n      return;\n    }\n    commitCompression();\n  }\n\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-3'>\n      <Label htmlFor={inputId}>Compression</Label>\n      <div className='flex items-center gap-4'>\n        <Slider\n          className='grow'\n          value={sliderValue}\n          onValueChange={handleSliderChange}\n          min={MIN_COMPRESSION}\n          max={MAX_COMPRESSION}\n          thumbLabels={['Compression']}\n        />\n        <Input\n          id={inputId}\n          className='w-12 shrink-0 tabular-nums'\n          type='text'\n          inputMode='decimal'\n          value={inputValues[0]}\n          onChange={(event) => handleInputChange(event, 0)}\n          onBlur={commitCompression}\n          onKeyDown={commitOnEnter}\n        />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "slider"
+  ],
+  "type": "registry:component"
+}

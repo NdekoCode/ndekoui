@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs-15",
+  "title": "Icon tabs with tooltips",
+  "description": "Icon-only segmented tabs that name themselves in a tooltip.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/animated-size.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/tabs.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/tooltip.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/tabs/tabs-15.tsx",
+      "content": "import {\n  BoxIcon,\n  HouseIcon,\n  PanelsTopLeftIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { AnimatedSize } from '@/registry/ndeko/ui/animated-size';\nimport { Tabs, TabsList, TabsPanel, TabsTab } from '@/registry/ndeko/ui/tabs';\nimport {\n  Tooltip,\n  TooltipContent,\n  TooltipTrigger,\n} from '@/registry/ndeko/ui/tooltip';\n\nconst PANELS = [\n  {\n    value: 'overview',\n    content: 'Open tasks, recent activity and the next deadlines.',\n  },\n  {\n    value: 'projects',\n    content: 'Three active projects, sorted by their latest update.',\n  },\n  {\n    value: 'packages',\n    content:\n      'Packages published from this workspace, with their latest version.',\n  },\n];\n\nconst ICON_COUNT =\n  'keycap-3d absolute -top-1.5 left-full inline-flex h-4 min-w-4 -translate-x-2 items-center justify-center rounded-[4px] px-0.5 text-[10px] font-medium tabular-nums text-muted-foreground';\n\nexport default function Tabs15() {\n  return (\n    <Tabs defaultValue='overview' className='items-center'>\n      <TabsList variant='segmented'>\n        <Tooltip>\n          <TooltipTrigger\n            delay={0}\n            render={<TabsTab value='overview' aria-label='Overview' />}\n          >\n            <HouseIcon />\n          </TooltipTrigger>\n          <TooltipContent>Overview</TooltipContent>\n        </Tooltip>\n        <Tooltip>\n          <TooltipTrigger\n            delay={0}\n            render={\n              <TabsTab value='projects' aria-label='Projects, 3 active' />\n            }\n          >\n            <span className='relative flex'>\n              <PanelsTopLeftIcon />\n              <span className={ICON_COUNT}>3</span>\n            </span>\n          </TooltipTrigger>\n          <TooltipContent>Projects</TooltipContent>\n        </Tooltip>\n        <Tooltip>\n          <TooltipTrigger\n            delay={0}\n            render={<TabsTab value='packages' aria-label='Packages' />}\n          >\n            <BoxIcon />\n          </TooltipTrigger>\n          <TooltipContent>Packages</TooltipContent>\n        </Tooltip>\n      </TabsList>\n      <AnimatedSize>\n        {PANELS.map((panel) => (\n          <TabsPanel key={panel.value} value={panel.value}>\n            <p className='text-muted-foreground p-4 text-center text-xs'>\n              {panel.content}\n            </p>\n          </TabsPanel>\n        ))}\n      </AnimatedSize>\n    </Tabs>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "tabs"
+  ],
+  "type": "registry:component"
+}

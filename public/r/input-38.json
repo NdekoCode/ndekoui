@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-38",
+  "title": "Time input with start icon",
+  "description": "A clock before the time segments.",
+  "dependencies": [
+    "react-aria-components"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/datefield-rac.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-38.tsx",
+      "content": "'use client';\n\nimport { Label } from 'react-aria-components';\n\nimport { ClockIcon } from '@/registry/ndeko/lib/icons';\nimport { DateInput, TimeField } from '@/registry/ndeko/ui/datefield-rac';\nimport { LABEL_RECIPE } from '@/registry/ndeko/ui/label';\n\nexport default function Input38() {\n  return (\n    <TimeField className='flex w-full max-w-xs flex-col gap-1.5'>\n      <Label className={LABEL_RECIPE}>Meeting time</Label>\n      <div className='relative'>\n        <span className='text-muted-foreground pointer-events-none absolute inset-y-0 start-0 z-10 flex w-8 items-center justify-center'>\n          <ClockIcon className='size-4' />\n        </span>\n        <DateInput className='ps-8' />\n      </div>\n    </TimeField>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

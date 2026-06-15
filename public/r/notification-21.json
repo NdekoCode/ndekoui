@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "notification-21",
+  "title": "Toast with undo",
+  "description": "A toast with a description and an Undo action.",
+  "dependencies": [
+    "sonner"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/notification/notification-21.tsx",
+      "content": "'use client';\n\nimport { toast } from 'sonner';\n\nimport { Button } from '@/registry/ndeko/ui/button';\n\nfunction undoMove() {\n  toast('Task moved back to In review');\n}\n\nfunction showTaskMoved() {\n  toast('Task moved to Done', {\n    description: 'Design review, in Atlas Redesign',\n    action: {\n      label: 'Undo',\n      onClick: undoMove,\n    },\n  });\n}\n\nexport default function Notification21() {\n  return (\n    <Button variant='outline' onClick={showTaskMoved}>\n      Show toast with undo\n    </Button>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "notification"
+  ],
+  "type": "registry:component"
+}

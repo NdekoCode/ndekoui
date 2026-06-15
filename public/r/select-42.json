@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-42",
+  "title": "Organization switcher",
+  "description": "A searchable list of organizations with an action to add one.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/command.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/popover.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/selected-mark.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-42.tsx",
+      "content": "'use client';\n\nimport { useId, useState } from 'react';\n\nimport { ChevronsUpDownIcon, PlusIcon } from '@/registry/ndeko/lib/icons';\nimport { CONTROL_RECIPE, CONTROL_SIZES } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport {\n  Command,\n  CommandEmpty,\n  CommandGroup,\n  CommandInput,\n  CommandItem,\n  CommandList,\n  CommandSeparator,\n} from '@/registry/ndeko/ui/command';\nimport { Label } from '@/registry/ndeko/ui/label';\nimport {\n  Popover,\n  PopoverContent,\n  PopoverTrigger,\n} from '@/registry/ndeko/ui/popover';\nimport { SelectedMark } from '@/registry/ndeko/ui/selected-mark';\n\nconst ORGANIZATIONS = [\n  { value: 'lumen', label: 'Lumen Labs' },\n  { value: 'kivu', label: 'Kivu Studio' },\n];\n\nconst TRIGGER = cn(\n  CONTROL_RECIPE,\n  CONTROL_SIZES.default,\n  'flex cursor-pointer items-center justify-between gap-2 text-left',\n  'data-popup-open:border-foreground/30'\n);\n\nfunction labelOf(value: string) {\n  const organization = ORGANIZATIONS.find((item) => item.value === value);\n  return organization?.label ?? 'Pick an organization';\n}\n\nexport default function Select42() {\n  const id = useId();\n  const [isOpen, setIsOpen] = useState(false);\n  const [value, setValue] = useState('lumen');\n\n  function selectOrganization(nextValue: string) {\n    setValue(nextValue);\n    setIsOpen(false);\n  }\n\n  function startNewOrganization() {\n    setIsOpen(false);\n  }\n\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-1.5'>\n      <Label htmlFor={id}>Organization</Label>\n      <Popover open={isOpen} onOpenChange={setIsOpen}>\n        <PopoverTrigger id={id} className={TRIGGER}>\n          <span className='flex-1 truncate'>{labelOf(value)}</span>\n          <ChevronsUpDownIcon className='text-muted-foreground size-3.5 shrink-0' />\n        </PopoverTrigger>\n        <PopoverContent align='start' className='w-(--anchor-width) p-0'>\n          <Command>\n            <CommandInput placeholder='Find an organization' />\n            <CommandList>\n              <CommandEmpty>No organization matches your search.</CommandEmpty>\n              <CommandGroup>\n                {ORGANIZATIONS.map((organization) => (\n                  <CommandItem\n                    key={organization.value}\n                    value={organization.label}\n                    onSelect={() => selectOrganization(organization.value)}\n                  >\n                    <span className='truncate'>{organization.label}</span>\n                    {organization.value === value && (\n                      <SelectedMark label='Selected' className='ms-auto' />\n                    )}\n                  </CommandItem>\n                ))}\n              </CommandGroup>\n              <CommandSeparator alwaysRender />\n              <CommandGroup forceMount>\n                <CommandItem\n                  forceMount\n                  value='new-organization'\n                  onSelect={startNewOrganization}\n                >\n                  <PlusIcon />\n                  New organization\n                </CommandItem>\n              </CommandGroup>\n            </CommandList>\n          </Command>\n        </PopoverContent>\n      </Popover>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

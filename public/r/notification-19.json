@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "notification-19",
+  "title": "Error toast with retry",
+  "description": "A failed send whose retry turns the toast into loading, then success.",
+  "dependencies": [
+    "sonner"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/notification/notification-19.tsx",
+      "content": "'use client';\n\nimport { toast } from 'sonner';\n\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst RETRY_DURATION_MS = 1200;\n\nfunction waitForRetry() {\n  return new Promise<void>((resolve) => {\n    window.setTimeout(resolve, RETRY_DURATION_MS);\n  });\n}\n\nfunction retryInvite() {\n  toast.promise(waitForRetry(), {\n    loading: 'Sending the invite again',\n    success: 'Invite sent to amara@example.com',\n    error: 'The invite could not be sent',\n  });\n}\n\nfunction showFailure() {\n  toast.error('We could not send the invite', {\n    description:\n      'The server did not answer. Check your connection, then try again.',\n    action: {\n      label: 'Try again',\n      onClick: retryInvite,\n    },\n  });\n}\n\nexport default function Notification19() {\n  return (\n    <Button variant='outline' onClick={showFailure}>\n      Show error toast\n    </Button>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "notification"
+  ],
+  "type": "registry:component"
+}

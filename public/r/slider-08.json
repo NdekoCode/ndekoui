@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider-08",
+  "title": "Slider with value",
+  "description": "The value beside the label, rolling when it steps.",
+  "dependencies": [
+    "@base-ui/react",
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/slider.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/slider/slider-08.tsx",
+      "content": "'use client';\n\nimport type { SliderRootChangeEventDetails } from '@base-ui/react/slider';\nimport {\n  AnimatePresence,\n  motion,\n  type Transition,\n  type Variants,\n  useReducedMotion,\n} from 'motion/react';\nimport { useState } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { Slider } from '@/registry/ndeko/ui/slider';\n\ntype SliderValue = number | readonly number[];\n\ntype Readout = {\n  value: number;\n  slideKey: number;\n  direction: number;\n};\n\nconst INITIAL_READOUT: Readout = { value: 25, slideKey: 0, direction: 1 };\nconst DIGIT_SHIFT_PX = 8;\n\nconst DIGIT_TRANSITION: Transition = { duration: 0.18, ease: [0.2, 0, 0, 1] };\n\nconst DIGIT_VARIANTS: Variants = {\n  enter: (direction: number) => {\n    const offset = direction * DIGIT_SHIFT_PX;\n    return { opacity: 0, y: offset };\n  },\n  visible: { opacity: 1, y: 0 },\n  exit: (direction: number) => {\n    const offset = direction * DIGIT_SHIFT_PX;\n    return { opacity: 0, y: -offset };\n  },\n};\n\nconst FADE_VARIANTS: Variants = {\n  enter: { opacity: 0 },\n  visible: { opacity: 1 },\n  exit: { opacity: 0 },\n};\n\nfunction digitVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return DIGIT_VARIANTS;\n}\n\nfunction firstValueOf(value: SliderValue) {\n  if (typeof value === 'number') {\n    return value;\n  }\n  return value[0];\n}\n\nfunction directionOf(previous: number, next: number) {\n  if (next < previous) {\n    return -1;\n  }\n  return 1;\n}\n\nfunction readoutAfter(current: Readout, value: number, shouldSlide: boolean) {\n  if (!shouldSlide) {\n    return { ...current, value };\n  }\n  const direction = directionOf(current.value, value);\n  const slideKey = current.slideKey + 1;\n  return { value, slideKey, direction };\n}\n\nexport default function Slider08() {\n  const [readout, setReadout] = useState(INITIAL_READOUT);\n  const shouldReduceMotion = useReducedMotion();\n  const digitVariants = digitVariantsOf(shouldReduceMotion);\n\n  function changeContrast(\n    value: SliderValue,\n    details: SliderRootChangeEventDetails\n  ) {\n    const nextValue = firstValueOf(value);\n    const shouldSlide = details.reason !== 'drag';\n    setReadout((current) => readoutAfter(current, nextValue, shouldSlide));\n  }\n\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-3'>\n      <div className='flex items-center justify-between gap-2'>\n        <Label>Contrast</Label>\n        <span\n          className='relative flex text-[13px] font-medium tabular-nums'\n          aria-hidden='true'\n        >\n          <AnimatePresence\n            mode='popLayout'\n            initial={false}\n            custom={readout.direction}\n          >\n            <motion.span\n              key={readout.slideKey}\n              className='flex'\n              custom={readout.direction}\n              variants={digitVariants}\n              initial='enter'\n              animate='visible'\n              exit='exit'\n              transition={DIGIT_TRANSITION}\n            >\n              {readout.value}\n            </motion.span>\n          </AnimatePresence>\n        </span>\n      </div>\n      <Slider\n        value={readout.value}\n        onValueChange={changeContrast}\n        thumbLabels={['Contrast']}\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "slider"
+  ],
+  "type": "registry:component"
+}

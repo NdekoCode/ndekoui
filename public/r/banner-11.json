@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "banner-11",
+  "title": "Newsletter banner",
+  "description": "A centred line that invites a newsletter subscription.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/status-orb.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/banner/banner-11.tsx",
+      "content": "import { MailIcon } from '@/registry/ndeko/lib/icons';\nimport { FOCUS_RING } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { StatusOrb } from '@/registry/ndeko/ui/status-orb';\n\nexport default function Banner11() {\n  return (\n    <div className='bg-card hairline-ring ring-border w-full rounded-xl px-4 py-2.5 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>\n      <div className='flex items-center justify-center gap-3'>\n        <StatusOrb\n          tone='brand'\n          size='sm'\n          glyph={<MailIcon strokeWidth={2.25} />}\n        />\n        <p className='text-[13px]'>\n          Subscribe to our newsletter and get 10% off your first order{' '}\n          <span className='text-muted-foreground mx-1' aria-hidden='true'>\n            ·\n          </span>{' '}\n          <a\n            href='#'\n            className={cn(\n              'text-primary-ink rounded-sm font-medium underline underline-offset-4 hover:no-underline',\n              FOCUS_RING\n            )}\n          >\n            Subscribe\n          </a>\n        </p>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "banner"
+  ],
+  "type": "registry:component"
+}

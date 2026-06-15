@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox-17",
+  "title": "Checkbox tiles",
+  "description": "A two-column grid of tool tiles that can each be checked.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/checkbox.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/checkbox/checkbox-17.tsx",
+      "content": "import { useId } from 'react';\n\nimport {\n  BrushIcon,\n  EraserIcon,\n  type Icon,\n  ScissorsIcon,\n  SwatchBookIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { Checkbox } from '@/registry/ndeko/ui/checkbox';\nimport { Label } from '@/registry/ndeko/ui/label';\n\ntype Tool = {\n  value: string;\n  label: string;\n  Icon: Icon;\n  defaultChecked?: boolean;\n};\n\nconst TOOLS: Tool[] = [\n  {\n    value: 'palette',\n    label: 'Palette',\n    Icon: SwatchBookIcon,\n    defaultChecked: true,\n  },\n  { value: 'brush', label: 'Brush', Icon: BrushIcon },\n  { value: 'eraser', label: 'Eraser', Icon: EraserIcon },\n  { value: 'cut', label: 'Cut', Icon: ScissorsIcon },\n];\n\nconst CHOICE_CARD = [\n  'relative flex flex-col gap-4 rounded-xl bg-card p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)] hairline-ring ring-border transition-[box-shadow] duration-150',\n  'has-data-checked:shadow-[0_1px_2px_rgb(0_0_0/0.04),0_6px_16px_-8px_color-mix(in_oklab,var(--primary)_35%,transparent)] has-data-checked:ring-primary/45',\n].join(' ');\n\nexport default function Checkbox17() {\n  const id = useId();\n\n  return (\n    <div\n      role='group'\n      aria-label='Tools'\n      className='grid w-full grid-cols-2 gap-3'\n    >\n      {TOOLS.map((tool) => {\n        const itemId = `${id}-${tool.value}`;\n\n        return (\n          <div key={tool.value} className={CHOICE_CARD}>\n            <div className='flex justify-between gap-2'>\n              <Checkbox\n                id={itemId}\n                value={tool.value}\n                defaultChecked={tool.defaultChecked}\n                className='order-1 after:absolute after:inset-0'\n              />\n              <tool.Icon className='text-muted-foreground size-4' />\n            </div>\n            <Label htmlFor={itemId}>{tool.label}</Label>\n          </div>\n        );\n      })}\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "checkbox"
+  ],
+  "type": "registry:component"
+}

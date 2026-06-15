@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge-11",
+  "title": "Selectable badge",
+  "description": "A badge that toggles like a checkbox and shows a check when on.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/animated-size.json",
+    "https://ui.ndeko.dev/r/badge.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/badge/badge-11.tsx",
+      "content": "'use client';\n\nimport { Checkbox } from '@base-ui/react/checkbox';\n\nimport { CheckIcon } from '@/registry/ndeko/lib/icons';\nimport { FOCUS_RING } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { AnimatedSize } from '@/registry/ndeko/ui/animated-size';\nimport { badgeVariants } from '@/registry/ndeko/ui/badge';\n\nconst MARK = [\n  'flex transition-[scale,opacity] duration-150 ease-(--ease-out-strong)',\n  'data-starting-style:scale-60 data-starting-style:opacity-0',\n  'data-ending-style:scale-60 data-ending-style:opacity-0 data-ending-style:duration-100',\n].join(' ');\n\nexport default function Badge11() {\n  return (\n    <Checkbox.Root\n      defaultChecked\n      className={cn(\n        badgeVariants(),\n        'data-unchecked:bg-foreground/[0.06] data-unchecked:text-muted-foreground cursor-pointer transition-colors select-none',\n        FOCUS_RING\n      )}\n    >\n      <AnimatedSize\n        axis='width'\n        as='span'\n        contentClassName='flex items-center gap-1'\n      >\n        <Checkbox.Indicator className={MARK}>\n          <CheckIcon strokeWidth={2.5} />\n        </Checkbox.Indicator>\n        Remote\n      </AnimatedSize>\n    </Checkbox.Root>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "badge"
+  ],
+  "type": "registry:component"
+}

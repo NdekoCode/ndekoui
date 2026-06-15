@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "alert-04",
+  "title": "Tinted error alert",
+  "description": "The same error drawn on the soft destructive pair.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/status-orb.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/alert/alert-04.tsx",
+      "content": "import { StatusOrb } from '@/registry/ndeko/ui/status-orb';\n\nexport default function Alert04() {\n  return (\n    <div\n      role='alert'\n      className='bg-destructive/10 text-destructive-ink hairline-ring ring-destructive/25 flex items-start gap-3 rounded-xl px-4 py-2.5'\n    >\n      <StatusOrb tone='error' size='sm' />\n      <p className='py-0.5 text-[13px] leading-5'>\n        The export failed. Try again in a few minutes.\n      </p>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "alert"
+  ],
+  "type": "registry:component"
+}

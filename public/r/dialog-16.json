@@ -1,0 +1,30 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dialog-16",
+  "title": "Card details dialog",
+  "description": "Card number, expiry and CVC that format as you type.",
+  "dependencies": [
+    "react-payment-inputs"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/checkbox.json",
+    "https://ui.ndeko.dev/r/dialog.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/dialog/dialog-16.tsx",
+      "content": "'use client';\n\nimport { useId } from 'react';\nimport { usePaymentInputs } from 'react-payment-inputs';\nimport images, { type CardImages } from 'react-payment-inputs/images';\n\nimport { CreditCardIcon, WalletIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport { Checkbox } from '@/registry/ndeko/ui/checkbox';\nimport {\n  Dialog,\n  DialogContent,\n  DialogDescription,\n  DialogHeader,\n  DialogTitle,\n  DialogTrigger,\n} from '@/registry/ndeko/ui/dialog';\nimport { Input } from '@/registry/ndeko/ui/input';\nimport { Label } from '@/registry/ndeko/ui/label';\n\nconst CARD_IMAGES = images as unknown as CardImages;\n\nconst ICON_TILE =\n  'keycap-3d text-muted-foreground flex size-10 shrink-0 items-center justify-center rounded-lg';\n\nexport default function Dialog16() {\n  const id = useId();\n  const nameId = `${id}-name`;\n  const numberId = `${id}-number`;\n  const expiryId = `${id}-expiry`;\n  const cvcId = `${id}-cvc`;\n  const defaultId = `${id}-default`;\n  const {\n    meta,\n    getCardNumberProps,\n    getExpiryDateProps,\n    getCVCProps,\n    getCardImageProps,\n  } = usePaymentInputs();\n  const hasCardType = Boolean(meta.cardType);\n\n  return (\n    <Dialog>\n      <DialogTrigger render={<Button variant='outline' />}>\n        Update card\n      </DialogTrigger>\n      <DialogContent className='max-w-md'>\n        <div className='flex flex-col gap-4'>\n          <span aria-hidden='true' className={ICON_TILE}>\n            <WalletIcon className='size-5' />\n          </span>\n          <DialogHeader>\n            <DialogTitle>Update your card</DialogTitle>\n            <DialogDescription>\n              The new card replaces the Visa ending in 4242 for the next\n              invoices.\n            </DialogDescription>\n          </DialogHeader>\n        </div>\n        <form className='flex flex-col gap-5'>\n          <div className='flex flex-col gap-4'>\n            <div className='grid gap-2'>\n              <Label htmlFor={nameId}>Name on card</Label>\n              <Input\n                id={nameId}\n                autoComplete='cc-name'\n                placeholder='Amara Okafor'\n                required\n              />\n            </div>\n            <div className='grid gap-2'>\n              <Label htmlFor={numberId}>Card number</Label>\n              <div className='relative'>\n                <Input\n                  {...getCardNumberProps()}\n                  id={numberId}\n                  className='peer pe-9 [direction:inherit]'\n                />\n                <span className='text-muted-foreground/80 pointer-events-none absolute inset-y-0 end-0 flex items-center pe-2.5 peer-disabled:opacity-50'>\n                  {hasCardType && (\n                    <svg\n                      className='overflow-hidden rounded-sm'\n                      {...getCardImageProps({ images: CARD_IMAGES })}\n                      width={20}\n                    />\n                  )}\n                  {!hasCardType && <CreditCardIcon className='size-4' />}\n                </span>\n              </div>\n            </div>\n            <div className='flex gap-4'>\n              <div className='grid flex-1 gap-2'>\n                <Label htmlFor={expiryId}>Expiry date</Label>\n                <Input\n                  {...getExpiryDateProps()}\n                  id={expiryId}\n                  className='[direction:inherit]'\n                />\n              </div>\n              <div className='grid flex-1 gap-2'>\n                <Label htmlFor={cvcId}>CVC</Label>\n                <Input\n                  {...getCVCProps()}\n                  id={cvcId}\n                  className='[direction:inherit]'\n                />\n              </div>\n            </div>\n          </div>\n          <div className='flex items-center gap-2'>\n            <Checkbox id={defaultId} />\n            <Label\n              htmlFor={defaultId}\n              className='text-muted-foreground font-normal'\n            >\n              Use it as the default payment method\n            </Label>\n          </div>\n          <Button type='button' size='lg' className='w-full'>\n            Update card\n          </Button>\n        </form>\n      </DialogContent>\n    </Dialog>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "dialog"
+  ],
+  "type": "registry:component"
+}

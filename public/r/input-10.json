@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-10",
+  "title": "Input with end icon",
+  "description": "A mail icon at the end of an email field.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-10.tsx",
+      "content": "import { MailIcon } from '@/registry/ndeko/lib/icons';\nimport { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport { Input } from '@/registry/ndeko/ui/input';\n\nexport default function Input10() {\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Email</FieldLabel>\n      <div className='relative'>\n        <Input\n          className='peer pe-8'\n          type='email'\n          placeholder='you@example.com'\n        />\n        <span className='text-muted-foreground pointer-events-none absolute inset-y-0 end-0 flex w-8 items-center justify-center peer-disabled:opacity-50'>\n          <MailIcon className='size-4' />\n        </span>\n      </div>\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

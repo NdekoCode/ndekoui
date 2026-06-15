@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "table-09",
+  "title": "Vertical table",
+  "description": "Field names on the left and one record's values on the right.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/badge.json",
+    "https://ui.ndeko.dev/r/table.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/table/table-09.tsx",
+      "content": "import { Badge } from '@/registry/ndeko/ui/badge';\nimport {\n  Table,\n  TableBody,\n  TableCell,\n  TableHead,\n  TableRow,\n} from '@/registry/ndeko/ui/table';\n\nconst CURRENCY = new Intl.NumberFormat('en-US', {\n  style: 'currency',\n  currency: 'USD',\n});\n\nconst ROW =\n  '*:border-border [&>:not(:last-child)]:hairline-r hover:bg-transparent';\n\nconst KEY_CELL =\n  'bg-foreground/[0.025] text-foreground h-auto w-32 py-2 text-[13px] font-medium';\n\nexport default function Table09() {\n  return (\n    <div className='bg-card hairline-ring ring-border mx-auto w-full max-w-lg overflow-hidden rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>\n      <Table>\n        <TableBody>\n          <TableRow className={ROW}>\n            <TableHead scope='row' className={KEY_CELL}>\n              Name\n            </TableHead>\n            <TableCell className='py-2'>Kenji Watanabe</TableCell>\n          </TableRow>\n          <TableRow className={ROW}>\n            <TableHead scope='row' className={KEY_CELL}>\n              Email\n            </TableHead>\n            <TableCell className='py-2'>kenji.watanabe@example.com</TableCell>\n          </TableRow>\n          <TableRow className={ROW}>\n            <TableHead scope='row' className={KEY_CELL}>\n              Location\n            </TableHead>\n            <TableCell className='py-2'>Osaka, Japan</TableCell>\n          </TableRow>\n          <TableRow className={ROW}>\n            <TableHead scope='row' className={KEY_CELL}>\n              Status\n            </TableHead>\n            <TableCell className='py-2'>\n              <Badge variant='success'>Active</Badge>\n            </TableCell>\n          </TableRow>\n          <TableRow className={ROW}>\n            <TableHead scope='row' className={KEY_CELL}>\n              Balance\n            </TableHead>\n            <TableCell className='py-2 tabular-nums'>\n              {CURRENCY.format(1000)}\n            </TableCell>\n          </TableRow>\n        </TableBody>\n      </Table>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "table"
+  ],
+  "type": "registry:component"
+}

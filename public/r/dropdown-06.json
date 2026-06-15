@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dropdown-06",
+  "title": "Checkbox menu",
+  "description": "Options that toggle on and off while the menu stays open.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/dropdown-menu.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/dropdown/dropdown-06.tsx",
+      "content": "'use client';\n\nimport { useState } from 'react';\n\nimport { ChevronDownIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport {\n  DropdownMenu,\n  DropdownMenuCheckboxItem,\n  DropdownMenuContent,\n  DropdownMenuTrigger,\n} from '@/registry/ndeko/ui/dropdown-menu';\n\nexport default function Dropdown06() {\n  const [hasNextjs, setHasNextjs] = useState(false);\n  const [hasSveltekit, setHasSveltekit] = useState(true);\n  const [hasRemix, setHasRemix] = useState(false);\n  const [hasAstro, setHasAstro] = useState(false);\n\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger render={<Button variant='outline' />}>\n        Frameworks\n        <ChevronDownIcon className='-me-1 opacity-60' />\n      </DropdownMenuTrigger>\n      <DropdownMenuContent>\n        <DropdownMenuCheckboxItem\n          checked={hasNextjs}\n          onCheckedChange={setHasNextjs}\n        >\n          Next.js\n        </DropdownMenuCheckboxItem>\n        <DropdownMenuCheckboxItem\n          checked={hasSveltekit}\n          onCheckedChange={setHasSveltekit}\n        >\n          SvelteKit\n        </DropdownMenuCheckboxItem>\n        <DropdownMenuCheckboxItem\n          checked={hasRemix}\n          onCheckedChange={setHasRemix}\n          disabled\n        >\n          Remix\n        </DropdownMenuCheckboxItem>\n        <DropdownMenuCheckboxItem\n          checked={hasAstro}\n          onCheckedChange={setHasAstro}\n        >\n          Astro\n        </DropdownMenuCheckboxItem>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "dropdown"
+  ],
+  "type": "registry:component"
+}

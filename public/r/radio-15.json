@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-15",
+  "title": "Plan list",
+  "description": "Joined plan rows with prices and a popular badge.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/badge.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/radio-group.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/radio/radio-15.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Badge } from '@/registry/ndeko/ui/badge';\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { RadioGroup, RadioGroupItem } from '@/registry/ndeko/ui/radio-group';\n\ntype Plan = {\n  value: string;\n  label: string;\n  price: string;\n  isPopular?: boolean;\n};\n\nconst PLANS: Plan[] = [\n  { value: 'hobby', label: 'Hobby', price: '$9/mo' },\n  { value: 'plus', label: 'Plus', price: '$29/mo', isPopular: true },\n  { value: 'team', label: 'Team', price: '$49/mo' },\n  { value: 'enterprise', label: 'Enterprise', price: 'Custom' },\n];\n\nconst PLAN_LIST =\n  'gap-0 rounded-xl bg-card shadow-[0_1px_2px_rgb(0_0_0/0.04)] hairline-ring ring-border hairline-divide-y divide-border';\n\nconst PLAN_ROW = [\n  'relative flex items-center justify-between gap-2 px-4 py-3.5 hairline-ring ring-transparent first:rounded-t-xl last:rounded-b-xl transition-[box-shadow] duration-150',\n  'has-data-checked:z-10 has-data-checked:border-transparent has-data-checked:shadow-[0_6px_16px_-8px_color-mix(in_oklab,var(--primary)_35%,transparent)] has-data-checked:ring-primary/45',\n].join(' ');\n\nexport default function Radio15() {\n  const id = useId();\n  const captionId = `${id}-caption`;\n\n  return (\n    <div className='flex w-full flex-col gap-3'>\n      <span\n        id={captionId}\n        className='text-foreground text-[13px] leading-none font-medium'\n      >\n        Choose a plan\n      </span>\n      <RadioGroup\n        defaultValue='plus'\n        aria-labelledby={captionId}\n        className={PLAN_LIST}\n      >\n        {PLANS.map((plan) => {\n          const itemId = `${id}-${plan.value}`;\n          const priceId = `${itemId}-price`;\n\n          return (\n            <div key={plan.value} className={PLAN_ROW}>\n              <div className='flex items-center gap-2'>\n                <RadioGroupItem\n                  value={plan.value}\n                  id={itemId}\n                  aria-describedby={priceId}\n                  className='after:absolute after:inset-0'\n                />\n                <Label htmlFor={itemId}>\n                  {plan.label}\n                  {plan.isPopular && <Badge>Popular</Badge>}\n                </Label>\n              </div>\n              <span\n                id={priceId}\n                className='text-muted-foreground text-xs tabular-nums'\n              >\n                {plan.price}\n              </span>\n            </div>\n          );\n        })}\n      </RadioGroup>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "radio"
+  ],
+  "type": "registry:component"
+}

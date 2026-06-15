@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "table-06",
+  "title": "Dense table",
+  "description": "Eight columns of service data in compact rows on a card.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/table.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/table/table-06.tsx",
+      "content": "import {\n  Table,\n  TableBody,\n  TableCell,\n  TableHead,\n  TableHeader,\n  TableRow,\n} from '@/registry/ndeko/ui/table';\n\ntype Service = {\n  id: string;\n  name: string;\n  region: string;\n  owner: string;\n  runtime: string;\n  plan: string;\n  instances: number;\n  uptime: string;\n  latency: string;\n};\n\nconst SERVICES: Service[] = [\n  {\n    id: '1',\n    name: 'api-gateway',\n    region: 'eu-west-1',\n    owner: 'Anna Novak',\n    runtime: 'Node 22',\n    plan: 'Pro',\n    instances: 4,\n    uptime: '99.98%',\n    latency: '182 ms',\n  },\n  {\n    id: '2',\n    name: 'billing-worker',\n    region: 'us-east-1',\n    owner: 'Jordan Hayes',\n    runtime: 'Go 1.24',\n    plan: 'Pro',\n    instances: 2,\n    uptime: '99.95%',\n    latency: '96 ms',\n  },\n  {\n    id: '3',\n    name: 'search-index',\n    region: 'eu-central-1',\n    owner: 'Kenji Watanabe',\n    runtime: 'Rust 1.86',\n    plan: 'Scale',\n    instances: 6,\n    uptime: '99.99%',\n    latency: '41 ms',\n  },\n  {\n    id: '4',\n    name: 'media-resizer',\n    region: 'ap-south-1',\n    owner: 'Lina Haddad',\n    runtime: 'Python 3.13',\n    plan: 'Starter',\n    instances: 1,\n    uptime: '99.71%',\n    latency: '310 ms',\n  },\n  {\n    id: '5',\n    name: 'notifications',\n    region: 'us-west-2',\n    owner: 'Ama Mensah',\n    runtime: 'Node 22',\n    plan: 'Pro',\n    instances: 3,\n    uptime: '99.93%',\n    latency: '128 ms',\n  },\n];\n\nconst DENSE_HEAD = 'h-9 py-2';\nconst DENSE_CELL = 'py-2';\nconst DENSE_FIGURE = 'py-2 text-right tabular-nums';\n\nexport default function Table06() {\n  return (\n    <div className='bg-card hairline-ring ring-border w-full overflow-hidden rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>\n      <Table>\n        <TableHeader>\n          <TableRow className='hover:bg-transparent'>\n            <TableHead className={DENSE_HEAD}>Service</TableHead>\n            <TableHead className={DENSE_HEAD}>Region</TableHead>\n            <TableHead className={DENSE_HEAD}>Owner</TableHead>\n            <TableHead className={DENSE_HEAD}>Runtime</TableHead>\n            <TableHead className={DENSE_HEAD}>Plan</TableHead>\n            <TableHead className={`${DENSE_HEAD} text-right`}>\n              Instances\n            </TableHead>\n            <TableHead className={`${DENSE_HEAD} text-right`}>Uptime</TableHead>\n            <TableHead className={`${DENSE_HEAD} text-right`}>\n              p95 latency\n            </TableHead>\n          </TableRow>\n        </TableHeader>\n        <TableBody>\n          {SERVICES.map((service) => (\n            <TableRow key={service.id}>\n              <TableCell className={`${DENSE_CELL} font-medium`}>\n                {service.name}\n              </TableCell>\n              <TableCell className={`${DENSE_CELL} text-muted-foreground`}>\n                {service.region}\n              </TableCell>\n              <TableCell className={DENSE_CELL}>{service.owner}</TableCell>\n              <TableCell className={DENSE_CELL}>{service.runtime}</TableCell>\n              <TableCell className={DENSE_CELL}>{service.plan}</TableCell>\n              <TableCell className={DENSE_FIGURE}>\n                {service.instances}\n              </TableCell>\n              <TableCell className={DENSE_FIGURE}>{service.uptime}</TableCell>\n              <TableCell className={DENSE_FIGURE}>{service.latency}</TableCell>\n            </TableRow>\n          ))}\n        </TableBody>\n      </Table>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "table"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "navbar-15",
+  "title": "Chat navbar",
+  "description": "A model select whose label morphs to the chosen model, a temporary chat button and the account.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/animated-size.json",
+    "https://ui.ndeko.dev/r/avatar.json",
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/dropdown-menu.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/select.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/navbar/navbar-15.tsx",
+      "content": "'use client';\n\nimport { MorphingLabel } from '@/registry/ndeko/components/navbar/_parts/morphing-label';\nimport { UserMenu } from '@/registry/ndeko/components/navbar/_parts/user-menu';\nimport {\n  BotMessageSquareIcon,\n  MessageCircleDashedIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport {\n  Select,\n  SelectContent,\n  SelectGroup,\n  SelectItem,\n  SelectLabel,\n  SelectTrigger,\n  SelectValue,\n} from '@/registry/ndeko/ui/select';\n\nconst MODELS = [\n  {\n    value: 'orion-alpha-45',\n    label: 'Orion-Alpha 4.5',\n    description: 'Balanced performance and creativity',\n  },\n  {\n    value: 'orion-code-4',\n    label: 'Orion-Code 4',\n    description: 'Optimized for code generation and understanding',\n  },\n  {\n    value: 'nova-chat-4',\n    label: 'Nova-Chat 4',\n    description: 'Excels at natural, engaging conversations',\n  },\n  {\n    value: 'galaxy-max-4',\n    label: 'Galaxy-Max 4',\n    description: 'Most powerful model for complex tasks',\n  },\n];\n\nfunction modelLabelOf(value: string) {\n  const model = MODELS.find((option) => option.value === value);\n  return model?.label ?? value;\n}\n\nfunction renderModel(value: string) {\n  return <MorphingLabel value={value}>{modelLabelOf(value)}</MorphingLabel>;\n}\n\nexport default function Navbar15() {\n  return (\n    <header className='hairline-b border-border px-4 md:px-6'>\n      <div className='flex h-16 items-center justify-between gap-4'>\n        <Select items={MODELS} defaultValue='orion-alpha-45'>\n          <SelectTrigger aria-label='Select AI model' className='w-fit'>\n            <BotMessageSquareIcon className='text-muted-foreground' />\n            <SelectValue className='flex'>{renderModel}</SelectValue>\n          </SelectTrigger>\n          <SelectContent>\n            <SelectGroup>\n              <SelectLabel>Models</SelectLabel>\n              {MODELS.map((model) => (\n                <SelectItem\n                  key={model.value}\n                  value={model.value}\n                  className='h-auto py-1.5'\n                >\n                  <span className='flex flex-col gap-0.5'>\n                    <span>{model.label}</span>\n                    <span className='text-muted-foreground text-xs'>\n                      {model.description}\n                    </span>\n                  </span>\n                </SelectItem>\n              ))}\n            </SelectGroup>\n          </SelectContent>\n        </Select>\n        <div className='flex items-center justify-end gap-2'>\n          <Button\n            variant='ghost'\n            size='icon'\n            aria-label='Start a temporary chat'\n            className='text-muted-foreground'\n          >\n            <MessageCircleDashedIcon />\n          </Button>\n          <UserMenu />\n        </div>\n      </div>\n    </header>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/navbar/navbar-15.tsx"
+    },
+    {
+      "path": "registry/ndeko/components/navbar/_parts/morphing-label.tsx",
+      "content": "'use client';\n\nimport {\n  AnimatePresence,\n  motion,\n  type Transition,\n  type Variants,\n  useReducedMotion,\n} from 'motion/react';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { AnimatedSize } from '@/registry/ndeko/ui/animated-size';\n\nconst SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };\nconst EXIT_TRANSITION: Transition = { duration: 0.1, ease: [0.2, 0, 0, 1] };\n\nconst LABEL_VARIANTS: Variants = {\n  enter: { opacity: 0, filter: 'blur(2px)' },\n  visible: { opacity: 1, filter: 'blur(0px)' },\n  exit: { opacity: 0, filter: 'blur(2px)', transition: EXIT_TRANSITION },\n};\n\nconst FADE_VARIANTS: Variants = {\n  enter: { opacity: 0 },\n  visible: { opacity: 1 },\n  exit: { opacity: 0, transition: EXIT_TRANSITION },\n};\n\nfunction labelVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return LABEL_VARIANTS;\n}\n\ntype MorphingLabelProps = {\n  value: string;\n  className?: string;\n  children: React.ReactNode;\n};\n\nfunction MorphingLabel({ value, className, children }: MorphingLabelProps) {\n  const shouldReduceMotion = useReducedMotion();\n  const labelVariants = labelVariantsOf(shouldReduceMotion);\n\n  return (\n    <AnimatedSize as='span' axis='width' contentClassName='relative flex'>\n      <AnimatePresence mode='popLayout' initial={false}>\n        <motion.span\n          key={value}\n          className={cn('flex whitespace-nowrap', className)}\n          variants={labelVariants}\n          initial='enter'\n          animate='visible'\n          exit='exit'\n          transition={SWAP_TRANSITION}\n        >\n          {children}\n        </motion.span>\n      </AnimatePresence>\n    </AnimatedSize>\n  );\n}\n\nexport { MorphingLabel };\n",
+      "type": "registry:component",
+      "target": "components/navbar/_parts/morphing-label.tsx"
+    },
+    {
+      "path": "registry/ndeko/components/navbar/_parts/user-menu.tsx",
+      "content": "import {\n  BoltIcon,\n  BookOpenIcon,\n  Layers2Icon,\n  LogOutIcon,\n  PinIcon,\n  UserPenIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { Avatar, AvatarFallback } from '@/registry/ndeko/ui/avatar';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuGroup,\n  DropdownMenuItem,\n  DropdownMenuLabel,\n  DropdownMenuSeparator,\n  DropdownMenuTrigger,\n} from '@/registry/ndeko/ui/dropdown-menu';\n\nfunction UserMenu() {\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger\n        render={\n          <Button\n            variant='ghost'\n            size='icon'\n            aria-label='Open account menu'\n            className='rounded-full hover:bg-transparent'\n          />\n        }\n      >\n        <Avatar>\n          <AvatarFallback>KK</AvatarFallback>\n        </Avatar>\n      </DropdownMenuTrigger>\n      <DropdownMenuContent align='end' className='max-w-64'>\n        <DropdownMenuLabel className='flex min-w-0 flex-col gap-0.5'>\n          <span className='text-foreground truncate text-[13px]'>\n            Keith Kennedy\n          </span>\n          <span className='truncate font-normal'>\n            keith.kennedy@example.com\n          </span>\n        </DropdownMenuLabel>\n        <DropdownMenuSeparator />\n        <DropdownMenuGroup>\n          <DropdownMenuItem>\n            <BoltIcon />\n            Preferences\n          </DropdownMenuItem>\n          <DropdownMenuItem>\n            <Layers2Icon />\n            Workspaces\n          </DropdownMenuItem>\n          <DropdownMenuItem>\n            <BookOpenIcon />\n            Documentation\n          </DropdownMenuItem>\n        </DropdownMenuGroup>\n        <DropdownMenuSeparator />\n        <DropdownMenuGroup>\n          <DropdownMenuItem>\n            <PinIcon />\n            Pinned items\n          </DropdownMenuItem>\n          <DropdownMenuItem>\n            <UserPenIcon />\n            Edit profile\n          </DropdownMenuItem>\n        </DropdownMenuGroup>\n        <DropdownMenuSeparator />\n        <DropdownMenuItem>\n          <LogOutIcon />\n          Log out\n        </DropdownMenuItem>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  );\n}\n\nexport { UserMenu };\n",
+      "type": "registry:component",
+      "target": "components/navbar/_parts/user-menu.tsx"
+    }
+  ],
+  "categories": [
+    "components",
+    "navbar"
+  ],
+  "type": "registry:component"
+}

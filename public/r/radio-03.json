@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-03",
+  "title": "Disabled radio group",
+  "description": "A radio group and its labels dimmed because they cannot be changed.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/radio-group.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/radio/radio-03.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { RadioGroup, RadioGroupItem } from '@/registry/ndeko/ui/radio-group';\n\nconst BILLING_OPTIONS = [\n  { value: 'monthly', label: 'Monthly' },\n  { value: 'quarterly', label: 'Quarterly' },\n  { value: 'yearly', label: 'Yearly' },\n];\n\nexport default function Radio03() {\n  const id = useId();\n\n  return (\n    <RadioGroup\n      defaultValue='quarterly'\n      disabled\n      aria-label='Billing cycle'\n      className='group'\n    >\n      {BILLING_OPTIONS.map((option) => {\n        const itemId = `${id}-${option.value}`;\n\n        return (\n          <div key={option.value} className='flex items-center gap-2'>\n            <RadioGroupItem value={option.value} id={itemId} />\n            <Label htmlFor={itemId}>{option.label}</Label>\n          </div>\n        );\n      })}\n    </RadioGroup>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "radio"
+  ],
+  "type": "registry:component"
+}

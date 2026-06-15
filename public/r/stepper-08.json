@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stepper-08",
+  "title": "Paginated stepper",
+  "description": "Progress bars between two arrow buttons.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/stepper.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/stepper/stepper-08.tsx",
+      "content": "'use client';\n\nimport { useState } from 'react';\n\nimport { ChevronLeftIcon, ChevronRightIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport {\n  Stepper,\n  StepperIndicator,\n  StepperItem,\n} from '@/registry/ndeko/ui/stepper';\n\nconst STEPS = [1, 2, 3, 4];\nconst FIRST_STEP = 1;\n\nconst BAR = [\n  'bg-foreground/10 data-[state=active]:bg-foreground/10 data-[state=completed]:bg-foreground/10 w-full',\n  'after:bg-primary after:absolute after:inset-0 after:origin-left after:scale-x-0 after:rounded-[inherit] after:transition-[scale] after:duration-200 after:ease-out-strong rtl:after:origin-right',\n  'data-[state=active]:after:scale-x-100 data-[state=active]:after:duration-300 data-[state=completed]:after:scale-x-100 data-[state=completed]:after:duration-300',\n].join(' ');\n\nexport default function Stepper08() {\n  const [currentStep, setCurrentStep] = useState(2);\n  const isFirstStep = currentStep === FIRST_STEP;\n  const isLastStep = currentStep === STEPS.length;\n\n  function goToPreviousStep() {\n    setCurrentStep((step) => step - 1);\n  }\n\n  function goToNextStep() {\n    setCurrentStep((step) => step + 1);\n  }\n\n  return (\n    <div className='mx-auto flex w-full max-w-xl items-center gap-2'>\n      <Button\n        variant='ghost'\n        size='icon'\n        onClick={goToPreviousStep}\n        disabled={isFirstStep}\n        focusableWhenDisabled\n        aria-label='Previous step'\n      >\n        <ChevronLeftIcon />\n      </Button>\n      <Stepper\n        value={currentStep}\n        onValueChange={setCurrentStep}\n        className='gap-1'\n      >\n        {STEPS.map((step) => (\n          <StepperItem key={step} step={step} className='flex-1'>\n            <StepperIndicator className={cn(BAR, 'h-1')}>\n              <span className='sr-only'>{step}</span>\n            </StepperIndicator>\n          </StepperItem>\n        ))}\n      </Stepper>\n      <Button\n        variant='ghost'\n        size='icon'\n        onClick={goToNextStep}\n        disabled={isLastStep}\n        focusableWhenDisabled\n        aria-label='Next step'\n      >\n        <ChevronRightIcon />\n      </Button>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "stepper"
+  ],
+  "type": "registry:component"
+}

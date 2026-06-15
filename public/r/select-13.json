@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-13",
+  "title": "Native select with floating label",
+  "description": "The label sits on the top edge of the field.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/select-native.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-13.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { SelectNative } from '@/registry/ndeko/ui/select-native';\n\nexport default function Select13() {\n  const id = useId();\n\n  return (\n    <div className='group relative w-full max-w-xs'>\n      <Label\n        htmlFor={id}\n        className='bg-card absolute start-1.5 top-0 z-10 -translate-y-1/2 px-1 text-xs group-has-disabled:opacity-50'\n      >\n        Framework\n      </Label>\n      <SelectNative id={id} defaultValue=''>\n        <option value='' disabled>\n          Pick a framework\n        </option>\n        <option value='react'>React</option>\n        <option value='nextjs'>Next.js</option>\n        <option value='astro'>Astro</option>\n        <option value='gatsby'>Gatsby</option>\n      </SelectNative>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

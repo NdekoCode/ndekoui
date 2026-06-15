@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-38",
+  "title": "Select with avatars",
+  "description": "Team members with their avatar, in the list and in the trigger.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/avatar.json",
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/select.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-38.tsx",
+      "content": "import { Avatar, AvatarFallback } from '@/registry/ndeko/ui/avatar';\nimport { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport {\n  Select,\n  SelectContent,\n  SelectGroup,\n  SelectItem,\n  SelectLabel,\n  SelectTrigger,\n  SelectValue,\n} from '@/registry/ndeko/ui/select';\n\ntype Member = {\n  value: string;\n  name: string;\n  initials: string;\n};\n\nconst MEMBERS: Member[] = [\n  { value: 'jenny', name: 'Jenny Hamilton', initials: 'JH' },\n  { value: 'paul', name: 'Paul Smith', initials: 'PS' },\n  { value: 'luna', name: 'Luna Wyen', initials: 'LW' },\n];\n\nfunction MemberName({ member }: { member: Member }) {\n  return (\n    <span className='flex min-w-0 items-center gap-2'>\n      <Avatar aria-hidden='true' className='size-5 text-[9px]'>\n        <AvatarFallback>{member.initials}</AvatarFallback>\n      </Avatar>\n      <span className='truncate'>{member.name}</span>\n    </span>\n  );\n}\n\nconst MEMBER_ITEMS = MEMBERS.map((member) => ({\n  value: member.value,\n  label: <MemberName member={member} />,\n}));\n\nexport default function Select38() {\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Assignee</FieldLabel>\n      <Select items={MEMBER_ITEMS} defaultValue='jenny'>\n        <SelectTrigger className='ps-1.5'>\n          <SelectValue placeholder='Pick a team member' />\n        </SelectTrigger>\n        <SelectContent>\n          <SelectGroup>\n            <SelectLabel>Team members</SelectLabel>\n            {MEMBERS.map((member) => (\n              <SelectItem\n                key={member.value}\n                value={member.value}\n                label={member.name}\n              >\n                <MemberName member={member} />\n              </SelectItem>\n            ))}\n          </SelectGroup>\n        </SelectContent>\n      </Select>\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

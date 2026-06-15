@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hover-card",
+  "title": "Hover Card",
+  "description": "A raised card that previews a link after a short pause.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/recipes.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/hover-card.tsx",
+      "content": "'use client';\n\nimport { PreviewCard as PreviewCardPrimitive } from '@base-ui/react/preview-card';\n\nimport { POPUP_TRANSITION } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\n\ntype WithClassName<Props> = Omit<Props, 'className'> & { className?: string };\n\nfunction HoverCard(props: PreviewCardPrimitive.Root.Props) {\n  return <PreviewCardPrimitive.Root data-slot='hover-card' {...props} />;\n}\n\nfunction HoverCardTrigger(props: PreviewCardPrimitive.Trigger.Props) {\n  return (\n    <PreviewCardPrimitive.Trigger data-slot='hover-card-trigger' {...props} />\n  );\n}\n\ntype HoverCardContentProps = WithClassName<PreviewCardPrimitive.Popup.Props> &\n  Pick<\n    PreviewCardPrimitive.Positioner.Props,\n    'side' | 'sideOffset' | 'align' | 'alignOffset'\n  > & {\n    showArrow?: boolean;\n  };\n\nfunction HoverCardContent({\n  className,\n  children,\n  side = 'bottom',\n  sideOffset = 6,\n  align = 'center',\n  alignOffset = 0,\n  showArrow = false,\n  ...props\n}: HoverCardContentProps) {\n  return (\n    <PreviewCardPrimitive.Portal>\n      <PreviewCardPrimitive.Positioner\n        side={side}\n        sideOffset={sideOffset}\n        align={align}\n        alignOffset={alignOffset}\n        className='z-50'\n      >\n        <PreviewCardPrimitive.Popup\n          data-slot='hover-card-content'\n          className={cn(\n            'surface-raised w-64 rounded-xl p-4 text-[13px] outline-none',\n            POPUP_TRANSITION,\n            className\n          )}\n          {...props}\n        >\n          {children}\n          {showArrow && (\n            <PreviewCardPrimitive.Arrow className='fill-popover stroke-border flex data-[side=bottom]:-top-[6px] data-[side=left]:-right-[9px] data-[side=left]:rotate-90 data-[side=right]:-left-[9px] data-[side=right]:-rotate-90 data-[side=top]:-bottom-[6px] data-[side=top]:rotate-180'>\n              <svg width='12' height='6' viewBox='0 0 12 6' aria-hidden='true'>\n                <path d='M0 6 6 0l6 6Z' stroke='none' />\n                <polyline points='0,6 6,0.5 12,6' fill='none' strokeWidth='1' />\n              </svg>\n            </PreviewCardPrimitive.Arrow>\n          )}\n        </PreviewCardPrimitive.Popup>\n      </PreviewCardPrimitive.Positioner>\n    </PreviewCardPrimitive.Portal>\n  );\n}\n\nexport { HoverCard, HoverCardContent, HoverCardTrigger };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

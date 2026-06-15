@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "avatar-20",
+  "title": "Avatar stack with more",
+  "description": "Four overlapping avatars and a button for the three others.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/avatar.json",
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/avatar/avatar-20.tsx",
+      "content": "import {\n  Avatar,\n  AvatarFallback,\n  AvatarImage,\n} from '@/registry/ndeko/ui/avatar';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst MEMBERS = [\n  { name: 'Jordan Hayes', initials: 'JH', image: '/avatars/avatar-03.svg' },\n  { name: 'Anna Novak', initials: 'AN', image: '/avatars/avatar-04.svg' },\n  { name: 'Lina Haddad', initials: 'LH', image: '/avatars/avatar-05.svg' },\n  { name: 'Ama Mensah', initials: 'AM', image: '/avatars/avatar-06.svg' },\n];\n\nexport default function Avatar20() {\n  return (\n    <div className='flex -space-x-3'>\n      {MEMBERS.map((member) => (\n        <Avatar\n          key={member.name}\n          className='ring-card size-10 text-[13px] ring-2'\n        >\n          <AvatarImage src={member.image} alt={member.name} />\n          <AvatarFallback>{member.initials}</AvatarFallback>\n        </Avatar>\n      ))}\n      <Button\n        variant='secondary'\n        size='icon-lg'\n        className='bg-muted text-muted-foreground hover:bg-muted hover:text-foreground ring-card size-10 text-xs ring-2'\n        aria-label='Show 3 more members'\n      >\n        +3\n      </Button>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "avatar"
+  ],
+  "type": "registry:component"
+}

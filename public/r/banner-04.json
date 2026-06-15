@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "banner-04",
+  "title": "Feature banner",
+  "description": "A new feature with a learn more link at the end.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/status-orb.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/banner/banner-04.tsx",
+      "content": "import { ArrowRightIcon, EclipseIcon } from '@/registry/ndeko/lib/icons';\nimport { FOCUS_RING } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { StatusOrb } from '@/registry/ndeko/ui/status-orb';\n\nexport default function Banner04() {\n  return (\n    <div className='bg-primary/[0.06] hairline-ring ring-primary/15 dark:bg-primary/10 @container w-full rounded-xl px-4 py-3'>\n      <div className='flex gap-3'>\n        <StatusOrb\n          tone='brand'\n          size='sm'\n          glyph={<EclipseIcon strokeWidth={2.25} />}\n        />\n        <div className='flex grow flex-col justify-between gap-2 py-0.5 @xl:flex-row @xl:items-center'>\n          <p className='text-[13px] leading-5'>\n            Saved views are here: keep your filters and reopen them in one\n            click.\n          </p>\n          <a\n            href='#'\n            className={cn(\n              'group text-primary-ink inline-flex w-fit items-center gap-1 rounded-sm text-[13px] leading-5 font-medium whitespace-nowrap',\n              FOCUS_RING\n            )}\n          >\n            Learn more\n            <ArrowRightIcon className='size-4 opacity-60 transition-transform group-hover:translate-x-0.5' />\n          </a>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "banner"
+  ],
+  "type": "registry:component"
+}

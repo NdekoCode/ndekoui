@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-41",
+  "title": "Searchable select",
+  "description": "A search field at the top of the list narrows the options.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/combobox.json",
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-41.tsx",
+      "content": "'use client';\n\nimport { SearchIcon } from '@/registry/ndeko/lib/icons';\nimport {\n  Combobox,\n  ComboboxContent,\n  ComboboxEmpty,\n  ComboboxInput,\n  ComboboxItem,\n  ComboboxList,\n  ComboboxSelectTrigger,\n} from '@/registry/ndeko/ui/combobox';\nimport { Field, FieldLabel } from '@/registry/ndeko/ui/field';\n\ntype Framework = {\n  value: string;\n  label: string;\n};\n\nconst FRAMEWORKS: Framework[] = [\n  { value: 'nextjs', label: 'Next.js' },\n  { value: 'sveltekit', label: 'SvelteKit' },\n  { value: 'nuxt', label: 'Nuxt' },\n  { value: 'remix', label: 'Remix' },\n  { value: 'astro', label: 'Astro' },\n  { value: 'angular', label: 'Angular' },\n  { value: 'vue', label: 'Vue.js' },\n  { value: 'react', label: 'React' },\n  { value: 'ember', label: 'Ember.js' },\n  { value: 'gatsby', label: 'Gatsby' },\n  { value: 'eleventy', label: 'Eleventy' },\n  { value: 'solid', label: 'SolidJS' },\n  { value: 'preact', label: 'Preact' },\n  { value: 'qwik', label: 'Qwik' },\n  { value: 'alpine', label: 'Alpine.js' },\n  { value: 'lit', label: 'Lit' },\n];\n\nexport default function Select41() {\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Framework</FieldLabel>\n      <Combobox items={FRAMEWORKS}>\n        <ComboboxSelectTrigger placeholder='Pick a framework' />\n        <ComboboxContent className='flex flex-col p-0'>\n          <div className='hairline-b border-border flex h-10 shrink-0 items-center gap-2 px-3'>\n            <SearchIcon className='text-muted-foreground size-4 shrink-0' />\n            <ComboboxInput\n              aria-label='Search frameworks'\n              placeholder='Search frameworks'\n              className='h-full px-0'\n            />\n          </div>\n          <ComboboxEmpty>No framework matches your search.</ComboboxEmpty>\n          <ComboboxList className='max-h-64 overflow-y-auto p-1 empty:hidden'>\n            {(framework: Framework) => (\n              <ComboboxItem key={framework.value} value={framework}>\n                {framework.label}\n              </ComboboxItem>\n            )}\n          </ComboboxList>\n        </ComboboxContent>\n      </Combobox>\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

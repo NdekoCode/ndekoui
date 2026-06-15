@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "navbar-18",
+  "title": "Editor navbar",
+  "description": "A team switcher, a segmented view toggle, and export and upgrade actions.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/animated-size.json",
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/dropdown-menu.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/tabs.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/navbar/navbar-18.tsx",
+      "content": "import { AppToggle } from '@/registry/ndeko/components/navbar/_parts/app-toggle';\nimport { TeamSwitcher } from '@/registry/ndeko/components/navbar/_parts/team-switcher';\nimport { SparklesIcon, UploadIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst TEAMS = ['Acme Inc.', 'Lumen Labs', 'Junon'];\n\nexport default function Navbar18() {\n  return (\n    <header className='hairline-b border-border px-4 md:px-6'>\n      <div className='flex h-16 items-center justify-between gap-4'>\n        <div className='flex flex-1 items-center gap-2'>\n          <TeamSwitcher teams={TEAMS} defaultTeam={TEAMS[0]} />\n        </div>\n        <AppToggle />\n        <div className='flex flex-1 items-center justify-end gap-2'>\n          <Button variant='ghost' className='max-sm:aspect-square max-sm:px-0'>\n            <UploadIcon className='opacity-60' />\n            <span className='max-sm:sr-only'>Export</span>\n          </Button>\n          <Button className='max-sm:aspect-square max-sm:px-0'>\n            <SparklesIcon className='opacity-60' />\n            <span className='max-sm:sr-only'>Upgrade</span>\n          </Button>\n        </div>\n      </div>\n    </header>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/navbar/navbar-18.tsx"
+    },
+    {
+      "path": "registry/ndeko/components/navbar/_parts/app-toggle.tsx",
+      "content": "import { Tabs, TabsList, TabsTab } from '@/registry/ndeko/ui/tabs';\n\nfunction AppToggle() {\n  return (\n    <Tabs defaultValue='wireframe'>\n      <TabsList variant='segmented' aria-label='View'>\n        <TabsTab value='sitemap'>Sitemap</TabsTab>\n        <TabsTab value='wireframe'>Wireframe</TabsTab>\n      </TabsList>\n    </Tabs>\n  );\n}\n\nexport { AppToggle };\n",
+      "type": "registry:component",
+      "target": "components/navbar/_parts/app-toggle.tsx"
+    },
+    {
+      "path": "registry/ndeko/components/navbar/_parts/morphing-label.tsx",
+      "content": "'use client';\n\nimport {\n  AnimatePresence,\n  motion,\n  type Transition,\n  type Variants,\n  useReducedMotion,\n} from 'motion/react';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { AnimatedSize } from '@/registry/ndeko/ui/animated-size';\n\nconst SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };\nconst EXIT_TRANSITION: Transition = { duration: 0.1, ease: [0.2, 0, 0, 1] };\n\nconst LABEL_VARIANTS: Variants = {\n  enter: { opacity: 0, filter: 'blur(2px)' },\n  visible: { opacity: 1, filter: 'blur(0px)' },\n  exit: { opacity: 0, filter: 'blur(2px)', transition: EXIT_TRANSITION },\n};\n\nconst FADE_VARIANTS: Variants = {\n  enter: { opacity: 0 },\n  visible: { opacity: 1 },\n  exit: { opacity: 0, transition: EXIT_TRANSITION },\n};\n\nfunction labelVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return LABEL_VARIANTS;\n}\n\ntype MorphingLabelProps = {\n  value: string;\n  className?: string;\n  children: React.ReactNode;\n};\n\nfunction MorphingLabel({ value, className, children }: MorphingLabelProps) {\n  const shouldReduceMotion = useReducedMotion();\n  const labelVariants = labelVariantsOf(shouldReduceMotion);\n\n  return (\n    <AnimatedSize as='span' axis='width' contentClassName='relative flex'>\n      <AnimatePresence mode='popLayout' initial={false}>\n        <motion.span\n          key={value}\n          className={cn('flex whitespace-nowrap', className)}\n          variants={labelVariants}\n          initial='enter'\n          animate='visible'\n          exit='exit'\n          transition={SWAP_TRANSITION}\n        >\n          {children}\n        </motion.span>\n      </AnimatePresence>\n    </AnimatedSize>\n  );\n}\n\nexport { MorphingLabel };\n",
+      "type": "registry:component",
+      "target": "components/navbar/_parts/morphing-label.tsx"
+    },
+    {
+      "path": "registry/ndeko/components/navbar/_parts/team-switcher.tsx",
+      "content": "'use client';\n\nimport { useState } from 'react';\n\nimport { MorphingLabel } from '@/registry/ndeko/components/navbar/_parts/morphing-label';\nimport { ChevronsUpDownIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuRadioGroup,\n  DropdownMenuRadioItem,\n  DropdownMenuTrigger,\n} from '@/registry/ndeko/ui/dropdown-menu';\n\nconst GEM_STYLE = { '--gem': 'var(--primary)' } as React.CSSProperties;\n\nfunction initialOf(team: string) {\n  const firstLetter = team.charAt(0);\n  return firstLetter.toUpperCase();\n}\n\nfunction TeamMark({ team }: { team: string }) {\n  return (\n    <span\n      aria-hidden='true'\n      style={GEM_STYLE}\n      className='gem-plate flex size-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold'\n    >\n      {initialOf(team)}\n    </span>\n  );\n}\n\ntype TeamSwitcherProps = {\n  teams: string[];\n  defaultTeam: string;\n};\n\nfunction TeamSwitcher({ teams, defaultTeam }: TeamSwitcherProps) {\n  const [selectedTeam, setSelectedTeam] = useState(defaultTeam);\n\n  function selectTeam(team: string) {\n    setSelectedTeam(team);\n  }\n\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger\n        render={<Button variant='ghost' className='gap-2 px-1.5' />}\n      >\n        <TeamMark team={selectedTeam} />\n        <MorphingLabel value={selectedTeam}>{selectedTeam}</MorphingLabel>\n        <ChevronsUpDownIcon className='text-muted-foreground size-3.5' />\n      </DropdownMenuTrigger>\n      <DropdownMenuContent>\n        <DropdownMenuRadioGroup value={selectedTeam} onValueChange={selectTeam}>\n          {teams.map((team) => (\n            <DropdownMenuRadioItem key={team} value={team} closeOnClick>\n              <TeamMark team={team} />\n              {team}\n            </DropdownMenuRadioItem>\n          ))}\n        </DropdownMenuRadioGroup>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  );\n}\n\nexport { TeamSwitcher };\n",
+      "type": "registry:component",
+      "target": "components/navbar/_parts/team-switcher.tsx"
+    }
+  ],
+  "categories": [
+    "components",
+    "navbar"
+  ],
+  "type": "registry:component"
+}

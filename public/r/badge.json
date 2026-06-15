@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge",
+  "title": "Badge",
+  "description": "Soft status pairs, readable in both themes.",
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/badge.tsx",
+      "content": "'use client';\n\nimport { mergeProps } from '@base-ui/react/merge-props';\nimport { useRender } from '@base-ui/react/use-render';\nimport { cva, type VariantProps } from 'class-variance-authority';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\n\nconst badgeVariants = cva(\n  \"inline-flex h-5 w-fit shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-md px-1.5 text-xs font-medium [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-3\",\n  {\n    variants: {\n      variant: {\n        default: 'bg-primary/10 text-primary-ink',\n        secondary: 'bg-foreground/[0.06] text-foreground',\n        outline: 'bg-card text-foreground hairline-ring ring-border',\n        success: 'bg-success/10 text-success-foreground',\n        warning: 'bg-warning/10 text-warning-foreground',\n        info: 'bg-info/10 text-info-foreground',\n        destructive: 'bg-destructive/10 text-destructive-ink',\n      },\n    },\n    defaultVariants: {\n      variant: 'default',\n    },\n  }\n);\n\ntype BadgeProps = useRender.ComponentProps<'span'> &\n  VariantProps<typeof badgeVariants>;\n\nfunction Badge({ className, variant, render, ...props }: BadgeProps) {\n  const defaultProps = {\n    'data-slot': 'badge',\n    className: cn(badgeVariants({ variant }), className),\n  };\n\n  return useRender({\n    defaultTagName: 'span',\n    render,\n    props: mergeProps<'span'>(defaultProps, props),\n  });\n}\n\nexport { Badge, badgeVariants, type BadgeProps };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

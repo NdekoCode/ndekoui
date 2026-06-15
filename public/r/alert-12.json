@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "alert-12",
+  "title": "Tinted error alert with list",
+  "description": "The unmet password rules on the soft destructive pair.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/status-orb.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/alert/alert-12.tsx",
+      "content": "import { StatusOrb } from '@/registry/ndeko/ui/status-orb';\n\nexport default function Alert12() {\n  return (\n    <div\n      role='alert'\n      className='bg-destructive/10 text-destructive-ink hairline-ring ring-destructive/25 flex items-start gap-3 rounded-xl px-4 py-3'\n    >\n      <StatusOrb tone='error' size='sm' />\n      <div className='flex grow flex-col gap-1 py-0.5 text-[13px] leading-5'>\n        <p className='font-medium'>Password does not meet the requirements:</p>\n        <ul className='list-inside list-disc opacity-80'>\n          <li>At least 8 characters</li>\n          <li>At least one special character</li>\n        </ul>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "alert"
+  ],
+  "type": "registry:component"
+}

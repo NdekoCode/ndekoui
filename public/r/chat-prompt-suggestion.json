@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chat-prompt-suggestion",
+  "title": "Chat Prompt Suggestion",
+  "description": "A prompt to start from, as a pill or as a list row that marks the typed match.",
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/button.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/chat-prompt-suggestion.tsx",
+      "content": "// Adapted from prompt-kit (MIT, Copyright (c) 2025 Julien Thibeaut).\n'use client';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Button } from '@/registry/ndeko/ui/button';\n\ntype PromptSuggestionProps = React.ComponentProps<typeof Button> & {\n  /** Turns the pill into a list row that marks where the typed text matches. */\n  highlight?: string;\n};\n\ntype HighlightParts = {\n  before: string;\n  match: string;\n  after: string;\n};\n\nfunction highlightPartsOf(content: string, highlight: string) {\n  const lowerContent = content.toLowerCase();\n  const lowerHighlight = highlight.toLowerCase();\n  const start = lowerContent.indexOf(lowerHighlight);\n  if (start === -1) {\n    return null;\n  }\n  const end = start + highlight.length;\n  const parts: HighlightParts = {\n    before: content.slice(0, start),\n    match: content.slice(start, end),\n    after: content.slice(end),\n  };\n  return parts;\n}\n\nfunction trimmedHighlightOf(highlight: string | undefined) {\n  if (!highlight) {\n    return '';\n  }\n  return highlight.trim();\n}\n\nfunction HighlightedText({\n  content,\n  highlight,\n}: {\n  content: string;\n  highlight: string;\n}) {\n  const parts = highlightPartsOf(content, highlight);\n\n  if (!parts) {\n    return (\n      <span className='text-muted-foreground whitespace-pre-wrap'>\n        {content}\n      </span>\n    );\n  }\n\n  return (\n    <span className='whitespace-pre-wrap'>\n      <span className='text-muted-foreground'>{parts.before}</span>\n      <span className='text-primary-ink font-medium'>{parts.match}</span>\n      <span className='text-muted-foreground'>{parts.after}</span>\n    </span>\n  );\n}\n\nconst ROW = 'h-auto w-full justify-start py-2 text-start font-normal';\n\nfunction PromptSuggestion({\n  children,\n  variant,\n  size,\n  className,\n  highlight,\n  ...props\n}: PromptSuggestionProps) {\n  const trimmedHighlight = trimmedHighlightOf(highlight);\n  const isHighlightMode = trimmedHighlight.length > 0;\n  const isTextContent = typeof children === 'string';\n\n  if (!isHighlightMode) {\n    return (\n      <Button\n        type='button'\n        variant={variant ?? 'outline'}\n        size={size ?? 'default'}\n        className={cn('font-normal', className)}\n        {...props}\n      >\n        {children}\n      </Button>\n    );\n  }\n\n  if (!isTextContent) {\n    return (\n      <Button\n        type='button'\n        variant={variant ?? 'ghost'}\n        size={size ?? 'sm'}\n        className={cn(ROW, className)}\n        {...props}\n      >\n        {children}\n      </Button>\n    );\n  }\n\n  return (\n    <Button\n      type='button'\n      variant={variant ?? 'ghost'}\n      size={size ?? 'sm'}\n      className={cn(ROW, 'gap-0', className)}\n      {...props}\n    >\n      <HighlightedText content={children} highlight={trimmedHighlight} />\n    </Button>\n  );\n}\n\nexport { PromptSuggestion, type PromptSuggestionProps };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives",
+    "chat"
+  ],
+  "type": "registry:ui"
+}

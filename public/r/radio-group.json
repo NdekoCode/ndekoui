@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-group",
+  "title": "Radio Group",
+  "description": "Native radio semantics, drawn on the theme.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/radio-group.tsx",
+      "content": "'use client';\n\nimport { Radio as RadioPrimitive } from '@base-ui/react/radio';\nimport { RadioGroup as RadioGroupPrimitive } from '@base-ui/react/radio-group';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\n\ntype WithClassName<Props> = Omit<Props, 'className'> & { className?: string };\n\nfunction RadioGroup({\n  className,\n  ...props\n}: WithClassName<RadioGroupPrimitive.Props>) {\n  return (\n    <RadioGroupPrimitive\n      data-slot='radio-group'\n      className={cn('grid gap-3', className)}\n      {...props}\n    />\n  );\n}\n\nconst CHECKED_FILL = [\n  'data-checked:bg-primary data-checked:ring-(--ring-color)',\n  'dark:data-checked:bg-primary dark:data-checked:ring-(--ring-color) dark:focus-visible:ring-ring/25',\n  '[--ring-color:color-mix(in_oklab,black_15%,var(--primary))] dark:[--ring-color:color-mix(in_oklab,white_15%,var(--primary))]',\n].join(' ');\n\nfunction RadioGroupItem({\n  className,\n  ...props\n}: WithClassName<RadioPrimitive.Root.Props>) {\n  return (\n    <RadioPrimitive.Root\n      data-slot='radio-group-item'\n      className={cn(\n        'peer bg-card hairline-ring ring-foreground/20 inline-flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-full shadow-[0_1px_2px_rgb(0_0_0/0.05)] transition-[background-color,box-shadow] duration-150 outline-none',\n        'focus-visible:ring-ring/25 dark:bg-foreground/[0.04] dark:ring-foreground/25 focus-visible:ring-[3px] data-disabled:cursor-not-allowed data-disabled:opacity-50',\n        CHECKED_FILL,\n        className\n      )}\n      {...props}\n    >\n      <RadioPrimitive.Indicator\n        data-slot='radio-group-indicator'\n        className='size-1.5 rounded-full bg-white transition-[scale,opacity] duration-150 ease-(--ease-out-strong) data-ending-style:scale-60 data-ending-style:opacity-0 data-ending-style:duration-100 data-starting-style:scale-60 data-starting-style:opacity-0'\n      />\n    </RadioPrimitive.Root>\n  );\n}\n\nexport { RadioGroup, RadioGroupItem };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

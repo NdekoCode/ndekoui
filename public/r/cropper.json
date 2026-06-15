@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "cropper",
+  "title": "Cropper",
+  "description": "An image crop area you can drag and zoom.",
+  "dependencies": [
+    "@origin-space/image-cropper"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/cropper.tsx",
+      "content": "'use client';\n\nimport { Cropper as CropperPrimitive } from '@origin-space/image-cropper';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\n\nfunction Cropper({\n  className,\n  ...props\n}: React.ComponentProps<typeof CropperPrimitive.Root>) {\n  return (\n    <CropperPrimitive.Root\n      data-slot='cropper'\n      className={cn(\n        'bg-foreground/[0.04] focus-visible:ring-ring/25 relative flex w-full cursor-move touch-none items-center justify-center overflow-hidden rounded-xl outline-none focus-visible:ring-[3px]',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nfunction CropperDescription({\n  className,\n  ...props\n}: React.ComponentProps<typeof CropperPrimitive.Description>) {\n  return (\n    <CropperPrimitive.Description\n      data-slot='cropper-description'\n      className={cn('sr-only', className)}\n      {...props}\n    />\n  );\n}\n\nfunction CropperImage({\n  className,\n  ...props\n}: React.ComponentProps<typeof CropperPrimitive.Image>) {\n  return (\n    <CropperPrimitive.Image\n      data-slot='cropper-image'\n      className={cn(\n        'pointer-events-none h-full w-full object-cover',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nfunction CropperCropArea({\n  className,\n  ...props\n}: React.ComponentProps<typeof CropperPrimitive.CropArea>) {\n  return (\n    <CropperPrimitive.CropArea\n      data-slot='cropper-crop-area'\n      className={cn(\n        'pointer-events-none absolute border-2 border-white shadow-[0_0_0_9999px_rgb(0_0_0/0.35)] in-[[data-slot=cropper]:focus-visible]:ring-[3px] in-[[data-slot=cropper]:focus-visible]:ring-white/50',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nexport { Cropper, CropperCropArea, CropperDescription, CropperImage };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

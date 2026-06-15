@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-43",
+  "title": "Date range with unavailable days",
+  "description": "Weekends and booked days cannot be picked, and a range over them says why.",
+  "dependencies": [
+    "@internationalized/date",
+    "react-aria",
+    "react-aria-components"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/calendar-rac.json",
+    "https://ui.ndeko.dev/r/datefield-rac.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-43.tsx",
+      "content": "'use client';\n\nimport {\n  getLocalTimeZone,\n  isWeekend,\n  today,\n  type CalendarDate,\n} from '@internationalized/date';\nimport { useLocale } from 'react-aria';\nimport {\n  Button,\n  DateRangePicker,\n  Dialog,\n  FieldError,\n  Group,\n  Label,\n  Popover,\n  type DateValue,\n} from 'react-aria-components';\n\nimport { CalendarIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { RangeCalendar } from '@/registry/ndeko/ui/calendar-rac';\nimport { DateInput, dateInputStyle } from '@/registry/ndeko/ui/datefield-rac';\nimport { LABEL_RECIPE } from '@/registry/ndeko/ui/label';\n\ntype DateRange = { start: DateValue; end: DateValue };\n\nconst CALENDAR_BUTTON =\n  'text-muted-foreground data-hovered:bg-foreground/5 data-hovered:text-foreground data-focus-visible:ring-ring/25 absolute inset-y-0 end-1 z-10 my-auto flex size-6 items-center justify-center rounded-md outline-none transition-[color,background-color,box-shadow] data-focus-visible:ring-[3px]';\n\nconst POPOVER =\n  'surface-raised z-50 origin-(--trigger-anchor-point) rounded-xl p-2 outline-none transition-[opacity,scale] duration-150 ease-(--ease-out-strong) data-entering:scale-95 data-entering:opacity-0 data-exiting:scale-95 data-exiting:opacity-0 data-exiting:duration-100';\n\nconst RANGE_ERROR =\n  'text-destructive-ink text-xs transition-[opacity,translate] duration-200 ease-(--ease-out-strong) starting:-translate-y-0.5 starting:opacity-0';\n\nconst UNAVAILABLE_MESSAGE =\n  'This range includes booked days. Pick dates around them.';\n\nfunction bookedRangesFrom(now: CalendarDate): DateRange[] {\n  return [\n    { start: now, end: now.add({ days: 5 }) },\n    { start: now.add({ days: 14 }), end: now.add({ days: 16 }) },\n    { start: now.add({ days: 23 }), end: now.add({ days: 24 }) },\n  ];\n}\n\nfunction isInsideRange(date: DateValue, range: DateRange) {\n  const isAfterStart = date.compare(range.start) >= 0;\n  const isBeforeEnd = date.compare(range.end) <= 0;\n  return isAfterStart && isBeforeEnd;\n}\n\nfunction rangesOverlap(first: DateRange, second: DateRange) {\n  const endsAfterStart = first.end.compare(second.start) >= 0;\n  const startsBeforeEnd = first.start.compare(second.end) <= 0;\n  return endsAfterStart && startsBeforeEnd;\n}\n\nexport default function Input43() {\n  const { locale } = useLocale();\n  const now = today(getLocalTimeZone());\n  const bookedRanges = bookedRangesFrom(now);\n\n  function isDateUnavailable(date: DateValue) {\n    const isBooked = bookedRanges.some((range) => isInsideRange(date, range));\n    const isOnWeekend = isWeekend(date, locale);\n    return isBooked || isOnWeekend;\n  }\n\n  function validateRange(value: DateRange | null) {\n    if (!value) {\n      return null;\n    }\n    const overlapsBooking = bookedRanges.some((range) =>\n      rangesOverlap(value, range)\n    );\n    if (overlapsBooking) {\n      return UNAVAILABLE_MESSAGE;\n    }\n    return null;\n  }\n\n  return (\n    <DateRangePicker\n      className='flex w-full max-w-xs flex-col gap-1.5'\n      isDateUnavailable={isDateUnavailable}\n      validate={validateRange}\n    >\n      <Label className={LABEL_RECIPE}>Stay dates</Label>\n      <Group className={cn(dateInputStyle, 'pe-8')}>\n        <DateInput slot='start' unstyled />\n        <span aria-hidden='true' className='text-muted-foreground/75 px-1.5'>\n          –\n        </span>\n        <DateInput slot='end' unstyled />\n        <Button className={CALENDAR_BUTTON}>\n          <CalendarIcon className='size-4' />\n        </Button>\n      </Group>\n      <FieldError className={RANGE_ERROR} />\n      <Popover className={POPOVER} offset={6}>\n        <Dialog className='max-h-[inherit] overflow-auto outline-none'>\n          <RangeCalendar minValue={now} isDateUnavailable={isDateUnavailable} />\n        </Dialog>\n      </Popover>\n    </DateRangePicker>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

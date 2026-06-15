@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "alert-dialog",
+  "title": "Alert Dialog",
+  "description": "A dialog that asks to confirm a consequence.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/button.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/alert-dialog.tsx",
+      "content": "'use client';\n\nimport { AlertDialog as AlertDialogPrimitive } from '@base-ui/react/alert-dialog';\n\nimport { OVERLAY_BACKDROP } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Button, type ButtonProps } from '@/registry/ndeko/ui/button';\n\ntype WithClassName<Props> = Omit<Props, 'className'> & { className?: string };\n\nfunction AlertDialog(props: AlertDialogPrimitive.Root.Props) {\n  return <AlertDialogPrimitive.Root data-slot='alert-dialog' {...props} />;\n}\n\nfunction AlertDialogTrigger(props: AlertDialogPrimitive.Trigger.Props) {\n  return (\n    <AlertDialogPrimitive.Trigger data-slot='alert-dialog-trigger' {...props} />\n  );\n}\n\nconst ALERT_POPUP = [\n  'fixed left-1/2 top-1/2 z-50 flex w-[calc(100%-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 flex-col gap-4',\n  'rounded-2xl bg-card p-6 text-card-foreground outline-none hairline-ring ring-border shadow-xl shadow-black/8',\n  'transition-[opacity,scale] duration-200 ease-(--ease-out-strong) data-ending-style:duration-150 data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0',\n].join(' ');\n\nfunction AlertDialogContent({\n  className,\n  ...props\n}: WithClassName<AlertDialogPrimitive.Popup.Props>) {\n  return (\n    <AlertDialogPrimitive.Portal>\n      <AlertDialogPrimitive.Backdrop className={OVERLAY_BACKDROP} />\n      <AlertDialogPrimitive.Popup\n        data-slot='alert-dialog-content'\n        className={cn(ALERT_POPUP, className)}\n        {...props}\n      />\n    </AlertDialogPrimitive.Portal>\n  );\n}\n\nfunction AlertDialogHeader({\n  className,\n  ...props\n}: React.ComponentProps<'div'>) {\n  return (\n    <div\n      data-slot='alert-dialog-header'\n      className={cn('flex flex-col gap-1.5', className)}\n      {...props}\n    />\n  );\n}\n\nfunction AlertDialogFooter({\n  className,\n  ...props\n}: React.ComponentProps<'div'>) {\n  return (\n    <div\n      data-slot='alert-dialog-footer'\n      className={cn(\n        'flex flex-col-reverse gap-2 sm:flex-row sm:justify-end',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nfunction AlertDialogTitle({\n  className,\n  ...props\n}: WithClassName<AlertDialogPrimitive.Title.Props>) {\n  return (\n    <AlertDialogPrimitive.Title\n      data-slot='alert-dialog-title'\n      className={cn(\n        'text-lg leading-tight font-semibold text-balance',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nfunction AlertDialogDescription({\n  className,\n  ...props\n}: WithClassName<AlertDialogPrimitive.Description.Props>) {\n  return (\n    <AlertDialogPrimitive.Description\n      data-slot='alert-dialog-description'\n      className={cn('text-muted-foreground text-[13px]', className)}\n      {...props}\n    />\n  );\n}\n\ntype AlertDialogButtonProps = Pick<\n  ButtonProps,\n  'variant' | 'size' | 'className' | 'children' | 'disabled' | 'onClick'\n>;\n\nfunction AlertDialogAction({\n  variant = 'default',\n  size = 'lg',\n  ...props\n}: AlertDialogButtonProps) {\n  return (\n    <AlertDialogPrimitive.Close\n      data-slot='alert-dialog-action'\n      render={<Button variant={variant} size={size} />}\n      {...props}\n    />\n  );\n}\n\nfunction AlertDialogCancel({\n  variant = 'outline',\n  size = 'lg',\n  ...props\n}: AlertDialogButtonProps) {\n  return (\n    <AlertDialogPrimitive.Close\n      data-slot='alert-dialog-cancel'\n      render={<Button variant={variant} size={size} />}\n      {...props}\n    />\n  );\n}\n\nexport {\n  AlertDialog,\n  AlertDialogAction,\n  AlertDialogCancel,\n  AlertDialogContent,\n  AlertDialogDescription,\n  AlertDialogFooter,\n  AlertDialogHeader,\n  AlertDialogTitle,\n  AlertDialogTrigger,\n};\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

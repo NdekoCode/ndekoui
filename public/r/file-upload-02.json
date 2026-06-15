@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "file-upload-02",
+  "title": "Avatar upload button",
+  "description": "A round button that shows the chosen avatar, with a remove badge.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/avatar.json",
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/use-file-upload.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/file-upload/file-upload-02.tsx",
+      "content": "'use client';\n\nimport { useFileUpload } from '@/registry/ndeko/hooks/use-file-upload';\nimport { CircleUserRoundIcon, XIcon } from '@/registry/ndeko/lib/icons';\nimport {\n  Avatar,\n  AvatarFallback,\n  AvatarImage,\n} from '@/registry/ndeko/ui/avatar';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nfunction avatarActionOf(hasImage: boolean) {\n  if (hasImage) {\n    return 'Change image';\n  }\n  return 'Upload image';\n}\n\nexport default function FileUpload02() {\n  const [{ files }, { removeFile, openFileDialog, getInputProps }] =\n    useFileUpload({\n      accept: 'image/*',\n    });\n\n  const image = files[0];\n  const previewUrl = image?.preview;\n  const fileName = image?.file.name;\n  const hasImage = Boolean(image);\n\n  function removeImage() {\n    if (!image) {\n      return;\n    }\n    removeFile(image.id);\n  }\n\n  return (\n    <div className='flex flex-col items-center gap-2'>\n      <div className='relative inline-flex'>\n        <Button\n          variant='outline'\n          className='size-16 overflow-hidden p-0'\n          onClick={openFileDialog}\n          aria-label={avatarActionOf(hasImage)}\n        >\n          <Avatar className='size-full bg-transparent ring-0'>\n            {previewUrl && (\n              <AvatarImage src={previewUrl} alt='Preview of uploaded image' />\n            )}\n            <AvatarFallback className='bg-transparent'>\n              <CircleUserRoundIcon className='opacity-60' />\n            </AvatarFallback>\n          </Avatar>\n        </Button>\n        {hasImage && (\n          <Button\n            size='icon'\n            onClick={removeImage}\n            aria-label='Remove image'\n            className='border-background absolute -end-1 -top-1 size-6 border-2 ring-0'\n          >\n            <XIcon className='size-3.5' />\n          </Button>\n        )}\n        <input\n          {...getInputProps()}\n          className='sr-only'\n          aria-label='Upload image file'\n          tabIndex={-1}\n        />\n      </div>\n      {fileName && <p className='text-muted-foreground text-xs'>{fileName}</p>}\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "file-upload"
+  ],
+  "type": "registry:component"
+}

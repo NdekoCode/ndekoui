@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "alert-08",
+  "title": "Tinted info alert",
+  "description": "The same note drawn on the soft info pair.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/status-orb.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/alert/alert-08.tsx",
+      "content": "import { StatusOrb } from '@/registry/ndeko/ui/status-orb';\n\nexport default function Alert08() {\n  return (\n    <div\n      role='status'\n      className='bg-info/10 text-info-foreground hairline-ring ring-info/25 flex items-start gap-3 rounded-xl px-4 py-2.5'\n    >\n      <StatusOrb tone='info' size='sm' />\n      <p className='py-0.5 text-[13px] leading-5'>\n        Invoices are now sent on the first day of each month.\n      </p>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "alert"
+  ],
+  "type": "registry:component"
+}

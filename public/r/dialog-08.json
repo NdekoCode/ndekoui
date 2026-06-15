@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dialog-08",
+  "title": "Typed confirmation",
+  "description": "Deleting a project asks for its name before the button turns on.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/dialog.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/status-orb.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/dialog/dialog-08.tsx",
+      "content": "'use client';\n\nimport { useId, useState } from 'react';\n\nimport { Trash2Icon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport {\n  Dialog,\n  DialogClose,\n  DialogContent,\n  DialogDescription,\n  DialogFooter,\n  DialogHeader,\n  DialogTitle,\n  DialogTrigger,\n} from '@/registry/ndeko/ui/dialog';\nimport { Input } from '@/registry/ndeko/ui/input';\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { StatusOrb } from '@/registry/ndeko/ui/status-orb';\n\nconst PROJECT_NAME = 'Atlas Redesign';\n\nexport default function Dialog08() {\n  const id = useId();\n  const [typedName, setTypedName] = useState('');\n  const isConfirmed = typedName === PROJECT_NAME;\n\n  function clearOnOpen(open: boolean) {\n    if (open) {\n      setTypedName('');\n    }\n  }\n\n  function updateTypedName(event: React.ChangeEvent<HTMLInputElement>) {\n    setTypedName(event.currentTarget.value);\n  }\n\n  return (\n    <Dialog onOpenChange={clearOnOpen}>\n      <DialogTrigger render={<Button variant='outline' />}>\n        Delete project\n      </DialogTrigger>\n      <DialogContent className='max-w-md'>\n        <div className='flex flex-col items-center gap-4'>\n          <StatusOrb tone='error' glyph={<Trash2Icon strokeWidth={2.25} />} />\n          <DialogHeader className='px-8 text-center'>\n            <DialogTitle>Delete {PROJECT_NAME}?</DialogTitle>\n            <DialogDescription>\n              The project, its 48 tasks and every file attached to them are\n              removed for good. To confirm, type{' '}\n              <span className='text-foreground font-medium'>\n                {PROJECT_NAME}\n              </span>\n              .\n            </DialogDescription>\n          </DialogHeader>\n        </div>\n        <div className='grid gap-2'>\n          <Label htmlFor={id}>Project name</Label>\n          <Input\n            id={id}\n            autoComplete='off'\n            placeholder={PROJECT_NAME}\n            value={typedName}\n            onChange={updateTypedName}\n          />\n        </div>\n        <DialogFooter>\n          <DialogClose\n            render={<Button variant='outline' size='lg' className='flex-1' />}\n          >\n            Cancel\n          </DialogClose>\n          <DialogClose\n            disabled={!isConfirmed}\n            render={\n              <Button variant='destructive' size='lg' className='flex-1' />\n            }\n          >\n            Delete project\n          </DialogClose>\n        </DialogFooter>\n      </DialogContent>\n    </Dialog>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "dialog"
+  ],
+  "type": "registry:component"
+}

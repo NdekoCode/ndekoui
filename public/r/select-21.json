@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-21",
+  "title": "Filled select",
+  "description": "A grey fill without a hairline, for dense forms.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/select.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/select/select-21.tsx",
+      "content": "import { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport {\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from '@/registry/ndeko/ui/select';\n\nconst FRAMEWORKS = [\n  { value: 'react', label: 'React' },\n  { value: 'nextjs', label: 'Next.js' },\n  { value: 'astro', label: 'Astro' },\n  { value: 'gatsby', label: 'Gatsby' },\n];\n\nexport default function Select21() {\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Framework</FieldLabel>\n      <Select items={FRAMEWORKS} defaultValue='nextjs'>\n        <SelectTrigger className='bg-foreground/[0.05] dark:bg-foreground/[0.07] shadow-none ring-transparent dark:ring-transparent'>\n          <SelectValue placeholder='Pick a framework' />\n        </SelectTrigger>\n        <SelectContent>\n          {FRAMEWORKS.map((framework) => (\n            <SelectItem key={framework.value} value={framework.value}>\n              {framework.label}\n            </SelectItem>\n          ))}\n        </SelectContent>\n      </Select>\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "select"
+  ],
+  "type": "registry:component"
+}

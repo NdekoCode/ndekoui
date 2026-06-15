@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs-06",
+  "title": "Grouped tabs",
+  "description": "Tabs joined into one outlined pill, the active segment tinted.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/animated-size.json",
+    "https://ui.ndeko.dev/r/tabs.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/tabs/tabs-06.tsx",
+      "content": "import { Tabs as TabsPrimitive } from '@base-ui/react/tabs';\n\nimport { AnimatedSize } from '@/registry/ndeko/ui/animated-size';\nimport { Tabs, TabsPanel, TabsTab } from '@/registry/ndeko/ui/tabs';\n\nconst TABS = [\n  {\n    value: 'overview',\n    label: 'Overview',\n    content: 'Open tasks, recent activity and the next deadlines.',\n  },\n  {\n    value: 'projects',\n    label: 'Projects',\n    content: 'Three active projects, sorted by their latest update.',\n  },\n  {\n    value: 'packages',\n    label: 'Packages',\n    content:\n      'Packages published from this workspace, with their latest version.',\n  },\n];\n\nconst LIST = [\n  'relative inline-flex h-8 overflow-hidden rounded-full bg-card shadow-[0_1px_2px_rgb(0_0_0/0.05)] hairline-ring ring-foreground/12',\n  'dark:bg-foreground/[0.04] dark:ring-foreground/15',\n].join(' ');\n\nconst INDICATOR =\n  'pointer-events-none absolute inset-y-0 left-0 w-(--active-tab-width) translate-x-(--active-tab-left) bg-foreground/[0.06] transition-[translate,width] duration-200 ease-(--ease-out-strong)';\n\nconst SEGMENT = [\n  'h-full px-3.5 first-of-type:rounded-s-full last-of-type:rounded-e-full focus-visible:ring-inset',\n  'not-first-of-type:hairline-l border-foreground/12 dark:border-foreground/15',\n].join(' ');\n\nexport default function Tabs06() {\n  return (\n    <Tabs defaultValue='overview' className='items-center'>\n      <TabsPrimitive.List className={LIST}>\n        {TABS.map((tab) => (\n          <TabsTab key={tab.value} value={tab.value} className={SEGMENT}>\n            {tab.label}\n          </TabsTab>\n        ))}\n        <TabsPrimitive.Indicator className={INDICATOR} />\n      </TabsPrimitive.List>\n      <AnimatedSize>\n        {TABS.map((tab) => (\n          <TabsPanel key={tab.value} value={tab.value}>\n            <p className='text-muted-foreground p-4 text-center text-xs'>\n              {tab.content}\n            </p>\n          </TabsPanel>\n        ))}\n      </AnimatedSize>\n    </Tabs>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "tabs"
+  ],
+  "type": "registry:component"
+}

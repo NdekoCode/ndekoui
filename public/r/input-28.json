@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-28",
+  "title": "Number input with steppers",
+  "description": "Minus and plus segments around a number.",
+  "dependencies": [
+    "@base-ui/react",
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-28.tsx",
+      "content": "'use client';\n\nimport {\n  NumberField,\n  type NumberFieldRootChangeEventDetails,\n} from '@base-ui/react/number-field';\nimport { useReducedMotion } from 'motion/react';\nimport { useRef } from 'react';\n\nimport { MinusIcon, PlusIcon } from '@/registry/ndeko/lib/icons';\nimport { CONTROL_RECIPE } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Field, FieldLabel } from '@/registry/ndeko/ui/field';\n\nconst INITIAL_STORAGE = 2048;\nconst DIGIT_SHIFT_PX = 8;\nconst STEP_SLIDE_MS = 180;\nconst STEP_SLIDE_EASING = 'cubic-bezier(0.2, 0, 0, 1)';\n\nconst GROUP = cn(\n  CONTROL_RECIPE,\n  'flex h-8 items-stretch overflow-hidden',\n  'focus-within:border-foreground/30 focus-within:ring-ring/25 dark:focus-within:border-foreground/25 focus-within:ring-[3px]',\n  'data-disabled:pointer-events-none data-disabled:opacity-50'\n);\n\nconst STEP_BUTTON =\n  'text-muted-foreground hover:bg-foreground/[0.03] hover:text-foreground flex aspect-square h-full shrink-0 cursor-pointer items-center justify-center outline-none transition-colors select-none data-disabled:pointer-events-none data-disabled:opacity-50';\n\nconst SEPARATOR =\n  'bg-foreground/12 dark:bg-foreground/15 w-(--hairline) shrink-0';\n\nfunction isStepReason(reason: string) {\n  const isIncrement = reason === 'increment-press';\n  const isDecrement = reason === 'decrement-press';\n  const isKeyboard = reason === 'keyboard';\n  return isIncrement || isDecrement || isKeyboard;\n}\n\nfunction directionOf(previous: number | null, next: number | null) {\n  if (previous === null) {\n    return 1;\n  }\n  if (next === null) {\n    return 1;\n  }\n  if (next < previous) {\n    return -1;\n  }\n  return 1;\n}\n\nfunction enteringFrameOf(\n  direction: number,\n  shouldReduceMotion: boolean | null\n): Keyframe {\n  if (shouldReduceMotion) {\n    return { opacity: 0 };\n  }\n  const offset = direction * DIGIT_SHIFT_PX;\n  return { opacity: 0, transform: `translateY(${offset}px)` };\n}\n\nfunction settledFrameOf(shouldReduceMotion: boolean | null): Keyframe {\n  if (shouldReduceMotion) {\n    return { opacity: 1 };\n  }\n  return { opacity: 1, transform: 'translateY(0)' };\n}\n\nfunction useStepSlide(initialValue: number) {\n  const inputRef = useRef<HTMLInputElement>(null);\n  const slideRef = useRef<Animation | null>(null);\n  const previousValueRef = useRef<number | null>(initialValue);\n  const shouldReduceMotion = useReducedMotion();\n\n  function slideOnStep(\n    value: number | null,\n    details: NumberFieldRootChangeEventDetails\n  ) {\n    const previousValue = previousValueRef.current;\n    previousValueRef.current = value;\n    const input = inputRef.current;\n    const isStep = isStepReason(details.reason);\n    if (!isStep) {\n      return;\n    }\n    if (!input) {\n      return;\n    }\n    const isSliding = slideRef.current?.playState === 'running';\n    if (isSliding) {\n      return;\n    }\n    const direction = directionOf(previousValue, value);\n    const entering = enteringFrameOf(direction, shouldReduceMotion);\n    const settled = settledFrameOf(shouldReduceMotion);\n    slideRef.current = input.animate([entering, settled], {\n      duration: STEP_SLIDE_MS,\n      easing: STEP_SLIDE_EASING,\n    });\n  }\n\n  return { inputRef, slideOnStep };\n}\n\nexport default function Input28() {\n  const { inputRef, slideOnStep } = useStepSlide(INITIAL_STORAGE);\n\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Storage in GB</FieldLabel>\n      <NumberField.Root\n        defaultValue={INITIAL_STORAGE}\n        min={0}\n        onValueChange={slideOnStep}\n      >\n        <NumberField.Group className={GROUP}>\n          <NumberField.Decrement\n            className={STEP_BUTTON}\n            aria-label='Decrease storage'\n          >\n            <MinusIcon className='size-4' />\n          </NumberField.Decrement>\n          <span className={SEPARATOR} aria-hidden='true' />\n          <NumberField.Input\n            ref={inputRef}\n            className='h-full min-w-0 flex-1 bg-transparent px-2.5 text-center tabular-nums outline-none'\n          />\n          <span className={SEPARATOR} aria-hidden='true' />\n          <NumberField.Increment\n            className={STEP_BUTTON}\n            aria-label='Increase storage'\n          >\n            <PlusIcon className='size-4' />\n          </NumberField.Increment>\n        </NumberField.Group>\n      </NumberField.Root>\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

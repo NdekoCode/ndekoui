@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "timeline-07",
+  "title": "Comment timeline",
+  "description": "Avatars on the line and each comment in a card.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/avatar.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/timeline.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/timeline/timeline-07.tsx",
+      "content": "import {\n  Avatar,\n  AvatarFallback,\n  AvatarImage,\n} from '@/registry/ndeko/ui/avatar';\nimport {\n  Timeline,\n  TimelineContent,\n  TimelineDate,\n  TimelineHeader,\n  TimelineIndicator,\n  TimelineItem,\n  TimelineSeparator,\n  TimelineTitle,\n} from '@/registry/ndeko/ui/timeline';\n\nconst ITEMS = [\n  {\n    id: 1,\n    date: '15 minutes ago',\n    name: 'Hannah Kandell',\n    initials: 'HK',\n    action: 'opened a new issue',\n    description:\n      'The date picker from the component library opens behind the dialog.',\n    image: '/avatars/avatar-03.svg',\n  },\n  {\n    id: 2,\n    date: '10 minutes ago',\n    name: 'Chris Tompson',\n    initials: 'CT',\n    action: 'commented on the issue',\n    description:\n      'Same here on Safari and Chrome. It looks like the popover sits under the dialog layer.',\n    image: '/avatars/avatar-04.svg',\n  },\n  {\n    id: 3,\n    date: '5 minutes ago',\n    name: 'Emma Davis',\n    initials: 'ED',\n    action: 'assigned you to the issue',\n    description: 'Can you take a look before the Friday release?',\n    image: '/avatars/avatar-05.svg',\n  },\n  {\n    id: 4,\n    date: '2 minutes ago',\n    name: 'Alex Morgan',\n    initials: 'AM',\n    action: 'closed the issue',\n    description: 'Fixed in the latest build. Please review the changes.',\n    image: '/avatars/avatar-06.svg',\n  },\n];\n\nconst LINE =\n  'bg-foreground/10 group-data-[orientation=vertical]/timeline:-left-7 group-data-[orientation=vertical]/timeline:h-[calc(100%-1.5rem-0.25rem)] group-data-[orientation=vertical]/timeline:translate-y-6.5';\n\nconst COMMENT_CARD =\n  'bg-card text-foreground hairline-ring ring-border mt-2 rounded-xl px-4 py-3 shadow-[0_1px_2px_rgb(0_0_0/0.04)]';\n\nexport default function Timeline07() {\n  return (\n    <Timeline className='w-full max-w-md'>\n      {ITEMS.map((item) => (\n        <TimelineItem\n          key={item.id}\n          step={item.id}\n          className='group-data-[orientation=vertical]/timeline:ms-10 group-data-[orientation=vertical]/timeline:not-last:pb-8'\n        >\n          <TimelineHeader>\n            <TimelineSeparator className={LINE} />\n            <TimelineTitle className='mt-0.5'>\n              {item.name}{' '}\n              <span className='text-muted-foreground font-normal'>\n                {item.action}\n              </span>\n            </TimelineTitle>\n            <TimelineIndicator className='flex size-6 items-center justify-center border-none bg-transparent group-data-[orientation=vertical]/timeline:-left-7'>\n              <Avatar className='size-6 text-[10px]'>\n                <AvatarImage src={item.image} alt={item.name} />\n                <AvatarFallback>{item.initials}</AvatarFallback>\n              </Avatar>\n            </TimelineIndicator>\n          </TimelineHeader>\n          <TimelineContent className={COMMENT_CARD}>\n            {item.description}\n            <TimelineDate className='mt-1 mb-0'>{item.date}</TimelineDate>\n          </TimelineContent>\n        </TimelineItem>\n      ))}\n    </Timeline>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "timeline"
+  ],
+  "type": "registry:component"
+}

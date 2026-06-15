@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-55",
+  "title": "Masked input",
+  "description": "A license plate field that follows a fixed pattern.",
+  "dependencies": [
+    "use-mask-input"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/input.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-55.tsx",
+      "content": "'use client';\n\nimport { useMaskInput } from 'use-mask-input';\n\nimport { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport { Input } from '@/registry/ndeko/ui/input';\n\nconst PLATE_MASK = 'AA99 AAA';\nconst PLATE_MASK_OPTIONS = { placeholder: '', showMaskOnHover: false };\n\nexport default function Input55() {\n  const plateRef = useMaskInput({\n    mask: PLATE_MASK,\n    options: PLATE_MASK_OPTIONS,\n  });\n\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>License plate</FieldLabel>\n      <Input ref={plateRef} placeholder='AB12 CDE' />\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

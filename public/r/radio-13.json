@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-13",
+  "title": "Option tiles",
+  "description": "A grid of CPU sizes where the largest one is not available.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/radio-group.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/radio/radio-13.tsx",
+      "content": "import { useId } from 'react';\n\nimport { RadioGroup, RadioGroupItem } from '@/registry/ndeko/ui/radio-group';\n\ntype CoreOption = {\n  value: string;\n  label: string;\n  disabled?: boolean;\n};\n\nconst CORE_OPTIONS: CoreOption[] = [\n  { value: '2', label: '2 CPU' },\n  { value: '4', label: '4 CPU' },\n  { value: '6', label: '6 CPU' },\n  { value: '8', label: '8 CPU' },\n  { value: '12', label: '12 CPU' },\n  { value: '16', label: '16 CPU', disabled: true },\n];\n\nconst CORE_TILE = [\n  'relative flex cursor-pointer flex-col items-center rounded-lg bg-card px-2 py-3 text-center shadow-[0_1px_2px_rgb(0_0_0/0.04)] hairline-ring ring-border transition-[box-shadow] duration-150',\n  'has-data-checked:shadow-[0_1px_2px_rgb(0_0_0/0.04),0_6px_16px_-8px_color-mix(in_oklab,var(--primary)_35%,transparent)] has-data-checked:ring-primary/45',\n  'has-focus-visible:ring-[3px] has-focus-visible:ring-ring/25',\n  'has-data-disabled:cursor-not-allowed has-data-disabled:opacity-50',\n].join(' ');\n\nexport default function Radio13() {\n  const captionId = useId();\n\n  return (\n    <div className='flex w-full flex-col gap-3'>\n      <span\n        id={captionId}\n        className='text-foreground text-[13px] leading-none font-medium'\n      >\n        CPU cores\n      </span>\n      <RadioGroup\n        defaultValue='2'\n        aria-labelledby={captionId}\n        className='grid-cols-3 gap-2'\n      >\n        {CORE_OPTIONS.map((option) => (\n          <label key={option.value} className={CORE_TILE}>\n            <RadioGroupItem\n              value={option.value}\n              disabled={option.disabled}\n              className='sr-only'\n            />\n            <span className='text-foreground text-[13px] leading-none font-medium tabular-nums'>\n              {option.label}\n            </span>\n          </label>\n        ))}\n      </RadioGroup>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "radio"
+  ],
+  "type": "registry:component"
+}

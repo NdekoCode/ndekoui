@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dropdown-08",
+  "title": "Menu with shortcuts",
+  "description": "Grouped actions with keyboard shortcuts and a submenu.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/button.json",
+    "https://ui.ndeko.dev/r/dropdown-menu.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/kbd.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/dropdown/dropdown-08.tsx",
+      "content": "import { ChevronDownIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuGroup,\n  DropdownMenuItem,\n  DropdownMenuSeparator,\n  DropdownMenuShortcut,\n  DropdownMenuSub,\n  DropdownMenuSubContent,\n  DropdownMenuSubTrigger,\n  DropdownMenuTrigger,\n} from '@/registry/ndeko/ui/dropdown-menu';\nimport { Kbd, KbdGroup } from '@/registry/ndeko/ui/kbd';\n\nfunction Shortcut({ keys }: { keys: string[] }) {\n  return (\n    <DropdownMenuShortcut>\n      <KbdGroup>\n        {keys.map((key) => (\n          <Kbd key={key}>{key}</Kbd>\n        ))}\n      </KbdGroup>\n    </DropdownMenuShortcut>\n  );\n}\n\nexport default function Dropdown08() {\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger render={<Button variant='outline' />}>\n        Options\n        <ChevronDownIcon className='-me-1 opacity-60' />\n      </DropdownMenuTrigger>\n      <DropdownMenuContent>\n        <DropdownMenuGroup>\n          <DropdownMenuItem>\n            Edit\n            <Shortcut keys={['⌘', 'E']} />\n          </DropdownMenuItem>\n          <DropdownMenuItem>\n            Duplicate\n            <Shortcut keys={['⌘', 'D']} />\n          </DropdownMenuItem>\n        </DropdownMenuGroup>\n        <DropdownMenuSeparator />\n        <DropdownMenuGroup>\n          <DropdownMenuItem>\n            Archive\n            <Shortcut keys={['⌘', 'A']} />\n          </DropdownMenuItem>\n          <DropdownMenuSub>\n            <DropdownMenuSubTrigger>More</DropdownMenuSubTrigger>\n            <DropdownMenuSubContent>\n              <DropdownMenuItem>Move to project</DropdownMenuItem>\n              <DropdownMenuItem>Move to folder</DropdownMenuItem>\n              <DropdownMenuSeparator />\n              <DropdownMenuItem>Advanced options</DropdownMenuItem>\n            </DropdownMenuSubContent>\n          </DropdownMenuSub>\n        </DropdownMenuGroup>\n        <DropdownMenuSeparator />\n        <DropdownMenuGroup>\n          <DropdownMenuItem>Share</DropdownMenuItem>\n          <DropdownMenuItem>Add to favorites</DropdownMenuItem>\n        </DropdownMenuGroup>\n        <DropdownMenuSeparator />\n        <DropdownMenuItem variant='destructive'>\n          Delete\n          <Shortcut keys={['⌘', '⌫']} />\n        </DropdownMenuItem>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "dropdown"
+  ],
+  "type": "registry:component"
+}

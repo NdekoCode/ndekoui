@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-01",
+  "title": "Basic radio group",
+  "description": "Three options stacked, one of them always picked.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/radio-group.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/radio/radio-01.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { RadioGroup, RadioGroupItem } from '@/registry/ndeko/ui/radio-group';\n\nconst VISIBILITY_OPTIONS = [\n  { value: 'everyone', label: 'Everyone' },\n  { value: 'members', label: 'Members only' },\n  { value: 'private', label: 'Only me' },\n];\n\nexport default function Radio01() {\n  const id = useId();\n\n  return (\n    <RadioGroup defaultValue='everyone' aria-label='Project visibility'>\n      {VISIBILITY_OPTIONS.map((option) => {\n        const itemId = `${id}-${option.value}`;\n\n        return (\n          <div key={option.value} className='flex items-center gap-2'>\n            <RadioGroupItem value={option.value} id={itemId} />\n            <Label htmlFor={itemId}>{option.label}</Label>\n          </div>\n        );\n      })}\n    </RadioGroup>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "radio"
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox-02",
+  "title": "Indeterminate checkbox",
+  "description": "A select all box that starts half checked.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/checkbox.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/checkbox/checkbox-02.tsx",
+      "content": "'use client';\n\nimport { useId, useState } from 'react';\n\nimport { Checkbox } from '@/registry/ndeko/ui/checkbox';\nimport { Label } from '@/registry/ndeko/ui/label';\n\nexport default function Checkbox02() {\n  const id = useId();\n  const [isChecked, setIsChecked] = useState(false);\n  const [isIndeterminate, setIsIndeterminate] = useState(true);\n\n  function changeChecked(nextChecked: boolean) {\n    setIsIndeterminate(false);\n    setIsChecked(nextChecked);\n  }\n\n  return (\n    <div className='flex items-center gap-2'>\n      <Checkbox\n        id={id}\n        checked={isChecked}\n        indeterminate={isIndeterminate}\n        onCheckedChange={changeChecked}\n      />\n      <Label htmlFor={id}>Select all tasks</Label>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "checkbox"
+  ],
+  "type": "registry:component"
+}

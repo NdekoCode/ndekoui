@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea-13",
+  "title": "Textarea with overlapping label",
+  "description": "A small label that sits on the top edge of the field.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/textarea.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/textarea/textarea-13.tsx",
+      "content": "import { useId } from 'react';\n\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { Textarea } from '@/registry/ndeko/ui/textarea';\n\nexport default function Textarea13() {\n  const id = useId();\n\n  return (\n    <div className='group relative w-full max-w-xs'>\n      <Label\n        htmlFor={id}\n        className='bg-card absolute start-1.5 top-0 z-10 -translate-y-1/2 px-1 text-xs group-has-disabled:opacity-50'\n      >\n        Cover letter\n      </Label>\n      <Textarea id={id} />\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "textarea"
+  ],
+  "type": "registry:component"
+}

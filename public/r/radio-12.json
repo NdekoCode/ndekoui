@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-12",
+  "title": "Payment method tiles",
+  "description": "Three centred tiles with an icon and a name for the payment method.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/label.json",
+    "https://ui.ndeko.dev/r/radio-group.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/radio/radio-12.tsx",
+      "content": "import { useId } from 'react';\n\nimport {\n  AppleBrandIcon,\n  CreditCardIcon,\n  type Icon,\n  PaypalBrandIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { Label } from '@/registry/ndeko/ui/label';\nimport { RadioGroup, RadioGroupItem } from '@/registry/ndeko/ui/radio-group';\n\ntype PaymentMethod = {\n  value: string;\n  label: string;\n  Icon: Icon;\n};\n\nconst PAYMENT_METHODS: PaymentMethod[] = [\n  { value: 'card', label: 'Card', Icon: CreditCardIcon },\n  { value: 'paypal', label: 'PayPal', Icon: PaypalBrandIcon },\n  { value: 'apple-pay', label: 'Apple Pay', Icon: AppleBrandIcon },\n];\n\nconst METHOD_TILE = [\n  'relative flex cursor-pointer flex-col items-center gap-3 rounded-lg bg-card px-2 py-3 text-center shadow-[0_1px_2px_rgb(0_0_0/0.04)] hairline-ring ring-border transition-[box-shadow] duration-150',\n  'has-data-checked:shadow-[0_1px_2px_rgb(0_0_0/0.04),0_6px_16px_-8px_color-mix(in_oklab,var(--primary)_35%,transparent)] has-data-checked:ring-primary/45',\n  'has-focus-visible:ring-[3px] has-focus-visible:ring-ring/25',\n].join(' ');\n\nexport default function Radio12() {\n  const id = useId();\n\n  return (\n    <RadioGroup\n      defaultValue='card'\n      aria-label='Payment method'\n      className='grid-cols-3 gap-2'\n    >\n      {PAYMENT_METHODS.map((method) => {\n        const itemId = `${id}-${method.value}`;\n\n        return (\n          <div key={method.value} className={METHOD_TILE}>\n            <RadioGroupItem\n              value={method.value}\n              id={itemId}\n              className='sr-only'\n            />\n            <method.Icon className='text-muted-foreground size-5' />\n            <Label\n              htmlFor={itemId}\n              className='cursor-pointer text-xs after:absolute after:inset-0'\n            >\n              {method.label}\n            </Label>\n          </div>\n        );\n      })}\n    </RadioGroup>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "radio"
+  ],
+  "type": "registry:component"
+}

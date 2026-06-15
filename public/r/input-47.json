@@ -1,0 +1,30 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-47",
+  "title": "Phone number input",
+  "description": "A country picker with its flag before an international number.",
+  "dependencies": [
+    "@base-ui/react",
+    "motion",
+    "react-phone-number-input"
+  ],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/icons.json",
+    "https://ui.ndeko.dev/r/recipes.json",
+    "https://ui.ndeko.dev/r/theme.json",
+    "https://ui.ndeko.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-47.tsx",
+      "content": "'use client';\n\nimport { Input as InputPrimitive } from '@base-ui/react/input';\nimport {\n  AnimatePresence,\n  motion,\n  type Transition,\n  type Variants,\n  useReducedMotion,\n} from 'motion/react';\nimport { useState, type ChangeEvent, type ComponentProps } from 'react';\nimport PhoneInput, {\n  getCountryCallingCode,\n  type Country,\n  type FlagProps,\n} from 'react-phone-number-input';\nimport flags from 'react-phone-number-input/flags';\n\nimport { ChevronDownIcon, PhoneIcon } from '@/registry/ndeko/lib/icons';\nimport { CONTROL_RECIPE } from '@/registry/ndeko/lib/recipes';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Field, FieldLabel } from '@/registry/ndeko/ui/field';\n\ntype CountryOption = { label: string; value: Country | undefined };\n\ntype CountrySelectProps = {\n  disabled?: boolean;\n  value: Country;\n  onChange: (value: Country) => void;\n  options: CountryOption[];\n};\n\nconst GROUP = cn(\n  CONTROL_RECIPE,\n  'flex h-8 items-stretch overflow-hidden',\n  'focus-within:border-foreground/30 focus-within:ring-ring/25 dark:focus-within:border-foreground/25 focus-within:ring-[3px]'\n);\n\nconst SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };\n\nconst SWAP_VARIANTS: Variants = {\n  enter: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },\n  visible: { opacity: 1, scale: 1, filter: 'blur(0px)' },\n  exit: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },\n};\n\nconst FADE_VARIANTS: Variants = {\n  enter: { opacity: 0 },\n  visible: { opacity: 1 },\n  exit: { opacity: 0 },\n};\n\nfunction swapVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return SWAP_VARIANTS;\n}\n\nfunction NumberInput({ className, ...props }: ComponentProps<'input'>) {\n  return (\n    <InputPrimitive\n      className={cn(\n        'placeholder:text-muted-foreground/75 h-full min-w-0 flex-1 bg-transparent px-2.5 outline-none',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nfunction CountryFlag({ country, countryName }: FlagProps) {\n  const Flag = flags[country];\n\n  return (\n    <span className='flex w-5 overflow-hidden rounded-[3px]'>\n      {Flag && <Flag title={countryName} />}\n      {!Flag && <PhoneIcon className='size-4' />}\n    </span>\n  );\n}\n\nfunction hasCountry(\n  option: CountryOption\n): option is { label: string; value: Country } {\n  return option.value !== undefined;\n}\n\nfunction optionLabelOf(option: { label: string; value: Country }) {\n  const callingCode = getCountryCallingCode(option.value);\n  return `${option.label} +${callingCode}`;\n}\n\nfunction CountrySelect({\n  disabled,\n  value,\n  onChange,\n  options,\n}: CountrySelectProps) {\n  const countries = options.filter(hasCountry);\n  const shouldReduceMotion = useReducedMotion();\n  const swapVariants = swapVariantsOf(shouldReduceMotion);\n  const flagKey = String(value);\n\n  function selectCountry(event: ChangeEvent<HTMLSelectElement>) {\n    onChange(event.currentTarget.value as Country);\n  }\n\n  return (\n    <span className='text-muted-foreground hover:bg-foreground/[0.03] hover:text-foreground border-foreground/12 dark:border-foreground/15 relative flex shrink-0 items-center border-e-(length:--hairline) ps-2.5 pe-2 transition-colors has-disabled:pointer-events-none has-disabled:opacity-50'>\n      <span className='flex items-center gap-1' aria-hidden='true'>\n        <span className='relative flex'>\n          <AnimatePresence mode='popLayout' initial={false}>\n            <motion.span\n              key={flagKey}\n              className='flex'\n              variants={swapVariants}\n              initial='enter'\n              animate='visible'\n              exit='exit'\n              transition={SWAP_TRANSITION}\n            >\n              <CountryFlag country={value} countryName={value} />\n            </motion.span>\n          </AnimatePresence>\n        </span>\n        <ChevronDownIcon className='size-4' />\n      </span>\n      <select\n        disabled={disabled}\n        value={value}\n        onChange={selectCountry}\n        className='absolute inset-0 cursor-pointer text-[13px] opacity-0'\n        aria-label='Country'\n      >\n        <option value=''>Select a country</option>\n        {countries.map((option) => (\n          <option key={option.value} value={option.value}>\n            {optionLabelOf(option)}\n          </option>\n        ))}\n      </select>\n    </span>\n  );\n}\n\nexport default function Input47() {\n  const [phoneNumber, setPhoneNumber] = useState('');\n\n  function changePhoneNumber(nextNumber: string | undefined) {\n    setPhoneNumber(nextNumber ?? '');\n  }\n\n  return (\n    <Field className='w-full max-w-xs' dir='ltr'>\n      <FieldLabel>Phone number</FieldLabel>\n      <PhoneInput\n        className={GROUP}\n        international\n        flagComponent={CountryFlag}\n        countrySelectComponent={CountrySelect}\n        inputComponent={NumberInput}\n        placeholder='Enter phone number'\n        value={phoneNumber}\n        onChange={changePhoneNumber}\n      />\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

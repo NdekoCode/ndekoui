@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-46",
+  "title": "Spaced code input",
+  "description": "Four separate code slots.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndeko.dev/r/field.json",
+    "https://ui.ndeko.dev/r/otp-field.json",
+    "https://ui.ndeko.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-46.tsx",
+      "content": "import { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport { OTPField, OTPFieldInput } from '@/registry/ndeko/ui/otp-field';\n\nconst CODE_LENGTH = 4;\n\nconst SLOTS = Array.from({ length: CODE_LENGTH }, (_, index) => index);\n\nfunction slotLabelOf(index: number) {\n  if (index === 0) {\n    return undefined;\n  }\n  const position = index + 1;\n  return `Character ${position} of ${CODE_LENGTH}`;\n}\n\nexport default function Input46() {\n  return (\n    <Field className='w-full max-w-xs'>\n      <FieldLabel>Verification code</FieldLabel>\n      <OTPField length={CODE_LENGTH}>\n        {SLOTS.map((index) => (\n          <OTPFieldInput key={index} aria-label={slotLabelOf(index)} />\n        ))}\n      </OTPField>\n    </Field>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}
