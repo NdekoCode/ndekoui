@@ -1,6 +1,8 @@
 # Contributing
 
-Thanks for your interest in contributing to motion-primitive. We're happy to have you here.
+Thanks for your interest in contributing to Ndeko UI. We're happy to have you here.
+
+Read `docs/DESIGN-SYSTEM.md` before drawing anything and `docs/ROADMAP.md` for the port checklist. Code is accepted only under the MIT licence: never copy a file from a project with another licence.
 
 Please take a moment to review this document before submitting your first pull request. We also strongly recommend that you check for open issues and pull request to see if someone else is working on something similar.
 
@@ -8,9 +10,10 @@ If you need any help, feel free to reach out to [@ndekocode](https://x.com/ndeko
 
 ## About this repository
 
-- We use [npm](https://docs.npmjs.com).
-- For animation [framer](https://www.framer.com/motion)
-- For custom icons [lucid react](https://lucide.dev/guide/)
+- We use [pnpm](https://pnpm.io) and Node.js 24.
+- Behaviour and accessibility come from [Base UI](https://base-ui.com).
+- Animation uses [motion](https://motion.dev).
+- Icons come from [Hugeicons](https://hugeicons.com), through `registry/ndeko/lib/icons.tsx` only.
 
 ## Development
 
