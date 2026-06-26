@@ -5,9 +5,9 @@
   "description": "A button crops the selection and shows the result beside it.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/button.json",
-    "https://ui.ndeko.dev/r/cropper.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/cropper.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

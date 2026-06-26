@@ -5,8 +5,8 @@
   "description": "A primary pill that cannot be pressed yet.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/button.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

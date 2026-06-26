@@ -5,8 +5,8 @@
   "description": "A grid of CPU sizes where the largest one is not available.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/radio-group.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/radio-group.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

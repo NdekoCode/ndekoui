@@ -5,8 +5,8 @@
   "description": "A compact badge that holds a single count.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/badge.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/badge.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

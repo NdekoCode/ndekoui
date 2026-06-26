@@ -5,9 +5,9 @@
   "description": "A plus that turns into a cross when the menu opens.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/button.json",
-    "https://ui.ndeko.dev/r/icons.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

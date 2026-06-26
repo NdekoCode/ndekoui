@@ -5,9 +5,9 @@
   "description": "A switch that turns the success hue when it is on.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/label.json",
-    "https://ui.ndeko.dev/r/switch.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/label.json",
+    "https://ui.ndekocode.dev/r/switch.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

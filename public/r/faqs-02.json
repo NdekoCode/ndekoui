@@ -5,9 +5,9 @@
   "description": "A centred heading, the questions on one card and a line that names who answers the rest.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/accordion.json",
-    "https://ui.ndeko.dev/r/avatar.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/accordion.json",
+    "https://ui.ndekocode.dev/r/avatar.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

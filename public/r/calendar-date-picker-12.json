@@ -9,11 +9,11 @@
     "react-day-picker"
   ],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/animated-size.json",
-    "https://ui.ndeko.dev/r/calendar.json",
-    "https://ui.ndeko.dev/r/select.json",
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/utils.json"
+    "https://ui.ndekocode.dev/r/animated-size.json",
+    "https://ui.ndekocode.dev/r/calendar.json",
+    "https://ui.ndekocode.dev/r/select.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json"
   ],
   "files": [
     {

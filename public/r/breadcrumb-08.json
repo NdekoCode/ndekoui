@@ -5,10 +5,10 @@
   "description": "The last step is a select that switches between databases.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/breadcrumb.json",
-    "https://ui.ndeko.dev/r/icons.json",
-    "https://ui.ndeko.dev/r/select.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/breadcrumb.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/select.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

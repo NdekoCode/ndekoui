@@ -17,7 +17,7 @@ import {
 } from './registry-catalog';
 import { motionItemsOf } from './registry-motion';
 
-const REGISTRY_URL = 'https://ui.ndeko.dev/r';
+const REGISTRY_URL = 'https://ui.ndekocode.dev/r';
 const ROOT = path.join(__dirname, '..');
 const THEME_CSS = path.join(ROOT, 'registry/ndeko/styles/ndeko.css');
 const OUTPUT = path.join(ROOT, 'registry.json');
@@ -165,7 +165,7 @@ async function buildRegistry() {
   const registry = {
     $schema: 'https://ui.shadcn.com/schema/registry.json',
     name: 'ndekoui',
-    homepage: 'https://ui.ndeko.dev',
+    homepage: 'https://ui.ndekocode.dev',
     items: [themeItem, ...definitions.map(toRegistryItem)],
   };
   const json = JSON.stringify(registry, null, 2);

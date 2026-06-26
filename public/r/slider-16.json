@@ -5,11 +5,11 @@
   "description": "A slider and a number field that follow each other.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/input.json",
-    "https://ui.ndeko.dev/r/label.json",
-    "https://ui.ndeko.dev/r/slider.json",
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/use-slider-with-input.json"
+    "https://ui.ndekocode.dev/r/input.json",
+    "https://ui.ndekocode.dev/r/label.json",
+    "https://ui.ndekocode.dev/r/slider.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/use-slider-with-input.json"
   ],
   "files": [
     {

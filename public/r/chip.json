@@ -4,8 +4,8 @@
   "title": "Chip",
   "description": "A 3D label in any colour, for assigned values.",
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/utils.json"
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json"
   ],
   "files": [
     {

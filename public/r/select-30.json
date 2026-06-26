@@ -5,9 +5,9 @@
   "description": "Every time zone of the browser, sorted by its offset from GMT.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/field.json",
-    "https://ui.ndeko.dev/r/select.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/field.json",
+    "https://ui.ndekocode.dev/r/select.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

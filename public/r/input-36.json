@@ -7,9 +7,9 @@
     "react-aria-components"
   ],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/datefield-rac.json",
-    "https://ui.ndeko.dev/r/label.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/datefield-rac.json",
+    "https://ui.ndekocode.dev/r/label.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

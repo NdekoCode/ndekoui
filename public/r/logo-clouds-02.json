@@ -5,7 +5,7 @@
   "description": "A short line on the left and six drawn marks with fictional names in one row, two columns on phones.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

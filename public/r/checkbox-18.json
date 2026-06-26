@@ -5,10 +5,10 @@
   "description": "Nested checkboxes where a parent shows when only some children are on.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/checkbox.json",
-    "https://ui.ndeko.dev/r/checkbox-tree.json",
-    "https://ui.ndeko.dev/r/label.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/checkbox.json",
+    "https://ui.ndekocode.dev/r/checkbox-tree.json",
+    "https://ui.ndekocode.dev/r/label.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

@@ -5,8 +5,8 @@
   "description": "A photo avatar with a success dot for someone online.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/avatar.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/avatar.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

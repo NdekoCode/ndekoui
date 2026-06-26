@@ -5,9 +5,9 @@
   "description": "The actions stay at the bottom while the questions scroll.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/button.json",
-    "https://ui.ndeko.dev/r/dialog.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/dialog.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

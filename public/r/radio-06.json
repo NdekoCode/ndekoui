@@ -5,11 +5,11 @@
   "description": "Filter reviews by star rating, each option with its count.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/icons.json",
-    "https://ui.ndeko.dev/r/label.json",
-    "https://ui.ndeko.dev/r/radio-group.json",
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/utils.json"
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/label.json",
+    "https://ui.ndekocode.dev/r/radio-group.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json"
   ],
   "files": [
     {

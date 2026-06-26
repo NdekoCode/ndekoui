@@ -36,11 +36,11 @@ registry/
     blocks/                sections and app pieces with fictional data
     templates/             full pages
 scripts/build-registry.ts  writes registry.json, theme included
-public/r/*.json            built by `shadcn build`, served at https://ui.ndeko.dev/r
+public/r/*.json            built by `shadcn build`, served at https://ui.ndekocode.dev/r
 app/kit                    every primitive on one page, light and dark
 ```
 
-`pnpm registry:build` regenerates `registry.json` from `registry/items.ts` and `ndeko.css`, then `shadcn build` writes `public/r`. A user installs an item with `npx shadcn@latest add https://ui.ndeko.dev/r/<name>.json`; its theme, utilities and inner dependencies come with it. Imports written as `@/registry/ndeko/ui/...` are rewritten to the user's aliases by the CLI.
+`pnpm registry:build` regenerates `registry.json` from `registry/items.ts` and `ndeko.css`, then `shadcn build` writes `public/r`. A user installs an item with `npx shadcn@latest add https://ui.ndekocode.dev/r/<name>.json`; its theme, utilities and inner dependencies come with it. Imports written as `@/registry/ndeko/ui/...` are rewritten to the user's aliases by the CLI.
 
 ## Phases
 
@@ -108,7 +108,7 @@ README with installation and contribution paths, CONTRIBUTING with the port chec
 | DEC-03 | Hugeicons behind one module with Lucide-style names                            | one icon language; ports from Lucide-based code stay mechanical                                                 |
 | DEC-04 | Pill buttons, two focus registers (2px ring on buttons, halo on fields)        | the design language, with a visible focus that meets WCAG on buttons                                            |
 | DEC-05 | CSS motion in primitives, `motion` in compositions                             | primitives stay light; springs and presence where the change follows the user                                   |
-| DEC-06 | Registry served from `https://ui.ndeko.dev/r`, inner dependencies as full URLs | installs work without configuring a namespace                                                                   |
+| DEC-06 | Registry served from `https://ui.ndekocode.dev/r`, inner dependencies as full URLs | installs work without configuring a namespace                                                                   |
 
 ## Open points for the owner
 

@@ -5,8 +5,8 @@
   "description": "Questions that open one at a time, with a chevron that turns.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/accordion.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/accordion.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

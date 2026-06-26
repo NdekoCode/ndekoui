@@ -7,17 +7,17 @@
     "motion"
   ],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/button.json",
-    "https://ui.ndeko.dev/r/chat-container.json",
-    "https://ui.ndeko.dev/r/chat-loader.json",
-    "https://ui.ndeko.dev/r/chat-message.json",
-    "https://ui.ndeko.dev/r/chat-motion.json",
-    "https://ui.ndeko.dev/r/chat-prompt-input.json",
-    "https://ui.ndeko.dev/r/chat-response-stream.json",
-    "https://ui.ndeko.dev/r/chat-scroll-button.json",
-    "https://ui.ndeko.dev/r/icons.json",
-    "https://ui.ndeko.dev/r/kbd.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/chat-container.json",
+    "https://ui.ndekocode.dev/r/chat-loader.json",
+    "https://ui.ndekocode.dev/r/chat-message.json",
+    "https://ui.ndekocode.dev/r/chat-motion.json",
+    "https://ui.ndekocode.dev/r/chat-prompt-input.json",
+    "https://ui.ndekocode.dev/r/chat-response-stream.json",
+    "https://ui.ndekocode.dev/r/chat-scroll-button.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/kbd.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

@@ -5,9 +5,9 @@
   "description": "A raised plate slides to the active tab on a grey track.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/animated-size.json",
-    "https://ui.ndeko.dev/r/tabs.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/animated-size.json",
+    "https://ui.ndekocode.dev/r/tabs.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

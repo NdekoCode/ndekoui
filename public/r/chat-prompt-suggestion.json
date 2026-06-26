@@ -4,9 +4,9 @@
   "title": "Chat Prompt Suggestion",
   "description": "A prompt to start from, as a pill or as a list row that marks the typed match.",
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/utils.json",
-    "https://ui.ndeko.dev/r/button.json"
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json",
+    "https://ui.ndekocode.dev/r/button.json"
   ],
   "files": [
     {

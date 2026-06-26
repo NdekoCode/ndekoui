@@ -5,8 +5,8 @@
   "description": "Each question on its own card, the chevron before the text.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/accordion.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/accordion.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

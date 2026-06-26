@@ -5,8 +5,8 @@
   "description": "A card with an error orb for something that failed.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/status-orb.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/status-orb.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

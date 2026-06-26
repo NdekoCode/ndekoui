@@ -5,9 +5,9 @@
   "description": "A checkbox and its label dimmed because they cannot be changed.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/checkbox.json",
-    "https://ui.ndeko.dev/r/label.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/checkbox.json",
+    "https://ui.ndekocode.dev/r/label.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

@@ -4,11 +4,11 @@
   "title": "Chat Reasoning",
   "description": "The reasoning behind a reply, open while it streams and folded once the answer starts.",
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/utils.json",
-    "https://ui.ndeko.dev/r/icons.json",
-    "https://ui.ndeko.dev/r/chat-markdown.json",
-    "https://ui.ndeko.dev/r/chat-motion.json"
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/chat-markdown.json",
+    "https://ui.ndekocode.dev/r/chat-motion.json"
   ],
   "files": [
     {

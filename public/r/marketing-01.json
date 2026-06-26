@@ -8,21 +8,21 @@
     "motion"
   ],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/accordion.json",
-    "https://ui.ndeko.dev/r/animated-size.json",
-    "https://ui.ndeko.dev/r/avatar.json",
-    "https://ui.ndeko.dev/r/button.json",
-    "https://ui.ndeko.dev/r/chip.json",
-    "https://ui.ndeko.dev/r/collapsible.json",
-    "https://ui.ndeko.dev/r/field.json",
-    "https://ui.ndeko.dev/r/icons.json",
-    "https://ui.ndeko.dev/r/input.json",
-    "https://ui.ndeko.dev/r/kbd.json",
-    "https://ui.ndeko.dev/r/navigation-menu.json",
-    "https://ui.ndeko.dev/r/status-orb.json",
-    "https://ui.ndeko.dev/r/switch.json",
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/utils.json"
+    "https://ui.ndekocode.dev/r/accordion.json",
+    "https://ui.ndekocode.dev/r/animated-size.json",
+    "https://ui.ndekocode.dev/r/avatar.json",
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/chip.json",
+    "https://ui.ndekocode.dev/r/collapsible.json",
+    "https://ui.ndekocode.dev/r/field.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/input.json",
+    "https://ui.ndekocode.dev/r/kbd.json",
+    "https://ui.ndekocode.dev/r/navigation-menu.json",
+    "https://ui.ndekocode.dev/r/status-orb.json",
+    "https://ui.ndekocode.dev/r/switch.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json"
   ],
   "files": [
     {

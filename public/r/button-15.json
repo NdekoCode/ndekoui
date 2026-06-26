@@ -5,8 +5,8 @@
   "description": "An outline pill with a count on a key cap.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/button.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

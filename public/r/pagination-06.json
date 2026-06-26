@@ -7,9 +7,9 @@
     "motion"
   ],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/pagination.json",
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/use-pagination.json"
+    "https://ui.ndekocode.dev/r/pagination.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/use-pagination.json"
   ],
   "files": [
     {

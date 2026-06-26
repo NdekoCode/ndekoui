@@ -7,10 +7,10 @@
     "sonner"
   ],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/button.json",
-    "https://ui.ndeko.dev/r/icons.json",
-    "https://ui.ndeko.dev/r/status-orb.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/status-orb.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

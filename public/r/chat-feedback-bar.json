@@ -4,12 +4,12 @@
   "title": "Chat Feedback Bar",
   "description": "Asks whether a reply helped and becomes a thank you once you answer.",
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/utils.json",
-    "https://ui.ndeko.dev/r/icons.json",
-    "https://ui.ndeko.dev/r/animated-size.json",
-    "https://ui.ndeko.dev/r/button.json",
-    "https://ui.ndeko.dev/r/chat-motion.json"
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/animated-size.json",
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/chat-motion.json"
   ],
   "files": [
     {

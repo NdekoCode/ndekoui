@@ -5,9 +5,9 @@
   "description": "A user icon for an account with no photo and no name yet.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/avatar.json",
-    "https://ui.ndeko.dev/r/icons.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/avatar.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

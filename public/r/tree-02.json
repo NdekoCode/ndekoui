@@ -8,9 +8,9 @@
     "@headless-tree/react"
   ],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/animated-size.json",
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/tree.json"
+    "https://ui.ndekocode.dev/r/animated-size.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/tree.json"
   ],
   "files": [
     {

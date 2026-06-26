@@ -5,10 +5,10 @@
   "description": "A column of icon tabs with tooltips on the side, next to a content card.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/icons.json",
-    "https://ui.ndeko.dev/r/tabs.json",
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/tooltip.json"
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/tabs.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/tooltip.json"
   ],
   "files": [
     {

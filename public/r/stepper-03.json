@@ -5,8 +5,8 @@
   "description": "Small dots, a ring on the current step and a check on done ones.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/stepper.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/stepper.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

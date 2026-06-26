@@ -5,10 +5,10 @@
   "description": "A search field that shows its keyboard shortcut on a key cap.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/field.json",
-    "https://ui.ndeko.dev/r/input.json",
-    "https://ui.ndeko.dev/r/kbd.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/field.json",
+    "https://ui.ndekocode.dev/r/input.json",
+    "https://ui.ndekocode.dev/r/kbd.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

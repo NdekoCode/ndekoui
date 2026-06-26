@@ -5,8 +5,8 @@
   "description": "A square cropper whose crop area fills it with no padding.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/cropper.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/cropper.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

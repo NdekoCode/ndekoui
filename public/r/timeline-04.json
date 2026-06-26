@@ -5,8 +5,8 @@
   "description": "Review steps with the time under each description.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/timeline.json"
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/timeline.json"
   ],
   "files": [
     {

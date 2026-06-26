@@ -4,9 +4,9 @@
   "title": "Selected Mark",
   "description": "The mark of the picked row in a menu.",
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/utils.json",
-    "https://ui.ndeko.dev/r/icons.json"
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json",
+    "https://ui.ndekocode.dev/r/icons.json"
   ],
   "files": [
     {

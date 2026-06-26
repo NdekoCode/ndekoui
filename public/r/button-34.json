@@ -5,8 +5,8 @@
   "description": "Three joined outline toggles that can all be off.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/toggle-group.json"
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/toggle-group.json"
   ],
   "files": [
     {

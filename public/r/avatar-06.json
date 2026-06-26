@@ -5,8 +5,8 @@
   "description": "A photo avatar with a grey dot for someone offline.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/avatar.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/avatar.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

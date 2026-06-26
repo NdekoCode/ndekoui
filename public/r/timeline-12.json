@@ -5,9 +5,9 @@
   "description": "Dates above the line, titles and descriptions below it.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/timeline.json",
-    "https://ui.ndeko.dev/r/utils.json"
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/timeline.json",
+    "https://ui.ndekocode.dev/r/utils.json"
   ],
   "files": [
     {

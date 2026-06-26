@@ -5,8 +5,8 @@
   "description": "The chevron sits before the question and the answer lines up with the text.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/accordion.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/accordion.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

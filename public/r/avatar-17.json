@@ -5,8 +5,8 @@
   "description": "Four overlapping avatars at 48px.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/avatar.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/avatar.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

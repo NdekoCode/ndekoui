@@ -5,8 +5,8 @@
   "description": "The unmet password rules on the soft destructive pair.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/status-orb.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/status-orb.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

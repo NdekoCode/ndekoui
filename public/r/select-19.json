@@ -5,9 +5,9 @@
   "description": "The hairline, the open state and the focus halo take the brand colour.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/field.json",
-    "https://ui.ndeko.dev/r/select.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/field.json",
+    "https://ui.ndekocode.dev/r/select.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

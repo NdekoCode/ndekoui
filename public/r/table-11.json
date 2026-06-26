@@ -5,9 +5,9 @@
   "description": "Grouped platform columns with a mark and a version for each feature.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/icons.json",
-    "https://ui.ndeko.dev/r/table.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/table.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

@@ -5,8 +5,8 @@
   "description": "A light mask in the card colour around the crop area.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/cropper.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/cropper.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

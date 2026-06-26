@@ -5,8 +5,8 @@
   "description": "The crop area in pixels, shown as it changes.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/cropper.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/cropper.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

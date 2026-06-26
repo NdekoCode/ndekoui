@@ -7,11 +7,11 @@
     "motion"
   ],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/button.json",
-    "https://ui.ndeko.dev/r/dialog.json",
-    "https://ui.ndeko.dev/r/otp-field.json",
-    "https://ui.ndeko.dev/r/status-orb.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/dialog.json",
+    "https://ui.ndekocode.dev/r/otp-field.json",
+    "https://ui.ndekocode.dev/r/status-orb.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

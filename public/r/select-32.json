@@ -5,10 +5,10 @@
   "description": "Each status carries a coloured dot, in the list and in the trigger.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/field.json",
-    "https://ui.ndeko.dev/r/select.json",
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/utils.json"
+    "https://ui.ndekocode.dev/r/field.json",
+    "https://ui.ndekocode.dev/r/select.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json"
   ],
   "files": [
     {

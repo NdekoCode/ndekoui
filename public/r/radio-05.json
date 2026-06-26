@@ -5,11 +5,11 @@
   "description": "Picking the first option opens a field below it and focuses it.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/collapsible.json",
-    "https://ui.ndeko.dev/r/input.json",
-    "https://ui.ndeko.dev/r/label.json",
-    "https://ui.ndeko.dev/r/radio-group.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/collapsible.json",
+    "https://ui.ndekocode.dev/r/input.json",
+    "https://ui.ndekocode.dev/r/label.json",
+    "https://ui.ndekocode.dev/r/radio-group.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

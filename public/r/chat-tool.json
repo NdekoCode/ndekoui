@@ -4,11 +4,11 @@
   "title": "Chat Tool",
   "description": "A tool call with its state, opening onto its input and output and resizing as the output arrives.",
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/utils.json",
-    "https://ui.ndeko.dev/r/icons.json",
-    "https://ui.ndeko.dev/r/badge.json",
-    "https://ui.ndeko.dev/r/chat-motion.json"
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/badge.json",
+    "https://ui.ndekocode.dev/r/chat-motion.json"
   ],
   "files": [
     {

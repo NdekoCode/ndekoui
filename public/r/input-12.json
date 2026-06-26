@@ -5,9 +5,9 @@
   "description": "A domain ending written inside the field after the name.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/field.json",
-    "https://ui.ndeko.dev/r/input.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/field.json",
+    "https://ui.ndekocode.dev/r/input.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

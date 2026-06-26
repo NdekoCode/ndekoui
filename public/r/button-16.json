@@ -5,10 +5,10 @@
   "description": "An outline print button that shows its keyboard shortcut.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/button.json",
-    "https://ui.ndeko.dev/r/icons.json",
-    "https://ui.ndeko.dev/r/kbd.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/kbd.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

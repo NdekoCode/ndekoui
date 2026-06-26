@@ -5,10 +5,10 @@
   "description": "A sun and a moon on each side of a dark mode switch.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/icons.json",
-    "https://ui.ndeko.dev/r/switch.json",
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/utils.json"
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/switch.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json"
   ],
   "files": [
     {

@@ -5,8 +5,8 @@
   "description": "A crop area locked to a 16:9 ratio.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/cropper.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/cropper.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

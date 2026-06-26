@@ -7,9 +7,9 @@
     "motion"
   ],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/combobox.json",
-    "https://ui.ndeko.dev/r/field.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/combobox.json",
+    "https://ui.ndekocode.dev/r/field.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

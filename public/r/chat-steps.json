@@ -4,10 +4,10 @@
   "title": "Chat Steps",
   "description": "Steps the assistant took, on a thin line, behind a trigger that opens and closes them.",
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/utils.json",
-    "https://ui.ndeko.dev/r/icons.json",
-    "https://ui.ndeko.dev/r/collapsible.json"
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/collapsible.json"
   ],
   "files": [
     {

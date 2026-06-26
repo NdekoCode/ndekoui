@@ -5,11 +5,11 @@
   "description": "Grouped actions with keyboard shortcuts and a submenu.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/button.json",
-    "https://ui.ndeko.dev/r/dropdown-menu.json",
-    "https://ui.ndeko.dev/r/icons.json",
-    "https://ui.ndeko.dev/r/kbd.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/dropdown-menu.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/kbd.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

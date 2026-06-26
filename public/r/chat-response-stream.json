@@ -4,8 +4,8 @@
   "title": "Chat Response Stream",
   "description": "A reply revealed word by word or character by character, from a fixed text or an async stream.",
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/utils.json"
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json"
   ],
   "files": [
     {

@@ -4,9 +4,9 @@
   "title": "Chat Image",
   "description": "An image a model produced, from base64 or raw bytes, with a placeholder until it is there.",
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/utils.json",
-    "https://ui.ndeko.dev/r/skeleton.json"
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json",
+    "https://ui.ndekocode.dev/r/skeleton.json"
   ],
   "files": [
     {

@@ -5,9 +5,9 @@
   "description": "A label, a sublabel and a description with the box at the end.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/checkbox.json",
-    "https://ui.ndeko.dev/r/label.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/checkbox.json",
+    "https://ui.ndekocode.dev/r/label.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

@@ -5,10 +5,10 @@
   "description": "The label lives inside the field, above the value.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/recipes.json",
-    "https://ui.ndeko.dev/r/select-native.json",
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/utils.json"
+    "https://ui.ndekocode.dev/r/recipes.json",
+    "https://ui.ndekocode.dev/r/select-native.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json"
   ],
   "files": [
     {

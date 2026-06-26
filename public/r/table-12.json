@@ -7,10 +7,10 @@
     "@tanstack/react-table"
   ],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/badge.json",
-    "https://ui.ndeko.dev/r/checkbox.json",
-    "https://ui.ndeko.dev/r/table.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/badge.json",
+    "https://ui.ndekocode.dev/r/checkbox.json",
+    "https://ui.ndekocode.dev/r/table.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

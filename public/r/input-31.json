@@ -5,9 +5,9 @@
   "description": "A small label sitting on the top edge of the field.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/field.json",
-    "https://ui.ndeko.dev/r/input.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/field.json",
+    "https://ui.ndekocode.dev/r/input.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

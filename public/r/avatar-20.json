@@ -5,9 +5,9 @@
   "description": "Four overlapping avatars and a button for the three others.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/avatar.json",
-    "https://ui.ndeko.dev/r/button.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/avatar.json",
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

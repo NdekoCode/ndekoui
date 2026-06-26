@@ -5,8 +5,8 @@
   "description": "Round swatches in the theme hues for picking a label colour.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/radio-group.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/radio-group.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

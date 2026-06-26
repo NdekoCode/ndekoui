@@ -5,10 +5,10 @@
   "description": "A field with its send button aligned to the start.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/button.json",
-    "https://ui.ndeko.dev/r/label.json",
-    "https://ui.ndeko.dev/r/textarea.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/label.json",
+    "https://ui.ndekocode.dev/r/textarea.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

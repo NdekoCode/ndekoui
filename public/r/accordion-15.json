@@ -5,8 +5,8 @@
   "description": "Questions stacked as rows of a single card, with a chevron.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/accordion.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/accordion.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

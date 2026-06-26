@@ -5,7 +5,7 @@
   "description": "A label drawn inside the field, above the text.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

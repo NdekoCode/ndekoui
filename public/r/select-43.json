@@ -5,10 +5,10 @@
   "description": "Every time zone of the browser, found by typing part of its name.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/combobox.json",
-    "https://ui.ndeko.dev/r/field.json",
-    "https://ui.ndeko.dev/r/icons.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/combobox.json",
+    "https://ui.ndekocode.dev/r/field.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

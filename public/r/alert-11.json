@@ -5,8 +5,8 @@
   "description": "A card that lists the password rules still unmet.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/status-orb.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/status-orb.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

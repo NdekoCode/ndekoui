@@ -5,10 +5,10 @@
   "description": "The same FAQ inside a scroll area with a thin scrollbar.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/button.json",
-    "https://ui.ndeko.dev/r/dialog.json",
-    "https://ui.ndeko.dev/r/scroll-area.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/dialog.json",
+    "https://ui.ndekocode.dev/r/scroll-area.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

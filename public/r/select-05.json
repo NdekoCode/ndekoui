@@ -5,9 +5,9 @@
   "description": "The hairline and the focus halo take the brand colour.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/label.json",
-    "https://ui.ndeko.dev/r/select-native.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/label.json",
+    "https://ui.ndekocode.dev/r/select-native.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

@@ -13,10 +13,10 @@ The library is being rebuilt. What exists today is listed below; what comes next
 
 ## Install a component
 
-Every item is served at `https://ui.ndeko.dev/r/<name>.json`. In a project already set up for shadcn with Tailwind CSS 4:
+Every item is served at `https://ui.ndekocode.dev/r/<name>.json`. In a project already set up for shadcn with Tailwind CSS 4:
 
 ```bash
-npx shadcn@latest add https://ui.ndeko.dev/r/button.json
+npx shadcn@latest add https://ui.ndekocode.dev/r/button.json
 ```
 
 The theme, the `cn` helper and every inner dependency come with it. Imports are rewritten to your own aliases.

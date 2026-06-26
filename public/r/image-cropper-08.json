@@ -7,9 +7,9 @@
     "motion"
   ],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/cropper.json",
-    "https://ui.ndeko.dev/r/slider.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/cropper.json",
+    "https://ui.ndekocode.dev/r/slider.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

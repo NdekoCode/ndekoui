@@ -5,8 +5,8 @@
   "description": "An outline badge with a warning dot.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/badge.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/badge.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

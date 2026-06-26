@@ -5,9 +5,9 @@
   "description": "An alert dialog that asks before an invoice goes out.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/alert-dialog.json",
-    "https://ui.ndeko.dev/r/button.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/alert-dialog.json",
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

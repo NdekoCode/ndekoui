@@ -5,9 +5,9 @@
   "description": "A field with a short hint below, read out with the field.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/label.json",
-    "https://ui.ndeko.dev/r/textarea.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/label.json",
+    "https://ui.ndekocode.dev/r/textarea.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

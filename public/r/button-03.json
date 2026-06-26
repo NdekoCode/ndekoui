@@ -5,8 +5,8 @@
   "description": "The lg pill for the call to action of a page or a dialog.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/button.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

@@ -4,9 +4,9 @@
   "title": "Chat Source",
   "description": "A cited page as a small pill that previews its title and summary after a short pause.",
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/utils.json",
-    "https://ui.ndeko.dev/r/hover-card.json"
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json",
+    "https://ui.ndekocode.dev/r/hover-card.json"
   ],
   "files": [
     {

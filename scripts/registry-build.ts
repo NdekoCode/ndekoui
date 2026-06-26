@@ -182,7 +182,7 @@ const registryItems = components.map((component) => {
 const registry = {
   $schema: 'https://ui.shadcn.com/schema/registry.json',
   name: 'ndekoui',
-  homepage: 'https://ui.ndeko.dev',
+  homepage: 'https://ui.ndekocode.dev',
   items: registryItems,
 };
 

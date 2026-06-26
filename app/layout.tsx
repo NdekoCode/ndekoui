@@ -8,7 +8,7 @@ import { ThemeProvider } from '@/components/website/theme-provider';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://ui.ndeko.dev'),
+  metadataBase: new URL('https://ui.ndekocode.dev'),
   title: 'Ndeko UI',
   description:
     'Open-source primitives, components, blocks and templates for React and Tailwind CSS, installed with the shadcn CLI and animated around what people do.',

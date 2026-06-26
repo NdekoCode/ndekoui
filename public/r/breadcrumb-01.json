@@ -7,10 +7,10 @@
     "@base-ui/react"
   ],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/breadcrumb.json",
-    "https://ui.ndeko.dev/r/dropdown-menu.json",
-    "https://ui.ndeko.dev/r/recipes.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/breadcrumb.json",
+    "https://ui.ndekocode.dev/r/dropdown-menu.json",
+    "https://ui.ndekocode.dev/r/recipes.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

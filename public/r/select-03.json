@@ -5,10 +5,10 @@
   "description": "A clock icon sits at the start of the field.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/icons.json",
-    "https://ui.ndeko.dev/r/label.json",
-    "https://ui.ndeko.dev/r/select-native.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/label.json",
+    "https://ui.ndekocode.dev/r/select-native.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

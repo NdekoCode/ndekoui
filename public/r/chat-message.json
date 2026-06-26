@@ -4,11 +4,11 @@
   "title": "Chat Message",
   "description": "A message with its avatar or glyph, a bubble or plain body, and actions explained by tooltips.",
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/theme.json",
-    "https://ui.ndeko.dev/r/utils.json",
-    "https://ui.ndeko.dev/r/avatar.json",
-    "https://ui.ndeko.dev/r/tooltip.json",
-    "https://ui.ndeko.dev/r/chat-markdown.json"
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json",
+    "https://ui.ndekocode.dev/r/avatar.json",
+    "https://ui.ndekocode.dev/r/tooltip.json",
+    "https://ui.ndekocode.dev/r/chat-markdown.json"
   ],
   "files": [
     {

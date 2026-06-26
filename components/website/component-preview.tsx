@@ -28,7 +28,7 @@ export default function ComponentPreview({
   const [replayCount, setReplayCount] = useState(0);
 
   const componentName = filePath?.split('/').pop()?.split('.').shift();
-  const registryUrl = `https://ui.ndeko.dev/e/${componentName}.json`;
+  const registryUrl = `https://ui.ndekocode.dev/e/${componentName}.json`;
 
   const replay = () => {
     setReplayCount((count) => count + 1);

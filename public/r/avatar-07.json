@@ -5,8 +5,8 @@
   "description": "A rounded-corner avatar with an online dot on its top corner.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ui.ndeko.dev/r/avatar.json",
-    "https://ui.ndeko.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/avatar.json",
+    "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {

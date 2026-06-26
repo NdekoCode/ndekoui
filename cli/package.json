@@ -2,7 +2,7 @@
   "name": "ndekoui",
   "version": "0.1.1",
   "description": "CLI to add beautiful, animated components to your app. Built for React, Next.js, and Tailwind CSS.",
-  "homepage": "https://ui.ndeko.dev",
+  "homepage": "https://ui.ndekocode.dev",
   "bin": {
     "ndekoui": "./dist/index.js"
   },
