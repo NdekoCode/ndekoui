@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import { motion, MotionProps, useReducedMotion } from 'motion/react';
+import { motionElementOf } from './motion-elements';
 
 export type TextScrambleProps = {
   children: string;
@@ -27,9 +28,7 @@ export function TextScramble({
   onScrambleComplete,
   ...props
 }: TextScrambleProps) {
-  const MotionComponent = motion[
-    Component as keyof typeof motion
-  ] as typeof motion.p;
+  const MotionComponent = motionElementOf(Component) as typeof motion.p;
   const [displayText, setDisplayText] = useState(children);
   const isAnimatingRef = useRef(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);

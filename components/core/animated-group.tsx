@@ -1,6 +1,7 @@
 'use client';
 import { ReactNode } from 'react';
 import { motion, MotionConfig, useReducedMotion, Variants } from 'motion/react';
+import { motionElementOf } from './motion-elements';
 import React from 'react';
 
 export type PresetType =
@@ -123,12 +124,8 @@ function AnimatedGroup({
   const containerVariants = variants?.container || selectedVariants.container;
   const itemVariants = variants?.item || selectedVariants.item;
 
-  const MotionComponent = motion[
-    as as keyof typeof motion
-  ] as typeof motion.div;
-  const MotionChild = motion[
-    asChild as keyof typeof motion
-  ] as typeof motion.div;
+  const MotionComponent = motionElementOf(as) as typeof motion.div;
+  const MotionChild = motionElementOf(asChild) as typeof motion.div;
 
   return (
     <ReducedMotionConfig>

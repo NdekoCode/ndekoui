@@ -12,6 +12,7 @@ import type {
   Variant,
   Variants,
 } from 'motion/react';
+import { motionElementOf } from './motion-elements';
 import React from 'react';
 
 export type PresetType = 'blur' | 'fade-in-blur' | 'scale' | 'fade' | 'slide';
@@ -239,7 +240,7 @@ export function TextEffect({
   style,
 }: TextEffectProps) {
   const segments = splitText(children, per);
-  const MotionTag = motion[as as keyof typeof motion] as typeof motion.div;
+  const MotionTag = motionElementOf(as) as typeof motion.div;
 
   const baseVariants = preset
     ? presetVariants[preset]

@@ -7,6 +7,7 @@ import {
   useSpring,
   useTransform,
 } from 'motion/react';
+import { motionElementOf } from './motion-elements';
 import { useEffect } from 'react';
 
 export type AnimatedNumberProps = {
@@ -22,9 +23,7 @@ export function AnimatedNumber({
   springOptions,
   as = 'span',
 }: AnimatedNumberProps) {
-  const MotionComponent = motion[
-    as as keyof typeof motion
-  ] as typeof motion.span;
+  const MotionComponent = motionElementOf(as) as typeof motion.span;
   const prefersReducedMotion = useReducedMotion();
 
   const spring = useSpring(value, springOptions);

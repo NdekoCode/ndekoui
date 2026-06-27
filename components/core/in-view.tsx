@@ -1,7 +1,6 @@
 'use client';
 import { ReactNode, useRef, useState } from 'react';
 import {
-  motion,
   MotionConfig,
   useInView,
   useReducedMotion,
@@ -9,6 +8,7 @@ import {
   Transition,
   UseInViewOptions,
 } from 'motion/react';
+import { motionElementOf } from './motion-elements';
 
 export type InViewProps = {
   children: ReactNode;
@@ -48,7 +48,7 @@ export function InView({
 
   const [isViewed, setIsViewed] = useState(false);
 
-  const MotionComponent = motion[as as keyof typeof motion] as typeof as;
+  const MotionComponent = motionElementOf(as) as typeof as;
 
   return (
     <ReducedMotionConfig>

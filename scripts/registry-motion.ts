@@ -36,6 +36,23 @@ function isPackageImport(specifier: string) {
   return !isLocal && !isRelative;
 }
 
+const LOCAL_EXTENSIONS = ['.tsx', '.ts'];
+
+function siblingFileOf(sourcePath: string, specifier: string) {
+  const base = path.resolve(path.dirname(sourcePath), specifier);
+  const candidates = LOCAL_EXTENSIONS.map((extension) => `${base}${extension}`);
+  const existing = candidates.find((candidate) => fs.existsSync(candidate));
+  if (!existing) {
+    return null;
+  }
+  const file: RegistryItemFile = {
+    path: path.relative(ROOT, existing),
+    type: 'registry:component',
+    target: `components/motion/${path.basename(existing)}`,
+  };
+  return file;
+}
+
 function hookFileOf(specifier: string): RegistryItemFile {
   const hookName = specifier.slice(HOOKS_PREFIX.length);
   return { path: `hooks/${hookName}.tsx`, type: 'registry:hook' };
@@ -51,6 +68,7 @@ function motionItemOf(
   const registryDependencies = new Set<string>(['theme']);
   const dependencies = new Set<string>();
   const hookFiles: RegistryItemFile[] = [];
+  const siblingFiles: RegistryItemFile[] = [];
 
   for (const specifier of specifiers) {
     if (specifier === UTILS_SPECIFIER) {
@@ -63,6 +81,13 @@ function motionItemOf(
     }
     if (specifier.startsWith(HOOKS_PREFIX)) {
       hookFiles.push(hookFileOf(specifier));
+      continue;
+    }
+    if (specifier.startsWith('./')) {
+      const sibling = siblingFileOf(sourcePath, specifier);
+      if (sibling) {
+        siblingFiles.push(sibling);
+      }
       continue;
     }
     if (!isPackageImport(specifier)) {
@@ -85,7 +110,7 @@ function motionItemOf(
     type: 'registry:component',
     title: titleOf(name),
     description,
-    files: [componentFile, ...hookFiles],
+    files: [componentFile, ...siblingFiles, ...hookFiles],
     dependencies: sortedAlphabetically(dependencies),
     registryDependencies: sortedAlphabetically(registryDependencies),
     categories: ['motion'],

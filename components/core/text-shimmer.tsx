@@ -1,6 +1,7 @@
 'use client';
 import React, { useMemo } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
+import { motionElementOf } from './motion-elements';
 import { cn } from '@/lib/utils';
 
 export type TextShimmerProps = {
@@ -29,9 +30,7 @@ function TextShimmerComponent({
   duration = 2,
   spread = 2,
 }: TextShimmerProps) {
-  const MotionComponent = motion[
-    Component as keyof typeof motion
-  ] as typeof motion.p;
+  const MotionComponent = motionElementOf(Component) as typeof motion.p;
   const prefersReducedMotion = useReducedMotion();
 
   const dynamicSpread = useMemo(() => {

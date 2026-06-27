@@ -5,6 +5,7 @@ import {
   Transition,
   useReducedMotion,
 } from 'motion/react';
+import { motionElementOf } from './motion-elements';
 import { cn } from '@/lib/utils';
 
 export type TextShimmerWaveProps = {
@@ -42,9 +43,7 @@ export function TextShimmerWave({
   rotateYDistance = 10,
   transition,
 }: TextShimmerWaveProps) {
-  const MotionComponent = motion[
-    Component as keyof typeof motion
-  ] as typeof motion.p;
+  const MotionComponent = motionElementOf(Component) as typeof motion.p;
 
   return (
     <ReducedMotionConfig>

@@ -2030,6 +2030,11 @@
           "path": "components/core/animated-group.tsx",
           "type": "registry:component",
           "target": "components/motion/animated-group.tsx"
+        },
+        {
+          "path": "components/core/motion-elements.ts",
+          "type": "registry:component",
+          "target": "components/motion/motion-elements.ts"
         }
       ],
       "categories": [
@@ -2053,6 +2058,11 @@
           "path": "components/core/animated-number.tsx",
           "type": "registry:component",
           "target": "components/motion/animated-number.tsx"
+        },
+        {
+          "path": "components/core/motion-elements.ts",
+          "type": "registry:component",
+          "target": "components/motion/motion-elements.ts"
         }
       ],
       "categories": [
@@ -2196,6 +2206,11 @@
           "path": "components/core/in-view.tsx",
           "type": "registry:component",
           "target": "components/motion/in-view.tsx"
+        },
+        {
+          "path": "components/core/motion-elements.ts",
+          "type": "registry:component",
+          "target": "components/motion/motion-elements.ts"
         }
       ],
       "categories": [
@@ -2266,6 +2281,11 @@
           "path": "components/core/text-effect.tsx",
           "type": "registry:component",
           "target": "components/motion/text-effect.tsx"
+        },
+        {
+          "path": "components/core/motion-elements.ts",
+          "type": "registry:component",
+          "target": "components/motion/motion-elements.ts"
         }
       ],
       "categories": [
@@ -2356,6 +2376,11 @@
           "path": "components/core/text-scramble.tsx",
           "type": "registry:component",
           "target": "components/motion/text-scramble.tsx"
+        },
+        {
+          "path": "components/core/motion-elements.ts",
+          "type": "registry:component",
+          "target": "components/motion/motion-elements.ts"
         }
       ],
       "categories": [
@@ -2379,6 +2404,11 @@
           "path": "components/core/text-shimmer.tsx",
           "type": "registry:component",
           "target": "components/motion/text-shimmer.tsx"
+        },
+        {
+          "path": "components/core/motion-elements.ts",
+          "type": "registry:component",
+          "target": "components/motion/motion-elements.ts"
         }
       ],
       "categories": [
@@ -2402,6 +2432,11 @@
           "path": "components/core/text-shimmer-wave.tsx",
           "type": "registry:component",
           "target": "components/motion/text-shimmer-wave.tsx"
+        },
+        {
+          "path": "components/core/motion-elements.ts",
+          "type": "registry:component",
+          "target": "components/motion/motion-elements.ts"
         }
       ],
       "categories": [
