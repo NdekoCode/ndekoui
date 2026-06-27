@@ -16,6 +16,8 @@ const READABLE_ROOTS = ['registry/', 'components/core/', 'hooks/'];
 
 export const dynamic = 'force-static';
 
+export const dynamicParams = false;
+
 function hasFiles(entry: RegistryEntry) {
   const fileCount = entry.files?.length ?? 0;
   return fileCount > 0;
@@ -43,7 +45,10 @@ function labelOf(file: RegistryFile) {
 }
 
 async function highlightedFileOf(file: RegistryFile) {
-  const absolutePath = path.join(process.cwd(), file.path);
+  const absolutePath = path.join(
+    /*turbopackIgnore: true*/ process.cwd(),
+    file.path
+  );
   const source = await fs.readFile(absolutePath, 'utf8');
   const html = await codeToHtml({ code: source, lang: 'tsx' });
   return { label: labelOf(file), source, html };
