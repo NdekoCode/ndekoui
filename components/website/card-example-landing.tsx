@@ -1,6 +1,6 @@
 'use client';
 import { cn } from '@/lib/utils';
-import { cloneElement, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { RefreshCwIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 
@@ -39,8 +39,7 @@ export function CardExampleLanding({
           </Button>
         )}
         <div className='flex h-[350px] items-center justify-center'>
-          {hasReTrigger && cloneElement(children, { key: replayCount })}
-          {!hasReTrigger && children}
+          <Fragment key={replayCount}>{children}</Fragment>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 'use client';
-import { cloneElement, useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 import { RefreshCwIcon } from '@/registry/ndeko/lib/icons';
@@ -64,8 +64,7 @@ export default function ComponentPreview({
           )}
         </div>
       </div>
-      {hasReTrigger && cloneElement(component, { key: replayCount })}
-      {!hasReTrigger && component}
+      <Fragment key={replayCount}>{component}</Fragment>
     </div>
   );
 }
