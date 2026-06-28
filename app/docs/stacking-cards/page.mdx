@@ -1,0 +1,81 @@
+export const metadata = {
+  title: 'Stacking Cards - Ndeko UI',
+  description:
+    'Cards that pin and pile up as the page scrolls, each one behind shrinking and fading back a little. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { StackingCardsProjects } from './stacking-cards-projects';
+import { StackingCardsPrinciples } from './stacking-cards-principles';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Stacking Cards
+
+Cards that pin and pile up as the page scrolls, each one behind shrinking and fading back a little.
+
+## Examples
+
+### Project cards with scenes
+
+<ComponentCodePreview
+  component={<StackingCardsProjects />}
+  filePath='app/docs/stacking-cards/stacking-cards-projects.tsx'
+/>
+
+### Principles
+
+<ComponentCodePreview
+  component={<StackingCardsPrinciples />}
+  filePath='app/docs/stacking-cards/stacking-cards-principles.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='stacking-cards' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/stacking-cards.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### StackingCards
+
+Each card gets a pinned frame as tall as the scrolling area. The deepest card ends at 90% of its size and the one on top stays at full size; the scale and the fade follow the scroll position directly, without re-rendering. With reduced motion, the cards are a plain list at full size.
+
+| Prop           | Type                             | Default   | Description                                                                     |
+| :------------- | :------------------------------- | :-------- | :------------------------------------------------------------------------------ |
+| children       | React.ReactNode                  |           | The `StackingCard` elements.                                                    |
+| containerRef   | RefObject\<HTMLElement \| null\> |           | The scrolling element, when it is not the page. It needs a non-static position. |
+| frameClassName | string                           | `h-svh`   | Classes of each pinned frame. Its height should match the scrolling area.       |
+| peek           | number                           | 16        | How many pixels of each card stay visible above the next one.                   |
+| className      | string                           | undefined | Optional CSS class for the stack.                                               |
+
+### StackingCard
+
+| Prop      | Type            | Default   | Description                                                                    |
+| :-------- | :-------------- | :-------- | :----------------------------------------------------------------------------- |
+| children  | React.ReactNode |           | The content of the card. Give every card the same height so the edges line up. |
+| className | string          | undefined | Classes of the card surface: background, ring, radius and width.               |

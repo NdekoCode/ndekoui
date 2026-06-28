@@ -1,0 +1,81 @@
+export const metadata = {
+  title: 'Timeline Animation - Ndeko UI',
+  description:
+    'A vertical timeline whose line fills as the page scrolls, with entries that settle in once as they arrive. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { TimelineAnimationReleases } from './timeline-animation-releases';
+import { TimelineAnimationChangelog } from './timeline-animation-changelog';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Timeline Animation
+
+A vertical timeline whose line fills as the page scrolls, with entries that settle in once as they arrive.
+
+## Examples
+
+### Release history
+
+<ComponentCodePreview
+  component={<TimelineAnimationReleases />}
+  filePath='app/docs/timeline-animation/timeline-animation-releases.tsx'
+  hasReTrigger
+/>
+
+### Changelog with authors
+
+<ComponentCodePreview
+  component={<TimelineAnimationChangelog />}
+  filePath='app/docs/timeline-animation/timeline-animation-changelog.tsx'
+  hasReTrigger
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='timeline-animation' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/timeline-animation.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### TimelineAnimation
+
+The line fills up to the middle of the scrolling area, and each dot takes the primary colour when the line reaches it. Entries rise 8px and fade in over 300ms the first time they enter the view, then stay. With reduced motion, the line is full and every entry is in place from the start.
+
+| Prop         | Type                             | Default   | Description                                                                     |
+| :----------- | :------------------------------- | :-------- | :------------------------------------------------------------------------------ |
+| children     | React.ReactNode                  |           | The `TimelineAnimationItem` elements, in reading order.                         |
+| containerRef | RefObject\<HTMLElement \| null\> |           | The scrolling element, when it is not the page. It needs a non-static position. |
+| className    | string                           | undefined | Optional CSS class for the list.                                                |
+
+### TimelineAnimationItem
+
+| Prop      | Type            | Default   | Description                                                                             |
+| :-------- | :-------------- | :-------- | :-------------------------------------------------------------------------------------- |
+| children  | React.ReactNode |           | The content of the entry. Its first line sits next to the dot.                          |
+| className | string          | undefined | Classes of the entry, merged over `relative ps-8 pb-10`. The bottom padding is the gap. |

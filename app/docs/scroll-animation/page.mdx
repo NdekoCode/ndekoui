@@ -1,0 +1,88 @@
+export const metadata = {
+  title: 'Scroll Animation - Ndeko UI',
+  description:
+    'Reveals that play once when an element scrolls into view, and a parallax layer that drifts with the scroll. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { ScrollAnimationPresets } from './scroll-animation-presets';
+import { ScrollAnimationParallax } from './scroll-animation-parallax';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Scroll Animation
+
+Reveals that play once when an element scrolls into view, and a parallax layer that drifts with the scroll.
+
+## Examples
+
+### Presets
+
+<ComponentCodePreview
+  component={<ScrollAnimationPresets />}
+  filePath='app/docs/scroll-animation/scroll-animation-presets.tsx'
+  hasReTrigger
+/>
+
+### Parallax layer
+
+<ComponentCodePreview
+  component={<ScrollAnimationParallax />}
+  filePath='app/docs/scroll-animation/scroll-animation-parallax.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='scroll-animation' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/scroll-animation.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+Wrap one element per reveal and keep them apart, so only one thing moves at a time. With reduced motion, every element is in place from the start and the parallax layer stays still.
+
+### ScrollAnimation
+
+| Prop         | Type                                     | Default   | Description                                                                        |
+| :----------- | :--------------------------------------- | :-------- | :--------------------------------------------------------------------------------- |
+| children     | React.ReactNode                          |           | The element to reveal.                                                             |
+| preset       | 'fade-up' \| 'scale-in' \| 'clip-reveal' | 'fade-up' | Rise 16px and fade in, grow from 96% and fade in, or uncover from the bottom edge. |
+| delay        | number                                   | 0         | Delay before the reveal, in seconds.                                               |
+| amount       | number                                   | 0.3       | The share of the element that must be visible before it plays.                     |
+| containerRef | RefObject\<HTMLElement \| null\>         |           | The scrolling element, when it is not the page.                                    |
+| className    | string                                   | undefined | Optional CSS class for the wrapper.                                                |
+
+### ScrollParallax
+
+A frame that clips a layer, which drifts against the scroll while the frame crosses the view.
+
+| Prop           | Type                             | Default   | Description                                                                                      |
+| :------------- | :------------------------------- | :-------- | :----------------------------------------------------------------------------------------------- |
+| children       | React.ReactNode                  |           | The content of the layer, usually an image that fills it.                                        |
+| strength       | number                           | 40        | How far the layer drifts each way, in pixels. A negative value moves it with the scroll instead. |
+| className      | string                           | undefined | Classes of the frame. Give it a size, for instance an aspect ratio.                              |
+| layerClassName | string                           | undefined | Classes of the moving layer.                                                                     |
+| containerRef   | RefObject\<HTMLElement \| null\> |           | The scrolling element, when it is not the page. It needs a non-static position.                  |

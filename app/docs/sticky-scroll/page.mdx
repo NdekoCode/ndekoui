@@ -1,0 +1,91 @@
+export const metadata = {
+  title: 'Sticky Scroll - Ndeko UI',
+  description:
+    'Steps that scroll past a pinned picture, which changes in place to match the step being read. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { StickyScrollTour } from './sticky-scroll-tour';
+import { StickyScrollSections } from './sticky-scroll-sections';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Sticky Scroll
+
+Steps that scroll past a pinned picture, which changes in place to match the step being read.
+
+## Examples
+
+### Steps with a pinned picture
+
+<ComponentCodePreview
+  component={<StickyScrollTour />}
+  filePath='app/docs/sticky-scroll/sticky-scroll-tour.tsx'
+/>
+
+### Stacked sections
+
+<ComponentCodePreview
+  component={<StickyScrollSections />}
+  filePath='app/docs/sticky-scroll/sticky-scroll-sections.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='sticky-scroll' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/sticky-scroll.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### StickyScroll
+
+The step that crosses the middle of the scrolling area is the active one. The picture of the active step fades in over the previous one, without sliding. The pinned panel repeats the pictures of the steps for sighted readers, so it is hidden from screen readers; below 36rem of width, each step shows its own picture above its text instead.
+
+| Prop           | Type                             | Default         | Description                                                                            |
+| :------------- | :------------------------------- | :-------------- | :------------------------------------------------------------------------------------- |
+| steps          | StickyScrollStep[]               |                 | The steps, each with an `id`, a `title`, a `description` and its `media`.              |
+| containerRef   | RefObject\<HTMLElement \| null\> |                 | The scrolling element, when it is not the page.                                        |
+| mediaSide      | 'start' \| 'end'                 | 'end'           | The side of the pinned picture on wide layouts.                                        |
+| frameClassName | string                           | `h-svh`         | Classes of the pinned panel. Its height should match the height of the scrolling area. |
+| stepClassName  | string                           | `min-h-[70svh]` | Classes of each step. Taller steps keep each picture on screen for longer.             |
+| className      | string                           | undefined       | Optional CSS class for the root element.                                               |
+
+### StickySections
+
+A wrapper for stacked sections. The sections stay pinned until the end of the wrapper, then leave together.
+
+| Prop      | Type   | Default   | Description                         |
+| :-------- | :----- | :-------- | :---------------------------------- |
+| className | string | undefined | Optional CSS class for the wrapper. |
+
+### StickySection
+
+A section pinned to the top of the scrolling area. Each section covers the one before it as it arrives; the scroll itself is the only movement.
+
+| Prop      | Type   | Default | Description                                                       |
+| :-------- | :----- | :------ | :---------------------------------------------------------------- |
+| className | string | `h-svh` | Classes of the section, merged over `sticky top-0 flex flex-col`. |

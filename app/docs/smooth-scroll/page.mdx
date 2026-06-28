@@ -1,0 +1,88 @@
+export const metadata = {
+  title: 'Smooth Scroll - Ndeko UI',
+  description:
+    'An opt-in wrapper that eases mouse wheel scrolling and leaves every other way of scrolling native. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { SmoothScrollCompare } from './smooth-scroll-compare';
+import { SmoothScrollNested } from './smooth-scroll-nested';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Smooth Scroll
+
+An opt-in wrapper that eases mouse wheel scrolling and leaves every other way of scrolling native.
+
+## Examples
+
+### Smooth and native side by side
+
+<ComponentCodePreview
+  component={<SmoothScrollCompare />}
+  filePath='app/docs/smooth-scroll/smooth-scroll-compare.tsx'
+/>
+
+### Nested scrolling areas
+
+<ComponentCodePreview
+  component={<SmoothScrollNested />}
+  filePath='app/docs/smooth-scroll/smooth-scroll-nested.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='smooth-scroll' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/smooth-scroll.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### SmoothScroll
+
+Only the mouse wheel is eased. The page keeps its real scroll position at every frame, so sticky elements, scroll-linked animations, anchors, the keyboard, the scrollbar, touch and screen readers behave as they do without it. When something else moves the page, the easing stops and starts again from there. With reduced motion, nothing is attached at all.
+
+The wheel stays native when it is pinched to zoom, sideways or held with Shift, inside an inner area that can still scroll that way, inside an element marked `data-smooth-scroll-ignore`, and while the page is locked by a dialog.
+
+Use `root` on a marketing page to ease the window; without it, the wrapper is the scrolling area and needs a height.
+
+| Prop      | Type            | Default   | Description                                                                              |
+| :-------- | :-------------- | :-------- | :--------------------------------------------------------------------------------------- |
+| children  | React.ReactNode |           | The content.                                                                             |
+| root      | boolean         | false     | Eases the scrolling of the window instead of the wrapper.                                |
+| lerp      | number          | 0.12      | The share of the remaining distance covered in each frame at 60 fps, between 0.01 and 1. |
+| enabled   | boolean         | true      | Turns the easing on or off without unmounting.                                           |
+| className | string          | undefined | Classes of the wrapper, merged over `relative overflow-y-auto` when it scrolls itself.   |
+
+### useSmoothScroll
+
+The same behaviour as a hook, for a scrolling element you already have.
+
+| Option    | Type                             | Default | Description                                         |
+| :-------- | :------------------------------- | :------ | :-------------------------------------------------- |
+| container | RefObject\<HTMLElement \| null\> |         | The scrolling element. Leave it out for the window. |
+| lerp      | number                           | 0.12    | As above.                                           |
+| enabled   | boolean                          | true    | As above.                                           |

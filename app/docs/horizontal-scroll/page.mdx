@@ -1,0 +1,76 @@
+export const metadata = {
+  title: 'Horizontal Scroll - Ndeko UI',
+  description:
+    'A tall section whose pinned row of cards travels sideways as the page scrolls down. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { HorizontalScrollScenes } from './horizontal-scroll-scenes';
+import { HorizontalScrollProgress } from './horizontal-scroll-progress';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Horizontal Scroll
+
+A tall section whose pinned row of cards travels sideways as the page scrolls down, one pixel of scroll for one pixel of travel.
+
+## Examples
+
+### Cards with scenes
+
+<ComponentCodePreview
+  component={<HorizontalScrollScenes />}
+  filePath='app/docs/horizontal-scroll/horizontal-scroll-scenes.tsx'
+/>
+
+### Progress under the row
+
+<ComponentCodePreview
+  component={<HorizontalScrollProgress />}
+  filePath='app/docs/horizontal-scroll/horizontal-scroll-progress.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='horizontal-scroll' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/horizontal-scroll.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### HorizontalScroll
+
+The section is as tall as the frame plus the width the row overflows, so the row has finished its travel exactly when the section ends. With reduced motion, the frame stops pinning and the row becomes a normal horizontally scrollable row. When a card or a link inside it receives keyboard focus, the page scrolls to the point where it is in view.
+
+| Prop           | Type                             | Default   | Description                                                                            |
+| :------------- | :------------------------------- | :-------- | :------------------------------------------------------------------------------------- |
+| children       | React.ReactNode                  |           | The cards of the row. Give them a fixed width and `shrink-0`.                          |
+| containerRef   | RefObject\<HTMLElement \| null\> |           | The scrolling element, when it is not the page. It needs a non-static position.        |
+| frameClassName | string                           | `h-svh`   | Classes of the pinned frame. Its height should match the height of the scrolling area. |
+| trackClassName | string                           |           | Classes of the row, merged over `flex w-max gap-4 px-6`.                               |
+| showProgress   | boolean                          | false     | Shows a thin bar under the row that fills as the row travels.                          |
+| aria-label     | string                           |           | A name for the section, read by screen readers.                                        |
+| className      | string                           | undefined | Optional CSS class for the section.                                                    |
