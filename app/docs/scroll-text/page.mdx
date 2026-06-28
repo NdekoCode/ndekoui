@@ -1,0 +1,89 @@
+export const metadata = {
+  title: 'Scroll Text - Ndeko UI',
+  description:
+    'Text that reveals word by word, letter by letter or under a highlight as it scrolls through the viewport. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { ScrollTextWord } from './scroll-text-word';
+import { ScrollTextCharacter } from './scroll-text-character';
+import { ScrollTextHighlight } from './scroll-text-highlight';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Scroll Text
+
+Text that reveals as it scrolls through the viewport, following the scroll position. Scroll the page to play the examples.
+
+## Examples
+
+### By word
+
+<ComponentCodePreview
+  component={<ScrollTextWord />}
+  filePath='app/docs/scroll-text/scroll-text-word.tsx'
+/>
+
+### By character
+
+<ComponentCodePreview
+  component={<ScrollTextCharacter />}
+  filePath='app/docs/scroll-text/scroll-text-character.tsx'
+/>
+
+### Highlight
+
+<ComponentCodePreview
+  component={<ScrollTextHighlight />}
+  filePath='app/docs/scroll-text/scroll-text-highlight.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='scroll-text' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/scroll-text.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### ScrollText
+
+| Prop         | Type                                                                   | Default                   | Description                                                                                                                                    |
+| :----------- | :--------------------------------------------------------------------- | :------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------- |
+| children     | string                                                                 |                           | The text to reveal.                                                                                                                            |
+| mode         | 'word' \| 'character' \| 'highlight'                                   | 'word'                    | Reveal word by word, character by character, or fill a highlight behind each line as it is read.                                               |
+| as           | 'p' \| 'h1' \| 'h2' \| 'h3' \| 'h4' \| 'blockquote' \| 'div' \| 'span' | 'p'                       | The element to render. Use `span` to reveal one phrase inside a paragraph.                                                                     |
+| offset       | UseScrollOptions['offset']                                             | ['start 0.85', 'end 0.5'] | When the reveal starts and ends: here it starts as the top of the text passes 85% of the viewport and ends when its bottom reaches the middle. |
+| containerRef | RefObject\<HTMLElement \| null\>                                       |                           | A scrolling element to follow instead of the page. It needs a position other than static.                                                      |
+| className    | string                                                                 |                           | Optional CSS class for the text element.                                                                                                       |
+
+The reveal follows the scroll position through motion values, so scrolling back hides the text again and nothing re-renders while you scroll. Screen readers get the whole text at once. Under reduced motion the text shows fully and the highlight is already filled.
+
+Scroll pieces belong on marketing pages. Keep the character mode for short headlines: every character follows the scroll on its own.
+
+## Credits
+
+The effect is inspired by the scroll text of [UI Layouts](https://www.ui-layouts.com/components/scroll-text), rebuilt as a scroll-linked reveal.

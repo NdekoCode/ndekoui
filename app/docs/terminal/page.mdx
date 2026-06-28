@@ -1,0 +1,90 @@
+export const metadata = {
+  title: 'Terminal - Ndeko UI',
+  description:
+    'A command line for developer docs that types its commands and prints their output line by line. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { TerminalInstall } from './terminal-install';
+import { TerminalDeploy } from './terminal-deploy';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Terminal
+
+A command line for developer docs that types its commands, prints their output line by line, and copies the commands in one press.
+
+## Examples
+
+### Install a component
+
+<ComponentCodePreview
+  component={<TerminalInstall />}
+  filePath='app/docs/terminal/terminal-install.tsx'
+/>
+
+### Deploy log
+
+<ComponentCodePreview
+  component={<TerminalDeploy />}
+  filePath='app/docs/terminal/terminal-deploy.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='terminal' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/terminal.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### Terminal
+
+| Prop        | Type           | Default    | Description                                                                      |
+| :---------- | :------------- | :--------- | :------------------------------------------------------------------------------- |
+| lines       | TerminalLine[] |            | The session, in order: commands are typed, output lines are printed.             |
+| title       | string         | 'Terminal' | The label at the top left.                                                       |
+| prompt      | string         | '$'        | The prompt shown before each command, in the muted colour.                       |
+| typingSpeed | number         | 32         | Milliseconds per typed character.                                                |
+| outputDelay | number         | 120        | Milliseconds before the next line when an output line has no `delay` of its own. |
+| className   | string         |            | Optional CSS class for the card.                                                 |
+
+### TerminalLine
+
+| Field | Type                                                      | Description                                                         |
+| :---- | :-------------------------------------------------------- | :------------------------------------------------------------------ |
+| kind  | 'command' \| 'output'                                     | A command is typed after the prompt; an output line prints at once. |
+| text  | string                                                    | The line. A long line scrolls sideways.                             |
+| tone  | 'default' \| 'muted' \| 'success' \| 'warning' \| 'error' | Output only: the status colour of the line.                         |
+| delay | number                                                    | Output only: milliseconds before the next line, for a slow step.    |
+
+The session plays once when half of it is on screen, and the replay button plays it again. Every line keeps its place from the start, so the card never grows while it types. The whole session is in the page from the first render, so screen readers and text selection get every line. Under reduced motion the session shows complete, the caret stops blinking and the replay button is hidden.
+
+The typing relies on a monospaced font, which the card sets with `font-mono`.
+
+## Credits
+
+The effect is inspired by the terminal of [UI Layouts](https://www.ui-layouts.com/components/terminal-ui), redrawn as a working docs component.

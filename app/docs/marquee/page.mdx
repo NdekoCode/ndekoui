@@ -1,0 +1,120 @@
+export const metadata = {
+  title: 'Marquee - Ndeko UI',
+  description:
+    'A loop of logos, chips or cards driven by CSS, horizontal or vertical, that pauses under the pointer and on focus. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { MarqueeWordmarks } from './marquee-wordmarks';
+import { MarqueeRows } from './marquee-rows';
+import { MarqueeVertical } from './marquee-vertical';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+export const MARQUEE_KEYFRAMES = `@theme {
+  --animate-marquee: marquee var(--marquee-duration, 40s) linear infinite;
+  --animate-marquee-y: marquee-y var(--marquee-duration, 60s) linear infinite;
+
+@keyframes marquee {
+to {
+translate: -50% 0;
+}
+}
+
+@keyframes marquee-y {
+to {
+translate: 0 -50%;
+}
+}
+}`;
+
+# Marquee
+
+A loop of logos, chips or cards that runs on a CSS animation, so it keeps its pace while the page is busy.
+
+## Examples
+
+### Wordmarks
+
+<ComponentCodePreview
+  component={<MarqueeWordmarks />}
+  filePath='app/docs/marquee/marquee-wordmarks.tsx'
+/>
+
+### Two rows in opposite directions
+
+<ComponentCodePreview
+  component={<MarqueeRows />}
+  filePath='app/docs/marquee/marquee-rows.tsx'
+/>
+
+### Vertical
+
+<ComponentCodePreview
+  component={<MarqueeVertical />}
+  filePath='app/docs/marquee/marquee-vertical.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='marquee' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/marquee.tsx' />
+
+<Step>
+  Add the marquee keyframes to your CSS if your project does not use the Ndeko
+  theme.
+</Step>
+
+<CodeBlock lang='css' code={MARQUEE_KEYFRAMES} />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### Marquee
+
+| Prop         | Type                       | Default      | Description                                                                                          |
+| :----------- | :------------------------- | :----------- | :--------------------------------------------------------------------------------------------------- |
+| children     | React.ReactNode            |              | The items of one loop.                                                                               |
+| direction    | 'horizontal' \| 'vertical' | 'horizontal' | The axis of the loop. A vertical marquee needs a height.                                             |
+| reverse      | boolean                    | false        | Runs the loop the other way.                                                                         |
+| pauseOnHover | boolean                    | true         | Pauses under the pointer and while an item inside has focus.                                         |
+| gap          | number                     | 16           | The space between items, in pixels.                                                                  |
+| duration     | number                     |              | Seconds for one loop. Without it, the theme default applies: 40 seconds across, 60 down.             |
+| repeat       | number                     | 2            | Copies of the items in each half of the loop. Raise it when one copy is narrower than the container. |
+| fade         | boolean                    | true         | Fades the items out at both edges.                                                                   |
+| className    | string                     |              | Optional CSS class for the container.                                                                |
+
+Only the first copy is read by screen readers and reached with the keyboard; the copies are hidden from both. Under reduced motion the loop stops: a horizontal marquee shows one copy, wrapped and centred, and a vertical one shows its first items.
+
+Marquees are ambient motion: keep them on marketing pages, never inside the application.
+
+### Compared with Infinite Slider
+
+Infinite Slider moves its row from JavaScript, measures it, and can slow down smoothly under the pointer with `speedOnHover`. Marquee hands the loop to the browser, so it stays smooth when the page is busy, and it pauses under the pointer. Prefer Marquee for a constant loop and Infinite Slider when the speed has to change.
+
+## Credits
+
+The effect is inspired by the marquee of [UI Layouts](https://www.ui-layouts.com/components/marquee).

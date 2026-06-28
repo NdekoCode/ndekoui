@@ -1,0 +1,86 @@
+export const metadata = {
+  title: 'Scroll Text Marquee - Ndeko UI',
+  description:
+    'A large line of text that loops sideways and speeds up with the scroll. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { ScrollTextMarqueeUnidirectional } from './scroll-text-marquee-unidirectional';
+import { ScrollTextMarqueeBidirectional } from './scroll-text-marquee-bidirectional';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Scroll Text Marquee
+
+A large line of text that loops sideways and speeds up with the scroll. Scroll the page to drive the examples.
+
+## Examples
+
+### Unidirectional
+
+Each row keeps its own direction and runs faster while the page scrolls, whichever way it scrolls.
+
+<ComponentCodePreview
+  component={<ScrollTextMarqueeUnidirectional />}
+  filePath='app/docs/scroll-text-marquee/scroll-text-marquee-unidirectional.tsx'
+/>
+
+### Bidirectional
+
+The row turns around when the page scrolls up and keeps that direction until the page scrolls down again.
+
+<ComponentCodePreview
+  component={<ScrollTextMarqueeBidirectional />}
+  filePath='app/docs/scroll-text-marquee/scroll-text-marquee-bidirectional.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='scroll-text-marquee' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/scroll-text-marquee.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### ScrollTextMarquee
+
+| Prop          | Type                             | Default | Description                                                                                              |
+| :------------ | :------------------------------- | :------ | :------------------------------------------------------------------------------------------------------- |
+| children      | React.ReactNode                  |         | The line of text. Add a separator at its end to mark where one copy meets the next.                      |
+| speed         | number                           | 60      | The speed at rest, in pixels per second. Scrolling at 1000 pixels per second makes it five times faster. |
+| direction     | 'left' \| 'right'                | 'left'  | The direction at rest.                                                                                   |
+| bidirectional | boolean                          | false   | Turns the row around while the page scrolls up.                                                          |
+| repeat        | number                           | 4       | How many copies of the text fill the row. Raise it for short text on wide screens.                       |
+| containerRef  | RefObject\<HTMLElement \| null\> |         | A scrolling element to follow instead of the page.                                                       |
+| className     | string                           |         | Optional CSS class for the row. The default size is `text-5xl` and `sm:text-7xl`.                        |
+
+The row only moves while it is on screen, and it stays still under reduced motion. The first copy is read by screen readers; the others are hidden from them.
+
+Scroll pieces belong on marketing pages. A line that keeps moving needs a way to stop for people who find it distracting: reduced motion stops it here, and a page that relies on it can offer a pause control as well.
+
+## Credits
+
+The effect is inspired by the scroll text marquee of [UI Layouts](https://www.ui-layouts.com/components/scroll-text-marquee), rebuilt on `motion` without `@motionone/utils`.

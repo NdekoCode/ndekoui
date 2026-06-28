@@ -1,0 +1,99 @@
+export const metadata = {
+  title: 'Motion Number - Ndeko UI',
+  description:
+    'A formatted number whose digits roll to their new value in the direction of the change. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { MotionNumberPrice } from './motion-number-price';
+import { MotionNumberCounter } from './motion-number-counter';
+import { MotionNumberFollowers } from './motion-number-followers';
+import { MotionNumberChange } from './motion-number-change';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Motion Number
+
+A formatted number whose digits roll to their new value, upward when it grows and downward when it shrinks.
+
+## Examples
+
+### Price with a plan switch
+
+<ComponentCodePreview
+  component={<MotionNumberPrice />}
+  filePath='app/docs/motion-number/motion-number-price.tsx'
+/>
+
+### Counter
+
+<ComponentCodePreview
+  component={<MotionNumberCounter />}
+  filePath='app/docs/motion-number/motion-number-counter.tsx'
+/>
+
+### Compact count
+
+<ComponentCodePreview
+  component={<MotionNumberFollowers />}
+  filePath='app/docs/motion-number/motion-number-followers.tsx'
+/>
+
+### Signed percent change
+
+<ComponentCodePreview
+  component={<MotionNumberChange />}
+  filePath='app/docs/motion-number/motion-number-change.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='motion-number' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/motion-number.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### MotionNumber
+
+| Prop      | Type                     | Default | Description                                                                                        |
+| :-------- | :----------------------- | :------ | :------------------------------------------------------------------------------------------------- |
+| value     | number                   |         | The number to display. Digits roll when it changes; the first render shows it without motion.      |
+| locale    | Intl.LocalesArgument     | 'en-US' | The locale passed to `Intl.NumberFormat`. Fixed by default so the server and the browser agree.    |
+| format    | Intl.NumberFormatOptions |         | Formatting options: `style: 'currency'`, `style: 'percent'`, `notation: 'compact'`, `signDisplay`. |
+| prefix    | string                   |         | Text placed before the number and read with it.                                                    |
+| suffix    | string                   |         | Text placed after the number and read with it.                                                     |
+| className | string                   |         | Optional CSS class for the wrapper. The font size and weight are inherited.                        |
+
+Screen readers hear the formatted value once, never the rolling digits. Wrap a number that changes on a press in an `<output>` to announce it. Under reduced motion the value changes instantly.
+
+### Compared with Sliding Number and Animated Number
+
+Sliding Number takes a plain number and moves each digit on its own, so 19 to 20 rolls the last digit back from 9 to 0. Animated Number counts through every value in between. Motion Number keeps the formatting of `Intl.NumberFormat`, rolls every digit in the direction of the whole change, and slides its neighbours when a digit is added or removed.
+
+## Credits
+
+The effect is inspired by [Number Flow](https://number-flow.barvian.me/) and the motion number of [UI Layouts](https://www.ui-layouts.com/components/motion-number), rebuilt on `motion` without either package.
