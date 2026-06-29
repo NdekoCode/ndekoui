@@ -1,0 +1,83 @@
+export const metadata = {
+  title: 'Masonry Grid - Ndeko UI',
+  description:
+    'A responsive masonry layout, in CSS columns or balanced in reading order, with an optional entrance the first time each item comes into view. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { MasonryGridImages } from './masonry-grid-images';
+import { MasonryGridMixed } from './masonry-grid-mixed';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Masonry Grid
+
+A responsive masonry layout for items of different heights.
+
+## Examples
+
+### Images
+
+The default layout uses CSS columns: no JavaScript places the items, and they read down each column. `revealOnView` lets each item rise into place once, the first time it comes into view.
+
+<ComponentCodePreview
+  component={<MasonryGridImages />}
+  filePath='app/docs/masonry-grid/masonry-grid-images.tsx'
+  hasReTrigger
+/>
+
+### Mixed cards
+
+`layout='balanced'` keeps the reading order from left to right: each item goes to the bottom of the shortest column. Use it when the order matters, as in a feed.
+
+<ComponentCodePreview
+  component={<MasonryGridMixed />}
+  filePath='app/docs/masonry-grid/masonry-grid-mixed.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='masonry-grid' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/masonry-grid.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### MasonryGrid
+
+| Prop           | Type                      | Default     | Description                                                                     |
+| :------------- | :------------------------ | :---------- | :------------------------------------------------------------------------------ |
+| `children`     | `ReactNode`               |             | The items, each with a `key`.                                                   |
+| `layout`       | `'columns' \| 'balanced'` | `'columns'` | CSS columns read down each column; balanced keeps the order across the columns. |
+| `columnWidth`  | `number`                  | `220`       | The narrowest a column may get, in pixels. It sets how many columns fit.        |
+| `maxColumns`   | `number`                  | `4`         | The most columns, however wide the grid.                                        |
+| `gap`          | `number`                  | `16`        | The space between columns and between items, in pixels.                         |
+| `revealOnView` | `boolean`                 | `false`     | Each item fades and rises 12px in 320ms, once, when it first comes into view.   |
+| `className`    | `string`                  |             | Classes of the grid.                                                            |
+
+The entrance is off by default: inside an application, content should not wait for the scroll to appear. Turn it on for marketing pages. Under reduced motion the items are always shown as they are. Items of the same row enter 40ms apart in the balanced layout.
+
+The balanced layout measures the items once they are rendered, before the browser paints, and again when the number of columns changes. Give images a fixed aspect ratio so their height is known before they load.

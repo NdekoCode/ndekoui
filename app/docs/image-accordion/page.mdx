@@ -1,0 +1,100 @@
+export const metadata = {
+  title: 'Image Accordion - Ndeko UI',
+  description:
+    'A row of image panels where the hovered or focused one widens to show its caption. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { ImageAccordionBasic } from './image-accordion-basic';
+import { ImageAccordionLinks } from './image-accordion-links';
+import { ImageAccordionVertical } from './image-accordion-vertical';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Image Accordion
+
+A row of image panels where the hovered or focused one widens to show its caption.
+
+## Examples
+
+### Image accordion basic
+
+Hover a panel with the mouse, tab to it with the keyboard, or tap it. Below the `sm` breakpoint the panels stack and grow in height.
+
+<ComponentCodePreview
+  component={<ImageAccordionBasic />}
+  filePath='app/docs/image-accordion/image-accordion-basic.tsx'
+/>
+
+### Panels as links
+
+Give an item an `href` and its panel becomes a link. Focus opens it before Enter follows it, and on a touch screen the first tap opens it and the second follows it.
+
+<ComponentCodePreview
+  component={<ImageAccordionLinks />}
+  filePath='app/docs/image-accordion/image-accordion-links.tsx'
+/>
+
+### Vertical
+
+`orientation='vertical'` keeps the panels stacked at every width, for a narrow column.
+
+<ComponentCodePreview
+  component={<ImageAccordionVertical />}
+  filePath='app/docs/image-accordion/image-accordion-vertical.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='image-accordion' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/image-accordion.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### ImageAccordion
+
+| Prop            | Type                         | Default        | Description                                                                  |
+| :-------------- | :--------------------------- | :------------- | :--------------------------------------------------------------------------- |
+| `items`         | `ImageAccordionItem[]`       |                | The panels.                                                                  |
+| `defaultValue`  | `string`                     | the first id   | The panel open first.                                                        |
+| `value`         | `string`                     |                | The open panel, when controlled.                                             |
+| `onValueChange` | `(value: string) => void`    |                | Called when another panel opens.                                             |
+| `orientation`   | `'horizontal' \| 'vertical'` | `'horizontal'` | Horizontal stacks below `sm`; vertical stacks at every width.                |
+| `className`     | `string`                     |                | Classes of the list. The height lives here (`h-[28rem] sm:h-80` by default). |
+
+### ImageAccordionItem
+
+| Field         | Type     | Description                                    |
+| :------------ | :------- | :--------------------------------------------- |
+| `id`          | `string` | A unique id.                                   |
+| `src`         | `string` | The image source.                              |
+| `alt`         | `string` | The description of the image.                  |
+| `title`       | `string` | The caption title, also the name of the panel. |
+| `description` | `string` | An optional second line in the caption.        |
+| `href`        | `string` | Turns the panel into a link.                   |
+
+The open panel grows through a `flex-grow` transition of 500ms on `--ease-out-strong`, so the panels share the row without measuring anything. The image stays centred and the panel crops it, so a widening panel reads as a window opening rather than a picture stretching. The caption arrives 150ms later and leaves in 100ms.

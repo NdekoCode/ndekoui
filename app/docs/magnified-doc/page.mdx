@@ -1,0 +1,98 @@
+export const metadata = {
+  title: 'Magnified Doc - Ndeko UI',
+  description:
+    'A dock of icons that magnify near the pointer and switch the content of a stage above them. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { MagnifiedDocWorkspace } from './magnified-doc-workspace';
+import { MagnifiedDocWallpapers } from './magnified-doc-wallpapers';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Magnified Doc
+
+A dock of icons that magnify near the pointer and switch the content of the stage above them.
+
+## Examples
+
+### Workspace
+
+Each icon is a tab. The stage shows live content per app, and the dot under the icon marks the open one.
+
+<ComponentCodePreview
+  component={<MagnifiedDocWorkspace />}
+  filePath='app/docs/magnified-doc/magnified-doc-workspace.tsx'
+/>
+
+### Wallpapers
+
+Images work as icons too. The stage wipes to the chosen wallpaper with `transition='clip'`.
+
+<ComponentCodePreview
+  component={<MagnifiedDocWallpapers />}
+  filePath='app/docs/magnified-doc/magnified-doc-wallpapers.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='magnified-doc' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>
+  Copy and paste the following code into your project. It builds on
+  `image-tabs.tsx`, which goes next to it.
+</Step>
+
+<CodeBlock filePath='components/core/magnified-doc.tsx' />
+
+<CodeBlock filePath='components/core/image-tabs.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### MagnifiedDoc
+
+Takes the props of `ImageTabs` except `orientation`, which is always horizontal: `defaultValue`, `value`, `onValueChange`, `className` and `children`.
+
+### MagnifiedDocDock
+
+| Prop            | Type        | Default | Description                                                        |
+| :-------------- | :---------- | :------ | :----------------------------------------------------------------- |
+| `children`      | `ReactNode` |         | The `MagnifiedDocItem` elements.                                   |
+| `magnification` | `number`    | `1.6`   | The scale of the icon right under the pointer.                     |
+| `distance`      | `number`    | `120`   | How far from the pointer, in pixels, the icons still grow.         |
+| `aria-label`    | `string`    |         | The name of the dock.                                              |
+| `className`     | `string`    |         | Classes of the dock, laid over the bottom of the stage by default. |
+
+### MagnifiedDocItem
+
+| Prop        | Type        | Default | Description                                                     |
+| :---------- | :---------- | :------ | :-------------------------------------------------------------- |
+| `value`     | `string`    |         | The value of the panel it opens.                                |
+| `label`     | `string`    |         | The name shown above the icon and read by assistive technology. |
+| `children`  | `ReactNode` |         | An icon or an image.                                            |
+| `className` | `string`    |         | Optional classes of the icon tile.                              |
+
+### MagnifiedDocStage, MagnifiedDocPanel, MagnifiedDocImage
+
+The same parts as `ImageTabsFrame`, `ImageTabsPanel` and `ImageTabsImage`: the stage takes `transition` (`'fade'` or `'clip'`), a panel takes a `value` and any content, an image takes `value`, `src` and `alt`.

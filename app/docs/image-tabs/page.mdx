@@ -1,0 +1,125 @@
+export const metadata = {
+  title: 'Image Tabs - Ndeko UI',
+  description:
+    'Tabs that change an image in place: the indicator travels to the chosen tab and the picture fades or wipes without the frame moving. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { ImageTabsFeatures } from './image-tabs-features';
+import { ImageTabsThumbnails } from './image-tabs-thumbnails';
+import { ImageTabsSeasons } from './image-tabs-seasons';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Image Tabs
+
+Tabs that change an image in place while the indicator travels to the chosen tab.
+
+## Examples
+
+### Tabs with text and image
+
+The frame crossfades: the new image fades in over the previous one, so nothing slides and no background shows through.
+
+<ComponentCodePreview
+  component={<ImageTabsFeatures />}
+  filePath='app/docs/image-tabs/image-tabs-features.tsx'
+/>
+
+### Image thumbnails as tabs
+
+`variant='thumbnails'` turns the list into a strip of images. With `transition='clip'`, the new image wipes in from the side of the thumbnail that was chosen.
+
+<ComponentCodePreview
+  component={<ImageTabsThumbnails />}
+  filePath='app/docs/image-tabs/image-tabs-thumbnails.tsx'
+/>
+
+### Image first
+
+Put the frame before the list to mirror the layout. In a vertical list, the clip wipes up or down depending on the direction of the change.
+
+<ComponentCodePreview
+  component={<ImageTabsSeasons />}
+  filePath='app/docs/image-tabs/image-tabs-seasons.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='image-tabs' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/image-tabs.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### ImageTabs
+
+| Prop            | Type                         | Default      | Description                                                        |
+| :-------------- | :--------------------------- | :----------- | :----------------------------------------------------------------- |
+| `children`      | `ReactNode`                  |              | The list and the frame.                                            |
+| `defaultValue`  | `string`                     |              | The tab selected first.                                            |
+| `value`         | `string`                     |              | The selected tab, when controlled.                                 |
+| `onValueChange` | `(value: string) => void`    |              | Called when another tab is chosen.                                 |
+| `orientation`   | `'vertical' \| 'horizontal'` | `'vertical'` | Arrow keys follow it, and the clip wipes along it.                 |
+| `className`     | `string`                     |              | Classes of the root, a grid with a gap by default, for the layout. |
+
+### ImageTabsList
+
+| Prop              | Type                     | Default  | Description                                                               |
+| :---------------- | :----------------------- | :------- | :------------------------------------------------------------------------ |
+| `variant`         | `'list' \| 'thumbnails'` | `'list'` | A list of text tabs on a travelling surface, or a strip of thumbnails.    |
+| `activateOnFocus` | `boolean`                | `true`   | Arrow keys select the tab they reach. The images are mounted, so no wait. |
+| `aria-label`      | `string`                 |          | The name of the tab list.                                                 |
+| `className`       | `string`                 |          | Optional classes of the list.                                             |
+
+### ImageTabsTab
+
+| Prop         | Type        | Default | Description                                               |
+| :----------- | :---------- | :------ | :-------------------------------------------------------- |
+| `value`      | `string`    |         | The value shared with its panel.                          |
+| `children`   | `ReactNode` |         | `ImageTabsTitle` and `ImageTabsDescription`, or an image. |
+| `aria-label` | `string`    |         | Required when the tab only holds an image.                |
+| `disabled`   | `boolean`   |         | Whether the tab can be chosen.                            |
+| `className`  | `string`    |         | Optional classes of the tab.                              |
+
+### ImageTabsFrame
+
+| Prop         | Type               | Default  | Description                                                      |
+| :----------- | :----------------- | :------- | :--------------------------------------------------------------- |
+| `children`   | `ReactNode`        |          | One `ImageTabsImage` or `ImageTabsPanel` per tab.                |
+| `transition` | `'fade' \| 'clip'` | `'fade'` | A 200ms crossfade, or a 320ms wipe. Reduced motion always fades. |
+| `className`  | `string`           |          | Classes of the frame, `aspect-[3/2]` by default.                 |
+
+### ImageTabsImage
+
+| Prop        | Type     | Default | Description                    |
+| :---------- | :------- | :------ | :----------------------------- |
+| `value`     | `string` |         | The value of its tab.          |
+| `src`       | `string` |         | The image source.              |
+| `alt`       | `string` |         | The description of the image.  |
+| `className` | `string` |         | Optional classes of the image. |
+
+`ImageTabsPanel` takes `value`, `children` and `className` and shows any content in the frame with the same transition. `useImageTabs` returns the selected `value`, the `previousValue` and the `orientation`.

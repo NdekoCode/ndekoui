@@ -1,0 +1,91 @@
+export const metadata = {
+  title: 'Image Trail - Ndeko UI',
+  description:
+    'Images that land along the pointer path, then fade and shrink away. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { ImageTrailBasic } from './image-trail-basic';
+import { ImageTrailStack } from './image-trail-stack';
+import { ImageTrailSmall } from './image-trail-small';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Image Trail
+
+Images that land along the pointer path, then fade and shrink away.
+
+The trail answers a mouse or a pen. It stays off on touch screens and when the system asks for reduced motion, and the content inside stays readable on its own.
+
+## Examples
+
+### Image trail basic
+
+<ComponentCodePreview
+  component={<ImageTrailBasic />}
+  filePath='app/docs/image-trail/image-trail-basic.tsx'
+/>
+
+### Persistent stack
+
+With `persist`, images stay until newer ones push them out, so the last `maxVisible` pictures remain after the pointer stops.
+
+<ComponentCodePreview
+  component={<ImageTrailStack />}
+  filePath='app/docs/image-trail/image-trail-stack.tsx'
+/>
+
+### Small tiles
+
+A short `distance` and a short `lifetime` give a dense trail of small tiles.
+
+<ComponentCodePreview
+  component={<ImageTrailSmall />}
+  filePath='app/docs/image-trail/image-trail-small.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='image-trail' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/image-trail.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### ImageTrail
+
+| Prop             | Type                | Default | Description                                                              |
+| :--------------- | :------------------ | :------ | :----------------------------------------------------------------------- |
+| `images`         | `{ src: string }[]` |         | The images, used in order and then from the start again.                 |
+| `children`       | `ReactNode`         |         | The content laid above the trail.                                        |
+| `distance`       | `number`            | `80`    | The distance in pixels the pointer travels before the next image lands.  |
+| `maxVisible`     | `number`            | `5`     | How many images stay on screen; older ones leave when a new one lands.   |
+| `lifetime`       | `number`            | `900`   | How long, in milliseconds, an image stays before it leaves on its own.   |
+| `persist`        | `boolean`           | `false` | Keep images until newer ones push them out, instead of after `lifetime`. |
+| `imageClassName` | `string`            |         | Classes of each image, `h-40 w-32 rounded-lg` by default.                |
+| `className`      | `string`            |         | Classes of the container. Give it a height.                              |
+
+The images are decorative and hidden from assistive technology. The trail recycles a fixed set of `maxVisible * 2` elements and animates only `transform` and `opacity` with the Web Animations API, so moving the pointer never re-renders React.

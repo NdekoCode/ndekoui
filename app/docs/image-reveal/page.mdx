@@ -1,0 +1,89 @@
+export const metadata = {
+  title: 'Image Reveal - Ndeko UI',
+  description:
+    'A list of titles where the hovered row shows its picture beside the pointer, following it with a spring. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { ImageRevealPortfolio } from './image-reveal-portfolio';
+import { ImageRevealCompact } from './image-reveal-compact';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Image Reveal
+
+A list of titles where the hovered row shows its picture beside the pointer.
+
+## Examples
+
+### Portfolio
+
+One frame follows the pointer and changes its picture in place when the pointer reaches another row. It sits beside the pointer, so the title under it stays readable, and moves to the other side near the right edge.
+
+<ComponentCodePreview
+  component={<ImageRevealPortfolio />}
+  filePath='app/docs/image-reveal/image-reveal-portfolio.tsx'
+/>
+
+### Compact list
+
+`rowClassName`, `titleClassName` and `imageClassName` size the rows, the titles and the frame. Press Tab to reach a row: the picture appears fixed at its end, without moving.
+
+<ComponentCodePreview
+  component={<ImageRevealCompact />}
+  filePath='app/docs/image-reveal/image-reveal-compact.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='image-reveal' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/image-reveal.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### ImageReveal
+
+| Prop             | Type                              | Default | Description                                                             |
+| :--------------- | :-------------------------------- | :------ | :---------------------------------------------------------------------- |
+| `items`          | `ImageRevealItem[]`               |         | The rows.                                                               |
+| `onSelect`       | `(item: ImageRevealItem) => void` |         | Called when a row without `href` is pressed.                            |
+| `rowClassName`   | `string`                          |         | Classes of each row.                                                    |
+| `titleClassName` | `string`                          |         | Classes of each title, `text-2xl font-semibold sm:text-3xl` by default. |
+| `imageClassName` | `string`                          |         | Classes of the frame, `aspect-[3/2] w-60` by default.                   |
+| `className`      | `string`                          |         | Classes of the wrapper.                                                 |
+
+### ImageRevealItem
+
+| Field   | Type        | Description                                    |
+| :------ | :---------- | :--------------------------------------------- |
+| `id`    | `string`    | A unique id.                                   |
+| `title` | `string`    | The row title.                                 |
+| `meta`  | `ReactNode` | A short value at the end of the row.           |
+| `src`   | `string`    | The picture shown on hover or focus.           |
+| `href`  | `string`    | Turns the row into a link, otherwise a button. |
+
+The frame is decorative and hidden from assistive technology: the row title carries the meaning. It never shows on touch screens. Under reduced motion it jumps to the pointer instead of following it with a spring.
