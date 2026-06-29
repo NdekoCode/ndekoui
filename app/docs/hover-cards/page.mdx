@@ -1,0 +1,109 @@
+export const metadata = {
+  title: 'Hover Cards - Ndeko UI',
+  description:
+    'Link cards with four hover treatments: an image that zooms in its frame, details that rise in, a tilt with a light edge and a border that draws itself. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { HoverCardsZoom } from './hover-cards-zoom';
+import { HoverCardsRise } from './hover-cards-rise';
+import { HoverCardsTilt } from './hover-cards-tilt';
+import { HoverCardsTrace } from './hover-cards-trace';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Hover Cards
+
+Link cards that answer the pointer with one of four treatments, and only where a pointer can hover.
+
+## Examples
+
+### Zoom
+
+The image grows inside its frame while the card keeps its size.
+
+<ComponentCodePreview
+  component={<HoverCardsZoom />}
+  filePath='app/docs/hover-cards/hover-cards-zoom.tsx'
+/>
+
+### Rise
+
+The details rise over the image on hover or keyboard focus. On touch screens they stay visible.
+
+<ComponentCodePreview
+  component={<HoverCardsRise />}
+  filePath='app/docs/hover-cards/hover-cards-rise.tsx'
+/>
+
+### Tilt
+
+The card leans toward the mouse on a spring and its edge catches the light where the pointer is.
+
+<ComponentCodePreview
+  component={<HoverCardsTilt />}
+  filePath='app/docs/hover-cards/hover-cards-tilt.tsx'
+/>
+
+### Trace
+
+A border draws itself around the card, and leaves faster than it came.
+
+<ComponentCodePreview
+  component={<HoverCardsTrace />}
+  filePath='app/docs/hover-cards/hover-cards-trace.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='hover-cards' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/hover-cards.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### HoverEffectCard
+
+Renders an `<a>`: every other anchor attribute (`href`, `target`, `rel`) passes through.
+
+| Prop        | Type                                  | Default | Description                                                         |
+| :---------- | :------------------------------------ | :------ | :------------------------------------------------------------------ |
+| effect      | 'zoom' \| 'rise' \| 'tilt' \| 'trace' |         | The hover treatment.                                                |
+| title       | React.ReactNode                       |         | The card title.                                                     |
+| description | React.ReactNode                       |         | A short line under the title.                                       |
+| meta        | React.ReactNode                       |         | A small row of details. With `rise`, it is the panel that rises in. |
+| image       | `{ src: string; alt: string }`        |         | The card image.                                                     |
+| className   | string                                |         | Classes for the link.                                               |
+
+## Accessibility and motion
+
+- Every card is a link with a visible focus outline. Keyboard focus also brings up the rising details and the traced border.
+- Hover effects run only on devices that can hover. The tilt follows a mouse, never a finger.
+- With reduced motion, the zoom and the tilt are off, the rising details only fade and the border appears without drawing.
+
+## Credits
+
+The effects are inspired by the hover cards of [UI Layouts](https://www.ui-layouts.com/components/hover-cards), rebuilt on our tokens and `motion`.

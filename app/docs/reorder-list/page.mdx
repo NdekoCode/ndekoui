@@ -1,0 +1,101 @@
+export const metadata = {
+  title: 'Reorder List - Ndeko UI',
+  description:
+    'A list reordered by dragging a handle, with move up and move down buttons and keyboard reordering for everyone else. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { ReorderListPriorities } from './reorder-list-priorities';
+import { ReorderListQueue } from './reorder-list-queue';
+import { ReorderListSidebar } from './reorder-list-sidebar';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Reorder List
+
+A list reordered by dragging a handle: the other rows make room as the dragged one passes, and buttons do the same from the keyboard.
+
+## Examples
+
+### Priorities
+
+Drag a row by its handle, or use the arrows at the end of each row.
+
+<ComponentCodePreview
+  component={<ReorderListPriorities />}
+  filePath='app/docs/reorder-list/reorder-list-priorities.tsx'
+/>
+
+### Play queue
+
+Rows can carry any content: here a length on the right, in tabular figures.
+
+<ComponentCodePreview
+  component={<ReorderListQueue />}
+  filePath='app/docs/reorder-list/reorder-list-queue.tsx'
+/>
+
+### Sidebar order
+
+A short list with icon tiles, for a settings page.
+
+<ComponentCodePreview
+  component={<ReorderListSidebar />}
+  filePath='app/docs/reorder-list/reorder-list-sidebar.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='reorder-list' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/reorder-list.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### ReorderList
+
+A controlled list: keep the items in state and pass the setter to `onReorder`.
+
+| Prop       | Type                         | Default | Description                                                           |
+| :--------- | :--------------------------- | :------ | :-------------------------------------------------------------------- |
+| items      | T[]                          |         | The items, in their current order.                                    |
+| onReorder  | (items: T[]) => void         |         | Called with the new order after a drag step, a button press or a key. |
+| getKey     | (item: T) => string          |         | A stable key for each item.                                           |
+| getLabel   | (item: T) => string          |         | The name read in the move buttons and in the announcements.           |
+| renderItem | (item: T) => React.ReactNode |         | The content of a row, between the handle and the move buttons.        |
+| aria-label | string                       |         | The name of the list.                                                 |
+| className  | string                       |         | Classes for the list.                                                 |
+
+## Accessibility and motion
+
+- Three ways to move a row: drag the handle; press the move up or move down button; or focus the row, press Space to pick it up, the arrow keys to move it, Space to drop it and Escape to put it back.
+- Each move is announced with the new position, for example "Low Tide moved to position 2 of 5". A drag is announced once, when it ends.
+- The first row's move up button and the last row's move down button stay focusable but do nothing, so focus never jumps away after a move.
+- Rows settle on a spring with no bounce, and the dragged row lifts slightly. The list holds the row near its ends with a little give. With reduced motion, rows change place at once and the dragged row does not lift.
+
+## Credits
+
+Inspired by the drag items of [UI Layouts](https://www.ui-layouts.com/components/drag-items), rebuilt on the `Reorder` components of `motion`.

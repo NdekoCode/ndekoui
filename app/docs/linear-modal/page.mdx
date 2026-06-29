@@ -1,0 +1,101 @@
+export const metadata = {
+  title: 'Linear Modal - Ndeko UI',
+  description:
+    'A grid of feature cards where each card grows into a modal with its full story and a list of what it does, then shrinks back into place. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { LinearModalFeatures } from './linear-modal-features';
+import { LinearModalReleaseNotes } from './linear-modal-release-notes';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Linear Modal
+
+Feature cards that grow into a modal: the card frame, its image and its title travel to their place in the dialog, and return to the card when it closes.
+
+## Examples
+
+### Feature grid
+
+Each card opens its feature, with a description and the points that make it up.
+
+<ComponentCodePreview
+  component={<LinearModalFeatures />}
+  filePath='app/docs/linear-modal/linear-modal-features.tsx'
+/>
+
+### Release notes
+
+One column, and no list of points: the modal shows the description alone.
+
+<ComponentCodePreview
+  component={<LinearModalReleaseNotes />}
+  filePath='app/docs/linear-modal/linear-modal-release-notes.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='linear-modal' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/linear-modal.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### LinearModal
+
+Renders the grid of cards and the one modal they share.
+
+| Prop       | Type                 | Default | Description                                                     |
+| :--------- | :------------------- | :------ | :-------------------------------------------------------------- |
+| features   | LinearModalFeature[] |         | One card per feature.                                           |
+| closeLabel | string               | 'Close' | The accessible name of the close button.                        |
+| className  | string               |         | Classes for the grid. It starts as `grid gap-3 sm:grid-cols-2`. |
+
+### LinearModalFeature
+
+| Field       | Type                           | Description                                                           |
+| :---------- | :----------------------------- | :-------------------------------------------------------------------- |
+| id          | string                         | A stable id for the feature.                                          |
+| title       | string                         | The title on the card and in the modal.                               |
+| summary     | string                         | One line under the title on the card.                                 |
+| description | string                         | The paragraph in the modal.                                           |
+| image       | `{ src: string; alt: string }` | The image on the card and at the top of the modal.                    |
+| points      | LinearModalPoint[]             | The list in the modal: `title`, `description` and an optional `icon`. |
+
+## How it differs from Morphing Dialog
+
+[Morphing Dialog](/docs/morphing-dialog) gives you the parts to build any card that opens into a dialog. Linear Modal is the finished section: a grid of cards, one modal and the content layout, on the Base UI dialog for its keyboard and focus handling.
+
+## Accessibility and motion
+
+- Each card is a button. The modal moves focus to its close button, keeps it inside, closes with Escape or a click on the backdrop, and returns focus to the card that opened it. The page behind does not scroll.
+- The frame, image and title travel on a spring with no bounce, in 360ms to open and 280ms to close. The text of the modal fades in once the frame has nearly arrived.
+- With reduced motion, the modal appears in place with a fade and nothing travels.
+
+## Credits
+
+Inspired by the Linear modal of [UI Layouts](https://www.ui-layouts.com/components/linear-modal), rebuilt on the Base UI dialog and `motion`.

@@ -1,0 +1,115 @@
+export const metadata = {
+  title: 'Directional Drawer - Ndeko UI',
+  description:
+    'A drawer that opens from any side and follows the finger or the mouse: a flick closes it, pulling the wrong way only gives a little. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { DirectionalDrawerSides } from './directional-drawer-sides';
+import { DirectionalDrawerShare } from './directional-drawer-share';
+import { DirectionalDrawerFilters } from './directional-drawer-filters';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Directional Drawer
+
+A drawer from any of the four sides that you can drag shut: it follows the pointer, closes on a flick and resists being pulled the wrong way.
+
+## Examples
+
+### Any side
+
+Open the drawer from each edge, then drag it back toward that edge.
+
+<ComponentCodePreview
+  component={<DirectionalDrawerSides />}
+  filePath='app/docs/directional-drawer/directional-drawer-sides.tsx'
+/>
+
+### Share sheet
+
+A bottom drawer whose rows close it when chosen.
+
+<ComponentCodePreview
+  component={<DirectionalDrawerShare />}
+  filePath='app/docs/directional-drawer/directional-drawer-share.tsx'
+/>
+
+### Filters panel
+
+A right drawer with form controls. A drag that starts on a control is left to the control.
+
+<ComponentCodePreview
+  component={<DirectionalDrawerFilters />}
+  filePath='app/docs/directional-drawer/directional-drawer-filters.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='directional-drawer' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/directional-drawer.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### DirectionalDrawer
+
+The root. Open state can be controlled or left to the component.
+
+| Prop         | Type                    | Default | Description                               |
+| :----------- | :---------------------- | :------ | :---------------------------------------- |
+| open         | boolean                 |         | The open state, when you control it.      |
+| defaultOpen  | boolean                 | false   | The open state on mount, when you do not. |
+| onOpenChange | (open: boolean) => void |         | Called when the drawer opens or closes.   |
+| children     | React.ReactNode         |         | The trigger and the content.              |
+
+### DirectionalDrawerContent
+
+The panel. It accepts every prop of `SheetContent`.
+
+| Prop            | Type                                   | Default | Description                                    |
+| :-------------- | :------------------------------------- | :------ | :--------------------------------------------- |
+| side            | 'top' \| 'right' \| 'bottom' \| 'left' | 'right' | The edge the drawer opens from and returns to. |
+| showCloseButton | boolean                                | true    | Whether the corner close button is shown.      |
+| closeLabel      | string                                 | 'Close' | The accessible name of the close button.       |
+| className       | string                                 |         | Classes for the panel.                         |
+
+### Parts
+
+`DirectionalDrawerTrigger`, `DirectionalDrawerClose`, `DirectionalDrawerHeader`, `DirectionalDrawerTitle`, `DirectionalDrawerDescription` and `DirectionalDrawerFooter` are the sheet parts under drawer names. Trigger and Close take a `render` prop to draw them as any button.
+
+## Behaviour
+
+- The panel follows the pointer one to one toward its edge. Pulled the other way, it moves less and less and stops near 28px.
+- On release, it closes when the pointer was moving toward the edge faster than 0.11px per millisecond, or when it travelled more than 35% of its size without being pulled back. Otherwise it springs back with the drawer curve.
+- The drag starts after 6px along the drawer's axis, keeps the pointer captured until release, and ignores a second finger.
+- A drag never starts on a button, a link, a field or anything marked `data-drawer-no-drag`. On touch screens, side drawers keep vertical scrolling; for long content in a top or bottom drawer, put it in its own scroll area with `overflow-y-auto touch-pan-y` and `data-drawer-no-drag`.
+- Focus moves into the drawer, stays there, and returns to the trigger. Escape closes it and the page behind does not scroll. This comes from the Base UI dialog under the sheet.
+- With reduced motion, the drawer appears and leaves without sliding and does not spring back.
+
+## Credits
+
+Inspired by the directional drawer of [UI Layouts](https://www.ui-layouts.com/components/directional-drawer), rebuilt on our sheet without the `vaul` package.

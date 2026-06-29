@@ -1,0 +1,108 @@
+export const metadata = {
+  title: 'Swap Grid - Ndeko UI',
+  description:
+    'A grid of slots where items are dragged onto each other to swap places, with the layout gliding to the new order and a full keyboard path. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { SwapGridDashboard } from './swap-grid-dashboard';
+import { SwapGridShortcuts } from './swap-grid-shortcuts';
+import { SwapGridMoodboard } from './swap-grid-moodboard';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Swap Grid
+
+A grid of slots: drop an item on another and the two trade places, drop it on an empty slot and it moves there.
+
+## Examples
+
+### Dashboard widgets
+
+Drag a widget onto another one. Both glide to their new slots from where they were.
+
+<ComponentCodePreview
+  component={<SwapGridDashboard />}
+  filePath='app/docs/swap-grid/swap-grid-dashboard.tsx'
+/>
+
+### Shortcuts with empty slots
+
+`defaultSlots` sets the starting layout, with `null` for an empty slot. Empty slots show a dashed outline.
+
+<ComponentCodePreview
+  component={<SwapGridShortcuts />}
+  filePath='app/docs/swap-grid/swap-grid-shortcuts.tsx'
+/>
+
+### Moodboard
+
+`onSlotsChange` reports the layout after each move: here the first slot is the cover image.
+
+<ComponentCodePreview
+  component={<SwapGridMoodboard />}
+  filePath='app/docs/swap-grid/swap-grid-moodboard.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='swap-grid' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/swap-grid.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### SwapGrid
+
+| Prop          | Type                                | Default      | Description                                                               |
+| :------------ | :---------------------------------- | :----------- | :------------------------------------------------------------------------ |
+| items         | SwapGridItem[]                      |              | The items that can be placed in the grid.                                 |
+| columns       | number                              | 3            | The number of columns. Rows follow from the number of slots.              |
+| defaultSlots  | (string \| null)[]                  | the item ids | The starting layout: one entry per slot, an item id or `null` when empty. |
+| onSlotsChange | (slots: (string \| null)[]) => void |              | Called with the new layout after each swap or move.                       |
+| className     | string                              |              | Classes for the grid, such as the row height (`auto-rows-[104px]`).       |
+| itemClassName | string                              |              | Classes for the surface of each item.                                     |
+| aria-label    | string                              |              | The name of the grid.                                                     |
+
+### SwapGridItem
+
+| Field   | Type            | Description                                                   |
+| :------ | :-------------- | :------------------------------------------------------------ |
+| id      | string          | A stable id, used in `defaultSlots` and `onSlotsChange`.      |
+| label   | string          | The name read to screen readers and in the announcements.     |
+| content | React.ReactNode | What the item shows. Keep controls out: the item is a button. |
+
+## Accessibility and motion
+
+- Every item is a button. Press Enter or Space to pick it up, the arrow keys to swap it with its neighbour, Enter to drop it and Escape to put everything back. Each step is announced.
+- Tab follows the visual order of the grid, which changes as items move.
+- A drag starts after the pointer moves 4px, follows the pointer captured by the item, and ignores a second finger. Dropping between slots sends the item home.
+- Items glide to their new places on a spring with no bounce, keeping the speed of the throw. With reduced motion they change place at once and the picked-up item does not grow.
+- Images inside items need `draggable={false}` so the browser does not start its own image drag.
+
+## Credits
+
+Inspired by the Swapy demos of [UI Layouts](https://www.ui-layouts.com/components/swapy), rebuilt with `motion` and without the `swapy` package.

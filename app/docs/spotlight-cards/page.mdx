@@ -1,0 +1,95 @@
+export const metadata = {
+  title: 'Spotlight Cards - Ndeko UI',
+  description:
+    'A grid of link cards where a soft light follows the mouse and lights the hairline borders it passes near. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { SpotlightCardsTemplates } from './spotlight-cards-templates';
+import { SpotlightCardsSettings } from './spotlight-cards-settings';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Spotlight Cards
+
+A grid of link cards where one soft light follows the mouse across the whole grid and catches the borders nearby.
+
+## Examples
+
+### Primary tint
+
+The light uses the primary colour. Move the mouse between two cards: both edges catch it.
+
+<ComponentCodePreview
+  component={<SpotlightCardsTemplates />}
+  filePath='app/docs/spotlight-cards/spotlight-cards-templates.tsx'
+/>
+
+### Neutral tint
+
+The same light in the foreground colour, for settings and quieter pages.
+
+<ComponentCodePreview
+  component={<SpotlightCardsSettings />}
+  filePath='app/docs/spotlight-cards/spotlight-cards-settings.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='spotlight-cards' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/spotlight-cards.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### SpotlightCards
+
+The grid that tracks the mouse. Renders a `<div>` with `grid gap-3`; set the columns with `className`.
+
+| Prop      | Type                   | Default   | Description                |
+| :-------- | :--------------------- | :-------- | :------------------------- |
+| tint      | 'primary' \| 'neutral' | 'primary' | The colour of the light.   |
+| className | string                 |           | Classes for the grid.      |
+| children  | React.ReactNode        |           | The `SpotlightCard` items. |
+
+### SpotlightCard
+
+A card that is a link. Renders an `<a>`: `href` and every other anchor attribute pass through. Its children stack in a column.
+
+| Prop      | Type            | Default | Description           |
+| :-------- | :-------------- | :------ | :-------------------- |
+| className | string          |         | Classes for the card. |
+| children  | React.ReactNode |         | The card content.     |
+
+## Accessibility and motion
+
+- The light follows a mouse only. Touch and pen leave the cards as they are.
+- The light trails the pointer on a spring with no bounce. With reduced motion it sits exactly under the pointer, and it fades in and out the same way.
+- The light layers are decorative and hidden from assistive technology.
+
+## Credits
+
+Inspired by the spotlight cards of [UI Layouts](https://www.ui-layouts.com/components/spotlight-cards), rebuilt on our tokens and `motion`.

@@ -1,0 +1,94 @@
+export const metadata = {
+  title: 'Code Tree Viewer - Ndeko UI',
+  description:
+    'A file tree beside a code panel: pick a file to read its highlighted code, copy it, and keep your place. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { CodeTreeViewerProject } from './code-tree-viewer-project';
+import { CodeTreeViewerConfig } from './code-tree-viewer-config';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Code Tree Viewer
+
+A file tree beside a code panel: choose a file and its code appears in place, highlighted, with its name and a copy button above it.
+
+## Examples
+
+### Project
+
+Folders come first and open with a click or the arrow keys. Paths become the tree.
+
+<ComponentCodePreview
+  component={<CodeTreeViewerProject />}
+  filePath='app/docs/code-tree-viewer/code-tree-viewer-project.tsx'
+/>
+
+### Without line numbers
+
+A shorter panel for a handful of configuration files.
+
+<ComponentCodePreview
+  component={<CodeTreeViewerConfig />}
+  filePath='app/docs/code-tree-viewer/code-tree-viewer-config.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='code-tree-viewer' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/code-tree-viewer.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### CodeTreeViewer
+
+| Prop            | Type           | Default        | Description                                               |
+| :-------------- | :------------- | :------------- | :-------------------------------------------------------- |
+| files           | CodeTreeFile[] |                | The files to show. Keep the array stable between renders. |
+| defaultPath     | string         | the first file | The file shown on mount.                                  |
+| showLineNumbers | boolean        | true           | Whether each line starts with its number.                 |
+| aria-label      | string         | 'Files'        | The name of the tree.                                     |
+| className       | string         |                | Classes for the frame, such as its height.                |
+
+### CodeTreeFile
+
+| Field    | Type   | Description                                                              |
+| :------- | :----- | :----------------------------------------------------------------------- |
+| path     | string | The file path with `/` between folders, such as `src/lib/format-day.ts`. |
+| code     | string | The content of the file.                                                 |
+| language | string | A Shiki language id. By default it comes from the file extension.        |
+
+## Behaviour
+
+- Highlighting runs in the browser with Shiki, in light and dark themes at once, so the panel follows the theme without highlighting again. Every file is highlighted once when the viewer mounts, so switching files shows colours at once; until then the code shows plain, at the same size.
+- The panel changes its content in place. Only the row you choose and the folder you open respond.
+- The tree is a list of buttons: arrows move between rows and open folders, Enter or Space shows a file.
+
+## Credits
+
+Inspired by the tree code viewer of [UI Layouts](https://www.ui-layouts.com/components/tree-code-viewer), rebuilt on our tree and the Shiki setup of our code block.

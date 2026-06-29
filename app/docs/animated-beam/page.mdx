@@ -1,0 +1,112 @@
+export const metadata = {
+  title: 'Animated Beam - Ndeko UI',
+  description:
+    'SVG lines that connect icon tiles, with a highlight travelling along each one. Paths follow the layout when it resizes. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { AnimatedBeamHub } from './animated-beam-hub';
+import { AnimatedBeamPipeline } from './animated-beam-pipeline';
+import { AnimatedBeamSync } from './animated-beam-sync';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Animated Beam
+
+Lines that connect icon tiles, each with a highlight travelling from one end to the other, for showing how things flow on a marketing page.
+
+## Examples
+
+### Hub
+
+Three sources curve into one workspace, which feeds one person.
+
+<ComponentCodePreview
+  component={<AnimatedBeamHub />}
+  filePath='app/docs/animated-beam/animated-beam-hub.tsx'
+/>
+
+### Pipeline
+
+Straight beams with delays that line up, so each step starts when the previous one arrives.
+
+<ComponentCodePreview
+  component={<AnimatedBeamPipeline />}
+  filePath='app/docs/animated-beam/animated-beam-pipeline.tsx'
+/>
+
+### Two-way sync
+
+Two arcs between the same tiles, one of them reversed.
+
+<ComponentCodePreview
+  component={<AnimatedBeamSync />}
+  filePath='app/docs/animated-beam/animated-beam-sync.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='animated-beam' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/animated-beam.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### AnimatedBeam
+
+Draws one beam inside its container. The container needs `position: relative`.
+
+| Prop         | Type                           | Default | Description                                                            |
+| :----------- | :----------------------------- | :------ | :--------------------------------------------------------------------- |
+| containerRef | React.RefObject\<HTMLElement\> |         | The element the beam is drawn in. It is observed for size changes.     |
+| fromRef      | React.RefObject\<HTMLElement\> |         | The node the beam starts from, at its centre.                          |
+| toRef        | React.RefObject\<HTMLElement\> |         | The node the beam ends at, at its centre.                              |
+| curvature    | number                         | 0       | How far the middle of the line bends away from a straight line, in px. |
+| reverse      | boolean                        | false   | Whether the highlight travels from `toRef` to `fromRef`.               |
+| duration     | number                         | 3       | Seconds for one trip of the highlight.                                 |
+| delay        | number                         | 0       | Seconds before the first trip.                                         |
+| repeatDelay  | number                         | 1       | Seconds of rest between two trips.                                     |
+| className    | string                         |         | Classes for the SVG.                                                   |
+
+### BeamNode
+
+An icon tile that sits above the beams. Renders a `<div>` and accepts a `ref`.
+
+| Prop      | Type                 | Default  | Description                                              |
+| :-------- | :------------------- | :------- | :------------------------------------------------------- |
+| material  | 'keycap' \| 'gem'    | 'keycap' | A neutral key cap, or a gem plate in the primary colour. |
+| size      | 'sm' \| 'md' \| 'lg' | 'md'     | 40, 48 or 64px, with the icon sized to match.            |
+| className | string               |          | Classes for the tile.                                    |
+
+## Accessibility and motion
+
+- The beams are decorative SVG and hidden from assistive technology. Give the container `role='img'` and an `aria-label` that says what the diagram shows.
+- The highlight is the primary colour only, over a quiet line in the foreground colour.
+- The highlight travels only while the container is on screen. With reduced motion, the lines stay and the highlight is gone.
+
+## Credits
+
+Inspired by the animated beam of [UI Layouts](https://www.ui-layouts.com/components/animated-beam), rebuilt on our tokens and `motion`.
