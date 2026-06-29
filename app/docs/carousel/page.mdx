@@ -1,13 +1,18 @@
 export const metadata = {
   title: 'Carousel - Ndeko UI',
   description:
-    'A flexible and easy-to-use carousel with customizable navigation and indicators. Built for React, Next.js, and Tailwind CSS.',
+    'A flexible and easy-to-use carousel with customizable navigation and indicators, autoplay, loop, thumbnails, progress, several slides per view and a vertical layout. Built for React, Next.js, and Tailwind CSS.',
 };
 
 import { CarouselBasic } from './carousel-basic';
 import { CarouselCustomSizes } from './carousel-custom-sizes';
 import { CarouselSpacing } from './carousel-spacing';
 import { CarouselCustomIndicator } from './carousel-custom-indicator';
+import { CarouselAutoplay } from './carousel-autoplay';
+import { CarouselThumbnailsExample } from './carousel-thumbnails';
+import { CarouselSlidesPerView } from './carousel-slides-per-view';
+import { CarouselVertical } from './carousel-vertical';
+import { CarouselAutoScroll } from './carousel-auto-scroll';
 import ComponentCodePreview from '@/components/website/component-code-preview';
 
 # Carousel
@@ -50,6 +55,51 @@ We can use `index` and `onIndexChange` to create custom indicators for the carou
   filePath='app/docs/carousel/carousel-custom-indicator.tsx'
 />
 
+### Autoplay and loop
+
+`autoplay` moves to the next slide every `autoplayDelay` milliseconds and returns to the first after the last. It pauses while the pointer is over the carousel, while a keyboard user is inside it, while a slide is dragged and while the tab is hidden. `CarouselAutoplayToggle` gives a lasting pause, and `CarouselProgress type='autoplay'` shows the time left. With `loop`, the arrows and the arrow keys wrap around too. The dots use `variant='travel'`: one dot slides to the new position.
+
+<ComponentCodePreview
+  component={<CarouselAutoplay />}
+  filePath='app/docs/carousel/carousel-autoplay.tsx'
+/>
+
+### Thumbnails
+
+`CarouselThumbnails` holds one `CarouselThumbnail` per slide. The ring travels to the chosen thumbnail, and the strip scrolls to keep it in view.
+
+<ComponentCodePreview
+  component={<CarouselThumbnailsExample />}
+  filePath='app/docs/carousel/carousel-thumbnails.tsx'
+/>
+
+### Slides per view
+
+`slidesPerView` sets the width of every item and stops at the last full view, so no empty space shows at the end. A fraction lets the next slide peek in. `CarouselProgress` shows the position.
+
+<ComponentCodePreview
+  component={<CarouselSlidesPerView />}
+  filePath='app/docs/carousel/carousel-slides-per-view.tsx'
+/>
+
+### Vertical
+
+`orientation='vertical'` stacks the slides, turns the arrows and the arrow keys up and down, and drags along the vertical axis. Give `CarouselContent` a height and the items `basis-full`.
+
+<ComponentCodePreview
+  component={<CarouselVertical />}
+  filePath='app/docs/carousel/carousel-vertical.tsx'
+/>
+
+### Auto-scroll
+
+For a strip that keeps moving, use [Infinite Slider](/docs/infinite-slider): it loops without an end and slows down under the pointer.
+
+<ComponentCodePreview
+  component={<CarouselAutoScroll />}
+  filePath='app/docs/carousel/carousel-auto-scroll.tsx'
+/>
+
 ## Installation
 
 <Tabs defaultValue="cli">
@@ -85,14 +135,20 @@ We can use `index` and `onIndexChange` to create custom indicators for the carou
 
 ### Carousel
 
-| Prop            | Type                         | Default | Description                                            |
-| :-------------- | :--------------------------- | :------ | :----------------------------------------------------- |
-| `children`      | `ReactNode`                  |         | The content elements of the carousel.                  |
-| `className`     | `string`                     |         | Optional CSS class for styling the carousel container. |
-| `initialIndex`  | `number`                     | `0`     | Initial index of the active carousel item.             |
-| `index`         | `number`                     |         | Controlled index of the active carousel item.          |
-| `onIndexChange` | `(newIndex: number) => void` |         | Callback function when the active index changes.       |
-| `disableDrag`   | `boolean`                    | `false` | Whether dragging is disabled.                          |
+| Prop            | Type                         | Default        | Description                                                                        |
+| :-------------- | :--------------------------- | :------------- | :--------------------------------------------------------------------------------- |
+| `children`      | `ReactNode`                  |                | The content elements of the carousel.                                              |
+| `className`     | `string`                     |                | Optional CSS class for styling the carousel container.                             |
+| `initialIndex`  | `number`                     | `0`            | Initial index of the active carousel item.                                         |
+| `index`         | `number`                     |                | Controlled index of the active carousel item.                                      |
+| `onIndexChange` | `(newIndex: number) => void` |                | Callback function when the active index changes.                                   |
+| `disableDrag`   | `boolean`                    | `false`        | Whether dragging is disabled.                                                      |
+| `orientation`   | `'horizontal' \| 'vertical'` | `'horizontal'` | The axis of the slides, the arrows, the arrow keys and the drag.                   |
+| `loop`          | `boolean`                    | `false`        | Whether the last slide leads back to the first, and the first to the last.         |
+| `slidesPerView` | `number`                     |                | How many slides fit in the view; sets their width and stops at the last full view. |
+| `autoplay`      | `boolean`                    | `false`        | Whether the slides advance on their own. Off under reduced motion.                 |
+| `autoplayDelay` | `number`                     | `5000`         | The time on each slide, in milliseconds.                                           |
+| `aria-label`    | `string`                     |                | The name of the carousel region.                                                   |
 
 ### CarouselNavigation
 
@@ -104,10 +160,35 @@ We can use `index` and `onIndexChange` to create custom indicators for the carou
 
 ### CarouselIndicator
 
-| Prop              | Type     | Default | Description                                             |
-| :---------------- | :------- | :------ | :------------------------------------------------------ |
-| `className`       | `string` |         | Optional CSS class for styling the indicator container. |
-| `classNameButton` | `string` |         | Optional CSS class for styling the indicator buttons.   |
+| Prop              | Type                 | Default  | Description                                             |
+| :---------------- | :------------------- | :------- | :------------------------------------------------------ |
+| `className`       | `string`             |          | Optional CSS class for styling the indicator container. |
+| `classNameButton` | `string`             |          | Optional CSS class for styling the indicator buttons.   |
+| `variant`         | `'dots' \| 'travel'` | `'dots'` | With `travel`, one dot slides to the active position.   |
+
+### CarouselProgress
+
+| Prop           | Type                       | Default      | Description                                                    |
+| :------------- | :------------------------- | :----------- | :------------------------------------------------------------- |
+| `type`         | `'position' \| 'autoplay'` | `'position'` | The position among the slides, or the time left on this slide. |
+| `className`    | `string`                   |              | Optional CSS class for the track.                              |
+| `classNameBar` | `string`                   |              | Optional CSS class for the bar.                                |
+
+### CarouselAutoplayToggle
+
+| Prop        | Type     | Default | Description                                                         |
+| :---------- | :------- | :------ | :------------------------------------------------------------------ |
+| `className` | `string` |         | Optional CSS class for the button. It renders only with `autoplay`. |
+
+### CarouselThumbnails and CarouselThumbnail
+
+| Component            | Prop         | Type        | Description                                 |
+| :------------------- | :----------- | :---------- | :------------------------------------------ |
+| `CarouselThumbnails` | `children`   | `ReactNode` | The thumbnails.                             |
+| `CarouselThumbnails` | `aria-label` | `string`    | The name of the strip, `Slides` by default. |
+| `CarouselThumbnail`  | `index`      | `number`    | The slide it opens.                         |
+| `CarouselThumbnail`  | `aria-label` | `string`    | Its name, `Go to slide n` by default.       |
+| `CarouselThumbnail`  | `className`  | `string`    | Optional CSS class, `size-14` by default.   |
 
 ### CarouselContent
 
@@ -126,11 +207,17 @@ We can use `index` and `onIndexChange` to create custom indicators for the carou
 
 ### useCarousel
 
-| Return          | Type                              | Description                                                     |
-| :-------------- | :-------------------------------- | :-------------------------------------------------------------- |
-| `index`         | `number`                          | The current index of the active carousel item.                  |
-| `setIndex`      | `(newIndex: number) => void`      | Function to update the index to show a different carousel item. |
-| `itemsCount`    | `number`                          | Total number of items in the carousel.                          |
-| `setItemsCount` | `(newItemsCount: number) => void` | Function to set the number of items in the carousel.            |
+| Return             | Type                              | Description                                                          |
+| :----------------- | :-------------------------------- | :------------------------------------------------------------------- |
+| `index`            | `number`                          | The current index of the active carousel item.                       |
+| `setIndex`         | `(newIndex: number) => void`      | Function to update the index to show a different carousel item.      |
+| `itemsCount`       | `number`                          | Total number of items in the carousel.                               |
+| `setItemsCount`    | `(newItemsCount: number) => void` | Function to set the number of items in the carousel.                 |
+| `lastIndex`        | `number`                          | The last reachable index, lower than the count with `slidesPerView`. |
+| `next`             | `() => void`                      | Goes to the next slide, wrapping with `loop`.                        |
+| `previous`         | `() => void`                      | Goes to the previous slide, wrapping with `loop`.                    |
+| `canGoNext`        | `boolean`                         | Whether `next` moves.                                                |
+| `canGoPrevious`    | `boolean`                         | Whether `previous` moves.                                            |
+| `autoplayProgress` | `MotionValue<number>`             | The time spent on the current slide, from 0 to 1.                    |
 
 This hook provides context values related to the carousel's state, allowing components within the carousel to adjust based on the active item and total items.

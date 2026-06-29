@@ -133,6 +133,9 @@ import {
   PencilEdit02Icon as PencilGlyph,
   PhoneIcon as PhoneGlyph,
   PinIcon as PinGlyph,
+  PlayIcon as PlayGlyph,
+  PauseIcon as PauseGlyph,
+  CloudIcon as CloudGlyph,
   PinOffIcon as PinOffGlyph,
   PowerIcon as PowerGlyph,
   PowerOffIcon as PowerOffGlyph,
@@ -449,6 +452,9 @@ export const PaypalBrandIcon = createIcon(PaypalBrandGlyph, 'PaypalBrandIcon');
 export const PencilIcon = createIcon(PencilGlyph, 'PencilIcon');
 export const PhoneIcon = createIcon(PhoneGlyph, 'PhoneIcon');
 export const PinIcon = createIcon(PinGlyph, 'PinIcon');
+export const PlayIcon = createIcon(PlayGlyph, 'PlayIcon');
+export const PauseIcon = createIcon(PauseGlyph, 'PauseIcon');
+export const CloudIcon = createIcon(CloudGlyph, 'CloudIcon');
 export const PinOffIcon = createIcon(PinOffGlyph, 'PinOffIcon');
 export const PlusIcon = createIcon(PlusGlyph, 'PlusIcon');
 export const PowerIcon = createIcon(PowerGlyph, 'PowerIcon');
