@@ -69,6 +69,11 @@ const STREAM_MODES: StreamMode[] = ['typewriter', 'fade'];
 
 const STREAM_TEXT = 'text-foreground min-h-16 text-sm leading-relaxed';
 
+const STACKED_STREAM_TEXT = `${STREAM_TEXT} col-start-1 row-start-1`;
+
+/** An invisible copy of the whole reply holds its final height, so the pane never grows while it streams. */
+const RESERVED_STREAM_TEXT = `${STACKED_STREAM_TEXT} invisible`;
+
 const BYTES_PER_KILOBYTE = 1024;
 const BYTES_PER_MEGABYTE = BYTES_PER_KILOBYTE * 1024;
 
@@ -236,16 +241,23 @@ function StreamPane({ mode, runCount }: StreamPaneProps) {
       <p className='text-muted-foreground font-mono text-[11px]'>
         mode=&apos;{mode}&apos;
       </p>
-      {!hasStreamed && <p className={STREAM_TEXT}>{STREAMED_REPLY}</p>}
-      {hasStreamed && (
-        <ResponseStream
-          key={runCount}
-          as='p'
-          mode={mode}
-          textStream={STREAMED_REPLY}
-          className={STREAM_TEXT}
-        />
-      )}
+      <div className='grid'>
+        <p aria-hidden='true' className={RESERVED_STREAM_TEXT}>
+          {STREAMED_REPLY}
+        </p>
+        {!hasStreamed && (
+          <p className={STACKED_STREAM_TEXT}>{STREAMED_REPLY}</p>
+        )}
+        {hasStreamed && (
+          <ResponseStream
+            key={runCount}
+            as='p'
+            mode={mode}
+            textStream={STREAMED_REPLY}
+            className={STACKED_STREAM_TEXT}
+          />
+        )}
+      </div>
     </div>
   );
 }

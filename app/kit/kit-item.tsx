@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react';
 
 import { CodeDialog } from '@/app/_site/code-dialog';
+import { PreviewStage } from '@/app/_site/preview-stage';
 import {
   widthClassOf,
   type PreviewWidth,
@@ -16,8 +17,8 @@ type KitItemProps = {
 
 const STAGE_CLASSES: Record<PreviewWidth, string> = {
   compact: 'px-4 py-10',
-  wide: 'px-4 py-8 sm:p-8',
-  full: 'px-4 py-6 sm:p-8',
+  wide: 'px-3 py-8 sm:p-8',
+  full: 'px-3 py-6 sm:p-8',
 };
 
 export function KitItem({ item, width, Demo }: KitItemProps) {
@@ -41,14 +42,14 @@ export function KitItem({ item, width, Demo }: KitItemProps) {
           itemName={item.name}
         />
       </header>
-      <div
+      <PreviewStage
         className={cn(
-          'bg-card hairline-ring ring-border flex min-h-48 flex-1 items-center justify-center rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04)]',
+          'bg-card hairline-ring ring-border min-h-48 flex-1 rounded-[calc(var(--radius-2xl)-0.375rem)] shadow-[0_1px_2px_rgb(0_0_0/0.04)]',
           STAGE_CLASSES[width]
         )}
       >
         <Demo />
-      </div>
+      </PreviewStage>
     </article>
   );
 }
