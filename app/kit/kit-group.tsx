@@ -14,7 +14,7 @@ export function KitGroupSection({ group, itemsByName }: KitGroupSectionProps) {
   return (
     <section aria-labelledby={headingId} className='flex flex-col gap-5'>
       <div className='flex flex-col gap-1'>
-        <h2 id={headingId} className='text-base font-semibold'>
+        <h2 id={headingId} className='scroll-mt-20 text-base font-semibold'>
           {group.title}
         </h2>
         <p className='text-muted-foreground text-[13px]'>{group.description}</p>

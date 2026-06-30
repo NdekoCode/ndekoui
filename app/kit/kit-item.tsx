@@ -24,8 +24,9 @@ const STAGE_CLASSES: Record<PreviewWidth, string> = {
 export function KitItem({ item, width, Demo }: KitItemProps) {
   return (
     <article
+      id={item.name}
       className={cn(
-        'bg-foreground/[0.025] flex min-w-0 flex-col rounded-2xl p-1.5',
+        'bg-foreground/[0.025] flex min-w-0 scroll-mt-20 flex-col rounded-2xl p-1.5',
         widthClassOf(width)
       )}
     >

@@ -27,8 +27,9 @@ export function ComponentTile({ entry, Preview }: ComponentTileProps) {
 
   return (
     <article
+      id={entry.name}
       className={cn(
-        'bg-foreground/[0.025] flex min-w-0 flex-col rounded-2xl p-1.5',
+        'bg-foreground/[0.025] flex min-w-0 scroll-mt-20 flex-col rounded-2xl p-1.5',
         widthClassOf(width)
       )}
     >

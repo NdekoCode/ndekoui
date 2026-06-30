@@ -18,7 +18,8 @@ export function ScrollToTopOnChange() {
   useEffect(() => {
     const hasChanged = previousPathname.current !== pathname;
     previousPathname.current = pathname;
-    if (!hasChanged) {
+    const opensAnAnchor = window.location.hash.length > 0;
+    if (!hasChanged || opensAnAnchor) {
       return;
     }
     const query = window.matchMedia('(prefers-reduced-motion: reduce)');

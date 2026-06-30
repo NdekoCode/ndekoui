@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from '@/registry/ndeko/ui/dropdown-menu';
 
+import { SiteSearch } from './site-search/site-search';
 import { ThemeToggle } from './theme-toggle';
 
 const NAVIGATION = [
@@ -106,6 +107,7 @@ export function SiteHeader() {
           })}
         </nav>
         <div className='ml-auto flex items-center gap-1'>
+          <SiteSearch />
           <SectionMenu pathname={pathname} />
           <ThemeToggle />
           <Button
