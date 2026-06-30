@@ -32,19 +32,25 @@ import { MEMBER_GRID } from './member-parts';
 
 const PRESENCE_IN: Transition = { duration: 0.2, ease: [0.23, 1, 0.32, 1] };
 
-const PRESENCE_OUT: Transition = { duration: 0.14, ease: [0.23, 1, 0.32, 1] };
+const PRESENCE_OUT: Transition = { duration: 0.12, ease: [0.23, 1, 0.32, 1] };
+
+/**
+ * The spring AnimatedSize resizes with. It starts from rest, so the fade leads and the freed space
+ * closes after it at the pace the list follows, instead of snapping shut.
+ */
+const SIZE_SPRING: Transition = { type: 'spring', bounce: 0, duration: 0.32 };
 
 const ITEM_PRESENCE: Variants = {
   hidden: {
     height: 0,
     opacity: 0,
     overflow: 'hidden',
-    transition: PRESENCE_OUT,
+    transition: { ...SIZE_SPRING, opacity: PRESENCE_OUT },
   },
   shown: {
     height: 'auto',
     opacity: 1,
-    transition: PRESENCE_IN,
+    transition: { ...SIZE_SPRING, opacity: PRESENCE_IN },
     transitionEnd: { overflow: 'visible' },
   },
 };
@@ -254,11 +260,11 @@ export default function Team01() {
     setQuery('');
   }
 
-  function invite(email: string) {
+  function invite(email: string, role: Role) {
     const invitation: Invitation = {
       id: `invite-${email}`,
       email,
-      role: 'member',
+      role,
       sentLabel: 'Sent just now',
     };
     setInvitations((previous) => [...previous, invitation]);

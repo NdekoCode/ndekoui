@@ -48,9 +48,10 @@ import {
   PresenceAvatar,
   TABLE_GRID,
   TABLE_ROW_HEIGHT,
-  SlidingValue,
+  DurationFigure,
   StatusChipMenu,
   formatDuration,
+  rowPresenceOf,
   totalTodayOf,
   workedTodayOf,
 } from './member-parts';
@@ -86,11 +87,25 @@ const TASK_SWAP: Variants = {
 
 const PANEL_IN: Transition = { duration: 0.2, ease: [0.23, 1, 0.32, 1] };
 
-const PANEL_OUT: Transition = { duration: 0.14, ease: [0.23, 1, 0.32, 1] };
+const PANEL_OUT: Transition = { duration: 0.12, ease: [0.23, 1, 0.32, 1] };
+
+/**
+ * The spring AnimatedSize resizes with. It starts from rest, so the fade leads and the freed space
+ * closes after it at the pace the list follows, instead of snapping shut.
+ */
+const SIZE_SPRING: Transition = { type: 'spring', bounce: 0, duration: 0.32 };
 
 const PANEL_PRESENCE: Variants = {
-  hidden: { height: 0, opacity: 0, transition: PANEL_OUT },
-  shown: { height: 'auto', opacity: 1, transition: PANEL_IN },
+  hidden: {
+    height: 0,
+    opacity: 0,
+    transition: { ...SIZE_SPRING, opacity: PANEL_OUT },
+  },
+  shown: {
+    height: 'auto',
+    opacity: 1,
+    transition: { ...SIZE_SPRING, opacity: PANEL_IN },
+  },
 };
 
 const FADE: Variants = {
@@ -389,8 +404,8 @@ function ActivityPanel({
                     className='bg-primary block h-full rounded-full transition-[width] duration-300 ease-(--ease-out-strong)'
                   />
                 </span>
-                <SlidingValue
-                  value={entry.minutes}
+                <DurationFigure
+                  minutes={entry.minutes}
                   className='row-start-1 justify-end text-[13px] font-medium sm:row-auto'
                 />
                 <span className='text-muted-foreground hidden text-right text-xs tabular-nums sm:block'>
@@ -439,8 +454,6 @@ const ROW_LAYOUT: Transition = { type: 'spring', bounce: 0, duration: 0.3 };
 
 const INSTANT: Transition = { duration: 0 };
 
-const ROW_EXIT = { opacity: 0, transition: { duration: 0.14 } };
-
 function rowLayoutOf(shouldReduceMotion: boolean | null) {
   if (shouldReduceMotion) {
     return INSTANT;
@@ -472,7 +485,7 @@ function TotalPill({
       className='bg-foreground/[0.04] hairline-ring ring-foreground/10 hover:bg-foreground/[0.07] aria-expanded:bg-foreground/[0.07] focus-visible:ring-ring/25 inline-flex h-7 w-fit cursor-pointer items-center gap-1.5 rounded-full px-2.5 text-[13px] font-medium transition-[background-color,scale] duration-150 ease-(--ease-out-strong) outline-none focus-visible:ring-[3px] active:scale-[0.97]'
     >
       <ChartLineIcon className='text-muted-foreground hidden size-3.5 sm:block' />
-      <SlidingValue value={total} />
+      <DurationFigure minutes={total} />
       <ChevronDownIcon
         className={cn(
           'text-muted-foreground size-3.5 transition-transform duration-200 ease-(--ease-out-strong)',
@@ -509,6 +522,7 @@ export function MemberRow({ member, openTasks, actions }: MemberRowProps) {
   const shouldReduceMotion = useReducedMotion();
   const panelVariants = panelPresenceOf(shouldReduceMotion);
   const rowLayout = rowLayoutOf(shouldReduceMotion);
+  const rowPresence = rowPresenceOf(shouldReduceMotion);
   const panelId = useId();
   const task = member.task;
   const worked = workedTodayOf(member);
@@ -527,7 +541,10 @@ export function MemberRow({ member, openTasks, actions }: MemberRowProps) {
       role='row'
       layout='position'
       transition={rowLayout}
-      exit={ROW_EXIT}
+      variants={rowPresence}
+      initial='hidden'
+      animate='shown'
+      exit='hidden'
       className={cn(TABLE_GRID, 'bg-card', member.isCurrentUser && OWN_ROW)}
     >
       <div role='cell' className={cn(CELL, TABLE_ROW_HEIGHT, 'gap-3')}>
@@ -553,7 +570,7 @@ export function MemberRow({ member, openTasks, actions }: MemberRowProps) {
         <TaskCell member={member} openTasks={openTasks} actions={actions} />
       </div>
       <div role='cell' className={cn(CELL, FIGURE_CELL)}>
-        <SlidingValue value={worked} className='text-[13px] font-medium' />
+        <DurationFigure minutes={worked} className='text-[13px] font-medium' />
       </div>
       <div role='cell' className={cn(CELL, FIGURE_CELL)}>
         {task && (

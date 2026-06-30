@@ -410,11 +410,11 @@ export default function Team02() {
     setSort(DEFAULT_SORT);
   }
 
-  function invite(email: string) {
+  function invite(email: string, role: Role) {
     const invitation: Invitation = {
       id: `invite-${email}`,
       email,
-      role: 'member',
+      role,
       sentLabel: 'Sent just now',
     };
     setInvitations((previous) => [...previous, invitation]);
@@ -484,7 +484,7 @@ export default function Team02() {
             <HeaderRow sort={sort} onSort={sortBy} />
           </div>
           <div role='rowgroup' className='hairline-divide-y divide-border'>
-            <AnimatePresence mode='popLayout' initial={false}>
+            <AnimatePresence initial={false}>
               {visibleMembers.map((member) => (
                 <MemberRow
                   key={member.id}

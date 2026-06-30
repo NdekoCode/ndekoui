@@ -67,7 +67,23 @@ export function MorphText({ text }: { text: string }) {
 
 const ENTER: Transition = { duration: 0.2, ease: EASE_OUT_STRONG };
 
-const EXIT: Transition = { duration: 0.15, ease: EASE_OUT_STRONG };
+const EXIT: Transition = { duration: 0.12, ease: EASE_OUT_STRONG };
+
+/**
+ * The spring AnimatedSize resizes with. It starts from rest, so the fade leads and the freed space
+ * closes after it at the pace the surrounding layout follows, instead of snapping shut.
+ */
+const SIZE_SPRING: Transition = { type: 'spring', bounce: 0, duration: 0.32 };
+
+const HEIGHT_ENTER: Transition = {
+  ...SIZE_SPRING,
+  opacity: ENTER,
+};
+
+const HEIGHT_EXIT: Transition = {
+  ...SIZE_SPRING,
+  opacity: EXIT,
+};
 
 type PresenceProps = Pick<
   MotionProps,
@@ -77,8 +93,8 @@ type PresenceProps = Pick<
 const HEIGHT_PRESENCE: PresenceProps = {
   initial: { height: 0, opacity: 0 },
   animate: { height: 'auto', opacity: 1 },
-  exit: { height: 0, opacity: 0, transition: EXIT },
-  transition: ENTER,
+  exit: { height: 0, opacity: 0, transition: HEIGHT_EXIT },
+  transition: HEIGHT_ENTER,
 };
 
 const FADE_PRESENCE: PresenceProps = {

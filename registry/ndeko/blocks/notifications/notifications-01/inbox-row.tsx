@@ -10,9 +10,11 @@ import {
 import { ArchiveIcon, CheckIcon, MailIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import {
+  TOOLTIP_GLIDE_CLOSE_DELAY,
   Tooltip,
   TooltipContent,
   TooltipTrigger,
+  useTooltipHandle,
 } from '@/registry/ndeko/ui/tooltip';
 
 import { PEOPLE, TEAM_KEY, type InboxItem } from './data';
@@ -20,9 +22,25 @@ import { IssueTypeGem, SenderAvatar } from './inbox-glyphs';
 
 const EASE_OUT_STRONG: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
-const ENTER: Transition = { duration: 0.2, ease: EASE_OUT_STRONG };
+/**
+ * The spring AnimatedSize resizes with. It starts from rest, so the fade leads and the freed space
+ * closes after it at the pace the list follows, instead of snapping shut.
+ */
+const SIZE_SPRING: Transition = { type: 'spring', bounce: 0, duration: 0.32 };
 
-const EXIT: Transition = { duration: 0.16, ease: EASE_OUT_STRONG };
+const ENTER: Transition = {
+  ...SIZE_SPRING,
+  opacity: { duration: 0.2, ease: EASE_OUT_STRONG },
+};
+
+const EXIT: Transition = {
+  ...SIZE_SPRING,
+  opacity: { duration: 0.12, ease: EASE_OUT_STRONG },
+};
+
+const FADE_ENTER: Transition = { duration: 0.2, ease: EASE_OUT_STRONG };
+
+const FADE_EXIT: Transition = { duration: 0.12, ease: EASE_OUT_STRONG };
 
 type PresenceProps = Pick<
   MotionProps,
@@ -39,8 +57,8 @@ const ROW_PRESENCE: PresenceProps = {
 const ROW_FADE: PresenceProps = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },
-  exit: { opacity: 0, transition: EXIT },
-  transition: ENTER,
+  exit: { opacity: 0, transition: FADE_EXIT },
+  transition: FADE_ENTER,
 };
 
 function rowPresenceOf(shouldReduceMotion: boolean | null) {
@@ -93,6 +111,7 @@ export function InboxRow({
   const sender = senderOf(item);
   const key = `${TEAM_KEY}-${item.taskNumber}`;
   const readLabel = readToggleLabelOf(item);
+  const actionHint = useTooltipHandle<string>();
 
   return (
     <motion.li
@@ -145,26 +164,31 @@ export function InboxRow({
             {item.age}
           </span>
           <span className='absolute end-0 flex items-center gap-0.5 opacity-0 transition-opacity duration-150 group-focus-within/row:opacity-100 group-hover/row:opacity-100 pointer-coarse:static pointer-coarse:opacity-100'>
-            <Tooltip>
-              <TooltipTrigger
-                aria-label={readLabel}
-                onClick={() => onToggleRead(item.id)}
-                className={ACTION_BUTTON}
-              >
-                {item.isUnread && <CheckIcon className='size-3.5' />}
-                {!item.isUnread && <MailIcon className='size-3.5' />}
-              </TooltipTrigger>
-              <TooltipContent>{readLabel}</TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger
-                aria-label='Archive'
-                onClick={() => onArchive(item.id)}
-                className={ACTION_BUTTON}
-              >
-                <ArchiveIcon className='size-3.5' />
-              </TooltipTrigger>
-              <TooltipContent>Archive</TooltipContent>
+            <TooltipTrigger
+              handle={actionHint}
+              payload={readLabel}
+              closeDelay={TOOLTIP_GLIDE_CLOSE_DELAY}
+              aria-label={readLabel}
+              onClick={() => onToggleRead(item.id)}
+              className={ACTION_BUTTON}
+            >
+              {item.isUnread && <CheckIcon className='size-3.5' />}
+              {!item.isUnread && <MailIcon className='size-3.5' />}
+            </TooltipTrigger>
+            <TooltipTrigger
+              handle={actionHint}
+              payload='Archive'
+              closeDelay={TOOLTIP_GLIDE_CLOSE_DELAY}
+              aria-label='Archive'
+              onClick={() => onArchive(item.id)}
+              className={ACTION_BUTTON}
+            >
+              <ArchiveIcon className='size-3.5' />
+            </TooltipTrigger>
+            <Tooltip handle={actionHint}>
+              {({ payload }) => (
+                <TooltipContent glide>{payload}</TooltipContent>
+              )}
             </Tooltip>
           </span>
         </span>

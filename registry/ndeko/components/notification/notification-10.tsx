@@ -1,46 +1,20 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  type Transition,
-  type Variants,
-  useReducedMotion,
-} from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useState } from 'react';
 
 import { XIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import { StatusOrb } from '@/registry/ndeko/ui/status-orb';
 
-const LEAVE_TRANSITION: Transition = {
-  duration: 0.15,
-  ease: [0.23, 1, 0.32, 1],
-};
-
-const LEAVE_VARIANTS: Variants = {
-  shown: { opacity: 1, height: 'auto' },
-  hidden: { opacity: 0, height: 0, paddingTop: 0, paddingBottom: 0 },
-};
-
-const FADE_VARIANTS: Variants = {
-  shown: { opacity: 1 },
-  hidden: { opacity: 0 },
-};
+import { surfaceCollapseOf } from './_parts/collapse';
 
 const TEXT_ACTION = 'h-auto px-0 text-[13px] leading-5';
-
-function leaveVariantsOf(shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return FADE_VARIANTS;
-  }
-  return LEAVE_VARIANTS;
-}
 
 export default function Notification10() {
   const [isVisible, setIsVisible] = useState(true);
   const shouldReduceMotion = useReducedMotion();
-  const leaveVariants = leaveVariantsOf(shouldReduceMotion);
+  const leaveVariants = surfaceCollapseOf(shouldReduceMotion);
 
   function dismiss() {
     setIsVisible(false);
@@ -57,7 +31,6 @@ export default function Notification10() {
           initial='hidden'
           animate='shown'
           exit='hidden'
-          transition={LEAVE_TRANSITION}
         >
           <StatusOrb tone='success' size='sm' />
           <div className='flex grow items-center justify-between gap-4'>

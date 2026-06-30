@@ -25,4 +25,19 @@ export const manifest: BlockManifest = [
     files: ['index.tsx', 'notice.tsx', 'motion-parts.tsx', 'data.ts'],
     previewHeight: 640,
   },
+  {
+    name: 'notifications-04',
+    title: 'Inbox with a reading pane',
+    description:
+      'Notifications grouped by day beside the one selected: read, archive with Undo, filter by unread or mentions, and reply in place.',
+    files: [
+      'index.tsx',
+      'inbox-list.tsx',
+      'notification-detail.tsx',
+      'glyphs.tsx',
+      'motion-parts.tsx',
+      'data.ts',
+    ],
+    previewHeight: 680,
+  },
 ];

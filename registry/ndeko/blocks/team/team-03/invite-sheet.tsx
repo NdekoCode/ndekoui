@@ -7,9 +7,18 @@ import {
   type Variants,
   useReducedMotion,
 } from 'motion/react';
-import { useId, useState } from 'react';
+import { useEffect, useEffectEvent, useId, useState } from 'react';
 
-import { MailIcon } from '@/registry/ndeko/lib/icons';
+import { MotionNumber } from '@/components/core/motion-number';
+import {
+  AlertCircleIcon,
+  CheckIcon,
+  ClockIcon,
+  InfoIcon,
+  LoaderCircleIcon,
+  MailIcon,
+  UserIcon,
+} from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -26,62 +35,95 @@ import { Tabs, TabsList, TabsPanel, TabsTab } from '@/registry/ndeko/ui/tabs';
 import { Textarea } from '@/registry/ndeko/ui/textarea';
 
 import { ROLE_OPTIONS, type Invitation, type Member, type Role } from './data';
-import { EmailChipsField } from './email-chips-field';
+import { EmailChipsField, type ChipLook } from './email-chips-field';
 import { InvitationList } from './invitation-list';
 
 export type InviteTab = 'invite' | 'invited';
 
+/** What sending does to an address: a new invitation, the e-mail again for a pending one, nothing for a member or a typo. */
+type AddressState = 'new' | 'pending' | 'member' | 'invalid';
+
+type AddressEntry = { email: string; state: AddressState };
+
+type SendState = 'idle' | 'sending' | 'sent';
+
+type SummaryLine = { state: AddressState; text: string };
+
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const LABEL_MORPH: Transition = { type: 'spring', bounce: 0, duration: 0.3 };
+const TOKEN_SEPARATORS = /[\s,;<>"'()]+/;
 
-const INSTANT: Transition = { duration: 0 };
+const SENDING_MS = 800;
 
-const DIGIT_SHIFT_PX = 8;
+const SENT_MS = 700;
 
-const DIGIT_TRANSITION: Transition = { duration: 0.18, ease: [0.2, 0, 0, 1] };
+const INVITED_COUNT =
+  'bg-foreground/[0.06] text-muted-foreground h-5 min-w-5 items-center justify-center rounded-sm px-1.5 text-xs';
 
-const DIGIT_VARIANTS: Variants = {
-  enter: (direction: number) => {
-    const offset = direction * DIGIT_SHIFT_PX;
-    return { opacity: 0, y: offset };
+const CHIP_LOOK: Record<AddressState, ChipLook> = {
+  new: { color: 'var(--muted-foreground)', icon: null, hint: '' },
+  pending: {
+    color: 'var(--warning)',
+    icon: ClockIcon,
+    hint: 'Already invited: they get the e-mail again',
   },
-  visible: { opacity: 1, y: 0 },
-  exit: (direction: number) => {
-    const offset = direction * DIGIT_SHIFT_PX;
-    return { opacity: 0, y: -offset };
+  member: {
+    color: 'var(--muted-foreground)',
+    icon: UserIcon,
+    hint: 'Already in the team: not invited again',
+  },
+  invalid: {
+    color: 'var(--destructive)',
+    icon: AlertCircleIcon,
+    hint: 'Not a valid e-mail address',
   },
 };
 
-const FADE_VARIANTS: Variants = {
+const SUMMARY_ORDER: AddressState[] = ['invalid', 'member', 'pending'];
+
+const SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };
+
+const TRAVEL: Transition = { type: 'spring', bounce: 0, duration: 0.3 };
+
+const INSTANT: Transition = { duration: 0 };
+
+const ICON_SWAP: Variants = {
+  enter: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },
+  visible: { opacity: 1, scale: 1, filter: 'blur(0px)' },
+  exit: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },
+};
+
+const LABEL_SWAP: Variants = {
+  enter: { opacity: 0, filter: 'blur(2px)' },
+  visible: { opacity: 1, filter: 'blur(0px)' },
+  exit: { opacity: 0, filter: 'blur(2px)' },
+};
+
+const FADE: Variants = {
   enter: { opacity: 0 },
   visible: { opacity: 1 },
   exit: { opacity: 0 },
 };
 
-type ParsedEmails = { accepted: string[]; rejected: string[]; reason: string };
+function iconSwapOf(shouldReduceMotion: boolean | null) {
+  if (shouldReduceMotion) {
+    return FADE;
+  }
+  return ICON_SWAP;
+}
 
-type CountState = { value: number; direction: number };
+function labelSwapOf(shouldReduceMotion: boolean | null) {
+  if (shouldReduceMotion) {
+    return FADE;
+  }
+  return LABEL_SWAP;
+}
 
-function morphOf(shouldReduceMotion: boolean | null) {
+function travelOf(shouldReduceMotion: boolean | null) {
   if (shouldReduceMotion) {
     return INSTANT;
   }
-  return LABEL_MORPH;
-}
-
-function digitVariantsOf(shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return FADE_VARIANTS;
-  }
-  return DIGIT_VARIANTS;
-}
-
-function directionOf(previous: number, next: number) {
-  if (next > previous) {
-    return 1;
-  }
-  return -1;
+  return TRAVEL;
 }
 
 function isInviteTab(value: unknown): value is InviteTab {
@@ -94,61 +136,140 @@ function isRole(value: unknown): value is Role {
   return ROLE_OPTIONS.some((option) => option.value === value);
 }
 
-function sendLabelOf(count: number) {
+/** The addresses in what was typed or pasted; words around an address, such as names copied from a mail, are left out. */
+function splitAddresses(text: string) {
+  const tokens = text.split(TOKEN_SEPARATORS);
+  const holdsAnAddress = text.includes('@');
+  const addresses: string[] = [];
+  for (const token of tokens) {
+    const trimmed = token.trim();
+    const address = trimmed.toLowerCase();
+    const isEmpty = address.length === 0;
+    const isNameAround = holdsAnAddress && !address.includes('@');
+    const isRepeat = addresses.includes(address);
+    if (isEmpty || isNameAround || isRepeat) {
+      continue;
+    }
+    addresses.push(address);
+  }
+  return addresses;
+}
+
+function mergeAddresses(current: string[], added: string[]) {
+  const merged = [...current];
+  for (const address of added) {
+    if (!merged.includes(address)) {
+      merged.push(address);
+    }
+  }
+  return merged;
+}
+
+function sendLabelOf(state: SendState, count: number) {
+  if (state === 'sending') {
+    return 'Sending';
+  }
+  if (state === 'sent') {
+    return 'Sent';
+  }
   if (count > 1) {
     return `Send ${count} invitations`;
   }
   return 'Send invitation';
 }
 
-function rejectionOf(
-  address: string,
-  takenByMember: Set<string>,
-  invited: Set<string>
-) {
-  const isEmail = EMAIL_PATTERN.test(address);
-  if (!isEmail) {
-    return `${address} is not an e-mail address`;
+function summaryTextOf(state: AddressState, count: number) {
+  const isOne = count === 1;
+  if (state === 'invalid') {
+    if (isOne) {
+      return '1 address is not valid. Fix or remove it';
+    }
+    return `${count} addresses are not valid. Fix or remove them`;
   }
-  if (takenByMember.has(address)) {
-    return `${address} is already in the team`;
+  if (state === 'member') {
+    if (isOne) {
+      return '1 person is already in the team and is skipped';
+    }
+    return `${count} people are already in the team and are skipped`;
   }
-  if (invited.has(address)) {
-    return `${address} already has an invitation`;
+  if (isOne) {
+    return '1 person was already invited and gets the e-mail again';
   }
-  return null;
+  return `${count} people were already invited and get the e-mail again`;
 }
 
-function SlidingCount({ value }: { value: number }) {
-  const shouldReduceMotion = useReducedMotion();
-  const [shown, setShown] = useState<CountState>({ value, direction: 1 });
-  const variants = digitVariantsOf(shouldReduceMotion);
-
-  if (shown.value !== value) {
-    const direction = directionOf(shown.value, value);
-    setShown({ value, direction });
+function summaryOf(entries: AddressEntry[]) {
+  const lines: SummaryLine[] = [];
+  for (const state of SUMMARY_ORDER) {
+    const count = entries.filter((entry) => entry.state === state).length;
+    if (count > 0) {
+      lines.push({ state, text: summaryTextOf(state, count) });
+    }
   }
+  return lines;
+}
+
+function SendGlyph({ state }: { state: SendState }) {
+  if (state === 'sending') {
+    return <LoaderCircleIcon className='animate-spin' />;
+  }
+  if (state === 'sent') {
+    return <CheckIcon />;
+  }
+  return <MailIcon />;
+}
+
+/** The send button becomes its next state: its icon swaps, its label crossfades and its width follows. */
+function SendButton({
+  state,
+  count,
+  isDisabled,
+}: {
+  state: SendState;
+  count: number;
+  isDisabled: boolean;
+}) {
+  const shouldReduceMotion = useReducedMotion();
+  const iconVariants = iconSwapOf(shouldReduceMotion);
+  const labelVariants = labelSwapOf(shouldReduceMotion);
+  const label = sendLabelOf(state, count);
+  const isSending = state === 'sending';
 
   return (
-    <span className='bg-foreground/[0.06] text-muted-foreground relative inline-flex h-5 min-w-5 items-center justify-center overflow-hidden rounded-sm px-1.5 text-xs tabular-nums'>
-      <AnimatePresence
-        mode='popLayout'
-        initial={false}
-        custom={shown.direction}
-      >
-        <motion.span
-          key={value}
-          custom={shown.direction}
-          variants={variants}
-          initial='enter'
-          animate='visible'
-          exit='exit'
-          transition={DIGIT_TRANSITION}
-        >
-          {value}
-        </motion.span>
-      </AnimatePresence>
-    </span>
+    <Button type='submit' disabled={isDisabled} aria-busy={isSending}>
+      <span className='relative flex'>
+        <AnimatePresence mode='popLayout' initial={false}>
+          <motion.span
+            key={state}
+            className='flex'
+            variants={iconVariants}
+            initial='enter'
+            animate='visible'
+            exit='exit'
+            transition={SWAP_TRANSITION}
+          >
+            <SendGlyph state={state} />
+          </motion.span>
+        </AnimatePresence>
+      </span>
+      <AnimatedSize axis='width' as='span'>
+        <span className='relative flex'>
+          <AnimatePresence mode='popLayout' initial={false}>
+            <motion.span
+              key={label}
+              className='whitespace-nowrap'
+              variants={labelVariants}
+              initial='enter'
+              animate='visible'
+              exit='exit'
+              transition={SWAP_TRANSITION}
+            >
+              {label}
+            </motion.span>
+          </AnimatePresence>
+        </span>
+      </AnimatedSize>
+    </Button>
   );
 }
 
@@ -165,6 +286,10 @@ type InviteSheetProps = {
   onRevoke: (invitationId: string) => void;
 };
 
+/**
+ * Invites people the way the invite dialog does: every address becomes a chip tinted by what sending does to it,
+ * a summary says what is skipped or sent again, and sending morphs the button before the Invited tab shows the rows.
+ */
 export function InviteSheet({
   open,
   onOpenChange,
@@ -177,71 +302,115 @@ export function InviteSheet({
   onResend,
   onRevoke,
 }: InviteSheetProps) {
-  const [emails, setEmails] = useState<string[]>([]);
+  const [addresses, setAddresses] = useState<string[]>([]);
+  const [queued, setQueued] = useState<AddressEntry[]>([]);
   const [draft, setDraft] = useState('');
   const [role, setRole] = useState<Role>('member');
   const [note, setNote] = useState('');
-  const [error, setError] = useState<string | null>(null);
+  const [sendState, setSendState] = useState<SendState>('idle');
   const shouldReduceMotion = useReducedMotion();
-  const labelMorph = morphOf(shouldReduceMotion);
+  const roleTravel = travelOf(shouldReduceMotion);
   const fieldId = useId();
-  const hintId = useId();
+  const summaryId = useId();
   const noteId = useId();
-  const hasError = Boolean(error);
+  const roleTintId = useId();
+  const memberEmails = new Set(members.map((member) => member.email));
+  const pendingEmails = new Set(
+    invitations.map((invitation) => invitation.email)
+  );
   const hasInvitations = invitations.length > 0;
-  const hasDraft = draft.trim().length > 0;
-  let sendCount = emails.length;
-  if (hasDraft) {
-    sendCount += 1;
-  }
-  const canSend = sendCount > 0;
+  const draftAddresses = splitAddresses(draft);
+  const withDraft = mergeAddresses(addresses, draftAddresses);
+  const withDraftEntries = withDraft.map(entryOf);
+  const sendable = withDraftEntries.filter(isSendable);
+  const sendCount = sendable.length;
+  const entries = addresses.map(entryOf);
+  const summary = summaryOf(entries);
+  const hasSummary = summary.length > 0;
+  const hasInvalid = summary.some((line) => line.state === 'invalid');
+  const isIdle = sendState === 'idle';
+  const isSendDisabled = sendCount === 0;
 
-  function parse(text: string, current: string[]): ParsedEmails {
-    const memberEmails = new Set(members.map((member) => member.email));
-    const invitedEmails = new Set(invitations.map((item) => item.email));
-    const parts = text.split(/[\s,;]+/);
-    const accepted: string[] = [];
-    const rejected: string[] = [];
-    let reason = '';
-    for (const part of parts) {
-      const address = part.trim().toLowerCase();
-      const isEmpty = address.length === 0;
-      const isKnown = current.includes(address) || accepted.includes(address);
-      if (isEmpty || isKnown) {
-        continue;
-      }
-      const rejection = rejectionOf(address, memberEmails, invitedEmails);
-      if (rejection) {
-        rejected.push(address);
-        if (!reason) {
-          reason = rejection;
-        }
-        continue;
-      }
-      accepted.push(address);
+  function entryOf(email: string): AddressEntry {
+    if (!EMAIL_PATTERN.test(email)) {
+      return { email, state: 'invalid' };
     }
-    return { accepted, rejected, reason };
+    if (memberEmails.has(email)) {
+      return { email, state: 'member' };
+    }
+    if (pendingEmails.has(email)) {
+      return { email, state: 'pending' };
+    }
+    return { email, state: 'new' };
   }
+
+  function isSendable(entry: AddressEntry) {
+    const isNew = entry.state === 'new';
+    const isPending = entry.state === 'pending';
+    return isNew || isPending;
+  }
+
+  function lookOf(email: string) {
+    const entry = entryOf(email);
+    return CHIP_LOOK[entry.state];
+  }
+
+  const deliverQueued = useEffectEvent(() => {
+    const newEntries = queued.filter((entry) => entry.state === 'new');
+    const newEmails = newEntries.map((entry) => entry.email);
+    const pendingEntries = queued.filter((entry) => entry.state === 'pending');
+    const resentEmails = pendingEntries.map((entry) => entry.email);
+    const sentEmails = queued.map((entry) => entry.email);
+    const hasNew = newEmails.length > 0;
+    if (hasNew) {
+      onSend(newEmails, role);
+    }
+    for (const invitation of invitations) {
+      const isResent = resentEmails.includes(invitation.email);
+      if (isResent) {
+        onResend(invitation.id);
+      }
+    }
+    setAddresses((previous) =>
+      previous.filter((email) => !sentEmails.includes(email))
+    );
+    setQueued([]);
+    setNote('');
+  });
+
+  const showInvited = useEffectEvent(() => {
+    onTabChange('invited');
+  });
+
+  useEffect(() => {
+    if (sendState === 'sending') {
+      const timeout = window.setTimeout(() => {
+        deliverQueued();
+        setSendState('sent');
+      }, SENDING_MS);
+      return () => window.clearTimeout(timeout);
+    }
+    if (sendState === 'sent') {
+      const timeout = window.setTimeout(() => {
+        setSendState('idle');
+        showInvited();
+      }, SENT_MS);
+      return () => window.clearTimeout(timeout);
+    }
+  }, [sendState]);
 
   function commit(text: string) {
-    const parsed = parse(text, emails);
-    setEmails((previous) => [...previous, ...parsed.accepted]);
-    setDraft(parsed.rejected.join(' '));
-    const hasRejected = parsed.rejected.length > 0;
-    if (hasRejected) {
-      setError(parsed.reason);
-      return;
-    }
-    setError(null);
+    const added = splitAddresses(text);
+    setAddresses((previous) => mergeAddresses(previous, added));
+    setDraft('');
   }
 
   function changeDraft(nextDraft: string) {
     setDraft(nextDraft);
-    setError(null);
   }
 
   function removeEmail(email: string) {
-    setEmails((previous) => previous.filter((item) => item !== email));
+    setAddresses((previous) => previous.filter((item) => item !== email));
   }
 
   function changeRole(value: unknown) {
@@ -266,25 +435,16 @@ export function InviteSheet({
 
   function send(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const parsed = parse(draft, emails);
-    const hasRejected = parsed.rejected.length > 0;
-    if (hasRejected) {
-      setEmails((previous) => [...previous, ...parsed.accepted]);
-      setDraft(parsed.rejected.join(' '));
-      setError(parsed.reason);
+    if (!isIdle) {
       return;
     }
-    const allEmails = [...emails, ...parsed.accepted];
-    if (allEmails.length === 0) {
-      setError('Add at least one e-mail address');
-      return;
-    }
-    onSend(allEmails, role);
-    setEmails([]);
+    setAddresses(withDraft);
     setDraft('');
-    setNote('');
-    setError(null);
-    onTabChange('invited');
+    if (sendable.length === 0) {
+      return;
+    }
+    setQueued(sendable);
+    setSendState('sending');
   }
 
   return (
@@ -293,7 +453,7 @@ export function InviteSheet({
         <SheetHeader className='px-5 pt-5 pb-3'>
           <SheetTitle>{`Invite to ${teamName}`}</SheetTitle>
           <SheetDescription>
-            People join the team once they accept the e-mail
+            They get an e-mail with a link to join the team
           </SheetDescription>
         </SheetHeader>
         <Tabs value={tab} onValueChange={changeTab} className='gap-0'>
@@ -301,13 +461,17 @@ export function InviteSheet({
             <TabsTab value='invite'>Invite</TabsTab>
             <TabsTab value='invited'>
               Invited
-              <SlidingCount value={invitations.length} />
+              <MotionNumber
+                value={invitations.length}
+                className={INVITED_COUNT}
+              />
             </TabsTab>
           </TabsList>
           <AnimatedSize className='m-0' contentClassName='p-0'>
             <TabsPanel value='invite' className='rounded-none'>
               <form
                 onSubmit={send}
+                autoComplete='off'
                 className='flex flex-col gap-5 px-5 pt-4 pb-5'
               >
                 <div className='flex flex-col gap-1.5'>
@@ -316,24 +480,44 @@ export function InviteSheet({
                   </label>
                   <EmailChipsField
                     id={fieldId}
-                    emails={emails}
+                    emails={addresses}
                     draft={draft}
-                    isInvalid={hasError}
-                    describedBy={hintId}
+                    isInvalid={hasInvalid}
+                    describedBy={summaryId}
                     onDraftChange={changeDraft}
                     onCommit={commit}
                     onRemove={removeEmail}
+                    lookOf={lookOf}
                   />
-                  <p
-                    id={hintId}
-                    className={cn(
-                      'text-xs',
-                      hasError && 'text-destructive-ink',
-                      !hasError && 'text-muted-foreground'
-                    )}
-                  >
-                    {error ?? 'Separate addresses with a comma or a space'}
-                  </p>
+                  <AnimatedSize>
+                    <div
+                      id={summaryId}
+                      className='flex flex-col gap-0.5 text-xs'
+                    >
+                      <p className='text-muted-foreground flex items-center gap-1.5'>
+                        <InfoIcon className='size-3.5 shrink-0' />
+                        Press Enter or a comma after each address, or paste a
+                        list
+                      </p>
+                      {hasSummary && (
+                        <ul className='flex flex-col gap-0.5 pl-5'>
+                          {summary.map((line) => (
+                            <li
+                              key={line.state}
+                              className={cn(
+                                line.state === 'invalid' &&
+                                  'text-destructive-ink',
+                                line.state !== 'invalid' &&
+                                  'text-muted-foreground'
+                              )}
+                            >
+                              {line.text}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </AnimatedSize>
                 </div>
                 <fieldset className='flex flex-col gap-1.5'>
                   <legend className='mb-1.5 text-[13px] font-medium'>
@@ -342,7 +526,7 @@ export function InviteSheet({
                   <RadioGroup
                     value={role}
                     onValueChange={changeRole}
-                    className='bg-card hairline-ring ring-border hairline-divide-y divide-border gap-0 overflow-hidden rounded-xl'
+                    className='bg-card hairline-ring ring-border gap-0 rounded-xl p-1 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
                   >
                     {ROLE_OPTIONS.map((option) => {
                       const isPicked = option.value === role;
@@ -350,16 +534,21 @@ export function InviteSheet({
                       return (
                         <label
                           key={option.value}
-                          className={cn(
-                            'flex cursor-pointer items-start gap-3 px-3 py-2.5 transition-colors duration-150',
-                            isPicked && 'bg-primary/[0.06]'
-                          )}
+                          className='relative flex cursor-pointer items-start gap-3 rounded-lg px-3 py-2.5'
                         >
+                          {isPicked && (
+                            <motion.span
+                              layoutId={roleTintId}
+                              aria-hidden='true'
+                              transition={roleTravel}
+                              className='bg-primary/[0.07] absolute inset-0 rounded-lg'
+                            />
+                          )}
                           <RadioGroupItem
                             value={option.value}
-                            className='mt-0.5'
+                            className='relative mt-0.5'
                           />
-                          <span className='flex min-w-0 flex-col gap-0.5'>
+                          <span className='relative flex min-w-0 flex-col gap-0.5'>
                             <span className='text-[13px] font-medium'>
                               {option.label}
                             </span>
@@ -391,12 +580,11 @@ export function InviteSheet({
                   <SheetClose render={<Button type='button' variant='ghost' />}>
                     Cancel
                   </SheetClose>
-                  <Button type='submit' disabled={!canSend}>
-                    <MailIcon />
-                    <motion.span layout transition={labelMorph}>
-                      {sendLabelOf(sendCount)}
-                    </motion.span>
-                  </Button>
+                  <SendButton
+                    state={sendState}
+                    count={sendCount}
+                    isDisabled={isSendDisabled}
+                  />
                 </div>
               </form>
             </TabsPanel>

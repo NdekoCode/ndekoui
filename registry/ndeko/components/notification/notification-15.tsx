@@ -1,43 +1,17 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  type Transition,
-  type Variants,
-  useReducedMotion,
-} from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useState } from 'react';
 
 import { XIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 
-const LEAVE_TRANSITION: Transition = {
-  duration: 0.15,
-  ease: [0.23, 1, 0.32, 1],
-};
-
-const LEAVE_VARIANTS: Variants = {
-  shown: { opacity: 1, height: 'auto' },
-  hidden: { opacity: 0, height: 0, paddingTop: 0, paddingBottom: 0 },
-};
-
-const FADE_VARIANTS: Variants = {
-  shown: { opacity: 1 },
-  hidden: { opacity: 0 },
-};
-
-function leaveVariantsOf(shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return FADE_VARIANTS;
-  }
-  return LEAVE_VARIANTS;
-}
+import { surfaceCollapseOf } from './_parts/collapse';
 
 export default function Notification15() {
   const [isVisible, setIsVisible] = useState(true);
   const shouldReduceMotion = useReducedMotion();
-  const leaveVariants = leaveVariantsOf(shouldReduceMotion);
+  const leaveVariants = surfaceCollapseOf(shouldReduceMotion);
 
   function dismiss() {
     setIsVisible(false);
@@ -54,7 +28,6 @@ export default function Notification15() {
           initial='hidden'
           animate='shown'
           exit='hidden'
-          transition={LEAVE_TRANSITION}
         >
           <div className='flex grow flex-col gap-3'>
             <div className='flex flex-col gap-1 text-[13px] leading-5'>

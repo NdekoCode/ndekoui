@@ -7,8 +7,8 @@ import {
   type Variants,
   useReducedMotion,
 } from 'motion/react';
-import { useState } from 'react';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import { cn } from '@/registry/ndeko/lib/utils';
 import {
   Avatar,
@@ -56,21 +56,7 @@ const FADE_VARIANTS: Variants = {
   exit: { opacity: 0 },
 };
 
-const DIGIT_SHIFT_PX = 8;
-
-const DIGIT_TRANSITION: Transition = { duration: 0.18, ease: [0.2, 0, 0, 1] };
-
-const DIGIT_VARIANTS: Variants = {
-  enter: (direction: number) => {
-    const offset = direction * DIGIT_SHIFT_PX;
-    return { opacity: 0, y: offset };
-  },
-  visible: { opacity: 1, y: 0 },
-  exit: (direction: number) => {
-    const offset = direction * DIGIT_SHIFT_PX;
-    return { opacity: 0, y: -offset };
-  },
-};
+const TWO_DIGITS: Intl.NumberFormatOptions = { minimumIntegerDigits: 2 };
 
 export function swapVariantsOf(shouldReduceMotion: boolean | null) {
   if (shouldReduceMotion) {
@@ -79,25 +65,17 @@ export function swapVariantsOf(shouldReduceMotion: boolean | null) {
   return SWAP_VARIANTS;
 }
 
-function digitVariantsOf(shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return FADE_VARIANTS;
-  }
-  return DIGIT_VARIANTS;
+function durationPartsOf(totalMinutes: number) {
+  const rawHours = totalMinutes / 60;
+  const hours = Math.floor(rawHours);
+  const minutes = totalMinutes % 60;
+  return { hours, minutes };
 }
 
-function directionOf(previous: number, next: number) {
-  if (next > previous) {
-    return 1;
-  }
-  return -1;
-}
-
-export function formatDuration(minutes: number) {
-  const hours = Math.floor(minutes / 60);
-  const rest = minutes % 60;
-  const paddedRest = String(rest).padStart(2, '0');
-  return `${hours}h ${paddedRest}m`;
+export function formatDuration(totalMinutes: number) {
+  const { hours, minutes } = durationPartsOf(totalMinutes);
+  const paddedMinutes = String(minutes).padStart(2, '0');
+  return `${hours}h ${paddedMinutes}m`;
 }
 
 export function workedTodayOf(member: Member) {
@@ -120,52 +98,29 @@ export function totalTodayOf(member: Member) {
   return total;
 }
 
-type ShownValue = { value: number; direction: number };
-
-/** A figure the user just changed: its digits slide in the direction of the change. */
-export function SlidingValue({
-  value,
-  format = formatDuration,
+/** Hours and minutes roll as two numbers, but a screen reader hears the duration once. */
+export function DurationFigure({
+  minutes,
   className,
 }: {
-  value: number;
-  format?: (value: number) => string;
+  minutes: number;
   className?: string;
 }) {
-  const shouldReduceMotion = useReducedMotion();
-  const [shown, setShown] = useState<ShownValue>({ value, direction: 1 });
-  const variants = digitVariantsOf(shouldReduceMotion);
-  const text = format(value);
-
-  if (shown.value !== value) {
-    const direction = directionOf(shown.value, value);
-    setShown({ value, direction });
-  }
+  const parts = durationPartsOf(minutes);
+  const text = formatDuration(minutes);
 
   return (
     <span
       className={cn(
-        'relative inline-flex overflow-hidden tabular-nums',
+        'inline-flex items-baseline whitespace-nowrap tabular-nums',
         className
       )}
     >
-      <AnimatePresence
-        mode='popLayout'
-        initial={false}
-        custom={shown.direction}
-      >
-        <motion.span
-          key={text}
-          custom={shown.direction}
-          variants={variants}
-          initial='enter'
-          animate='visible'
-          exit='exit'
-          transition={DIGIT_TRANSITION}
-        >
-          {text}
-        </motion.span>
-      </AnimatePresence>
+      <span className='sr-only'>{text}</span>
+      <span aria-hidden='true'>
+        <MotionNumber value={parts.hours} suffix='h' />{' '}
+        <MotionNumber value={parts.minutes} format={TWO_DIGITS} suffix='m' />
+      </span>
     </span>
   );
 }

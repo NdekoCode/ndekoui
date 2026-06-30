@@ -135,4 +135,60 @@ export const manifest: ComponentManifest = [
     title: 'Custom toast',
     description: 'A sent message in a custom toast with View and Undo.',
   },
+  {
+    name: 'notification-23',
+    source: 'ndeko',
+    title: 'Inbox with unread states',
+    description:
+      'An inbox where opening a row reads it, the dot shrinks away and Mark all as read clears the count.',
+  },
+  {
+    name: 'notification-24',
+    source: 'ndeko',
+    title: 'Activity grouped by day',
+    description:
+      'Notifications under Today, Yesterday and Earlier, each one snoozed or muted in place, with snoozed ones brought back from the header.',
+  },
+  {
+    name: 'notification-25',
+    source: 'ndeko',
+    title: 'Bell with filtered inbox',
+    description:
+      'A bell that opens the inbox, with All, Mentions and Invites tabs that carry their unread counts.',
+  },
+  {
+    name: 'notification-26',
+    source: 'ndeko',
+    title: 'Invitation with its answer',
+    description:
+      'A team invitation whose Accept and Decline turn into the result, with Undo.',
+  },
+  {
+    name: 'notification-27',
+    source: 'ndeko',
+    title: 'Task activity thread',
+    description:
+      'The latest change on a task under its chip, with the earlier updates folded below.',
+  },
+  {
+    name: 'notification-28',
+    source: 'ndeko',
+    title: 'Stack of notifications',
+    description:
+      'Toasts stacked one behind the other that spread out on hover, focus or a pinned toggle.',
+  },
+  {
+    name: 'notification-29',
+    source: 'ndeko',
+    title: 'Notices in their tone',
+    description:
+      'Success, error and info notices washed in their own hue, each dismissed with its space closing.',
+  },
+  {
+    name: 'notification-30',
+    source: 'ndeko',
+    title: 'Notification preferences',
+    description:
+      'One switch per kind of notification, saved as it changes, with the kind dimmed when it is off.',
+  },
 ];

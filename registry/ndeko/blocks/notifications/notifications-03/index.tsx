@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
 import { RotateCcwIcon } from '@/registry/ndeko/lib/icons';
+import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
 
@@ -87,51 +88,53 @@ export default function Notifications03() {
         <p className='text-muted-foreground mt-1 text-[13px]'>
           Where {TEAM_NAME} gets its members and its calendar
         </p>
-        <div className='relative mt-6'>
-          <AnimatePresence mode='popLayout' initial={false}>
-            {hasNotices && (
-              <motion.ul
-                key='notices'
-                aria-label='Notices'
-                aria-live='polite'
-                {...fadePresence()}
-              >
-                <AnimatePresence initial={false}>
-                  {shownNotices.map((notice) => (
-                    <Notice
-                      key={notice.id}
-                      notice={notice}
-                      phase={phaseOf(phases, notice.id)}
-                      recoveryHref={`#${SOURCES_ANCHOR}`}
-                      onAction={act}
-                      onDismiss={dismiss}
-                    />
-                  ))}
-                </AnimatePresence>
-              </motion.ul>
-            )}
-            {!hasNotices && (
-              <motion.div
-                key='no-notices'
-                {...fadePresence()}
-                className='flex flex-wrap items-center justify-between gap-2 pb-3'
-              >
-                <p className='text-muted-foreground text-[13px]'>
-                  No notices, a source that needs you will show one here
-                </p>
-                <Button
-                  variant='ghost'
-                  size='sm'
-                  onClick={showDismissed}
-                  className='text-muted-foreground'
+        <AnimatedSize className='mt-6'>
+          <div className='relative'>
+            <AnimatePresence mode='popLayout' initial={false}>
+              {hasNotices && (
+                <motion.ul
+                  key='notices'
+                  aria-label='Notices'
+                  aria-live='polite'
+                  {...fadePresence()}
                 >
-                  <RotateCcwIcon />
-                  Show dismissed notices
-                </Button>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+                  <AnimatePresence initial={false}>
+                    {shownNotices.map((notice) => (
+                      <Notice
+                        key={notice.id}
+                        notice={notice}
+                        phase={phaseOf(phases, notice.id)}
+                        recoveryHref={`#${SOURCES_ANCHOR}`}
+                        onAction={act}
+                        onDismiss={dismiss}
+                      />
+                    ))}
+                  </AnimatePresence>
+                </motion.ul>
+              )}
+              {!hasNotices && (
+                <motion.div
+                  key='no-notices'
+                  {...fadePresence()}
+                  className='flex flex-wrap items-center justify-between gap-2 pb-3'
+                >
+                  <p className='text-muted-foreground text-[13px]'>
+                    No notices, a source that needs you will show one here
+                  </p>
+                  <Button
+                    variant='ghost'
+                    size='sm'
+                    onClick={showDismissed}
+                    className='text-muted-foreground'
+                  >
+                    <RotateCcwIcon />
+                    Show dismissed notices
+                  </Button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </AnimatedSize>
         <section id={SOURCES_ANCHOR} className='mt-7 scroll-mt-6'>
           <h2 className='text-sm font-medium'>Sources</h2>
           <ul className='bg-card hairline-ring ring-border hairline-divide-y divide-border mt-3 overflow-clip rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>

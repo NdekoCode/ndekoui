@@ -9,7 +9,7 @@ import {
 } from 'motion/react';
 import { useRef } from 'react';
 
-import { XIcon } from '@/registry/ndeko/lib/icons';
+import { XIcon, type Icon } from '@/registry/ndeko/lib/icons';
 import { CONTROL_RECIPE } from '@/registry/ndeko/lib/recipes';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Chip } from '@/registry/ndeko/ui/chip';
@@ -31,6 +31,18 @@ const CHIP_FADE: Variants = {
   shown: { opacity: 1 },
 };
 
+export type ChipLook = { color: string; icon: Icon | null; hint: string };
+
+const NEUTRAL_LOOK: ChipLook = {
+  color: 'var(--muted-foreground)',
+  icon: null,
+  hint: '',
+};
+
+function neutralLook() {
+  return NEUTRAL_LOOK;
+}
+
 function chipVariantsOf(shouldReduceMotion: boolean | null) {
   if (shouldReduceMotion) {
     return CHIP_FADE;
@@ -47,6 +59,8 @@ type EmailChipsFieldProps = {
   onDraftChange: (draft: string) => void;
   onCommit: (text: string) => void;
   onRemove: (email: string) => void;
+  /** Tints each chip by what sending will do with its address. */
+  lookOf?: (email: string) => ChipLook;
 };
 
 /** Addresses become chips on Enter, comma or space; a pasted list splits into chips. */
@@ -59,6 +73,7 @@ export function EmailChipsField({
   onDraftChange,
   onCommit,
   onRemove,
+  lookOf = neutralLook,
 }: EmailChipsFieldProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const shouldReduceMotion = useReducedMotion();
@@ -116,6 +131,10 @@ export function EmailChipsField({
     >
       <AnimatePresence initial={false}>
         {emails.map((email) => {
+          const look = lookOf(email);
+          const ChipGlyph = look.icon;
+          const hasHint = look.hint.length > 0;
+
           function removeEmail() {
             onRemove(email);
             focusInput();
@@ -133,10 +152,13 @@ export function EmailChipsField({
               className='flex'
             >
               <Chip
-                color='var(--muted-foreground)'
+                color={look.color}
+                title={look.hint}
                 className='h-6 max-w-56 gap-1 pr-0.5 pl-2 text-[13px]'
               >
+                {ChipGlyph && <ChipGlyph strokeWidth={2.25} />}
                 <span className='truncate'>{email}</span>
+                {hasHint && <span className='sr-only'>{look.hint}</span>}
                 <button
                   type='button'
                   aria-label={`Remove ${email}`}

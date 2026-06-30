@@ -1,8 +1,10 @@
 'use client';
 
+import { AnimatePresence, motion, type Transition } from 'motion/react';
 import { useId, useState } from 'react';
 
 import { MailIcon, UserRoundPlusIcon } from '@/registry/ndeko/lib/icons';
+import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Chip } from '@/registry/ndeko/ui/chip';
 import {
@@ -22,6 +24,10 @@ import {
 } from './data';
 import { InvitationList, LIST_SURFACE } from './invitation-list';
 import { InviteSheet, type InviteTab } from './invite-sheet';
+
+const SWITCH_IN: Transition = { duration: 0.2, ease: [0.23, 1, 0.32, 1] };
+
+const SWITCH_OUT: Transition = { duration: 0.12, ease: [0.23, 1, 0.32, 1] };
 
 function countLabel(count: number, singular: string, plural: string) {
   if (count === 1) {
@@ -123,26 +129,48 @@ export default function Team03() {
               {invitations.length}
             </span>
           </div>
-          {hasInvitations && (
-            <InvitationList
-              invitations={invitations}
-              onResend={resend}
-              onRevoke={revoke}
-            />
-          )}
-          {!hasInvitations && (
-            <div className='hairline-border border-foreground/20 flex flex-col items-center gap-3 rounded-xl border-dashed px-4 py-10 text-center'>
-              <div className='flex flex-col gap-1'>
-                <p className='text-sm font-medium'>No pending invitation</p>
-                <p className='text-muted-foreground text-[13px]'>
-                  Everyone you invited has joined or the invitation was revoked
-                </p>
-              </div>
-              <Button variant='outline' onClick={openInvite}>
-                Invite people
-              </Button>
+          <AnimatedSize>
+            <div className='relative'>
+              <AnimatePresence mode='popLayout' initial={false}>
+                {hasInvitations && (
+                  <motion.div
+                    key='list'
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1, transition: SWITCH_IN }}
+                    exit={{ opacity: 0, transition: SWITCH_OUT }}
+                  >
+                    <InvitationList
+                      invitations={invitations}
+                      onResend={resend}
+                      onRevoke={revoke}
+                    />
+                  </motion.div>
+                )}
+                {!hasInvitations && (
+                  <motion.div
+                    key='empty'
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1, transition: SWITCH_IN }}
+                    exit={{ opacity: 0, transition: SWITCH_OUT }}
+                    className='hairline-border border-foreground/20 flex flex-col items-center gap-3 rounded-xl border-dashed px-4 py-10 text-center'
+                  >
+                    <div className='flex flex-col gap-1'>
+                      <p className='text-sm font-medium'>
+                        No pending invitation
+                      </p>
+                      <p className='text-muted-foreground text-[13px]'>
+                        Everyone you invited has joined or the invitation was
+                        revoked
+                      </p>
+                    </div>
+                    <Button variant='outline' onClick={openInvite}>
+                      Invite people
+                    </Button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-          )}
+          </AnimatedSize>
         </section>
         <section
           aria-labelledby={membersHeadingId}

@@ -47,4 +47,18 @@ export const manifest: BlockManifest = [
     ],
     previewHeight: 760,
   },
+  {
+    name: 'team-04',
+    title: 'Team overview',
+    description:
+      'A team page with its figures for this week or last, the members with their current task and hours, and the activity of the person picked.',
+    files: [
+      'index.tsx',
+      'member-list.tsx',
+      'activity-feed.tsx',
+      'parts.tsx',
+      'data.ts',
+    ],
+    previewHeight: 820,
+  },
 ];
