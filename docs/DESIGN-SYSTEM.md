@@ -58,6 +58,8 @@ Rules:
 
 An element without relief has no shadow at all. In dark mode the black shadows almost vanish on purpose: relief comes from the hairline.
 
+Modal layers (dialog, alert dialog, sheet, command palette) sit on `bg-black/40 backdrop-blur-xs`: the page behind stays recognisable but out of focus, and the backdrop fades with the layer. Popovers, menus, selects and tooltips never blur what is behind them, because the page stays in use while they are open.
+
 ## 5. Typography
 
 Components inherit the font of the app. The site and the previews use the system UI stack. Weight stops at `font-semibold`; no `tracking-*` in new code; `text-balance` on headings; `tabular-nums` on every aligned number.

@@ -47,4 +47,4 @@ export const MENU_SHORTCUT =
   'ml-auto text-xs tabular-nums tracking-normal text-muted-foreground';
 
 export const OVERLAY_BACKDROP =
-  'fixed inset-0 z-50 bg-black/40 transition-opacity duration-200 data-starting-style:opacity-0 data-ending-style:opacity-0';
+  'fixed inset-0 z-50 bg-black/40 backdrop-blur-xs transition-opacity duration-200 data-starting-style:opacity-0 data-ending-style:opacity-0';

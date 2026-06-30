@@ -197,7 +197,7 @@ function FeatureModal({
   return (
     <Dialog.Portal keepMounted>
       <Dialog.Backdrop
-        className='fixed inset-0 z-50 bg-black/40'
+        className='fixed inset-0 z-50 bg-black/40 backdrop-blur-xs'
         render={
           <motion.div
             initial={{ opacity: 0 }}
