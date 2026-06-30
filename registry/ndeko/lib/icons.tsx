@@ -1,5 +1,6 @@
 import {
   Add01Icon as PlusGlyph,
+  AlarmClockIcon as AlarmClockGlyph,
   Alert02Icon as TriangleAlertGlyph,
   AlertCircleIcon as AlertCircleGlyph,
   AlertCircleIcon as CircleAlertGlyph,
@@ -14,17 +15,19 @@ import {
   ArrowRight02Icon as ArrowRightGlyph,
   ArrowRightToLineIcon as ArrowRightToLineGlyph,
   ArrowUp01Icon as ChevronUpGlyph,
+  ArrowUp02Icon as ArrowUpGlyph,
   ArrowUpRight01Icon as ArrowUpRightGlyph,
   AtSignIcon as AtSignGlyph,
   Attachment01Icon as PaperclipGlyph,
   BlocksIcon as BlocksGlyph,
   BoltIcon as BoltGlyph,
   Book01Icon as BookGlyph,
-  BookOpen01Icon as BookOpenGlyph,
   Bookmark01Icon as BookmarkGlyph,
+  BookOpen01Icon as BookOpenGlyph,
   BotMessageSquareIcon as BotMessageSquareGlyph,
   BoxIcon as BoxGlyph,
   BrainIcon as BrainGlyph,
+  Briefcase01Icon as BriefcaseGlyph,
   BrushIcon as BrushGlyph,
   Calendar03Icon as CalendarGlyph,
   CalendarCheckIn01Icon as CalendarCheckGlyph,
@@ -39,6 +42,7 @@ import {
   CircleFadingPlusIcon as CircleFadingPlusGlyph,
   CircleIcon as CircleGlyph,
   Clock01Icon as ClockGlyph,
+  CloudIcon as CloudGlyph,
   CloudUploadIcon as UploadCloudGlyph,
   ClubIcon as ClubGlyph,
   CodeIcon as CodeGlyph,
@@ -65,10 +69,10 @@ import {
   File01Icon as FileGlyph,
   FileArchiveIcon as FileArchiveGlyph,
   FileInputIcon as FileInputGlyph,
+  Files01Icon as FilesGlyph,
   FileSpreadsheetIcon as FileSpreadsheetGlyph,
   FileTextIcon as FileTextGlyph,
   FileUpIcon as FileUpGlyph,
-  Files01Icon as FilesGlyph,
   Film02Icon as FilmGlyph,
   FilterIcon as FilterGlyph,
   FlipHorizontalIcon as FlipHorizontalGlyph,
@@ -80,9 +84,9 @@ import {
   GaugeIcon as GaugeGlyph,
   GitCompareIcon as GitCompareGlyph,
   GitForkIcon as GitForkGlyph,
+  Github01Icon as GithubGlyph,
   GitMergeIcon as GitMergeGlyph,
   GitPullRequestIcon as GitPullRequestGlyph,
-  Github01Icon as GithubGlyph,
   Globe02Icon as GlobeGlyph,
   GoogleIcon as GoogleBrandGlyph,
   HashIcon as HashGlyph,
@@ -92,6 +96,7 @@ import {
   HistoryIcon as HistoryGlyph,
   Home01Icon as HomeGlyph,
   Home01Icon as HouseGlyph,
+  Idea01Icon as LightbulbGlyph,
   Image01Icon as ImageGlyph,
   ImagePlusIcon as ImagePlusGlyph,
   ImageUpIcon as ImageUpGlyph,
@@ -127,16 +132,16 @@ import {
   MoreHorizontalIcon as EllipsisGlyph,
   NetworkIcon as NetworkGlyph,
   NewTwitterIcon as TwitterXGlyph,
-  Notification03Icon as BellGlyph,
+  Notification01Icon as BellGlyph,
+  NotificationOff01Icon as BellOffGlyph,
   PanelsTopLeftIcon as PanelsTopLeftGlyph,
+  PauseIcon as PauseGlyph,
   PaypalIcon as PaypalBrandGlyph,
   PencilEdit02Icon as PencilGlyph,
   PhoneIcon as PhoneGlyph,
   PinIcon as PinGlyph,
-  PlayIcon as PlayGlyph,
-  PauseIcon as PauseGlyph,
-  CloudIcon as CloudGlyph,
   PinOffIcon as PinOffGlyph,
+  PlayIcon as PlayGlyph,
   PowerIcon as PowerGlyph,
   PowerOffIcon as PowerOffGlyph,
   PrinterIcon as PrinterGlyph,
@@ -157,6 +162,7 @@ import {
   ShieldCheckIcon as ShieldCheckGlyph,
   ShuffleIcon as ShuffleGlyph,
   SmartphoneIcon as SmartphoneGlyph,
+  SmileIcon as SmileGlyph,
   SourceCodeIcon as SourceCodeGlyph,
   SpadesIcon as SpadeGlyph,
   SparklesIcon as SparklesGlyph,
@@ -172,6 +178,7 @@ import {
   TextQuoteIcon as TextQuoteGlyph,
   ThumbsUpIcon as ThumbsUpGlyph,
   Tick02Icon as CheckGlyph,
+  TickDouble01Icon as CheckCheckGlyph,
   TicketPercentIcon as TicketPercentGlyph,
   TypeIcon as TypeGlyph,
   UnfoldMoreIcon as ChevronsUpDownGlyph,
@@ -180,6 +187,7 @@ import {
   UserGroupIcon as UsersGlyph,
   UserIcon as UserGlyph,
   UserPenIcon as UserPenGlyph,
+  UserRemove01Icon as UserMinusGlyph,
   UserRoundIcon as UserRoundGlyph,
   UserRoundPlusIcon as UserRoundPlusGlyph,
   UsersRoundIcon as UsersRoundGlyph,
@@ -226,6 +234,7 @@ function createIcon(glyph: IconSvgElement, displayName: string): Icon {
   return NamedIcon;
 }
 
+export const AlarmClockIcon = createIcon(AlarmClockGlyph, 'AlarmClockIcon');
 export const AlertCircleIcon = createIcon(AlertCircleGlyph, 'AlertCircleIcon');
 export const AlignCenterIcon = createIcon(AlignCenterGlyph, 'AlignCenterIcon');
 export const AlignJustifyIcon = createIcon(
@@ -246,6 +255,7 @@ export const ArrowLeftToLineIcon = createIcon(
   'ArrowLeftToLineIcon'
 );
 export const ArrowRightIcon = createIcon(ArrowRightGlyph, 'ArrowRightIcon');
+export const ArrowUpIcon = createIcon(ArrowUpGlyph, 'ArrowUpIcon');
 export const ArrowRightToLineIcon = createIcon(
   ArrowRightToLineGlyph,
   'ArrowRightToLineIcon'
@@ -256,6 +266,7 @@ export const ArrowUpRightIcon = createIcon(
 );
 export const AtSignIcon = createIcon(AtSignGlyph, 'AtSignIcon');
 export const BellIcon = createIcon(BellGlyph, 'BellIcon');
+export const BellOffIcon = createIcon(BellOffGlyph, 'BellOffIcon');
 export const BlocksIcon = createIcon(BlocksGlyph, 'BlocksIcon');
 export const BoltIcon = createIcon(BoltGlyph, 'BoltIcon');
 export const BookIcon = createIcon(BookGlyph, 'BookIcon');
@@ -267,6 +278,7 @@ export const BotMessageSquareIcon = createIcon(
 );
 export const BoxIcon = createIcon(BoxGlyph, 'BoxIcon');
 export const BrainIcon = createIcon(BrainGlyph, 'BrainIcon');
+export const BriefcaseIcon = createIcon(BriefcaseGlyph, 'BriefcaseIcon');
 export const BrushIcon = createIcon(BrushGlyph, 'BrushIcon');
 export const CalendarCheckIcon = createIcon(
   CalendarCheckGlyph,
@@ -274,6 +286,7 @@ export const CalendarCheckIcon = createIcon(
 );
 export const CalendarIcon = createIcon(CalendarGlyph, 'CalendarIcon');
 export const ChartLineIcon = createIcon(ChartLineGlyph, 'ChartLineIcon');
+export const CheckCheckIcon = createIcon(CheckCheckGlyph, 'CheckCheckIcon');
 export const CheckIcon = createIcon(CheckGlyph, 'CheckIcon');
 export const ChevronDownIcon = createIcon(ChevronDownGlyph, 'ChevronDownIcon');
 export const ChevronFirstIcon = createIcon(
@@ -455,6 +468,7 @@ export const PinIcon = createIcon(PinGlyph, 'PinIcon');
 export const PlayIcon = createIcon(PlayGlyph, 'PlayIcon');
 export const PauseIcon = createIcon(PauseGlyph, 'PauseIcon');
 export const CloudIcon = createIcon(CloudGlyph, 'CloudIcon');
+export const LightbulbIcon = createIcon(LightbulbGlyph, 'LightbulbIcon');
 export const PinOffIcon = createIcon(PinOffGlyph, 'PinOffIcon');
 export const PlusIcon = createIcon(PlusGlyph, 'PlusIcon');
 export const PowerIcon = createIcon(PowerGlyph, 'PowerIcon');
@@ -477,6 +491,7 @@ export const ShareIcon = createIcon(ShareGlyph, 'ShareIcon');
 export const ShieldCheckIcon = createIcon(ShieldCheckGlyph, 'ShieldCheckIcon');
 export const ShuffleIcon = createIcon(ShuffleGlyph, 'ShuffleIcon');
 export const SmartphoneIcon = createIcon(SmartphoneGlyph, 'SmartphoneIcon');
+export const SmileIcon = createIcon(SmileGlyph, 'SmileIcon');
 export const SourceCodeIcon = createIcon(SourceCodeGlyph, 'SourceCodeIcon');
 export const SpadeIcon = createIcon(SpadeGlyph, 'SpadeIcon');
 export const SparklesIcon = createIcon(SparklesGlyph, 'SparklesIcon');
@@ -505,6 +520,7 @@ export const TypeIcon = createIcon(TypeGlyph, 'TypeIcon');
 export const UploadCloudIcon = createIcon(UploadCloudGlyph, 'UploadCloudIcon');
 export const UploadIcon = createIcon(UploadGlyph, 'UploadIcon');
 export const UserIcon = createIcon(UserGlyph, 'UserIcon');
+export const UserMinusIcon = createIcon(UserMinusGlyph, 'UserMinusIcon');
 export const UserPenIcon = createIcon(UserPenGlyph, 'UserPenIcon');
 export const UserRoundIcon = createIcon(UserRoundGlyph, 'UserRoundIcon');
 export const UserRoundPlusIcon = createIcon(
