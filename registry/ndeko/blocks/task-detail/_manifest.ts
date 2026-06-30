@@ -37,4 +37,39 @@ export const manifest: BlockManifest = [
     ],
     previewHeight: 760,
   },
+  {
+    name: 'task-detail-03',
+    title: 'Task with work tabs',
+    description:
+      'A task page whose sub-tasks, comments and activity share one card behind a segmented switch, each count rolling as you check, add and comment',
+    files: [
+      'index.tsx',
+      'subtask-panel.tsx',
+      'comment-panel.tsx',
+      'activity-panel.tsx',
+      'comment-composer.tsx',
+      'work-glyphs.tsx',
+      'motion-parts.tsx',
+      'work-model.ts',
+      'data.ts',
+    ],
+    previewHeight: 760,
+  },
+  {
+    name: 'task-detail-04',
+    title: 'Task with a conversation pane',
+    description:
+      'The task beside a pinned conversation where comments and changes interleave, a teammate types an answer and the panes become a switch on phones',
+    files: [
+      'index.tsx',
+      'conversation-pane.tsx',
+      'subtask-panel.tsx',
+      'comment-composer.tsx',
+      'work-glyphs.tsx',
+      'motion-parts.tsx',
+      'work-model.ts',
+      'data.ts',
+    ],
+    previewHeight: 760,
+  },
 ];
