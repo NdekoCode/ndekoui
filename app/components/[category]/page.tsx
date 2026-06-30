@@ -71,8 +71,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             {category.name}
           </h1>
           <p className='text-muted-foreground max-w-xl text-[13px] text-balance'>
-            Redrawn from the Origin UI catalogue on Ndeko UI primitives. Open
-            the code of any of them to copy it or the command that installs it.
+            Every variant is built on Ndeko UI primitives and its design
+            language. Open the code of any of them to copy it or the command
+            that installs it.
           </p>
         </header>
         <nav

@@ -32,7 +32,7 @@ const GROUPS: QuestionGroup[] = [
         id: 'origin',
         question: 'Where do the components come from?',
         answer:
-          'The motion components started from Motion Primitives and the compositions are redrawn from the MIT edition of Origin UI. The chat pieces adapt prompt-kit. All three are credited in the repository.',
+          'They are built here, on our own primitives, data and design language. Open-source libraries such as Motion Primitives, Origin UI, prompt-kit and UI Layouts gave some of the starting ideas, and they are credited in the repository.',
       },
     ],
   },
