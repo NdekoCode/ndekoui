@@ -2467,7 +2467,7 @@
       "name": "motion-text-scramble",
       "type": "registry:component",
       "title": "Text scramble",
-      "description": "A component that creates a scrambling text effect during transitions.",
+      "description": "Text that scrambles into place on mount, when it scrolls into view or on hover of its link.",
       "dependencies": [
         "motion"
       ],
@@ -2571,6 +2571,376 @@
       ]
     },
     {
+      "name": "motion-safari",
+      "type": "registry:component",
+      "title": "Safari",
+      "description": "A macOS browser window drawn in CSS around a picture, a video or live UI, with a chrome that follows the theme.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/safari.tsx",
+          "type": "registry:component",
+          "target": "components/core/safari.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-iphone",
+      "type": "registry:component",
+      "title": "Iphone",
+      "description": "A modern iPhone drawn in SVG and CSS, with a titanium frame, a Dynamic Island and a status bar that follows the screen.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/iphone.tsx",
+          "type": "registry:component",
+          "target": "components/core/iphone.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-android",
+      "type": "registry:component",
+      "title": "Android",
+      "description": "An unbranded Android phone drawn in SVG and CSS, with a punch-hole camera, thin even bezels and a gesture bar.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/android.tsx",
+          "type": "registry:component",
+          "target": "components/core/android.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-text-3d-flip",
+      "type": "registry:component",
+      "title": "Text 3d flip",
+      "description": "Letters that turn over like small blocks, one after another, when the link or button they sit in is hovered or focused.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/text-3d-flip.tsx",
+          "type": "registry:component",
+          "target": "components/core/text-3d-flip.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-highlighter",
+      "type": "registry:component",
+      "title": "Highlighter",
+      "description": "Hand-drawn marks on text, a marker band, an underline, a box, a circle or a strike, drawn in when the text comes into view.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/highlighter.tsx",
+          "type": "registry:component",
+          "target": "components/core/highlighter.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-word-rotate",
+      "type": "registry:component",
+      "title": "Word rotate",
+      "description": "Phrases on a drum that turns on a timer, with the sentence around them sliding to the new width.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/word-rotate.tsx",
+          "type": "registry:component",
+          "target": "components/core/word-rotate.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-scroll-velocity",
+      "type": "registry:component",
+      "title": "Scroll velocity",
+      "description": "Stacked rows of text or pictures that loop sideways, speed up with the scroll, turn around when it scrolls up and lean into their speed.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/scroll-velocity.tsx",
+          "type": "registry:component",
+          "target": "components/core/scroll-velocity.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-globe",
+      "type": "registry:component",
+      "title": "Globe",
+      "description": "A WebGL globe in the theme colours that turns on its own, follows a drag with momentum and glides to a chosen city.",
+      "dependencies": [
+        "cobe",
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/globe.tsx",
+          "type": "registry:component",
+          "target": "components/core/globe.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-dotted-map",
+      "type": "registry:component",
+      "title": "Dotted map",
+      "description": "A world map drawn in dots from a pre-generated grid, with markers, labels and a slow pulse.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/dotted-map.tsx",
+          "type": "registry:component",
+          "target": "components/core/dotted-map.tsx"
+        },
+        {
+          "path": "components/core/dotted-map-points.ts",
+          "type": "registry:component",
+          "target": "components/core/dotted-map-points.ts"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-orbiting-circles",
+      "type": "registry:component",
+      "title": "Orbiting circles",
+      "description": "Icons or avatars on concentric orbits around a centre, driven by CSS, with radius, speed, direction and a pause.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/orbiting-circles.tsx",
+          "type": "registry:component",
+          "target": "components/core/orbiting-circles.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-lens",
+      "type": "registry:component",
+      "title": "Lens",
+      "description": "A round magnifier that follows the pointer over an image or any content, and moves with the arrow keys when focused.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/lens.tsx",
+          "type": "registry:component",
+          "target": "components/core/lens.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-border-beam",
+      "type": "registry:component",
+      "title": "Border beam",
+      "description": "A beam in the primary colour that travels around the border of a card, its tail fading behind it and bending round the corners.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/border-beam.tsx",
+          "type": "registry:component",
+          "target": "components/core/border-beam.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-shine-border",
+      "type": "registry:component",
+      "title": "Shine border",
+      "description": "A slanted glint that sweeps across the border of a card, on a slow loop or once on hover and keyboard focus.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/shine-border.tsx",
+          "type": "registry:component",
+          "target": "components/core/shine-border.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-magic-card",
+      "type": "registry:component",
+      "title": "Magic card",
+      "description": "A card whose edge lights up on the side the pointer comes from, before the pointer reaches it.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/magic-card.tsx",
+          "type": "registry:component",
+          "target": "components/core/magic-card.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-confetti",
+      "type": "registry:component",
+      "title": "Confetti",
+      "description": "A canvas burst of confetti from a button or a function call, in the brand colours and with no package.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/confetti.tsx",
+          "type": "registry:component",
+          "target": "components/core/confetti.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-post-card",
+      "type": "registry:component",
+      "title": "Post card",
+      "description": "A social post card built from static props: author, text, pictures, date and counts. Nothing is fetched.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/post-card.tsx",
+          "type": "registry:component",
+          "target": "components/core/post-card.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
       "name": "motion-magnetic",
       "type": "registry:component",
       "title": "Magnetic",
@@ -2651,7 +3021,7 @@
       "name": "motion-dock",
       "type": "registry:component",
       "title": "Dock",
-      "description": "A macOS-style dock component with scaling and movement effects.",
+      "description": "A macOS-style dock of buttons or links that magnify near the pointer, with labels and separators.",
       "dependencies": [
         "motion"
       ],

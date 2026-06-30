@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "motion-orbiting-circles",
+  "title": "Orbiting circles",
+  "description": "Icons or avatars on concentric orbits around a centre, driven by CSS, with radius, speed, direction and a pause.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/core/orbiting-circles.tsx",
+      "content": "import { Children } from 'react';\n\nimport { cn } from '@/lib/utils';\n\nconst FULL_TURN = 360;\n\nfunction orbitDurationOf(duration: number, speed: number) {\n  const safeSpeed = Math.max(speed, 0.01);\n  const seconds = duration / safeSpeed;\n  return `${seconds}s`;\n}\n\nfunction slotAngleOf(index: number, count: number, startAngle: number) {\n  const step = FULL_TURN / count;\n  const angle = startAngle + step * index;\n  return (angle * Math.PI) / 180;\n}\n\nfunction slotPositionOf(angle: number, radius: number) {\n  const x = Math.cos(angle) * radius;\n  const y = Math.sin(angle) * radius;\n  return {\n    left: `calc(50% + ${x}px)`,\n    top: `calc(50% + ${y}px)`,\n  };\n}\n\nconst RING_DIRECTION = {\n  forward: 'normal',\n  backward: 'reverse',\n} as const;\n\nconst ITEM_DIRECTION = {\n  forward: 'reverse',\n  backward: 'normal',\n} as const;\n\nfunction playStateOf(paused: boolean) {\n  if (paused) {\n    return 'paused';\n  }\n  return 'running';\n}\n\nfunction directionOf(reverse: boolean) {\n  if (reverse) {\n    return 'backward';\n  }\n  return 'forward';\n}\n\nexport type OrbitingCirclesProps = {\n  children: React.ReactNode;\n  radius?: number;\n  duration?: number;\n  speed?: number;\n  reverse?: boolean;\n  startAngle?: number;\n  iconSize?: number;\n  path?: boolean;\n  paused?: boolean;\n  className?: string;\n};\n\nexport function OrbitingCircles({\n  children,\n  radius = 120,\n  duration = 24,\n  speed = 1,\n  reverse = false,\n  startAngle = -90,\n  iconSize = 40,\n  path = true,\n  paused = false,\n  className,\n}: OrbitingCirclesProps) {\n  const items = Children.toArray(children);\n  const direction = directionOf(reverse);\n  const diameter = radius * 2;\n  const animationDuration = orbitDurationOf(duration, speed);\n  const animationPlayState = playStateOf(paused);\n\n  return (\n    <div\n      style={{\n        width: diameter,\n        height: diameter,\n        animationDuration,\n        animationDirection: RING_DIRECTION[direction],\n        animationPlayState,\n      }}\n      className={cn(\n        'pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-spin rounded-full motion-reduce:animate-none',\n        path && 'hairline-ring ring-border',\n        className\n      )}\n    >\n      {items.map((item, index) => {\n        const angle = slotAngleOf(index, items.length, startAngle);\n        const position = slotPositionOf(angle, radius);\n\n        return (\n          <div\n            key={index}\n            style={{\n              ...position,\n              width: iconSize,\n              height: iconSize,\n              animationDuration,\n              animationDirection: ITEM_DIRECTION[direction],\n              animationPlayState,\n            }}\n            className='pointer-events-auto absolute flex -translate-x-1/2 -translate-y-1/2 animate-spin items-center justify-center motion-reduce:animate-none'\n          >\n            {item}\n          </div>\n        );\n      })}\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/core/orbiting-circles.tsx"
+    }
+  ],
+  "categories": [
+    "motion"
+  ],
+  "type": "registry:component"
+}
