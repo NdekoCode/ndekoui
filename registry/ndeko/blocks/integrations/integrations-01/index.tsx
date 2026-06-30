@@ -21,6 +21,7 @@ import {
   INTEGRATIONS,
   PAGE,
   VIEWS,
+  nameOf,
   type Integration,
   type ViewId,
 } from './data';
@@ -61,7 +62,8 @@ function matchesQuery(integration: Integration, query: string) {
     return true;
   }
   const category = CATEGORIES[integration.category].label;
-  const haystack = `${integration.name} ${integration.description} ${category}`;
+  const name = nameOf(integration);
+  const haystack = `${name} ${integration.description} ${category}`;
   const lowered = haystack.toLowerCase();
   return lowered.includes(needle);
 }

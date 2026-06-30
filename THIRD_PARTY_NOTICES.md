@@ -90,6 +90,10 @@ SOFTWARE.
 
 `hooks/usePreventScroll.tsx` is adapted from `usePreventScroll` in React Aria, part of React Spectrum (<https://github.com/adobe/react-spectrum>), Copyright 2020 Adobe. It is licensed under the Apache License, Version 2.0; the full text is in `LICENSES/Apache-2.0.txt`. The file was modified for Ndeko UI: types, formatting and lint fixes.
 
+## Simple Icons
+
+The brand marks in `registry/ndeko/lib/brand-logos.tsx`, and the v0, Cursor and Claude marks of the site's Open in menu (`app/_site/open-in/tool-marks.tsx`), are SVG paths and colours taken from Simple Icons 16.33.0 (<https://github.com/simple-icons/simple-icons>), released under CC0 1.0 Universal. Every mark is a trademark of its owner. It is shown only to name the tool a block connects to, and its use stays subject to that brand's own guidelines. No brand endorses Ndeko UI.
+
 ## Dependencies
 
 These are installed as packages and keep their own licences:

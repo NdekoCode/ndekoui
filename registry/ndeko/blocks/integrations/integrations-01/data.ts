@@ -1,25 +1,13 @@
-import {
-  CreditCardIcon,
-  FileTextIcon,
-  FolderIcon,
-  GitMergeIcon,
-  type Icon,
-  MailIcon,
-  MessageCircleIcon,
-  ServerIcon,
-  WalletIcon,
-  ZapIcon,
-} from '@/registry/ndeko/lib/icons';
+import { BRANDS, type BrandSlug } from '@/registry/ndeko/lib/brand-logos';
 
-export type CategoryId = 'messaging' | 'files' | 'finance' | 'developer';
+export type CategoryId = 'communication' | 'files' | 'finance' | 'developer';
 
 export type ViewId = 'all' | 'connected' | CategoryId;
 
 export type Integration = {
   id: string;
-  name: string;
+  brand: BrandSlug;
   category: CategoryId;
-  icon: Icon;
   description: string;
   /** The first attempt asks for an owner's approval, so the block can show its error state. */
   needsApproval?: boolean;
@@ -31,18 +19,18 @@ export const PAGE = {
     'Connect the tools Fernhollow Studio already uses. Each one only reads what its card says.',
 };
 
-export const CATEGORIES: Record<CategoryId, { label: string; hue: string }> = {
-  messaging: { label: 'Messaging', hue: 'hsl(199 84% 46%)' },
-  files: { label: 'Files', hue: 'hsl(239 70% 62%)' },
-  finance: { label: 'Finance', hue: 'hsl(152 56% 38%)' },
-  developer: { label: 'Developer', hue: 'hsl(215 18% 44%)' },
+export const CATEGORIES: Record<CategoryId, { label: string }> = {
+  communication: { label: 'Communication' },
+  files: { label: 'Files and docs' },
+  finance: { label: 'Finance' },
+  developer: { label: 'Developer' },
 };
 
 export const VIEWS: { id: ViewId; label: string }[] = [
   { id: 'all', label: 'All' },
   { id: 'connected', label: 'Connected' },
-  { id: 'messaging', label: 'Messaging' },
-  { id: 'files', label: 'Files' },
+  { id: 'communication', label: 'Communication' },
+  { id: 'files', label: 'Files and docs' },
   { id: 'finance', label: 'Finance' },
   { id: 'developer', label: 'Developer' },
 ];
@@ -51,74 +39,91 @@ export const APPROVER = 'Rosa Ilunga';
 
 export const INTEGRATIONS: Integration[] = [
   {
-    id: 'chatterpine',
-    name: 'Chatterpine',
-    category: 'messaging',
-    icon: MessageCircleIcon,
+    id: 'element',
+    brand: 'element',
+    category: 'communication',
     description:
-      'Posts task updates to a channel and lets people reply from the thread.',
+      'Posts task updates to an Element room and links each one back to its task.',
   },
   {
-    id: 'letterkiln',
-    name: 'Letterkiln',
-    category: 'messaging',
-    icon: MailIcon,
+    id: 'gmail',
+    brand: 'gmail',
+    category: 'communication',
     description:
-      'Turns emails sent to a project address into tasks with their attachments.',
+      'Turns emails sent to a project address into tasks, attachments included.',
   },
   {
-    id: 'folderwell',
-    name: 'Folderwell',
+    id: 'zoom',
+    brand: 'zoom',
+    category: 'communication',
+    description:
+      'Adds a call link to a task and logs the call on its timeline when it ends.',
+  },
+  {
+    id: 'google-drive',
+    brand: 'googledrive',
     category: 'files',
-    icon: FolderIcon,
-    description: 'Attaches files from shared folders without copying them.',
+    description: 'Attaches files from shared drives without copying them.',
   },
   {
-    id: 'pagebarrow',
-    name: 'Pagebarrow',
+    id: 'notion',
+    brand: 'notion',
     category: 'files',
-    icon: FileTextIcon,
-    description: 'Links documents to tasks and keeps their titles in sync.',
+    description: 'Links pages to tasks and keeps their titles in sync.',
   },
   {
-    id: 'coinharbor',
-    name: 'Coinharbor',
+    id: 'dropbox',
+    brand: 'dropbox',
+    category: 'files',
+    description:
+      'Saves the files people drop on a task into the project’s folder.',
+  },
+  {
+    id: 'quickbooks',
+    brand: 'quickbooks',
     category: 'finance',
-    icon: WalletIcon,
     description:
       'Sends approved hours to draft invoices, one line per project.',
     needsApproval: true,
   },
   {
-    id: 'tallyfern',
-    name: 'Tallyfern',
+    id: 'stripe',
+    brand: 'stripe',
     category: 'finance',
-    icon: CreditCardIcon,
-    description: 'Matches card payments with the expenses people log.',
+    description:
+      'Marks a Fernhollow invoice as paid once its payment comes through.',
   },
   {
-    id: 'mergemoth',
-    name: 'Mergemoth',
+    id: 'xero',
+    brand: 'xero',
+    category: 'finance',
+    description: 'Copies logged expenses into your books with their receipts.',
+  },
+  {
+    id: 'github',
+    brand: 'github',
     category: 'developer',
-    icon: GitMergeIcon,
     description:
       'Closes a task when the pull request that mentions it is merged.',
   },
   {
-    id: 'buildlark',
-    name: 'Buildlark',
+    id: 'linear',
+    brand: 'linear',
     category: 'developer',
-    icon: ServerIcon,
-    description: 'Shows the latest build result on every linked task.',
+    description:
+      'Keeps the status of an issue and its linked task the same, both ways.',
   },
   {
-    id: 'signalreed',
-    name: 'Signalreed',
+    id: 'sentry',
+    brand: 'sentry',
     category: 'developer',
-    icon: ZapIcon,
     description:
-      'Sends task events to an address you choose, signed with your key.',
+      'Opens a task for a new error, with a link to the first event.',
   },
 ];
 
-export const INITIALLY_CONNECTED = ['chatterpine', 'mergemoth'];
+export const INITIALLY_CONNECTED = ['element', 'github'];
+
+export function nameOf(integration: Integration) {
+  return BRANDS[integration.brand].title;
+}

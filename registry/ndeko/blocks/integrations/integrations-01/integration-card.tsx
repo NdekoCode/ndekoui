@@ -10,6 +10,7 @@ import {
 } from 'motion/react';
 import { useId } from 'react';
 
+import { BrandLogo } from '@/registry/ndeko/lib/brand-logos';
 import {
   CheckIcon,
   LoaderCircleIcon,
@@ -19,7 +20,7 @@ import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
 
-import { APPROVER, CATEGORIES, type Integration } from './data';
+import { APPROVER, CATEGORIES, nameOf, type Integration } from './data';
 
 export type ConnectState = 'idle' | 'connecting' | 'connected' | 'failed';
 
@@ -219,10 +220,9 @@ export function IntegrationCard({
   const swapVariants = swapVariantsOf(shouldReduceMotion);
   const heightPresence = heightPresenceOf(shouldReduceMotion);
   const category = CATEGORIES[integration.category];
-  const plateStyle = { '--gem': category.hue } as React.CSSProperties;
+  const name = nameOf(integration);
   const isConnected = state === 'connected';
   const isFailed = state === 'failed';
-  const IntegrationIcon = integration.icon;
 
   return (
     <article
@@ -230,16 +230,12 @@ export function IntegrationCard({
       className={cn(CARD_SURFACE, 'flex h-full flex-col p-4')}
     >
       <div className='flex items-center gap-3'>
-        <span
-          aria-hidden='true'
-          style={plateStyle}
-          className='gem-plate flex size-9 shrink-0 items-center justify-center rounded-lg [&_svg]:size-4.5'
-        >
-          <IntegrationIcon />
+        <span className='keycap-3d flex size-9 shrink-0 items-center justify-center rounded-lg'>
+          <BrandLogo brand={integration.brand} className='size-4.5' />
         </span>
         <div className='min-w-0 flex-1'>
           <h3 id={titleId} className='truncate text-sm font-medium'>
-            {integration.name}
+            {name}
           </h3>
           <p className='text-muted-foreground text-xs'>{category.label}</p>
         </div>
@@ -256,15 +252,15 @@ export function IntegrationCard({
             className='text-destructive-ink overflow-hidden text-xs leading-relaxed'
           >
             <span className='block pt-2'>
-              {integration.name} needs a workspace owner to approve it. A
-              request went to {APPROVER}. Try again once they approve.
+              {name} needs a workspace owner to approve it. A request went to{' '}
+              {APPROVER}. Try again once they approve.
             </span>
           </motion.p>
         )}
       </AnimatePresence>
       <div className='mt-auto flex items-center gap-1.5 pt-4'>
         <ConnectButton
-          name={integration.name}
+          name={name}
           state={state}
           errorId={errorId}
           onConnect={onConnect}
@@ -283,7 +279,7 @@ export function IntegrationCard({
               <Button
                 variant='ghost'
                 size='sm'
-                aria-label={`Disconnect ${integration.name}`}
+                aria-label={`Disconnect ${name}`}
                 onClick={onDisconnect}
               >
                 Disconnect

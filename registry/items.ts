@@ -43,6 +43,18 @@ export const foundationItems: RegistryItemDefinition[] = [
     files: [{ path: 'registry/ndeko/lib/recipes.ts', type: 'registry:lib' }],
     categories: ['foundations'],
   },
+  {
+    name: 'brand-logos',
+    type: 'registry:lib',
+    title: 'Brand logos',
+    description:
+      'Marks of the tools the integration blocks show, from Simple Icons, drawn in their brand colour and readable in both themes.',
+    files: [
+      { path: 'registry/ndeko/lib/brand-logos.tsx', type: 'registry:lib' },
+    ],
+    registryDependencies: ['theme', 'utils'],
+    categories: ['foundations'],
+  },
 ];
 
 export const primitiveItems: RegistryItemDefinition[] = [
