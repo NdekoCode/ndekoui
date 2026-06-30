@@ -49,6 +49,7 @@ const MARKETING_GROUPS = new Set([
   'footers',
   'contact',
   'changelog',
+  'legal',
 ]);
 
 const GETTING_STARTED = 'Getting Started';
