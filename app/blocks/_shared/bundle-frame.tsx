@@ -63,7 +63,7 @@ export function BundleFrame({
       </div>
       <div className='flex justify-center'>
         <div
-          className={`${WIDTH_CLASS[width]} bg-background hairline-ring ring-border overflow-hidden rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04)] transition-[width] duration-300 ease-(--ease-out-quint)`}
+          className={`${WIDTH_CLASS[width]} bg-background hairline-ring ring-border overflow-hidden rounded-[calc(var(--radius-2xl)-0.375rem)] shadow-[0_1px_2px_rgb(0_0_0/0.04)] transition-[width] duration-300 ease-(--ease-out-quint)`}
         >
           <iframe
             src={src}

@@ -16,7 +16,7 @@ function SceneFrame({ image }: { image: string }) {
         height={800}
         loading='lazy'
         decoding='async'
-        className='aspect-[3/2] w-full rounded-xl object-cover'
+        className='aspect-[3/2] w-full rounded-[calc(var(--radius-2xl)-0.375rem)] object-cover'
       />
     </div>
   );
