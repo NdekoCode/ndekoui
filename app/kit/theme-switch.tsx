@@ -5,7 +5,7 @@ import { useTheme } from 'next-themes';
 import { MoonIcon, SunIcon } from '@/registry/ndeko/lib/icons';
 import { Tabs, TabsList, TabsTab } from '@/registry/ndeko/ui/tabs';
 
-import { useIsClient } from './use-is-client';
+import { useIsClient } from '@/hooks/useIsClient';
 
 export function ThemeSwitch() {
   const { resolvedTheme, setTheme } = useTheme();

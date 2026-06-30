@@ -44,7 +44,7 @@ import {
 import { Field, FieldLabel } from '@/registry/ndeko/ui/field';
 import { Label, LABEL_RECIPE } from '@/registry/ndeko/ui/label';
 
-import { useIsClient } from '../use-is-client';
+import { useIsClient } from '@/hooks/useIsClient';
 
 type Option = {
   value: string;
