@@ -31,7 +31,7 @@ export default function RootLayout({
         />
       )}
       <body className='font-sans antialiased'>
-        <ThemeProvider attribute='class'>
+        <ThemeProvider attribute='class' disableTransitionOnChange>
           <TooltipProvider>
             <div className='isolate min-h-screen'>{children}</div>
           </TooltipProvider>

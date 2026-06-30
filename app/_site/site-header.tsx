@@ -7,6 +7,8 @@ import { NdekoUILLogo } from '@/components/website/icons/ndekoui-logo';
 import { GithubIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 
+import { ThemeToggle } from './theme-toggle';
+
 const NAVIGATION = [
   { href: '/kit', label: 'Primitives' },
   { href: '/components', label: 'Components' },
@@ -59,7 +61,8 @@ export function SiteHeader() {
             );
           })}
         </nav>
-        <div className='ml-auto'>
+        <div className='ml-auto flex items-center gap-1'>
+          <ThemeToggle />
           <Button
             variant='ghost'
             size='icon-sm'
