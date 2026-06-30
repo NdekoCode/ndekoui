@@ -161,7 +161,7 @@ export const components: ComponentDefinition[] = [
     registryDependencies: [],
     dependencies: ['motion'],
     description:
-      'A component that creates a scrambling text effect during transitions.',
+      'Text that scrambles into place on mount, when it scrolls into view or on hover of its link.',
   },
   {
     name: 'text-shimmer',
@@ -184,6 +184,134 @@ export const components: ComponentDefinition[] = [
     dependencies: ['motion'],
     description:
       'A short label whose changed words roll out and the new ones rise in, in the direction of the change.',
+  },
+  {
+    name: 'safari',
+    path: path.join(__dirname, '../components/core/safari.tsx'),
+    registryDependencies: [],
+    dependencies: ['motion'],
+    description:
+      'A macOS browser window drawn in CSS around a picture, a video or live UI, with a chrome that follows the theme.',
+  },
+  {
+    name: 'iphone',
+    path: path.join(__dirname, '../components/core/iphone.tsx'),
+    registryDependencies: [],
+    dependencies: ['motion'],
+    description:
+      'A modern iPhone drawn in SVG and CSS, with a titanium frame, a Dynamic Island and a status bar that follows the screen.',
+  },
+  {
+    name: 'android',
+    path: path.join(__dirname, '../components/core/android.tsx'),
+    registryDependencies: [],
+    dependencies: ['motion'],
+    description:
+      'An unbranded Android phone drawn in SVG and CSS, with a punch-hole camera, thin even bezels and a gesture bar.',
+  },
+  {
+    name: 'text-3d-flip',
+    path: path.join(__dirname, '../components/core/text-3d-flip.tsx'),
+    registryDependencies: [],
+    dependencies: ['motion'],
+    description:
+      'Letters that turn over like small blocks, one after another, when the link or button they sit in is hovered or focused.',
+  },
+  {
+    name: 'highlighter',
+    path: path.join(__dirname, '../components/core/highlighter.tsx'),
+    registryDependencies: [],
+    dependencies: ['motion'],
+    description:
+      'Hand-drawn marks on text, a marker band, an underline, a box, a circle or a strike, drawn in when the text comes into view.',
+  },
+  {
+    name: 'word-rotate',
+    path: path.join(__dirname, '../components/core/word-rotate.tsx'),
+    registryDependencies: [],
+    dependencies: ['motion'],
+    description:
+      'Phrases on a drum that turns on a timer, with the sentence around them sliding to the new width.',
+  },
+  {
+    name: 'scroll-velocity',
+    path: path.join(__dirname, '../components/core/scroll-velocity.tsx'),
+    registryDependencies: [],
+    dependencies: ['motion'],
+    description:
+      'Stacked rows of text or pictures that loop sideways, speed up with the scroll, turn around when it scrolls up and lean into their speed.',
+  },
+  {
+    name: 'globe',
+    path: path.join(__dirname, '../components/core/globe.tsx'),
+    registryDependencies: [],
+    dependencies: ['cobe', 'motion'],
+    description:
+      'A WebGL globe in the theme colours that turns on its own, follows a drag with momentum and glides to a chosen city.',
+  },
+  {
+    name: 'dotted-map',
+    path: path.join(__dirname, '../components/core/dotted-map.tsx'),
+    registryDependencies: [],
+    dependencies: [],
+    description:
+      'A world map drawn in dots from a pre-generated grid, with markers, labels and a slow pulse.',
+  },
+  {
+    name: 'orbiting-circles',
+    path: path.join(__dirname, '../components/core/orbiting-circles.tsx'),
+    registryDependencies: [],
+    dependencies: [],
+    description:
+      'Icons or avatars on concentric orbits around a centre, driven by CSS, with radius, speed, direction and a pause.',
+  },
+  {
+    name: 'lens',
+    path: path.join(__dirname, '../components/core/lens.tsx'),
+    registryDependencies: [],
+    dependencies: ['motion'],
+    description:
+      'A round magnifier that follows the pointer over an image or any content, and moves with the arrow keys when focused.',
+  },
+  {
+    name: 'border-beam',
+    path: path.join(__dirname, '../components/core/border-beam.tsx'),
+    registryDependencies: [],
+    dependencies: ['motion'],
+    description:
+      'A beam in the primary colour that travels around the border of a card, its tail fading behind it and bending round the corners.',
+  },
+  {
+    name: 'shine-border',
+    path: path.join(__dirname, '../components/core/shine-border.tsx'),
+    registryDependencies: [],
+    dependencies: ['motion'],
+    description:
+      'A slanted glint that sweeps across the border of a card, on a slow loop or once on hover and keyboard focus.',
+  },
+  {
+    name: 'magic-card',
+    path: path.join(__dirname, '../components/core/magic-card.tsx'),
+    registryDependencies: [],
+    dependencies: ['motion'],
+    description:
+      'A card whose edge lights up on the side the pointer comes from, before the pointer reaches it.',
+  },
+  {
+    name: 'confetti',
+    path: path.join(__dirname, '../components/core/confetti.tsx'),
+    registryDependencies: [],
+    dependencies: [],
+    description:
+      'A canvas burst of confetti from a button or a function call, in the brand colours and with no package.',
+  },
+  {
+    name: 'post-card',
+    path: path.join(__dirname, '../components/core/post-card.tsx'),
+    registryDependencies: [],
+    dependencies: [],
+    description:
+      'A social post card built from static props: author, text, pictures, date and counts. Nothing is fetched.',
   },
   {
     name: 'magnetic',
@@ -229,7 +357,7 @@ export const components: ComponentDefinition[] = [
     registryDependencies: [],
     dependencies: ['motion'],
     description:
-      'A macOS-style dock component with scaling and movement effects.',
+      'A macOS-style dock of buttons or links that magnify near the pointer, with labels and separators.',
   },
   {
     name: 'glow-effect',

@@ -40,6 +40,11 @@ export const NAVIGATION: NavigationGroup[] = [
         href: '/docs/animated-group',
       },
       {
+        name: 'Border Beam',
+        href: '/docs/border-beam',
+        isNew: true,
+      },
+      {
         name: 'Border Trail',
         href: '/docs/border-trail',
       },
@@ -79,6 +84,16 @@ export const NAVIGATION: NavigationGroup[] = [
         href: '/docs/infinite-slider',
       },
       {
+        name: 'Post Card',
+        href: '/docs/post-card',
+        isNew: true,
+      },
+      {
+        name: 'Shine Border',
+        href: '/docs/shine-border',
+        isNew: true,
+      },
+      {
         name: 'Terminal',
         href: '/docs/terminal',
         isNew: true,
@@ -111,6 +126,7 @@ export const NAVIGATION: NavigationGroup[] = [
       {
         name: 'Text Scramble',
         href: '/docs/text-scramble',
+        isUpdated: true,
       },
       {
         name: 'Text Shimmer',
@@ -123,6 +139,21 @@ export const NAVIGATION: NavigationGroup[] = [
       {
         name: 'Word Roll',
         href: '/docs/word-roll',
+        isNew: true,
+      },
+      {
+        name: 'Highlighter',
+        href: '/docs/highlighter',
+        isNew: true,
+      },
+      {
+        name: 'Text 3D Flip',
+        href: '/docs/text-3d-flip',
+        isNew: true,
+      },
+      {
+        name: 'Word Rotate',
+        href: '/docs/word-rotate',
         isNew: true,
       },
     ],
@@ -149,8 +180,14 @@ export const NAVIGATION: NavigationGroup[] = [
     name: 'Interactive Elements',
     children: [
       {
+        name: 'Confetti',
+        href: '/docs/confetti',
+        isNew: true,
+      },
+      {
         name: 'Dock',
         href: '/docs/dock',
+        isUpdated: true,
       },
       {
         name: 'Glow Effect',
@@ -166,6 +203,11 @@ export const NAVIGATION: NavigationGroup[] = [
         href: '/docs/image-comparison',
       },
       {
+        name: 'Magic Card',
+        href: '/docs/magic-card',
+        isNew: true,
+      },
+      {
         name: 'Magnified Dock',
         href: '/docs/magnified-doc',
         isNew: true,
@@ -177,6 +219,7 @@ export const NAVIGATION: NavigationGroup[] = [
       {
         name: 'Spinning Text',
         href: '/docs/spinning-text',
+        isUpdated: true,
       },
       {
         name: 'Spotlight',
@@ -224,6 +267,7 @@ export const NAVIGATION: NavigationGroup[] = [
       {
         name: 'Progressive Blur',
         href: '/docs/progressive-blur',
+        isUpdated: true,
       },
     ],
   },
@@ -270,6 +314,11 @@ export const NAVIGATION: NavigationGroup[] = [
         href: '/docs/timeline-animation',
         isNew: true,
       },
+      {
+        name: 'Scroll Velocity',
+        href: '/docs/scroll-velocity',
+        isNew: true,
+      },
     ],
   },
   {
@@ -295,6 +344,11 @@ export const NAVIGATION: NavigationGroup[] = [
         href: '/docs/image-trail',
         isNew: true,
       },
+      {
+        name: 'Lens',
+        href: '/docs/lens',
+        isNew: true,
+      },
     ],
   },
   {
@@ -303,6 +357,16 @@ export const NAVIGATION: NavigationGroup[] = [
       {
         name: 'Animated Beam',
         href: '/docs/animated-beam',
+        isNew: true,
+      },
+      {
+        name: 'Dotted Map',
+        href: '/docs/dotted-map',
+        isNew: true,
+      },
+      {
+        name: 'Globe',
+        href: '/docs/globe',
         isNew: true,
       },
       {
@@ -321,6 +385,11 @@ export const NAVIGATION: NavigationGroup[] = [
         isNew: true,
       },
       {
+        name: 'Orbiting Circles',
+        href: '/docs/orbiting-circles',
+        isNew: true,
+      },
+      {
         name: 'Reorder List',
         href: '/docs/reorder-list',
         isNew: true,
@@ -328,6 +397,26 @@ export const NAVIGATION: NavigationGroup[] = [
       {
         name: 'Swap Grid',
         href: '/docs/swap-grid',
+        isNew: true,
+      },
+    ],
+  },
+  {
+    name: 'Device Mocks',
+    children: [
+      {
+        name: 'Android',
+        href: '/docs/android',
+        isNew: true,
+      },
+      {
+        name: 'iPhone',
+        href: '/docs/iphone',
+        isNew: true,
+      },
+      {
+        name: 'Safari',
+        href: '/docs/safari',
         isNew: true,
       },
     ],
