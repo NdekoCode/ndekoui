@@ -7,6 +7,8 @@ export const metadata = {
 import { TextScrambleBasic } from './text-scramble-basic';
 import { TextScrambleCustomCharacterDuration } from './text-scramble-custom-char-duration';
 import { TextScrambleCustomTrigger } from './text-scramble-custom-trigger';
+import { TextScrambleHover } from './text-scramble-hover';
+import { TextScrambleInView } from './text-scramble-in-view';
 import ComponentCodePreview from '@/components/website/component-code-preview';
 
 # Text Scramble
@@ -29,6 +31,27 @@ Text animation that transforms text by randomly cycling through characters befor
 <ComponentCodePreview
   component={<TextScrambleCustomTrigger />}
   filePath='app/docs/text-scramble/text-scramble-custom-trigger.tsx'
+  classNameComponentContainer='min-h-0 py-12 px-12 justify-start items-start'
+/>
+
+### Text Scramble on hover
+
+`replayOnHover` scrambles the text again whenever the link or button it sits in is hovered or focused from the keyboard. With `trigger={false}`, it does not scramble on mount. `stableWidth` keeps every character at the width of its final letter, so the link does not change size while it scrambles.
+
+<ComponentCodePreview
+  component={<TextScrambleHover />}
+  filePath='app/docs/text-scramble/text-scramble-hover.tsx'
+  classNameComponentContainer='min-h-0 py-12 px-12 justify-start items-start'
+/>
+
+### Text Scramble in view
+
+`startOnView` waits until the text scrolls into view, and `delay` lines up several of them.
+
+<ComponentCodePreview
+  component={<TextScrambleInView />}
+  filePath='app/docs/text-scramble/text-scramble-in-view.tsx'
+  hasReTrigger
   classNameComponentContainer='min-h-0 py-12 px-12 justify-start items-start'
 />
 
@@ -76,13 +99,27 @@ Text animation that transforms text by randomly cycling through characters befor
 
 ### TextScramble
 
-| Prop               | Type                        | Default              | Description                                         |
-| :----------------- | :-------------------------- | :------------------- | :-------------------------------------------------- |
-| children           | string                      |                      | The text content to be animated.                    |
-| as                 | keyof JSX.IntrinsicElements | 'p'                  | The HTML tag to render, defaults to paragraph.      |
-| duration           | number                      | 0.8                  | Duration of the effect.                             |
-| speed              | number                      | 0.04                 | Speed of the effect.                                |
-| characterSet       | string                      | ABCDEF...z0123456789 | Set of characters for the scramble effect           |
-| className          | string                      | undefined            | Optional CSS class for styling the component.       |
-| trigger            | boolean                     | undefined            | Controls whether the animation should be triggered. |
-| onScrambleComplete | () => void                  | undefined            | Callback function when the animation completes.     |
+| Prop               | Type                        | Default              | Description                                                                        |
+| :----------------- | :-------------------------- | :------------------- | :--------------------------------------------------------------------------------- |
+| children           | string                      |                      | The text content to be animated.                                                   |
+| as                 | keyof JSX.IntrinsicElements | 'p'                  | The HTML tag to render, defaults to paragraph.                                     |
+| duration           | number                      | 0.8                  | Duration of the effect.                                                            |
+| speed              | number                      | 0.04                 | Speed of the effect.                                                               |
+| characterSet       | string                      | ABCDEF...z0123456789 | Set of characters for the scramble effect                                          |
+| className          | string                      | undefined            | Optional CSS class for styling the component.                                      |
+| trigger            | boolean                     | true                 | Controls whether the animation should be triggered.                                |
+| startOnView        | boolean                     | false                | Waits until the text is in view before the first scramble.                         |
+| replayOnHover      | boolean                     | false                | Scrambles again on hover or keyboard focus of the link or button the text sits in. |
+| delay              | number                      | 0                    | Seconds before the scramble starts.                                                |
+| stableWidth        | boolean                     | false                | Keeps each character at the width of its final letter.                             |
+| onScrambleComplete | () => void                  | undefined            | Callback function when the animation completes.                                    |
+
+## Accessibility and motion
+
+- Screen readers hear the final text, never the scrambled characters.
+- `replayOnHover` listens to the nearest link, button, tab, menu item or label. Plain text outside one does not react to the pointer, and touch does not replay it.
+- With reduced motion, the text never scrambles and `onScrambleComplete` is called at once.
+
+## Credits
+
+The hover, in-view and stable-width options are inspired by the hyper text of [Magic UI](https://magicui.design/docs/components/hyper-text), added to this component instead of a second scramble.

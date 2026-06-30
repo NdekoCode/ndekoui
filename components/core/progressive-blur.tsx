@@ -30,11 +30,28 @@ function maskColorOf(stopIndex: number) {
   return 'transparent';
 }
 
+/** Without explicit levels, each layer blurs `index * intensity` pixels, as before. */
+function blursOf(
+  blurLevels: readonly number[] | undefined,
+  blurLayers: number,
+  blurIntensity: number
+) {
+  const hasLevels = blurLevels !== undefined && blurLevels.length > 0;
+  if (hasLevels) {
+    return [...blurLevels];
+  }
+  const layerCount = Math.max(blurLayers, 2);
+  return Array.from({ length: layerCount }, (_, index) => {
+    return index * blurIntensity;
+  });
+}
+
 export type ProgressiveBlurProps = {
   direction?: keyof typeof GRADIENT_ANGLES;
   blurLayers?: number;
   className?: string;
   blurIntensity?: number;
+  blurLevels?: readonly number[];
 } & HTMLMotionProps<'div'>;
 
 export function ProgressiveBlur({
@@ -42,15 +59,17 @@ export function ProgressiveBlur({
   blurLayers = 8,
   className,
   blurIntensity = 0.25,
+  blurLevels,
   ...props
 }: ProgressiveBlurProps) {
-  const layers = Math.max(blurLayers, 2);
-  const segmentSize = 1 / (blurLayers + 1);
+  const blurs = blursOf(blurLevels, blurLayers, blurIntensity);
+  const bandCount = blurs.length + 1;
+  const segmentSize = 1 / bandCount;
 
   return (
     <ReducedMotionConfig>
-      <div className={cn('relative', className)}>
-        {Array.from({ length: layers }).map((_, index) => {
+      <div aria-hidden='true' className={cn('relative', className)}>
+        {blurs.map((blur, index) => {
           const angle = GRADIENT_ANGLES[direction];
           const gradientStops = [
             index * segmentSize,
@@ -70,8 +89,8 @@ export function ProgressiveBlur({
               style={{
                 maskImage: gradient,
                 WebkitMaskImage: gradient,
-                backdropFilter: `blur(${index * blurIntensity}px)`,
-                WebkitBackdropFilter: `blur(${index * blurIntensity}px)`,
+                backdropFilter: `blur(${blur}px)`,
+                WebkitBackdropFilter: `blur(${blur}px)`,
               }}
               {...props}
             />

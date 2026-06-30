@@ -17,6 +17,11 @@ type BeamGeometry = {
 
 type ElementRef = React.RefObject<HTMLElement | null>;
 
+type BeamOffsets = {
+  start: Point;
+  end: Point;
+};
+
 const HEAD_LENGTH = 0.35;
 
 const TRAVEL_EASE = [0.77, 0, 0.175, 1] as const;
@@ -28,6 +33,12 @@ function centreOf(element: HTMLElement, origin: DOMRect): Point {
   const halfWidth = box.width / 2;
   const halfHeight = box.height / 2;
   return { x: left + halfWidth, y: top + halfHeight };
+}
+
+function shiftedOf(point: Point, offset: Point): Point {
+  const x = point.x + offset.x;
+  const y = point.y + offset.y;
+  return { x, y };
 }
 
 function curvedPathOf(start: Point, end: Point, curvature: number) {
@@ -50,11 +61,14 @@ function measureBeam(
   container: HTMLElement,
   from: HTMLElement,
   to: HTMLElement,
-  curvature: number
+  curvature: number,
+  offsets: BeamOffsets
 ): BeamGeometry {
   const origin = container.getBoundingClientRect();
-  const start = centreOf(from, origin);
-  const end = centreOf(to, origin);
+  const fromCentre = centreOf(from, origin);
+  const toCentre = centreOf(to, origin);
+  const start = shiftedOf(fromCentre, offsets.start);
+  const end = shiftedOf(toCentre, offsets.end);
   return {
     width: origin.width,
     height: origin.height,
@@ -68,9 +82,14 @@ function useBeamGeometry(
   containerRef: ElementRef,
   fromRef: ElementRef,
   toRef: ElementRef,
-  curvature: number
+  curvature: number,
+  offsets: BeamOffsets
 ) {
   const [geometry, setGeometry] = useState<BeamGeometry | null>(null);
+  const startX = offsets.start.x;
+  const startY = offsets.start.y;
+  const endX = offsets.end.x;
+  const endY = offsets.end.y;
 
   useEffect(() => {
     const container = containerRef.current;
@@ -80,14 +99,19 @@ function useBeamGeometry(
     if (!container || isMissingNode) {
       return;
     }
+    const measuredOffsets: BeamOffsets = {
+      start: { x: startX, y: startY },
+      end: { x: endX, y: endY },
+    };
     const observer = new ResizeObserver(() => {
-      setGeometry(measureBeam(container, from, to, curvature));
+      const next = measureBeam(container, from, to, curvature, measuredOffsets);
+      setGeometry(next);
     });
     observer.observe(container);
     observer.observe(from);
     observer.observe(to);
     return () => observer.disconnect();
-  }, [containerRef, fromRef, toRef, curvature]);
+  }, [containerRef, fromRef, toRef, curvature, startX, startY, endX, endY]);
 
   return geometry;
 }
@@ -140,6 +164,10 @@ export type AnimatedBeamProps = {
   duration?: number;
   delay?: number;
   repeatDelay?: number;
+  startXOffset?: number;
+  startYOffset?: number;
+  endXOffset?: number;
+  endYOffset?: number;
   className?: string;
 };
 
@@ -152,11 +180,25 @@ export function AnimatedBeam({
   duration = 3,
   delay = 0,
   repeatDelay = 1,
+  startXOffset = 0,
+  startYOffset = 0,
+  endXOffset = 0,
+  endYOffset = 0,
   className,
 }: AnimatedBeamProps) {
   const prefersReducedMotion = useReducedMotion();
   const isInView = useInView(containerRef);
-  const geometry = useBeamGeometry(containerRef, fromRef, toRef, curvature);
+  const offsets: BeamOffsets = {
+    start: { x: startXOffset, y: startYOffset },
+    end: { x: endXOffset, y: endYOffset },
+  };
+  const geometry = useBeamGeometry(
+    containerRef,
+    fromRef,
+    toRef,
+    curvature,
+    offsets
+  );
   const beamId = useId();
   const gradientId = `beam-${safeIdOf(beamId)}`;
 

@@ -1,0 +1,103 @@
+export const metadata = {
+  title: 'Text 3D Flip - Ndeko UI',
+  description:
+    'Letters that turn over like small blocks, one after another, when the link or button they sit in is hovered or focused. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { Text3DFlipNav } from './text-3d-flip-nav';
+import { Text3DFlipButton } from './text-3d-flip-button';
+import { Text3DFlipChecklist } from './text-3d-flip-checklist';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Text 3D Flip
+
+Each letter is the front of a small block. When the link or button it sits in is hovered or focused from the keyboard, the blocks turn one after another and show their other face, then turn back when the pointer leaves.
+
+## Examples
+
+### Navigation links
+
+The back face takes the brand ink, so the link under the pointer reads as the chosen one. Tab through the links: keyboard focus flips them too.
+
+<ComponentCodePreview
+  component={<Text3DFlipNav />}
+  filePath='app/docs/text-3d-flip/text-3d-flip-nav.tsx'
+/>
+
+### Buttons
+
+The wave can start from the middle of the label, from either end, from a letter of your choice or in a fixed shuffled order. The turn can go up, down, left or right.
+
+<ComponentCodePreview
+  component={<Text3DFlipButton />}
+  filePath='app/docs/text-3d-flip/text-3d-flip-button.tsx'
+/>
+
+### Driven by state
+
+With `flipped`, the text turns when your state changes instead of on hover. Here a finished task turns to its muted face. A task that is already done when the list loads shows its muted face without turning.
+
+<ComponentCodePreview
+  component={<Text3DFlipChecklist />}
+  filePath='app/docs/text-3d-flip/text-3d-flip-checklist.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='text-3d-flip' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/text-3d-flip.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### Text3DFlip
+
+| Prop          | Type                                                | Default | Description                                                                           |
+| :------------ | :-------------------------------------------------- | :------ | :------------------------------------------------------------------------------------ |
+| children      | string                                              |         | The text. Words still wrap between them.                                              |
+| as            | React.ElementType                                   | 'span'  | The element to render.                                                                |
+| className     | string                                              |         | Classes for the element.                                                              |
+| textClassName | string                                              |         | Classes for the front face of every letter.                                           |
+| backClassName | string                                              |         | Classes for the back face of every letter, for example another colour.                |
+| direction     | 'up' \| 'down' \| 'left' \| 'right'                 | 'up'    | Which way the letters turn.                                                           |
+| staggerFrom   | 'first' \| 'last' \| 'center' \| 'random' \| number | 'first' | Where the wave starts. A number starts at that letter. 'random' is a fixed shuffle.   |
+| stagger       | number                                              | 0.03    | Seconds between two letters.                                                          |
+| duration      | number                                              | 0.5     | Seconds for one letter to turn. Turning back takes 70% of it, with a shorter stagger. |
+| flipped       | boolean                                             |         | Controls the face shown. When it is set, hover and focus are ignored.                 |
+
+## Accessibility and motion
+
+- The text listens to the nearest link, button, tab, menu item or label it sits in. Plain text that is not inside one does not react to the pointer, because text that moves on hover reads as something to click. Drive it with `flipped` there.
+- Touch does not flip the letters, so a tap goes straight to the link.
+- Screen readers hear the text once. The letter faces are hidden from them.
+- The turn uses CSS transitions on `transform`, so a pointer that leaves halfway turns the letters back from where they are.
+- With reduced motion, the faces cross-fade in 150ms and nothing turns.
+
+## Credits
+
+Inspired by the text 3D flip of [Magic UI](https://magicui.design/docs/components/text-3d-flip), rebuilt on our tokens with CSS transitions.

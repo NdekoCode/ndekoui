@@ -1,0 +1,115 @@
+export const metadata = {
+  title: 'Highlighter - Ndeko UI',
+  description:
+    'Hand-drawn marks on text: a marker band, an underline, a box, a circle or a strike, drawn in when the text comes into view. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { HighlighterParagraph } from './highlighter-paragraph';
+import { HighlighterActions } from './highlighter-actions';
+import { HighlighterToggle } from './highlighter-toggle';
+import { HighlighterMultiline } from './highlighter-multiline';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Highlighter
+
+Marks drawn by hand over a few words: a marker band behind them, a line under or through them, a box or a loop around them. Each mark draws in the first time the text comes into view, and keeps its shape when the text wraps again.
+
+## Examples
+
+### In a paragraph
+
+The marker band sits behind the text, so the words stay sharp. The underline waits until the band is done.
+
+<ComponentCodePreview
+  component={<HighlighterParagraph />}
+  filePath='app/docs/highlighter/highlighter-paragraph.tsx'
+  hasReTrigger
+/>
+
+### Every mark
+
+Five marks, each in a tone that keeps its meaning. Lines and loops go over twice, as a pen would.
+
+<ComponentCodePreview
+  component={<HighlighterActions />}
+  filePath='app/docs/highlighter/highlighter-actions.tsx'
+  hasReTrigger
+/>
+
+### Shown on demand
+
+With `show`, the marks follow your state: they draw when it turns true and fade out faster when it turns false.
+
+<ComponentCodePreview
+  component={<HighlighterToggle />}
+  filePath='app/docs/highlighter/highlighter-toggle.tsx'
+/>
+
+### Across lines
+
+A phrase that wraps gets one mark per line, drawn one line after the other, each for its share of the duration.
+
+<ComponentCodePreview
+  component={<HighlighterMultiline />}
+  filePath='app/docs/highlighter/highlighter-multiline.tsx'
+  hasReTrigger
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='highlighter' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/highlighter.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### Highlighter
+
+| Prop        | Type                                                           | Default                                       | Description                                                                     |
+| :---------- | :------------------------------------------------------------- | :-------------------------------------------- | :------------------------------------------------------------------------------ |
+| children    | React.ReactNode                                                |                                               | The words to mark. Keep them inline: text, links, `strong`.                     |
+| action      | 'highlight' \| 'underline' \| 'box' \| 'circle' \| 'strike'    | 'highlight'                                   | The mark to draw.                                                               |
+| tone        | 'primary' \| 'success' \| 'warning' \| 'info' \| 'destructive' | 'warning' for highlight, 'primary' for others | The colour token of the mark.                                                   |
+| strokeWidth | number                                                         | 2                                             | Width of lines and loops, in pixels. The marker band follows the text height.   |
+| padding     | number                                                         | 2, 5 for box, 8 for circle                    | Room between the text and the mark, in pixels.                                  |
+| passes      | 1 \| 2                                                         | 1 for highlight, 2 for others                 | How many times the pen goes over the mark.                                      |
+| duration    | number                                                         | 0.8                                           | Seconds to draw the whole mark, shared between the lines it covers.             |
+| delay       | number                                                         | 0                                             | Seconds before drawing starts.                                                  |
+| show        | boolean                                                        |                                               | Controls the mark. When it is not set, the mark draws once the text is in view. |
+| className   | string                                                         |                                               | Classes for the wrapping `span`.                                                |
+
+## Accessibility and motion
+
+- The marks are a decorative SVG hidden from assistive technology. When a mark carries meaning, such as a price that no longer applies, say it in the text too, or wrap it in `del` and `ins`.
+- Marker bands use the fill tokens at 35% opacity behind the text. Lines use the status text pairs (`text-warning-foreground`, `text-destructive-ink`...), measured for both themes, and the primary colour.
+- The shapes come from a seeded generator, so a mark keeps its shape when the window is resized and only its position follows the new line breaks.
+- With reduced motion, the marks fade in at full length instead of being drawn.
+
+## Credits
+
+Inspired by the highlighter of [Magic UI](https://magicui.design/docs/components/highlighter). The hand-drawn shapes are our own SVG paths, with no annotation library.

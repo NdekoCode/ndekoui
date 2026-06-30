@@ -10,7 +10,7 @@ import {
 import React, { CSSProperties } from 'react';
 
 export type SpinningTextProps = {
-  children: string;
+  children: string | readonly string[];
   style?: CSSProperties;
   duration?: number;
   className?: string;
@@ -38,6 +38,14 @@ const BASE_ITEM_VARIANTS = {
   },
 };
 
+/** Text with an expression in JSX (`{count} left`) arrives as several strings. */
+function textOf(children: string | readonly string[]) {
+  if (typeof children === 'string') {
+    return children;
+  }
+  return children.join('');
+}
+
 function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
   const prefersReducedMotion = useReducedMotion();
   if (!prefersReducedMotion) {
@@ -57,7 +65,8 @@ export function SpinningText({
   transition,
   variants,
 }: SpinningTextProps) {
-  const letters = children.split('');
+  const text = textOf(children);
+  const letters = Array.from(text);
   const totalLetters = letters.length;
 
   const finalTransition = {
@@ -113,7 +122,7 @@ export function SpinningText({
             {letter}
           </motion.span>
         ))}
-        <span className='sr-only'>{children}</span>
+        <span className='sr-only'>{text}</span>
       </motion.div>
     </ReducedMotionConfig>
   );

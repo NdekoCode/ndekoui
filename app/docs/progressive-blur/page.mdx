@@ -7,6 +7,7 @@ export const metadata = {
 import { ProgressiveBlurBasic } from './progressive-blur-basic';
 import { ProgressiveBlurHover } from './progressive-blur-hover';
 import { ProgressiveBlurSlider } from './progressive-blur-slider';
+import { ProgressiveBlurScroll } from './progressive-blur-scroll';
 import ComponentCodePreview from '@/components/website/component-code-preview';
 
 # Progressive blur
@@ -36,6 +37,15 @@ You can change the direction of the blur effect with the `direction` prop.
 <ComponentCodePreview
   component={<ProgressiveBlurSlider />}
   filePath='app/docs/progressive-blur/progressive-blur-slider.tsx'
+/>
+
+### Progressive blur over a scrolling list
+
+`blurLevels` sets the blur of each layer in pixels. Levels that double (0.5, 1, 2, 4...) read as an even fade, since the eye judges blur by ratio rather than by pixels. Two blurs sit over the list, a short one at the top and a longer one at the bottom, and stay in place while the list scrolls.
+
+<ComponentCodePreview
+  component={<ProgressiveBlurScroll />}
+  filePath='app/docs/progressive-blur/progressive-blur-scroll.tsx'
 />
 
 ## Installation
@@ -73,9 +83,16 @@ You can change the direction of the blur effect with the `direction` prop.
 
 ### ProgressiveBlur
 
-| Prop          | Type                                   | Default | Description                               |
-| :------------ | :------------------------------------- | :------ | :---------------------------------------- |
-| direction     | 'top' \| 'right' \| 'bottom' \| 'left' | 'top'   | The direction of the blur effect.         |
-| blurLayers    | number                                 | 8       | The number of blur layers.                |
-| className     | string                                 | ''      | The class name to apply to the component. |
-| blurIntensity | number                                 | 0.25    | The intensity of the blur effect.         |
+| Prop          | Type                                   | Default  | Description                                                                                                    |
+| :------------ | :------------------------------------- | :------- | :------------------------------------------------------------------------------------------------------------- |
+| direction     | 'top' \| 'right' \| 'bottom' \| 'left' | 'bottom' | The edge where the blur is strongest.                                                                          |
+| blurLayers    | number                                 | 8        | The number of blur layers.                                                                                     |
+| className     | string                                 | ''       | The class name to apply to the component.                                                                      |
+| blurIntensity | number                                 | 0.25     | Pixels of blur added by each layer: layer n blurs `n * blurIntensity`.                                         |
+| blurLevels    | readonly number[]                      |          | The blur of each layer, in pixels, from the clear side to the edge. Replaces `blurLayers` and `blurIntensity`. |
+
+The blur is decorative and hidden from assistive technology. Put it over the content with `pointer-events-none`, so clicks and scrolling reach what is under it.
+
+## Credits
+
+The `blurLevels` option is inspired by the progressive blur of [Magic UI](https://magicui.design/docs/components/progressive-blur).

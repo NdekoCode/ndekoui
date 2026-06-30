@@ -7,6 +7,7 @@ export const metadata = {
 import { SpinningTextBasic } from './spinning-text-basic';
 import { SpinningTextCustomTransition } from './spinning-text-custom-transition';
 import { SpinningTextCustomVariants } from './spinning-text-custom-variants';
+import { SpinningTextReverse } from './spinning-text-reverse';
 import ComponentCodePreview from '@/components/website/component-code-preview';
 
 # Spinning Text
@@ -21,6 +22,15 @@ Easily animate text circularly. Customize the animation with variants and transi
   component={<SpinningTextBasic />}
   filePath='app/docs/spinning-text/spinning-text-basic.tsx'
   hasReTrigger
+/>
+
+### Reverse, around a badge
+
+`reverse` turns the ring the other way. The text mixes constants in JSX (`{COHORT} • {SEATS_LEFT} seats left`), which React passes as several strings: they are joined into one ring.
+
+<ComponentCodePreview
+  component={<SpinningTextReverse />}
+  filePath='app/docs/spinning-text/spinning-text-reverse.tsx'
 />
 
 ### Custom Transition
@@ -69,21 +79,24 @@ Easily animate text circularly. Customize the animation with variants and transi
 </TabsContent>
 
 </Tabs>
+
 ## Component API
 
 ### SpinningText
 
-| Prop       | Type                                         | Default | Description                                             |
-| :--------- | :------------------------------------------- | :------ | :------------------------------------------------------ |
-| children   | `ReactElement`                               |         | The text content to be animated in a circular motion.   |
-| style      | `CSSProperties`                              | `{}`    | Custom styles for the text container.                   |
-| duration   | `number`                                     | `10`    | The duration of the full circular rotation animation.   |
-| className  | `string`                                     |         | A custom class name for the text container.             |
-| reverse    | `boolean`                                    | `false` | Determines if the animation should rotate in reverse.   |
-| fontSize   | `number`                                     | `1`     | The font size of the text being animated in rem.        |
-| radius     | `number`                                     | `5`     | The radius of the circular path for the text animation. |
-| transition | `Transition`                                 |         | Custom transition effects for the animation.            |
-| variants   | `{ container?: Variants; item?: Variants; }` |         | Variants for container and item animations.             |
+| Prop       | Type                                         | Default | Description                                                                                      |
+| :--------- | :------------------------------------------- | :------ | :----------------------------------------------------------------------------------------------- |
+| children   | `string \| readonly string[]`                |         | The text to place around the circle. Several strings, as JSX gives with expressions, are joined. |
+| style      | `CSSProperties`                              | `{}`    | Custom styles for the text container.                                                            |
+| duration   | `number`                                     | `10`    | The duration of the full circular rotation animation.                                            |
+| className  | `string`                                     |         | A custom class name for the text container.                                                      |
+| reverse    | `boolean`                                    | `false` | Determines if the animation should rotate in reverse.                                            |
+| fontSize   | `number`                                     | `1`     | The font size of the text being animated in rem.                                                 |
+| radius     | `number`                                     | `5`     | The radius of the circular path for the text animation.                                          |
+| transition | `Transition`                                 |         | Custom transition effects for the animation.                                                     |
+| variants   | `{ container?: Variants; item?: Variants; }` |         | Variants for container and item animations.                                                      |
+
+Screen readers hear the text once; the letters around the circle are hidden from them. With reduced motion, the ring stands still.
 
 ## Credit
 

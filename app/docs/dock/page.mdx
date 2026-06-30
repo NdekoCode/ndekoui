@@ -5,6 +5,7 @@ export const metadata = {
 };
 
 import { AppleStyleDock } from './apple-style-dock';
+import { DockLinks } from './dock-links';
 import ComponentCodePreview from '@/components/website/component-code-preview';
 
 # Dock
@@ -19,6 +20,15 @@ A versatile UI element that provides a flexible and customizable way to organize
   component={<AppleStyleDock />}
   filePath='app/docs/dock/apple-style-dock.tsx'
   hasReTrigger
+/>
+
+### Links in two groups
+
+Items with `href` render as links. A `DockSeparator` splits the places from the tools, and `itemSize` with `magnification` sets a smaller dock.
+
+<ComponentCodePreview
+  component={<DockLinks />}
+  filePath='app/docs/dock/dock-links.tsx'
 />
 
 ## Installation
@@ -56,22 +66,25 @@ A versatile UI element that provides a flexible and customizable way to organize
 
 ### Dock
 
-| Prop          | Type          | Default                                      | Description                                                                              |
-| :------------ | :------------ | :------------------------------------------- | :--------------------------------------------------------------------------------------- |
-| children      | ReactNode     |                                              | The child elements to be animated.                                                       |
-| className     | string        | undefined                                    | Optional CSS class for styling the component.                                            |
-| spring        | SpringOptions | `{ mass: 0.1, stiffness: 150, damping: 12 }` | Spring options from motion for animation effects.                                        |
-| magnification | number        | 80                                           | The scaling factor applied to a dock item on hover.                                      |
-| distance      | number        | 150                                          | The distance from the center of a dock item at which the magnification animation starts. |
-| panelHeight   | number        | 64                                           |
+| Prop                 | Type          | Default                                      | Description                                                                              |
+| :------------------- | :------------ | :------------------------------------------- | :--------------------------------------------------------------------------------------- |
+| children             | ReactNode     |                                              | The child elements to be animated.                                                       |
+| className            | string        | undefined                                    | Optional CSS class for styling the component.                                            |
+| spring               | SpringOptions | `{ mass: 0.1, stiffness: 150, damping: 12 }` | Spring options from motion for animation effects.                                        |
+| magnification        | number        | 80                                           | The width of the item under the pointer, in pixels.                                      |
+| distance             | number        | 150                                          | The distance from the center of a dock item at which the magnification animation starts. |
+| panelHeight          | number        | 64                                           | The height of the panel at rest, in pixels.                                              |
+| itemSize             | number        | 40                                           | The width of an item away from the pointer, in pixels.                                   |
+| disableMagnification | boolean       | false                                        | Keeps every item at `itemSize`. Labels still appear.                                     |
 
 ### DockItem
 
-| Prop      | Type       | Default   | Description                                                |
-| :-------- | :--------- | :-------- | :--------------------------------------------------------- |
-| children  | ReactNode  |           | DockLabel and DockIcon                                     |
-| className | string     | undefined | Optional CSS class for styling the component.              |
-| onClick   | () => void | undefined | Optional click handler triggered when the item is clicked. |
+| Prop      | Type       | Default   | Description                                                        |
+| :-------- | :--------- | :-------- | :----------------------------------------------------------------- |
+| children  | ReactNode  |           | DockLabel and DockIcon                                             |
+| className | string     | undefined | Optional CSS class for styling the component.                      |
+| href      | string     | undefined | Renders the item as a link to this address.                        |
+| onClick   | () => void | undefined | Called when the item is clicked, or activated with Enter or Space. |
 
 ### DockLabel
 
@@ -86,6 +99,20 @@ A versatile UI element that provides a flexible and customizable way to organize
 | :-------- | :-------- | :-------- | :-------------------------------------------- |
 | children  | ReactNode |           | Icon                                          |
 | className | string    | undefined | Optional CSS class for styling the component. |
+
+### DockSeparator
+
+A vertical hairline between two groups of items.
+
+| Prop      | Type   | Default   | Description                                                 |
+| :-------- | :----- | :-------- | :---------------------------------------------------------- |
+| className | string | undefined | Classes for the line, for example its height and alignment. |
+
+## Accessibility
+
+- The text of `DockLabel` names its item for screen readers even while the label is hidden, so every icon has a name.
+- An item without `href` is a button: it takes focus, and Enter or Space activates it. Focus shows its label.
+- The magnification follows the mouse only. With reduced motion, items resize without the spring.
 
 ## Credits
 

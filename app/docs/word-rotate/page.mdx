@@ -1,0 +1,104 @@
+export const metadata = {
+  title: 'Word Rotate - Ndeko UI',
+  description:
+    'Phrases on a drum that turns on a timer: the next phrase turns in from below, the sentence around it slides to the new width, and it waits while someone reads. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { WordRotateHeadline } from './word-rotate-headline';
+import { WordRotateTips } from './word-rotate-tips';
+import { WordRotatePause } from './word-rotate-pause';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Word Rotate
+
+Whole phrases sit on a small drum that turns on a timer. The next phrase turns in from one side with a light blur while the last one turns away, and the words around it slide to the new width instead of jumping.
+
+It stops turning while the pointer rests on it, while it is off screen and while the tab is hidden, so nobody loses a phrase they were reading.
+
+Two other text pieces change their wording. [Word Roll](/docs/word-roll) rolls only the words that changed when your state changes, such as a billing period. [Text Loop](/docs/text-loop) loops any children with variants you write yourself. Word Rotate is the timed one, for whole phrases on marketing pages.
+
+## Examples
+
+### In a headline
+
+The phrase changes width, and the end of the sentence slides with it.
+
+<ComponentCodePreview
+  component={<WordRotateHeadline />}
+  filePath='app/docs/word-rotate/word-rotate-headline.tsx'
+/>
+
+### Whole sentences
+
+Longer tips turn downward every four seconds. Rest the pointer on a tip to keep it.
+
+<ComponentCodePreview
+  component={<WordRotateTips />}
+  filePath='app/docs/word-rotate/word-rotate-tips.tsx'
+/>
+
+### With a pause control
+
+A line that keeps changing needs a way to stop it. `paused` holds the current phrase until it turns false again.
+
+<ComponentCodePreview
+  component={<WordRotatePause />}
+  filePath='app/docs/word-rotate/word-rotate-pause.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='word-rotate' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/word-rotate.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### WordRotate
+
+| Prop           | Type                    | Default                      | Description                                              |
+| :------------- | :---------------------- | :--------------------------- | :------------------------------------------------------- |
+| words          | readonly string[]       |                              | The phrases, in order. One phrase never turns.           |
+| interval       | number                  | 2.5                          | Seconds each phrase stays.                               |
+| direction      | 'up' \| 'down'          | 'up'                         | Which way the drum turns.                                |
+| paused         | boolean                 | false                        | Holds the current phrase.                                |
+| pauseOnHover   | boolean                 | true                         | Holds the current phrase while the pointer rests on it.  |
+| onIndexChange  | (index: number) => void |                              | Called with the index of each new phrase.                |
+| accessibleText | string                  | the phrases joined by commas | What screen readers hear in place of the turning phrase. |
+| className      | string                  |                              | Classes for the outer `span`.                            |
+
+## Accessibility and motion
+
+- Screen readers hear one stable sentence (`accessibleText`) instead of a phrase that changes under them. The turning drum is hidden from them.
+- The drum turns only while it is on screen and the tab is visible, and holds still under the pointer. For a line that keeps changing on its own, add a pause control as in the third example.
+- A phrase turns in over 500ms with a strong ease-out and leaves in 350ms, fading faster than it turns. The width eases with the same spring as `AnimatedSize`.
+- With reduced motion, the phrases cross-fade and the width changes at once.
+
+## Credits
+
+Inspired by the word rotate of [Magic UI](https://magicui.design/docs/components/word-rotate), rebuilt as a turning drum on `motion` and `AnimatedSize`.

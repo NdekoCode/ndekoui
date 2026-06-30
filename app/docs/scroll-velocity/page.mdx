@@ -1,0 +1,103 @@
+export const metadata = {
+  title: 'Scroll Velocity - Ndeko UI',
+  description:
+    'Stacked rows of text or pictures that loop sideways, speed up with the scroll, turn around when the page scrolls up and lean into their speed. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { ScrollVelocityText } from './scroll-velocity-text';
+import { ScrollVelocityScenes } from './scroll-velocity-scenes';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Scroll Velocity
+
+Rows that loop sideways at a calm speed and run faster while the page scrolls. All the rows of a group read one shared scroll speed, turn around when the page scrolls up and lean slightly into their speed. Scroll the page to drive the examples.
+
+For one large line of text, [Scroll Text Marquee](/docs/scroll-text-marquee) is lighter. Scroll Velocity is for a stack of rows, with text, chips or pictures, that should move as one group.
+
+## Examples
+
+### Two rows of text
+
+The second row runs the other way. Both lean into their speed while the page scrolls and stand up again when it stops.
+
+<ComponentCodePreview
+  component={<ScrollVelocityText />}
+  filePath='app/docs/scroll-velocity/scroll-velocity-text.tsx'
+/>
+
+### Rows of pictures
+
+Any content can loop. Pictures keep straight with `lean={false}`.
+
+<ComponentCodePreview
+  component={<ScrollVelocityScenes />}
+  filePath='app/docs/scroll-velocity/scroll-velocity-scenes.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='scroll-velocity' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/scroll-velocity.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### ScrollVelocity
+
+Reads the scroll speed once for every row inside it.
+
+| Prop              | Type                             | Default | Description                                                                    |
+| :---------------- | :------------------------------- | :------ | :----------------------------------------------------------------------------- |
+| children          | React.ReactNode                  |         | One or more `ScrollVelocityRow`.                                               |
+| containerRef      | RefObject\<HTMLElement \| null\> |         | A scrolling element to follow instead of the page.                             |
+| reverseOnScrollUp | boolean                          | true    | Turns every row around while the page scrolls up, until it scrolls down again. |
+| lean              | boolean                          | true    | Slants the rows into their speed, up to 6 degrees.                             |
+| fade              | boolean                          | true    | Fades both ends of the rows.                                                   |
+| className         | string                           |         | Classes for the group, a vertical flex column.                                 |
+
+### ScrollVelocityRow
+
+| Prop      | Type              | Default | Description                                                                                          |
+| :-------- | :---------------- | :------ | :--------------------------------------------------------------------------------------------------- |
+| children  | React.ReactNode   |         | One copy of the row's content. It is repeated as many times as the row needs to stay filled.         |
+| speed     | number            | 40      | Speed at rest, in pixels per second. Scrolling at 1000 pixels per second makes it five times faster. |
+| direction | 'left' \| 'right' | 'left'  | The direction at rest.                                                                               |
+| gap       | number            | 32      | Space between two copies, in pixels.                                                                 |
+| className | string            |         | Classes for the row, for example its text size.                                                      |
+
+## Accessibility and motion
+
+- The rows move through motion values only: nothing re-renders while they run.
+- Rows move only while the group is on screen and the tab is visible, and a frame after a long pause never throws them forward.
+- One copy of each row is read by screen readers and reached by the keyboard; the repeats are hidden from both.
+- With reduced motion, the rows stand still and show their content from the start.
+- Scroll pieces belong on marketing pages. A row that keeps moving needs a way to stop for people who find it distracting: reduced motion stops it here, and a page that relies on it can offer a pause control as well.
+
+## Credits
+
+Inspired by the scroll based velocity of [Magic UI](https://magicui.design/docs/components/scroll-based-velocity), rebuilt on `motion` values with rows that fill themselves and a shared scroll reading.
