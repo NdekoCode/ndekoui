@@ -5,10 +5,14 @@ import {
   syncDataLoaderFeature,
   type ItemInstance,
 } from '@headless-tree/core';
-import { useTree } from '@headless-tree/react';
 
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
-import { Tree, TreeItem, TreeItemLabel } from '@/registry/ndeko/ui/tree';
+import {
+  Tree,
+  TreeItem,
+  TreeItemLabel,
+  useTree,
+} from '@/registry/ndeko/ui/tree';
 
 type Item = {
   name: string;

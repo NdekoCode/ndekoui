@@ -2,8 +2,13 @@
 
 import { mergeProps } from '@base-ui/react/merge-props';
 import { useRender } from '@base-ui/react/use-render';
-import type { ItemInstance, TreeInstance } from '@headless-tree/core';
-import { createContext, useContext } from 'react';
+import type {
+  ItemInstance,
+  TreeConfig,
+  TreeInstance,
+} from '@headless-tree/core';
+import { useTree as useHeadlessTree } from '@headless-tree/react';
+import { createContext, useContext, useState } from 'react';
 
 import { ChevronDownIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -18,6 +23,20 @@ const TreeContext = createContext<TreeContextValue>({ indent: 20 });
 
 function useTreeContext() {
   return useContext(TreeContext);
+}
+
+/**
+ * headless-tree's `useTree`, with the visible rows built during the first render. The library
+ * builds them in an effect after mount, so without this the tree is missing from the server HTML
+ * and only appears once the page has hydrated.
+ */
+function useTree<T>(config: TreeConfig<T>) {
+  const tree = useHeadlessTree<T>(config);
+  useState(() => {
+    tree.scheduleRebuildTree();
+    return true;
+  });
+  return tree;
 }
 
 type TreeProps<T> = React.ComponentProps<'div'> & {
@@ -180,4 +199,4 @@ function TreeDragLine({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
-export { Tree, TreeDragLine, TreeItem, TreeItemLabel };
+export { Tree, TreeDragLine, TreeItem, TreeItemLabel, useTree };

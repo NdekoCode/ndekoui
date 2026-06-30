@@ -9,7 +9,7 @@ import {
   syncDataLoaderFeature,
   type ItemInstance,
 } from '@headless-tree/core';
-import { AssistiveTreeDescription, useTree } from '@headless-tree/react';
+import { AssistiveTreeDescription } from '@headless-tree/react';
 import { motion, type Transition, useReducedMotion } from 'motion/react';
 import { useState } from 'react';
 
@@ -21,6 +21,7 @@ import {
   TreeDragLine,
   TreeItem,
   TreeItemLabel,
+  useTree,
 } from '@/registry/ndeko/ui/tree';
 
 type Item = {

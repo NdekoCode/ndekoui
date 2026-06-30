@@ -7,7 +7,6 @@ import {
   type FeatureImplementation,
   type ItemInstance,
 } from '@headless-tree/core';
-import { useTree } from '@headless-tree/react';
 import { Fragment, useEffect, useMemo, useState } from 'react';
 import { bundledLanguages, codeToHtml, type BundledTheme } from 'shiki';
 
@@ -19,7 +18,12 @@ import {
   FolderOpenIcon,
 } from '@/registry/ndeko/lib/icons';
 import { CodeBlockCopyButton } from '@/registry/ndeko/ui/chat-code-block';
-import { Tree, TreeItem, TreeItemLabel } from '@/registry/ndeko/ui/tree';
+import {
+  Tree,
+  TreeItem,
+  TreeItemLabel,
+  useTree,
+} from '@/registry/ndeko/ui/tree';
 
 export type CodeTreeFile = {
   path: string;

@@ -5,11 +5,15 @@ import {
   syncDataLoaderFeature,
   type ItemInstance,
 } from '@headless-tree/core';
-import { useTree } from '@headless-tree/react';
 import { useState } from 'react';
 
 import { SelectedMark } from '@/registry/ndeko/ui/selected-mark';
-import { Tree, TreeItem, TreeItemLabel } from '@/registry/ndeko/ui/tree';
+import {
+  Tree,
+  TreeItem,
+  TreeItemLabel,
+  useTree,
+} from '@/registry/ndeko/ui/tree';
 
 type FileNode = {
   name: string;

@@ -9,7 +9,6 @@ import {
   type ItemInstance,
   type TreeState,
 } from '@headless-tree/core';
-import { useTree } from '@headless-tree/react';
 import { useState, type ChangeEvent } from 'react';
 
 import {
@@ -20,7 +19,12 @@ import {
 import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Input } from '@/registry/ndeko/ui/input';
-import { Tree, TreeItem, TreeItemLabel } from '@/registry/ndeko/ui/tree';
+import {
+  Tree,
+  TreeItem,
+  TreeItemLabel,
+  useTree,
+} from '@/registry/ndeko/ui/tree';
 
 type Item = {
   name: string;
