@@ -47,6 +47,11 @@ export function InfiniteSlider({
       return;
     }
 
+    const isPaused = currentSpeed <= 0;
+    if (isPaused) {
+      return;
+    }
+
     const distanceToTravel = Math.abs(to - from);
     const duration = distanceToTravel / currentSpeed;
 
@@ -89,18 +94,21 @@ export function InfiniteSlider({
     prefersReducedMotion,
   ]);
 
-  const hoverProps = speedOnHover
-    ? {
-        onHoverStart: () => {
-          setIsTransitioning(true);
-          setCurrentSpeed(speedOnHover);
-        },
-        onHoverEnd: () => {
-          setIsTransitioning(true);
-          setCurrentSpeed(speed);
-        },
-      }
-    : {};
+  function slowDown() {
+    if (speedOnHover === undefined) {
+      return;
+    }
+    setIsTransitioning(true);
+    setCurrentSpeed(speedOnHover);
+  }
+
+  function resume() {
+    if (speedOnHover === undefined) {
+      return;
+    }
+    setIsTransitioning(true);
+    setCurrentSpeed(speed);
+  }
 
   return (
     <div className={cn('overflow-hidden', className)}>
@@ -114,7 +122,10 @@ export function InfiniteSlider({
           flexDirection: direction === 'horizontal' ? 'row' : 'column',
         }}
         ref={ref}
-        {...hoverProps}
+        onHoverStart={slowDown}
+        onHoverEnd={resume}
+        onFocus={slowDown}
+        onBlur={resume}
       >
         {children}
         {children}
