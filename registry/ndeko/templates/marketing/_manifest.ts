@@ -44,7 +44,6 @@ export const manifest: BlockManifest = [
       'features.tsx',
       'feature-media.tsx',
       'pricing.tsx',
-      'plan-price.tsx',
       'faq.tsx',
       'sdk-card.tsx',
       'command-row.tsx',
@@ -57,7 +56,7 @@ export const manifest: BlockManifest = [
     name: 'marketing-03',
     title: 'Per-seat pricing page',
     description:
-      'A Tallyfold pricing page: one plan whose seat count and monthly total slide when changed, a grouped table of what it includes, questions on one card and a compact footer.',
+      'A Tallyfold pricing page: one plan whose seat count and monthly total roll to their new value when changed, a grouped table of what it includes, questions on one card and a compact footer.',
     files: [
       'index.tsx',
       'site-header.tsx',
@@ -66,7 +65,6 @@ export const manifest: BlockManifest = [
       'section-link.ts',
       'brand-mark.tsx',
       'pricing.tsx',
-      'sliding-figure.tsx',
       'feature-table.tsx',
       'faq.tsx',
       'site-footer.tsx',

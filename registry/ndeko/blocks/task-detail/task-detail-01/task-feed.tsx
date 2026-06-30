@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useRef } from 'react';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import {
   CircleDashedIcon,
   ClockIcon,
@@ -22,7 +23,7 @@ import {
   timeOf,
   type FeedFilter,
 } from './detail-model';
-import { heightPresenceOf, RollingCount } from './motion-parts';
+import { heightPresenceOf } from './motion-parts';
 import { PersonAvatar, PriorityGlyph } from './task-glyphs';
 
 const FILTERS: { id: FeedFilter; label: string }[] = [
@@ -193,7 +194,7 @@ export function TaskFeed({
             {FILTERS.map((option) => (
               <TabsTab key={option.id} value={option.id}>
                 {option.label}
-                <RollingCount
+                <MotionNumber
                   value={counts[option.id]}
                   className='text-muted-foreground text-xs'
                 />

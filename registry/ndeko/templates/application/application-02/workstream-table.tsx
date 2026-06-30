@@ -8,6 +8,7 @@ import {
   useReducedMotion,
 } from 'motion/react';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import { cn } from '@/registry/ndeko/lib/utils';
 import {
   Avatar,
@@ -18,12 +19,10 @@ import { Chip } from '@/registry/ndeko/ui/chip';
 
 import { HEALTH_META, type Lead } from './data';
 import {
-  formatShare,
   percentAmountOf,
   type Totals,
   type WorkstreamRow,
 } from './health-figures';
-import { SlidingFigure } from './sliding-figure';
 
 const TABLE_GRID =
   'grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 px-4 sm:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_2.75rem_2.75rem_3.5rem_minmax(5.5rem,1fr)_6rem]';
@@ -88,12 +87,9 @@ type FigureProps = {
 };
 
 function Figure({ value, isQuiet }: FigureProps) {
-  const text = String(value);
-
   return (
-    <SlidingFigure
-      amount={value}
-      text={text}
+    <MotionNumber
+      value={value}
       className={cn(isQuiet && 'text-muted-foreground')}
     />
   );
@@ -109,7 +105,6 @@ function ProgressCell({ share, transition }: ProgressCellProps) {
   const hiddenPercent = hiddenShare * 100;
   const offset = `-${hiddenPercent}%`;
   const shareAmount = percentAmountOf(share);
-  const shareText = formatShare(share);
 
   return (
     <div role='cell' className={cn(WIDE_CELL, 'items-center gap-2')}>
@@ -121,9 +116,9 @@ function ProgressCell({ share, transition }: ProgressCellProps) {
           className='bg-primary absolute inset-0 rounded-full'
         />
       </span>
-      <SlidingFigure
-        amount={shareAmount}
-        text={shareText}
+      <MotionNumber
+        value={shareAmount}
+        suffix='%'
         className='text-muted-foreground w-9 justify-end text-xs'
       />
     </div>

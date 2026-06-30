@@ -13,7 +13,6 @@ const NUMBER_FORMAT = new Intl.NumberFormat('en');
 export type MetricFigure = {
   metric: MetricDefinition;
   total: number;
-  totalText: string;
   hint: string;
 };
 
@@ -131,7 +130,6 @@ export function figuresOf(periodId: PeriodId): MetricFigure[] {
   return METRICS.map((metric) => {
     const series = SERIES[periodId][metric.id];
     const total = totalOf(metric, series.values);
-    const totalText = formatMetric(metric, total);
     const aggregateLine = aggregateLineOf(metric, period);
     const changeLine = changeLineOf(
       metric,
@@ -142,7 +140,6 @@ export function figuresOf(periodId: PeriodId): MetricFigure[] {
     return {
       metric,
       total,
-      totalText,
       hint: `${aggregateLine}, ${changeLine}`,
     };
   });

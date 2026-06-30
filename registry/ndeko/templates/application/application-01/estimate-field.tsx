@@ -13,7 +13,7 @@ import {
   PopoverTrigger,
 } from '@/registry/ndeko/ui/popover';
 
-import { SlidingValue, formatDuration } from './member-parts';
+import { DurationFigure, formatDuration } from './member-parts';
 
 const VALUE_FIELD = [
   'group/estimate inline-flex h-6 cursor-pointer items-center gap-1.5 rounded-md px-2 text-[13px] font-medium tabular-nums outline-none',
@@ -126,7 +126,7 @@ export function EstimateField({
       >
         {hasEstimate && (
           <>
-            <SlidingValue value={minutes} />
+            <DurationFigure minutes={minutes} />
             <PencilIcon className='text-muted-foreground size-3' />
           </>
         )}

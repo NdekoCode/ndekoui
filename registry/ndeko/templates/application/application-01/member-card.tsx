@@ -48,7 +48,7 @@ import {
   MEMBER_CARD_HEIGHT,
   MEMBER_GRID,
   PresenceAvatar,
-  SlidingValue,
+  DurationFigure,
   StatusChipMenu,
   formatDuration,
   totalTodayOf,
@@ -386,8 +386,8 @@ function ActivityPanel({
                     className='bg-primary block h-full rounded-full transition-[width] duration-300 ease-(--ease-out-strong)'
                   />
                 </span>
-                <SlidingValue
-                  value={entry.minutes}
+                <DurationFigure
+                  minutes={entry.minutes}
                   className='row-start-1 justify-end text-[13px] font-medium sm:row-auto'
                 />
                 <span className='text-muted-foreground hidden text-right text-xs tabular-nums sm:block'>
@@ -480,7 +480,7 @@ export function MemberCard({ member, openTasks, actions }: MemberCardProps) {
       </div>
       <div className='hairline-t xl:hairline-l border-border flex flex-col justify-center gap-1 border-dashed px-4 py-3 xl:items-center xl:border-t-0 xl:border-solid'>
         <span className={FIGURE_LABEL}>Worked today</span>
-        <SlidingValue value={worked} className='text-[13px] font-medium' />
+        <DurationFigure minutes={worked} className='text-[13px] font-medium' />
       </div>
       <div className='hairline-t hairline-l border-border flex flex-col justify-center gap-1 border-dashed px-4 py-3 xl:items-center xl:border-t-0 xl:border-solid'>
         <span className={FIGURE_LABEL}>Estimate</span>
@@ -509,7 +509,7 @@ export function MemberCard({ member, openTasks, actions }: MemberCardProps) {
           className='bg-foreground/[0.04] hairline-ring ring-foreground/10 hover:bg-foreground/[0.07] aria-expanded:bg-foreground/[0.07] focus-visible:ring-ring/25 inline-flex h-7 w-fit cursor-pointer items-center gap-1.5 rounded-full px-2.5 text-[13px] font-medium transition-[background-color,scale] duration-150 ease-(--ease-out-strong) outline-none focus-visible:ring-[3px] active:scale-[0.97]'
         >
           <ChartLineIcon className='text-muted-foreground size-3.5' />
-          <SlidingValue value={total} />
+          <DurationFigure minutes={total} />
           <ChevronDownIcon
             className={cn(
               'text-muted-foreground size-3.5 transition-transform duration-200 ease-(--ease-out-strong)',

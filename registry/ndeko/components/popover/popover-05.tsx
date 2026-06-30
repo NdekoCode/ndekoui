@@ -9,6 +9,7 @@ import {
 } from 'motion/react';
 import { useState } from 'react';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
@@ -35,27 +36,12 @@ const TIPS = [
   },
 ];
 
-const DIGIT_SHIFT_PX = 8;
-
 const SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };
-const DIGIT_TRANSITION: Transition = { duration: 0.18, ease: [0.2, 0, 0, 1] };
 
 const TEXT_VARIANTS: Variants = {
   enter: { opacity: 0, filter: 'blur(2px)' },
   visible: { opacity: 1, filter: 'blur(0px)' },
   exit: { opacity: 0, filter: 'blur(2px)' },
-};
-
-const DIGIT_VARIANTS: Variants = {
-  enter: (direction: number) => {
-    const offset = direction * DIGIT_SHIFT_PX;
-    return { opacity: 0, y: offset };
-  },
-  visible: { opacity: 1, y: 0 },
-  exit: (direction: number) => {
-    const offset = direction * DIGIT_SHIFT_PX;
-    return { opacity: 0, y: -offset };
-  },
 };
 
 const FADE_VARIANTS: Variants = {
@@ -71,13 +57,6 @@ function textVariantsOf(shouldReduceMotion: boolean | null) {
   return TEXT_VARIANTS;
 }
 
-function digitVariantsOf(shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return FADE_VARIANTS;
-  }
-  return DIGIT_VARIANTS;
-}
-
 function nextLabelOf(isLastTip: boolean) {
   if (isLastTip) {
     return 'Start over';
@@ -87,10 +66,8 @@ function nextLabelOf(isLastTip: boolean) {
 
 export default function Popover05() {
   const [tipIndex, setTipIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
   const shouldReduceMotion = useReducedMotion();
   const textVariants = textVariantsOf(shouldReduceMotion);
-  const digitVariants = digitVariantsOf(shouldReduceMotion);
   const tip = TIPS[tipIndex];
   const tipNumber = tipIndex + 1;
   const isLastTip = tipNumber === TIPS.length;
@@ -98,11 +75,9 @@ export default function Popover05() {
 
   function showNextTip() {
     if (isLastTip) {
-      setDirection(-1);
       setTipIndex(0);
       return;
     }
-    setDirection(1);
     setTipIndex(tipIndex + 1);
   }
 
@@ -130,27 +105,7 @@ export default function Popover05() {
         </AnimatedSize>
         <div className='flex items-center justify-between gap-2'>
           <span className='text-muted-foreground flex text-xs tabular-nums'>
-            <span className='relative flex overflow-hidden'>
-              <AnimatePresence
-                mode='popLayout'
-                initial={false}
-                custom={direction}
-              >
-                <motion.span
-                  key={tipNumber}
-                  className='flex'
-                  custom={direction}
-                  variants={digitVariants}
-                  initial='enter'
-                  animate='visible'
-                  exit='exit'
-                  transition={DIGIT_TRANSITION}
-                >
-                  {tipNumber}
-                </motion.span>
-              </AnimatePresence>
-            </span>
-            /{TIPS.length}
+            <MotionNumber value={tipNumber} />/{TIPS.length}
           </span>
           <Button
             variant='link'

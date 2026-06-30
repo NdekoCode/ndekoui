@@ -395,7 +395,7 @@ export const manifest: ComponentManifest = [
     source: 'ui-layouts:buttons',
     title: 'Watch with rolling digits',
     description:
-      'Only the digits that change roll, units first, when the watch count goes up or down.',
+      'Only the digits that change roll, in the direction of the change, when the watch count goes up or down.',
   },
   {
     name: 'button-63',

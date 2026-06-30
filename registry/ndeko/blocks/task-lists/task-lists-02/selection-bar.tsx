@@ -7,6 +7,7 @@ import {
   type Transition,
 } from 'motion/react';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import { CircleDashedIcon, UserIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
@@ -27,7 +28,6 @@ import {
   type StatusId,
   type Task,
 } from './data';
-import { RollingCount } from './motion-parts';
 import { PersonAvatar, PriorityGlyph, StatusGlyph } from './task-glyphs';
 import { isPriorityId, isStatusId } from './task-model';
 
@@ -121,7 +121,7 @@ export function SelectionBar({
       className='surface-raised pointer-events-auto flex h-11 max-w-full items-center gap-0.5 rounded-full py-1 ps-4 pe-1.5'
     >
       <span className='flex items-center gap-1 text-[13px] font-medium whitespace-nowrap'>
-        <RollingCount value={tasks.length} />
+        <MotionNumber value={tasks.length} />
         selected
       </span>
       <BarDivider />

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 
-import { SlidingNumber } from '@/components/core/sliding-number';
+import { MotionNumber } from '@/components/core/motion-number';
 import { AnimatedTabsHover } from '@/app/docs/animated-background/animated-tabs-hover';
 import { TextLoopBasic } from '@/app/docs/text-loop/text-loop-basic';
 import { TextMorphButton } from '@/app/docs/text-morph/text-morph-button';
@@ -38,7 +38,7 @@ function SeatCounter() {
         <MinusIcon />
       </Button>
       <span className='flex w-10 justify-center text-2xl font-semibold tabular-nums'>
-        <SlidingNumber value={seats} />
+        <MotionNumber value={seats} />
       </span>
       <Button
         variant='outline'
@@ -62,9 +62,9 @@ type MotionCell = {
 
 const CELLS: MotionCell[] = [
   {
-    slug: 'sliding-number',
-    name: 'Sliding number',
-    motion: 'Digits slide in the direction of the change',
+    slug: 'motion-number',
+    name: 'Motion number',
+    motion: 'Digits roll in the direction of the change',
     demo: <SeatCounter />,
   },
   {

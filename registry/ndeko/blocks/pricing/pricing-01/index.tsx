@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Chip } from '@/registry/ndeko/ui/chip';
@@ -14,9 +15,16 @@ import {
   PLANS,
   SECTION,
 } from './data';
-import { formatPrice, PlanPrice } from './plan-price';
 
 const MONTHS_PER_YEAR = 12;
+
+const PRICE_FORMAT: Intl.NumberFormatOptions = {
+  style: 'currency',
+  currency: 'USD',
+  maximumFractionDigits: 0,
+};
+
+const PRICE_FORMATTER = new Intl.NumberFormat('en-US', PRICE_FORMAT);
 
 const PLAN_SURFACE =
   'bg-card hairline-ring ring-border shadow-[0_1px_2px_rgb(0_0_0/0.04)] dark:bg-foreground/[0.03]';
@@ -25,6 +33,10 @@ function isBillingPeriod(value: unknown): value is BillingPeriod {
   const isMonthly = value === 'monthly';
   const isYearly = value === 'yearly';
   return isMonthly || isYearly;
+}
+
+function formatPrice(amount: number) {
+  return PRICE_FORMATTER.format(amount);
 }
 
 function monthlyFigureOf(plan: Plan, period: BillingPeriod) {
@@ -40,13 +52,6 @@ function billingNoteOf(plan: Plan, period: BillingPeriod) {
     return `${total} billed once a year`;
   }
   return 'Billed every month';
-}
-
-function directionOf(period: BillingPeriod) {
-  if (period === 'yearly') {
-    return -1;
-  }
-  return 1;
 }
 
 function surfaceOf(plan: Plan) {
@@ -71,7 +76,6 @@ type PlanCardProps = {
 function PlanCard({ plan, period }: PlanCardProps) {
   const figure = monthlyFigureOf(plan, period);
   const note = billingNoteOf(plan, period);
-  const direction = directionOf(period);
   const surface = surfaceOf(plan);
   const actionVariant = actionVariantOf(plan);
 
@@ -87,7 +91,14 @@ function PlanCard({ plan, period }: PlanCardProps) {
         <p className='text-muted-foreground text-[13px]'>{plan.description}</p>
       </div>
       <div aria-live='polite' className='flex flex-col gap-1'>
-        <PlanPrice amount={figure} direction={direction} />
+        <p className='flex items-baseline gap-1.5'>
+          <MotionNumber
+            value={figure}
+            format={PRICE_FORMAT}
+            className='text-4xl font-semibold'
+          />
+          <span className='text-muted-foreground text-[13px]'>per month</span>
+        </p>
         <p className='text-muted-foreground text-xs tabular-nums'>{note}</p>
       </div>
       <Button

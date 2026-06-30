@@ -2,9 +2,10 @@
 
 import { Tabs as TabsPrimitive } from '@base-ui/react/tabs';
 
+import { MotionNumber } from '@/components/core/motion-number';
+
 import type { MetricId } from './data';
 import type { MetricFigure } from './figures';
-import { SlidingFigure } from './sliding-figure';
 
 type MetricStripProps = {
   figures: MetricFigure[];
@@ -42,9 +43,9 @@ export function MetricStrip({
             <span className='text-muted-foreground group-data-active/metric:text-foreground text-xs font-medium transition-colors duration-150'>
               {figure.metric.label}
             </span>
-            <SlidingFigure
-              amount={figure.total}
-              text={figure.totalText}
+            <MotionNumber
+              value={figure.total}
+              suffix={figure.metric.suffix}
               className='text-lg leading-7 font-semibold'
             />
             <span className='text-muted-foreground text-xs text-pretty'>

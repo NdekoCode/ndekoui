@@ -75,7 +75,7 @@ Titles are short nouns; descriptions are one plain sentence. English, no em dash
 Micro-interactions are the identity of the library: a port is finished only when it carries the ones that belong to it. Use the signature table of section 7 of the design system (press, swap, morph, resize, travel, presence, count, drag, hold) with its timing and easing tokens. Never on hover of something that cannot be clicked, never on mount for decoration. `registry/ndeko/ui/animated-size.tsx` animates a container whose content changes; dialogs already do it.
 
 - Icon or label swap: `AnimatePresence mode='popLayout' initial={false}` around a keyed `motion.span`, opacity plus scale 0.6 and blur 2px, 150ms, ease `[0.2, 0, 0, 1]`.
-- Count change: digits slide 8px in the direction of the change, keyed on the value, `tabular-nums`, 180ms.
+- Count change: `MotionNumber` from `@/components/core/motion-number`, digits rolling in the direction of the change, `tabular-nums`. Keystroke counters keep the short 8px slide, keyed on the value, 180ms.
 - Item added or removed from a list: `AnimatePresence` with height and opacity, 200ms; items already there on mount do not animate (`initial={false}`).
 - Label change in a button: `motion.span layout` with `{ type: 'spring', bounce: 0, duration: 0.3 }`.
 - Panels: the primitives already animate their height; do not add motion on top.

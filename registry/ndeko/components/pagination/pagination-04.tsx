@@ -1,14 +1,8 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  type Transition,
-  type Variants,
-  useReducedMotion,
-} from 'motion/react';
 import { useState } from 'react';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import { ChevronLeftIcon, ChevronRightIcon } from '@/registry/ndeko/lib/icons';
 import {
   Pagination,
@@ -19,36 +13,6 @@ import {
 
 const FIRST_PAGE = 1;
 const TOTAL_PAGES = 10;
-const DIGIT_SHIFT_PX = 8;
-
-const DIGIT_TRANSITION: Transition = { duration: 0.18, ease: [0.2, 0, 0, 1] };
-
-const DIGIT_VARIANTS: Variants = {
-  enter: (direction: number) => {
-    const offset = direction * DIGIT_SHIFT_PX;
-    return { opacity: 0, y: offset };
-  },
-  visible: { opacity: 1, y: 0 },
-  exit: (direction: number) => {
-    const offset = direction * DIGIT_SHIFT_PX;
-    return { opacity: 0, y: -offset };
-  },
-};
-
-const FADE_VARIANTS: Variants = {
-  enter: { opacity: 0 },
-  visible: { opacity: 1 },
-  exit: { opacity: 0 },
-};
-
-type PageState = { current: number; direction: number };
-
-function digitVariantsOf(shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return FADE_VARIANTS;
-  }
-  return DIGIT_VARIANTS;
-}
 
 function clampPage(page: number) {
   const atLeastFirst = Math.max(FIRST_PAGE, page);
@@ -60,16 +24,11 @@ function hrefOf(page: number) {
 }
 
 export default function Pagination04() {
-  const [page, setPage] = useState<PageState>({
-    current: FIRST_PAGE,
-    direction: 1,
-  });
-  const shouldReduceMotion = useReducedMotion();
-  const digitVariants = digitVariantsOf(shouldReduceMotion);
-  const previousPage = page.current - 1;
-  const nextPage = page.current + 1;
-  const isFirstPage = page.current === FIRST_PAGE;
-  const isLastPage = page.current === TOTAL_PAGES;
+  const [page, setPage] = useState(FIRST_PAGE);
+  const previousPage = page - 1;
+  const nextPage = page + 1;
+  const isFirstPage = page === FIRST_PAGE;
+  const isLastPage = page === TOTAL_PAGES;
 
   function goToPage(
     event: React.MouseEvent<HTMLAnchorElement>,
@@ -77,10 +36,7 @@ export default function Pagination04() {
   ) {
     event.preventDefault();
     const nextCurrent = clampPage(target);
-    setPage((previous) => {
-      const direction = Math.sign(nextCurrent - previous.current);
-      return { current: nextCurrent, direction };
-    });
+    setPage(nextCurrent);
   }
 
   return (
@@ -103,30 +59,11 @@ export default function Pagination04() {
             aria-live='polite'
           >
             <span className='sr-only'>
-              Page {page.current} of {TOTAL_PAGES}
+              Page {page} of {TOTAL_PAGES}
             </span>
             <span className='inline-flex items-baseline' aria-hidden='true'>
               Page&nbsp;
-              <span className='text-foreground relative inline-flex'>
-                <AnimatePresence
-                  mode='popLayout'
-                  initial={false}
-                  custom={page.direction}
-                >
-                  <motion.span
-                    key={page.current}
-                    className='inline-flex'
-                    custom={page.direction}
-                    variants={digitVariants}
-                    initial='enter'
-                    animate='visible'
-                    exit='exit'
-                    transition={DIGIT_TRANSITION}
-                  >
-                    {page.current}
-                  </motion.span>
-                </AnimatePresence>
-              </span>
+              <MotionNumber value={page} className='text-foreground' />
               &nbsp;of&nbsp;
               <span className='text-foreground'>{TOTAL_PAGES}</span>
             </span>

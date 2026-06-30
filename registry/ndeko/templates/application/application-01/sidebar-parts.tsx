@@ -2,10 +2,10 @@
 
 import { motion, type Transition, useReducedMotion } from 'motion/react';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 import type { Entity, NavItem } from './data';
-import { RollingCount } from './motion-parts';
 
 export const NAV_ROW = [
   'relative flex h-7 w-full min-w-0 items-center gap-2 rounded-md px-2 text-left text-[13px] font-medium text-foreground outline-none',
@@ -115,7 +115,7 @@ export function NavRow({
         <ItemIcon />
         <span className='relative min-w-0 flex-1 truncate'>{item.label}</span>
         {hasCount && (
-          <RollingCount
+          <MotionNumber
             value={count}
             className='text-muted-foreground text-xs font-normal'
           />

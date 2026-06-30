@@ -1,14 +1,8 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  type Transition,
-  type Variants,
-  useReducedMotion,
-} from 'motion/react';
-import { useState } from 'react';
+import { motion, type Transition, useReducedMotion } from 'motion/react';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import { cn } from '@/registry/ndeko/lib/utils';
 import {
   Avatar,
@@ -49,88 +43,6 @@ export function ActiveRowIndicator({ layoutId }: { layoutId: string }) {
       transition={travelOf(shouldReduceMotion)}
       className='bg-foreground/[0.07] absolute inset-0 rounded-md'
     />
-  );
-}
-
-const COUNT_SHIFT_PX = 8;
-
-const COUNT_TRANSITION: Transition = { duration: 0.18, ease: [0.2, 0, 0, 1] };
-
-const COUNT_VARIANTS: Variants = {
-  enter: (direction: number) => {
-    const offset = direction * COUNT_SHIFT_PX;
-    return { opacity: 0, y: offset };
-  },
-  visible: { opacity: 1, y: 0 },
-  exit: (direction: number) => {
-    const offset = direction * COUNT_SHIFT_PX;
-    return { opacity: 0, y: -offset };
-  },
-};
-
-const FADE_VARIANTS: Variants = {
-  enter: { opacity: 0 },
-  visible: { opacity: 1 },
-  exit: { opacity: 0 },
-};
-
-type CountState = { value: number; direction: number };
-
-function countVariantsOf(shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return FADE_VARIANTS;
-  }
-  return COUNT_VARIANTS;
-}
-
-function directionOf(previous: number, next: number) {
-  if (next > previous) {
-    return 1;
-  }
-  return -1;
-}
-
-export function SlidingCount({
-  value,
-  className,
-}: {
-  value: number;
-  className?: string;
-}) {
-  const shouldReduceMotion = useReducedMotion();
-  const [shown, setShown] = useState<CountState>({ value, direction: 1 });
-  const variants = countVariantsOf(shouldReduceMotion);
-
-  if (shown.value !== value) {
-    const direction = directionOf(shown.value, value);
-    setShown({ value, direction });
-  }
-
-  return (
-    <span
-      className={cn(
-        'relative inline-flex overflow-hidden tabular-nums',
-        className
-      )}
-    >
-      <AnimatePresence
-        mode='popLayout'
-        initial={false}
-        custom={shown.direction}
-      >
-        <motion.span
-          key={value}
-          custom={shown.direction}
-          variants={variants}
-          initial='enter'
-          animate='visible'
-          exit='exit'
-          transition={COUNT_TRANSITION}
-        >
-          {value}
-        </motion.span>
-      </AnimatePresence>
-    </span>
   );
 }
 
@@ -223,7 +135,7 @@ export function NavRow({
         <ItemIcon />
         <span className='relative min-w-0 flex-1 truncate'>{item.label}</span>
         {hasCount && (
-          <SlidingCount
+          <MotionNumber
             value={count}
             className='text-muted-foreground text-xs font-normal'
           />

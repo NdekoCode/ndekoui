@@ -6,7 +6,6 @@ import {
   type ColumnFiltersState,
   type FilterFn,
   flexRender,
-  functionalUpdate,
   getCoreRowModel,
   getFacetedUniqueValues,
   getFilteredRowModel,
@@ -17,7 +16,6 @@ import {
   type Row,
   type SortDirection,
   type SortingState,
-  type Updater,
   useReactTable,
   type VisibilityState,
 } from '@tanstack/react-table';
@@ -30,6 +28,7 @@ import {
 } from 'motion/react';
 import { createContext, useContext, useId, useRef, useState } from 'react';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import {
   ChevronDownIcon,
   ChevronFirstIcon,
@@ -301,27 +300,12 @@ const PAGE_SIZES = [
 
 const INITIAL_PAGINATION: PaginationState = { pageIndex: 0, pageSize: 10 };
 
-const SLIDE_SHIFT_PX = 8;
-
 const SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };
-const SLIDE_TRANSITION: Transition = { duration: 0.18, ease: [0.2, 0, 0, 1] };
 
 const GLYPH_VARIANTS: Variants = {
   enter: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },
   visible: { opacity: 1, scale: 1, filter: 'blur(0px)' },
   exit: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },
-};
-
-const SLIDE_VARIANTS: Variants = {
-  enter: (direction: number) => {
-    const offset = direction * SLIDE_SHIFT_PX;
-    return { opacity: 0, y: offset };
-  },
-  visible: { opacity: 1, y: 0 },
-  exit: (direction: number) => {
-    const offset = direction * SLIDE_SHIFT_PX;
-    return { opacity: 0, y: -offset };
-  },
 };
 
 const FADE_VARIANTS: Variants = {
@@ -571,13 +555,6 @@ function glyphVariantsOf(shouldReduceMotion: boolean | null) {
   return GLYPH_VARIANTS;
 }
 
-function slideVariantsOf(shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return FADE_VARIANTS;
-  }
-  return SLIDE_VARIANTS;
-}
-
 function sortGlyphOf(direction: false | SortDirection) {
   if (direction === 'asc') {
     return {
@@ -595,13 +572,6 @@ function sortGlyphOf(direction: false | SortDirection) {
     key: 'none',
     icon: <ChevronsUpDownIcon className='size-3.5 opacity-40' />,
   };
-}
-
-function directionOf(shift: number) {
-  if (shift < 0) {
-    return -1;
-  }
-  return 1;
 }
 
 function rangeOf(pagination: PaginationState, rowCount: number) {
@@ -631,36 +601,6 @@ function SortGlyph({ direction }: { direction: false | SortDirection }) {
           transition={SWAP_TRANSITION}
         >
           {glyph.icon}
-        </motion.span>
-      </AnimatePresence>
-    </span>
-  );
-}
-
-function SlidingValue({
-  value,
-  direction,
-}: {
-  value: string;
-  direction: number;
-}) {
-  const shouldReduceMotion = useReducedMotion();
-  const variants = slideVariantsOf(shouldReduceMotion);
-
-  return (
-    <span className='text-foreground relative inline-flex'>
-      <AnimatePresence mode='popLayout' initial={false} custom={direction}>
-        <motion.span
-          key={value}
-          className='inline-flex'
-          custom={direction}
-          variants={variants}
-          initial='enter'
-          animate='visible'
-          exit='exit'
-          transition={SLIDE_TRANSITION}
-        >
-          {value}
         </motion.span>
       </AnimatePresence>
     </span>
@@ -718,21 +658,6 @@ function presenceVariantsOf(shouldReduceMotion: boolean | null) {
     return PRESENCE_FADE_VARIANTS;
   }
   return PRESENCE_VARIANTS;
-}
-
-function useChangeDirection(value: number) {
-  const [tracked, setTracked] = useState({ value, direction: 1 });
-  if (tracked.value !== value) {
-    const direction = directionOf(value - tracked.value);
-    setTracked({ value, direction });
-    return direction;
-  }
-  return tracked.direction;
-}
-
-function SlidingCount({ value }: { value: number }) {
-  const direction = useChangeDirection(value);
-  return <SlidingValue value={String(value)} direction={direction} />;
 }
 
 function NameFilter({ column }: { column: Column<Account> | undefined }) {
@@ -825,7 +750,7 @@ function StatusFilter({ column }: { column: Column<Account> | undefined }) {
         Status
         {hasSelection && (
           <span className={COUNT_BADGE}>
-            <SlidingCount value={selectedCount} />
+            <MotionNumber value={selectedCount} className='text-foreground' />
           </span>
         )}
       </PopoverTrigger>
@@ -904,7 +829,7 @@ function DeleteSelected({
         <TrashIcon className='-ms-1 opacity-60' />
         Delete
         <span className={COUNT_BADGE}>
-          <SlidingCount value={count} />
+          <MotionNumber value={count} className='text-foreground' />
         </span>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -944,16 +869,8 @@ export default function Table20() {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [pagination, setPagination] =
     useState<PaginationState>(INITIAL_PAGINATION);
-  const [direction, setDirection] = useState(1);
   const shouldReduceMotion = useReducedMotion();
   const presenceVariants = presenceVariantsOf(shouldReduceMotion);
-
-  function changePagination(updater: Updater<PaginationState>) {
-    const next = functionalUpdate(updater, pagination);
-    const shift = next.pageIndex - pagination.pageIndex;
-    setDirection(directionOf(shift));
-    setPagination(next);
-  }
 
   function deleteAccount(id: string) {
     setAccounts((current) => current.filter((account) => account.id !== id));
@@ -966,7 +883,7 @@ export default function Table20() {
     getRowId: (account) => account.id,
     state: { sorting, pagination, columnFilters, columnVisibility },
     onSortingChange: setSorting,
-    onPaginationChange: changePagination,
+    onPaginationChange: setPagination,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
@@ -1128,10 +1045,11 @@ export default function Table20() {
               Showing rows {firstRow} to {lastRow} of {rowCount}
             </span>
             <span aria-hidden='true' className='inline-flex items-baseline'>
-              <SlidingValue
-                value={`${firstRow}–${lastRow}`}
-                direction={direction}
-              />
+              <span className='text-foreground inline-flex items-baseline'>
+                <MotionNumber value={firstRow} />
+                –
+                <MotionNumber value={lastRow} />
+              </span>
               &nbsp;of&nbsp;
               <span className='text-foreground'>{rowCount}</span>
             </span>

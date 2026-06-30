@@ -3,11 +3,12 @@
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useState } from 'react';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import { PlusIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 import type { ChildIssue, StatusId } from './data';
-import { heightPresenceOf, RollingCount, Swap } from './motion-parts';
+import { heightPresenceOf, Swap } from './motion-parts';
 import { PersonAvatar, StatusGlyph } from './task-glyphs';
 import { keyOf, personOf, statusOf } from './task-model';
 
@@ -189,8 +190,8 @@ export function ChildIssues({ items, nextNumber, onChange }: ChildIssuesProps) {
           <span className='text-muted-foreground flex items-center gap-1.5 text-xs tabular-nums'>
             <ProgressRing done={doneCount} total={items.length} />
             <span aria-hidden='true' className='flex'>
-              <RollingCount value={doneCount} />/
-              <RollingCount value={items.length} />
+              <MotionNumber value={doneCount} />/
+              <MotionNumber value={items.length} />
             </span>
             <span className='sr-only'>
               {doneCount} of {items.length} done

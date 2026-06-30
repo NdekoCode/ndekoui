@@ -8,7 +8,6 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import {
-  AnimatePresence,
   motion,
   type Transition,
   type Variants,
@@ -16,6 +15,7 @@ import {
 } from 'motion/react';
 import { memo, useEffect, useRef, useState } from 'react';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import { PlusIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -51,30 +51,6 @@ const CARD_FADE: Variants = {
   shown: { opacity: 1, transition: ENTER_IN },
 };
 
-const DIGIT_SHIFT_PX = 8;
-
-const DIGIT_TRANSITION: Transition = { duration: 0.18, ease: [0.2, 0, 0, 1] };
-
-const DIGIT_VARIANTS: Variants = {
-  enter: (direction: number) => {
-    const offset = direction * DIGIT_SHIFT_PX;
-    return { opacity: 0, y: offset };
-  },
-  visible: { opacity: 1, y: 0 },
-  exit: (direction: number) => {
-    const offset = direction * DIGIT_SHIFT_PX;
-    return { opacity: 0, y: -offset };
-  },
-};
-
-const FADE_VARIANTS: Variants = {
-  enter: { opacity: 0 },
-  visible: { opacity: 1 },
-  exit: { opacity: 0 },
-};
-
-type CountState = { value: number; direction: number };
-
 function sortTransitionOf(shouldReduceMotion: boolean | null) {
   if (shouldReduceMotion) {
     return null;
@@ -96,20 +72,6 @@ function initialOf(isNew: boolean) {
   return false;
 }
 
-function digitVariantsOf(shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return FADE_VARIANTS;
-  }
-  return DIGIT_VARIANTS;
-}
-
-function directionOf(previous: number, next: number) {
-  if (next > previous) {
-    return 1;
-  }
-  return -1;
-}
-
 function taskCountLabel(count: number) {
   if (count === 1) {
     return '1 task';
@@ -123,35 +85,14 @@ function cardLabelOf(task: BoardCard) {
 }
 
 function LaneCount({ value }: { value: number }) {
-  const shouldReduceMotion = useReducedMotion();
-  const [shown, setShown] = useState<CountState>({ value, direction: 1 });
-  const variants = digitVariantsOf(shouldReduceMotion);
-
-  if (shown.value !== value) {
-    const direction = directionOf(shown.value, value);
-    setShown({ value, direction });
-  }
+  const label = taskCountLabel(value);
 
   return (
-    <span className='bg-foreground/[0.06] text-muted-foreground relative inline-flex h-5 min-w-5 items-center justify-center overflow-hidden rounded-sm px-1.5 text-xs tabular-nums'>
-      <AnimatePresence
-        mode='popLayout'
-        initial={false}
-        custom={shown.direction}
-      >
-        <motion.span
-          key={value}
-          custom={shown.direction}
-          variants={variants}
-          initial='enter'
-          animate='visible'
-          exit='exit'
-          transition={DIGIT_TRANSITION}
-        >
-          {value}
-        </motion.span>
-      </AnimatePresence>
-      <span className='sr-only'>{` ${taskCountLabel(value)}`}</span>
+    <span className='bg-foreground/[0.06] text-muted-foreground inline-flex h-5 min-w-5 items-center justify-center rounded-sm px-1.5 text-xs tabular-nums'>
+      <span aria-hidden='true' className='inline-flex'>
+        <MotionNumber value={value} />
+      </span>
+      <span className='sr-only'>{` ${label}`}</span>
     </span>
   );
 }

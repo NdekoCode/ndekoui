@@ -208,18 +208,17 @@ function otherOf(
   return { count, minutes, share };
 }
 
-export function formatDuration(minutes: number) {
-  const rawHours = minutes / 60;
+export function durationPartsOf(totalMinutes: number) {
+  const rawHours = totalMinutes / 60;
   const hours = Math.floor(rawHours);
-  const rest = minutes % 60;
-  const paddedRest = String(rest).padStart(2, '0');
-  return `${hours}h ${paddedRest}m`;
+  const minutes = totalMinutes % 60;
+  return { hours, minutes };
 }
 
-export function formatShare(share: number) {
-  const percent = share * 100;
-  const rounded = Math.round(percent);
-  return `${rounded}%`;
+export function formatDuration(totalMinutes: number) {
+  const { hours, minutes } = durationPartsOf(totalMinutes);
+  const paddedMinutes = String(minutes).padStart(2, '0');
+  return `${hours}h ${paddedMinutes}m`;
 }
 
 export function csvRowsOf(bars: DayBar[]) {

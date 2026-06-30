@@ -9,6 +9,7 @@ import {
 } from 'motion/react';
 import { useState } from 'react';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import { BellIcon } from '@/registry/ndeko/lib/icons';
 import { Avatar, AvatarFallback } from '@/registry/ndeko/ui/avatar';
 import { Badge } from '@/registry/ndeko/ui/badge';
@@ -81,21 +82,13 @@ const INITIAL_NOTIFICATIONS: Notification[] = [
 ];
 
 const MAX_SHOWN_COUNT = 99;
-const DIGIT_SHIFT_PX = 8;
 
 const SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };
-const DIGIT_TRANSITION: Transition = { duration: 0.18, ease: [0.2, 0, 0, 1] };
 
 const POP_VARIANTS: Variants = {
   enter: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },
   visible: { opacity: 1, scale: 1, filter: 'blur(0px)' },
   exit: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },
-};
-
-const DIGIT_VARIANTS: Variants = {
-  enter: { opacity: 0, y: -DIGIT_SHIFT_PX },
-  visible: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: DIGIT_SHIFT_PX },
 };
 
 const FADE_VARIANTS: Variants = {
@@ -111,13 +104,6 @@ function popVariantsOf(shouldReduceMotion: boolean | null) {
   return POP_VARIANTS;
 }
 
-function digitVariantsOf(shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return FADE_VARIANTS;
-  }
-  return DIGIT_VARIANTS;
-}
-
 function notificationsLabelOf(unreadCount: number) {
   if (unreadCount === 0) {
     return 'Open notifications';
@@ -128,11 +114,15 @@ function notificationsLabelOf(unreadCount: number) {
   return `Open notifications, ${unreadCount} unread`;
 }
 
-function badgeTextOf(unreadCount: number) {
+function shownCountOf(unreadCount: number) {
+  return Math.min(unreadCount, MAX_SHOWN_COUNT);
+}
+
+function overflowMarkOf(unreadCount: number) {
   if (unreadCount > MAX_SHOWN_COUNT) {
-    return `${MAX_SHOWN_COUNT}+`;
+    return '+';
   }
-  return String(unreadCount);
+  return undefined;
 }
 
 function initialsOf(name: string) {
@@ -149,11 +139,12 @@ export default function Popover03() {
   const [notifications, setNotifications] = useState(INITIAL_NOTIFICATIONS);
   const shouldReduceMotion = useReducedMotion();
   const popVariants = popVariantsOf(shouldReduceMotion);
-  const digitVariants = digitVariantsOf(shouldReduceMotion);
   const unreadCount = notifications.filter(
     (notification) => notification.isUnread
   ).length;
   const hasUnread = unreadCount > 0;
+  const shownCount = shownCountOf(unreadCount);
+  const overflowMark = overflowMarkOf(unreadCount);
 
   function markAllAsRead() {
     setNotifications((current) => current.map(markAsRead));
@@ -194,19 +185,7 @@ export default function Popover03() {
               transition={SWAP_TRANSITION}
             >
               <Badge className='bg-primary text-primary-foreground min-w-5 overflow-hidden px-1 tabular-nums'>
-                <AnimatePresence mode='popLayout' initial={false}>
-                  <motion.span
-                    key={unreadCount}
-                    className='flex'
-                    variants={digitVariants}
-                    initial='enter'
-                    animate='visible'
-                    exit='exit'
-                    transition={DIGIT_TRANSITION}
-                  >
-                    {badgeTextOf(unreadCount)}
-                  </motion.span>
-                </AnimatePresence>
+                <MotionNumber value={shownCount} suffix={overflowMark} />
               </Badge>
             </motion.span>
           )}

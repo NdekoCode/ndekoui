@@ -8,7 +8,6 @@ import {
   type Transition,
   type Variants,
 } from 'motion/react';
-import { useState } from 'react';
 
 import { cn } from '@/registry/ndeko/lib/utils';
 
@@ -90,73 +89,6 @@ export function Swap({ swapKey, children, className }: SwapProps) {
           className='inline-flex'
         >
           {children}
-        </motion.span>
-      </AnimatePresence>
-    </span>
-  );
-}
-
-const COUNT_SLIDE = 8;
-
-const COUNT_TRANSITION: Transition = { duration: 0.18, ease: EASE_OUT_STRONG };
-
-const COUNT_VARIANTS: Variants = {
-  enter: (offset: number) => ({ y: offset, opacity: 0 }),
-  center: { y: 0, opacity: 1 },
-  leave: (offset: number) => ({ y: -offset, opacity: 0 }),
-};
-
-function directionOf(previous: number, next: number) {
-  if (next < previous) {
-    return -1;
-  }
-  return 1;
-}
-
-function offsetOf(direction: number, shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return 0;
-  }
-  return direction * COUNT_SLIDE;
-}
-
-export function RollingCount({
-  value,
-  className,
-}: {
-  value: number;
-  className?: string;
-}) {
-  const shouldReduceMotion = useReducedMotion();
-  const [previous, setPrevious] = useState(value);
-  const [direction, setDirection] = useState(1);
-
-  if (previous !== value) {
-    setDirection(directionOf(previous, value));
-    setPrevious(value);
-  }
-
-  const offset = offsetOf(direction, shouldReduceMotion);
-
-  return (
-    <span
-      className={cn(
-        'relative inline-flex overflow-hidden tabular-nums',
-        className
-      )}
-    >
-      <AnimatePresence mode='popLayout' initial={false} custom={offset}>
-        <motion.span
-          key={value}
-          custom={offset}
-          variants={COUNT_VARIANTS}
-          initial='enter'
-          animate='center'
-          exit='leave'
-          transition={COUNT_TRANSITION}
-          className='inline-block'
-        >
-          {value}
         </motion.span>
       </AnimatePresence>
     </span>

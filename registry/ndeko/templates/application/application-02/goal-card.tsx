@@ -7,16 +7,11 @@ import {
   useReducedMotion,
 } from 'motion/react';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 import type { Sprint } from './data';
-import {
-  formatShare,
-  percentAmountOf,
-  type Goal,
-  type GoalTone,
-} from './health-figures';
-import { SlidingFigure } from './sliding-figure';
+import { percentAmountOf, type Goal, type GoalTone } from './health-figures';
 
 const MOVE_TRANSITION: Transition = {
   duration: 0.3,
@@ -119,9 +114,6 @@ export function GoalCard({ sprint, goal }: GoalCardProps) {
   const shouldReduceMotion = useReducedMotion();
   const transition = moveTransitionOf(shouldReduceMotion);
   const shareAmount = percentAmountOf(goal.share);
-  const shareText = formatShare(goal.share);
-  const doneText = String(goal.done);
-  const plannedText = String(goal.planned);
   const hasMarker = goal.expectedShare !== null;
   const taskWord = taskWordOf(goal.planned);
 
@@ -141,24 +133,19 @@ export function GoalCard({ sprint, goal }: GoalCardProps) {
       <p className='text-base font-semibold text-balance'>{sprint.goal}</p>
       <div className='flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1'>
         <p className='flex items-baseline gap-1.5'>
-          <SlidingFigure
-            amount={goal.done}
-            text={doneText}
-            className='text-2xl font-semibold'
-          />
+          <MotionNumber value={goal.done} className='text-2xl font-semibold' />
           <span className='text-muted-foreground text-[13px]'>of</span>
-          <SlidingFigure
-            amount={goal.planned}
-            text={plannedText}
+          <MotionNumber
+            value={goal.planned}
             className='text-[13px] font-medium'
           />
           <span className='text-muted-foreground text-[13px]'>
             {`${taskWord} done`}
           </span>
         </p>
-        <SlidingFigure
-          amount={shareAmount}
-          text={shareText}
+        <MotionNumber
+          value={shareAmount}
+          suffix='%'
           className='text-lg font-semibold'
         />
       </div>

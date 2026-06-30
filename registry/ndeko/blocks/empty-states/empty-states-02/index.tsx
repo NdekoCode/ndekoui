@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import { ListFilterIcon, SearchIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import {
@@ -31,7 +32,7 @@ import {
   type Member,
   type RoleId,
 } from './data';
-import { fadePresence, RollingCount } from './motion-parts';
+import { fadePresence } from './motion-parts';
 
 function roleNameOf(roleId: RoleId) {
   const role = ROLES.find((item) => item.id === roleId);
@@ -206,7 +207,7 @@ export default function EmptyStates02() {
               Role
               {hasRoles && (
                 <span className='bg-primary/10 text-primary-ink -me-1.5 inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-xs'>
-                  <RollingCount value={roleCount} />
+                  <MotionNumber value={roleCount} />
                   <span className='sr-only'> selected</span>
                 </span>
               )}

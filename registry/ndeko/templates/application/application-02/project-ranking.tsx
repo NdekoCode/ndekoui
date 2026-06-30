@@ -8,15 +8,11 @@ import {
   useReducedMotion,
 } from 'motion/react';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import { cn } from '@/registry/ndeko/lib/utils';
 
-import {
-  formatDuration,
-  formatShare,
-  type OtherProjects,
-  type RankedProject,
-} from './weekly-figures';
-import { SlidingFigure } from './sliding-figure';
+import { DurationFigure } from './duration-figure';
+import type { OtherProjects, RankedProject } from './weekly-figures';
 
 const ROW_IN: Transition = { duration: 0.2, ease: [0.23, 1, 0.32, 1] };
 
@@ -124,14 +120,12 @@ function RankRow({
   isMuted,
 }: RankRowProps) {
   const shareAmount = percentAmountOf(share);
-  const shareText = formatShare(share);
-  const durationText = formatDuration(minutes);
 
   return (
     <div className='grid grid-cols-[2.5rem_minmax(0,1fr)_auto] items-baseline gap-x-2 gap-y-1.5 py-2'>
-      <SlidingFigure
-        amount={shareAmount}
-        text={shareText}
+      <MotionNumber
+        value={shareAmount}
+        suffix='%'
         className='text-muted-foreground text-xs'
       />
       <span
@@ -142,11 +136,7 @@ function RankRow({
       >
         {label}
       </span>
-      <SlidingFigure
-        amount={minutes}
-        text={durationText}
-        className='text-[13px]'
-      />
+      <DurationFigure minutes={minutes} className='text-[13px]' />
       <span className='col-start-2 col-end-4'>
         <ShareMeter share={share} tone={tone} transition={transition} />
       </span>

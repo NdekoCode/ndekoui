@@ -2,13 +2,14 @@
 
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import { ChevronDownIcon, PlusIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
 
 import type { StatusId, Task } from './data';
 import { DraftRow } from './draft-row';
-import { fadePresence, heightPresenceOf, RollingCount } from './motion-parts';
+import { fadePresence, heightPresenceOf } from './motion-parts';
 import { StatusGlyph } from './task-glyphs';
 import { BAND_FILL, COUNT_CHIP, TASK_GRID } from './task-grid';
 import { countLabel, statusOf } from './task-model';
@@ -73,7 +74,7 @@ export function TaskGroup({
           <span className='truncate text-[13px] font-medium'>{meta.name}</span>
           <span className={COUNT_CHIP}>
             <span aria-hidden='true'>
-              <RollingCount value={tasks.length} />
+              <MotionNumber value={tasks.length} />
             </span>
             <span className='sr-only'>
               {countLabel(tasks.length, 'task', 'tasks')}

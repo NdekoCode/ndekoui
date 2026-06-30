@@ -1,8 +1,8 @@
 'use client';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import { Tabs, TabsList, TabsTab } from '@/registry/ndeko/ui/tabs';
 
-import { RollingCount } from './motion-parts';
 import { isScope, SCOPES, type Scope } from './task-model';
 
 type ScopeSwitchProps = {
@@ -24,7 +24,7 @@ export function ScopeSwitch({ scope, counts, onChange }: ScopeSwitchProps) {
         {SCOPES.map((option) => (
           <TabsTab key={option.id} value={option.id}>
             {option.label}
-            <RollingCount
+            <MotionNumber
               value={counts[option.id]}
               className='text-muted-foreground text-xs'
             />

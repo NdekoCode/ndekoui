@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import { cn } from '@/registry/ndeko/lib/utils';
 import {
   Avatar,
@@ -12,7 +13,6 @@ import { Checkbox } from '@/registry/ndeko/ui/checkbox';
 
 import { DashboardCard } from './dashboard-card';
 import { OPEN_TASKS, TEAM, type OpenTask, type Person } from './data';
-import { RollingCount } from './motion-parts';
 import { personOf } from './people';
 
 function withDone(tasks: OpenTask[], taskId: string, isDone: boolean) {
@@ -52,7 +52,7 @@ export function OpenTasksCard() {
       title='Your open tasks'
       meta={
         <span className='inline-flex items-center gap-1 tabular-nums'>
-          <RollingCount value={openCount} /> open
+          <MotionNumber value={openCount} /> open
         </span>
       }
     >

@@ -1,5 +1,6 @@
 'use client';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import {
   CircleDashedIcon,
   HashIcon,
@@ -31,7 +32,6 @@ import {
   STATUSES,
   type Task,
 } from './data';
-import { RollingCount } from './motion-parts';
 import {
   IssueTypeGem,
   PersonAvatar,
@@ -182,7 +182,7 @@ export function FilterMenu({
         Filter
         {hasActive && (
           <span className='bg-primary/10 text-primary-ink -me-1.5 inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-xs'>
-            <RollingCount value={activeCount} />
+            <MotionNumber value={activeCount} />
             <span className='sr-only'> active</span>
           </span>
         )}

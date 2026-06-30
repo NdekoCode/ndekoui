@@ -2,21 +2,23 @@
 
 import { useState } from 'react';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import { MinusIcon, PlusIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 
 import { PLAN, SECTION } from './data';
 import { FeatureTable } from './feature-table';
-import { SlidingFigure } from './sliding-figure';
 
-const PRICE_FORMAT = new Intl.NumberFormat('en-US', {
+const PRICE_FORMAT: Intl.NumberFormatOptions = {
   style: 'currency',
   currency: 'USD',
   maximumFractionDigits: 0,
-});
+};
+
+const PRICE_FORMATTER = new Intl.NumberFormat('en-US', PRICE_FORMAT);
 
 function formatPrice(amount: number) {
-  return PRICE_FORMAT.format(amount);
+  return PRICE_FORMATTER.format(amount);
 }
 
 function seatsLabelOf(seats: number) {
@@ -38,22 +40,17 @@ function fewerSeatsOf(seats: number) {
 
 export default function Pricing02() {
   const [seats, setSeats] = useState(PLAN.defaultSeats);
-  const [direction, setDirection] = useState(1);
   const canRemoveSeat = seats > PLAN.minSeats;
   const canAddSeat = seats < PLAN.maxSeats;
   const total = seats * PLAN.pricePerSeat;
-  const totalLabel = formatPrice(total);
   const seatPrice = formatPrice(PLAN.pricePerSeat);
-  const seatCount = String(seats);
   const seatsLabel = seatsLabelOf(seats);
 
   function addSeat() {
-    setDirection(1);
     setSeats(moreSeatsOf);
   }
 
   function removeSeat() {
-    setDirection(-1);
     setSeats(fewerSeatsOf);
   }
 
@@ -104,9 +101,8 @@ export default function Pricing02() {
                 >
                   <MinusIcon />
                 </Button>
-                <SlidingFigure
-                  value={seatCount}
-                  direction={direction}
+                <MotionNumber
+                  value={seats}
                   className='min-w-6 justify-center text-[13px] font-medium'
                 />
                 <Button
@@ -130,9 +126,9 @@ export default function Pricing02() {
                 Total per month
               </span>
               <span className='flex items-baseline gap-1.5 text-sm'>
-                <SlidingFigure
-                  value={totalLabel}
-                  direction={direction}
+                <MotionNumber
+                  value={total}
+                  format={PRICE_FORMAT}
                   className='font-semibold'
                 />
                 <span className='text-muted-foreground text-xs'>

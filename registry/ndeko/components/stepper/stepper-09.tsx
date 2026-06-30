@@ -1,14 +1,8 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  type Transition,
-  type Variants,
-  useReducedMotion,
-} from 'motion/react';
 import { useState } from 'react';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
@@ -19,36 +13,6 @@ import {
 
 const STEPS = [1, 2, 3, 4];
 const FIRST_STEP = 1;
-const DIGIT_SHIFT_PX = 8;
-
-const DIGIT_TRANSITION: Transition = { duration: 0.18, ease: [0.2, 0, 0, 1] };
-
-const DIGIT_VARIANTS: Variants = {
-  enter: (direction: number) => {
-    const offset = direction * DIGIT_SHIFT_PX;
-    return { opacity: 0, y: offset };
-  },
-  visible: { opacity: 1, y: 0 },
-  exit: (direction: number) => {
-    const offset = direction * DIGIT_SHIFT_PX;
-    return { opacity: 0, y: -offset };
-  },
-};
-
-const FADE_VARIANTS: Variants = {
-  enter: { opacity: 0 },
-  visible: { opacity: 1 },
-  exit: { opacity: 0 },
-};
-
-type StepState = { current: number; direction: number };
-
-function digitVariantsOf(shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return FADE_VARIANTS;
-  }
-  return DIGIT_VARIANTS;
-}
 
 const BAR = [
   'bg-foreground/10 data-[state=active]:bg-foreground/10 data-[state=completed]:bg-foreground/10 w-full',
@@ -57,26 +21,18 @@ const BAR = [
 ].join(' ');
 
 export default function Stepper09() {
-  const [step, setStep] = useState<StepState>({
-    current: FIRST_STEP,
-    direction: 1,
-  });
-  const shouldReduceMotion = useReducedMotion();
-  const digitVariants = digitVariantsOf(shouldReduceMotion);
-  const isFirstStep = step.current === FIRST_STEP;
-  const isLastStep = step.current >= STEPS.length;
+  const [step, setStep] = useState(FIRST_STEP);
+  const isFirstStep = step === FIRST_STEP;
+  const isLastStep = step >= STEPS.length;
 
-  function moveBy(direction: number) {
-    setStep((previous) => {
-      const current = previous.current + direction;
-      return { current, direction };
-    });
+  function moveBy(stepCount: number) {
+    setStep((previous) => previous + stepCount);
   }
 
   return (
     <div className='mx-auto flex w-full max-w-xl flex-col gap-8 text-center'>
       <div className='flex flex-col gap-3'>
-        <Stepper value={step.current} className='overflow-hidden rounded-full'>
+        <Stepper value={step} className='overflow-hidden rounded-full'>
           {STEPS.map((item) => (
             <StepperItem key={item} step={item} className='flex-1'>
               <StepperIndicator className={cn(BAR, 'h-2 rounded-none')}>
@@ -90,30 +46,11 @@ export default function Stepper09() {
           aria-live='polite'
         >
           <span className='sr-only'>
-            Step {step.current} of {STEPS.length}
+            Step {step} of {STEPS.length}
           </span>
           <span className='inline-flex items-baseline' aria-hidden='true'>
             Step&nbsp;
-            <span className='relative inline-flex'>
-              <AnimatePresence
-                mode='popLayout'
-                initial={false}
-                custom={step.direction}
-              >
-                <motion.span
-                  key={step.current}
-                  className='inline-flex'
-                  custom={step.direction}
-                  variants={digitVariants}
-                  initial='enter'
-                  animate='visible'
-                  exit='exit'
-                  transition={DIGIT_TRANSITION}
-                >
-                  {step.current}
-                </motion.span>
-              </AnimatePresence>
-            </span>
+            <MotionNumber value={step} />
             &nbsp;of {STEPS.length}
           </span>
         </p>

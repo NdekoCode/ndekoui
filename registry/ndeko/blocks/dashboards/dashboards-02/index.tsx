@@ -18,11 +18,11 @@ import { Skeleton } from '@/registry/ndeko/ui/skeleton';
 
 import { MEMBERS, TEAM_NAME, WEEKS, type Member, type Week } from './data';
 import { DayBars } from './day-bars';
+import { DurationFigure } from './duration-figure';
 import {
   averageWorkdayMinutesOf,
   csvRowsOf,
   dayBarsOf,
-  formatDuration,
   memberOf,
   rankingOf,
   totalMinutesOf,
@@ -41,7 +41,6 @@ import {
   useSimulatedLoad,
   type PeriodOption,
 } from './report-frame';
-import { SlidingFigure } from './sliding-figure';
 
 type ScopeOption = { value: Scope; label: string; member: Member | null };
 
@@ -151,8 +150,6 @@ export default function Dashboards02() {
   const title = `Week ${week.number}`;
   const meta = `${week.rangeLabel} · ${scopeLabel}`;
   const dayNote = dayNoteOf(week);
-  const totalText = formatDuration(totalMinutes);
-  const averageText = formatDuration(averageMinutes);
   const workingDaysLabel = dayCountLabelOf(
     workingDays,
     'working day',
@@ -241,9 +238,8 @@ export default function Dashboards02() {
               <div className='flex flex-wrap gap-x-10 gap-y-3'>
                 <div className='flex flex-col gap-0.5'>
                   <span className='text-muted-foreground text-xs'>Tracked</span>
-                  <SlidingFigure
-                    amount={totalMinutes}
-                    text={totalText}
+                  <DurationFigure
+                    minutes={totalMinutes}
                     className='text-lg leading-7 font-semibold'
                   />
                 </div>
@@ -251,9 +247,8 @@ export default function Dashboards02() {
                   <span className='text-muted-foreground text-xs'>
                     Average a working day
                   </span>
-                  <SlidingFigure
-                    amount={averageMinutes}
-                    text={averageText}
+                  <DurationFigure
+                    minutes={averageMinutes}
                     className='text-lg leading-7 font-semibold'
                   />
                   <span className='text-muted-foreground text-xs'>
