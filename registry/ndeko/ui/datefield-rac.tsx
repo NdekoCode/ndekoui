@@ -54,12 +54,32 @@ const SEGMENT = [
   'data-disabled:cursor-not-allowed data-disabled:opacity-50',
 ].join(' ');
 
-function DateSegment({ className, ...props }: DateSegmentProps) {
+const NARROW_NO_BREAK_SPACE = '\u202f';
+
+/**
+ * Node and the browser ship different ICU data: one puts a narrow no-break space before AM and PM,
+ * the other a plain space, so the server HTML would not match and React would rebuild the field.
+ */
+function segmentTextOf(text: string) {
+  return text.replaceAll(NARROW_NO_BREAK_SPACE, ' ');
+}
+
+function DateSegment({
+  className,
+  children,
+  segment,
+  ...props
+}: DateSegmentProps) {
+  const content = children ?? segmentTextOf(segment.text);
+
   return (
     <DateSegmentRac
+      segment={segment}
       className={composeRenderProps(className, (value) => cn(SEGMENT, value))}
       {...props}
-    />
+    >
+      {content}
+    </DateSegmentRac>
   );
 }
 
