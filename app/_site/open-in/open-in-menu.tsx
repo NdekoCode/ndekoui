@@ -6,8 +6,8 @@ import { useEffect, useState, type ReactNode } from 'react';
 
 import { installCommandOf } from '@/lib/site';
 import {
-  ArrowUpRightIcon,
   CheckIcon,
+  ChevronDownIcon,
   CopyIcon,
   ExternalLinkIcon,
   MessageCircleIcon,
@@ -181,18 +181,21 @@ export function OpenInMenu({ title, itemName }: OpenInMenuProps) {
             <DropdownMenuTrigger
               render={
                 <Button
-                  variant='ghost'
-                  size='icon-sm'
-                  className='text-muted-foreground'
-                  aria-label={`Open ${title} in an app builder`}
+                  variant='outline'
+                  size='sm'
+                  className='gap-1 px-2.5'
+                  aria-label={`Open ${title} in v0 or another app builder`}
                 />
               }
             />
           }
         >
-          <ArrowUpRightIcon />
+          <V0Mark className='size-4' />
+          <ChevronDownIcon className='text-muted-foreground size-3.5' />
         </TooltipTrigger>
-        <TooltipContent>Open in v0, Lovable, Cursor</TooltipContent>
+        <TooltipContent>
+          Open in v0, Lovable, Cursor, Claude or ChatGPT
+        </TooltipContent>
       </Tooltip>
       <DropdownMenuContent align='end' className='w-64'>
         <OpenLink href={v0LinkOf(itemName)} icon={<V0Mark />}>

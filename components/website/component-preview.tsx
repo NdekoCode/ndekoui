@@ -72,7 +72,7 @@ export default function ComponentPreview({
       )}
     >
       <div className='absolute top-3 right-3 z-10'>
-        <div className='flex items-center gap-1 opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100'>
+        <div className='flex items-center gap-1'>
           {motionItem && (
             <OpenInMenu title={motionItem.title} itemName={motionItem.name} />
           )}
