@@ -369,4 +369,39 @@ export const manifest: ComponentManifest = [
     description:
       'Tags sit inside the field and Backspace removes the last one.',
   },
+  {
+    name: 'input-60',
+    source: 'ui-layouts:password',
+    title: 'Password with morphing reveal',
+    description:
+      'Showing the password turns each dot into its character one after the other, in a monospace face.',
+  },
+  {
+    name: 'input-61',
+    source: 'ui-layouts:password',
+    title: 'Password with Caps Lock warning',
+    description:
+      'The hint under the field becomes a warning while Caps Lock is on and the field has focus.',
+  },
+  {
+    name: 'input-62',
+    source: 'ui-layouts:password',
+    title: 'Confirm password with match state',
+    description:
+      'The confirmation stays quiet while it follows the password and shows a cross or a check once it differs or matches.',
+  },
+  {
+    name: 'input-63',
+    source: 'ui-layouts:password',
+    title: 'Segmented strength meter',
+    description:
+      'Four segments fill in turn as the password gets stronger and the strength label slides in the same direction.',
+  },
+  {
+    name: 'input-64',
+    source: 'ui-layouts:password',
+    title: 'Password rule chips',
+    description:
+      'Each rule is a chip that turns green and swaps its circle for a check once the password meets it.',
+  },
 ];
