@@ -1,3 +1,5 @@
+'use client';
+
 import {
   BoxIcon,
   HouseIcon,
@@ -5,9 +7,11 @@ import {
 } from '@/registry/ndeko/lib/icons';
 import { Tabs, TabsList, TabsPanel, TabsTab } from '@/registry/ndeko/ui/tabs';
 import {
+  TOOLTIP_GLIDE_CLOSE_DELAY,
   Tooltip,
   TooltipContent,
   TooltipTrigger,
+  useTooltipHandle,
 } from '@/registry/ndeko/ui/tooltip';
 
 const PANELS = [
@@ -33,42 +37,49 @@ const PANEL_CARD =
   'grow rounded-xl bg-card shadow-[0_1px_2px_rgb(0_0_0/0.04)] hairline-ring ring-border';
 
 export default function Tabs16() {
+  const tabHint = useTooltipHandle<string>();
+
   return (
     <Tabs defaultValue='overview' orientation='vertical' className='w-full'>
       <TabsList variant='segmented' className='flex-col self-start'>
-        <Tooltip>
-          <TooltipTrigger
-            delay={0}
-            render={<TabsTab value='overview' aria-label='Overview' />}
-          >
-            <HouseIcon />
-          </TooltipTrigger>
-          <TooltipContent side='right'>Overview</TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger
-            delay={0}
-            render={
-              <TabsTab value='projects' aria-label='Projects, 3 active' />
-            }
-          >
-            <span className='relative flex'>
-              <PanelsTopLeftIcon />
-              <span className={ICON_COUNT}>3</span>
-            </span>
-          </TooltipTrigger>
-          <TooltipContent side='right'>Projects</TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger
-            delay={0}
-            render={<TabsTab value='packages' aria-label='Packages' />}
-          >
-            <BoxIcon />
-          </TooltipTrigger>
-          <TooltipContent side='right'>Packages</TooltipContent>
-        </Tooltip>
+        <TooltipTrigger
+          handle={tabHint}
+          payload='Overview'
+          delay={0}
+          closeDelay={TOOLTIP_GLIDE_CLOSE_DELAY}
+          render={<TabsTab value='overview' aria-label='Overview' />}
+        >
+          <HouseIcon />
+        </TooltipTrigger>
+        <TooltipTrigger
+          handle={tabHint}
+          payload='Projects'
+          delay={0}
+          closeDelay={TOOLTIP_GLIDE_CLOSE_DELAY}
+          render={<TabsTab value='projects' aria-label='Projects, 3 active' />}
+        >
+          <span className='relative flex'>
+            <PanelsTopLeftIcon />
+            <span className={ICON_COUNT}>3</span>
+          </span>
+        </TooltipTrigger>
+        <TooltipTrigger
+          handle={tabHint}
+          payload='Packages'
+          delay={0}
+          closeDelay={TOOLTIP_GLIDE_CLOSE_DELAY}
+          render={<TabsTab value='packages' aria-label='Packages' />}
+        >
+          <BoxIcon />
+        </TooltipTrigger>
       </TabsList>
+      <Tooltip handle={tabHint}>
+        {({ payload }) => (
+          <TooltipContent glide side='right'>
+            {payload}
+          </TooltipContent>
+        )}
+      </Tooltip>
       <div className={PANEL_CARD}>
         {PANELS.map((panel) => (
           <TabsPanel key={panel.value} value={panel.value}>

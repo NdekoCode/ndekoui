@@ -83,9 +83,8 @@ import {
   HoverCardDemo,
   PopoverDemo,
   SheetDemo,
-  TooltipDemo,
 } from './_demos/overlays-demos';
-import { CommandDemo, DialogDemo } from './_demos/overlays-live';
+import { CommandDemo, DialogDemo, TooltipDemo } from './_demos/overlays-live';
 import type { KitGroup } from './kit-types';
 
 export const KIT_GROUPS: KitGroup[] = [

@@ -22,9 +22,11 @@ import {
 } from '@/registry/ndeko/ui/dropdown-menu';
 import { Kbd } from '@/registry/ndeko/ui/kbd';
 import {
+  TOOLTIP_GLIDE_CLOSE_DELAY,
   Tooltip,
   TooltipContent,
   TooltipTrigger,
+  useTooltipHandle,
 } from '@/registry/ndeko/ui/tooltip';
 
 import type { TaskDetail } from './data';
@@ -32,6 +34,26 @@ import { currentUser, keyOf, taskUrlOf } from './detail-model';
 import { Swap } from './motion-parts';
 import { IssueTypeGem } from './task-glyphs';
 import { copyWithToast, useCopied } from './use-copied';
+
+type TaskStepHint = { label: string; shortcut: string };
+
+const PREVIOUS_TASK_HINT: TaskStepHint = {
+  label: 'Previous task',
+  shortcut: 'K',
+};
+
+const NEXT_TASK_HINT: TaskStepHint = { label: 'Next task', shortcut: 'J' };
+
+function TaskStepHintLabel({ hint }: { hint: TaskStepHint | undefined }) {
+  if (!hint) {
+    return null;
+  }
+  return (
+    <>
+      {hint.label} <Kbd>{hint.shortcut}</Kbd>
+    </>
+  );
+}
 
 function branchNameOf(task: TaskDetail) {
   const owner = currentUser().id;
@@ -104,6 +126,7 @@ export function PageBand({
   const link = taskUrlOf(task.number);
   const isFirst = position <= 1;
   const isLast = position >= total;
+  const stepHint = useTooltipHandle<TaskStepHint>();
 
   return (
     <div className='hairline-b border-border flex h-11 shrink-0 items-center gap-1 px-2 sm:px-3'>
@@ -139,41 +162,44 @@ export function PageBand({
         <span className='text-muted-foreground me-1 text-xs tabular-nums'>
           {position} / {total}
         </span>
-        <Tooltip>
-          <TooltipTrigger
-            render={
-              <Button
-                variant='ghost'
-                size='icon-sm'
-                aria-label='Previous task'
-                disabled={isFirst}
-                onClick={onPrevious}
-              />
-            }
-          >
-            <ChevronUpIcon />
-          </TooltipTrigger>
-          <TooltipContent>
-            Previous task <Kbd>K</Kbd>
-          </TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger
-            render={
-              <Button
-                variant='ghost'
-                size='icon-sm'
-                aria-label='Next task'
-                disabled={isLast}
-                onClick={onNext}
-              />
-            }
-          >
-            <ChevronDownIcon />
-          </TooltipTrigger>
-          <TooltipContent>
-            Next task <Kbd>J</Kbd>
-          </TooltipContent>
+        <TooltipTrigger
+          handle={stepHint}
+          payload={PREVIOUS_TASK_HINT}
+          closeDelay={TOOLTIP_GLIDE_CLOSE_DELAY}
+          render={
+            <Button
+              variant='ghost'
+              size='icon-sm'
+              aria-label='Previous task'
+              disabled={isFirst}
+              onClick={onPrevious}
+            />
+          }
+        >
+          <ChevronUpIcon />
+        </TooltipTrigger>
+        <TooltipTrigger
+          handle={stepHint}
+          payload={NEXT_TASK_HINT}
+          closeDelay={TOOLTIP_GLIDE_CLOSE_DELAY}
+          render={
+            <Button
+              variant='ghost'
+              size='icon-sm'
+              aria-label='Next task'
+              disabled={isLast}
+              onClick={onNext}
+            />
+          }
+        >
+          <ChevronDownIcon />
+        </TooltipTrigger>
+        <Tooltip handle={stepHint}>
+          {({ payload }) => (
+            <TooltipContent glide>
+              <TaskStepHintLabel hint={payload} />
+            </TooltipContent>
+          )}
         </Tooltip>
         <Button
           variant='ghost'

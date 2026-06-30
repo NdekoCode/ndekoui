@@ -10,11 +10,16 @@ import {
 } from 'motion/react';
 import { useState } from 'react';
 
+import { MotionNumber } from '@/components/core/motion-number';
 import { POPUP_TRANSITION } from '@/registry/ndeko/lib/recipes';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
-import { Popover, PopoverTrigger } from '@/registry/ndeko/ui/popover';
+import {
+  POPOVER_GLIDE,
+  Popover,
+  PopoverTrigger,
+} from '@/registry/ndeko/ui/popover';
 
 const TOUR_STEPS = [
   {
@@ -39,27 +44,12 @@ const TOUR_STEPS = [
   },
 ];
 
-const DIGIT_SHIFT_PX = 8;
-
 const SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };
-const DIGIT_TRANSITION: Transition = { duration: 0.18, ease: [0.2, 0, 0, 1] };
 
 const TEXT_VARIANTS: Variants = {
   enter: { opacity: 0, filter: 'blur(2px)' },
   visible: { opacity: 1, filter: 'blur(0px)' },
   exit: { opacity: 0, filter: 'blur(2px)' },
-};
-
-const DIGIT_VARIANTS: Variants = {
-  enter: (direction: number) => {
-    const offset = direction * DIGIT_SHIFT_PX;
-    return { opacity: 0, y: offset };
-  },
-  visible: { opacity: 1, y: 0 },
-  exit: (direction: number) => {
-    const offset = direction * DIGIT_SHIFT_PX;
-    return { opacity: 0, y: -offset };
-  },
 };
 
 const FADE_VARIANTS: Variants = {
@@ -70,6 +60,7 @@ const FADE_VARIANTS: Variants = {
 
 const ARROW = [
   'flex fill-popover stroke-border',
+  'transition-[left,top,opacity] duration-[250ms,250ms,150ms] ease-(--ease-out-strong) starting:opacity-0',
   'data-[side=bottom]:-top-[6px]',
   'data-[side=top]:-bottom-[6px] data-[side=top]:rotate-180',
   'data-[side=left]:-right-[9px] data-[side=left]:rotate-90',
@@ -83,13 +74,6 @@ function textVariantsOf(shouldReduceMotion: boolean | null) {
     return FADE_VARIANTS;
   }
   return TEXT_VARIANTS;
-}
-
-function digitVariantsOf(shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return FADE_VARIANTS;
-  }
-  return DIGIT_VARIANTS;
 }
 
 function nextLabelOf(isLastStep: boolean) {
@@ -116,31 +100,27 @@ function sideOf(stepIndex: number) {
 
 export default function Popover09() {
   const [stepIndex, setStepIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
   const [anchorTile, setAnchorTile] = useState<HTMLDivElement | null>(null);
   const shouldReduceMotion = useReducedMotion();
   const textVariants = textVariantsOf(shouldReduceMotion);
-  const digitVariants = digitVariantsOf(shouldReduceMotion);
   const step = TOUR_STEPS[stepIndex];
   const stepNumber = stepIndex + 1;
   const isLastStep = stepNumber === TOUR_STEPS.length;
   const nextLabel = nextLabelOf(isLastStep);
+  const side = sideOf(stepIndex);
 
   function restartWhenOpening(isOpen: boolean) {
     if (!isOpen) {
       return;
     }
-    setDirection(-1);
     setStepIndex(0);
   }
 
   function showNextStep() {
     if (isLastStep) {
-      setDirection(-1);
       setStepIndex(0);
       return;
     }
-    setDirection(1);
     setStepIndex(stepIndex + 1);
   }
 
@@ -169,9 +149,9 @@ export default function Popover09() {
       <PopoverPrimitive.Portal>
         <PopoverPrimitive.Positioner
           anchor={anchorTile}
-          side={sideOf(stepIndex)}
+          side={side}
           sideOffset={10}
-          className='z-50'
+          className={cn('z-50', POPOVER_GLIDE)}
         >
           <PopoverPrimitive.Popup
             className={cn(
@@ -201,27 +181,7 @@ export default function Popover09() {
             </AnimatedSize>
             <div className='flex items-center justify-between gap-2'>
               <span className='text-muted-foreground flex text-xs tabular-nums'>
-                <span className='relative flex overflow-hidden'>
-                  <AnimatePresence
-                    mode='popLayout'
-                    initial={false}
-                    custom={direction}
-                  >
-                    <motion.span
-                      key={stepNumber}
-                      className='flex'
-                      custom={direction}
-                      variants={digitVariants}
-                      initial='enter'
-                      animate='visible'
-                      exit='exit'
-                      transition={DIGIT_TRANSITION}
-                    >
-                      {stepNumber}
-                    </motion.span>
-                  </AnimatePresence>
-                </span>
-                /{TOUR_STEPS.length}
+                <MotionNumber value={stepNumber} />/{TOUR_STEPS.length}
               </span>
               <Button
                 variant='link'
@@ -244,7 +204,7 @@ export default function Popover09() {
                 </AnimatePresence>
               </Button>
             </div>
-            <PopoverPrimitive.Arrow className={ARROW}>
+            <PopoverPrimitive.Arrow key={side} className={ARROW}>
               <svg width='12' height='6' viewBox='0 0 12 6' aria-hidden='true'>
                 <path d='M0 6 6 0l6 6Z' stroke='none' />
                 <polyline points='0,6 6,0.5 12,6' fill='none' strokeWidth='1' />

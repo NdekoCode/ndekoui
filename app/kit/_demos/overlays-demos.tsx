@@ -1,12 +1,5 @@
 import { CopyButton } from '@/app/_site/copy-button';
-import {
-  ArchiveIcon,
-  FilterIcon,
-  LinkIcon,
-  PinIcon,
-  ShareIcon,
-  TrashIcon,
-} from '@/registry/ndeko/lib/icons';
+import { FilterIcon, ShareIcon, TrashIcon } from '@/registry/ndeko/lib/icons';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -48,17 +41,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/registry/ndeko/ui/sheet';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/registry/ndeko/ui/tooltip';
-
-const TOOLTIP_ACTIONS = [
-  { label: 'Copy link', icon: LinkIcon },
-  { label: 'Pin to sidebar', icon: PinIcon },
-  { label: 'Archive project', icon: ArchiveIcon },
-];
 
 const SHARE_LINK = 'https://atlas.example.com/p/website-redesign';
 
@@ -67,28 +49,6 @@ const FILTERS = [
   { label: 'Has a due date', isChecked: false },
   { label: 'Blocked', isChecked: false },
 ];
-
-export function TooltipDemo() {
-  return (
-    <div className='flex items-center gap-1'>
-      {TOOLTIP_ACTIONS.map((action) => {
-        const ActionIcon = action.icon;
-        return (
-          <Tooltip key={action.label}>
-            <TooltipTrigger
-              render={
-                <Button variant='ghost' size='icon' aria-label={action.label} />
-              }
-            >
-              <ActionIcon />
-            </TooltipTrigger>
-            <TooltipContent>{action.label}</TooltipContent>
-          </Tooltip>
-        );
-      })}
-    </div>
-  );
-}
 
 export function PopoverDemo() {
   return (

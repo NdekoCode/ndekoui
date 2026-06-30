@@ -15,11 +15,28 @@ function PopoverTrigger(props: PopoverPrimitive.Trigger.Props) {
   return <PopoverPrimitive.Trigger data-slot='popover-trigger' {...props} />;
 }
 
+/**
+ * The first open does not glide: Base UI positions the popup while it still holds transitions off.
+ * `trigger-change` marks a popover resting after a move between triggers, so scroll and resize
+ * tracking stay instant; a keyboard open (`click`) still glides.
+ */
+const POPOVER_GLIDE = [
+  'transition-[top,left,right,bottom,transform] duration-250 ease-(--ease-out-strong)',
+  'data-closed:transition-none data-[instant=trigger-change]:transition-none',
+].join(' ');
+
+function positionerClassOf(glide: boolean) {
+  return cn('z-50', glide && POPOVER_GLIDE);
+}
+
 type PopoverContentProps = WithClassName<PopoverPrimitive.Popup.Props> &
   Pick<
     PopoverPrimitive.Positioner.Props,
     'side' | 'sideOffset' | 'align' | 'alignOffset'
-  >;
+  > & {
+    /** Glide to the next anchor of a popover shared by several triggers. */
+    glide?: boolean;
+  };
 
 function PopoverContent({
   className,
@@ -27,6 +44,7 @@ function PopoverContent({
   sideOffset = 6,
   align = 'center',
   alignOffset = 0,
+  glide = false,
   ...props
 }: PopoverContentProps) {
   return (
@@ -36,7 +54,7 @@ function PopoverContent({
         sideOffset={sideOffset}
         align={align}
         alignOffset={alignOffset}
-        className='z-50'
+        className={positionerClassOf(glide)}
       >
         <PopoverPrimitive.Popup
           data-slot='popover-content'
@@ -83,6 +101,7 @@ function PopoverClose(props: PopoverPrimitive.Close.Props) {
 }
 
 export {
+  POPOVER_GLIDE,
   Popover,
   PopoverClose,
   PopoverContent,

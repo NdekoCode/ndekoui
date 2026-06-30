@@ -17,10 +17,13 @@ import {
   NavigationMenuList,
 } from '@/registry/ndeko/ui/navigation-menu';
 import {
+  TOOLTIP_GLIDE_CLOSE_DELAY,
   Tooltip,
   TooltipContent,
+  type TooltipHandle,
   TooltipProvider,
   TooltipTrigger,
+  useTooltipHandle,
 } from '@/registry/ndeko/ui/tooltip';
 
 type NavLinkItem = { label: string; href: string; icon?: Icon };
@@ -85,6 +88,7 @@ type NavLinksItemProps = {
   indicator: NavIndicator;
   display: NavLinkDisplay;
   transition: Transition;
+  linkHint: TooltipHandle<string>;
   onFollow: (
     event: React.MouseEvent<HTMLAnchorElement>,
     link: NavLinkItem
@@ -97,6 +101,7 @@ function NavLinksItem({
   indicator,
   display,
   transition,
+  linkHint,
   onFollow,
 }: NavLinksItemProps) {
   const isIconOnly = display === 'icon';
@@ -131,21 +136,21 @@ function NavLinksItem({
   if (isIconOnly) {
     return (
       <NavigationMenuItem className={ITEM_CLASS[indicator]}>
-        <Tooltip>
-          <TooltipTrigger
-            render={
-              <NavigationMenuLink
-                href={link.href}
-                active={isActive}
-                onClick={follow}
-                className={linkClassName}
-              />
-            }
-          >
-            {content}
-          </TooltipTrigger>
-          <TooltipContent side='bottom'>{link.label}</TooltipContent>
-        </Tooltip>
+        <TooltipTrigger
+          handle={linkHint}
+          payload={link.label}
+          closeDelay={TOOLTIP_GLIDE_CLOSE_DELAY}
+          render={
+            <NavigationMenuLink
+              href={link.href}
+              active={isActive}
+              onClick={follow}
+              className={linkClassName}
+            />
+          }
+        >
+          {content}
+        </TooltipTrigger>
       </NavigationMenuItem>
     );
   }
@@ -185,6 +190,8 @@ function NavLinks({
   const shouldReduceMotion = useReducedMotion();
   const transition = slideTransitionOf(shouldReduceMotion);
   const isUnderline = indicator === 'underline';
+  const isIconOnly = display === 'icon';
+  const linkHint = useTooltipHandle<string>();
 
   function followLink(
     event: React.MouseEvent<HTMLAnchorElement>,
@@ -212,11 +219,21 @@ function NavLinks({
                 indicator={indicator}
                 display={display}
                 transition={transition}
+                linkHint={linkHint}
                 onFollow={followLink}
               />
             ))}
           </NavigationMenuList>
         </NavigationMenu>
+        {isIconOnly && (
+          <Tooltip handle={linkHint}>
+            {({ payload }) => (
+              <TooltipContent glide side='bottom'>
+                {payload}
+              </TooltipContent>
+            )}
+          </Tooltip>
+        )}
       </TooltipProvider>
     </LayoutGroup>
   );

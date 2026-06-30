@@ -43,7 +43,7 @@ export const manifest: ComponentManifest = [
     source: 'comp-360',
     title: 'Tooltips on four sides',
     description:
-      'Four pan buttons, each tooltip on its own side with a shortcut.',
+      'Four pan buttons share one tooltip that moves to each side with its shortcut.',
   },
   {
     name: 'tooltip-08',
@@ -56,7 +56,7 @@ export const manifest: ComponentManifest = [
     source: 'comp-362',
     title: 'Chart readout',
     description:
-      'Bars that show the visits of their day when hovered or pressed.',
+      'One readout follows the pointer, a tap or the keyboard from bar to bar.',
   },
   {
     name: 'tooltip-10',

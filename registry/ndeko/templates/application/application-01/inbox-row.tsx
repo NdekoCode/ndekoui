@@ -10,9 +10,11 @@ import {
 import { ArchiveIcon, CheckIcon, MailIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import {
+  TOOLTIP_GLIDE_CLOSE_DELAY,
   Tooltip,
   TooltipContent,
   TooltipTrigger,
+  useTooltipHandle,
 } from '@/registry/ndeko/ui/tooltip';
 
 import { PEOPLE, TEAM_KEY, type InboxItem } from './data';
@@ -94,6 +96,7 @@ export function InboxRow({
   const sender = senderOf(item);
   const key = `${TEAM_KEY}-${item.taskNumber}`;
   const readLabel = readToggleLabelOf(item);
+  const actionHint = useTooltipHandle<string>();
 
   return (
     <motion.li
@@ -147,26 +150,31 @@ export function InboxRow({
             {item.age}
           </span>
           <span className='absolute end-0 flex items-center gap-0.5 opacity-0 transition-opacity duration-150 group-focus-within/row:opacity-100 group-hover/row:opacity-100 pointer-coarse:static pointer-coarse:opacity-100'>
-            <Tooltip>
-              <TooltipTrigger
-                aria-label={readLabel}
-                onClick={() => onToggleRead(item.id)}
-                className={ACTION_BUTTON}
-              >
-                {item.isUnread && <CheckIcon className='size-3.5' />}
-                {!item.isUnread && <MailIcon className='size-3.5' />}
-              </TooltipTrigger>
-              <TooltipContent>{readLabel}</TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger
-                aria-label='Archive'
-                onClick={() => onArchive(item.id)}
-                className={ACTION_BUTTON}
-              >
-                <ArchiveIcon className='size-3.5' />
-              </TooltipTrigger>
-              <TooltipContent>Archive</TooltipContent>
+            <TooltipTrigger
+              handle={actionHint}
+              payload={readLabel}
+              closeDelay={TOOLTIP_GLIDE_CLOSE_DELAY}
+              aria-label={readLabel}
+              onClick={() => onToggleRead(item.id)}
+              className={ACTION_BUTTON}
+            >
+              {item.isUnread && <CheckIcon className='size-3.5' />}
+              {!item.isUnread && <MailIcon className='size-3.5' />}
+            </TooltipTrigger>
+            <TooltipTrigger
+              handle={actionHint}
+              payload='Archive'
+              closeDelay={TOOLTIP_GLIDE_CLOSE_DELAY}
+              aria-label='Archive'
+              onClick={() => onArchive(item.id)}
+              className={ACTION_BUTTON}
+            >
+              <ArchiveIcon className='size-3.5' />
+            </TooltipTrigger>
+            <Tooltip handle={actionHint}>
+              {({ payload }) => (
+                <TooltipContent glide>{payload}</TooltipContent>
+              )}
             </Tooltip>
           </span>
         </span>

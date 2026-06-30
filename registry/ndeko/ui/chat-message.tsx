@@ -1,6 +1,8 @@
 // Adapted from prompt-kit (MIT, Copyright (c) 2025 Julien Thibeaut).
 'use client';
 
+import { createContext, useContext, useMemo } from 'react';
+
 import { cn } from '@/registry/ndeko/lib/utils';
 import {
   Avatar,
@@ -9,10 +11,13 @@ import {
 } from '@/registry/ndeko/ui/avatar';
 import { Markdown } from '@/registry/ndeko/ui/chat-markdown';
 import {
+  TOOLTIP_GLIDE_CLOSE_DELAY,
   Tooltip,
   TooltipContent,
+  type TooltipHandle,
   TooltipProvider,
   TooltipTrigger,
+  useTooltipHandle,
 } from '@/registry/ndeko/ui/tooltip';
 
 type MessageProps = React.ComponentProps<'div'>;
@@ -127,19 +132,58 @@ function MessageContent({
   );
 }
 
+type MessageActionSide = 'top' | 'bottom' | 'left' | 'right';
+
+type MessageActionHint = {
+  tooltip: React.ReactNode;
+  side: MessageActionSide;
+  className?: string;
+};
+
+const MessageActionsHintContext =
+  createContext<TooltipHandle<MessageActionHint> | null>(null);
+
+function hintSideOf(hint: MessageActionHint | undefined): MessageActionSide {
+  if (!hint) {
+    return 'top';
+  }
+  return hint.side;
+}
+
+function MessageActionTooltip({
+  hint,
+}: {
+  hint: MessageActionHint | undefined;
+}) {
+  const side = hintSideOf(hint);
+
+  return (
+    <TooltipContent glide side={side} className={hint?.className}>
+      {hint?.tooltip}
+    </TooltipContent>
+  );
+}
+
 type MessageActionsProps = React.ComponentProps<'div'>;
 
 function MessageActions({ className, ...props }: MessageActionsProps) {
+  const actionHint = useTooltipHandle<MessageActionHint>();
+
   return (
     <TooltipProvider>
-      <div
-        data-slot='message-actions'
-        className={cn(
-          'text-muted-foreground flex items-center gap-0.5',
-          className
-        )}
-        {...props}
-      />
+      <MessageActionsHintContext.Provider value={actionHint}>
+        <div
+          data-slot='message-actions'
+          className={cn(
+            'text-muted-foreground flex items-center gap-0.5',
+            className
+          )}
+          {...props}
+        />
+      </MessageActionsHintContext.Provider>
+      <Tooltip handle={actionHint}>
+        {({ payload }) => <MessageActionTooltip hint={payload} />}
+      </Tooltip>
     </TooltipProvider>
   );
 }
@@ -148,7 +192,7 @@ type MessageActionProps = {
   tooltip: React.ReactNode;
   /** The control the tooltip explains, usually an icon `Button` with an `aria-label`. */
   children: React.ReactElement;
-  side?: 'top' | 'bottom' | 'left' | 'right';
+  side?: MessageActionSide;
   className?: string;
 };
 
@@ -158,6 +202,24 @@ function MessageAction({
   side = 'top',
   className,
 }: MessageActionProps) {
+  const actionHint = useContext(MessageActionsHintContext);
+  const hint = useMemo(
+    () => ({ tooltip, side, className }),
+    [tooltip, side, className]
+  );
+
+  if (actionHint) {
+    return (
+      <TooltipTrigger
+        handle={actionHint}
+        payload={hint}
+        closeDelay={TOOLTIP_GLIDE_CLOSE_DELAY}
+        render={children}
+      />
+    );
+  }
+
+  // Outside `MessageActions` there is no row to glide along, so the action keeps its own tooltip.
   return (
     <Tooltip>
       <TooltipTrigger render={children} />

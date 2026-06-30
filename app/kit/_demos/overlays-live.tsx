@@ -3,9 +3,12 @@
 import { useState } from 'react';
 
 import {
+  ArchiveIcon,
   CommandIcon,
   FolderIcon,
   InboxIcon,
+  LinkIcon,
+  PinIcon,
   PlusIcon,
   SettingsIcon,
   UserRoundPlusIcon,
@@ -37,6 +40,47 @@ import { Input } from '@/registry/ndeko/ui/input';
 import { Label } from '@/registry/ndeko/ui/label';
 import { Switch } from '@/registry/ndeko/ui/switch';
 import { Textarea } from '@/registry/ndeko/ui/textarea';
+import {
+  TOOLTIP_GLIDE_CLOSE_DELAY,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  useTooltipHandle,
+} from '@/registry/ndeko/ui/tooltip';
+
+const TOOLTIP_ACTIONS = [
+  { label: 'Copy link', icon: LinkIcon },
+  { label: 'Pin to sidebar', icon: PinIcon },
+  { label: 'Archive project', icon: ArchiveIcon },
+];
+
+export function TooltipDemo() {
+  const actionHint = useTooltipHandle<string>();
+
+  return (
+    <div className='flex items-center gap-1'>
+      {TOOLTIP_ACTIONS.map((action) => {
+        const ActionIcon = action.icon;
+        return (
+          <TooltipTrigger
+            key={action.label}
+            handle={actionHint}
+            payload={action.label}
+            closeDelay={TOOLTIP_GLIDE_CLOSE_DELAY}
+            render={
+              <Button variant='ghost' size='icon' aria-label={action.label} />
+            }
+          >
+            <ActionIcon />
+          </TooltipTrigger>
+        );
+      })}
+      <Tooltip handle={actionHint}>
+        {({ payload }) => <TooltipContent glide>{payload}</TooltipContent>}
+      </Tooltip>
+    </div>
+  );
+}
 
 type CommandEntriesProps = {
   onRun?: () => void;
