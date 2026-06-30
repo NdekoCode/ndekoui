@@ -31,7 +31,7 @@ export const FAMILIES: CatalogFamily[] = [
   {
     name: 'Overlays',
     description: 'Layers that open above the page.',
-    slugs: ['dialog', 'popover', 'tooltip'],
+    slugs: ['dialog', 'modal', 'aside', 'popover', 'tooltip'],
   },
   {
     name: 'Navigation',
@@ -50,6 +50,12 @@ export const FAMILIES: CatalogFamily[] = [
       'badge',
       'event-calendar',
     ],
+  },
+  {
+    name: 'Collaboration',
+    description:
+      'The work around a task: its sub-tasks, comments, activity and team.',
+    slugs: ['subtask', 'comment', 'activity', 'teams'],
   },
   {
     name: 'Feedback',

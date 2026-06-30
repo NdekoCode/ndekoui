@@ -596,9 +596,179 @@ function NotificationThumb() {
   );
 }
 
+const AVATAR_DOT = 'keycap-3d block size-4 shrink-0 rounded-full';
+
+function ActivityThumb() {
+  return (
+    <div className='flex w-44 flex-col gap-2.5'>
+      <div className='flex items-center gap-2'>
+        <span className={AVATAR_DOT} />
+        <StrongLine className='w-10' />
+        <Line className='w-16' />
+      </div>
+      <div className='flex items-center gap-2'>
+        <span className={AVATAR_DOT} />
+        <span className='bg-foreground/10 block h-3.5 w-9 rounded-[4px]' />
+        <ChevronRightIcon className='text-muted-foreground size-2.5' />
+        <MiniChip color='var(--primary)' className='w-9' />
+      </div>
+      <div className='flex items-center gap-2'>
+        <span className={AVATAR_DOT} />
+        <StrongLine className='w-12' />
+        <Line className='w-12' />
+      </div>
+    </div>
+  );
+}
+
+function SubtaskThumb() {
+  return (
+    <div className='flex w-40 flex-col gap-2.5'>
+      <div className='flex items-center gap-2'>
+        <span className='border-primary border-e-foreground/15 border-b-foreground/15 block size-4 rounded-full border-2' />
+        <StrongLine className='w-8' />
+      </div>
+      <div className='flex flex-col gap-2'>
+        <div className='flex items-center gap-2'>
+          <MiniCheck checked />
+          <span className='bg-foreground/25 block h-px w-20' />
+        </div>
+        <div className='flex items-center gap-2'>
+          <MiniCheck checked />
+          <span className='bg-foreground/25 block h-px w-16' />
+        </div>
+        <div className='flex items-center gap-2'>
+          <MiniCheck checked={false} />
+          <Line className='w-24' />
+        </div>
+        <div className='flex items-center gap-2'>
+          <MiniCheck checked={false} />
+          <Line className='w-14' />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CommentThumb() {
+  return (
+    <div className='flex w-44 flex-col gap-2'>
+      <div className='flex gap-2'>
+        <span className={AVATAR_DOT} />
+        <div className='flex flex-1 flex-col gap-1.5'>
+          <StrongLine className='w-14' />
+          <div className='flex items-center gap-1'>
+            <Line className='w-8' />
+            <span className='bg-primary/15 block h-2.5 w-9 rounded-[3px]' />
+            <Line className='w-10' />
+          </div>
+          <div className='flex items-center gap-1'>
+            <span className='bg-primary/15 ring-primary/30 block h-3.5 w-7 rounded-full ring-1' />
+            <span className={cn(OUTLINE_PILL, 'h-3.5 w-5')} />
+          </div>
+        </div>
+      </div>
+      <div className='ms-6 flex items-center gap-2'>
+        <span className='keycap-3d block size-3 shrink-0 rounded-full' />
+        <Line className='w-20' />
+      </div>
+    </div>
+  );
+}
+
+function TeamsThumb() {
+  const gemStyle = { '--gem': 'var(--primary)' } as React.CSSProperties;
+  const presenceStyle = { '--chip': 'var(--success)' } as React.CSSProperties;
+  return (
+    <div className='flex w-44 flex-col gap-3'>
+      <div className='flex items-center gap-2'>
+        <span
+          className='gem-plate flex size-6 items-center justify-center rounded-md text-[8px] font-semibold text-white'
+          style={gemStyle}
+        >
+          DS
+        </span>
+        <div className='flex flex-col gap-1'>
+          <StrongLine className='w-16' />
+          <Line className='w-10' />
+        </div>
+      </div>
+      <div className='flex items-center'>
+        <span className='keycap-3d ring-card block size-5 rounded-full ring-2' />
+        <span className='keycap-3d ring-card relative -ms-1.5 block size-5 rounded-full ring-2'>
+          <span
+            className='chip-3d ring-card absolute -end-0.5 -bottom-0.5 block size-2 rounded-full ring-1'
+            style={presenceStyle}
+          />
+        </span>
+        <span className='keycap-3d ring-card -ms-1.5 block size-5 rounded-full ring-2' />
+        <Line className='ms-2 w-8' />
+      </div>
+    </div>
+  );
+}
+
+function ModalThumb() {
+  return (
+    <div className={cn(RAISED, 'flex w-44 flex-col gap-2.5 rounded-xl p-2.5')}>
+      <StrongLine className='w-16' />
+      <div className='flex items-center gap-1.5'>
+        <div className={cn(FIELD, 'flex-1 gap-1')}>
+          <MiniChip color='var(--primary)' className='w-6' />
+          <MiniChip color='var(--warning)' className='w-6' />
+          <MiniChip color='var(--info)' className='w-5' />
+        </div>
+        <span className={cn(PRIMARY_PILL, 'w-9')} />
+      </div>
+      <div className='flex items-center gap-2'>
+        <span className='keycap-3d block size-4 rounded-full' />
+        <Line className='w-16' />
+      </div>
+      <div className='flex items-center gap-2'>
+        <span className='border-foreground/25 block size-4 rounded-full border border-dashed' />
+        <Line className='w-12' />
+      </div>
+    </div>
+  );
+}
+
+function AsideThumb() {
+  return (
+    <div className='bg-card hairline-ring ring-foreground/10 relative flex h-24 w-44 overflow-hidden rounded-lg'>
+      <div className='flex flex-1 flex-col gap-1.5 p-2'>
+        <Line className='w-14' />
+        <Line className='w-10' />
+        <Line className='w-12' />
+      </div>
+      <div
+        className={cn(
+          RAISED,
+          'my-1 me-1 flex w-24 flex-col gap-2 rounded-md p-2'
+        )}
+      >
+        <StrongLine className='w-14' />
+        <div className='flex items-center justify-between'>
+          <Line className='w-6' />
+          <Line className='w-8' />
+        </div>
+        <div className='flex items-center justify-between'>
+          <Line className='w-7' />
+          <MiniChip color='var(--primary)' className='w-8' />
+        </div>
+        <div className='flex items-center justify-between'>
+          <Line className='w-5' />
+          <Line className='w-9' />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const THUMBNAILS: Record<string, () => React.ReactNode> = {
   accordion: AccordionThumb,
+  activity: ActivityThumb,
   alert: AlertThumb,
+  aside: AsideThumb,
   avatar: AvatarThumb,
   badge: BadgeThumb,
   banner: BannerThumb,
@@ -606,12 +776,14 @@ const THUMBNAILS: Record<string, () => React.ReactNode> = {
   button: ButtonThumb,
   'calendar-date-picker': DatePickerThumb,
   checkbox: CheckboxThumb,
+  comment: CommentThumb,
   dialog: DialogThumb,
   dropdown: DropdownThumb,
   'event-calendar': EventCalendarThumb,
   'file-upload': FileUploadThumb,
   'image-cropper': ImageCropperThumb,
   input: InputThumb,
+  modal: ModalThumb,
   navbar: NavbarThumb,
   notification: NotificationThumb,
   pagination: PaginationThumb,
@@ -620,9 +792,11 @@ const THUMBNAILS: Record<string, () => React.ReactNode> = {
   select: SelectThumb,
   slider: SliderThumb,
   stepper: StepperThumb,
+  subtask: SubtaskThumb,
   switch: SwitchThumb,
   table: TableThumb,
   tabs: TabsThumb,
+  teams: TeamsThumb,
   textarea: TextareaThumb,
   timeline: TimelineThumb,
   tooltip: TooltipThumb,
