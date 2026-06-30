@@ -16,6 +16,7 @@ import {
 import { Skeleton } from '@/registry/ndeko/ui/skeleton';
 
 import { CopyButton } from './copy-button';
+import { OpenInMenu } from './open-in/open-in-menu';
 
 type CodeFile = {
   label: string;
@@ -141,33 +142,36 @@ export function CodeDialog({ title, description, itemName }: CodeDialogProps) {
   }
 
   return (
-    <Dialog onOpenChange={loadOnFirstOpen}>
-      <DialogTrigger
-        render={<Button variant='outline' size='sm' />}
-        aria-label={`Code of ${title}`}
-      >
-        <CodeIcon />
-        Code
-      </DialogTrigger>
-      <DialogContent className='max-w-3xl'>
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
-        </DialogHeader>
-        <div className='bg-foreground/[0.04] flex items-center gap-2 rounded-lg py-1 pr-1 pl-3'>
-          <code className='text-muted-foreground min-w-0 flex-1 truncate font-mono text-xs'>
-            {installCommand}
-          </code>
-          <CopyButton value={installCommand} label='Copy install command' />
-        </div>
-        <div className={CODE_SURFACE}>
-          <div className='max-h-[55dvh] overflow-auto'>
-            {status === 'loading' && <CodeLoading />}
-            {status === 'error' && <CodeError onRetry={load} />}
-            {status === 'ready' && <CodeFiles files={files} />}
+    <div className='flex shrink-0 items-center gap-0.5'>
+      <OpenInMenu title={title} itemName={itemName} />
+      <Dialog onOpenChange={loadOnFirstOpen}>
+        <DialogTrigger
+          render={<Button variant='outline' size='sm' />}
+          aria-label={`Code of ${title}`}
+        >
+          <CodeIcon />
+          Code
+        </DialogTrigger>
+        <DialogContent className='max-w-3xl'>
+          <DialogHeader>
+            <DialogTitle>{title}</DialogTitle>
+            <DialogDescription>{description}</DialogDescription>
+          </DialogHeader>
+          <div className='bg-foreground/[0.04] flex items-center gap-2 rounded-lg py-1 pr-1 pl-3'>
+            <code className='text-muted-foreground min-w-0 flex-1 truncate font-mono text-xs'>
+              {installCommand}
+            </code>
+            <CopyButton value={installCommand} label='Copy install command' />
           </div>
-        </div>
-      </DialogContent>
-    </Dialog>
+          <div className={CODE_SURFACE}>
+            <div className='max-h-[55dvh] overflow-auto'>
+              {status === 'loading' && <CodeLoading />}
+              {status === 'error' && <CodeError onRetry={load} />}
+              {status === 'ready' && <CodeFiles files={files} />}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 }

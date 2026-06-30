@@ -120,6 +120,7 @@ import {
   LockIcon as LockGlyph,
   Logout01Icon as LogOutGlyph,
   Mail01Icon as MailGlyph,
+  Maximize02Icon as MaximizeGlyph,
   Menu01Icon as MenuGlyph,
   MessageCircleDashedIcon as MessageCircleDashedGlyph,
   MessageCircleIcon as MessageCircleGlyph,
@@ -130,6 +131,7 @@ import {
   MonitorIcon as MonitorGlyph,
   Moon02Icon as MoonGlyph,
   MoreHorizontalIcon as EllipsisGlyph,
+  Motion01Icon as MotionGlyph,
   NetworkIcon as NetworkGlyph,
   NewTwitterIcon as TwitterXGlyph,
   Notification01Icon as BellGlyph,
@@ -469,6 +471,8 @@ export const PlayIcon = createIcon(PlayGlyph, 'PlayIcon');
 export const PauseIcon = createIcon(PauseGlyph, 'PauseIcon');
 export const CloudIcon = createIcon(CloudGlyph, 'CloudIcon');
 export const LightbulbIcon = createIcon(LightbulbGlyph, 'LightbulbIcon');
+export const MaximizeIcon = createIcon(MaximizeGlyph, 'MaximizeIcon');
+export const MotionIcon = createIcon(MotionGlyph, 'MotionIcon');
 export const PinOffIcon = createIcon(PinOffGlyph, 'PinOffIcon');
 export const PlusIcon = createIcon(PlusGlyph, 'PlusIcon');
 export const PowerIcon = createIcon(PowerGlyph, 'PowerIcon');

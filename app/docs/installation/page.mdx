@@ -36,3 +36,13 @@ The command above adds the Text Effect component to `components/core`, with Moti
 You can also copy the code by hand from the component's page.
 
 </Steps>
+
+## In an AI app builder
+
+Every preview has an Open in menu next to its Code button.
+
+- **v0** reads the item straight from the registry.
+- **Lovable, Cursor, Claude and ChatGPT** open with a prompt that holds the install command and what the project needs.
+- **Bolt, Replit, Windsurf** and any other builder: copy the same prompt from the menu and paste it there.
+
+An item brings everything it uses: the theme, the icons, the primitives, its sample pictures in `public/`, and the parts it imports. Nothing points back to this site. The project needs React 19 and Tailwind CSS 4. No component depends on Next.js, so they also run in Vite projects.

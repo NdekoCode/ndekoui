@@ -1,6 +1,6 @@
 import { CodeDialog } from '@/app/_site/code-dialog';
 import { Button } from '@/registry/ndeko/ui/button';
-import { ArrowUpRightIcon } from '@/registry/ndeko/lib/icons';
+import { MaximizeIcon } from '@/registry/ndeko/lib/icons';
 
 import { BundleFrame } from './bundle-frame';
 import { viewPathOf } from './bundles';
@@ -20,11 +20,11 @@ export function BundleCard({ kind, entry }: BundleCardProps) {
         variant='ghost'
         size='sm'
         nativeButton={false}
-        aria-label={`Open ${entry.title} in a new tab`}
+        aria-label={`Open ${entry.title} full page in a new tab`}
         render={<a href={viewPath} target='_blank' rel='noreferrer' />}
       >
-        Open
-        <ArrowUpRightIcon />
+        <MaximizeIcon />
+        Full page
       </Button>
       <CodeDialog
         title={entry.title}
@@ -44,7 +44,7 @@ export function BundleCard({ kind, entry }: BundleCardProps) {
   );
 
   return (
-    <article>
+    <article id={entry.name} className='scroll-mt-20'>
       <BundleFrame
         src={viewPath}
         title={entry.title}

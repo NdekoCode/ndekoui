@@ -3,8 +3,13 @@ export const SYSTEM_FONT_CLASS =
 
 export const REGISTRY_URL = 'https://ui.ndekocode.dev/r';
 
+export function itemUrlOf(itemName: string) {
+  return `${REGISTRY_URL}/${itemName}.json`;
+}
+
 export function installCommandOf(itemName: string) {
-  return `npx shadcn@latest add ${REGISTRY_URL}/${itemName}.json`;
+  const itemUrl = itemUrlOf(itemName);
+  return `npx shadcn@latest add ${itemUrl}`;
 }
 
 export function countLabel(count: number, singular: string, plural: string) {
