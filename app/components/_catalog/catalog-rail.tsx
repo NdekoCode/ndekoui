@@ -34,6 +34,7 @@ export function CatalogRail({ families, currentSlug }: CatalogRailProps) {
               <Link
                 key={category.slug}
                 href={`/components/${category.slug}`}
+                scroll={false}
                 aria-current={ariaCurrentOf(isCurrent)}
                 className={RAIL_LINK}
               >

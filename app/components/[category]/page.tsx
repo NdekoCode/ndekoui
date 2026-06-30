@@ -86,6 +86,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               <Link
                 key={item.slug}
                 href={`/components/${item.slug}`}
+                scroll={false}
                 aria-current={ariaCurrentOf(isCurrent)}
                 className={CATEGORY_LINK}
               >
