@@ -23,6 +23,14 @@ import Notification19 from '@/registry/ndeko/components/notification/notificatio
 import Notification20 from '@/registry/ndeko/components/notification/notification-20';
 import Notification21 from '@/registry/ndeko/components/notification/notification-21';
 import Notification22 from '@/registry/ndeko/components/notification/notification-22';
+import Notification23 from '@/registry/ndeko/components/notification/notification-23';
+import Notification24 from '@/registry/ndeko/components/notification/notification-24';
+import Notification25 from '@/registry/ndeko/components/notification/notification-25';
+import Notification26 from '@/registry/ndeko/components/notification/notification-26';
+import Notification27 from '@/registry/ndeko/components/notification/notification-27';
+import Notification28 from '@/registry/ndeko/components/notification/notification-28';
+import Notification29 from '@/registry/ndeko/components/notification/notification-29';
+import Notification30 from '@/registry/ndeko/components/notification/notification-30';
 
 export const previews: Record<string, ComponentType> = {
   'notification-01': Notification01,
@@ -47,4 +55,12 @@ export const previews: Record<string, ComponentType> = {
   'notification-20': Notification20,
   'notification-21': Notification21,
   'notification-22': Notification22,
+  'notification-23': Notification23,
+  'notification-24': Notification24,
+  'notification-25': Notification25,
+  'notification-26': Notification26,
+  'notification-27': Notification27,
+  'notification-28': Notification28,
+  'notification-29': Notification29,
+  'notification-30': Notification30,
 };

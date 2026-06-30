@@ -106,6 +106,50 @@ export const groups: BundleGroup[] = [
     ],
   },
   {
+    slug: 'automations',
+    name: 'Automations',
+    entries: [
+      {
+        name: 'automations-01',
+        title: 'Rule builder',
+        description:
+          'An event, conditions and actions on one rail: rows open and close in place, the rule reads back as a sentence as you edit, mistakes fold in under their row and Save becomes Saving then Saved.',
+        files: [
+          'index.tsx',
+          'rule-parts.tsx',
+          'rule-model.ts',
+          'save-button.tsx',
+          'motion-parts.tsx',
+          'data.ts',
+        ],
+        previewHeight: 860,
+        group: 'automations',
+      },
+    ],
+  },
+  {
+    slug: 'billing',
+    name: 'Billing',
+    entries: [
+      {
+        name: 'billing-01',
+        title: 'Usage with a spending cap',
+        description:
+          'Plan meters that turn amber near their limit, on-demand spending against a cap whose marker follows the slider, a card that grows into its editor, and a next invoice that rolls to its new total once the cap is saved.',
+        files: [
+          'index.tsx',
+          'spend-cap.tsx',
+          'usage-meters.tsx',
+          'billing-model.ts',
+          'save-button.tsx',
+          'data.ts',
+        ],
+        previewHeight: 900,
+        group: 'billing',
+      },
+    ],
+  },
+  {
     slug: 'boards',
     name: 'Boards',
     entries: [
@@ -144,6 +188,21 @@ export const groups: BundleGroup[] = [
         ],
         previewHeight: 720,
         group: 'boards',
+      },
+    ],
+  },
+  {
+    slug: 'calendars',
+    name: 'Calendars',
+    entries: [
+      {
+        name: 'calendars-01',
+        title: 'Calendar app',
+        description:
+          'A sidebar with a month that moves the main calendar and colour toggles that filter it, beside a calendar with day, week, month, year and agenda views',
+        files: ['index.tsx', 'calendar-sidebar.tsx', 'data.ts'],
+        previewHeight: 760,
+        group: 'calendars',
       },
     ],
   },
@@ -256,14 +315,13 @@ export const groups: BundleGroup[] = [
         name: 'dashboards-01',
         title: 'Overview with a figures band',
         description:
-          'Four figures that pick what one line chart draws, a period switch whose figures slide to their new value, and a CSV export built in the browser.',
+          'Four figures that pick what one line chart draws, a period switch whose figures roll to their new value, and a CSV export built in the browser.',
         files: [
           'index.tsx',
           'metric-strip.tsx',
           'trend-chart.tsx',
           'chart-kit.tsx',
           'report-frame.tsx',
-          'sliding-figure.tsx',
           'figures.ts',
           'data.ts',
         ],
@@ -279,9 +337,9 @@ export const groups: BundleGroup[] = [
           'index.tsx',
           'day-bars.tsx',
           'project-ranking.tsx',
+          'duration-figure.tsx',
           'chart-kit.tsx',
           'report-frame.tsx',
-          'sliding-figure.tsx',
           'figures.ts',
           'data.ts',
         ],
@@ -298,11 +356,25 @@ export const groups: BundleGroup[] = [
           'goal-card.tsx',
           'workstream-table.tsx',
           'report-frame.tsx',
-          'sliding-figure.tsx',
           'figures.ts',
           'data.ts',
         ],
         previewHeight: 760,
+        group: 'dashboards',
+      },
+      {
+        name: 'dashboards-04',
+        title: 'Retention cohorts',
+        description:
+          'Weekly sign-up cohorts as a grid shaded by how many still subscribe, weeks to come as empty slots, a selection ring that travels with the arrow keys and a panel whose figure rolls to the picked week.',
+        files: [
+          'index.tsx',
+          'cohort-table.tsx',
+          'cohort-panel.tsx',
+          'cohort-model.ts',
+          'data.ts',
+        ],
+        previewHeight: 640,
         group: 'dashboards',
       },
     ],
@@ -402,6 +474,27 @@ export const groups: BundleGroup[] = [
         files: ['index.tsx', 'feature-previews.tsx', 'data.ts'],
         previewHeight: 700,
         group: 'features',
+      },
+    ],
+  },
+  {
+    slug: 'filters',
+    name: 'Filters',
+    entries: [
+      {
+        name: 'filters-01',
+        title: 'Amount filter over a histogram',
+        description:
+          'A popover that draws how the invoices spread by amount, lights the bars inside the range as the handles move, glides them to a common range and counts the matches before the list applies them.',
+        files: [
+          'index.tsx',
+          'amount-filter.tsx',
+          'invoice-model.ts',
+          'motion-parts.tsx',
+          'data.ts',
+        ],
+        previewHeight: 760,
+        group: 'filters',
       },
     ],
   },
@@ -543,6 +636,36 @@ export const groups: BundleGroup[] = [
     ],
   },
   {
+    slug: 'integrations',
+    name: 'Integrations',
+    entries: [
+      {
+        name: 'integrations-01',
+        title: 'Integrations directory',
+        description:
+          'Tools by category with a search, where Connect becomes Connecting then Connected in the same pill, an approval error folds in under its card, and the grid closes ranks as cards leave a view.',
+        files: ['index.tsx', 'integration-card.tsx', 'data.ts'],
+        previewHeight: 820,
+        group: 'integrations',
+      },
+    ],
+  },
+  {
+    slug: 'legal',
+    name: 'Legal',
+    entries: [
+      {
+        name: 'legal-01',
+        title: 'Policies with a section index',
+        description:
+          'Terms, privacy and cookies in one page: a rail of documents whose highlight travels, each document crossfading in place with its reading time and a short summary, and an index whose marker follows the section being read.',
+        files: ['index.tsx', 'section-index.tsx', 'legal-model.ts', 'data.ts'],
+        previewHeight: 900,
+        group: 'legal',
+      },
+    ],
+  },
+  {
     slug: 'logo-clouds',
     name: 'Logo clouds',
     entries: [
@@ -597,6 +720,22 @@ export const groups: BundleGroup[] = [
         previewHeight: 640,
         group: 'notifications',
       },
+      {
+        name: 'notifications-04',
+        title: 'Inbox with a reading pane',
+        description:
+          'Notifications grouped by day beside the one selected: read, archive with Undo, filter by unread or mentions, and reply in place.',
+        files: [
+          'index.tsx',
+          'inbox-list.tsx',
+          'notification-detail.tsx',
+          'glyphs.tsx',
+          'motion-parts.tsx',
+          'data.ts',
+        ],
+        previewHeight: 680,
+        group: 'notifications',
+      },
     ],
   },
   {
@@ -607,8 +746,8 @@ export const groups: BundleGroup[] = [
         name: 'pricing-01',
         title: 'Two plans with a billing switch',
         description:
-          'A monthly and yearly segmented switch whose thumb travels while both prices change in place, over two plans with example prices.',
-        files: ['index.tsx', 'plan-price.tsx', 'data.ts'],
+          'A monthly and yearly segmented switch whose thumb travels while the digits of both prices roll to their new value, over two plans with example prices.',
+        files: ['index.tsx', 'data.ts'],
         previewHeight: 760,
         group: 'pricing',
       },
@@ -616,13 +755,8 @@ export const groups: BundleGroup[] = [
         name: 'pricing-02',
         title: 'One plan with a feature table',
         description:
-          'A per-seat plan whose seat count and monthly total slide when changed, beside a grouped table of everything it includes.',
-        files: [
-          'index.tsx',
-          'sliding-figure.tsx',
-          'feature-table.tsx',
-          'data.ts',
-        ],
+          'A per-seat plan whose seat count and monthly total roll to their new value when changed, beside a grouped table of everything it includes.',
+        files: ['index.tsx', 'feature-table.tsx', 'data.ts'],
         previewHeight: 860,
         group: 'pricing',
       },
@@ -726,6 +860,43 @@ export const groups: BundleGroup[] = [
           'use-copied.ts',
           'task-edits.ts',
           'detail-model.ts',
+          'data.ts',
+        ],
+        previewHeight: 760,
+        group: 'task-detail',
+      },
+      {
+        name: 'task-detail-03',
+        title: 'Task with work tabs',
+        description:
+          'A task page whose sub-tasks, comments and activity share one card behind a segmented switch, each count rolling as you check, add and comment',
+        files: [
+          'index.tsx',
+          'subtask-panel.tsx',
+          'comment-panel.tsx',
+          'activity-panel.tsx',
+          'comment-composer.tsx',
+          'work-glyphs.tsx',
+          'motion-parts.tsx',
+          'work-model.ts',
+          'data.ts',
+        ],
+        previewHeight: 760,
+        group: 'task-detail',
+      },
+      {
+        name: 'task-detail-04',
+        title: 'Task with a conversation pane',
+        description:
+          'The task beside a pinned conversation where comments and changes interleave, a teammate types an answer and the panes become a switch on phones',
+        files: [
+          'index.tsx',
+          'conversation-pane.tsx',
+          'subtask-panel.tsx',
+          'comment-composer.tsx',
+          'work-glyphs.tsx',
+          'motion-parts.tsx',
+          'work-model.ts',
           'data.ts',
         ],
         previewHeight: 760,
@@ -845,6 +1016,21 @@ export const groups: BundleGroup[] = [
         previewHeight: 760,
         group: 'team',
       },
+      {
+        name: 'team-04',
+        title: 'Team overview',
+        description:
+          'A team page with its figures for this week or last, the members with their current task and hours, and the activity of the person picked.',
+        files: [
+          'index.tsx',
+          'member-list.tsx',
+          'activity-feed.tsx',
+          'parts.tsx',
+          'data.ts',
+        ],
+        previewHeight: 820,
+        group: 'team',
+      },
     ],
   },
 ];
@@ -855,7 +1041,10 @@ export const loaders: Record<
 > = {
   'app-shells': () => import('./app-shells'),
   auth: () => import('./auth'),
+  automations: () => import('./automations'),
+  billing: () => import('./billing'),
   boards: () => import('./boards'),
+  calendars: () => import('./calendars'),
   changelog: () => import('./changelog'),
   chat: () => import('./chat'),
   contact: () => import('./contact'),
@@ -864,9 +1053,12 @@ export const loaders: Record<
   'empty-states': () => import('./empty-states'),
   faqs: () => import('./faqs'),
   features: () => import('./features'),
+  filters: () => import('./filters'),
   footers: () => import('./footers'),
   headers: () => import('./headers'),
   heroes: () => import('./heroes'),
+  integrations: () => import('./integrations'),
+  legal: () => import('./legal'),
   'logo-clouds': () => import('./logo-clouds'),
   notifications: () => import('./notifications'),
   pricing: () => import('./pricing'),

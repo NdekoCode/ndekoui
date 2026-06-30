@@ -2,7 +2,19 @@
 import type { ComponentType } from 'react';
 
 import EventCalendar01 from '@/registry/ndeko/components/event-calendar/event-calendar-01';
+import EventCalendar02 from '@/registry/ndeko/components/event-calendar/event-calendar-02';
+import EventCalendar03 from '@/registry/ndeko/components/event-calendar/event-calendar-03';
+import EventCalendar04 from '@/registry/ndeko/components/event-calendar/event-calendar-04';
+import EventCalendar05 from '@/registry/ndeko/components/event-calendar/event-calendar-05';
+import EventCalendar06 from '@/registry/ndeko/components/event-calendar/event-calendar-06';
+import EventCalendar07 from '@/registry/ndeko/components/event-calendar/event-calendar-07';
 
 export const previews: Record<string, ComponentType> = {
   'event-calendar-01': EventCalendar01,
+  'event-calendar-02': EventCalendar02,
+  'event-calendar-03': EventCalendar03,
+  'event-calendar-04': EventCalendar04,
+  'event-calendar-05': EventCalendar05,
+  'event-calendar-06': EventCalendar06,
+  'event-calendar-07': EventCalendar07,
 };

@@ -4,9 +4,11 @@ import type { ComponentType } from 'react';
 import Team01 from '@/registry/ndeko/blocks/team/team-01/index';
 import Team02 from '@/registry/ndeko/blocks/team/team-02/index';
 import Team03 from '@/registry/ndeko/blocks/team/team-03/index';
+import Team04 from '@/registry/ndeko/blocks/team/team-04/index';
 
 export const previews: Record<string, ComponentType> = {
   'team-01': Team01,
   'team-02': Team02,
   'team-03': Team03,
+  'team-04': Team04,
 };

@@ -3,8 +3,12 @@ import type { ComponentType } from 'react';
 
 import TaskDetail01 from '@/registry/ndeko/blocks/task-detail/task-detail-01/index';
 import TaskDetail02 from '@/registry/ndeko/blocks/task-detail/task-detail-02/index';
+import TaskDetail03 from '@/registry/ndeko/blocks/task-detail/task-detail-03/index';
+import TaskDetail04 from '@/registry/ndeko/blocks/task-detail/task-detail-04/index';
 
 export const previews: Record<string, ComponentType> = {
   'task-detail-01': TaskDetail01,
   'task-detail-02': TaskDetail02,
+  'task-detail-03': TaskDetail03,
+  'task-detail-04': TaskDetail04,
 };

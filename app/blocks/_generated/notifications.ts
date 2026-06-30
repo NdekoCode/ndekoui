@@ -4,9 +4,11 @@ import type { ComponentType } from 'react';
 import Notifications01 from '@/registry/ndeko/blocks/notifications/notifications-01/index';
 import Notifications02 from '@/registry/ndeko/blocks/notifications/notifications-02/index';
 import Notifications03 from '@/registry/ndeko/blocks/notifications/notifications-03/index';
+import Notifications04 from '@/registry/ndeko/blocks/notifications/notifications-04/index';
 
 export const previews: Record<string, ComponentType> = {
   'notifications-01': Notifications01,
   'notifications-02': Notifications02,
   'notifications-03': Notifications03,
+  'notifications-04': Notifications04,
 };

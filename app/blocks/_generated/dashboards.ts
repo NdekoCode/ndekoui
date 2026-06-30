@@ -4,9 +4,11 @@ import type { ComponentType } from 'react';
 import Dashboards01 from '@/registry/ndeko/blocks/dashboards/dashboards-01/index';
 import Dashboards02 from '@/registry/ndeko/blocks/dashboards/dashboards-02/index';
 import Dashboards03 from '@/registry/ndeko/blocks/dashboards/dashboards-03/index';
+import Dashboards04 from '@/registry/ndeko/blocks/dashboards/dashboards-04/index';
 
 export const previews: Record<string, ComponentType> = {
   'dashboards-01': Dashboards01,
   'dashboards-02': Dashboards02,
   'dashboards-03': Dashboards03,
+  'dashboards-04': Dashboards04,
 };

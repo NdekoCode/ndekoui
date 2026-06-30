@@ -168,6 +168,68 @@ export const catalog: CatalogCategory[] = [
     ],
   },
   {
+    slug: 'activity',
+    name: 'Activity',
+    entries: [
+      {
+        name: 'activity-01',
+        source: 'ndeko',
+        title: 'Task history',
+        description:
+          'Every change to a task with its old and new value, and a time that switches to the exact date on click',
+        category: 'activity',
+      },
+      {
+        name: 'activity-02',
+        source: 'ndeko',
+        title: 'Feed by day with filters',
+        description:
+          'Activity grouped under Today and Yesterday, with kind filters that fold rows away and an empty state',
+        category: 'activity',
+      },
+      {
+        name: 'activity-03',
+        source: 'ndeko',
+        title: 'Compact side feed',
+        description:
+          'One-line entries for a narrow panel that open in place to show what changed',
+        category: 'activity',
+      },
+      {
+        name: 'activity-04',
+        source: 'ndeko',
+        title: 'Team activity stream',
+        description:
+          'Who worked on what with the time spent, a timer glyph on each avatar and a range switch that rescales the bars',
+        category: 'activity',
+      },
+      {
+        name: 'activity-05',
+        source: 'ndeko',
+        title: 'Live feed',
+        description:
+          'New updates wait behind a count pill and slide in at the top when you ask for them',
+        category: 'activity',
+      },
+      {
+        name: 'activity-06',
+        source: 'ndeko',
+        title: 'Folded runs of changes',
+        description:
+          'Changes one person made in a row fold under their name behind a "more changes" button',
+        category: 'activity',
+      },
+      {
+        name: 'activity-07',
+        source: 'ndeko',
+        title: 'Mentions with quotes',
+        description:
+          'Mentions and replies with the quoted comment cut at two lines, opened in place when it runs longer',
+        category: 'activity',
+      },
+    ],
+  },
+  {
     slug: 'alert',
     name: 'Alert',
     entries: [
@@ -256,6 +318,68 @@ export const catalog: CatalogCategory[] = [
         title: 'Tinted error alert with list',
         description: 'The unmet password rules on the soft destructive pair.',
         category: 'alert',
+      },
+    ],
+  },
+  {
+    slug: 'aside',
+    name: 'Side panel',
+    entries: [
+      {
+        name: 'aside-01',
+        source: 'ndeko',
+        title: 'Task details',
+        description:
+          'Properties as rows with a status menu and assignee chips, sub-issues you check off and a comment box pinned at the foot',
+        category: 'aside',
+      },
+      {
+        name: 'aside-02',
+        source: 'ndeko',
+        title: 'Member profile',
+        description:
+          'Presence on the avatar, contact rows, the day split by project in one bar that morphs between today and yesterday',
+        category: 'aside',
+      },
+      {
+        name: 'aside-03',
+        source: 'ndeko',
+        title: 'Filters',
+        description:
+          'Status, assignee, priority and due date filters with removable chips and a button that counts the matching tasks',
+        category: 'aside',
+      },
+      {
+        name: 'aside-04',
+        source: 'ndeko',
+        title: 'Notification settings',
+        description:
+          'Events by channel as a grid of switches, a group checkbox for each section, quiet hours and a digest',
+        category: 'aside',
+      },
+      {
+        name: 'aside-05',
+        source: 'ndeko',
+        title: 'Project details',
+        description:
+          'A read-only project with its properties, progress by status in one bar and members that unfold in place',
+        category: 'aside',
+      },
+      {
+        name: 'aside-06',
+        source: 'ndeko',
+        title: 'Workspace sidebar',
+        description:
+          'A workspace switcher, navigation with one travelling highlight, a folding projects group and the account menu',
+        category: 'aside',
+      },
+      {
+        name: 'aside-07',
+        source: 'ndeko',
+        title: 'Keyboard shortcuts',
+        description:
+          'Shortcuts grouped by area, filtered as you type with the match highlighted and rows that fold away',
+        category: 'aside',
       },
     ],
   },
@@ -1152,7 +1276,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ui-layouts:buttons',
         title: 'Watch with rolling digits',
         description:
-          'Only the digits that change roll, units first, when the watch count goes up or down.',
+          'Only the digits that change roll, in the direction of the change, when the watch count goes up or down.',
         category: 'button',
       },
       {
@@ -1544,6 +1668,76 @@ export const catalog: CatalogCategory[] = [
     ],
   },
   {
+    slug: 'comment',
+    name: 'Comment',
+    entries: [
+      {
+        name: 'comment-01',
+        source: 'ndeko',
+        title: 'Thread with replies',
+        description:
+          'Comments with replies one level deep, a reply field that opens in place and replies that fold under their count',
+        category: 'comment',
+      },
+      {
+        name: 'comment-02',
+        source: 'ndeko',
+        title: 'Mention suggestions',
+        description:
+          'A comment field where @ lists the team, arrows and Enter pick a name and each mention is tinted in the text',
+        category: 'comment',
+      },
+      {
+        name: 'comment-03',
+        source: 'ndeko',
+        title: 'Reactions',
+        description:
+          'Reaction chips you toggle with a rolling count and the names in a tooltip, and a picker for a new one',
+        category: 'comment',
+      },
+      {
+        name: 'comment-04',
+        source: 'ndeko',
+        title: 'Edit in place',
+        description:
+          'Your comment turns into its own field to edit, marks itself edited, and leaves an Undo line when deleted',
+        category: 'comment',
+      },
+      {
+        name: 'comment-05',
+        source: 'ndeko',
+        title: 'Resolved thread',
+        description:
+          'A discussion that folds into one resolved line, opens again to read and can be reopened',
+        category: 'comment',
+      },
+      {
+        name: 'comment-06',
+        source: 'ndeko',
+        title: 'Comment with attachments',
+        description:
+          'Files staged as chips while they upload, refused with a reason when too large, and shown as tiles once posted',
+        category: 'comment',
+      },
+      {
+        name: 'comment-07',
+        source: 'ndeko',
+        title: 'Unread marker',
+        description:
+          'A count of new comments above the first unread one, cleared with Mark as read',
+        category: 'comment',
+      },
+      {
+        name: 'comment-08',
+        source: 'ndeko',
+        title: 'Someone is typing',
+        description:
+          'A typing row under the avatar of the person writing, which becomes their comment when it arrives',
+        category: 'comment',
+      },
+    ],
+  },
+  {
     slug: 'dialog',
     name: 'Dialog',
     entries: [
@@ -1831,7 +2025,55 @@ export const catalog: CatalogCategory[] = [
         source: 'comp-542',
         title: 'Event calendar',
         description:
-          'Month, week, day and agenda views with events you drag to a new slot and edit in a dialog.',
+          'Day, week, month, year and agenda views behind a segmented switch, with events you drag to a new slot and edit in one dialog',
+        category: 'event-calendar',
+      },
+      {
+        name: 'event-calendar-02',
+        source: 'ndeko',
+        title: 'Month view',
+        description:
+          'A month of events where spans read as bars and timed events as a dot with their time, and busy days fold into a list',
+        category: 'event-calendar',
+      },
+      {
+        name: 'event-calendar-03',
+        source: 'ndeko',
+        title: 'Week view',
+        description:
+          'Seven days on an hour grid that opens on the morning, with all-day events on top and a line at the current time',
+        category: 'event-calendar',
+      },
+      {
+        name: 'event-calendar-04',
+        source: 'ndeko',
+        title: 'Day view',
+        description:
+          'One day on an hour grid where overlapping events sit side by side and a click on a free slot plans a new one',
+        category: 'event-calendar',
+      },
+      {
+        name: 'event-calendar-05',
+        source: 'ndeko',
+        title: 'Year view',
+        description:
+          'Twelve compact months tinted by how busy each day is, with the picked day listed beside them',
+        category: 'event-calendar',
+      },
+      {
+        name: 'event-calendar-06',
+        source: 'ndeko',
+        title: 'Agenda',
+        description:
+          'The next thirty days as a list grouped by day, with the time, title and place of every event',
+        category: 'event-calendar',
+      },
+      {
+        name: 'event-calendar-07',
+        source: 'ndeko',
+        title: 'Month with the day’s events',
+        description:
+          'A small month with a dot on busy days beside the events of the picked day, which change in place',
         category: 'event-calendar',
       },
     ],
@@ -2520,6 +2762,124 @@ export const catalog: CatalogCategory[] = [
     ],
   },
   {
+    slug: 'modal',
+    name: 'Modal',
+    entries: [
+      {
+        name: 'modal-01',
+        source: 'ndeko',
+        title: 'Invite people',
+        description:
+          'Addresses become chips tinted by what sending does to them, with the role of the batch and the pending invitations to resend or revoke',
+        category: 'modal',
+      },
+      {
+        name: 'modal-02',
+        source: 'ndeko',
+        title: 'Invite with a seat limit',
+        description:
+          'A seat meter that reserves a seat for each address in the field and flags the ones left without a seat',
+        category: 'modal',
+      },
+      {
+        name: 'modal-03',
+        source: 'ndeko',
+        title: 'Invite with a link and a QR code',
+        description:
+          'A link to copy with its expiry and approval, an illustrative QR code and a join code that change together when the link is reset',
+        category: 'modal',
+      },
+      {
+        name: 'modal-04',
+        source: 'ndeko',
+        title: 'Invite into a project',
+        description:
+          'Teammates searched and added to the project with an access level, each one changeable or removable in the list',
+        category: 'modal',
+      },
+      {
+        name: 'modal-05',
+        source: 'ndeko',
+        title: 'Share a project',
+        description:
+          'Who can open the project as three access levels with a travelling highlight, what the link allows and the link to copy',
+        category: 'modal',
+      },
+      {
+        name: 'modal-06',
+        source: 'ndeko',
+        title: 'Manage access',
+        description:
+          'A role on a segmented control sets the permission switches, and changing one marks the access as custom with a way back',
+        category: 'modal',
+      },
+      {
+        name: 'modal-07',
+        source: 'ndeko',
+        title: 'Workspace access',
+        description:
+          'A join code to copy or renew, allowed e-mail domains added in a dashed slot and the role of people who join',
+        category: 'modal',
+      },
+      {
+        name: 'modal-08',
+        source: 'ndeko',
+        title: 'Add members from the directory',
+        description:
+          'Workspace people outside the team, picked with checkboxes into an avatar stack and added in one go',
+        category: 'modal',
+      },
+      {
+        name: 'modal-09',
+        source: 'ndeko',
+        title: 'Give feedback',
+        description:
+          'A kind, a five-step scale, a follow-up question that follows the rating, a screenshot slot and a thank-you state',
+        category: 'modal',
+      },
+      {
+        name: 'modal-10',
+        source: 'ndeko',
+        title: 'Schedule a meeting',
+        description:
+          'Attendees as chips, the next free slots, a duration and a meeting link, summed up in one sentence that rewrites itself',
+        category: 'modal',
+      },
+      {
+        name: 'modal-11',
+        source: 'ndeko',
+        title: 'Search people',
+        description:
+          'An @ mention search over members, pending invitations and guests, with highlighted matches and arrow-key picking',
+        category: 'modal',
+      },
+      {
+        name: 'modal-12',
+        source: 'ndeko',
+        title: 'Recent searches',
+        description:
+          'A search with scoped filter pills and a history of recent searches you prune one by one or all at once',
+        category: 'modal',
+      },
+      {
+        name: 'modal-13',
+        source: 'ndeko',
+        title: 'Delete a workspace',
+        description:
+          'The workspace and what deleting it does come first, then its name typed to confirm and a restore offer once deleted',
+        category: 'modal',
+      },
+      {
+        name: 'modal-14',
+        source: 'ndeko',
+        title: 'Payment record',
+        description:
+          'Time entries with their total, the earnings breakdown with the take-home figure, an invoice export and a paid status',
+        category: 'modal',
+      },
+    ],
+  },
+  {
     slug: 'navbar',
     name: 'Navbar',
     entries: [
@@ -2844,6 +3204,70 @@ export const catalog: CatalogCategory[] = [
         source: 'comp-300',
         title: 'Custom toast',
         description: 'A sent message in a custom toast with View and Undo.',
+        category: 'notification',
+      },
+      {
+        name: 'notification-23',
+        source: 'ndeko',
+        title: 'Inbox with unread states',
+        description:
+          'An inbox where opening a row reads it, the dot shrinks away and Mark all as read clears the count.',
+        category: 'notification',
+      },
+      {
+        name: 'notification-24',
+        source: 'ndeko',
+        title: 'Activity grouped by day',
+        description:
+          'Notifications under Today, Yesterday and Earlier, each one snoozed or muted in place, with snoozed ones brought back from the header.',
+        category: 'notification',
+      },
+      {
+        name: 'notification-25',
+        source: 'ndeko',
+        title: 'Bell with filtered inbox',
+        description:
+          'A bell that opens the inbox, with All, Mentions and Invites tabs that carry their unread counts.',
+        category: 'notification',
+      },
+      {
+        name: 'notification-26',
+        source: 'ndeko',
+        title: 'Invitation with its answer',
+        description:
+          'A team invitation whose Accept and Decline turn into the result, with Undo.',
+        category: 'notification',
+      },
+      {
+        name: 'notification-27',
+        source: 'ndeko',
+        title: 'Task activity thread',
+        description:
+          'The latest change on a task under its chip, with the earlier updates folded below.',
+        category: 'notification',
+      },
+      {
+        name: 'notification-28',
+        source: 'ndeko',
+        title: 'Stack of notifications',
+        description:
+          'Toasts stacked one behind the other that spread out on hover, focus or a pinned toggle.',
+        category: 'notification',
+      },
+      {
+        name: 'notification-29',
+        source: 'ndeko',
+        title: 'Notices in their tone',
+        description:
+          'Success, error and info notices washed in their own hue, each dismissed with its space closing.',
+        category: 'notification',
+      },
+      {
+        name: 'notification-30',
+        source: 'ndeko',
+        title: 'Notification preferences',
+        description:
+          'One switch per kind of notification, saved as it changes, with the kind dimmed when it is off.',
         category: 'notification',
       },
     ],
@@ -3895,6 +4319,68 @@ export const catalog: CatalogCategory[] = [
     ],
   },
   {
+    slug: 'subtask',
+    name: 'Sub-task',
+    entries: [
+      {
+        name: 'subtask-01',
+        source: 'ndeko',
+        title: 'Checklist with progress ring',
+        description:
+          'Sub-tasks you check off, a strike that runs across the title and a ring that fills, then turns into a check',
+        category: 'subtask',
+      },
+      {
+        name: 'subtask-02',
+        source: 'ndeko',
+        title: 'Inline add',
+        description:
+          'A dashed add line where Enter adds the sub-task and keeps the cursor for the next one, and rows that fold away on remove',
+        category: 'subtask',
+      },
+      {
+        name: 'subtask-03',
+        source: 'ndeko',
+        title: 'Reorder by drag',
+        description:
+          'Rows that move by their handle, by its arrow keys or by the up and down buttons, with the new position announced',
+        category: 'subtask',
+      },
+      {
+        name: 'subtask-04',
+        source: 'ndeko',
+        title: 'Status and assignees',
+        description:
+          'Each sub-task with a status menu and an assignee menu, over a bar with one segment per sub-task in its status colour',
+        category: 'subtask',
+      },
+      {
+        name: 'subtask-05',
+        source: 'ndeko',
+        title: 'Nested sub-tasks',
+        description:
+          'Phases that fold over their steps, with a parent box that checks every step and shows when only some are done',
+        category: 'subtask',
+      },
+      {
+        name: 'subtask-06',
+        source: 'ndeko',
+        title: 'Collapsed summary',
+        description:
+          'A one-line "4 of 7 done" with a segment per sub-task that opens into the checklist',
+        category: 'subtask',
+      },
+      {
+        name: 'subtask-07',
+        source: 'ndeko',
+        title: 'Convert a note line',
+        description:
+          'A note line that travels into the sub-task list and takes a task number when you convert it',
+        category: 'subtask',
+      },
+    ],
+  },
+  {
     slug: 'switch',
     name: 'Switch',
     entries: [
@@ -4343,6 +4829,84 @@ export const catalog: CatalogCategory[] = [
     ],
   },
   {
+    slug: 'teams',
+    name: 'Teams',
+    entries: [
+      {
+        name: 'teams-01',
+        source: 'ndeko',
+        title: 'Team card',
+        description:
+          'A team with its member stack, open tasks and time this week, where Join turns into Joined and your face joins the stack.',
+        category: 'teams',
+      },
+      {
+        name: 'teams-02',
+        source: 'ndeko',
+        title: 'Team switcher',
+        description:
+          'A pill with the current team that opens every team with its tile and member count, the picked one marked.',
+        category: 'teams',
+      },
+      {
+        name: 'teams-03',
+        source: 'ndeko',
+        title: 'Member row',
+        description:
+          'One member with presence on the avatar, the current task and time today, a role menu, and removal that turns into Undo.',
+        category: 'teams',
+      },
+      {
+        name: 'teams-04',
+        source: 'ndeko',
+        title: 'Members with roles',
+        description:
+          'The members of a team with a role menu on each row, a last manager who cannot step down, and a pending invite to revoke.',
+        category: 'teams',
+      },
+      {
+        name: 'teams-05',
+        source: 'ndeko',
+        title: 'Empty team that invites',
+        description:
+          'A team with dashed seats that fill with each address invited, the Invite button going through Sending to Sent.',
+        category: 'teams',
+      },
+      {
+        name: 'teams-06',
+        source: 'ndeko',
+        title: 'Team settings',
+        description:
+          'Name, colour, visibility, join requests and a hold to archive, with the team tile following every change.',
+        category: 'teams',
+      },
+      {
+        name: 'teams-07',
+        source: 'ndeko',
+        title: 'Member card that flips',
+        description:
+          'A member card whose Details button turns it over to the email, local time, teams and hours of the week.',
+        category: 'teams',
+      },
+      {
+        name: 'teams-08',
+        source: 'ndeko',
+        title: 'Workload per member',
+        description:
+          'Planned hours against capacity for each member, this week or next, with the people over capacity in warning.',
+        category: 'teams',
+      },
+      {
+        name: 'teams-09',
+        source: 'ndeko',
+        title: 'Team picker with search',
+        description:
+          'A searchable list of teams for moving a task, where the mark travels to the team picked and an empty search offers a way back.',
+        category: 'teams',
+      },
+    ],
+  },
+  {
     slug: 'textarea',
     name: 'Textarea',
     entries: [
@@ -4630,7 +5194,7 @@ export const catalog: CatalogCategory[] = [
         source: 'comp-360',
         title: 'Tooltips on four sides',
         description:
-          'Four pan buttons, each tooltip on its own side with a shortcut.',
+          'Four pan buttons share one tooltip that moves to each side with its shortcut.',
         category: 'tooltip',
       },
       {
@@ -4645,7 +5209,7 @@ export const catalog: CatalogCategory[] = [
         source: 'comp-362',
         title: 'Chart readout',
         description:
-          'Bars that show the visits of their day when hovered or pressed.',
+          'One readout follows the pointer, a tap or the keyboard from bar to bar.',
         category: 'tooltip',
       },
       {
@@ -4796,7 +5360,9 @@ export const loaders: Record<
   () => Promise<{ previews: Record<string, ComponentType> }>
 > = {
   accordion: () => import('./accordion'),
+  activity: () => import('./activity'),
   alert: () => import('./alert'),
+  aside: () => import('./aside'),
   avatar: () => import('./avatar'),
   badge: () => import('./badge'),
   banner: () => import('./banner'),
@@ -4804,12 +5370,14 @@ export const loaders: Record<
   button: () => import('./button'),
   'calendar-date-picker': () => import('./calendar-date-picker'),
   checkbox: () => import('./checkbox'),
+  comment: () => import('./comment'),
   dialog: () => import('./dialog'),
   dropdown: () => import('./dropdown'),
   'event-calendar': () => import('./event-calendar'),
   'file-upload': () => import('./file-upload'),
   'image-cropper': () => import('./image-cropper'),
   input: () => import('./input'),
+  modal: () => import('./modal'),
   navbar: () => import('./navbar'),
   notification: () => import('./notification'),
   pagination: () => import('./pagination'),
@@ -4818,9 +5386,11 @@ export const loaders: Record<
   select: () => import('./select'),
   slider: () => import('./slider'),
   stepper: () => import('./stepper'),
+  subtask: () => import('./subtask'),
   switch: () => import('./switch'),
   table: () => import('./table'),
   tabs: () => import('./tabs'),
+  teams: () => import('./teams'),
   textarea: () => import('./textarea'),
   timeline: () => import('./timeline'),
   tooltip: () => import('./tooltip'),
