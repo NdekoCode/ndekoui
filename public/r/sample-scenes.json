@@ -1,0 +1,60 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sample-scenes",
+  "title": "Sample scenes",
+  "description": "The flat landscapes the image examples use, copied into public/images/scenes.",
+  "files": [
+    {
+      "path": "public/images/scenes/scene-01.svg",
+      "content": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1200 800\" width=\"1200\" height=\"800\">\n  <rect width=\"1200\" height=\"800\" fill=\"#e8e9fb\"/>\n  <circle cx=\"300\" cy=\"180\" r=\"70\" fill=\"#f6c453\"/>\n  <path d=\"M0 470 Q 200 360 420 440 T 860 400 T 1200 430 V 800 H 0 Z\" fill=\"#c7c9f6\"/>\n  <path d=\"M0 560 Q 260 470 560 540 T 1000 500 T 1200 540 V 800 H 0 Z\" fill=\"#9b9ff0\"/>\n  <path d=\"M0 660 Q 340 590 700 650 T 1200 620 V 800 H 0 Z\" fill=\"#6366f1\"/>\n</svg>\n",
+      "type": "registry:file",
+      "target": "public/images/scenes/scene-01.svg"
+    },
+    {
+      "path": "public/images/scenes/scene-02.svg",
+      "content": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1200 800\" width=\"1200\" height=\"800\">\n  <rect width=\"1200\" height=\"800\" fill=\"#e6f4f1\"/>\n  <circle cx=\"437\" cy=\"233\" r=\"81\" fill=\"#f4a259\"/>\n  <path d=\"M0 470 Q 220 354 420 440 T 860 408 T 1200 430 V 800 H 0 Z\" fill=\"#bfe3da\"/>\n  <path d=\"M0 560 Q 250 475 560 540 T 1000 496 T 1200 540 V 800 H 0 Z\" fill=\"#7cc6b4\"/>\n  <path d=\"M0 660 Q 352 587 700 650 T 1200 626 V 800 H 0 Z\" fill=\"#2f8f7c\"/>\n</svg>\n",
+      "type": "registry:file",
+      "target": "public/images/scenes/scene-02.svg"
+    },
+    {
+      "path": "public/images/scenes/scene-03.svg",
+      "content": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1200 800\" width=\"1200\" height=\"800\">\n  <rect width=\"1200\" height=\"800\" fill=\"#fbefe6\"/>\n  <circle cx=\"574\" cy=\"286\" r=\"92\" fill=\"#e76f51\"/>\n  <path d=\"M0 470 Q 240 348 420 440 T 860 416 T 1200 430 V 800 H 0 Z\" fill=\"#f4cdb3\"/>\n  <path d=\"M0 560 Q 240 480 560 540 T 1000 492 T 1200 540 V 800 H 0 Z\" fill=\"#e9a37e\"/>\n  <path d=\"M0 660 Q 364 584 700 650 T 1200 632 V 800 H 0 Z\" fill=\"#b5643f\"/>\n</svg>\n",
+      "type": "registry:file",
+      "target": "public/images/scenes/scene-03.svg"
+    },
+    {
+      "path": "public/images/scenes/scene-04.svg",
+      "content": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1200 800\" width=\"1200\" height=\"800\">\n  <rect width=\"1200\" height=\"800\" fill=\"#eef2f7\"/>\n  <circle cx=\"711\" cy=\"219\" r=\"103\" fill=\"#9bb7d4\"/>\n  <path d=\"M0 470 Q 260 342 420 440 T 860 424 T 1200 430 V 800 H 0 Z\" fill=\"#cfd8e3\"/>\n  <path d=\"M0 560 Q 230 485 560 540 T 1000 488 T 1200 540 V 800 H 0 Z\" fill=\"#9fb0c4\"/>\n  <path d=\"M0 660 Q 376 581 700 650 T 1200 638 V 800 H 0 Z\" fill=\"#5b6b80\"/>\n</svg>\n",
+      "type": "registry:file",
+      "target": "public/images/scenes/scene-04.svg"
+    },
+    {
+      "path": "public/images/scenes/scene-05.svg",
+      "content": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1200 800\" width=\"1200\" height=\"800\">\n  <rect width=\"1200\" height=\"800\" fill=\"#f6eef8\"/>\n  <circle cx=\"848\" cy=\"272\" r=\"74\" fill=\"#f2b5d4\"/>\n  <path d=\"M0 470 Q 280 336 420 440 T 860 432 T 1200 430 V 800 H 0 Z\" fill=\"#e4cdeb\"/>\n  <path d=\"M0 560 Q 220 490 560 540 T 1000 484 T 1200 540 V 800 H 0 Z\" fill=\"#c9a3d6\"/>\n  <path d=\"M0 660 Q 388 578 700 650 T 1200 644 V 800 H 0 Z\" fill=\"#8e5ba6\"/>\n</svg>\n",
+      "type": "registry:file",
+      "target": "public/images/scenes/scene-05.svg"
+    },
+    {
+      "path": "public/images/scenes/scene-06.svg",
+      "content": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1200 800\" width=\"1200\" height=\"800\">\n  <rect width=\"1200\" height=\"800\" fill=\"#f3f6e9\"/>\n  <circle cx=\"385\" cy=\"205\" r=\"85\" fill=\"#e9c46a\"/>\n  <path d=\"M0 470 Q 300 330 420 440 T 860 440 T 1200 430 V 800 H 0 Z\" fill=\"#d9e4b8\"/>\n  <path d=\"M0 560 Q 210 495 560 540 T 1000 480 T 1200 540 V 800 H 0 Z\" fill=\"#b3c77d\"/>\n  <path d=\"M0 660 Q 400 575 700 650 T 1200 650 V 800 H 0 Z\" fill=\"#6f8a3a\"/>\n</svg>\n",
+      "type": "registry:file",
+      "target": "public/images/scenes/scene-06.svg"
+    },
+    {
+      "path": "public/images/scenes/scene-07.svg",
+      "content": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1200 800\" width=\"1200\" height=\"800\">\n  <rect width=\"1200\" height=\"800\" fill=\"#1d1f2e\"/>\n  <circle cx=\"522\" cy=\"258\" r=\"96\" fill=\"#f2e8c9\"/>\n  <path d=\"M0 470 Q 320 324 420 440 T 860 448 T 1200 430 V 800 H 0 Z\" fill=\"#2e3150\"/>\n  <path d=\"M0 560 Q 200 500 560 540 T 1000 476 T 1200 540 V 800 H 0 Z\" fill=\"#3f4473\"/>\n  <path d=\"M0 660 Q 412 572 700 650 T 1200 656 V 800 H 0 Z\" fill=\"#565da3\"/>\n</svg>\n",
+      "type": "registry:file",
+      "target": "public/images/scenes/scene-07.svg"
+    },
+    {
+      "path": "public/images/scenes/scene-08.svg",
+      "content": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1200 800\" width=\"1200\" height=\"800\">\n  <rect width=\"1200\" height=\"800\" fill=\"#eaf3fb\"/>\n  <circle cx=\"659\" cy=\"191\" r=\"107\" fill=\"#ffd166\"/>\n  <path d=\"M0 470 Q 340 318 420 440 T 860 456 T 1200 430 V 800 H 0 Z\" fill=\"#c6def2\"/>\n  <path d=\"M0 560 Q 190 505 560 540 T 1000 472 T 1200 540 V 800 H 0 Z\" fill=\"#8fbce3\"/>\n  <path d=\"M0 660 Q 424 569 700 650 T 1200 662 V 800 H 0 Z\" fill=\"#3d7cb8\"/>\n</svg>\n",
+      "type": "registry:file",
+      "target": "public/images/scenes/scene-08.svg"
+    }
+  ],
+  "categories": [
+    "foundations"
+  ],
+  "type": "registry:item"
+}

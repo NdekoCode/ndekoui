@@ -2,7 +2,11 @@
 import type { ComponentType } from 'react';
 
 import Integrations01 from '@/registry/ndeko/blocks/integrations/integrations-01/index';
+import Integrations02 from '@/registry/ndeko/blocks/integrations/integrations-02/index';
+import Integrations03 from '@/registry/ndeko/blocks/integrations/integrations-03/index';
 
 export const previews: Record<string, ComponentType> = {
   'integrations-01': Integrations01,
+  'integrations-02': Integrations02,
+  'integrations-03': Integrations03,
 };

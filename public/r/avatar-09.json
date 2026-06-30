@@ -7,6 +7,7 @@
   "registryDependencies": [
     "https://ui.ndekocode.dev/r/avatar.json",
     "https://ui.ndekocode.dev/r/badge.json",
+    "https://ui.ndekocode.dev/r/sample-avatars.json",
     "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
