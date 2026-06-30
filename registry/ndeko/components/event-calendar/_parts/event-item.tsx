@@ -4,29 +4,38 @@ import type {
   DraggableAttributes,
   DraggableSyntheticListeners,
 } from '@dnd-kit/core';
-import { differenceInMinutes, format, getMinutes, isPast } from 'date-fns';
+import { differenceInMinutes, isPast } from 'date-fns';
 
 import { cn } from '@/registry/ndeko/lib/utils';
 
+import { EventListRow } from './event-list-row';
 import type { CalendarEvent, CalendarView } from './types';
-import { eventChipStyle, getBorderRadiusClasses } from './utils';
+import {
+  clockLabelOf,
+  eventChipStyle,
+  getBorderRadiusClasses,
+  isMultiDayEvent,
+  timeRangeLabelOf,
+} from './utils';
 
 const SHORT_EVENT_MINUTES = 45;
 
-const EVENT_BLOCK = [
-  'chip-3d flex size-full cursor-pointer select-none overflow-hidden px-1 text-left font-medium outline-none sm:px-2',
-  'transition-[scale,filter] duration-150 ease-(--ease-out-strong) active:scale-[0.97]',
+const EVENT_SHARED = [
+  'flex size-full min-w-0 cursor-pointer select-none overflow-hidden text-left outline-none',
+  'transition-[opacity,background-color] duration-150 ease-(--ease-out-strong)',
   'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-solid focus-visible:outline-ring',
-  'data-dragging:cursor-grabbing data-dragging:drop-shadow-lg data-past-event:line-through',
+  'data-dragging:cursor-grabbing data-past-event:opacity-60',
 ].join(' ');
 
-function formatTimeWithOptionalMinutes(date: Date) {
-  let pattern = 'h:mma';
-  if (getMinutes(date) === 0) {
-    pattern = 'ha';
-  }
-  return format(date, pattern).toLowerCase();
-}
+/** A filled block: timed events on the hour grid and anything that spans whole days. */
+const EVENT_BLOCK =
+  'chip-3d px-1.5 font-medium data-dragging:drop-shadow-lg @3xl:px-2';
+
+/** A dot and a line of text: a timed event inside a month cell, lighter than a span. */
+const EVENT_DOT_ROW =
+  'items-center gap-1.5 rounded-sm px-1 text-foreground hover:bg-foreground/5 data-dragging:surface-raised @3xl:px-1.5';
+
+type EventShape = 'block' | 'dot';
 
 function shiftedEndOf(event: CalendarEvent, currentTime: Date | undefined) {
   if (!currentTime) {
@@ -44,6 +53,40 @@ function startOf(event: CalendarEvent, currentTime: Date | undefined) {
   return new Date(event.start);
 }
 
+function shapeClassOf(
+  shape: EventShape,
+  isFirstDay: boolean,
+  isLastDay: boolean
+) {
+  if (shape === 'dot') {
+    return EVENT_DOT_ROW;
+  }
+  const radius = getBorderRadiusClasses(isFirstDay, isLastDay);
+  return cn(EVENT_BLOCK, radius);
+}
+
+function accessibleLabelOf(event: CalendarEvent, start: Date, end: Date) {
+  if (event.allDay) {
+    return `${event.title}, all day`;
+  }
+  return `${event.title}, ${timeRangeLabelOf(start, end)}`;
+}
+
+/** Times stay visible in a popover or a drag preview, and follow the cell width elsewhere. */
+function monthTimeClassOf(showTime: boolean | undefined) {
+  if (showTime) {
+    return '';
+  }
+  return 'hidden @3xl:inline';
+}
+
+function eventTimeLabelOf(event: CalendarEvent, start: Date, end: Date) {
+  if (event.allDay) {
+    return 'All day';
+  }
+  return timeRangeLabelOf(start, end);
+}
+
 type DndProps = {
   dndListeners?: DraggableSyntheticListeners;
   dndAttributes?: DraggableAttributes;
@@ -51,35 +94,42 @@ type DndProps = {
 
 type EventWrapperProps = DndProps & {
   event: CalendarEvent;
+  shape: EventShape;
+  start: Date;
+  end: Date;
   isFirstDay?: boolean;
   isLastDay?: boolean;
   isDragging?: boolean;
+  tabIndex?: number;
   onClick?: (event: React.MouseEvent) => void;
   className?: string;
   children: React.ReactNode;
-  currentTime?: Date;
 };
 
 function EventWrapper({
   event,
+  shape,
+  start,
+  end,
   isFirstDay = true,
   isLastDay = true,
   isDragging,
+  tabIndex,
   onClick,
   className,
   children,
-  currentTime,
   dndListeners,
-  dndAttributes,
 }: EventWrapperProps) {
-  const isEventInPast = isPast(shiftedEndOf(event, currentTime));
+  const isEventInPast = isPast(end);
 
+  // Dragging is for the pointer only: the keyboard moves an event with the dialog's date and
+  // time fields, so dnd-kit's keyboard drag hints are not given to assistive technology.
   return (
     <button
       type='button'
       className={cn(
-        EVENT_BLOCK,
-        getBorderRadiusClasses(isFirstDay, isLastDay),
+        EVENT_SHARED,
+        shapeClassOf(shape, isFirstDay, isLastDay),
         className
       )}
       style={eventChipStyle(event.color)}
@@ -87,10 +137,57 @@ function EventWrapper({
       data-past-event={isEventInPast || undefined}
       onClick={onClick}
       {...dndListeners}
-      {...dndAttributes}
+      aria-label={accessibleLabelOf(event, start, end)}
+      tabIndex={tabIndex}
     >
       {children}
     </button>
+  );
+}
+
+type MonthLabelProps = {
+  event: CalendarEvent;
+  start: Date;
+  showTime?: boolean;
+};
+
+function MonthDotLabel({ event, start, showTime }: MonthLabelProps) {
+  return (
+    <>
+      <span
+        aria-hidden='true'
+        className='size-1.5 shrink-0 rounded-full bg-(--chip)'
+      />
+      <span
+        className={cn(
+          'text-muted-foreground shrink-0 tabular-nums',
+          monthTimeClassOf(showTime)
+        )}
+      >
+        {clockLabelOf(start)}
+      </span>
+      <span className='truncate font-medium'>{event.title}</span>
+    </>
+  );
+}
+
+function MonthBarLabel({ event, start, showTime }: MonthLabelProps) {
+  const isTimed = !event.allDay;
+
+  return (
+    <span className='truncate'>
+      {isTimed && (
+        <span
+          className={cn(
+            'font-normal tabular-nums opacity-75',
+            monthTimeClassOf(showTime)
+          )}
+        >
+          {clockLabelOf(start)}{' '}
+        </span>
+      )}
+      {event.title}
+    </span>
   );
 }
 
@@ -103,105 +200,11 @@ type EventItemProps = DndProps & {
   currentTime?: Date;
   isFirstDay?: boolean;
   isLastDay?: boolean;
+  /** `-1` for the copies of a multi-day event, so it takes one tab stop. */
+  tabIndex?: number;
   children?: React.ReactNode;
   className?: string;
 };
-
-function timeRangeLabelOf(start: Date, end: Date) {
-  const startLabel = formatTimeWithOptionalMinutes(start);
-  const endLabel = formatTimeWithOptionalMinutes(end);
-  return `${startLabel} - ${endLabel}`;
-}
-
-function eventTimeLabelOf(event: CalendarEvent, start: Date, end: Date) {
-  if (event.allDay) {
-    return 'All day';
-  }
-  const durationMinutes = differenceInMinutes(end, start);
-  if (durationMinutes < SHORT_EVENT_MINUTES) {
-    return formatTimeWithOptionalMinutes(start);
-  }
-  return timeRangeLabelOf(start, end);
-}
-
-function MonthEventLabel({
-  event,
-  start,
-}: {
-  event: CalendarEvent;
-  start: Date;
-}) {
-  const isTimed = !event.allDay;
-
-  return (
-    <span className='truncate'>
-      {isTimed && (
-        <span className='truncate font-normal opacity-70 sm:text-[11px]'>
-          {formatTimeWithOptionalMinutes(start)}{' '}
-        </span>
-      )}
-      {event.title}
-    </span>
-  );
-}
-
-function AgendaEventItem({
-  event,
-  onClick,
-  className,
-  dndListeners,
-  dndAttributes,
-}: EventItemProps) {
-  const start = new Date(event.start);
-  const end = new Date(event.end);
-  const isEventInPast = isPast(end);
-  const hasLocation = Boolean(event.location);
-  const hasDescription = Boolean(event.description);
-
-  return (
-    <button
-      type='button'
-      className={cn(
-        'chip-3d flex w-full cursor-pointer flex-col gap-1 rounded-lg p-2 text-left outline-none',
-        'transition-[scale] duration-150 ease-(--ease-out-strong) active:scale-[0.99]',
-        'focus-visible:outline-ring focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-solid',
-        'data-past-event:line-through data-past-event:opacity-90',
-        className
-      )}
-      style={eventChipStyle(event.color)}
-      data-past-event={isEventInPast || undefined}
-      onClick={onClick}
-      {...dndListeners}
-      {...dndAttributes}
-    >
-      <span className='text-[13px] font-medium'>{event.title}</span>
-      <span className='text-xs opacity-70'>
-        {event.allDay && <span>All day</span>}
-        {!event.allDay && (
-          <span className='uppercase tabular-nums'>
-            {timeRangeLabelOf(start, end)}
-          </span>
-        )}
-        {hasLocation && (
-          <>
-            <span className='px-1 opacity-35'> · </span>
-            <span>{event.location}</span>
-          </>
-        )}
-      </span>
-      {hasDescription && (
-        <span className='my-1 text-xs opacity-90'>{event.description}</span>
-      )}
-    </button>
-  );
-}
-
-function weekTextSizeOf(view: CalendarView) {
-  if (view === 'week') {
-    return 'text-[10px] sm:text-xs';
-  }
-  return 'text-xs';
-}
 
 export function EventItem(props: EventItemProps) {
   const {
@@ -213,51 +216,72 @@ export function EventItem(props: EventItemProps) {
     currentTime,
     isFirstDay = true,
     isLastDay = true,
+    tabIndex,
     children,
     className,
     dndListeners,
-    dndAttributes,
   } = props;
   const start = startOf(event, currentTime);
   const end = shiftedEndOf(event, currentTime);
   const isShortEvent = differenceInMinutes(end, start) < SHORT_EVENT_MINUTES;
   const sharedProps = {
     event,
+    start,
+    end,
     isFirstDay,
     isLastDay,
     isDragging,
+    tabIndex,
     onClick,
-    currentTime,
     dndListeners,
-    dndAttributes,
   };
 
-  if (view === 'month') {
+  if (view === 'agenda') {
     return (
-      <EventWrapper
-        {...sharedProps}
-        className={cn(
-          'mt-(--event-gap) h-(--event-height) items-center text-[10px] sm:text-xs',
-          className
-        )}
-      >
-        {children ?? <MonthEventLabel event={event} start={start} />}
-      </EventWrapper>
+      <EventListRow
+        event={event}
+        day={start}
+        onClick={onClick}
+        className={className}
+      />
     );
   }
 
-  if (view === 'agenda') {
-    return <AgendaEventItem {...props} />;
+  if (view === 'month') {
+    const isSpan = isMultiDayEvent(event);
+    let shape: EventShape = 'dot';
+    if (isSpan) {
+      shape = 'block';
+    }
+    let label = (
+      <MonthDotLabel event={event} start={start} showTime={showTime} />
+    );
+    if (isSpan) {
+      label = <MonthBarLabel event={event} start={start} showTime={showTime} />;
+    }
+
+    return (
+      <EventWrapper
+        {...sharedProps}
+        shape={shape}
+        className={cn(
+          'mt-(--event-gap) h-(--event-height) items-center text-[11px] @3xl:text-xs',
+          className
+        )}
+      >
+        {children ?? label}
+      </EventWrapper>
+    );
   }
 
   return (
     <EventWrapper
       {...sharedProps}
+      shape='block'
       className={cn(
-        'py-1',
+        'py-1 text-[11px] @3xl:text-xs',
         isShortEvent && 'items-center',
         !isShortEvent && 'flex-col',
-        weekTextSizeOf(view),
         className
       )}
     >
@@ -265,17 +289,17 @@ export function EventItem(props: EventItemProps) {
         <span className='truncate'>
           {event.title}{' '}
           {showTime && (
-            <span className='opacity-70'>
-              {formatTimeWithOptionalMinutes(start)}
+            <span className='font-normal tabular-nums opacity-75'>
+              {clockLabelOf(start)}
             </span>
           )}
         </span>
       )}
       {!isShortEvent && (
         <>
-          <span className='truncate font-medium'>{event.title}</span>
+          <span className='truncate'>{event.title}</span>
           {showTime && (
-            <span className='truncate font-normal tabular-nums opacity-70 sm:text-[11px]'>
+            <span className='truncate font-normal tabular-nums opacity-75'>
               {eventTimeLabelOf(event, start, end)}
             </span>
           )}

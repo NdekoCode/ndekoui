@@ -7,8 +7,11 @@ import {
   getHours,
   startOfDay,
 } from 'date-fns';
+import { useLayoutEffect, useRef } from 'react';
 
-import { EndHour, StartHour } from './constants';
+import { cn } from '@/registry/ndeko/lib/utils';
+
+import { EndHour, ScrollToHour, StartHour, WeekCellsHeight } from './constants';
 import { DraggableEvent } from './draggable-event';
 import { DroppableCell } from './droppable-cell';
 import type { CalendarEvent, TimedView } from './types';
@@ -16,12 +19,58 @@ import type { PositionedEvent } from './utils';
 
 const QUARTERS = [0, 1, 2, 3];
 
+/** The hour labels sit half a line above their row, so the first one stays readable. */
+const HOUR_LABEL_ROOM_PX = 16;
+
 export function hoursOfDay(day: Date) {
   const dayStart = startOfDay(day);
   return eachHourOfInterval({
     start: addHours(dayStart, StartHour),
     end: addHours(dayStart, EndHour - 1),
   });
+}
+
+type TimeGridScrollerProps = {
+  label: string;
+  className?: string;
+  children: React.ReactNode;
+};
+
+/**
+ * The scrolling area of the week and day views. It opens on the morning, keeps the day
+ * headers on top and the hours on the left, and can be scrolled from the keyboard.
+ */
+export function TimeGridScroller({
+  label,
+  className,
+  children,
+}: TimeGridScrollerProps) {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller) {
+      return;
+    }
+    const hourTop = (ScrollToHour - StartHour) * WeekCellsHeight;
+    scroller.scrollTop = hourTop - HOUR_LABEL_ROOM_PX;
+  }, []);
+
+  return (
+    <div
+      ref={scrollerRef}
+      role='region'
+      aria-label={label}
+      tabIndex={0}
+      className={cn(
+        'max-h-(--calendar-scroll-height) min-h-0 flex-1 overflow-auto outline-none',
+        'focus-visible:ring-ring/25 rounded-b-xl focus-visible:ring-[3px] focus-visible:ring-inset',
+        className
+      )}
+    >
+      {children}
+    </div>
+  );
 }
 
 export function HourLabels({ hours }: { hours: Date[] }) {
@@ -35,7 +84,7 @@ export function HourLabels({ hours }: { hours: Date[] }) {
             className='hairline-b border-border relative h-(--week-cells-height) last:border-b-0'
           >
             {hasLabel && (
-              <span className='bg-card text-muted-foreground absolute -top-3 left-0 flex h-6 w-16 max-w-full items-center justify-end pe-2 text-[10px] tabular-nums sm:pe-4 sm:text-xs'>
+              <span className='bg-card text-muted-foreground absolute -top-3 left-0 flex h-6 w-full items-center justify-end pe-2 text-[10px] tabular-nums @3xl:text-xs'>
                 {format(hour, 'h a')}
               </span>
             )}
@@ -49,6 +98,7 @@ export function HourLabels({ hours }: { hours: Date[] }) {
 export function CurrentTimeLine({ position }: { position: number }) {
   return (
     <div
+      aria-hidden='true'
       className='pointer-events-none absolute inset-x-0 z-20'
       style={{ top: `${position}%` }}
     >
@@ -140,7 +190,7 @@ export function QuarterSlots({
                   id={`${idPrefix}-${day.toISOString()}-${quarterHourTime}`}
                   date={day}
                   time={quarterHourTime}
-                  className='absolute h-[calc(var(--week-cells-height)/4)] w-full'
+                  className='not-data-dragging:hover:bg-foreground/[0.03] absolute h-[calc(var(--week-cells-height)/4)] w-full cursor-pointer'
                   style={{
                     top: `calc(var(--week-cells-height) / 4 * ${quarter})`,
                   }}

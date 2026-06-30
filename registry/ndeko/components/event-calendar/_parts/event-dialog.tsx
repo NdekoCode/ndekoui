@@ -1,10 +1,16 @@
 'use client';
 
 import { format, isBefore, isSameDay } from 'date-fns';
-import { AnimatePresence, motion, type Transition } from 'motion/react';
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+  type Transition,
+  type Variants,
+} from 'motion/react';
 import { useId, useState } from 'react';
 
-import { CalendarIcon, PinIcon, TrashIcon } from '@/registry/ndeko/lib/icons';
+import { CalendarIcon, TrashIcon } from '@/registry/ndeko/lib/icons';
 import { CONTROL_RECIPE, CONTROL_SIZES } from '@/registry/ndeko/lib/recipes';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
@@ -44,13 +50,23 @@ import {
   EventColors,
   StartHour,
 } from './constants';
-import type { CalendarEvent, EventColor } from './types';
-import { eventChipStyle } from './utils';
-
-type DialogMode = 'view' | 'edit';
+import type { CalendarEvent, EventColor, EventColorOption } from './types';
 
 const ENTER: Transition = { duration: 0.15, ease: [0.23, 1, 0.32, 1] };
 const EXIT: Transition = { duration: 0.1, ease: [0.23, 1, 0.32, 1] };
+const SWAP: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };
+
+const SWAP_VARIANTS: Variants = {
+  enter: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },
+  visible: { opacity: 1, scale: 1, filter: 'blur(0px)' },
+  exit: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },
+};
+
+const FADE_VARIANTS: Variants = {
+  enter: { opacity: 0 },
+  visible: { opacity: 1 },
+  exit: { opacity: 0 },
+};
 
 const DATE_TRIGGER = cn(
   CONTROL_RECIPE,
@@ -108,24 +124,11 @@ function isEventColor(value: unknown): value is EventColor {
   return EventColors.some((option) => option.value === value);
 }
 
-function initialModeOf(event: CalendarEvent | null): DialogMode {
-  if (event?.id) {
-    return 'view';
-  }
-  return 'edit';
-}
-
-function viewedEventOf(mode: DialogMode, event: CalendarEvent | null) {
-  if (mode !== 'view') {
-    return null;
-  }
-  return event;
-}
-
 function timeOf(date: Date) {
   return format(date, 'h:mm a');
 }
 
+/** When the event runs, in a sentence: the subtitle of the dialog. */
 function whenLabelOf(event: CalendarEvent) {
   const start = new Date(event.start);
   const end = new Date(event.end);
@@ -234,61 +237,83 @@ function TimeSelectField({ id, label, value, onChange }: TimeSelectFieldProps) {
   );
 }
 
-type EventDetailsProps = {
-  event: CalendarEvent;
-  onEdit: () => void;
-  onDelete: (eventId: string) => void;
-};
+function swapVariantsOf(shouldReduceMotion: boolean | null) {
+  if (shouldReduceMotion) {
+    return FADE_VARIANTS;
+  }
+  return SWAP_VARIANTS;
+}
 
-function EventDetails({ event, onEdit, onDelete }: EventDetailsProps) {
-  const hasLocation = Boolean(event.location);
-  const hasDescription = Boolean(event.description);
+function SwappingLabel({ label }: { label: string }) {
+  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <>
-      <DialogHeader>
-        <DialogTitle className='flex items-center gap-2'>
-          <span
-            aria-hidden='true'
-            className='chip-3d size-3 shrink-0 rounded-full'
-            style={eventChipStyle(event.color)}
-          />
-          {event.title}
-        </DialogTitle>
-        <DialogDescription>{whenLabelOf(event)}</DialogDescription>
-      </DialogHeader>
-      {hasLocation && (
-        <p className='flex items-center gap-2 text-[13px]'>
-          <PinIcon className='text-muted-foreground size-4 shrink-0' />
-          {event.location}
-        </p>
-      )}
-      {hasDescription && (
-        <p className='text-muted-foreground text-[13px]'>{event.description}</p>
-      )}
-      <DialogFooter className='flex-row sm:justify-between'>
-        <Button
-          variant='outline'
-          size='icon'
-          onClick={() => onDelete(event.id)}
-          aria-label='Delete event'
+    <span className='relative inline-flex'>
+      <AnimatePresence mode='popLayout' initial={false}>
+        <motion.span
+          key={label}
+          variants={swapVariantsOf(shouldReduceMotion)}
+          initial='enter'
+          animate='visible'
+          exit='exit'
+          transition={SWAP}
         >
-          <TrashIcon />
-        </Button>
-        <div className='flex flex-1 justify-end gap-2'>
-          <Button onClick={onEdit}>Edit event</Button>
-        </div>
-      </DialogFooter>
-    </>
+          {label}
+        </motion.span>
+      </AnimatePresence>
+    </span>
   );
 }
 
-type EventFormProps = {
-  event: CalendarEvent | null;
-  onCancel: () => void;
-  onSave: (event: CalendarEvent) => void;
-  onDelete: (eventId: string) => void;
+function labelOfColor(color: EventColor, options: EventColorOption[]) {
+  const option = options.find((candidate) => candidate.value === color);
+  return option?.label ?? '';
+}
+
+type ColorFieldProps = {
+  color: EventColor;
+  options: EventColorOption[];
+  legend: string;
+  onChange: (color: EventColor) => void;
 };
+
+function ColorField({ color, options, legend, onChange }: ColorFieldProps) {
+  function pickColor(value: unknown) {
+    if (isEventColor(value)) {
+      onChange(value);
+    }
+  }
+
+  return (
+    <fieldset>
+      <legend className='text-foreground mb-3 flex items-baseline gap-2 text-[13px] leading-none font-medium'>
+        {legend}
+        <span aria-hidden='true' className='text-muted-foreground font-normal'>
+          <SwappingLabel label={labelOfColor(color, options)} />
+        </span>
+      </legend>
+      <RadioGroup
+        className='flex flex-wrap gap-1.5'
+        value={color}
+        onValueChange={pickColor}
+      >
+        {options.map((option) => (
+          <RadioGroupItem
+            key={option.value}
+            value={option.value}
+            aria-label={option.label}
+            className={COLOR_SWATCH}
+            style={
+              {
+                '--swatch': `var(--${option.value})`,
+              } as React.CSSProperties
+            }
+          />
+        ))}
+      </RadioGroup>
+    </fieldset>
+  );
+}
 
 function startDateOf(event: CalendarEvent | null) {
   if (event) {
@@ -315,7 +340,7 @@ function titleOf(isExisting: boolean) {
   if (isExisting) {
     return 'Edit event';
   }
-  return 'Create event';
+  return 'New event';
 }
 
 function saveLabelOf(isExisting: boolean) {
@@ -325,7 +350,30 @@ function saveLabelOf(isExisting: boolean) {
   return 'Create event';
 }
 
-function EventForm({ event, onCancel, onSave, onDelete }: EventFormProps) {
+function subtitleOf(event: CalendarEvent | null) {
+  if (!event) {
+    return 'The title, time, place and colour of the event.';
+  }
+  return whenLabelOf(event);
+}
+
+type EventFormProps = {
+  event: CalendarEvent | null;
+  colorOptions: EventColorOption[];
+  colorLegend: string;
+  onCancel: () => void;
+  onSave: (event: CalendarEvent) => void;
+  onDelete: (eventId: string) => void;
+};
+
+function EventForm({
+  event,
+  colorOptions,
+  colorLegend,
+  onCancel,
+  onSave,
+  onDelete,
+}: EventFormProps) {
   const id = useId();
   const [title, setTitle] = useState(event?.title ?? '');
   const [description, setDescription] = useState(event?.description ?? '');
@@ -359,13 +407,8 @@ function EventForm({ event, onCancel, onSave, onDelete }: EventFormProps) {
     setError(null);
   }
 
-  function pickColor(value: unknown) {
-    if (isEventColor(value)) {
-      setColor(value);
-    }
-  }
-
-  function handleSave() {
+  function handleSave(submitEvent: React.FormEvent<HTMLFormElement>) {
+    submitEvent.preventDefault();
     const start = new Date(startDate);
     const end = new Date(endDate);
 
@@ -381,8 +424,8 @@ function EventForm({ event, onCancel, onSave, onDelete }: EventFormProps) {
         setError(`Pick times between ${StartHour}:00 and ${EndHour}:00.`);
         return;
       }
-      start.setHours(startParts.hours, startParts.minutes, 0);
-      end.setHours(endParts.hours, endParts.minutes, 0);
+      start.setHours(startParts.hours, startParts.minutes, 0, 0);
+      end.setHours(endParts.hours, endParts.minutes, 0, 0);
     }
 
     if (isBefore(end, start)) {
@@ -408,12 +451,10 @@ function EventForm({ event, onCancel, onSave, onDelete }: EventFormProps) {
   }
 
   return (
-    <>
+    <form className='flex flex-col gap-4' onSubmit={handleSave} noValidate>
       <DialogHeader>
         <DialogTitle>{titleOf(isExisting)}</DialogTitle>
-        <DialogDescription className='sr-only'>
-          The title, time, place and colour of the event.
-        </DialogDescription>
+        <DialogDescription>{subtitleOf(event)}</DialogDescription>
       </DialogHeader>
       <AnimatePresence initial={false}>
         {error && (
@@ -435,17 +476,8 @@ function EventForm({ event, onCancel, onSave, onDelete }: EventFormProps) {
           <Input
             id={`${id}-title`}
             value={title}
+            placeholder={UNTITLED}
             onChange={(changeEvent) => setTitle(changeEvent.target.value)}
-          />
-        </div>
-
-        <div className='flex flex-col gap-1.5'>
-          <Label htmlFor={`${id}-description`}>Description</Label>
-          <Textarea
-            id={`${id}-description`}
-            value={description}
-            onChange={(changeEvent) => setDescription(changeEvent.target.value)}
-            rows={3}
           />
         </div>
 
@@ -502,34 +534,27 @@ function EventForm({ event, onCancel, onSave, onDelete }: EventFormProps) {
           />
         </div>
 
-        <fieldset>
-          <legend className='text-foreground mb-3 text-[13px] leading-none font-medium'>
-            Colour
-          </legend>
-          <RadioGroup
-            className='flex gap-1.5'
-            value={color}
-            onValueChange={pickColor}
-          >
-            {EventColors.map((option) => (
-              <RadioGroupItem
-                key={option.value}
-                value={option.value}
-                aria-label={option.label}
-                className={COLOR_SWATCH}
-                style={
-                  {
-                    '--swatch': `var(--${option.value})`,
-                  } as React.CSSProperties
-                }
-              />
-            ))}
-          </RadioGroup>
-        </fieldset>
+        <div className='flex flex-col gap-1.5'>
+          <Label htmlFor={`${id}-description`}>Description</Label>
+          <Textarea
+            id={`${id}-description`}
+            value={description}
+            onChange={(changeEvent) => setDescription(changeEvent.target.value)}
+            rows={3}
+          />
+        </div>
+
+        <ColorField
+          color={color}
+          options={colorOptions}
+          legend={colorLegend}
+          onChange={setColor}
+        />
       </div>
       <DialogFooter className='flex-row sm:justify-between'>
         {isExisting && (
           <Button
+            type='button'
             variant='outline'
             size='icon'
             onClick={() => onDelete(event?.id ?? '')}
@@ -539,68 +564,33 @@ function EventForm({ event, onCancel, onSave, onDelete }: EventFormProps) {
           </Button>
         )}
         <div className='flex flex-1 justify-end gap-2'>
-          <Button variant='outline' onClick={onCancel}>
+          <Button type='button' variant='outline' onClick={onCancel}>
             Cancel
           </Button>
-          <Button onClick={handleSave}>{saveLabelOf(isExisting)}</Button>
+          <Button type='submit'>{saveLabelOf(isExisting)}</Button>
         </div>
       </DialogFooter>
-    </>
+    </form>
   );
 }
 
-type EventDialogBodyProps = {
+type EventDialogProps = {
   event: CalendarEvent | null;
-  onClose: () => void;
-  onSave: (event: CalendarEvent) => void;
-  onDelete: (eventId: string) => void;
-};
-
-function EventDialogBody({
-  event,
-  onClose,
-  onSave,
-  onDelete,
-}: EventDialogBodyProps) {
-  const [mode, setMode] = useState<DialogMode>(() => initialModeOf(event));
-  const viewedEvent = viewedEventOf(mode, event);
-  const isEditing = mode === 'edit';
-
-  return (
-    <AnimatePresence mode='wait' initial={false}>
-      <motion.div
-        key={mode}
-        className='flex flex-col gap-4'
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: ENTER }}
-        exit={{ opacity: 0, transition: EXIT }}
-      >
-        {viewedEvent && (
-          <EventDetails
-            event={viewedEvent}
-            onEdit={() => setMode('edit')}
-            onDelete={onDelete}
-          />
-        )}
-        {isEditing && (
-          <EventForm
-            event={event}
-            onCancel={onClose}
-            onSave={onSave}
-            onDelete={onDelete}
-          />
-        )}
-      </motion.div>
-    </AnimatePresence>
-  );
-}
-
-type EventDialogProps = EventDialogBodyProps & {
   isOpen: boolean;
   /** Changes on every opening, so the form starts from the event it was opened for. */
   session: number;
+  onClose: () => void;
+  onSave: (event: CalendarEvent) => void;
+  onDelete: (eventId: string) => void;
+  /** The colours to pick from, with their names: plain colours, or the calendars of an app. */
+  colorOptions?: EventColorOption[];
+  colorLegend?: string;
 };
 
+/**
+ * One layer for reading and changing an event. A click on an event opens it here, ready to
+ * edit; a click on an empty slot opens it as a new event at that time.
+ */
 export function EventDialog({
   event,
   isOpen,
@@ -608,6 +598,8 @@ export function EventDialog({
   onClose,
   onSave,
   onDelete,
+  colorOptions = EventColors,
+  colorLegend = 'Colour',
 }: EventDialogProps) {
   function handleOpenChange(open: boolean) {
     if (!open) {
@@ -618,10 +610,12 @@ export function EventDialog({
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogContent className='sm:max-w-md'>
-        <EventDialogBody
+        <EventForm
           key={session}
           event={event}
-          onClose={onClose}
+          colorOptions={colorOptions}
+          colorLegend={colorLegend}
+          onCancel={onClose}
           onSave={onSave}
           onDelete={onDelete}
         />

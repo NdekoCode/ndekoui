@@ -9,24 +9,35 @@ import {
   isSameDay,
   isSameMonth,
   isToday,
+  startOfDay,
   startOfMonth,
   startOfWeek,
 } from 'date-fns';
 import { useMemo, useState } from 'react';
 
+import { cn } from '@/registry/ndeko/lib/utils';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/registry/ndeko/ui/popover';
 
-import { DefaultStartHour, EventGap, EventHeight } from './constants';
+import {
+  DefaultStartHour,
+  EventGap,
+  EventHeight,
+  WeekStartsOn,
+} from './constants';
 import { DraggableEvent } from './draggable-event';
 import { DroppableCell } from './droppable-cell';
 import { EventItem } from './event-item';
+import { dayKeyOf } from './navigation';
 import type { CalendarEvent } from './types';
 import { useEventVisibility } from './use-event-visibility';
+import { useRovingDay } from './use-roving-day';
 import {
+  ariaCurrentDateOf,
+  eventCountLabelOf,
   getAllEventsForDay,
   getEventsForDay,
   getSpanningEventsForDay,
@@ -39,11 +50,30 @@ const WEEKDAYS = Array.from({ length: 7 }, (_, index) =>
   format(addDays(REFERENCE_SUNDAY, index), 'EEE')
 );
 
+const DAY_NUMBER =
+  'mt-1 inline-flex size-6 shrink-0 items-center justify-center self-start rounded-full text-[13px] tabular-nums data-today:bg-primary data-today:font-medium data-today:text-primary-foreground';
+
+const DAY_NUMBER_BUTTON = cn(
+  DAY_NUMBER,
+  'cursor-pointer outline-none transition-[background-color,scale] duration-150 ease-(--ease-out-strong) active:scale-90',
+  'not-data-today:hover:bg-foreground/[0.07] focus-visible:ring-[3px] focus-visible:ring-ring/25'
+);
+
+/** Room for two events on a narrow calendar, up to four on a wide one. */
+const CELL_CONTENT_AUTO =
+  'min-h-[calc((var(--event-height)+var(--event-gap))*2)] @2xl:min-h-[calc((var(--event-height)+var(--event-gap))*3)] @4xl:min-h-[calc((var(--event-height)+var(--event-gap))*4)]';
+
+const CELL_CONTENT_FILL = 'min-h-[calc(var(--event-height)+var(--event-gap))]';
+
 type MonthViewProps = {
   currentDate: Date;
   events: CalendarEvent[];
   onEventSelect: (event: CalendarEvent) => void;
   onEventCreate: (startTime: Date) => void;
+  /** Opens a day, for example in the day view. Without it the day numbers are plain text. */
+  onDaySelect?: (day: Date) => void;
+  /** The rows share the height of the calendar instead of growing to their events. */
+  fillHeight?: boolean;
 };
 
 function weeksOf(days: Date[]) {
@@ -54,8 +84,19 @@ function weeksOf(days: Date[]) {
   return weeks;
 }
 
-function dayKeyOf(day: Date) {
-  return day.toISOString().slice(0, 10);
+function cellContentClassOf(fillHeight: boolean | undefined) {
+  if (fillHeight) {
+    return CELL_CONTENT_FILL;
+  }
+  return CELL_CONTENT_AUTO;
+}
+
+function dayLabelOf(day: Date, eventCount: number) {
+  const date = format(day, 'EEEE, MMMM d');
+  if (eventCount === 0) {
+    return date;
+  }
+  return `${date}, ${eventCountLabelOf(eventCount)}`;
 }
 
 type MoreEventsProps = {
@@ -82,32 +123,37 @@ function MoreEvents({
   return (
     <Popover modal open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger
-        className='text-muted-foreground hover:text-foreground focus-visible:ring-ring/25 hover:bg-foreground/5 mt-(--event-gap) flex h-(--event-height) w-full cursor-pointer items-center overflow-hidden rounded-sm px-1 text-left text-[10px] tabular-nums outline-none select-none focus-visible:ring-[3px] sm:px-2 sm:text-xs'
+        className='text-muted-foreground hover:text-foreground focus-visible:ring-ring/25 hover:bg-foreground/5 mt-(--event-gap) flex h-(--event-height) w-full cursor-pointer items-center overflow-hidden rounded-sm px-1 text-left text-[11px] font-medium tabular-nums outline-none select-none focus-visible:ring-[3px] @3xl:px-1.5 @3xl:text-xs'
+        aria-label={`${remainingCount} more on ${format(day, 'EEEE, MMMM d')}`}
         onClick={(clickEvent) => clickEvent.stopPropagation()}
       >
-        <span>
-          + {remainingCount} <span className='max-sm:sr-only'>more</span>
-        </span>
+        +{remainingCount} more
       </PopoverTrigger>
       <PopoverContent
         align='center'
-        className='w-52 p-3'
-        style={{ '--event-height': `${EventHeight}px` } as React.CSSProperties}
+        className='w-60 p-2'
+        style={
+          {
+            '--event-height': `${EventHeight}px`,
+            '--event-gap': `${EventGap}px`,
+          } as React.CSSProperties
+        }
       >
-        <div className='flex flex-col gap-2'>
-          <p className='text-[13px] font-medium'>{format(day, 'EEE d')}</p>
-          <div className='flex flex-col gap-1'>
-            {sortEvents(events).map((event) => (
-              <EventItem
-                key={event.id}
-                onClick={(clickEvent) => selectEvent(event, clickEvent)}
-                event={event}
-                view='month'
-                isFirstDay={isSameDay(day, new Date(event.start))}
-                isLastDay={isSameDay(day, new Date(event.end))}
-              />
-            ))}
-          </div>
+        <p className='px-1.5 pt-1 pb-0.5 text-[13px] font-medium'>
+          {format(day, 'EEEE, MMMM d')}
+        </p>
+        <div className='flex flex-col'>
+          {sortEvents(events).map((event) => (
+            <EventItem
+              key={event.id}
+              onClick={(clickEvent) => selectEvent(event, clickEvent)}
+              event={event}
+              view='month'
+              showTime
+              isFirstDay={isSameDay(day, new Date(event.start))}
+              isLastDay={isSameDay(day, new Date(event.end))}
+            />
+          ))}
         </div>
       </PopoverContent>
     </Popover>
@@ -124,7 +170,6 @@ type DayEventProps = {
 function DayEvent({ event, day, isHidden, onEventClick }: DayEventProps) {
   const isFirstDay = isSameDay(day, new Date(event.start));
   const isLastDay = isSameDay(day, new Date(event.end));
-  const isTimed = !event.allDay;
 
   if (!isFirstDay) {
     return (
@@ -133,13 +178,11 @@ function DayEvent({ event, day, isHidden, onEventClick }: DayEventProps) {
           onClick={(clickEvent) => onEventClick(event, clickEvent)}
           event={event}
           view='month'
+          tabIndex={-1}
           isFirstDay={isFirstDay}
           isLastDay={isLastDay}
         >
-          <span className='invisible' aria-hidden='true'>
-            {isTimed && <span>{format(new Date(event.start), 'h:mm')} </span>}
-            {event.title}
-          </span>
+          <span aria-hidden='true' />
         </EventItem>
       </div>
     );
@@ -158,22 +201,79 @@ function DayEvent({ event, day, isHidden, onEventClick }: DayEventProps) {
   );
 }
 
+type DayNumberProps = {
+  day: Date;
+  eventCount: number;
+  tabIndex: number;
+  onDaySelect?: (day: Date) => void;
+  onFocusDay: (day: Date) => void;
+};
+
+function DayNumber({
+  day,
+  eventCount,
+  tabIndex,
+  onDaySelect,
+  onFocusDay,
+}: DayNumberProps) {
+  const isTodayCell = isToday(day);
+  const dayNumber = format(day, 'd');
+
+  if (!onDaySelect) {
+    return (
+      <span className={DAY_NUMBER} data-today={isTodayCell || undefined}>
+        {dayNumber}
+      </span>
+    );
+  }
+
+  function openDay(clickEvent: React.MouseEvent) {
+    clickEvent.stopPropagation();
+    onDaySelect?.(day);
+  }
+
+  return (
+    <button
+      type='button'
+      className={DAY_NUMBER_BUTTON}
+      data-today={isTodayCell || undefined}
+      data-day={dayKeyOf(day)}
+      tabIndex={tabIndex}
+      aria-label={dayLabelOf(day, eventCount)}
+      aria-current={ariaCurrentDateOf(isTodayCell)}
+      onClick={openDay}
+      onFocus={() => onFocusDay(day)}
+    >
+      {dayNumber}
+    </button>
+  );
+}
+
 export function MonthView({
   currentDate,
   events,
   onEventSelect,
   onEventCreate,
+  onDaySelect,
+  fillHeight,
 }: MonthViewProps) {
+  const monthStart = startOfMonth(currentDate);
+  const monthEnd = startOfDay(endOfMonth(currentDate));
   const weeks = useMemo(() => {
-    const monthStart = startOfMonth(currentDate);
-    const monthEnd = endOfMonth(monthStart);
-    const calendarStart = startOfWeek(monthStart, { weekStartsOn: 0 });
-    const calendarEnd = endOfWeek(monthEnd, { weekStartsOn: 0 });
+    const firstDay = startOfMonth(currentDate);
+    const lastDay = endOfMonth(firstDay);
+    const calendarStart = startOfWeek(firstDay, { weekStartsOn: WeekStartsOn });
+    const calendarEnd = endOfWeek(lastDay, { weekStartsOn: WeekStartsOn });
     const days = eachDayOfInterval({ start: calendarStart, end: calendarEnd });
     return weeksOf(days);
   }, [currentDate]);
   const { contentRef, contentHeight, getVisibleEventCount } =
     useEventVisibility({ eventHeight: EventHeight, eventGap: EventGap });
+  const { gridRef, handleKeyDown, tabIndexOf, rememberDay } = useRovingDay({
+    defaultDay: currentDate,
+    firstDay: monthStart,
+    lastDay: monthEnd,
+  });
   const isMeasured = contentHeight !== null;
 
   function handleEventClick(
@@ -191,18 +291,25 @@ export function MonthView({
   }
 
   return (
-    <div data-slot='month-view' className='contents'>
+    <div data-slot='month-view' className='flex min-h-0 flex-1 flex-col'>
       <div className='hairline-b border-border grid grid-cols-7'>
         {WEEKDAYS.map((weekday) => (
           <div
             key={weekday}
-            className='text-muted-foreground py-2 text-center text-[13px]'
+            className='text-muted-foreground py-2 text-center text-xs @3xl:text-[13px]'
           >
             {weekday}
           </div>
         ))}
       </div>
-      <div className='grid flex-1 auto-rows-fr'>
+      <div
+        ref={gridRef}
+        onKeyDown={handleKeyDown}
+        className={cn(
+          'grid min-h-0 flex-1 auto-rows-fr',
+          fillHeight && 'overflow-y-auto'
+        )}
+      >
         {weeks.map((week, weekIndex) => (
           <div
             key={dayKeyOf(week[0])}
@@ -228,22 +335,26 @@ export function MonthView({
 
               return (
                 <div
-                  key={day.toString()}
-                  className='group hairline-b hairline-r border-border data-outside-cell:bg-foreground/[0.025] data-outside-cell:text-muted-foreground last:border-r-0'
-                  data-today={isToday(day) || undefined}
+                  key={dayKeyOf(day)}
+                  className='hairline-b hairline-r border-border data-outside-cell:bg-foreground/[0.025] data-outside-cell:text-muted-foreground last:border-r-0'
                   data-outside-cell={!isCurrentMonth || undefined}
                 >
                   <DroppableCell
-                    id={`month-cell-${day.toISOString()}`}
+                    id={`month-cell-${dayKeyOf(day)}`}
                     date={day}
+                    className='not-data-dragging:hover:bg-foreground/[0.02] cursor-pointer'
                     onClick={() => createEventOn(day)}
                   >
-                    <div className='group-data-today:bg-primary group-data-today:text-primary-foreground mt-1 inline-flex size-6 items-center justify-center rounded-full text-[13px] tabular-nums'>
-                      {format(day, 'd')}
-                    </div>
+                    <DayNumber
+                      day={day}
+                      eventCount={cellEvents.length}
+                      tabIndex={tabIndexOf(day)}
+                      onDaySelect={onDaySelect}
+                      onFocusDay={rememberDay}
+                    />
                     <div
                       ref={contentRefOfCell}
-                      className='min-h-[calc((var(--event-height)+var(--event-gap))*2)] sm:min-h-[calc((var(--event-height)+var(--event-gap))*3)] lg:min-h-[calc((var(--event-height)+var(--event-gap))*4)]'
+                      className={cn('flex-1', cellContentClassOf(fillHeight))}
                     >
                       {visibleCount > 0 &&
                         cellEvents.map((event, index) => (

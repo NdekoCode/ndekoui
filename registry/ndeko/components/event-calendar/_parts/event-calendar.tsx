@@ -1,56 +1,34 @@
 'use client';
 
-import {
-  addDays,
-  addHours,
-  addMonths,
-  addWeeks,
-  endOfWeek,
-  format,
-  isSameMonth,
-  startOfWeek,
-} from 'date-fns';
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  type Transition,
-  type Variants,
-} from 'motion/react';
-import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
+import { useAnimate, type Transition } from 'motion/react';
+import { useLayoutEffect, useRef, useState } from 'react';
 
-import {
-  CalendarCheckIcon,
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  PlusIcon,
-} from '@/registry/ndeko/lib/icons';
+import { PlusIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger,
-} from '@/registry/ndeko/ui/dropdown-menu';
-import { Kbd } from '@/registry/ndeko/ui/kbd';
 
 import { AgendaView } from './agenda-view';
 import { CalendarDndProvider } from './calendar-dnd-context';
+import { CalendarHeader } from './calendar-header';
 import {
-  AgendaDaysToShow,
+  AllViews,
   EventGap,
   EventHeight,
+  ScrollAreaHeight,
   WeekCellsHeight,
 } from './constants';
+import { DayEventsPanel } from './day-events-panel';
 import { DayView } from './day-view';
 import { EventDialog } from './event-dialog';
 import { MonthView } from './month-view';
-import type { CalendarEvent, CalendarView } from './types';
+import { periodKeyOf, shiftDate } from './navigation';
+import type { CalendarEvent, CalendarView, EventColorOption } from './types';
+import { useEventEditor, type EventEditor } from './use-event-editor';
+import { defaultStartOf } from './utils';
+import { ViewSwitcher } from './view-switcher';
 import { WeekView } from './week-view';
+import { YearView } from './year-view';
 
 export type EventCalendarProps = {
   events?: CalendarEvent[];
@@ -59,198 +37,225 @@ export type EventCalendarProps = {
   onEventDelete?: (eventId: string) => void;
   className?: string;
   initialView?: CalendarView;
+  /** The views people can switch between, in this order. A single view hides the switcher. */
+  views?: CalendarView[];
+  /** The day the calendar shows, when the parent drives it, for example from a mini month. */
+  date?: Date;
+  onDateChange?: (date: Date) => void;
+  /** Fills the height of its parent, each view scrolling inside, as in an app shell. */
+  fillHeight?: boolean;
+  /** An editor from `useEventEditor`, when something outside the calendar also opens the dialog. */
+  editor?: EventEditor;
+  /** Named colours for the dialog, such as the calendars of an app. */
+  colorOptions?: EventColorOption[];
+  colorLegend?: string;
+  /** Placed before Today in the header. */
+  headerStart?: React.ReactNode;
+  newEventClassName?: string;
 };
 
-type DialogState = {
-  isOpen: boolean;
-  event: CalendarEvent | null;
-  session: number;
-};
+const ROOT =
+  '@container bg-card hairline-ring ring-border flex w-full min-w-0 flex-col rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04)]';
 
-const VIEW_OPTIONS: { view: CalendarView; label: string; shortcut: string }[] =
-  [
-    { view: 'month', label: 'Month', shortcut: 'M' },
-    { view: 'week', label: 'Week', shortcut: 'W' },
-    { view: 'day', label: 'Day', shortcut: 'D' },
-    { view: 'agenda', label: 'Agenda', shortcut: 'A' },
-  ];
+const VIEW_FADE: Transition = { duration: 0.16, ease: [0.23, 1, 0.32, 1] };
+
+/** The new period starts slightly faded rather than blank, so quick clicks never flash. */
+const FADE_FROM_OPACITY = 0.35;
 
 const SHORTCUT_VIEWS: Record<string, CalendarView | undefined> = {
-  m: 'month',
-  w: 'week',
   d: 'day',
+  w: 'week',
+  m: 'month',
+  y: 'year',
   a: 'agenda',
 };
 
-const VIEW_SHIFT_PX = 12;
-const TITLE_SHIFT_PX = 8;
+const TODAY_SHORTCUT = 't';
 
-const VIEW_TRANSITION: Transition = { duration: 0.2, ease: [0.23, 1, 0.32, 1] };
-const SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };
-
-const VIEW_AT_REST = { opacity: 1, x: 0 };
-
-const TITLE_VARIANTS: Variants = {
-  enter: (direction: number) => {
-    const offset = direction * TITLE_SHIFT_PX;
-    return { opacity: 0, x: offset };
-  },
-  visible: { opacity: 1, x: 0 },
-  exit: (direction: number) => {
-    const offset = direction * TITLE_SHIFT_PX;
-    return { opacity: 0, x: -offset, transition: { duration: 0.1 } };
-  },
-};
-
-const LABEL_VARIANTS: Variants = {
-  enter: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },
-  visible: { opacity: 1, scale: 1, filter: 'blur(0px)' },
-  exit: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },
-};
-
-const FADE_VARIANTS: Variants = {
-  enter: { opacity: 0 },
-  visible: { opacity: 1 },
-  exit: { opacity: 0 },
-};
-
-const IDLE_DIALOG: DialogState = { isOpen: false, event: null, session: 0 };
-
-function isTypingTarget(target: EventTarget | null) {
+function isTypingTarget(target: EventTarget) {
   const isInput = target instanceof HTMLInputElement;
   const isTextArea = target instanceof HTMLTextAreaElement;
   const isEditable = target instanceof HTMLElement && target.isContentEditable;
   return isInput || isTextArea || isEditable;
 }
 
-function hasModifierKey(keyEvent: KeyboardEvent) {
+function hasModifierKey(keyEvent: React.KeyboardEvent) {
   const modifiers = [keyEvent.metaKey, keyEvent.ctrlKey, keyEvent.altKey];
   return modifiers.some(Boolean);
 }
 
-function shiftDate(date: Date, view: CalendarView, step: number) {
-  if (view === 'month') {
-    return addMonths(date, step);
+/** Keys pressed in the dialog or a popover bubble through React portals; only the calendar's own DOM counts. */
+function isInsideRoot(target: EventTarget, root: HTMLElement | null) {
+  if (!root) {
+    return false;
   }
-  if (view === 'week') {
-    return addWeeks(date, step);
+  if (!(target instanceof Node)) {
+    return false;
   }
-  if (view === 'day') {
-    return addDays(date, step);
-  }
-  return addDays(date, step * AgendaDaysToShow);
+  return root.contains(target);
 }
 
-function periodKeyOf(date: Date, view: CalendarView) {
-  if (view === 'month') {
-    return format(date, 'yyyy-MM');
+function isShortcutEvent(
+  keyEvent: React.KeyboardEvent,
+  root: HTMLElement | null
+) {
+  if (keyEvent.defaultPrevented) {
+    return false;
   }
-  if (view === 'week') {
-    return format(startOfWeek(date, { weekStartsOn: 0 }), 'yyyy-MM-dd');
+  if (hasModifierKey(keyEvent)) {
+    return false;
   }
-  return format(date, 'yyyy-MM-dd');
+  if (isTypingTarget(keyEvent.target)) {
+    return false;
+  }
+  return isInsideRoot(keyEvent.target, root);
 }
 
-function spanTitleOf(start: Date, end: Date) {
-  if (isSameMonth(start, end)) {
-    return format(start, 'MMMM yyyy');
+function firstViewOf(initialView: CalendarView, views: CalendarView[]) {
+  if (views.includes(initialView)) {
+    return initialView;
   }
-  return `${format(start, 'MMM')} - ${format(end, 'MMM yyyy')}`;
+  return views[0] ?? initialView;
 }
 
-function textTitleOf(date: Date, view: CalendarView) {
-  if (view === 'week') {
-    const start = startOfWeek(date, { weekStartsOn: 0 });
-    const end = endOfWeek(date, { weekStartsOn: 0 });
-    return spanTitleOf(start, end);
+function scrollHeightOf(fillHeight: boolean) {
+  if (fillHeight) {
+    return 'none';
   }
-  if (view === 'agenda') {
-    const end = addDays(date, AgendaDaysToShow - 1);
-    return spanTitleOf(date, end);
-  }
-  return format(date, 'MMMM yyyy');
+  return ScrollAreaHeight;
 }
 
-function ViewTitle({ date, view }: { date: Date; view: CalendarView }) {
-  if (view !== 'day') {
-    return <>{textTitleOf(date, view)}</>;
-  }
+function rootStyleOf(fillHeight: boolean) {
+  return {
+    '--event-height': `${EventHeight}px`,
+    '--event-gap': `${EventGap}px`,
+    '--week-cells-height': `${WeekCellsHeight}px`,
+    '--calendar-scroll-height': scrollHeightOf(fillHeight),
+  } as React.CSSProperties;
+}
+
+function directionTowards(target: Date, from: Date) {
+  const difference = target.getTime() - from.getTime();
+  return Math.sign(difference);
+}
+
+type ViewFadeProps = {
+  changeKey: string;
+  className?: string;
+  children: React.ReactNode;
+};
+
+/** The new period or view replaces the old one in place, with a short fade and no sliding. */
+function ViewFade({ changeKey, className, children }: ViewFadeProps) {
+  const [scope, animate] = useAnimate<HTMLDivElement>();
+  const previousKeyRef = useRef(changeKey);
+
+  useLayoutEffect(() => {
+    if (previousKeyRef.current === changeKey) {
+      return;
+    }
+    previousKeyRef.current = changeKey;
+    animate(scope.current, { opacity: [FADE_FROM_OPACITY, 1] }, VIEW_FADE);
+  }, [animate, changeKey, scope]);
+
   return (
-    <>
-      <span className='min-[480px]:hidden' aria-hidden='true'>
-        {format(date, 'MMM d, yyyy')}
-      </span>
-      <span className='max-[479px]:hidden min-md:hidden' aria-hidden='true'>
-        {format(date, 'MMMM d, yyyy')}
-      </span>
-      <span className='max-md:hidden'>{format(date, 'EEE MMMM d, yyyy')}</span>
-    </>
+    <div ref={scope} className={className}>
+      {children}
+    </div>
   );
 }
 
-function variantsOf(variants: Variants, shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return FADE_VARIANTS;
-  }
-  return variants;
-}
+type ViewFrameProps = {
+  fillHeight: boolean;
+  changeKey: string;
+  children: React.ReactNode;
+};
 
-function viewEnterOf(direction: number, shouldReduceMotion: boolean | null) {
-  if (direction === 0) {
-    return false;
+function ViewFrame({ fillHeight, changeKey, children }: ViewFrameProps) {
+  if (fillHeight) {
+    return (
+      <ViewFade changeKey={changeKey} className='flex min-h-0 flex-1 flex-col'>
+        {children}
+      </ViewFade>
+    );
   }
-  if (shouldReduceMotion) {
-    return { opacity: 0 };
-  }
-  const offset = direction * VIEW_SHIFT_PX;
-  return { opacity: 0, x: offset };
-}
-
-function snapToQuarterHour(time: Date) {
-  const snapped = new Date(time);
-  const minutes = snapped.getMinutes();
-  const remainder = minutes % 15;
-  if (remainder === 0) {
-    return snapped;
-  }
-  const isCloserToPrevious = remainder < 7.5;
-  if (isCloserToPrevious) {
-    snapped.setMinutes(minutes - remainder, 0, 0);
-    return snapped;
-  }
-  snapped.setMinutes(minutes + 15 - remainder, 0, 0);
-  return snapped;
-}
-
-function newEventId() {
-  return Math.random().toString(36).substring(2, 11);
-}
-
-function announce(event: CalendarEvent, outcome: string) {
-  toast(`Event "${event.title}" ${outcome}`, {
-    description: format(new Date(event.start), 'MMM d, yyyy'),
-    position: 'bottom-left',
-  });
-}
-
-function ViewLabel({ label }: { label: string }) {
-  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <span className='relative flex'>
-      <AnimatePresence mode='popLayout' initial={false}>
-        <motion.span
-          key={label}
-          variants={variantsOf(LABEL_VARIANTS, shouldReduceMotion)}
-          initial='enter'
-          animate='visible'
-          exit='exit'
-          transition={SWAP_TRANSITION}
-        >
-          {label}
-        </motion.span>
-      </AnimatePresence>
-    </span>
+    <AnimatedSize className='m-0 rounded-b-xl' contentClassName='p-0'>
+      <ViewFade changeKey={changeKey} className='flex flex-col'>
+        {children}
+      </ViewFade>
+    </AnimatedSize>
+  );
+}
+
+type YearPaneProps = {
+  currentDate: Date;
+  events: CalendarEvent[];
+  canOpenDay: boolean;
+  onDaySelect: (day: Date) => void;
+  onMonthSelect?: (month: Date) => void;
+  onEventSelect: (event: CalendarEvent) => void;
+  onEventCreate: (startTime: Date) => void;
+};
+
+/** With a day view the year opens the picked day; on its own it lists the picked day beside it. */
+function YearPane({
+  currentDate,
+  events,
+  canOpenDay,
+  onDaySelect,
+  onMonthSelect,
+  onEventSelect,
+  onEventCreate,
+}: YearPaneProps) {
+  if (canOpenDay) {
+    return (
+      <div className='hairline-t border-border flex min-h-0 flex-1 flex-col'>
+        <YearView
+          currentDate={currentDate}
+          events={events}
+          onDaySelect={onDaySelect}
+          onMonthSelect={onMonthSelect}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className='hairline-t border-border flex min-h-0 flex-1 flex-col @4xl:grid @4xl:grid-cols-[minmax(0,1fr)_18rem]'>
+      <YearView
+        currentDate={currentDate}
+        events={events}
+        onDaySelect={onDaySelect}
+        onMonthSelect={onMonthSelect}
+        selectedDay={currentDate}
+      />
+      <DayEventsPanel
+        day={currentDate}
+        events={events}
+        onEventSelect={onEventSelect}
+        onEventCreate={onEventCreate}
+        className='hairline-t border-border @4xl:hairline-l px-2 py-4 @4xl:border-t-0 @4xl:py-5'
+      />
+    </div>
+  );
+}
+
+type NewEventButtonProps = {
+  className?: string;
+  onClick: () => void;
+};
+
+function NewEventButton({ className, onClick }: NewEventButtonProps) {
+  return (
+    <Button
+      className={cn('@max-md:w-8 @max-md:px-0', className)}
+      onClick={onClick}
+    >
+      <PlusIcon />
+      <span className='sr-only @md:not-sr-only'>New event</span>
+    </Button>
   );
 }
 
@@ -261,245 +266,185 @@ export function EventCalendar({
   onEventDelete,
   className,
   initialView = 'month',
+  views = AllViews,
+  date,
+  onDateChange,
+  fillHeight = false,
+  editor,
+  colorOptions,
+  colorLegend,
+  headerStart,
+  newEventClassName,
 }: EventCalendarProps) {
-  const [currentDate, setCurrentDate] = useState(() => new Date());
-  const [view, setView] = useState<CalendarView>(initialView);
-  const [slideDirection, setSlideDirection] = useState(0);
-  const [dialog, setDialog] = useState<DialogState>(IDLE_DIALOG);
-  const shouldReduceMotion = useReducedMotion();
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [ownDate, setOwnDate] = useState(() => new Date());
+  const [view, setView] = useState<CalendarView>(() =>
+    firstViewOf(initialView, views)
+  );
+  const [direction, setDirection] = useState(0);
+  const ownEditor = useEventEditor({
+    events,
+    onEventAdd,
+    onEventUpdate,
+    onEventDelete,
+  });
+  const activeEditor = editor ?? ownEditor;
+  const currentDate = date ?? ownDate;
   const periodKey = periodKeyOf(currentDate, view);
-  const viewLabel = VIEW_OPTIONS.find((option) => option.view === view)?.label;
-  const viewInitial = view.charAt(0).toUpperCase();
+  const canOpenDay = views.includes('day');
+  const canOpenMonth = views.includes('month');
+  const hasSwitcher = views.length > 1;
 
-  useEffect(() => {
-    if (dialog.isOpen) {
-      return;
-    }
-    function switchViewFromKeyboard(keyEvent: KeyboardEvent) {
-      if (isTypingTarget(keyEvent.target)) {
-        return;
-      }
-      if (hasModifierKey(keyEvent)) {
-        return;
-      }
-      const nextView = SHORTCUT_VIEWS[keyEvent.key.toLowerCase()];
-      if (!nextView) {
-        return;
-      }
-      setView(nextView);
-      setSlideDirection(0);
-    }
-    window.addEventListener('keydown', switchViewFromKeyboard);
-    return () => window.removeEventListener('keydown', switchViewFromKeyboard);
-  }, [dialog.isOpen]);
+  function changeDate(nextDate: Date, nextDirection: number) {
+    setOwnDate(nextDate);
+    setDirection(nextDirection);
+    onDateChange?.(nextDate);
+  }
 
   function changeView(nextView: CalendarView) {
     setView(nextView);
-    setSlideDirection(0);
+    setDirection(0);
   }
 
   function navigate(step: number) {
-    setCurrentDate((date) => shiftDate(date, view, step));
-    setSlideDirection(step);
+    const nextDate = shiftDate(currentDate, view, step);
+    changeDate(nextDate, step);
   }
 
   function goToToday() {
     const today = new Date();
-    const direction = Math.sign(today.getTime() - currentDate.getTime());
-    setCurrentDate(today);
-    setSlideDirection(direction);
-  }
-
-  function openDialog(event: CalendarEvent | null) {
-    setDialog((current) => ({
-      isOpen: true,
-      event,
-      session: current.session + 1,
-    }));
-  }
-
-  function closeDialog() {
-    setDialog((current) => ({ ...current, isOpen: false }));
-  }
-
-  function handleEventCreate(startTime: Date) {
-    const start = snapToQuarterHour(startTime);
-    openDialog({
-      id: '',
-      title: '',
-      start,
-      end: addHours(start, 1),
-      allDay: false,
-    });
-  }
-
-  function handleEventSave(event: CalendarEvent) {
-    if (event.id) {
-      onEventUpdate?.(event);
-      announce(event, 'updated');
-    } else {
-      onEventAdd?.({ ...event, id: newEventId() });
-      announce(event, 'added');
+    const todayKey = periodKeyOf(today, view);
+    const isSamePeriod = todayKey === periodKey;
+    let nextDirection = directionTowards(today, currentDate);
+    if (isSamePeriod) {
+      nextDirection = 0;
     }
-    closeDialog();
+    changeDate(today, nextDirection);
   }
 
-  function handleEventDelete(eventId: string) {
-    const deletedEvent = events.find((event) => event.id === eventId);
-    onEventDelete?.(eventId);
-    closeDialog();
-    if (deletedEvent) {
-      announce(deletedEvent, 'deleted');
+  function selectDay(day: Date) {
+    if (canOpenDay) {
+      setView('day');
     }
+    changeDate(day, 0);
   }
 
-  function handleEventMove(movedEvent: CalendarEvent) {
-    onEventUpdate?.(movedEvent);
-    announce(movedEvent, 'moved');
+  function selectMonth(month: Date) {
+    setView('month');
+    changeDate(month, 0);
+  }
+
+  let openDay: ((day: Date) => void) | undefined;
+  if (canOpenDay) {
+    openDay = selectDay;
+  }
+  let openMonth: ((month: Date) => void) | undefined;
+  if (canOpenMonth) {
+    openMonth = selectMonth;
+  }
+
+  function createFromHeader() {
+    const today = new Date();
+    const todayKey = periodKeyOf(today, view);
+    const isTodayInView = todayKey === periodKey;
+    let anchorDay = currentDate;
+    if (isTodayInView) {
+      anchorDay = today;
+    }
+    const start = defaultStartOf(anchorDay);
+    activeEditor.openNewEvent(start);
+  }
+
+  function handleShortcut(keyEvent: React.KeyboardEvent<HTMLDivElement>) {
+    if (!isShortcutEvent(keyEvent, rootRef.current)) {
+      return;
+    }
+    const key = keyEvent.key.toLowerCase();
+    if (key === TODAY_SHORTCUT) {
+      keyEvent.preventDefault();
+      goToToday();
+      return;
+    }
+    const nextView = SHORTCUT_VIEWS[key];
+    if (!nextView) {
+      return;
+    }
+    if (!views.includes(nextView)) {
+      return;
+    }
+    keyEvent.preventDefault();
+    changeView(nextView);
   }
 
   const viewProps = {
     currentDate,
     events,
-    onEventSelect: openDialog,
-    onEventCreate: handleEventCreate,
+    onEventSelect: activeEditor.openEvent,
+    onEventCreate: activeEditor.openNewEvent,
   };
 
   return (
     <div
-      className='bg-card hairline-ring ring-border flex flex-col rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04)] has-data-[slot=month-view]:flex-1'
-      style={
-        {
-          '--event-height': `${EventHeight}px`,
-          '--event-gap': `${EventGap}px`,
-          '--week-cells-height': `${WeekCellsHeight}px`,
-        } as React.CSSProperties
-      }
+      ref={rootRef}
+      data-slot='event-calendar'
+      onKeyDown={handleShortcut}
+      className={cn(ROOT, fillHeight && 'h-full min-h-0', className)}
+      style={rootStyleOf(fillHeight)}
     >
-      <CalendarDndProvider onEventUpdate={handleEventMove}>
-        <div
-          className={cn(
-            'flex items-center justify-between p-2 sm:p-4',
-            className
+      <CalendarDndProvider onEventUpdate={activeEditor.moveEvent}>
+        <CalendarHeader
+          view={view}
+          date={currentDate}
+          direction={direction}
+          start={headerStart}
+          onPrevious={() => navigate(-1)}
+          onNext={() => navigate(1)}
+          onToday={goToToday}
+        >
+          {hasSwitcher && (
+            <ViewSwitcher
+              views={views}
+              value={view}
+              onValueChange={changeView}
+            />
           )}
-        >
-          <div className='flex items-center gap-1 sm:gap-4'>
-            <Button
-              variant='outline'
-              className='max-[479px]:aspect-square max-[479px]:p-0!'
-              onClick={goToToday}
-            >
-              <CalendarCheckIcon className='min-[480px]:hidden' />
-              <span className='max-[479px]:sr-only'>Today</span>
-            </Button>
-            <div className='flex items-center sm:gap-2'>
-              <Button
-                variant='ghost'
-                size='icon'
-                onClick={() => navigate(-1)}
-                aria-label='Previous period'
-              >
-                <ChevronLeftIcon />
-              </Button>
-              <Button
-                variant='ghost'
-                size='icon'
-                onClick={() => navigate(1)}
-                aria-label='Next period'
-              >
-                <ChevronRightIcon />
-              </Button>
-            </div>
-            <h2 className='relative flex overflow-hidden text-sm font-semibold sm:text-lg'>
-              <AnimatePresence
-                mode='popLayout'
-                initial={false}
-                custom={slideDirection}
-              >
-                <motion.span
-                  key={`${view}-${periodKey}`}
-                  className='whitespace-nowrap'
-                  custom={slideDirection}
-                  variants={variantsOf(TITLE_VARIANTS, shouldReduceMotion)}
-                  initial='enter'
-                  animate='visible'
-                  exit='exit'
-                  transition={VIEW_TRANSITION}
-                >
-                  <ViewTitle date={currentDate} view={view} />
-                </motion.span>
-              </AnimatePresence>
-            </h2>
-          </div>
-          <div className='flex items-center gap-2'>
-            <DropdownMenu>
-              <DropdownMenuTrigger
-                render={
-                  <Button
-                    variant='outline'
-                    className='gap-1.5 max-[479px]:h-8'
-                  />
-                }
-              >
-                <span className='min-[480px]:hidden' aria-hidden='true'>
-                  {viewInitial}
-                </span>
-                <span className='max-[479px]:sr-only'>
-                  <ViewLabel label={viewLabel ?? ''} />
-                </span>
-                <ChevronDownIcon className='-me-1 opacity-60' />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align='end' className='min-w-32'>
-                {VIEW_OPTIONS.map((option) => (
-                  <DropdownMenuItem
-                    key={option.view}
-                    onClick={() => changeView(option.view)}
-                  >
-                    {option.label}
-                    <DropdownMenuShortcut>
-                      <Kbd>{option.shortcut}</Kbd>
-                    </DropdownMenuShortcut>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <Button
-              className='max-[479px]:aspect-square max-[479px]:p-0!'
-              size='sm'
-              onClick={() => openDialog(null)}
-            >
-              <PlusIcon className='opacity-60 sm:-ms-1' />
-              <span className='max-sm:sr-only'>New event</span>
-            </Button>
-          </div>
-        </div>
+          <NewEventButton
+            className={newEventClassName}
+            onClick={createFromHeader}
+          />
+        </CalendarHeader>
 
-        <motion.div
-          key={`${view}-${periodKey}`}
-          className='flex flex-1 flex-col'
-          initial={viewEnterOf(slideDirection, shouldReduceMotion)}
-          animate={VIEW_AT_REST}
-          transition={VIEW_TRANSITION}
-        >
-          {view === 'month' && <MonthView {...viewProps} />}
-          {view === 'week' && <WeekView {...viewProps} />}
+        <ViewFrame fillHeight={fillHeight} changeKey={`${view}-${periodKey}`}>
+          {view === 'month' && (
+            <MonthView
+              {...viewProps}
+              onDaySelect={openDay}
+              fillHeight={fillHeight}
+            />
+          )}
+          {view === 'week' && <WeekView {...viewProps} onDaySelect={openDay} />}
           {view === 'day' && <DayView {...viewProps} />}
+          {view === 'year' && (
+            <YearPane
+              {...viewProps}
+              canOpenDay={canOpenDay}
+              onDaySelect={selectDay}
+              onMonthSelect={openMonth}
+            />
+          )}
           {view === 'agenda' && (
             <AgendaView
               currentDate={currentDate}
               events={events}
-              onEventSelect={openDialog}
+              onEventSelect={activeEditor.openEvent}
             />
           )}
-        </motion.div>
+        </ViewFrame>
 
         <EventDialog
-          event={dialog.event}
-          isOpen={dialog.isOpen}
-          session={dialog.session}
-          onClose={closeDialog}
-          onSave={handleEventSave}
-          onDelete={handleEventDelete}
+          {...activeEditor.dialogProps}
+          colorOptions={colorOptions}
+          colorLegend={colorLegend}
         />
       </CalendarDndProvider>
     </div>

@@ -13,6 +13,7 @@ import { useMemo } from 'react';
 
 import { cn } from '@/registry/ndeko/lib/utils';
 
+import { WeekStartsOn } from './constants';
 import { EventItem } from './event-item';
 import {
   CurrentTimeLine,
@@ -20,20 +21,82 @@ import {
   hoursOfDay,
   PositionedEvents,
   QuarterSlots,
+  TimeGridScroller,
 } from './time-grid';
 import type { CalendarEvent } from './types';
 import { useCurrentTimeIndicator } from './use-current-time-indicator';
-import { isMultiDayEvent, occursOnDay, positionTimedEvents } from './utils';
+import {
+  ariaCurrentDateOf,
+  isMultiDayEvent,
+  occursOnDay,
+  positionTimedEvents,
+} from './utils';
+
+/** An hour gutter, then seven days that keep a readable width by scrolling sideways on a phone. */
+const WEEK_COLUMNS = 'grid grid-cols-[3.5rem_repeat(7,minmax(0,1fr))]';
+
+const STICKY_GUTTER = 'bg-card sticky left-0 z-20';
+
+const DAY_NUMBER =
+  'inline-flex size-6 items-center justify-center rounded-full text-[13px] tabular-nums group-data-today/day:bg-primary group-data-today/day:font-medium group-data-today/day:text-primary-foreground';
 
 type WeekViewProps = {
   currentDate: Date;
   events: CalendarEvent[];
   onEventSelect: (event: CalendarEvent) => void;
   onEventCreate: (startTime: Date) => void;
+  /** Opens a day from its heading. Without it the headings are plain text. */
+  onDaySelect?: (day: Date) => void;
 };
 
 function isTimedEvent(event: CalendarEvent) {
   return !isMultiDayEvent(event);
+}
+
+function DayHeadingContent({ day }: { day: Date }) {
+  return (
+    <>
+      <span className='text-muted-foreground text-xs'>
+        {format(day, 'EEE')}
+      </span>
+      <span className={DAY_NUMBER}>{format(day, 'd')}</span>
+    </>
+  );
+}
+
+type DayHeadingProps = {
+  day: Date;
+  onDaySelect?: (day: Date) => void;
+};
+
+function DayHeading({ day, onDaySelect }: DayHeadingProps) {
+  const isTodayColumn = isToday(day);
+
+  if (!onDaySelect) {
+    return (
+      <div
+        className='group/day flex items-center justify-center gap-1.5 py-2'
+        data-today={isTodayColumn || undefined}
+      >
+        <DayHeadingContent day={day} />
+      </div>
+    );
+  }
+
+  return (
+    <div className='flex justify-center py-1.5'>
+      <button
+        type='button'
+        className='group/day hover:bg-foreground/5 focus-visible:ring-ring/25 flex cursor-pointer items-center gap-1.5 rounded-md px-1.5 py-0.5 transition-colors duration-150 outline-none focus-visible:ring-[3px]'
+        data-today={isTodayColumn || undefined}
+        aria-label={format(day, 'EEEE, MMMM d')}
+        aria-current={ariaCurrentDateOf(isTodayColumn)}
+        onClick={() => onDaySelect(day)}
+      >
+        <DayHeadingContent day={day} />
+      </button>
+    </div>
+  );
 }
 
 type AllDayCellProps = {
@@ -54,10 +117,7 @@ function AllDayCell({
   const dayEvents = events.filter((event) => occursOnDay(event, day));
 
   return (
-    <div
-      className='hairline-r border-border relative p-1 last:border-r-0'
-      data-today={isToday(day) || undefined}
-    >
+    <div className='hairline-r border-border relative p-1 last:border-r-0'>
       {dayEvents.map((event) => {
         const eventStart = new Date(event.start);
         const isFirstDay = isSameDay(day, eventStart);
@@ -65,6 +125,10 @@ function AllDayCell({
         const startsBeforeWeek = isBefore(eventStart, weekStart);
         const isFirstVisibleDay = isFirstColumn && startsBeforeWeek;
         const shouldShowTitle = isFirstDay || isFirstVisibleDay;
+        let tabIndex: number | undefined;
+        if (!shouldShowTitle) {
+          tabIndex = -1;
+        }
 
         return (
           <EventItem
@@ -72,12 +136,13 @@ function AllDayCell({
             onClick={(clickEvent) => onEventClick(event, clickEvent)}
             event={event}
             view='month'
+            tabIndex={tabIndex}
             isFirstDay={isFirstDay}
             isLastDay={isLastDay}
           >
             <span
               className={cn('truncate', !shouldShowTitle && 'invisible')}
-              aria-hidden={!shouldShowTitle}
+              aria-hidden='true'
             >
               {event.title}
             </span>
@@ -93,13 +158,14 @@ export function WeekView({
   events,
   onEventSelect,
   onEventCreate,
+  onDaySelect,
 }: WeekViewProps) {
   const weekStart = useMemo(
-    () => startOfWeek(currentDate, { weekStartsOn: 0 }),
+    () => startOfWeek(currentDate, { weekStartsOn: WeekStartsOn }),
     [currentDate]
   );
   const days = useMemo(() => {
-    const weekEnd = endOfWeek(currentDate, { weekStartsOn: 0 });
+    const weekEnd = endOfWeek(currentDate, { weekStartsOn: WeekStartsOn });
     return eachDayOfInterval({ start: weekStart, end: weekEnd });
   }, [currentDate, weekStart]);
   const hours = useMemo(() => hoursOfDay(currentDate), [currentDate]);
@@ -124,6 +190,7 @@ export function WeekView({
     'week'
   );
   const showAllDaySection = allDayEvents.length > 0;
+  const gridLabel = `Week of ${format(weekStart, 'MMMM d')}`;
 
   function handleEventClick(
     event: CalendarEvent,
@@ -134,82 +201,79 @@ export function WeekView({
   }
 
   return (
-    <div data-slot='week-view' className='flex h-full flex-col'>
-      <div className='bg-card/80 hairline-b border-border sticky top-0 z-30 grid grid-cols-8 backdrop-blur-md'>
-        <div className='text-muted-foreground py-2 text-center text-[13px]'>
-          <span className='max-[479px]:sr-only'>
-            {format(currentDate, 'O')}
-          </span>
-        </div>
-        {days.map((day) => (
-          <div
-            key={day.toString()}
-            className='data-today:text-foreground text-muted-foreground py-2 text-center text-[13px] tabular-nums data-today:font-medium'
-            data-today={isToday(day) || undefined}
-          >
-            <span className='sm:hidden' aria-hidden='true'>
-              {format(day, 'E')[0]} {format(day, 'd')}
-            </span>
-            <span className='max-sm:hidden'>{format(day, 'EEE dd')}</span>
-          </div>
-        ))}
-      </div>
-
-      {showAllDaySection && (
-        <div className='hairline-b border-border bg-foreground/[0.025]'>
-          <div className='grid grid-cols-8'>
-            <div className='hairline-r border-border relative'>
-              <span className='text-muted-foreground absolute bottom-0 left-0 h-6 w-16 max-w-full pe-2 text-right text-[10px] sm:pe-4 sm:text-xs'>
-                All day
-              </span>
+    <div data-slot='week-view' className='flex min-h-0 flex-1 flex-col'>
+      <TimeGridScroller label={gridLabel}>
+        <div className='min-w-[42rem] @3xl:min-w-0'>
+          <div className='bg-card hairline-b border-border sticky top-0 z-30'>
+            <div className={WEEK_COLUMNS}>
+              <div className={STICKY_GUTTER} />
+              {days.map((day) => (
+                <DayHeading
+                  key={day.toString()}
+                  day={day}
+                  onDaySelect={onDaySelect}
+                />
+              ))}
             </div>
-            {days.map((day, dayIndex) => (
-              <AllDayCell
-                key={day.toString()}
-                day={day}
-                isFirstColumn={dayIndex === 0}
-                weekStart={weekStart}
-                events={allDayEvents}
-                onEventClick={handleEventClick}
-              />
-            ))}
+            {showAllDaySection && (
+              <div className={cn(WEEK_COLUMNS, 'hairline-t border-border')}>
+                <div
+                  className={cn(
+                    STICKY_GUTTER,
+                    'hairline-r border-border text-muted-foreground flex items-end justify-end pe-2 pb-2 text-[10px] @3xl:text-xs'
+                  )}
+                >
+                  All day
+                </div>
+                {days.map((day, dayIndex) => (
+                  <AllDayCell
+                    key={day.toString()}
+                    day={day}
+                    isFirstColumn={dayIndex === 0}
+                    weekStart={weekStart}
+                    events={allDayEvents}
+                    onEventClick={handleEventClick}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className={WEEK_COLUMNS}>
+            <div className={cn(STICKY_GUTTER, 'hairline-r border-border')}>
+              <HourLabels hours={hours} />
+            </div>
+
+            {days.map((day, dayIndex) => {
+              const isTodayColumn = isToday(day);
+              const showsCurrentTime = currentTimeVisible && isTodayColumn;
+
+              return (
+                <div
+                  key={day.toString()}
+                  className='hairline-r border-border data-today:bg-primary/[0.025] relative last:border-r-0'
+                  data-today={isTodayColumn || undefined}
+                >
+                  <PositionedEvents
+                    positionedEvents={positionedDayEvents[dayIndex] ?? []}
+                    view='week'
+                    onEventClick={handleEventClick}
+                  />
+                  {showsCurrentTime && (
+                    <CurrentTimeLine position={currentTimePosition} />
+                  )}
+                  <QuarterSlots
+                    day={day}
+                    hours={hours}
+                    idPrefix='week-cell'
+                    onEventCreate={onEventCreate}
+                  />
+                </div>
+              );
+            })}
           </div>
         </div>
-      )}
-
-      <div className='grid flex-1 grid-cols-8 overflow-hidden'>
-        <div className='hairline-r border-border grid auto-cols-fr'>
-          <HourLabels hours={hours} />
-        </div>
-
-        {days.map((day, dayIndex) => {
-          const isTodayColumn = isToday(day);
-          const showsCurrentTime = currentTimeVisible && isTodayColumn;
-
-          return (
-            <div
-              key={day.toString()}
-              className='hairline-r border-border relative grid auto-cols-fr last:border-r-0'
-              data-today={isTodayColumn || undefined}
-            >
-              <PositionedEvents
-                positionedEvents={positionedDayEvents[dayIndex] ?? []}
-                view='week'
-                onEventClick={handleEventClick}
-              />
-              {showsCurrentTime && (
-                <CurrentTimeLine position={currentTimePosition} />
-              )}
-              <QuarterSlots
-                day={day}
-                hours={hours}
-                idPrefix='week-cell'
-                onEventCreate={onEventCreate}
-              />
-            </div>
-          );
-        })}
-      </div>
+      </TimeGridScroller>
     </div>
   );
 }
