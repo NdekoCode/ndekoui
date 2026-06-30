@@ -38,3 +38,28 @@ export function ClaudeMark({ className }: ToolMarkProps) {
     <ToolMark path={CLAUDE_PATH} className={cn('text-[#D97757]', className)} />
   );
 }
+
+type MonogramProps = ToolMarkProps & { letter: string };
+
+/** For tools without a mark in Simple Icons: their initial on a small tile, never an imitation of their logo. */
+function Monogram({ letter, className }: MonogramProps) {
+  return (
+    <span
+      aria-hidden='true'
+      className={cn(
+        'bg-foreground text-background flex size-4 shrink-0 items-center justify-center rounded-[4px] text-[9px] leading-none font-semibold',
+        className
+      )}
+    >
+      {letter}
+    </span>
+  );
+}
+
+export function LovableMark({ className }: ToolMarkProps) {
+  return <Monogram letter='L' className={className} />;
+}
+
+export function ChatGptMark({ className }: ToolMarkProps) {
+  return <Monogram letter='G' className={className} />;
+}

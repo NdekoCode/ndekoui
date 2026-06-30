@@ -143,7 +143,7 @@ export function BundleFrame({
           {description}
         </p>
       </div>
-      <div className='flex items-center gap-2'>
+      <div className='@container/tile-header flex items-center gap-2'>
         <div className='flex shrink-0 items-center gap-1'>
           <ViewportSwitch
             value={viewport}

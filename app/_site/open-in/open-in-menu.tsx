@@ -10,7 +10,6 @@ import {
   ChevronDownIcon,
   CopyIcon,
   ExternalLinkIcon,
-  MessageCircleIcon,
   SourceCodeIcon,
 } from '@/registry/ndeko/lib/icons';
 import { MENU_ITEM, MENU_SEPARATOR } from '@/registry/ndeko/lib/recipes';
@@ -34,7 +33,14 @@ import {
   promptOf,
   v0LinkOf,
 } from './open-in-links';
-import { ClaudeMark, CursorMark, V0Mark } from './tool-marks';
+import {
+  ChatGptMark,
+  ClaudeMark,
+  CursorMark,
+  LovableMark,
+  V0Mark,
+} from './tool-marks';
+import { ToolRoller } from './tool-roller';
 
 type OpenInMenuProps = {
   title: string;
@@ -61,17 +67,21 @@ function swapStatesOf(prefersReducedMotion: boolean | null) {
 type OpenLinkProps = {
   href: string;
   icon: ReactNode;
+  hint?: string;
   children: ReactNode;
 };
 
-function OpenLink({ href, icon, children }: OpenLinkProps) {
+function OpenLink({ href, icon, hint, children }: OpenLinkProps) {
   return (
     <MenuPrimitive.LinkItem
       className={MENU_ITEM}
       render={<a href={href} target='_blank' rel='noreferrer' />}
     >
       {icon}
-      <span className='flex-1'>{children}</span>
+      <span className='flex flex-1 flex-col'>
+        <span>{children}</span>
+        {hint && <span className='text-muted-foreground text-xs'>{hint}</span>}
+      </span>
       <ExternalLinkIcon className='text-muted-foreground/70 size-3.5' />
     </MenuPrimitive.LinkItem>
   );
@@ -190,7 +200,7 @@ export function OpenInMenu({ title, itemName }: OpenInMenuProps) {
             />
           }
         >
-          <V0Mark className='size-4' />
+          <ToolRoller />
           <ChevronDownIcon className='text-muted-foreground size-3.5' />
         </TooltipTrigger>
         <TooltipContent>
@@ -201,22 +211,20 @@ export function OpenInMenu({ title, itemName }: OpenInMenuProps) {
         <OpenLink href={v0LinkOf(itemName)} icon={<V0Mark />}>
           Open in v0
         </OpenLink>
-        <OpenLink
-          href={lovableLinkOf(prompt)}
-          icon={<ExternalLinkIcon className='text-muted-foreground' />}
-        >
+        <OpenLink href={lovableLinkOf(prompt)} icon={<LovableMark />}>
           Open in Lovable
         </OpenLink>
         <OpenLink href={cursorLinkOf(prompt)} icon={<CursorMark />}>
           Open in Cursor
         </OpenLink>
-        <OpenLink href={claudeLinkOf(prompt)} icon={<ClaudeMark />}>
+        <OpenLink
+          href={claudeLinkOf(prompt)}
+          icon={<ClaudeMark />}
+          hint='Claude asks you to confirm prompts that come from a link'
+        >
           Ask Claude
         </OpenLink>
-        <OpenLink
-          href={chatGptLinkOf(prompt)}
-          icon={<MessageCircleIcon className='text-muted-foreground' />}
-        >
+        <OpenLink href={chatGptLinkOf(prompt)} icon={<ChatGptMark />}>
           Ask ChatGPT
         </OpenLink>
         <div role='separator' className={MENU_SEPARATOR} />
