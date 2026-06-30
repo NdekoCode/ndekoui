@@ -92,11 +92,17 @@ SOFTWARE.
 
 ## Simple Icons
 
-The brand marks in `registry/ndeko/lib/brand-logos.tsx`, and the v0, Cursor and Claude marks of the site's Open in menu (`app/_site/open-in/tool-marks.tsx`), are SVG paths and colours taken from Simple Icons 16.33.0 (<https://github.com/simple-icons/simple-icons>), released under CC0 1.0 Universal. Every mark is a trademark of its owner. It is shown only to name the tool a block connects to, and its use stays subject to that brand's own guidelines. No brand endorses Ndeko UI.
+The brand marks in `registry/ndeko/lib/brand-logos.tsx`, the v0, Cursor and Claude marks of the site's Open in menu (`app/_site/open-in/tool-marks.tsx`), and the client marks of the MCP page (`app/mcp/_components/client-marks.tsx`), are SVG paths and colours taken from Simple Icons 16.33.0 (<https://github.com/simple-icons/simple-icons>), released under CC0 1.0 Universal. Every mark is a trademark of its owner. It is shown only to name the tool a block connects to, and its use stays subject to that brand's own guidelines. No brand endorses Ndeko UI.
+
+## Magic UI
+
+Several motion components take their idea and their props from Magic UI (<https://magicui.design>, MIT): globe, dotted map, orbiting circles, lens, border beam, shine border, magic card, confetti, the post card, the word rotate, the highlighter, text 3D flip, scroll velocity, and the Safari, iPhone and Android mockups. Their code is written for Ndeko UI; none of Magic UI's code was copied.
+
+The land grid in `components/core/dotted-map-points.ts` is generated once by `scripts/generate-dotted-map.ts` from the countries data that ships with dotted-map (MIT).
 
 ## Dependencies
 
 These are installed as packages and keep their own licences:
 
-- MIT: Base UI (`@base-ui/react`), motion, Hugeicons (`@hugeicons/react`, `@hugeicons/core-free-icons`), clsx, tailwind-merge, cmdk, sonner, react-day-picker, date-fns, `@tanstack/react-table`, `@dnd-kit/*`, `@headless-tree/*`, `@origin-space/image-cropper`, react-payment-inputs, react-phone-number-input, use-mask-input, use-stick-to-bottom, react-markdown, remark-gfm, remark-breaks, marked and shiki.
-- Apache-2.0: class-variance-authority, react-aria, react-aria-components and `@internationalized/date`.
+- MIT: Base UI (`@base-ui/react`), motion, Hugeicons (`@hugeicons/react`, `@hugeicons/core-free-icons`), clsx, tailwind-merge, cmdk, sonner, react-day-picker, date-fns, `@tanstack/react-table`, `@dnd-kit/*`, `@headless-tree/*`, `@origin-space/image-cropper`, react-payment-inputs, react-phone-number-input, use-mask-input, use-stick-to-bottom, react-markdown, remark-gfm, remark-breaks, marked, shiki, cobe, zod and, at build time only, dotted-map.
+- Apache-2.0: class-variance-authority, react-aria, react-aria-components, `@internationalized/date`, mcp-handler and `@modelcontextprotocol/server`.
