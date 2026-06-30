@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "motion-iphone",
-  "title": "Iphone",
+  "title": "iPhone",
   "description": "A modern iPhone drawn in SVG and CSS, with a titanium frame, a Dynamic Island and a status bar that follows the screen.",
   "dependencies": [
     "motion"

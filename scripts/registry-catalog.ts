@@ -24,6 +24,7 @@ const GENERATED_NOTICE =
 const CATEGORY_NAMES: Record<string, string> = {
   'calendar-date-picker': 'Date picker',
   dropdown: 'Dropdown menu',
+  iphone: 'iPhone',
   subtask: 'Sub-task',
   aside: 'Side panel',
 };
