@@ -1,11 +1,18 @@
 'use client';
 
+import { Menu as MenuPrimitive } from '@base-ui/react/menu';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { NdekoUILLogo } from '@/components/website/icons/ndekoui-logo';
-import { GithubIcon } from '@/registry/ndeko/lib/icons';
+import { GithubIcon, MenuIcon } from '@/registry/ndeko/lib/icons';
+import { MENU_ITEM } from '@/registry/ndeko/lib/recipes';
 import { Button } from '@/registry/ndeko/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/registry/ndeko/ui/dropdown-menu';
 
 import { ThemeToggle } from './theme-toggle';
 
@@ -30,6 +37,40 @@ function isCurrentSection(pathname: string, href: string) {
   return isExact || isNested;
 }
 
+function SectionMenu({ pathname }: { pathname: string }) {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={
+          <Button
+            variant='ghost'
+            size='icon-sm'
+            aria-label='Open the sections menu'
+            className='md:hidden'
+          />
+        }
+      >
+        <MenuIcon />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align='end' className='min-w-40'>
+        {NAVIGATION.map((item) => {
+          const isCurrent = isCurrentSection(pathname, item.href);
+          return (
+            <MenuPrimitive.LinkItem
+              key={item.href}
+              aria-current={ariaCurrentOf(isCurrent)}
+              className={MENU_ITEM}
+              render={<Link href={item.href} />}
+            >
+              {item.label}
+            </MenuPrimitive.LinkItem>
+          );
+        })}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
 export function SiteHeader() {
   const pathname = usePathname();
 
@@ -43,7 +84,10 @@ export function SiteHeader() {
           <NdekoUILLogo aria-hidden className='size-6' />
           Ndeko UI
         </Link>
-        <nav aria-label='Sections' className='flex items-center gap-1'>
+        <nav
+          aria-label='Sections'
+          className='hidden items-center gap-1 md:flex'
+        >
           {NAVIGATION.map((item) => {
             const isCurrent = isCurrentSection(pathname, item.href);
             return (
@@ -62,6 +106,7 @@ export function SiteHeader() {
           })}
         </nav>
         <div className='ml-auto flex items-center gap-1'>
+          <SectionMenu pathname={pathname} />
           <ThemeToggle />
           <Button
             variant='ghost'
