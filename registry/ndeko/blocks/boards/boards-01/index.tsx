@@ -21,7 +21,7 @@ import {
 } from '@dnd-kit/core';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { useMotionValue, useReducedMotion } from 'motion/react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
 
 import { PlusIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -109,6 +109,7 @@ export default function Boards01() {
   const nextNumberRef = useRef(highestNumberOf(TASKS) + 1);
   const dragX = useMotionValue(0);
   const shouldReduceMotion = useReducedMotion();
+  const dndContextId = useId();
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 4 } }),
     useSensor(TouchSensor, {
@@ -277,6 +278,7 @@ export default function Boards01() {
         </Button>
       </div>
       <DndContext
+        id={dndContextId}
         sensors={sensors}
         collisionDetection={collisionDetection}
         measuring={MEASURING}

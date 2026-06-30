@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-57",
+  "title": "Rolling label",
+  "description": "Each letter rolls up on hover and its copy rolls in from below, one after the other.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-57.tsx",
+      "content": "import { cn } from '@/registry/ndeko/lib/utils';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst LABEL = 'Start a project';\nconst LETTERS = Array.from(LABEL);\nconst LETTER_STAGGER_MS = 12;\n\nconst ROLL =\n  'transition-[translate] duration-300 ease-(--ease-out-strong) whitespace-pre';\n\nfunction letterDelayOf(index: number) {\n  const delay = index * LETTER_STAGGER_MS;\n  return { transitionDelay: `${delay}ms` };\n}\n\nexport default function Button57() {\n  return (\n    <Button variant='outline' aria-label={LABEL}>\n      <span aria-hidden='true' className='relative flex overflow-hidden'>\n        {LETTERS.map((letter, index) => (\n          <span key={index} className='relative flex flex-col'>\n            <span\n              className={cn(ROLL, 'group-hover/button:-translate-y-full')}\n              style={letterDelayOf(index)}\n            >\n              {letter}\n            </span>\n            <span\n              className={cn(\n                ROLL,\n                'absolute inset-x-0 top-full group-hover/button:-translate-y-full'\n              )}\n              style={letterDelayOf(index)}\n            >\n              {letter}\n            </span>\n          </span>\n        ))}\n      </span>\n    </Button>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

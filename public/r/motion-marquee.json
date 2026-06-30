@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "motion-marquee",
+  "title": "Marquee",
+  "description": "A loop of logos, chips or cards driven by CSS, horizontal or vertical, that pauses under the pointer and on focus.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/core/marquee.tsx",
+      "content": "'use client';\nimport { cn } from '@/lib/utils';\n\nexport type MarqueeDirection = 'horizontal' | 'vertical';\n\ntype MarqueeStyle = React.CSSProperties & {\n  '--marquee-gap': string;\n  '--marquee-duration'?: string;\n};\n\nconst TRACK_CLASS: Record<MarqueeDirection, string> = {\n  horizontal: 'w-max motion-safe:animate-marquee motion-reduce:w-full',\n  vertical: 'h-max flex-col motion-safe:animate-marquee-y',\n};\n\nconst COPY_CLASS: Record<MarqueeDirection, string> = {\n  horizontal: 'items-center pr-(--marquee-gap)',\n  vertical: 'flex-col pb-(--marquee-gap)',\n};\n\nconst FIRST_COPY_REDUCED_CLASS: Record<MarqueeDirection, string> = {\n  horizontal:\n    'motion-reduce:w-full motion-reduce:flex-wrap motion-reduce:justify-center motion-reduce:pr-0',\n  vertical: '',\n};\n\nconst FADE_CLASS: Record<MarqueeDirection, string> = {\n  horizontal: 'mask-x-from-85% motion-reduce:mask-none',\n  vertical: 'mask-y-from-85%',\n};\n\nconst PAUSE_CLASS =\n  'group-hover/marquee:[animation-play-state:paused] group-focus-within/marquee:[animation-play-state:paused]';\n\nfunction styleOf(gap: number, duration: number | undefined) {\n  const style: MarqueeStyle = { '--marquee-gap': `${gap}px` };\n  if (duration !== undefined) {\n    style['--marquee-duration'] = `${duration}s`;\n  }\n  return style;\n}\n\nfunction isRepeatedCopy(index: number) {\n  return index > 0;\n}\n\nfunction hiddenFromReadersOf(isRepeated: boolean) {\n  if (isRepeated) {\n    return true;\n  }\n  return undefined;\n}\n\nexport type MarqueeProps = {\n  children: React.ReactNode;\n  direction?: MarqueeDirection;\n  reverse?: boolean;\n  pauseOnHover?: boolean;\n  gap?: number;\n  duration?: number;\n  repeat?: number;\n  fade?: boolean;\n  className?: string;\n};\n\nexport function Marquee({\n  children,\n  direction = 'horizontal',\n  reverse = false,\n  pauseOnHover = true,\n  gap = 16,\n  duration,\n  repeat = 2,\n  fade = true,\n  className,\n}: MarqueeProps) {\n  const copyCount = repeat * 2;\n  const copies = Array.from({ length: copyCount }, (_, index) => index);\n  const isVertical = direction === 'vertical';\n\n  return (\n    <div\n      style={styleOf(gap, duration)}\n      className={cn(\n        'group/marquee flex overflow-hidden',\n        isVertical && 'flex-col',\n        fade && FADE_CLASS[direction],\n        className\n      )}\n    >\n      <div\n        className={cn(\n          'flex',\n          TRACK_CLASS[direction],\n          reverse && '[animation-direction:reverse]',\n          pauseOnHover && PAUSE_CLASS\n        )}\n      >\n        {copies.map((index) => {\n          const isRepeated = isRepeatedCopy(index);\n\n          return (\n            <div\n              key={index}\n              aria-hidden={hiddenFromReadersOf(isRepeated)}\n              inert={isRepeated}\n              className={cn(\n                'flex shrink-0 gap-(--marquee-gap)',\n                COPY_CLASS[direction],\n                isRepeated && 'motion-reduce:hidden',\n                !isRepeated && FIRST_COPY_REDUCED_CLASS[direction]\n              )}\n            >\n              {children}\n            </div>\n          );\n        })}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/motion/marquee.tsx"
+    }
+  ],
+  "categories": [
+    "motion"
+  ],
+  "type": "registry:component"
+}

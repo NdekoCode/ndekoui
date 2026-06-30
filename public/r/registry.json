@@ -265,11 +265,7 @@
         },
         "@utility surface-brand": {
           "background-color": "var(--card)",
-          "background-image": "radial-gradient(\n    120% 70% at 0% 0%,\n    color-mix(in oklab, var(--primary) 7%, transparent),\n    transparent 60%\n  )",
-          "box-shadow": "0 0 0 var(--hairline) var(--border),\n    inset 0 1px 0 rgb(255 255 255 / 70%),\n    0 1px 2px rgb(0 0 0 / 4%),\n    0 8px 24px -12px color-mix(in oklab, var(--primary) 18%, transparent)",
-          "&:where(.dark, .dark *)": {
-            "box-shadow": "0 0 0 var(--hairline) var(--border),\n      inset 0 1px 0 rgb(255 255 255 / 5%),\n      0 8px 24px -12px color-mix(in oklab, var(--primary) 24%, transparent)"
-          }
+          "box-shadow": "0 0 0 var(--hairline) color-mix(in oklab, var(--primary) 35%, var(--border)),\n    0 1px 2px rgb(0 0 0 / 4%)"
         },
         "@media (prefers-reduced-motion: reduce)": {
           "*,\n  ::before,\n  ::after": {
@@ -2776,6 +2772,601 @@
           "path": "components/core/tilt.tsx",
           "type": "registry:component",
           "target": "components/motion/tilt.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-number",
+      "type": "registry:component",
+      "title": "Motion number",
+      "description": "A formatted number whose digits roll to their new value in the direction of the change.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/motion-number.tsx",
+          "type": "registry:component",
+          "target": "components/motion/motion-number.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-terminal",
+      "type": "registry:component",
+      "title": "Terminal",
+      "description": "A command line for developer docs that types its commands and prints their output line by line.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/terminal.tsx",
+          "type": "registry:component",
+          "target": "components/motion/terminal.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-directional-drawer",
+      "type": "registry:component",
+      "title": "Directional drawer",
+      "description": "A drawer from any side that follows the drag, closes on a flick and resists being pulled the wrong way.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/sheet.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/directional-drawer.tsx",
+          "type": "registry:component",
+          "target": "components/motion/directional-drawer.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-code-tree-viewer",
+      "type": "registry:component",
+      "title": "Code tree viewer",
+      "description": "A file tree beside a code panel with highlighted code, file name and copy.",
+      "dependencies": [
+        "@headless-tree/core",
+        "@headless-tree/react",
+        "shiki"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/chat-code-block.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/tree.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/code-tree-viewer.tsx",
+          "type": "registry:component",
+          "target": "components/motion/code-tree-viewer.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-spotlight-cards",
+      "type": "registry:component",
+      "title": "Spotlight cards",
+      "description": "A grid of link cards where a soft light follows the mouse and lights the hairline borders nearby.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/spotlight-cards.tsx",
+          "type": "registry:component",
+          "target": "components/motion/spotlight-cards.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-hover-cards",
+      "type": "registry:component",
+      "title": "Hover cards",
+      "description": "Link cards with four hover treatments: zoom, rise, tilt and trace.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/hover-cards.tsx",
+          "type": "registry:component",
+          "target": "components/motion/hover-cards.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-magnified-doc",
+      "type": "registry:component",
+      "title": "Magnified doc",
+      "description": "A dock of icons that magnify near the pointer and switch the content of the stage above them.",
+      "dependencies": [
+        "@base-ui/react",
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/magnified-doc.tsx",
+          "type": "registry:component",
+          "target": "components/motion/magnified-doc.tsx"
+        },
+        {
+          "path": "components/core/image-tabs.tsx",
+          "type": "registry:component",
+          "target": "components/motion/image-tabs.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-scroll-text",
+      "type": "registry:component",
+      "title": "Scroll text",
+      "description": "Text that reveals word by word, letter by letter or under a highlight as it scrolls through the viewport.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/scroll-text.tsx",
+          "type": "registry:component",
+          "target": "components/motion/scroll-text.tsx"
+        },
+        {
+          "path": "components/core/motion-elements.ts",
+          "type": "registry:component",
+          "target": "components/motion/motion-elements.ts"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-scroll-text-marquee",
+      "type": "registry:component",
+      "title": "Scroll text marquee",
+      "description": "A large line of text that loops sideways and speeds up with the scroll.",
+      "dependencies": [
+        "motion",
+        "react-use-measure"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/scroll-text-marquee.tsx",
+          "type": "registry:component",
+          "target": "components/motion/scroll-text-marquee.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-horizontal-scroll",
+      "type": "registry:component",
+      "title": "Horizontal scroll",
+      "description": "A pinned row of cards that travels sideways as the page scrolls down.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/horizontal-scroll.tsx",
+          "type": "registry:component",
+          "target": "components/motion/horizontal-scroll.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-sticky-scroll",
+      "type": "registry:component",
+      "title": "Sticky scroll",
+      "description": "Steps that scroll past a pinned picture, which changes in place to match the step being read.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/sticky-scroll.tsx",
+          "type": "registry:component",
+          "target": "components/motion/sticky-scroll.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-stacking-cards",
+      "type": "registry:component",
+      "title": "Stacking cards",
+      "description": "Cards that pin and pile up as the page scrolls, each one behind shrinking and fading back a little.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/stacking-cards.tsx",
+          "type": "registry:component",
+          "target": "components/motion/stacking-cards.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-timeline-animation",
+      "type": "registry:component",
+      "title": "Timeline animation",
+      "description": "A vertical timeline whose line fills as the page scrolls, with entries that settle in once as they arrive.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/timeline-animation.tsx",
+          "type": "registry:component",
+          "target": "components/motion/timeline-animation.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-scroll-animation",
+      "type": "registry:component",
+      "title": "Scroll animation",
+      "description": "Reveals that play once when an element scrolls into view, and a parallax layer that drifts with the scroll.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/scroll-animation.tsx",
+          "type": "registry:component",
+          "target": "components/motion/scroll-animation.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-smooth-scroll",
+      "type": "registry:component",
+      "title": "Smooth scroll",
+      "description": "An opt-in wrapper that eases mouse wheel scrolling and leaves every other way of scrolling native.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/smooth-scroll.tsx",
+          "type": "registry:component",
+          "target": "components/motion/smooth-scroll.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-image-tabs",
+      "type": "registry:component",
+      "title": "Image tabs",
+      "description": "Tabs that change an image in place while the indicator travels to the chosen tab.",
+      "dependencies": [
+        "@base-ui/react",
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/image-tabs.tsx",
+          "type": "registry:component",
+          "target": "components/motion/image-tabs.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-image-accordion",
+      "type": "registry:component",
+      "title": "Image accordion",
+      "description": "A row of image panels where the hovered or focused one widens to show its caption.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/image-accordion.tsx",
+          "type": "registry:component",
+          "target": "components/motion/image-accordion.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-image-reveal",
+      "type": "registry:component",
+      "title": "Image reveal",
+      "description": "A list of titles where the hovered row shows its picture beside the pointer.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/image-reveal.tsx",
+          "type": "registry:component",
+          "target": "components/motion/image-reveal.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-image-trail",
+      "type": "registry:component",
+      "title": "Image trail",
+      "description": "Images that land along the pointer path, then fade and shrink away.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/image-trail.tsx",
+          "type": "registry:component",
+          "target": "components/motion/image-trail.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-linear-modal",
+      "type": "registry:component",
+      "title": "Linear modal",
+      "description": "Feature cards that grow into a modal with their full story and a list of what they do.",
+      "dependencies": [
+        "@base-ui/react",
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/linear-modal.tsx",
+          "type": "registry:component",
+          "target": "components/motion/linear-modal.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-swap-grid",
+      "type": "registry:component",
+      "title": "Swap grid",
+      "description": "A grid of slots where items are dragged onto each other to swap places, with a full keyboard path.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/swap-grid.tsx",
+          "type": "registry:component",
+          "target": "components/motion/swap-grid.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-reorder-list",
+      "type": "registry:component",
+      "title": "Reorder list",
+      "description": "A list reordered by a drag handle, with move up and move down buttons and keyboard reordering.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/reorder-list.tsx",
+          "type": "registry:component",
+          "target": "components/motion/reorder-list.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-animated-beam",
+      "type": "registry:component",
+      "title": "Animated beam",
+      "description": "SVG lines connecting icon tiles, with a highlight travelling along each one.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/animated-beam.tsx",
+          "type": "registry:component",
+          "target": "components/motion/animated-beam.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-masonry-grid",
+      "type": "registry:component",
+      "title": "Masonry grid",
+      "description": "A responsive masonry layout for items of different heights.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/masonry-grid.tsx",
+          "type": "registry:component",
+          "target": "components/motion/masonry-grid.tsx"
+        }
+      ],
+      "categories": [
+        "motion"
+      ]
+    },
+    {
+      "name": "motion-marquee",
+      "type": "registry:component",
+      "title": "Marquee",
+      "description": "A loop of logos, chips or cards driven by CSS, horizontal or vertical, that pauses under the pointer and on focus.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/core/marquee.tsx",
+          "type": "registry:component",
+          "target": "components/motion/marquee.tsx"
         }
       ],
       "categories": [
@@ -6052,6 +6643,247 @@
       "files": [
         {
           "path": "registry/ndeko/components/button/button-54.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "button"
+      ]
+    },
+    {
+      "name": "button-55",
+      "type": "registry:component",
+      "title": "Label to icon on hover",
+      "description": "On hover the label slides out and a download icon slides in to take its place.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/button/button-55.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "button"
+      ]
+    },
+    {
+      "name": "button-56",
+      "type": "registry:component",
+      "title": "Travelling arrow",
+      "description": "The arrow in the cap leaves to the top right on hover while the next one arrives from the bottom left.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/button/button-56.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "button"
+      ]
+    },
+    {
+      "name": "button-57",
+      "type": "registry:component",
+      "title": "Rolling label",
+      "description": "Each letter rolls up on hover and its copy rolls in from below, one after the other.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/button/button-57.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "button"
+      ]
+    },
+    {
+      "name": "button-58",
+      "type": "registry:component",
+      "title": "Hold to delete",
+      "description": "A fill crosses the button while it is held for two seconds, snaps back on release and turns into a confirmation.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/button/button-58.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "button"
+      ]
+    },
+    {
+      "name": "button-59",
+      "type": "registry:component",
+      "title": "Follow toggle with fill",
+      "description": "Following fills the button from the point that was pressed, and unfollowing draws the fill back.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/button/button-59.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "button"
+      ]
+    },
+    {
+      "name": "button-60",
+      "type": "registry:component",
+      "title": "Publish with states",
+      "description": "The label and icon morph from publish to publishing to published, and the width follows.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/button/button-60.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "button"
+      ]
+    },
+    {
+      "name": "button-61",
+      "type": "registry:component",
+      "title": "Download with progress",
+      "description": "The button fills with the download progress, counts the percentage and ends on a check.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/button/button-61.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "button"
+      ]
+    },
+    {
+      "name": "button-62",
+      "type": "registry:component",
+      "title": "Watch with rolling digits",
+      "description": "Only the digits that change roll, units first, when the watch count goes up or down.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/button/button-62.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "button"
+      ]
+    },
+    {
+      "name": "button-63",
+      "type": "registry:component",
+      "title": "Copy install command",
+      "description": "A command in a monospace pill that copies itself and swaps its icon for a check.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/button/button-63.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "button"
+      ]
+    },
+    {
+      "name": "button-64",
+      "type": "registry:component",
+      "title": "Confirm on second press",
+      "description": "The first press turns the button destructive with a three second countdown, the second removes.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/button/button-64.tsx",
           "type": "registry:component"
         }
       ],
@@ -10382,6 +11214,137 @@
       "files": [
         {
           "path": "registry/ndeko/components/input/input-59.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "input"
+      ]
+    },
+    {
+      "name": "input-60",
+      "type": "registry:component",
+      "title": "Password with morphing reveal",
+      "description": "Showing the password turns each dot into its character one after the other, in a monospace face.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/field.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/input/input-60.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "input"
+      ]
+    },
+    {
+      "name": "input-61",
+      "type": "registry:component",
+      "title": "Password with Caps Lock warning",
+      "description": "The hint under the field becomes a warning while Caps Lock is on and the field has focus.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/field.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/input/input-61.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "input"
+      ]
+    },
+    {
+      "name": "input-62",
+      "type": "registry:component",
+      "title": "Confirm password with match state",
+      "description": "The confirmation stays quiet while it follows the password and shows a cross or a check once it differs or matches.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/field.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/input/input-62.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "input"
+      ]
+    },
+    {
+      "name": "input-63",
+      "type": "registry:component",
+      "title": "Segmented strength meter",
+      "description": "Four segments fill in turn as the password gets stronger and the strength label slides in the same direction.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/field.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/input/input-63.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "input"
+      ]
+    },
+    {
+      "name": "input-64",
+      "type": "registry:component",
+      "title": "Password rule chips",
+      "description": "Each rule is a chip that turns green and swaps its circle for a check once the password meets it.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/field.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/input/input-64.tsx",
           "type": "registry:component"
         }
       ],
@@ -19326,6 +20289,135 @@
           "path": "registry/ndeko/blocks/footers/footers-02/data.ts",
           "type": "registry:component",
           "target": "components/blocks/footers-02/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "footers"
+      ]
+    },
+    {
+      "name": "footers-03",
+      "type": "registry:block",
+      "title": "Footer with a wordmark",
+      "description": "Three lists of links beside the brand and a contact address, a back to top button whose arrow travels on hover, and the product name set across the full width at the bottom.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/footers/footers-03/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/footers-03/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/footers/footers-03/back-to-top.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/footers-03/back-to-top.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/footers/footers-03/brand-mark.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/footers-03/brand-mark.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/footers/footers-03/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/footers-03/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "footers"
+      ]
+    },
+    {
+      "name": "footers-04",
+      "type": "registry:block",
+      "title": "Footer with a folding sitemap",
+      "description": "Five link columns that fold into an accordion on phones, a support address with a copy button that confirms with a check, and a language select.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/accordion.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/select.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/footers/footers-04/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/footers-04/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/footers/footers-04/sitemap.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/footers-04/sitemap.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/footers/footers-04/copy-email.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/footers-04/copy-email.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/footers/footers-04/language-select.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/footers-04/language-select.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/footers/footers-04/brand-mark.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/footers-04/brand-mark.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/footers/footers-04/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/footers-04/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "footers"
+      ]
+    },
+    {
+      "name": "footers-05",
+      "type": "registry:block",
+      "title": "Footer with a closing call to action",
+      "description": "A last headline with a primary action whose arrow travels on hover, then the brand, one row of links and a link to the status page.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/footers/footers-05/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/footers-05/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/footers/footers-05/brand-mark.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/footers-05/brand-mark.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/footers/footers-05/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/footers-05/data.ts"
         }
       ],
       "categories": [

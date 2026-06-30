@@ -27,7 +27,14 @@ import {
   useMotionValue,
   useReducedMotion,
 } from 'motion/react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import { EllipsisIcon, EyeOffIcon, PlusIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -248,6 +255,7 @@ export default function Boards02() {
   const dragX = useMotionValue(0);
   const shouldReduceMotion = useReducedMotion();
   const laneTravel = laneTravelOf(shouldReduceMotion);
+  const dndContextId = useId();
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 4 } }),
     useSensor(TouchSensor, {
@@ -481,6 +489,7 @@ export default function Boards02() {
         </div>
       </div>
       <DndContext
+        id={dndContextId}
         sensors={sensors}
         collisionDetection={collisionDetection}
         measuring={MEASURING}

@@ -46,6 +46,12 @@ export const NAVIGATION: NavigationGroup[] = [
       {
         name: 'Carousel',
         href: '/docs/carousel',
+        isUpdated: true,
+      },
+      {
+        name: 'Code Tree Viewer',
+        href: '/docs/code-tree-viewer',
+        isNew: true,
       },
       {
         name: 'Cursor',
@@ -54,6 +60,11 @@ export const NAVIGATION: NavigationGroup[] = [
       {
         name: 'Dialog',
         href: '/docs/dialog',
+      },
+      {
+        name: 'Directional Drawer',
+        href: '/docs/directional-drawer',
+        isNew: true,
       },
       {
         name: 'Disclosure',
@@ -66,7 +77,11 @@ export const NAVIGATION: NavigationGroup[] = [
       {
         name: 'Infinite Slider',
         href: '/docs/infinite-slider',
-        isUpdated: true,
+      },
+      {
+        name: 'Terminal',
+        href: '/docs/terminal',
+        isNew: true,
       },
       {
         name: 'Transition Panel',
@@ -88,7 +103,6 @@ export const NAVIGATION: NavigationGroup[] = [
       {
         name: 'Text Morph',
         href: '/docs/text-morph',
-        isUpdated: true,
       },
       {
         name: 'Text Roll',
@@ -116,9 +130,13 @@ export const NAVIGATION: NavigationGroup[] = [
         href: '/docs/animated-number',
       },
       {
+        name: 'Motion Number',
+        href: '/docs/motion-number',
+        isNew: true,
+      },
+      {
         name: 'Sliding Number',
         href: '/docs/sliding-number',
-        isNew: true,
       },
     ],
   },
@@ -132,6 +150,10 @@ export const NAVIGATION: NavigationGroup[] = [
       {
         name: 'Glow Effect',
         href: '/docs/glow-effect',
+      },
+      {
+        name: 'Hover Cards',
+        href: '/docs/hover-cards',
         isNew: true,
       },
       {
@@ -139,17 +161,26 @@ export const NAVIGATION: NavigationGroup[] = [
         href: '/docs/image-comparison',
       },
       {
+        name: 'Magnified Dock',
+        href: '/docs/magnified-doc',
+        isNew: true,
+      },
+      {
         name: 'Scroll Progress',
         href: '/docs/scroll-progress',
       },
       {
-        name: 'Spotlight',
-        href: '/docs/spotlight',
-        isUpdated: true,
-      },
-      {
         name: 'Spinning Text',
         href: '/docs/spinning-text',
+      },
+      {
+        name: 'Spotlight',
+        href: '/docs/spotlight',
+      },
+      {
+        name: 'Spotlight Cards',
+        href: '/docs/spotlight-cards',
+        isNew: true,
       },
       {
         name: 'Tilt',
@@ -184,11 +215,114 @@ export const NAVIGATION: NavigationGroup[] = [
       {
         name: 'Morphing Popover',
         href: '/docs/morphing-popover',
-        isNew: true,
       },
       {
         name: 'Progressive Blur',
         href: '/docs/progressive-blur',
+      },
+    ],
+  },
+  {
+    name: 'Scroll Effects',
+    children: [
+      {
+        name: 'Horizontal Scroll',
+        href: '/docs/horizontal-scroll',
+        isNew: true,
+      },
+      {
+        name: 'Scroll Animation',
+        href: '/docs/scroll-animation',
+        isNew: true,
+      },
+      {
+        name: 'Scroll Text',
+        href: '/docs/scroll-text',
+        isNew: true,
+      },
+      {
+        name: 'Scroll Text Marquee',
+        href: '/docs/scroll-text-marquee',
+        isNew: true,
+      },
+      {
+        name: 'Smooth Scroll',
+        href: '/docs/smooth-scroll',
+        isNew: true,
+      },
+      {
+        name: 'Stacking Cards',
+        href: '/docs/stacking-cards',
+        isNew: true,
+      },
+      {
+        name: 'Sticky Scroll',
+        href: '/docs/sticky-scroll',
+        isNew: true,
+      },
+      {
+        name: 'Timeline Animation',
+        href: '/docs/timeline-animation',
+        isNew: true,
+      },
+    ],
+  },
+  {
+    name: 'Image Effects',
+    children: [
+      {
+        name: 'Image Accordion',
+        href: '/docs/image-accordion',
+        isNew: true,
+      },
+      {
+        name: 'Image Reveal',
+        href: '/docs/image-reveal',
+        isNew: true,
+      },
+      {
+        name: 'Image Tabs',
+        href: '/docs/image-tabs',
+        isNew: true,
+      },
+      {
+        name: 'Image Trail',
+        href: '/docs/image-trail',
+        isNew: true,
+      },
+    ],
+  },
+  {
+    name: 'Layout Effects',
+    children: [
+      {
+        name: 'Animated Beam',
+        href: '/docs/animated-beam',
+        isNew: true,
+      },
+      {
+        name: 'Linear Modal',
+        href: '/docs/linear-modal',
+        isNew: true,
+      },
+      {
+        name: 'Marquee',
+        href: '/docs/marquee',
+        isNew: true,
+      },
+      {
+        name: 'Masonry Grid',
+        href: '/docs/masonry-grid',
+        isNew: true,
+      },
+      {
+        name: 'Reorder List',
+        href: '/docs/reorder-list',
+        isNew: true,
+      },
+      {
+        name: 'Swap Grid',
+        href: '/docs/swap-grid',
         isNew: true,
       },
     ],

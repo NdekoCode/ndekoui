@@ -1,5 +1,5 @@
 import { CopyButton } from '@/app/_site/copy-button';
-import { installCommandOf } from '@/lib/site';
+import { installCommandOf, motionItemNameOf } from '@/lib/site';
 import { cn } from '@/lib/utils';
 
 import { NdekoUILLogo } from './icons/ndekoui-logo';
@@ -12,8 +12,6 @@ type Command = {
   code: string;
 };
 
-const MOTION_ITEM_PREFIX = 'motion-';
-
 export type InstallationCliProps = {
   value: string;
   className?: string;
@@ -24,7 +22,7 @@ export function InstallationCli({ value, className }: InstallationCliProps) {
     {
       label: 'shadcn',
       icon: <ShadcnLogo className='size-4' />,
-      code: installCommandOf(`${MOTION_ITEM_PREFIX}${value}`),
+      code: installCommandOf(motionItemNameOf(value)),
     },
     {
       label: 'ndekoui',

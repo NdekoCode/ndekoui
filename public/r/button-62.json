@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-62",
+  "title": "Watch with rolling digits",
+  "description": "Only the digits that change roll, units first, when the watch count goes up or down.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-62.tsx",
+      "content": "'use client';\n\nimport {\n  AnimatePresence,\n  motion,\n  type Transition,\n  type Variants,\n  useReducedMotion,\n} from 'motion/react';\nimport { useState } from 'react';\n\nimport { EyeIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\ntype CountGlyph = {\n  key: string;\n  character: string;\n  isDigit: boolean;\n  place: number;\n};\n\nconst BASE_WATCHERS = 1099;\nconst DIGIT_SHIFT_PX = 8;\nconst CARRY_DELAY_S = 0.035;\n\nconst DIGIT_TRANSITION: Transition = { duration: 0.18, ease: [0.2, 0, 0, 1] };\n\nconst DIGIT_VARIANTS: Variants = {\n  enter: (direction: number) => {\n    const offset = direction * DIGIT_SHIFT_PX;\n    return { opacity: 0, y: offset };\n  },\n  visible: { opacity: 1, y: 0 },\n  exit: (direction: number) => {\n    const offset = direction * DIGIT_SHIFT_PX;\n    return { opacity: 0, y: -offset };\n  },\n};\n\nconst FADE_VARIANTS: Variants = {\n  enter: { opacity: 0 },\n  visible: { opacity: 1 },\n  exit: { opacity: 0 },\n};\n\nfunction digitVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return DIGIT_VARIANTS;\n}\n\nfunction directionOf(isWatching: boolean) {\n  if (isWatching) {\n    return 1;\n  }\n  return -1;\n}\n\nfunction isDigitCharacter(character: string) {\n  return /\\d/.test(character);\n}\n\nfunction glyphsOf(count: number) {\n  const characters = Array.from(count.toLocaleString('en-US'));\n  const glyphs: CountGlyph[] = [];\n  let place = 0;\n  for (let index = characters.length - 1; index >= 0; index -= 1) {\n    const character = characters[index];\n    const isDigit = isDigitCharacter(character);\n    if (!isDigit) {\n      glyphs.unshift({ key: `separator-${place}`, character, isDigit, place });\n      continue;\n    }\n    glyphs.unshift({ key: `digit-${place}`, character, isDigit, place });\n    place += 1;\n  }\n  return glyphs;\n}\n\nfunction digitTransitionOf(place: number): Transition {\n  const delay = place * CARRY_DELAY_S;\n  return { ...DIGIT_TRANSITION, delay };\n}\n\nfunction watchersLabelOf(count: number) {\n  const formatted = count.toLocaleString('en-US');\n  if (count === 1) {\n    return '1 person watching';\n  }\n  return `${formatted} people watching`;\n}\n\nexport default function Button62() {\n  const [isWatching, setIsWatching] = useState(false);\n  const shouldReduceMotion = useReducedMotion();\n  const digitVariants = digitVariantsOf(shouldReduceMotion);\n  const direction = directionOf(isWatching);\n  const ownWatch = Number(isWatching);\n  const watcherCount = BASE_WATCHERS + ownWatch;\n  const glyphs = glyphsOf(watcherCount);\n\n  function toggleWatch() {\n    setIsWatching((current) => !current);\n  }\n\n  return (\n    <Button\n      variant='outline'\n      className='py-0 pe-0'\n      aria-pressed={isWatching}\n      onClick={toggleWatch}\n    >\n      <EyeIcon className='group-aria-pressed/button:text-primary-ink opacity-60 transition-[opacity,color] duration-150 group-aria-pressed/button:opacity-100' />\n      Watch\n      <span className='hairline-l border-foreground/12 text-muted-foreground dark:border-foreground/15 ms-1 inline-flex h-full items-center px-3 text-xs font-medium tabular-nums'>\n        <span className='flex' aria-hidden='true'>\n          {glyphs.map((glyph) => {\n            if (!glyph.isDigit) {\n              return <span key={glyph.key}>{glyph.character}</span>;\n            }\n            return (\n              <span key={glyph.key} className='relative flex'>\n                <AnimatePresence\n                  mode='popLayout'\n                  initial={false}\n                  custom={direction}\n                >\n                  <motion.span\n                    key={glyph.character}\n                    className='flex'\n                    custom={direction}\n                    variants={digitVariants}\n                    initial='enter'\n                    animate='visible'\n                    exit='exit'\n                    transition={digitTransitionOf(glyph.place)}\n                  >\n                    {glyph.character}\n                  </motion.span>\n                </AnimatePresence>\n              </span>\n            );\n          })}\n        </span>\n        <span className='sr-only'>{watchersLabelOf(watcherCount)}</span>\n      </span>\n    </Button>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

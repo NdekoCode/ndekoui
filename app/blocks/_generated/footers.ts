@@ -3,8 +3,14 @@ import type { ComponentType } from 'react';
 
 import Footers01 from '@/registry/ndeko/blocks/footers/footers-01/index';
 import Footers02 from '@/registry/ndeko/blocks/footers/footers-02/index';
+import Footers03 from '@/registry/ndeko/blocks/footers/footers-03/index';
+import Footers04 from '@/registry/ndeko/blocks/footers/footers-04/index';
+import Footers05 from '@/registry/ndeko/blocks/footers/footers-05/index';
 
 export const previews: Record<string, ComponentType> = {
   'footers-01': Footers01,
   'footers-02': Footers02,
+  'footers-03': Footers03,
+  'footers-04': Footers04,
+  'footers-05': Footers05,
 };

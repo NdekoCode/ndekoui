@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-64",
+  "title": "Password rule chips",
+  "description": "Each rule is a chip that turns green and swaps its circle for a check once the password meets it.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/badge.json",
+    "https://ui.ndekocode.dev/r/field.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/input.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/input/input-64.tsx",
+      "content": "'use client';\n\nimport {\n  AnimatePresence,\n  motion,\n  type Transition,\n  type Variants,\n  useReducedMotion,\n} from 'motion/react';\nimport { useId, useState, type ChangeEvent } from 'react';\n\nimport { CheckIcon, CircleIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Badge } from '@/registry/ndeko/ui/badge';\nimport { Field, FieldLabel } from '@/registry/ndeko/ui/field';\nimport { Input } from '@/registry/ndeko/ui/input';\n\ntype Rule = { label: string; isMetBy: (password: string) => boolean };\n\nconst MIN_LENGTH = 12;\n\nfunction hasMixedCase(password: string) {\n  const hasLower = /[a-z]/.test(password);\n  const hasUpper = /[A-Z]/.test(password);\n  return hasLower && hasUpper;\n}\n\nconst RULES: Rule[] = [\n  {\n    label: `${MIN_LENGTH}+ characters`,\n    isMetBy: (password) => password.length >= MIN_LENGTH,\n  },\n  { label: 'Upper and lower case', isMetBy: hasMixedCase },\n  { label: 'A number', isMetBy: (password) => /\\d/.test(password) },\n  {\n    label: 'A symbol',\n    isMetBy: (password) => /[^A-Za-z0-9]/.test(password),\n  },\n];\n\nconst SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };\n\nconst SWAP_VARIANTS: Variants = {\n  enter: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },\n  visible: { opacity: 1, scale: 1, filter: 'blur(0px)' },\n  exit: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },\n};\n\nconst FADE_VARIANTS: Variants = {\n  enter: { opacity: 0 },\n  visible: { opacity: 1 },\n  exit: { opacity: 0 },\n};\n\nfunction swapVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return SWAP_VARIANTS;\n}\n\nfunction badgeVariantOf(isMet: boolean) {\n  if (isMet) {\n    return 'success';\n  }\n  return 'secondary';\n}\n\nfunction badgeInkOf(isMet: boolean) {\n  if (isMet) {\n    return '';\n  }\n  return 'text-muted-foreground';\n}\n\nfunction ruleGlyphOf(isMet: boolean) {\n  if (isMet) {\n    return { key: 'met', icon: <CheckIcon strokeWidth={2.25} /> };\n  }\n  return { key: 'unmet', icon: <CircleIcon className='opacity-60' /> };\n}\n\nfunction ruleStatusOf(isMet: boolean) {\n  if (isMet) {\n    return 'met';\n  }\n  return 'not met yet';\n}\n\nfunction summaryOf(metCount: number) {\n  const total = RULES.length;\n  if (metCount === total) {\n    return 'Every rule is met';\n  }\n  return `${metCount} of ${total} rules met`;\n}\n\nexport default function Input64() {\n  const rulesId = useId();\n  const [password, setPassword] = useState('');\n  const shouldReduceMotion = useReducedMotion();\n  const swapVariants = swapVariantsOf(shouldReduceMotion);\n  const checks = RULES.map((rule) => ({\n    label: rule.label,\n    isMet: rule.isMetBy(password),\n  }));\n  const metCount = checks.filter((check) => check.isMet).length;\n\n  function changePassword(event: ChangeEvent<HTMLInputElement>) {\n    setPassword(event.currentTarget.value);\n  }\n\n  return (\n    <div className='flex w-full max-w-xs flex-col gap-3'>\n      <Field>\n        <FieldLabel>Password</FieldLabel>\n        <Input\n          type='password'\n          autoComplete='new-password'\n          placeholder='Choose a password'\n          value={password}\n          onChange={changePassword}\n          aria-describedby={rulesId}\n        />\n      </Field>\n      <ul\n        id={rulesId}\n        className='flex flex-wrap gap-1.5'\n        aria-label='Password rules'\n      >\n        {checks.map((check) => {\n          const glyph = ruleGlyphOf(check.isMet);\n          return (\n            <li key={check.label}>\n              <Badge\n                variant={badgeVariantOf(check.isMet)}\n                className={cn(\n                  'transition-colors duration-150',\n                  badgeInkOf(check.isMet)\n                )}\n              >\n                <span className='relative flex'>\n                  <AnimatePresence mode='popLayout' initial={false}>\n                    <motion.span\n                      key={glyph.key}\n                      className='flex'\n                      variants={swapVariants}\n                      initial='enter'\n                      animate='visible'\n                      exit='exit'\n                      transition={SWAP_TRANSITION}\n                    >\n                      {glyph.icon}\n                    </motion.span>\n                  </AnimatePresence>\n                </span>\n                {check.label}\n                <span className='sr-only'>, {ruleStatusOf(check.isMet)}</span>\n              </Badge>\n            </li>\n          );\n        })}\n      </ul>\n      <span className='sr-only' aria-live='polite'>\n        {summaryOf(metCount)}\n      </span>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "input"
+  ],
+  "type": "registry:component"
+}

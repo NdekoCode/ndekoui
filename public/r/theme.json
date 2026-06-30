@@ -260,11 +260,7 @@
     },
     "@utility surface-brand": {
       "background-color": "var(--card)",
-      "background-image": "radial-gradient(\n    120% 70% at 0% 0%,\n    color-mix(in oklab, var(--primary) 7%, transparent),\n    transparent 60%\n  )",
-      "box-shadow": "0 0 0 var(--hairline) var(--border),\n    inset 0 1px 0 rgb(255 255 255 / 70%),\n    0 1px 2px rgb(0 0 0 / 4%),\n    0 8px 24px -12px color-mix(in oklab, var(--primary) 18%, transparent)",
-      "&:where(.dark, .dark *)": {
-        "box-shadow": "0 0 0 var(--hairline) var(--border),\n      inset 0 1px 0 rgb(255 255 255 / 5%),\n      0 8px 24px -12px color-mix(in oklab, var(--primary) 24%, transparent)"
-      }
+      "box-shadow": "0 0 0 var(--hairline) color-mix(in oklab, var(--primary) 35%, var(--border)),\n    0 1px 2px rgb(0 0 0 / 4%)"
     },
     "@media (prefers-reduced-motion: reduce)": {
       "*,\n  ::before,\n  ::after": {

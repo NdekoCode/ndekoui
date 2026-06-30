@@ -21,7 +21,14 @@ import {
 } from '@dnd-kit/core';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { useMotionValue, useReducedMotion } from 'motion/react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import { PlusIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -109,6 +116,7 @@ export function BoardPage({
   const movedLaneRef = useRef(false);
   const dragX = useMotionValue(0);
   const shouldReduceMotion = useReducedMotion();
+  const dndContextId = useId();
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 4 } }),
     useSensor(TouchSensor, {
@@ -269,6 +277,7 @@ export function BoardPage({
         </Button>
       </div>
       <DndContext
+        id={dndContextId}
         sensors={sensors}
         collisionDetection={collisionDetection}
         measuring={MEASURING}

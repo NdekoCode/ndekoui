@@ -132,7 +132,7 @@ function Thumbnail({ file }: { file: FileWithPreview }) {
     <div
       role='img'
       aria-label={file.file.name}
-      className='from-primary/20 to-info/25 flex size-full items-center justify-center rounded-[inherit] bg-linear-to-br'
+      className='bg-primary/15 flex size-full items-center justify-center rounded-[inherit]'
     >
       <ImageIcon className='text-primary-ink/70 size-5' />
     </div>

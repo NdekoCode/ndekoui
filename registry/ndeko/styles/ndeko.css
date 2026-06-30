@@ -353,22 +353,9 @@
 /* The one lifted object of a block: a card with a brand wash from its top corner and a shadow tinted with the brand. */
 @utility surface-brand {
   background-color: var(--card);
-  background-image: radial-gradient(
-    120% 70% at 0% 0%,
-    color-mix(in oklab, var(--primary) 7%, transparent),
-    transparent 60%
-  );
   box-shadow:
-    0 0 0 var(--hairline) var(--border),
-    inset 0 1px 0 rgb(255 255 255 / 70%),
-    0 1px 2px rgb(0 0 0 / 4%),
-    0 8px 24px -12px color-mix(in oklab, var(--primary) 18%, transparent);
-  &:where(.dark, .dark *) {
-    box-shadow:
-      0 0 0 var(--hairline) var(--border),
-      inset 0 1px 0 rgb(255 255 255 / 5%),
-      0 8px 24px -12px color-mix(in oklab, var(--primary) 24%, transparent);
-  }
+    0 0 0 var(--hairline) color-mix(in oklab, var(--primary) 35%, var(--border)),
+    0 1px 2px rgb(0 0 0 / 4%);
 }
 
 /* Reduced motion keeps fades and colour changes and drops movement. `animate-spin` keeps turning: a frozen loader reads as stuck. */

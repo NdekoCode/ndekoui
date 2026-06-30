@@ -1,0 +1,61 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "footers-04",
+  "title": "Footer with a folding sitemap",
+  "description": "Five link columns that fold into an accordion on phones, a support address with a copy button that confirms with a check, and a language select.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/accordion.json",
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/select.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/tooltip.json",
+    "https://ui.ndekocode.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/blocks/footers/footers-04/index.tsx",
+      "content": "import { QuillmintMark } from './brand-mark';\nimport { CopyEmail } from './copy-email';\nimport { BRAND } from './data';\nimport { LanguageSelect } from './language-select';\nimport { Sitemap } from './sitemap';\n\nexport default function Footers04() {\n  return (\n    <footer className='px-4 pt-14 pb-8 sm:px-6 sm:pt-16 lg:px-8'>\n      <div className='mx-auto flex max-w-6xl flex-col gap-10 sm:gap-14'>\n        <div className='grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2.4fr)] lg:gap-16'>\n          <div className='flex flex-col items-start gap-6'>\n            <div className='flex flex-col gap-3'>\n              <a\n                href='#'\n                className='focus-visible:ring-ring/25 flex items-center gap-2 self-start rounded-md text-sm font-semibold outline-none focus-visible:ring-[3px]'\n              >\n                <QuillmintMark />\n                {BRAND.name}\n              </a>\n              <p className='text-muted-foreground max-w-xs text-[13px] text-pretty'>\n                {BRAND.tagline}\n              </p>\n            </div>\n            <div className='flex flex-col gap-1'>\n              <p className='text-muted-foreground text-xs font-medium'>\n                {BRAND.contactLabel}\n              </p>\n              <CopyEmail email={BRAND.email} />\n            </div>\n          </div>\n          <Sitemap />\n        </div>\n        <div className='flex flex-col-reverse gap-4 sm:flex-row sm:items-center sm:justify-between'>\n          <p className='text-muted-foreground text-xs'>{BRAND.copyright}</p>\n          <LanguageSelect />\n        </div>\n      </div>\n    </footer>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/footers-04/index.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/footers/footers-04/sitemap.tsx",
+      "content": "import {\n  Accordion,\n  AccordionContent,\n  AccordionItem,\n  AccordionTrigger,\n} from '@/registry/ndeko/ui/accordion';\n\nimport { CATEGORIES } from './data';\n\nconst LINK =\n  'text-foreground/80 hover:text-foreground focus-visible:ring-ring/25 rounded-sm text-[13px] transition-colors outline-none focus-visible:ring-[3px]';\n\nexport function Sitemap() {\n  return (\n    <nav aria-label='Footer'>\n      <Accordion className='sm:hidden'>\n        {CATEGORIES.map((category) => (\n          <AccordionItem key={category.title} value={category.title}>\n            <AccordionTrigger>{category.title}</AccordionTrigger>\n            <AccordionContent>\n              <ul className='flex flex-col gap-2.5 pb-1'>\n                {category.links.map((link) => (\n                  <li key={link.label}>\n                    <a href={link.href} className={LINK}>\n                      {link.label}\n                    </a>\n                  </li>\n                ))}\n              </ul>\n            </AccordionContent>\n          </AccordionItem>\n        ))}\n      </Accordion>\n      <div className='hidden gap-x-6 gap-y-10 sm:grid sm:grid-cols-3 lg:grid-cols-5'>\n        {CATEGORIES.map((category) => (\n          <div key={category.title} className='flex flex-col gap-3'>\n            <h2 className='text-muted-foreground text-xs font-medium'>\n              {category.title}\n            </h2>\n            <ul className='flex flex-col gap-2'>\n              {category.links.map((link) => (\n                <li key={link.label}>\n                  <a href={link.href} className={LINK}>\n                    {link.label}\n                  </a>\n                </li>\n              ))}\n            </ul>\n          </div>\n        ))}\n      </div>\n    </nav>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/footers-04/sitemap.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/footers/footers-04/copy-email.tsx",
+      "content": "'use client';\n\nimport {\n  AnimatePresence,\n  motion,\n  type Transition,\n  type Variants,\n  useReducedMotion,\n} from 'motion/react';\nimport { useEffect, useState } from 'react';\n\nimport { CheckIcon, CopyIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport {\n  Tooltip,\n  TooltipContent,\n  TooltipTrigger,\n} from '@/registry/ndeko/ui/tooltip';\n\nconst COPIED_RESET_MS = 1600;\n\nconst SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };\n\nconst ICON_VARIANTS: Variants = {\n  enter: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },\n  visible: { opacity: 1, scale: 1, filter: 'blur(0px)' },\n  exit: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },\n};\n\nconst FADE_VARIANTS: Variants = {\n  enter: { opacity: 0 },\n  visible: { opacity: 1 },\n  exit: { opacity: 0 },\n};\n\nfunction iconVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return ICON_VARIANTS;\n}\n\nfunction copyGlyphOf(isCopied: boolean) {\n  if (isCopied) {\n    return {\n      key: 'copied',\n      icon: <CheckIcon className='text-success-foreground' />,\n    };\n  }\n  return { key: 'copy', icon: <CopyIcon /> };\n}\n\nfunction tooltipLabelOf(isCopied: boolean) {\n  if (isCopied) {\n    return 'Copied';\n  }\n  return 'Copy address';\n}\n\nexport function CopyEmail({ email }: { email: string }) {\n  const [isCopied, setIsCopied] = useState(false);\n  const shouldReduceMotion = useReducedMotion();\n  const iconVariants = iconVariantsOf(shouldReduceMotion);\n  const glyph = copyGlyphOf(isCopied);\n\n  useEffect(() => {\n    if (!isCopied) {\n      return;\n    }\n    const timeout = window.setTimeout(() => {\n      setIsCopied(false);\n    }, COPIED_RESET_MS);\n    return () => window.clearTimeout(timeout);\n  }, [isCopied]);\n\n  async function copyEmail() {\n    try {\n      await navigator.clipboard.writeText(email);\n      setIsCopied(true);\n    } catch {\n      setIsCopied(false);\n    }\n  }\n\n  return (\n    <div className='flex items-center gap-1'>\n      <a\n        href={`mailto:${email}`}\n        className='text-primary-ink focus-visible:ring-ring/25 rounded-sm text-[13px] font-medium underline-offset-4 outline-none hover:underline focus-visible:ring-[3px]'\n      >\n        {email}\n      </a>\n      <Tooltip>\n        <TooltipTrigger\n          delay={0}\n          render={\n            <Button\n              variant='ghost'\n              size='icon-sm'\n              className='text-muted-foreground'\n              aria-label={`Copy ${email}`}\n              onClick={copyEmail}\n            />\n          }\n        >\n          <AnimatePresence mode='popLayout' initial={false}>\n            <motion.span\n              key={glyph.key}\n              className='flex'\n              variants={iconVariants}\n              initial='enter'\n              animate='visible'\n              exit='exit'\n              transition={SWAP_TRANSITION}\n            >\n              {glyph.icon}\n            </motion.span>\n          </AnimatePresence>\n        </TooltipTrigger>\n        <TooltipContent>{tooltipLabelOf(isCopied)}</TooltipContent>\n      </Tooltip>\n      <span className='sr-only' role='status'>\n        {isCopied && 'Email address copied'}\n      </span>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/footers-04/copy-email.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/footers/footers-04/language-select.tsx",
+      "content": "'use client';\n\nimport { GlobeIcon } from '@/registry/ndeko/lib/icons';\nimport {\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from '@/registry/ndeko/ui/select';\n\nimport { LANGUAGES } from './data';\n\nexport function LanguageSelect() {\n  return (\n    <Select items={LANGUAGES} defaultValue='en'>\n      <SelectTrigger size='sm' className='w-36' aria-label='Language'>\n        <GlobeIcon className='text-muted-foreground size-3.5' />\n        <SelectValue />\n      </SelectTrigger>\n      <SelectContent>\n        {LANGUAGES.map((language) => (\n          <SelectItem key={language.value} value={language.value}>\n            {language.label}\n          </SelectItem>\n        ))}\n      </SelectContent>\n    </Select>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/footers-04/language-select.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/footers/footers-04/brand-mark.tsx",
+      "content": "import { cn } from '@/registry/ndeko/lib/utils';\n\nexport function QuillmintMark({ className }: { className?: string }) {\n  return (\n    <svg\n      viewBox='0 0 24 24'\n      aria-hidden='true'\n      className={cn('size-6 shrink-0', className)}\n    >\n      <rect width='24' height='24' rx='7' className='fill-primary' />\n      <path\n        d='M17.5 5.5c-6 .5-9.5 4.5-10 11l2-1.5c3-.5 6.5-3.5 8-9.5Z'\n        className='fill-white'\n      />\n      <path\n        d='M6.5 18.5h11'\n        fill='none'\n        strokeWidth='1.5'\n        strokeLinecap='round'\n        className='stroke-white/60'\n      />\n    </svg>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/footers-04/brand-mark.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/footers/footers-04/data.ts",
+      "content": "export type FooterLink = {\n  label: string;\n  href: string;\n};\n\nexport type FooterCategory = {\n  title: string;\n  links: FooterLink[];\n};\n\nexport type Language = {\n  value: string;\n  label: string;\n};\n\nexport const BRAND = {\n  name: 'Quillmint',\n  tagline:\n    'Contracts, signatures and renewals in one place for small legal teams',\n  contactLabel: 'Support',\n  email: 'help@quillmint.app',\n  copyright: '© 2026 Quillmint',\n};\n\nexport const CATEGORIES: FooterCategory[] = [\n  {\n    title: 'Product',\n    links: [\n      { label: 'Drafting', href: '#' },\n      { label: 'Signatures', href: '#' },\n      { label: 'Renewals', href: '#' },\n      { label: 'Templates', href: '#' },\n      { label: 'Pricing', href: '#' },\n    ],\n  },\n  {\n    title: 'Solutions',\n    links: [\n      { label: 'Agencies', href: '#' },\n      { label: 'Clinics', href: '#' },\n      { label: 'Property managers', href: '#' },\n      { label: 'Nonprofits', href: '#' },\n    ],\n  },\n  {\n    title: 'Resources',\n    links: [\n      { label: 'Guides', href: '#' },\n      { label: 'Clause library', href: '#' },\n      { label: 'Webinars', href: '#' },\n      { label: 'Changelog', href: '#' },\n    ],\n  },\n  {\n    title: 'Company',\n    links: [\n      { label: 'About', href: '#' },\n      { label: 'Careers', href: '#' },\n      { label: 'Contact', href: '#' },\n    ],\n  },\n  {\n    title: 'Legal',\n    links: [\n      { label: 'Privacy', href: '#' },\n      { label: 'Terms', href: '#' },\n      { label: 'Data processing', href: '#' },\n    ],\n  },\n];\n\nexport const LANGUAGES: Language[] = [\n  { value: 'en', label: 'English' },\n  { value: 'fr', label: 'Français' },\n  { value: 'de', label: 'Deutsch' },\n  { value: 'es', label: 'Español' },\n  { value: 'pt', label: 'Português' },\n];\n",
+      "type": "registry:component",
+      "target": "components/blocks/footers-04/data.ts"
+    }
+  ],
+  "categories": [
+    "blocks",
+    "footers"
+  ],
+  "type": "registry:block"
+}

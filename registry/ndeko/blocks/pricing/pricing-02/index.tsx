@@ -9,9 +9,9 @@ import { PLAN, SECTION } from './data';
 import { FeatureTable } from './feature-table';
 import { SlidingFigure } from './sliding-figure';
 
-const PRICE_FORMAT = new Intl.NumberFormat('en', {
+const PRICE_FORMAT = new Intl.NumberFormat('en-US', {
   style: 'currency',
-  currency: 'XXX',
+  currency: 'USD',
   maximumFractionDigits: 0,
 });
 

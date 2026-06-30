@@ -6,15 +6,15 @@ import type {
   RegistryItemFile,
 } from '../registry/items';
 import { components } from './registry-components';
+import { motionItemNameOf } from '../lib/site';
 import { sortedAlphabetically, titleOf } from './registry-catalog';
 
 const ROOT = path.join(__dirname, '..');
 const UTILS_SPECIFIER = '@/lib/utils';
-const ICONS_SPECIFIER = '@/registry/ndeko/lib/icons';
 const HOOKS_PREFIX = '@/hooks/';
+const REGISTRY_PREFIX = '@/registry/ndeko/';
+const REGISTRY_ITEM_FOLDERS = new Set(['ui', 'lib', 'hooks']);
 const FRAMEWORK_PACKAGES = new Set(['react', 'react-dom', 'next']);
-
-export const MOTION_PREFIX = 'motion-';
 
 function importsOf(source: string) {
   const matches = source.matchAll(/from\s+['"]([^'"]+)['"]/g);
@@ -53,6 +53,16 @@ function siblingFileOf(sourcePath: string, specifier: string) {
   return file;
 }
 
+function registryItemOf(specifier: string) {
+  const relative = specifier.slice(REGISTRY_PREFIX.length);
+  const [folder, name] = relative.split('/');
+  const isItemFolder = REGISTRY_ITEM_FOLDERS.has(folder);
+  if (!isItemFolder) {
+    return null;
+  }
+  return name;
+}
+
 function hookFileOf(specifier: string): RegistryItemFile {
   const hookName = specifier.slice(HOOKS_PREFIX.length);
   return { path: `hooks/${hookName}.tsx`, type: 'registry:hook' };
@@ -75,8 +85,11 @@ function motionItemOf(
       registryDependencies.add('utils');
       continue;
     }
-    if (specifier === ICONS_SPECIFIER) {
-      registryDependencies.add('icons');
+    if (specifier.startsWith(REGISTRY_PREFIX)) {
+      const itemName = registryItemOf(specifier);
+      if (itemName) {
+        registryDependencies.add(itemName);
+      }
       continue;
     }
     if (specifier.startsWith(HOOKS_PREFIX)) {
@@ -106,7 +119,7 @@ function motionItemOf(
   };
 
   return {
-    name: `${MOTION_PREFIX}${name}`,
+    name: motionItemNameOf(name),
     type: 'registry:component',
     title: titleOf(name),
     description,

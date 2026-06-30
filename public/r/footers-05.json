@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "footers-05",
+  "title": "Footer with a closing call to action",
+  "description": "A last headline with a primary action whose arrow travels on hover, then the brand, one row of links and a link to the status page.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/blocks/footers/footers-05/index.tsx",
+      "content": "import { ArrowUpRightIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nimport { TidepostMark } from './brand-mark';\nimport { ACTIONS, BRAND, LINKS, STATUS } from './data';\n\nconst TRAVEL = 'transition-[translate] ease-(--ease-out-strong)';\n\nconst LEAVING_ARROW =\n  'duration-250 group-hover/button:translate-x-6 group-hover/button:-translate-y-6 group-hover/button:duration-200';\n\nconst ARRIVING_ARROW =\n  'absolute -translate-x-6 translate-y-6 duration-200 group-hover/button:translate-x-0 group-hover/button:translate-y-0 group-hover/button:duration-250';\n\nconst QUIET_LINK =\n  'text-muted-foreground hover:text-foreground focus-visible:ring-ring/25 rounded-sm text-[13px] transition-colors outline-none focus-visible:ring-[3px]';\n\nexport default function Footers05() {\n  return (\n    <footer className='px-4 pt-16 pb-8 sm:px-6 lg:px-8'>\n      <div className='mx-auto flex max-w-6xl flex-col gap-16'>\n        <div className='flex flex-col gap-6 md:flex-row md:items-end md:justify-between md:gap-12'>\n          <div className='flex max-w-xl flex-col gap-3'>\n            <h2 className='text-2xl font-semibold text-balance sm:text-3xl'>\n              {BRAND.headline}\n            </h2>\n            <p className='text-muted-foreground text-sm text-pretty'>\n              {BRAND.description}\n            </p>\n          </div>\n          <div className='flex flex-wrap gap-2'>\n            <Button\n              size='lg'\n              className='pe-1'\n              nativeButton={false}\n              render={<a href={ACTIONS.primary.href} />}\n            >\n              {ACTIONS.primary.label}\n              <span\n                aria-hidden='true'\n                className='bg-primary-foreground/15 relative flex size-7 items-center justify-center overflow-hidden rounded-full'\n              >\n                <ArrowUpRightIcon className={cn(TRAVEL, LEAVING_ARROW)} />\n                <ArrowUpRightIcon className={cn(TRAVEL, ARRIVING_ARROW)} />\n              </span>\n            </Button>\n            <Button\n              size='lg'\n              variant='outline'\n              nativeButton={false}\n              render={<a href={ACTIONS.secondary.href} />}\n            >\n              {ACTIONS.secondary.label}\n            </Button>\n          </div>\n        </div>\n        <div className='flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between'>\n          <div className='flex items-center gap-3'>\n            <a\n              href='#'\n              className='focus-visible:ring-ring/25 flex items-center gap-2 rounded-md text-sm font-semibold outline-none focus-visible:ring-[3px]'\n            >\n              <TidepostMark />\n              {BRAND.name}\n            </a>\n            <p className='text-muted-foreground text-xs'>{BRAND.copyright}</p>\n          </div>\n          <nav aria-label='Footer'>\n            <ul className='flex flex-wrap gap-x-5 gap-y-2'>\n              {LINKS.map((link) => (\n                <li key={link.label}>\n                  <a href={link.href} className={QUIET_LINK}>\n                    {link.label}\n                  </a>\n                </li>\n              ))}\n            </ul>\n          </nav>\n          <a\n            href={STATUS.href}\n            className={cn(\n              QUIET_LINK,\n              'flex items-center gap-2 self-start lg:self-auto'\n            )}\n          >\n            <span\n              aria-hidden='true'\n              className='bg-success size-2 rounded-full'\n            />\n            {STATUS.label}\n          </a>\n        </div>\n      </div>\n    </footer>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/footers-05/index.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/footers/footers-05/brand-mark.tsx",
+      "content": "import { cn } from '@/registry/ndeko/lib/utils';\n\nexport function TidepostMark({ className }: { className?: string }) {\n  return (\n    <svg\n      viewBox='0 0 24 24'\n      aria-hidden='true'\n      className={cn('size-6 shrink-0', className)}\n    >\n      <rect width='24' height='24' rx='7' className='fill-primary' />\n      <path\n        d='M5.5 10.5c2.2-1.8 4.3-1.8 6.5 0s4.3 1.8 6.5 0'\n        fill='none'\n        strokeWidth='2'\n        strokeLinecap='round'\n        className='stroke-white'\n      />\n      <path\n        d='M5.5 14.5c2.2-1.8 4.3-1.8 6.5 0s4.3 1.8 6.5 0'\n        fill='none'\n        strokeWidth='2'\n        strokeLinecap='round'\n        className='stroke-white/60'\n      />\n    </svg>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/footers-05/brand-mark.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/footers/footers-05/data.ts",
+      "content": "export type FooterLink = {\n  label: string;\n  href: string;\n};\n\nexport const BRAND = {\n  name: 'Tidepost',\n  headline: 'Plan the next release in Tidepost',\n  description:\n    'Roadmaps, release notes and the status page your customers read, kept in one workspace',\n  copyright: '© 2026 Tidepost',\n};\n\nexport const ACTIONS = {\n  primary: { label: 'Start a workspace', href: '#' },\n  secondary: { label: 'Book a walkthrough', href: '#' },\n};\n\nexport const STATUS = {\n  label: 'All services running',\n  href: '#',\n};\n\nexport const LINKS: FooterLink[] = [\n  { label: 'Product', href: '#' },\n  { label: 'Pricing', href: '#' },\n  { label: 'Changelog', href: '#' },\n  { label: 'Docs', href: '#' },\n  { label: 'Privacy', href: '#' },\n  { label: 'Terms', href: '#' },\n];\n",
+      "type": "registry:component",
+      "target": "components/blocks/footers-05/data.ts"
+    }
+  ],
+  "categories": [
+    "blocks",
+    "footers"
+  ],
+  "type": "registry:block"
+}

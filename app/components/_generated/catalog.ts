@@ -1091,6 +1091,86 @@ export const catalog: CatalogCategory[] = [
           'A two-line outline button with a title, a hint and a chevron.',
         category: 'button',
       },
+      {
+        name: 'button-55',
+        source: 'ui-layouts:buttons',
+        title: 'Label to icon on hover',
+        description:
+          'On hover the label slides out and a download icon slides in to take its place.',
+        category: 'button',
+      },
+      {
+        name: 'button-56',
+        source: 'ui-layouts:buttons',
+        title: 'Travelling arrow',
+        description:
+          'The arrow in the cap leaves to the top right on hover while the next one arrives from the bottom left.',
+        category: 'button',
+      },
+      {
+        name: 'button-57',
+        source: 'ui-layouts:buttons',
+        title: 'Rolling label',
+        description:
+          'Each letter rolls up on hover and its copy rolls in from below, one after the other.',
+        category: 'button',
+      },
+      {
+        name: 'button-58',
+        source: 'ui-layouts:buttons',
+        title: 'Hold to delete',
+        description:
+          'A fill crosses the button while it is held for two seconds, snaps back on release and turns into a confirmation.',
+        category: 'button',
+      },
+      {
+        name: 'button-59',
+        source: 'ui-layouts:buttons',
+        title: 'Follow toggle with fill',
+        description:
+          'Following fills the button from the point that was pressed, and unfollowing draws the fill back.',
+        category: 'button',
+      },
+      {
+        name: 'button-60',
+        source: 'ui-layouts:buttons',
+        title: 'Publish with states',
+        description:
+          'The label and icon morph from publish to publishing to published, and the width follows.',
+        category: 'button',
+      },
+      {
+        name: 'button-61',
+        source: 'ui-layouts:buttons',
+        title: 'Download with progress',
+        description:
+          'The button fills with the download progress, counts the percentage and ends on a check.',
+        category: 'button',
+      },
+      {
+        name: 'button-62',
+        source: 'ui-layouts:buttons',
+        title: 'Watch with rolling digits',
+        description:
+          'Only the digits that change roll, units first, when the watch count goes up or down.',
+        category: 'button',
+      },
+      {
+        name: 'button-63',
+        source: 'ui-layouts:buttons',
+        title: 'Copy install command',
+        description:
+          'A command in a monospace pill that copies itself and swaps its icon for a check.',
+        category: 'button',
+      },
+      {
+        name: 'button-64',
+        source: 'ui-layouts:buttons',
+        title: 'Confirm on second press',
+        description:
+          'The first press turns the button destructive with a three second countdown, the second removes.',
+        category: 'button',
+      },
     ],
   },
   {
@@ -2395,6 +2475,46 @@ export const catalog: CatalogCategory[] = [
         title: 'Input with inner tags',
         description:
           'Tags sit inside the field and Backspace removes the last one.',
+        category: 'input',
+      },
+      {
+        name: 'input-60',
+        source: 'ui-layouts:password',
+        title: 'Password with morphing reveal',
+        description:
+          'Showing the password turns each dot into its character one after the other, in a monospace face.',
+        category: 'input',
+      },
+      {
+        name: 'input-61',
+        source: 'ui-layouts:password',
+        title: 'Password with Caps Lock warning',
+        description:
+          'The hint under the field becomes a warning while Caps Lock is on and the field has focus.',
+        category: 'input',
+      },
+      {
+        name: 'input-62',
+        source: 'ui-layouts:password',
+        title: 'Confirm password with match state',
+        description:
+          'The confirmation stays quiet while it follows the password and shows a cross or a check once it differs or matches.',
+        category: 'input',
+      },
+      {
+        name: 'input-63',
+        source: 'ui-layouts:password',
+        title: 'Segmented strength meter',
+        description:
+          'Four segments fill in turn as the password gets stronger and the strength label slides in the same direction.',
+        category: 'input',
+      },
+      {
+        name: 'input-64',
+        source: 'ui-layouts:password',
+        title: 'Password rule chips',
+        description:
+          'Each rule is a chip that turns green and swaps its circle for a check once the password meets it.',
         category: 'input',
       },
     ],

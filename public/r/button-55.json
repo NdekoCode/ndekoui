@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-55",
+  "title": "Label to icon on hover",
+  "description": "On hover the label slides out and a download icon slides in to take its place.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-55.tsx",
+      "content": "import { DownloadIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst SLIDE = 'transition-[translate,opacity] ease-(--ease-out-strong)';\n\nconst LABEL_SLIDE =\n  'duration-200 group-hover/button:-translate-x-3 group-hover/button:opacity-0 group-hover/button:duration-150';\n\nconst ICON_SLIDE =\n  'translate-x-3 opacity-0 duration-150 group-hover/button:translate-x-0 group-hover/button:opacity-100 group-hover/button:duration-200';\n\nexport default function Button55() {\n  return (\n    <Button className='overflow-hidden'>\n      <span className={cn(SLIDE, LABEL_SLIDE)}>Download</span>\n      <span\n        aria-hidden='true'\n        className={cn(\n          SLIDE,\n          ICON_SLIDE,\n          'absolute inset-0 flex items-center justify-center'\n        )}\n      >\n        <DownloadIcon />\n      </span>\n    </Button>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

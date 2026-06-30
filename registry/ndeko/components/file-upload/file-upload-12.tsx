@@ -193,7 +193,7 @@ function FilePreview({ file }: { file: FileWithPreview }) {
     <div
       role='img'
       aria-label={file.file.name}
-      className='from-primary/20 to-info/25 flex aspect-square items-center justify-center rounded-t-[inherit] bg-linear-to-br'
+      className='bg-primary/15 flex aspect-square items-center justify-center rounded-t-[inherit]'
     >
       <ImageIcon className='text-primary-ink/70 size-5' />
     </div>

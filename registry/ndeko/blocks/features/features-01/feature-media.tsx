@@ -10,9 +10,9 @@ import {
   REMINDERS,
 } from './data';
 
-const AMOUNT_FORMAT = new Intl.NumberFormat('en', {
+const AMOUNT_FORMAT = new Intl.NumberFormat('en-US', {
   style: 'currency',
-  currency: 'XXX',
+  currency: 'USD',
   maximumFractionDigits: 0,
 });
 

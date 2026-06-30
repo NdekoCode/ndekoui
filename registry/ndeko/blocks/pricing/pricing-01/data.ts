@@ -19,8 +19,7 @@ export const SECTION = {
   description:
     'Start alone and move to Studio when other people write with you. Your subscribers and archive come along.',
   yearlyNote: 'Two months free',
-  footnote:
-    'Example prices in a placeholder currency (¤), taxes added at checkout',
+  footnote: 'Example prices in US dollars, taxes added at checkout',
 };
 
 export const PLANS: Plan[] = [

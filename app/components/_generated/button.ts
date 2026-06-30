@@ -55,6 +55,16 @@ import Button51 from '@/registry/ndeko/components/button/button-51';
 import Button52 from '@/registry/ndeko/components/button/button-52';
 import Button53 from '@/registry/ndeko/components/button/button-53';
 import Button54 from '@/registry/ndeko/components/button/button-54';
+import Button55 from '@/registry/ndeko/components/button/button-55';
+import Button56 from '@/registry/ndeko/components/button/button-56';
+import Button57 from '@/registry/ndeko/components/button/button-57';
+import Button58 from '@/registry/ndeko/components/button/button-58';
+import Button59 from '@/registry/ndeko/components/button/button-59';
+import Button60 from '@/registry/ndeko/components/button/button-60';
+import Button61 from '@/registry/ndeko/components/button/button-61';
+import Button62 from '@/registry/ndeko/components/button/button-62';
+import Button63 from '@/registry/ndeko/components/button/button-63';
+import Button64 from '@/registry/ndeko/components/button/button-64';
 
 export const previews: Record<string, ComponentType> = {
   'button-01': Button01,
@@ -111,4 +121,14 @@ export const previews: Record<string, ComponentType> = {
   'button-52': Button52,
   'button-53': Button53,
   'button-54': Button54,
+  'button-55': Button55,
+  'button-56': Button56,
+  'button-57': Button57,
+  'button-58': Button58,
+  'button-59': Button59,
+  'button-60': Button60,
+  'button-61': Button61,
+  'button-62': Button62,
+  'button-63': Button63,
+  'button-64': Button64,
 };

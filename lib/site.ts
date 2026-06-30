@@ -13,3 +13,13 @@ export function countLabel(count: number, singular: string, plural: string) {
   }
   return `${count} ${plural}`;
 }
+
+const MOTION_ITEM_PREFIX = 'motion-';
+
+/** The registry name of a motion component, without doubling the prefix of a slug that already has it. */
+export function motionItemNameOf(slug: string) {
+  if (slug.startsWith(MOTION_ITEM_PREFIX)) {
+    return slug;
+  }
+  return `${MOTION_ITEM_PREFIX}${slug}`;
+}

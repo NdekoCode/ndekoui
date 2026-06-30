@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-56",
+  "title": "Travelling arrow",
+  "description": "The arrow in the cap leaves to the top right on hover while the next one arrives from the bottom left.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-56.tsx",
+      "content": "import { ArrowUpRightIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst TRAVEL = 'transition-[translate] ease-(--ease-out-strong)';\n\nconst LEAVING_ARROW =\n  'duration-250 group-hover/button:translate-x-5 group-hover/button:-translate-y-5 group-hover/button:duration-200';\n\nconst ARRIVING_ARROW =\n  'absolute -translate-x-5 translate-y-5 duration-200 group-hover/button:translate-x-0 group-hover/button:translate-y-0 group-hover/button:duration-250';\n\nexport default function Button56() {\n  return (\n    <Button className='pe-1'>\n      Read the guide\n      <span\n        aria-hidden='true'\n        className='bg-primary-foreground/15 relative flex size-6 items-center justify-center overflow-hidden rounded-full'\n      >\n        <ArrowUpRightIcon className={cn(TRAVEL, LEAVING_ARROW)} />\n        <ArrowUpRightIcon className={cn(TRAVEL, ARRIVING_ARROW)} />\n      </span>\n    </Button>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}

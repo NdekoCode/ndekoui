@@ -39,8 +39,7 @@ export const PLAN = {
   maxSeats: 50,
   defaultSeats: 3,
   action: 'Start a free month',
-  footnote:
-    'Example prices in a placeholder currency (¤), taxes added at checkout',
+  footnote: 'Example prices in US dollars, taxes added at checkout',
 };
 
 export const PRICING = {

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-59",
+  "title": "Follow toggle with fill",
+  "description": "Following fills the button from the point that was pressed, and unfollowing draws the fill back.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/button/button-59.tsx",
+      "content": "'use client';\n\nimport {\n  AnimatePresence,\n  motion,\n  type Transition,\n  type Variants,\n  useReducedMotion,\n} from 'motion/react';\nimport { useState } from 'react';\n\nimport { CheckIcon, UserRoundPlusIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Button } from '@/registry/ndeko/ui/button';\n\ntype FillOrigin = { x: string; y: string };\n\nconst CENTRE: FillOrigin = { x: '50%', y: '50%' };\n\nconst FILL_LAYER =\n  'bg-primary text-primary-foreground pointer-events-none absolute inset-0 flex items-center justify-center rounded-[inherit] px-3.5';\n\nconst FILL_GROWS =\n  'transition-[clip-path] duration-300 ease-(--ease-out-strong)';\nconst FILL_SHRINKS =\n  'transition-[clip-path] duration-150 ease-(--ease-out-strong)';\nconst FILL_FADES = 'transition-opacity duration-150';\n\nconst CONTENT =\n  'col-start-1 row-start-1 flex items-center justify-center gap-2';\n\nconst SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };\n\nconst SWAP_VARIANTS: Variants = {\n  enter: { opacity: 0, filter: 'blur(2px)' },\n  visible: { opacity: 1, filter: 'blur(0px)' },\n  exit: { opacity: 0, filter: 'blur(2px)' },\n};\n\nconst FADE_VARIANTS: Variants = {\n  enter: { opacity: 0 },\n  visible: { opacity: 1 },\n  exit: { opacity: 0 },\n};\n\nfunction swapVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return SWAP_VARIANTS;\n}\n\nfunction contentOf(isFollowing: boolean) {\n  if (isFollowing) {\n    return { key: 'following', icon: <CheckIcon />, label: 'Following' };\n  }\n  return { key: 'follow', icon: <UserRoundPlusIcon />, label: 'Follow' };\n}\n\nfunction clipRadiusOf(isFollowing: boolean) {\n  if (isFollowing) {\n    return '150%';\n  }\n  return '0%';\n}\n\nfunction fillTransitionOf(\n  isFollowing: boolean,\n  shouldReduceMotion: boolean | null\n) {\n  if (shouldReduceMotion) {\n    return FILL_FADES;\n  }\n  if (isFollowing) {\n    return FILL_GROWS;\n  }\n  return FILL_SHRINKS;\n}\n\nfunction fillStyleOf(\n  isFollowing: boolean,\n  origin: FillOrigin,\n  shouldReduceMotion: boolean | null\n): React.CSSProperties {\n  if (shouldReduceMotion) {\n    return { opacity: Number(isFollowing) };\n  }\n  const radius = clipRadiusOf(isFollowing);\n  return { clipPath: `circle(${radius} at ${origin.x} ${origin.y})` };\n}\n\nfunction pressOriginOf(event: React.MouseEvent<HTMLButtonElement>) {\n  const isKeyboardClick = event.detail === 0;\n  if (isKeyboardClick) {\n    return CENTRE;\n  }\n  const bounds = event.currentTarget.getBoundingClientRect();\n  const x = event.clientX - bounds.left;\n  const y = event.clientY - bounds.top;\n  return { x: `${x}px`, y: `${y}px` };\n}\n\nfunction FollowContent({\n  isFollowing,\n  variants,\n}: {\n  isFollowing: boolean;\n  variants: Variants;\n}) {\n  const content = contentOf(isFollowing);\n\n  return (\n    <span className='grid'>\n      <span aria-hidden='true' className={cn(CONTENT, 'invisible')}>\n        <CheckIcon />\n        Following\n      </span>\n      <AnimatePresence mode='popLayout' initial={false}>\n        <motion.span\n          key={content.key}\n          className={CONTENT}\n          variants={variants}\n          initial='enter'\n          animate='visible'\n          exit='exit'\n          transition={SWAP_TRANSITION}\n        >\n          {content.icon}\n          {content.label}\n        </motion.span>\n      </AnimatePresence>\n    </span>\n  );\n}\n\nexport default function Button59() {\n  const [isFollowing, setIsFollowing] = useState(false);\n  const [origin, setOrigin] = useState<FillOrigin>(CENTRE);\n  const shouldReduceMotion = useReducedMotion();\n  const swapVariants = swapVariantsOf(shouldReduceMotion);\n  const fillTransition = fillTransitionOf(isFollowing, shouldReduceMotion);\n  const fillStyle = fillStyleOf(isFollowing, origin, shouldReduceMotion);\n\n  function toggleFollow(event: React.MouseEvent<HTMLButtonElement>) {\n    setOrigin(pressOriginOf(event));\n    setIsFollowing((current) => !current);\n  }\n\n  return (\n    <Button\n      variant='outline'\n      aria-label='Follow Mira Okafor'\n      aria-pressed={isFollowing}\n      onClick={toggleFollow}\n    >\n      <FollowContent isFollowing={isFollowing} variants={swapVariants} />\n      <span\n        aria-hidden='true'\n        className={cn(FILL_LAYER, fillTransition)}\n        style={fillStyle}\n      >\n        <FollowContent isFollowing={isFollowing} variants={swapVariants} />\n      </span>\n    </Button>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "components",
+    "button"
+  ],
+  "type": "registry:component"
+}
