@@ -35,6 +35,7 @@ import {
   CancelCircleIcon as CircleXGlyph,
   ChartLineData01Icon as LineChartGlyph,
   ChartLineIcon as ChartLineGlyph,
+  CheckmarkBadge01Icon as BadgeCheckGlyph,
   CheckmarkCircle02Icon as CircleCheckGlyph,
   ChevronFirstIcon as ChevronFirstGlyph,
   ChevronLastIcon as ChevronLastGlyph,
@@ -81,6 +82,7 @@ import {
   FolderOpenIcon as FolderOpenGlyph,
   FolderPlusIcon as FolderPlusGlyph,
   FoldersIcon as FoldersGlyph,
+  FullScreenIcon as MaximizeGlyph,
   GaugeIcon as GaugeGlyph,
   GitCompareIcon as GitCompareGlyph,
   GitForkIcon as GitForkGlyph,
@@ -120,7 +122,6 @@ import {
   LockIcon as LockGlyph,
   Logout01Icon as LogOutGlyph,
   Mail01Icon as MailGlyph,
-  Maximize02Icon as MaximizeGlyph,
   Menu01Icon as MenuGlyph,
   MessageCircleDashedIcon as MessageCircleDashedGlyph,
   MessageCircleIcon as MessageCircleGlyph,
@@ -152,6 +153,7 @@ import {
   ReactIcon as ReactBrandGlyph,
   RefreshCcwIcon as RefreshCcwGlyph,
   RefreshCwIcon as RefreshCwGlyph,
+  RepeatIcon as RepeatGlyph,
   RocketIcon as RocketGlyph,
   RotateCcwIcon as RotateCcwGlyph,
   ScissorsIcon as ScissorsGlyph,
@@ -160,19 +162,23 @@ import {
   ServerIcon as ServerGlyph,
   Settings01Icon as SettingsGlyph,
   Share02Icon as Share2Glyph,
+  Share03Icon as ShareBoxGlyph,
   Share08Icon as ShareGlyph,
   ShieldCheckIcon as ShieldCheckGlyph,
   ShuffleIcon as ShuffleGlyph,
+  SidebarLeftIcon as PanelLeftGlyph,
   SmartphoneIcon as SmartphoneGlyph,
   SmileIcon as SmileGlyph,
   SourceCodeIcon as SourceCodeGlyph,
   SpadesIcon as SpadeGlyph,
   SparklesIcon as SparklesGlyph,
   SquareArrowOutUpRightIcon as SquareArrowOutUpRightGlyph,
+  SquareLock01Icon as PadlockGlyph,
   StarIcon as StarGlyph,
   Store01Icon as StoreGlyph,
   Sun03Icon as SunGlyph,
   SwatchBookIcon as SwatchBookGlyph,
+  Tablet01Icon as TabletGlyph,
   TextAlignCenterIcon as AlignCenterGlyph,
   TextAlignJustifyIcon as AlignJustifyGlyph,
   TextAlignLeftIcon as AlignLeftGlyph,
@@ -267,6 +273,7 @@ export const ArrowUpRightIcon = createIcon(
   'ArrowUpRightIcon'
 );
 export const AtSignIcon = createIcon(AtSignGlyph, 'AtSignIcon');
+export const BadgeCheckIcon = createIcon(BadgeCheckGlyph, 'BadgeCheckIcon');
 export const BellIcon = createIcon(BellGlyph, 'BellIcon');
 export const BellOffIcon = createIcon(BellOffGlyph, 'BellOffIcon');
 export const BlocksIcon = createIcon(BlocksGlyph, 'BlocksIcon');
@@ -473,6 +480,8 @@ export const CloudIcon = createIcon(CloudGlyph, 'CloudIcon');
 export const LightbulbIcon = createIcon(LightbulbGlyph, 'LightbulbIcon');
 export const MaximizeIcon = createIcon(MaximizeGlyph, 'MaximizeIcon');
 export const MotionIcon = createIcon(MotionGlyph, 'MotionIcon');
+export const PadlockIcon = createIcon(PadlockGlyph, 'PadlockIcon');
+export const PanelLeftIcon = createIcon(PanelLeftGlyph, 'PanelLeftIcon');
 export const PinOffIcon = createIcon(PinOffGlyph, 'PinOffIcon');
 export const PlusIcon = createIcon(PlusGlyph, 'PlusIcon');
 export const PowerIcon = createIcon(PowerGlyph, 'PowerIcon');
@@ -483,6 +492,7 @@ export const RadioIcon = createIcon(RadioGlyph, 'RadioIcon');
 export const ReactBrandIcon = createIcon(ReactBrandGlyph, 'ReactBrandIcon');
 export const RefreshCcwIcon = createIcon(RefreshCcwGlyph, 'RefreshCcwIcon');
 export const RefreshCwIcon = createIcon(RefreshCwGlyph, 'RefreshCwIcon');
+export const RepeatIcon = createIcon(RepeatGlyph, 'RepeatIcon');
 export const RocketIcon = createIcon(RocketGlyph, 'RocketIcon');
 export const RotateCcwIcon = createIcon(RotateCcwGlyph, 'RotateCcwIcon');
 export const ScissorsIcon = createIcon(ScissorsGlyph, 'ScissorsIcon');
@@ -491,6 +501,7 @@ export const SendIcon = createIcon(SendGlyph, 'SendIcon');
 export const ServerIcon = createIcon(ServerGlyph, 'ServerIcon');
 export const SettingsIcon = createIcon(SettingsGlyph, 'SettingsIcon');
 export const Share2Icon = createIcon(Share2Glyph, 'Share2Icon');
+export const ShareBoxIcon = createIcon(ShareBoxGlyph, 'ShareBoxIcon');
 export const ShareIcon = createIcon(ShareGlyph, 'ShareIcon');
 export const ShieldCheckIcon = createIcon(ShieldCheckGlyph, 'ShieldCheckIcon');
 export const ShuffleIcon = createIcon(ShuffleGlyph, 'ShuffleIcon');
@@ -507,6 +518,7 @@ export const StarIcon = createIcon(StarGlyph, 'StarIcon');
 export const StoreIcon = createIcon(StoreGlyph, 'StoreIcon');
 export const SunIcon = createIcon(SunGlyph, 'SunIcon');
 export const SwatchBookIcon = createIcon(SwatchBookGlyph, 'SwatchBookIcon');
+export const TabletIcon = createIcon(TabletGlyph, 'TabletIcon');
 export const TextQuoteIcon = createIcon(TextQuoteGlyph, 'TextQuoteIcon');
 export const ThumbsUpIcon = createIcon(ThumbsUpGlyph, 'ThumbsUpIcon');
 export const TicketPercentIcon = createIcon(

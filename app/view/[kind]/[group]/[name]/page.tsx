@@ -2,9 +2,9 @@ import { notFound } from 'next/navigation';
 
 import {
   groupOf,
-  groupsOf,
   isBundleKind,
   previewOf,
+  viewParamsOf,
 } from '@/app/blocks/_shared/bundles';
 
 type ViewPageProps = {
@@ -12,16 +12,7 @@ type ViewPageProps = {
 };
 
 export function generateStaticParams() {
-  const kinds = ['blocks', 'templates'] as const;
-  return kinds.flatMap((kind) =>
-    groupsOf(kind).flatMap((group) =>
-      group.entries.map((entry) => ({
-        kind,
-        group: group.slug,
-        name: entry.name,
-      }))
-    )
-  );
+  return viewParamsOf();
 }
 
 export default async function ViewPage({ params }: ViewPageProps) {

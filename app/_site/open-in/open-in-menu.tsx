@@ -20,6 +20,11 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/registry/ndeko/ui/dropdown-menu';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/registry/ndeko/ui/tooltip';
 
 import {
   chatGptLinkOf,
@@ -170,18 +175,25 @@ export function OpenInMenu({ title, itemName }: OpenInMenuProps) {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger
-        render={
-          <Button
-            variant='ghost'
-            size='icon-sm'
-            className='text-muted-foreground'
-            aria-label={`Open ${title} in an app builder`}
-          />
-        }
-      >
-        <ArrowUpRightIcon />
-      </DropdownMenuTrigger>
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <DropdownMenuTrigger
+              render={
+                <Button
+                  variant='ghost'
+                  size='icon-sm'
+                  className='text-muted-foreground'
+                  aria-label={`Open ${title} in an app builder`}
+                />
+              }
+            />
+          }
+        >
+          <ArrowUpRightIcon />
+        </TooltipTrigger>
+        <TooltipContent>Open in v0, Lovable, Cursor</TooltipContent>
+      </Tooltip>
       <DropdownMenuContent align='end' className='w-64'>
         <OpenLink href={v0LinkOf(itemName)} icon={<V0Mark />}>
           Open in v0

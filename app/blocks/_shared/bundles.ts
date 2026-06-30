@@ -48,8 +48,52 @@ export async function previewOf(kind: BundleKind, slug: string, name: string) {
   return previews[name];
 }
 
+export function bundleEntryOf(kind: BundleKind, slug: string, name: string) {
+  const group = groupOf(kind, slug);
+  if (!group) {
+    return undefined;
+  }
+  const entry = group.entries.find((candidate) => candidate.name === name);
+  if (!entry) {
+    return undefined;
+  }
+  return { group, entry };
+}
+
+/** The entry alone, with nothing around it: the source of every preview frame. */
 export function viewPathOf(kind: BundleKind, group: string, name: string) {
   return `/view/${kind}/${group}/${name}`;
+}
+
+/** The entry centred in a spacious frame under a slim bar, for the full-page link. */
+export function presentPathOf(kind: BundleKind, group: string, name: string) {
+  const viewPath = viewPathOf(kind, group, name);
+  return `${viewPath}/present`;
+}
+
+/** The group page scrolled to the entry. */
+export function entryAnchorPathOf(
+  kind: BundleKind,
+  group: string,
+  name: string
+) {
+  return `/${kind}/${group}#${name}`;
+}
+
+const BUNDLE_KINDS: BundleKind[] = ['blocks', 'templates'];
+
+function viewParamsOfKind(kind: BundleKind) {
+  return GROUPS[kind].flatMap((group) =>
+    group.entries.map((entry) => ({
+      kind,
+      group: group.slug,
+      name: entry.name,
+    }))
+  );
+}
+
+export function viewParamsOf() {
+  return BUNDLE_KINDS.flatMap(viewParamsOfKind);
 }
 
 const UNIT_NAMES: Record<BundleKind, { singular: string; plural: string }> = {
