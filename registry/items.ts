@@ -130,6 +130,7 @@ export const primitiveItems: RegistryItemDefinition[] = [
     'A small bubble with an arrow, after a short pause.',
     {
       dependencies: [BASE_UI],
+      registryDependencies: ['animated-size'],
     }
   ),
   primitive('popover', 'Popover', 'A raised panel anchored to its trigger.', {

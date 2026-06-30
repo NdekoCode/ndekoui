@@ -6,6 +6,7 @@ import type { BundleGroup, BundleKind } from '../app/blocks/_shared/types';
 import type { RegistryItemDefinition } from '../registry/items';
 import type { BlockManifest } from '../registry/ndeko/blocks/types';
 import {
+  componentPartsOf,
   identifierOf,
   mergedDependencies,
   sortedAlphabetically,
@@ -70,14 +71,17 @@ export function bundleItemsOf(
         target: `components/${kind}/${entry.name}/${file}`,
       }));
       const absolutePaths = files.map((file) => path.join(ROOT, file.path));
-      const { registryDependencies, dependencies } =
-        mergedDependencies(absolutePaths);
+      const componentParts = componentPartsOf(absolutePaths);
+      const { registryDependencies, dependencies } = mergedDependencies([
+        ...absolutePaths,
+        ...componentParts.paths,
+      ]);
       return {
         name: entry.name,
         type: 'registry:block',
         title: entry.title,
         description: entry.description,
-        files,
+        files: [...files, ...componentParts.files],
         dependencies,
         registryDependencies,
         categories: [kind, group.slug],

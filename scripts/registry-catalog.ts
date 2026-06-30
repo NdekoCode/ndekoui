@@ -5,6 +5,7 @@ import { pathToFileURL } from 'node:url';
 import type { CatalogCategory } from '../app/components/_catalog/types';
 import type { RegistryItemDefinition } from '../registry/items';
 import type { ComponentManifest } from '../registry/ndeko/components/types';
+import { motionItemNameOf } from '../lib/site';
 
 const ROOT = path.join(__dirname, '..');
 const COMPONENTS_DIR = path.join(ROOT, 'registry/ndeko/components');
@@ -12,6 +13,7 @@ const HOOKS_DIR = path.join(ROOT, 'registry/ndeko/hooks');
 const GENERATED_DIR = path.join(ROOT, 'app/components/_generated');
 
 const LOCAL_PREFIX = '@/registry/ndeko/';
+const MOTION_PREFIX = '@/components/core/';
 const COMPONENTS_PREFIX = `${LOCAL_PREFIX}components/`;
 const LOCAL_ITEM_FOLDERS = new Set(['ui', 'lib', 'hooks']);
 const FRAMEWORK_PACKAGES = new Set(['react', 'react-dom', 'next']);
@@ -22,6 +24,8 @@ const GENERATED_NOTICE =
 const CATEGORY_NAMES: Record<string, string> = {
   'calendar-date-picker': 'Date picker',
   dropdown: 'Dropdown menu',
+  subtask: 'Sub-task',
+  aside: 'Side panel',
 };
 
 export function titleOf(slug: string) {
@@ -71,6 +75,11 @@ export function dependenciesOf(filePath: string) {
   const dependencies = new Set<string>();
 
   for (const specifier of importsOf(source)) {
+    if (specifier.startsWith(MOTION_PREFIX)) {
+      const motionSlug = specifier.slice(MOTION_PREFIX.length);
+      registryDependencies.add(motionItemNameOf(motionSlug));
+      continue;
+    }
     if (specifier.startsWith(LOCAL_PREFIX)) {
       const itemName = localItemOf(specifier);
       if (itemName) {
@@ -117,9 +126,13 @@ export function mergedDependencies(filePaths: string[]) {
 
 function resolvedSourceOf(baseDir: string, specifier: string) {
   const base = path.resolve(baseDir, specifier);
-  const candidates = SOURCE_EXTENSIONS.map(
+  const fileCandidates = SOURCE_EXTENSIONS.map(
     (extension) => `${base}${extension}`
   );
+  const indexCandidates = SOURCE_EXTENSIONS.map((extension) =>
+    path.join(base, `index${extension}`)
+  );
+  const candidates = [...fileCandidates, ...indexCandidates];
   const existing = candidates.find((candidate) => fs.existsSync(candidate));
   return existing ?? null;
 }
@@ -162,6 +175,28 @@ function targetedFileOf(absolutePath: string) {
     type: 'registry:component' as const,
     target: `components/${pathInComponents}`,
   };
+}
+
+function isInsideComponents(filePath: string) {
+  const relativePath = path.relative(COMPONENTS_DIR, filePath);
+  const isOutside = relativePath.startsWith('..');
+  return !isOutside;
+}
+
+/**
+ * The catalogue files a block or a template imports, with their own parts. They install where the
+ * catalogue item puts them, which is where the CLI rewrites `@/registry/ndeko/components/...` to.
+ */
+export function componentPartsOf(filePaths: string[]) {
+  const found = new Set<string>();
+  for (const filePath of filePaths) {
+    const parts = localPartsOf(filePath);
+    const catalogueParts = parts.filter(isInsideComponents);
+    catalogueParts.forEach((part) => found.add(part));
+  }
+  const paths = sortedAlphabetically(found);
+  const files = paths.map(targetedFileOf);
+  return { paths, files };
 }
 
 function componentFilesOf(entryPath: string, parts: string[]) {

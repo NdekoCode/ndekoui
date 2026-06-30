@@ -81,7 +81,7 @@ Port checklist for every composition:
 
 ### 4. Motion components
 
-The 33 components of `components/core` are restyled on the tokens, with the React 19 lint findings fixed (components created during render, state set in effects) and reduced-motion fallbacks. They ship in the registry as `motion-<name>` items (`scripts/registry-motion.ts`), installed into `components/motion/`, with their hooks and the `theme`, `utils` and `icons` items they need. The legacy `/c`, `/e` and `/h` endpoints keep serving their last published files for the old `ndekoui` CLI; `scripts/registry-build.ts` is not rerun until that CLI reads the new registry.
+The 33 components of `components/core` are restyled on the tokens, with the React 19 lint findings fixed (components created during render, state set in effects) and reduced-motion fallbacks. They ship in the registry as `motion-<name>` items (`scripts/registry-motion.ts`), installed into `components/core/`, with their hooks and the `theme`, `utils` and `icons` items they need. The legacy `/c`, `/e` and `/h` endpoints keep serving their last published files for the old `ndekoui` CLI; `scripts/registry-build.ts` is not rerun until that CLI reads the new registry.
 
 ### 4b. Micro-interaction pass
 
@@ -101,13 +101,13 @@ README with installation and contribution paths, CONTRIBUTING with the port chec
 
 ## Decisions
 
-| Id     | Decision                                                                       | Reason                                                                                                          |
-| ------ | ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
-| DEC-01 | Primitives on Base UI, not Radix, written from the Base UI documentation       | Origin UI itself moved to Base UI; one behaviour layer, maintained, accessible; coss code is AGPL and stays out |
-| DEC-02 | shadcn export names, Base UI composition (`render`, not `asChild`)             | familiar names for users of shadcn and Origin UI, native Base UI underneath                                     |
-| DEC-03 | Hugeicons behind one module with Lucide-style names                            | one icon language; ports from Lucide-based code stay mechanical                                                 |
-| DEC-04 | Pill buttons, two focus registers (2px ring on buttons, halo on fields)        | the design language, with a visible focus that meets WCAG on buttons                                            |
-| DEC-05 | CSS motion in primitives, `motion` in compositions                             | primitives stay light; springs and presence where the change follows the user                                   |
+| Id     | Decision                                                                           | Reason                                                                                                          |
+| ------ | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| DEC-01 | Primitives on Base UI, not Radix, written from the Base UI documentation           | Origin UI itself moved to Base UI; one behaviour layer, maintained, accessible; coss code is AGPL and stays out |
+| DEC-02 | shadcn export names, Base UI composition (`render`, not `asChild`)                 | familiar names for users of shadcn and Origin UI, native Base UI underneath                                     |
+| DEC-03 | Hugeicons behind one module with Lucide-style names                                | one icon language; ports from Lucide-based code stay mechanical                                                 |
+| DEC-04 | Pill buttons, two focus registers (2px ring on buttons, halo on fields)            | the design language, with a visible focus that meets WCAG on buttons                                            |
+| DEC-05 | CSS motion in primitives, `motion` in compositions                                 | primitives stay light; springs and presence where the change follows the user                                   |
 | DEC-06 | Registry served from `https://ui.ndekocode.dev/r`, inner dependencies as full URLs | installs work without configuring a namespace                                                                   |
 
 ## Open points for the owner

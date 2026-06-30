@@ -48,7 +48,7 @@ function siblingFileOf(sourcePath: string, specifier: string) {
   const file: RegistryItemFile = {
     path: path.relative(ROOT, existing),
     type: 'registry:component',
-    target: `components/motion/${path.basename(existing)}`,
+    target: `components/core/${path.basename(existing)}`,
   };
   return file;
 }
@@ -115,7 +115,7 @@ function motionItemOf(
   const componentFile: RegistryItemFile = {
     path: path.relative(ROOT, sourcePath),
     type: 'registry:component',
-    target: `components/motion/${name}.tsx`,
+    target: `components/core/${name}.tsx`,
   };
 
   return {

@@ -13,7 +13,7 @@ const INSTALL: TerminalLine[] = [
     delay: 900,
   },
   { kind: 'output', text: 'Created 1 file', tone: 'success' },
-  { kind: 'output', text: '  components/motion/marquee.tsx', tone: 'muted' },
+  { kind: 'output', text: '  components/core/marquee.tsx', tone: 'muted' },
 ];
 
 export function TerminalInstall() {
