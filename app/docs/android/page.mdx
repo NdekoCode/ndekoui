@@ -1,0 +1,101 @@
+export const metadata = {
+  title: 'Android - Ndeko UI',
+  description:
+    'A modern Android phone drawn in SVG and CSS, with a punch-hole camera, thin even bezels and a status bar that follows the screen. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { AndroidAgenda } from './android-agenda';
+import { AndroidDark } from './android-dark';
+import { AndroidScreens } from './android-screens';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Android
+
+A modern Android phone, unbranded, drawn in SVG and CSS around a picture, a video or live UI: an aluminium frame with its side buttons, a punch-hole camera, thin even bezels, a drawn status bar and the gesture bar. It scales with its width and shares its API with the [iPhone](/docs/iphone).
+
+## Examples
+
+### Live UI
+
+A week agenda built from our primitives. Pick a day and the indicator travels to it.
+
+<ComponentCodePreview
+  component={<AndroidAgenda />}
+  filePath='app/docs/android/android-agenda.tsx'
+/>
+
+### Dark screen
+
+The screen reads the theme tokens. Wrap the phone in an element with the `dark` class to show the dark screen on a light page.
+
+<ComponentCodePreview
+  component={<AndroidDark />}
+  filePath='app/docs/android/android-dark.tsx'
+/>
+
+### Changing screens
+
+A picture with live UI on top of it. When the picture changes, the new one fades in over the old one and the status bar takes the tone of the new picture.
+
+<ComponentCodePreview
+  component={<AndroidScreens />}
+  filePath='app/docs/android/android-screens.tsx'
+/>
+
+The [Safari](/docs/safari#hero-arrangement) page composes the Android phone with the browser and the iPhone for a landing page.
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='android' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/android.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### Android
+
+| Prop      | Type                            | Default        | Description                                                                                                       |
+| :-------- | :------------------------------ | :------------- | :---------------------------------------------------------------------------------------------------------------- |
+| imageSrc  | string                          |                | A picture covering the screen.                                                                                    |
+| videoSrc  | string                          |                | A muted looping video covering the screen. It wins over `imageSrc`.                                               |
+| alt       | string                          | ''             | The text alternative of the picture or the video. Leave it empty when `label` already says what the screen shows. |
+| finish    | 'natural' \| 'black' \| 'white' | 'black'        | The aluminium of the frame and the buttons.                                                                       |
+| statusBar | 'auto' \| 'light' \| 'dark'     | 'auto'         | The colour of the status bar and the gesture bar. `auto` uses the text colour of the theme; set it for a picture. |
+| time      | string                          | '9:41'         | The time in the status bar. An empty string leaves it out, as on a lock screen.                                   |
+| safeArea  | boolean                         | true           | Keeps live UI below the status bar and above the gesture bar. Turn it off to draw under them.                     |
+| label     | string                          | 'Phone screen' | The accessible name of the figure.                                                                                |
+| children  | ReactNode                       |                | Live UI for the screen, drawn above the picture or the video when both are given. It scrolls when it is taller.   |
+| className | string                          |                | Optional CSS class for the device. Its width sets the size, up to the 450px of the real device.                   |
+
+Everything is clipped to the corner radius of the screen. Live UI renders at its own size; the hardware, the status bar and the camera scale with the width. The device is a size container, so live UI can scale with it too through `cqw` units, as the lock screen of the last example does.
+
+The device is a `figure` named by `label`; the frame, the status bar, the camera and the gesture bar are hidden from assistive technologies. When `imageSrc` or `videoSrc` changes, the new picture fades in over the old one in 240ms. Under reduced motion the fade stays, the video does not play by itself and shows its controls instead.
+
+## Credits
+
+Inspired by the device mockups of [Magic UI](https://magicui.design/docs/components/android), drawn again on our tokens.

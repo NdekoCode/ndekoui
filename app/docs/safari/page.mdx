@@ -1,0 +1,116 @@
+export const metadata = {
+  title: 'Safari - Ndeko UI',
+  description:
+    'A macOS browser window drawn in CSS around a picture, a video or live UI, with a chrome that follows the theme. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { SafariPicture } from './safari-picture';
+import { SafariBlock } from './safari-block';
+import { SafariPages } from './safari-pages';
+import { SafariDark } from './safari-dark';
+import { DevicesHero } from './devices-hero';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Safari
+
+A macOS browser window drawn in CSS around a picture, a video or live UI. The chrome follows the theme, stays sharp at any size and gives way gracefully when the window gets narrow.
+
+## Examples
+
+### Picture
+
+<ComponentCodePreview
+  component={<SafariPicture />}
+  filePath='app/docs/safari/safari-picture.tsx'
+/>
+
+### Live UI
+
+A block rendered inside the window, in the simple chrome. With a fixed `aspectRatio`, the page scrolls inside the window like a real one.
+
+<ComponentCodePreview
+  component={<SafariBlock />}
+  filePath='app/docs/safari/safari-block.tsx'
+/>
+
+### Changing pages
+
+When the picture changes, the new page fades in over the old one, so the window never flashes empty.
+
+<ComponentCodePreview
+  component={<SafariPages />}
+  filePath='app/docs/safari/safari-pages.tsx'
+/>
+
+### Dark chrome
+
+The chrome reads the theme tokens. Wrap the window in an element with the `dark` class to show the dark chrome on a light page.
+
+<ComponentCodePreview
+  component={<SafariDark />}
+  filePath='app/docs/safari/safari-dark.tsx'
+/>
+
+### Hero arrangement
+
+The browser, the [iPhone](/docs/iphone) and the [Android](/docs/android) phone composed for a landing page.
+
+<ComponentCodePreview
+  component={<DevicesHero />}
+  filePath='app/docs/safari/devices-hero.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='safari' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/safari.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### Safari
+
+| Prop        | Type               | Default                 | Description                                                                                                        |
+| :---------- | :----------------- | :---------------------- | :----------------------------------------------------------------------------------------------------------------- |
+| url         | string             | 'example.com'           | The address in the field. The protocol and a trailing slash are left out, as Safari shows them.                    |
+| imageSrc    | string             |                         | A picture for the page, covering the content area from the top.                                                    |
+| videoSrc    | string             |                         | A muted looping video for the page. It wins over `imageSrc`.                                                       |
+| alt         | string             | ''                      | The text alternative of the picture or the video. Leave it empty when `label` already says what the window shows.  |
+| mode        | 'simple' \| 'full' | 'full'                  | `full` draws the sidebar, back, forward, share, new tab and tab overview buttons; `simple` keeps the address only. |
+| aspectRatio | number             | 16 / 10                 | Width over height of the content area. Without it, live UI sets the height of the window.                          |
+| label       | string             | 'Browser window at ...' | The accessible name of the figure.                                                                                 |
+| children    | ReactNode          |                         | Live UI for the page, drawn above the picture or the video when both are given.                                    |
+| className   | string             |                         | Optional CSS class for the window. Its width sets the size.                                                        |
+
+The window is a `figure` named by `label`; the chrome is decorative and hidden from assistive technologies. The traffic lights, the toolbar glyphs and the address are drawn at their real size, so a window narrower than 36rem hides the sidebar and share buttons, and one narrower than 28rem keeps only back and the address.
+
+When `imageSrc` or `videoSrc` changes, the new page fades in over the old one in 240ms. Under reduced motion the fade stays, the video does not play by itself and shows its controls instead.
+
+## Credits
+
+Inspired by the device mockups of [Magic UI](https://magicui.design/docs/components/safari), drawn again on our tokens.

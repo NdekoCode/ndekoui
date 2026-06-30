@@ -1,0 +1,99 @@
+export const metadata = {
+  title: 'iPhone - Ndeko UI',
+  description:
+    'A modern iPhone drawn in SVG and CSS, with a titanium frame, a Dynamic Island and a status bar that follows the screen. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { IphoneTasks } from './iphone-tasks';
+import { IphoneScreens } from './iphone-screens';
+import { IphoneFinishes } from './iphone-finishes';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# iPhone
+
+A modern iPhone drawn in SVG and CSS around a picture, a video or live UI: a titanium frame with its side buttons, a Dynamic Island, a drawn status bar and the home indicator. It scales with its width and keeps the proportions of the real device.
+
+## Examples
+
+### Live UI
+
+A small screen built from our primitives. The status bar and the home indicator take the colour of the text, so they follow the theme with the screen.
+
+<ComponentCodePreview
+  component={<IphoneTasks />}
+  filePath='app/docs/iphone/iphone-tasks.tsx'
+/>
+
+### Changing screens
+
+A picture with live UI on top of it. When the picture changes, the new one fades in over the old one and the status bar takes the tone of the new picture.
+
+<ComponentCodePreview
+  component={<IphoneScreens />}
+  filePath='app/docs/iphone/iphone-screens.tsx'
+/>
+
+### Finishes
+
+<ComponentCodePreview
+  component={<IphoneFinishes />}
+  filePath='app/docs/iphone/iphone-finishes.tsx'
+/>
+
+The [Safari](/docs/safari#hero-arrangement) page composes the iPhone with the browser and the Android phone for a landing page.
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='iphone' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/iphone.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### Iphone
+
+| Prop      | Type                            | Default        | Description                                                                                                          |
+| :-------- | :------------------------------ | :------------- | :------------------------------------------------------------------------------------------------------------------- |
+| imageSrc  | string                          |                | A picture covering the screen.                                                                                       |
+| videoSrc  | string                          |                | A muted looping video covering the screen. It wins over `imageSrc`.                                                  |
+| alt       | string                          | ''             | The text alternative of the picture or the video. Leave it empty when `label` already says what the screen shows.    |
+| finish    | 'natural' \| 'black' \| 'white' | 'black'        | The titanium of the frame and the buttons.                                                                           |
+| statusBar | 'auto' \| 'light' \| 'dark'     | 'auto'         | The colour of the status bar and the home indicator. `auto` uses the text colour of the theme; set it for a picture. |
+| time      | string                          | '9:41'         | The time in the status bar. An empty string leaves it out, as on a lock screen.                                      |
+| safeArea  | boolean                         | true           | Keeps live UI below the status bar and above the home indicator. Turn it off to draw under them.                     |
+| label     | string                          | 'Phone screen' | The accessible name of the figure.                                                                                   |
+| children  | ReactNode                       |                | Live UI for the screen, drawn above the picture or the video when both are given. It scrolls when it is taller.      |
+| className | string                          |                | Optional CSS class for the device. Its width sets the size, up to the 438px of the real device.                      |
+
+Everything is clipped to the corner radius of the screen. Live UI renders at its own size; the hardware, the status bar and the Dynamic Island scale with the width. The device is a size container, so live UI can scale with it too through `cqw` units, as the lock screen of the second example does.
+
+The device is a `figure` named by `label`; the frame, the status bar, the Dynamic Island and the home indicator are hidden from assistive technologies. When `imageSrc` or `videoSrc` changes, the new picture fades in over the old one in 240ms. Under reduced motion the fade stays, the video does not play by itself and shows its controls instead.
+
+## Credits
+
+Inspired by the device mockups of [Magic UI](https://magicui.design/docs/components/iphone), drawn again on our tokens.
