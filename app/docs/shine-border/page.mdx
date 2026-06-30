@@ -1,0 +1,91 @@
+export const metadata = {
+  title: 'Shine Border - Ndeko UI',
+  description:
+    'A slanted glint in the primary colour that sweeps across the border of a card, on a slow loop or once when the card is hovered or focused. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { ShineBorderUpdate } from './shine-border-update';
+import { ShineBorderHover } from './shine-border-hover';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Shine Border
+
+A slanted glint that sweeps across a card from left to right and catches its border on the way, the way light crosses a metal frame. It runs on a slow loop to draw the eye to one card, or once when a card that is a link is hovered or focused.
+
+Where [Border Beam](/docs/border-beam) travels around the edge to say that something is running, the shine crosses the whole frame at once and then rests.
+
+## Examples
+
+### On a loop
+
+One sweep every few seconds on the card that needs attention.
+
+<ComponentCodePreview
+  component={<ShineBorderUpdate />}
+  filePath='app/docs/shine-border/shine-border-update.tsx'
+/>
+
+### On hover and focus
+
+Each link card sweeps once when the pointer enters it or when it gets keyboard focus.
+
+<ComponentCodePreview
+  component={<ShineBorderHover />}
+  filePath='app/docs/shine-border/shine-border-hover.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='shine-border' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/shine-border.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### ShineBorder
+
+Place it inside a card with `position: relative`. It takes the card's corner radius and draws over its hairline. With `trigger='hover'`, it listens to the card it sits in.
+
+| Prop      | Type              | Default | Description                                                               |
+| :-------- | :---------------- | :------ | :------------------------------------------------------------------------ |
+| trigger   | 'loop' \| 'hover' | 'loop'  | Sweep on a loop, or once when the card is hovered or gets keyboard focus. |
+| duration  | number            | 1.4     | Seconds for one sweep across the card.                                    |
+| interval  | number            | 4       | Seconds of rest between two sweeps on a loop.                             |
+| width     | number            | 1       | The thickness of the shining border, in px.                               |
+| className | string            |         | Classes for the border layer. The colour comes from `text-primary`.       |
+
+## Accessibility and motion
+
+- The shine is decorative and hidden from assistive technology.
+- The sweep moves with a transform, so it stays smooth while the page is busy. A hover sweep that is already running finishes before another can start.
+- Use the hover trigger only on cards that can be clicked.
+- With reduced motion there is no sweep: the card keeps its usual border.
+
+## Credits
+
+Inspired by the shine border of [Magic UI](https://magicui.design/docs/components/shine-border), redrawn as one slanted glint in a single colour.

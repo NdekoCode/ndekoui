@@ -1,0 +1,89 @@
+export const metadata = {
+  title: 'Lens - Ndeko UI',
+  description:
+    'A round magnifier that follows the pointer over an image or any content, and moves with the arrow keys when focused. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { LensImage } from './lens-image';
+import { LensFinePrint } from './lens-fine-print';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Lens
+
+A round magnifier over an image or any content. It opens where the pointer enters, follows it exactly, and closes when the pointer leaves. Focus it with the keyboard and the arrow keys move it.
+
+## Examples
+
+### Over an image
+
+<ComponentCodePreview
+  component={<LensImage />}
+  filePath='app/docs/lens/lens-image.tsx'
+/>
+
+### Always shown
+
+The lens rests on the lines of an invoice until the pointer moves it. Text stays sharp because the magnified copy is drawn again at its new size.
+
+<ComponentCodePreview
+  component={<LensFinePrint />}
+  filePath='app/docs/lens/lens-fine-print.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='lens' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/lens.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### Lens
+
+Renders a focusable `<div>` with `overflow: hidden` and `rounded-xl`. The children are drawn twice: once as they are, once magnified inside the lens. The magnified copy is hidden from assistive technology and cannot be clicked, so keep ids and live regions out of the children.
+
+| Prop            | Type                       | Default     | Description                                             |
+| :-------------- | :------------------------- | :---------- | :------------------------------------------------------ |
+| children        | React.ReactNode            |             | The image or content to magnify.                        |
+| zoom            | number                     | 2           | How many times the content is enlarged inside the lens. |
+| size            | number                     | 160         | The diameter of the lens, in px.                        |
+| defaultPosition | \{ x: number; y: number \} | the centre  | Where the lens starts, in px from the top left corner.  |
+| alwaysVisible   | boolean                    | false       | Whether the lens stays shown when the pointer leaves.   |
+| label           | string                     | 'Magnifier' | The accessible name of the magnifier.                   |
+| className       | string                     |             | Classes for the wrapper.                                |
+
+## Accessibility and motion
+
+- Tab to the magnifier and it shows the lens. The arrow keys move it by 12px, by 48px with Shift held, and Escape hides it.
+- The lens sits exactly under the pointer, with no lag. It opens in 180ms from 90% of its size and closes faster, in 120ms. Keyboard moves glide for 160ms.
+- With reduced motion the lens only fades in and out, and keyboard moves are instant.
+- On a touch screen a press shows the lens, a sideways drag moves it and a vertical one scrolls the page.
+
+## Credits
+
+Inspired by the lens of [Magic UI](https://magicui.design/docs/components/lens), rebuilt with `motion` and a keyboard path.

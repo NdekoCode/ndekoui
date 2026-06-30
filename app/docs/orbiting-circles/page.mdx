@@ -1,0 +1,93 @@
+export const metadata = {
+  title: 'Orbiting Circles - Ndeko UI',
+  description:
+    'Icons or avatars that travel on concentric orbits around a centre, driven by CSS, with radius, speed, direction and a pause. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { OrbitingCirclesIntegrations } from './orbiting-circles-integrations';
+import { OrbitingCirclesTeam } from './orbiting-circles-team';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Orbiting Circles
+
+Items spread evenly on a circle that turns around a centre, for showing what connects to a product on a marketing page. Each orbit is one component; stack several with different radii and directions.
+
+## Examples
+
+### Two orbits
+
+Three sources on a quick inner orbit, five on a slower outer one turning the other way.
+
+<ComponentCodePreview
+  component={<OrbitingCirclesIntegrations />}
+  filePath='app/docs/orbiting-circles/orbiting-circles-integrations.tsx'
+/>
+
+### Pause
+
+Avatars on one orbit, with a button that pauses them where they are.
+
+<ComponentCodePreview
+  component={<OrbitingCirclesTeam />}
+  filePath='app/docs/orbiting-circles/orbiting-circles-team.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='orbiting-circles' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/orbiting-circles.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### OrbitingCircles
+
+Draws one orbit centred in its container, which needs `position: relative`, a height and `overflow: hidden`. Every child becomes one item on the orbit.
+
+| Prop       | Type            | Default | Description                                                          |
+| :--------- | :-------------- | :------ | :------------------------------------------------------------------- |
+| children   | React.ReactNode |         | The items, spread evenly around the circle.                          |
+| radius     | number          | 120     | The radius of the orbit, in px.                                      |
+| duration   | number          | 24      | Seconds for one full turn.                                           |
+| speed      | number          | 1       | A multiplier on the speed: 2 turns twice as fast.                    |
+| reverse    | boolean         | false   | Whether the orbit turns anticlockwise.                               |
+| startAngle | number          | -90     | Where the first item sits, in degrees. -90 is the top of the circle. |
+| iconSize   | number          | 40      | The width and height of each item slot, in px.                       |
+| path       | boolean         | true    | Whether the orbit is drawn as a hairline circle.                     |
+| paused     | boolean         | false   | Whether the orbit stops where it is.                                 |
+| className  | string          |         | Classes for the orbit circle.                                        |
+
+## Accessibility and motion
+
+- The orbit turns with a CSS animation, so it keeps running smoothly while the page is busy. Each item turns the other way at the same pace and stays upright.
+- With reduced motion the items stay where they are, evenly spread on the circle.
+- Orbiting items are usually decorative: give the container `role='img'` and an `aria-label` that says what the picture shows.
+
+## Credits
+
+Inspired by the orbiting circles of [Magic UI](https://magicui.design/docs/components/orbiting-circles), rebuilt on our materials and icon set.

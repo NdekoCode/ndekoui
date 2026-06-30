@@ -1,0 +1,92 @@
+export const metadata = {
+  title: 'Magic Card - Ndeko UI',
+  description:
+    'A card whose edge lights up on the side the pointer comes from, before the pointer even reaches it, with a soft wash under the pointer inside. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { MagicCardUsage } from './magic-card-usage';
+import { MagicCardNeutral } from './magic-card-neutral';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Magic Card
+
+A card that notices the pointer coming. As the pointer gets close, the stretch of border facing it lights up and turns to follow it around the card. Inside the card, a soft wash sits under the pointer.
+
+The light belongs to one card and holds any content, buttons included. [Spotlight Cards](/docs/spotlight-cards) shares one light across a grid of link cards and lights only the edges near the pointer once it is over the grid; [Spotlight](/docs/spotlight) is a soft blob that follows the pointer inside any element.
+
+## Examples
+
+### Usage cards
+
+Two cards side by side. Move the pointer between them: each one lights on the side that faces it.
+
+<ComponentCodePreview
+  component={<MagicCardUsage />}
+  filePath='app/docs/magic-card/magic-card-usage.tsx'
+/>
+
+### Neutral tint
+
+The same light in the foreground colour, reacting from further away.
+
+<ComponentCodePreview
+  component={<MagicCardNeutral />}
+  filePath='app/docs/magic-card/magic-card-neutral.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='magic-card' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/magic-card.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### MagicCard
+
+Renders a `<div>` card with `rounded-xl`, the card background and a hairline. Every other `div` attribute passes through.
+
+| Prop      | Type                   | Default   | Description                                                              |
+| :-------- | :--------------------- | :-------- | :----------------------------------------------------------------------- |
+| tint      | 'primary' \| 'neutral' | 'primary' | The colour of the light.                                                 |
+| proximity | number                 | 120       | How far from the card, in px, the edge starts to light up.               |
+| spread    | number                 | 70        | Half the width of the lit stretch of border, in degrees around the card. |
+| className | string                 |           | Classes for the card, such as its padding.                               |
+| children  | React.ReactNode        |           | The card content.                                                        |
+
+## Accessibility and motion
+
+- The light follows a mouse only. Touch and pen leave the card as it is.
+- The card listens to the pointer only while it is on screen or close to it.
+- The lit edge turns on a spring with no bounce and brightens as the pointer gets closer. The wash fades in over 300ms and out over 150ms.
+- With reduced motion the edge sits exactly where the pointer is, with no spring. It still fades.
+- The light layers are decorative and hidden from assistive technology.
+
+## Credits
+
+Inspired by the magic card of [Magic UI](https://magicui.design/docs/components/magic-card). Its orb mode is left out: a blurred coloured orb is not part of our design system.

@@ -1,0 +1,94 @@
+export const metadata = {
+  title: 'Border Beam - Ndeko UI',
+  description:
+    'A beam in the primary colour that travels around the border of a card, its tail fading behind it and bending round the corners. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { BorderBeamSync } from './border-beam-sync';
+import { BorderBeamPair } from './border-beam-pair';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Border Beam
+
+A beam that travels around the border of a card while something is in progress. Its head is the primary colour and its tail fades out behind it, following the rounded corners exactly.
+
+[Border Trail](/docs/border-trail) moves a soft neutral spot along the edge and fits a loading placeholder. Border Beam draws a line on the border itself, in the brand colour, and fades away when the work it stands for stops.
+
+## Examples
+
+### While a task runs
+
+The beam runs while the sync runs. Pause it and the beam fades out, then stops.
+
+<ComponentCodePreview
+  component={<BorderBeamSync />}
+  filePath='app/docs/border-beam/border-beam-sync.tsx'
+/>
+
+### Two beams
+
+Two shorter beams on opposite sides, travelling anticlockwise.
+
+<ComponentCodePreview
+  component={<BorderBeamPair />}
+  filePath='app/docs/border-beam/border-beam-pair.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='border-beam' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/border-beam.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### BorderBeam
+
+Place it inside a card with `position: relative`. It reads the card's corner radius and size, and redraws when they change. The card does not need `overflow: hidden`.
+
+| Prop      | Type    | Default | Description                                                                    |
+| :-------- | :------ | :------ | :----------------------------------------------------------------------------- |
+| duration  | number  | 6       | Seconds for a beam to go once around the card.                                 |
+| length    | number  | 0.3     | The length of a beam, as a share of the border, from 0 to 1.                   |
+| width     | number  | 1.5     | The thickness of the beam, in px.                                              |
+| count     | number  | 1       | How many beams travel, evenly spaced.                                          |
+| offset    | number  | 0       | Where the beam starts, as a share of the border from the top left corner.      |
+| reverse   | boolean | false   | Whether the beam travels anticlockwise.                                        |
+| active    | boolean | true    | Whether the beam shows. Turning it off fades the beam out, then pauses it.     |
+| radius    | number  |         | The corner radius in px, when it should not be read from the card.             |
+| className | string  |         | Classes for the SVG. The colour comes from `text-primary` and can be replaced. |
+
+## Accessibility and motion
+
+- The beam is decorative SVG and hidden from assistive technology. Say what is in progress in text, as the sync example does with a polite live region.
+- The beam pauses while the card is off screen.
+- With reduced motion the beam stays still where it starts.
+
+## Credits
+
+Inspired by the border beam of [Magic UI](https://magicui.design/docs/components/border-beam), redrawn as a dashed SVG stroke on our tokens.

@@ -1,0 +1,97 @@
+export const metadata = {
+  title: 'Post Card - Ndeko UI',
+  description:
+    'A social post card with author, text, pictures, date and counts, all passed as props. Nothing is fetched. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { PostCardText } from './post-card-text';
+import { PostCardMedia } from './post-card-media';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Post Card
+
+A card in the shape of a post on a social network, for quoting a post on a marketing page or a changelog. Everything comes from props: the component never fetches a post and carries no network's logo, so it fits whatever network the post came from.
+
+Only show posts that were really published, by people who agreed to it. The examples below are fictional and say so.
+
+## Examples
+
+### Text post
+
+A verified author, a hashtag picked out in the brand colour, and every count.
+
+<ComponentCodePreview
+  component={<PostCardText />}
+  filePath='app/docs/post-card/post-card-text.tsx'
+/>
+
+### With pictures
+
+Two pictures side by side. The time links to the original post, and a count of one reads "1 reply".
+
+<ComponentCodePreview
+  component={<PostCardMedia />}
+  filePath='app/docs/post-card/post-card-media.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='post-card' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Add the Avatar primitive to your project.</Step>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/post-card.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### PostCard
+
+Renders an `<article>`. It has no state, so it renders on the server as well as in the browser. Other `article` attributes pass through.
+
+| Prop      | Type           | Default | Description                                                                         |
+| :-------- | :------------- | :------ | :---------------------------------------------------------------------------------- |
+| author    | PostAuthor     |         | `{ name, handle, avatar?, verified? }`. The handle is written without the `@`.      |
+| text      | string         |         | The post. Line breaks are kept; mentions, hashtags and links take the brand colour. |
+| date      | Date \| string |         | When it was posted. A string is read as an ISO date.                                |
+| media     | PostMedia[]    | []      | Up to four pictures, `{ src, alt }`, laid out in a grid.                            |
+| counts    | PostCounts     | \{\}    | `{ replies?, reposts?, likes?, bookmarks?, views? }`. Missing counts are not shown. |
+| href      | string         |         | The address of the original post. The time becomes a link to it.                    |
+| locale    | string         | 'en-US' | The locale of the date and of compact counts such as 12.5K.                         |
+| timeZone  | string         | 'UTC'   | The time zone of the date, fixed so the server and the browser print the same time. |
+| className | string         |         | Classes for the card.                                                               |
+
+## Accessibility and motion
+
+- Each count is read in full, with its singular when it is one: "18 replies", "1 reply".
+- The verified mark is announced as "Verified account".
+- Every picture needs its own `alt` text. The avatar is decorative, since the name is right beside it.
+- The card does not move. When it is a link, only the time is, so the rest of the text can be selected.
+
+## Credits
+
+Replaces the tweet card of [Magic UI](https://magicui.design/docs/components/tweet-card), which fetches a real post. This one takes static props.

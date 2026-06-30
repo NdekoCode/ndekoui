@@ -1,0 +1,106 @@
+export const metadata = {
+  title: 'Confetti - Ndeko UI',
+  description:
+    'A burst of confetti drawn on a canvas, from a button or from a function call, in the brand colours and with no package. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { ConfettiButtonExample } from './confetti-button-example';
+import { ConfettiChecklist } from './confetti-checklist';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Confetti
+
+A burst of confetti for a rare moment worth marking: a first release, a finished setup. Pieces fly out from a button or any element, flutter as they fall and fade away. It is drawn on one canvas that exists only while pieces are on screen, with no package.
+
+## Examples
+
+### Button
+
+`ConfettiButton` is our `Button` that throws a burst from its centre when clicked.
+
+<ComponentCodePreview
+  component={<ConfettiButtonExample />}
+  filePath='app/docs/confetti/confetti-button-example.tsx'
+/>
+
+### From a function
+
+Tick the last step: `confetti()` is called with the list as its origin.
+
+<ComponentCodePreview
+  component={<ConfettiChecklist />}
+  filePath='app/docs/confetti/confetti-checklist.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='confetti' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Add the Button primitive to your project.</Step>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/confetti.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### confetti(options)
+
+Throws one burst and returns a promise that resolves when its last piece has gone. Several bursts share the same canvas.
+
+| Option        | Type                                  | Default                     | Description                                                            |
+| :------------ | :------------------------------------ | :-------------------------- | :--------------------------------------------------------------------- |
+| particleCount | number                                | 60                          | How many pieces are thrown.                                            |
+| origin        | \{ x: number; y: number \} \| Element | the centre of the viewport  | A point as shares of the viewport from 0 to 1, or an element's centre. |
+| angle         | number                                | 90                          | The launch direction in degrees. 90 is straight up.                    |
+| spread        | number                                | 60                          | How wide the burst opens, in degrees.                                  |
+| velocity      | number                                | 32                          | The launch speed, in px per frame at 60 frames per second.             |
+| decay         | number                                | 0.9                         | How much speed a piece keeps from one frame to the next.               |
+| gravity       | number                                | 1                           | How fast pieces fall once they slow down.                              |
+| drift         | number                                | 0                           | A sideways push, negative to the left.                                 |
+| duration      | number                                | 3000                        | How long a piece lives, in ms, give or take a little.                  |
+| colors        | string[]                              | primary, primary ink, muted | CSS colours. `var(--token)` values are read from the theme.            |
+| shapes        | ('ribbon' \| 'square' \| 'circle')[]  | all three                   | The shapes to pick from.                                               |
+| scalar        | number                                | 1                           | A multiplier on the size of every piece.                               |
+
+### ConfettiButton
+
+Our `Button`, with every prop it takes, plus:
+
+| Prop    | Type            | Default | Description                                                         |
+| :------ | :-------------- | :------ | :------------------------------------------------------------------ |
+| options | ConfettiOptions |         | Options for the burst. The origin is the button unless you set one. |
+
+## Accessibility and motion
+
+- The canvas is hidden from assistive technology and never catches a click. Say what happened in text as well, as the checklist does with its count.
+- Pieces turn and flip as they fall, then fade during the last third of their life.
+- With reduced motion nothing flies: a few pieces appear around the origin and fade in and out in place, in under a second.
+- Keep confetti for moments that happen once or rarely. An action repeated every day should not celebrate.
+
+## Credits
+
+Inspired by the confetti of [Magic UI](https://magicui.design/docs/components/confetti), written from scratch on a canvas without `canvas-confetti`.

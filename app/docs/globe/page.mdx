@@ -1,0 +1,96 @@
+export const metadata = {
+  title: 'Globe - Ndeko UI',
+  description:
+    'A WebGL globe in the theme colours that turns on its own, follows a drag with momentum and glides to a chosen city. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { GlobeCities } from './globe-cities';
+import { GlobeFocus } from './globe-focus';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Globe
+
+A dotted globe drawn with [cobe](https://github.com/shuding/cobe), coloured from the theme tokens. It turns slowly on its own, follows a drag and keeps its momentum when released, and can glide to a location you pass in.
+
+## Examples
+
+### Cities and routes
+
+Markers in the primary colour, with arcs between some of them. Drag the globe, or focus it and use the arrow keys.
+
+<ComponentCodePreview
+  component={<GlobeCities />}
+  filePath='app/docs/globe/globe-cities.tsx'
+/>
+
+### Glide to a city
+
+The globe turns to the chosen city and holds it there. Press the chosen city again and it goes back to turning on its own.
+
+<ComponentCodePreview
+  component={<GlobeFocus />}
+  filePath='app/docs/globe/globe-focus.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='globe' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install cobe and motion with your package manager.</Step>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath='components/core/globe.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### Globe
+
+Renders a square that fills the width of its container, up to 600px. The colours come from `--background`, `--foreground`, `--card` and `--primary`, and follow the theme when it changes.
+
+| Prop         | Type                     | Default | Description                                                                         |
+| :----------- | :----------------------- | :------ | :---------------------------------------------------------------------------------- |
+| markers      | GlobeMarker[]            | []      | Points in the primary colour. `{ location: [latitude, longitude], size?, label? }`. |
+| arcs         | GlobeArc[]               | []      | Curved routes between two locations. `{ from: [lat, lng], to: [lat, lng] }`.        |
+| focus        | [number, number] \| null | null    | A location to glide to and hold. `null` lets the globe turn on its own again.       |
+| autoRotate   | boolean                  | true    | Whether the globe turns on its own when nobody holds it.                            |
+| turnDuration | number                   | 40      | Seconds for one full turn on its own.                                               |
+| tilt         | number                   | 15      | The starting tilt in degrees, positive to show more of the northern hemisphere.     |
+| markerSize   | number                   | 0.05    | The size of markers that do not set their own, relative to the globe.               |
+| label        | string                   | 'Globe' | The accessible name of the globe.                                                   |
+| className    | string                   |         | Classes for the square wrapper, for example a `max-w-*`.                            |
+
+## Accessibility and motion
+
+- The globe is a focusable group. The left and right arrow keys turn it, the up and down arrow keys tilt it. Marker labels are listed for screen readers.
+- On touch screens a horizontal drag turns the globe and a vertical one scrolls the page.
+- The globe draws frames only while it is on screen, and stops drawing once it has settled when it is not turning on its own.
+- With reduced motion it does not turn on its own, a release does not keep spinning, and `focus` jumps straight to the location. Dragging still works.
+- The atmosphere around the sphere is tinted with the page colour, so there is no glow.
+
+## Credits
+
+Inspired by the globe of [Magic UI](https://magicui.design/docs/components/globe), rebuilt on [cobe](https://github.com/shuding/cobe) 2 and our tokens.
