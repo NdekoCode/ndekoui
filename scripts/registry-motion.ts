@@ -7,7 +7,11 @@ import type {
 } from '../registry/items';
 import { components } from './registry-components';
 import { motionItemNameOf } from '../lib/site';
-import { sortedAlphabetically, titleOf } from './registry-catalog';
+import {
+  sampleAssetItemsOf,
+  sortedAlphabetically,
+  titleOf,
+} from './registry-catalog';
 
 const ROOT = path.join(__dirname, '..');
 const UTILS_SPECIFIER = '@/lib/utils';
@@ -79,6 +83,7 @@ function motionItemOf(
   const dependencies = new Set<string>();
   const hookFiles: RegistryItemFile[] = [];
   const siblingFiles: RegistryItemFile[] = [];
+  sampleAssetItemsOf(source).forEach((item) => registryDependencies.add(item));
 
   for (const specifier of specifiers) {
     if (specifier === UTILS_SPECIFIER) {

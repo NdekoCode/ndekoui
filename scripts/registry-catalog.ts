@@ -69,10 +69,24 @@ function localItemOf(specifier: string) {
   return name;
 }
 
+const SAMPLE_ASSETS = [
+  { marker: '/avatars/avatar-', item: 'sample-avatars' },
+  { marker: '/images/scenes/', item: 'sample-scenes' },
+];
+
+/** The sample picture items a file needs, found by the public paths it points at. */
+export function sampleAssetItemsOf(source: string) {
+  const usedAssets = SAMPLE_ASSETS.filter((asset) =>
+    source.includes(asset.marker)
+  );
+  return usedAssets.map((asset) => asset.item);
+}
+
 export function dependenciesOf(filePath: string) {
   const source = fs.readFileSync(filePath, 'utf8');
   const registryDependencies = new Set<string>(['theme']);
   const dependencies = new Set<string>();
+  sampleAssetItemsOf(source).forEach((item) => registryDependencies.add(item));
 
   for (const specifier of importsOf(source)) {
     if (specifier.startsWith(MOTION_PREFIX)) {

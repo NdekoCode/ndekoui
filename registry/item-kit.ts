@@ -4,7 +4,9 @@ export type RegistryItemType =
   | 'registry:hook'
   | 'registry:component'
   | 'registry:block'
-  | 'registry:example';
+  | 'registry:example'
+  | 'registry:item'
+  | 'registry:file';
 
 export type RegistryItemFile = {
   path: string;

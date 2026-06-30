@@ -3,6 +3,7 @@ import path from 'node:path';
 
 import postcss, { type Container } from 'postcss';
 
+import { sampleAssetItems } from '../registry/asset-items';
 import { registryItems, type RegistryItemDefinition } from '../registry/items';
 import {
   bundleItemsOf,
@@ -146,6 +147,7 @@ async function buildRegistry() {
   const templateItems = bundleItemsOf('templates', templateGroups);
   const definitions = [
     ...registryItems,
+    ...sampleAssetItems,
     ...motionItemsOf(),
     ...hookItems,
     ...componentItems,
