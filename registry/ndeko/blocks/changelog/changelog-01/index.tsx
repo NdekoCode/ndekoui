@@ -9,6 +9,7 @@ import {
 } from 'motion/react';
 import { useEffect, useState } from 'react';
 
+import { WordRoll } from '@/components/core/word-roll';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
 
@@ -104,7 +105,7 @@ export default function Changelog01() {
         </AnimatedSize>
         <div className='flex flex-col items-start gap-3 md:ps-[12rem]'>
           <p className='text-muted-foreground text-xs tabular-nums'>
-            {shownCountLabel}
+            <WordRoll text={shownCountLabel} value={visibleCount} />
           </p>
           {hasMore && (
             <Button variant='outline' onClick={loadMore}>

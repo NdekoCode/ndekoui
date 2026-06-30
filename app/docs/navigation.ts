@@ -120,6 +120,11 @@ export const NAVIGATION: NavigationGroup[] = [
         name: 'Text Shimmer Wave',
         href: '/docs/text-shimmer-wave',
       },
+      {
+        name: 'Word Roll',
+        href: '/docs/word-roll',
+        isNew: true,
+      },
     ],
   },
   {

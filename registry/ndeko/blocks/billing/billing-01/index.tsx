@@ -9,7 +9,6 @@ import {
   MONEY_FORMAT,
   MONEY_LOCALE,
   daysLabelOf,
-  formatMoney,
   formatWholeMoney,
   onDemandTotal,
   type SpendCap,
@@ -35,7 +34,6 @@ export default function Billing01() {
   const chargedOnDemand = chargedOnDemandOf(cap, spent);
   const estimate = PLAN.monthlyPrice + chargedOnDemand;
   const planPrice = formatWholeMoney(PLAN.monthlyPrice);
-  const onDemandText = formatMoney(chargedOnDemand);
   const resetsIn = daysLabelOf(PLAN.resetsInDays);
 
   return (
@@ -65,7 +63,12 @@ export default function Billing01() {
               className='text-2xl leading-8 font-semibold'
             />
             <p className='text-muted-foreground text-xs tabular-nums'>
-              {PLAN.name} {planPrice}, on demand {onDemandText}
+              {PLAN.name} {planPrice}, on demand{' '}
+              <MotionNumber
+                value={chargedOnDemand}
+                locale={MONEY_LOCALE}
+                format={MONEY_FORMAT}
+              />
             </p>
           </div>
           <p className='text-muted-foreground text-xs'>

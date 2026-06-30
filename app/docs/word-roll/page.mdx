@@ -1,0 +1,115 @@
+export const metadata = {
+  title: 'Word Roll - Ndeko UI',
+  description:
+    'A short label whose changed words roll out and the new ones rise in their place, with the width held or eased. Built for React, Next.js, and Tailwind CSS.',
+};
+
+import { WordRollBilling } from './word-roll-billing';
+import { WordRollSeats } from './word-roll-seats';
+import { WordRollClock } from './word-roll-clock';
+import { WordRollStatus } from './word-roll-status';
+import ComponentCodePreview from '@/components/website/component-code-preview';
+
+# Word Roll
+
+A short label that becomes its next wording one word at a time. The words that changed leave upward and blur, the new ones rise from below, and the words that stayed do not move.
+
+## Examples
+
+### Billing period switch
+
+Only "every month" and "$144 once a year" roll; "Billed" stays. Switching to yearly rolls up, back to monthly rolls down.
+
+<ComponentCodePreview
+  component={<WordRollBilling />}
+  filePath='app/docs/word-roll/word-roll-billing.tsx'
+/>
+
+### Seat stepper
+
+The seat count rolls as a word in the direction of the change. Going from 1 to 2 also rolls "seat" into "seats". The phrase eases to its new width, so the price beside it slides.
+
+<ComponentCodePreview
+  component={<WordRollSeats />}
+  filePath='app/docs/word-roll/word-roll-seats.tsx'
+/>
+
+### City clock
+
+Every four seconds the next city and its time roll in; when the minute turns, only the time rolls. `labels` reserves the widest city, so nothing around the clock moves. Screen readers hear one sentence with every time.
+
+<ComponentCodePreview
+  component={<WordRollClock />}
+  filePath='app/docs/word-roll/word-roll-clock.tsx'
+/>
+
+### Status label
+
+A status that moves forward rolls up, and one that goes back rolls down.
+
+<ComponentCodePreview
+  component={<WordRollStatus />}
+  filePath='app/docs/word-roll/word-roll-status.tsx'
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value='cli'>CLI</TabsTrigger>
+  <TabsTrigger value='manual'>Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<InstallationCli value='word-roll' />
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>
+  Copy and paste the following code into your project. It uses the
+  `AnimatedSize` primitive.
+</Step>
+
+<CodeBlock filePath='components/core/word-roll.tsx' />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### WordRoll
+
+| Prop           | Type           | Default | Description                                                                                                                      |
+| :------------- | :------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------- |
+| text           | string         |         | The label to show, split into words on spaces. Use either `text` or `words`.                                                     |
+| words          | WordRollWord[] |         | The words as a list. An entry may hold several words that roll together, or `{ key, text, node }` to place a node in the phrase. |
+| labels         | string[]       |         | Every label the component can show. The widest one sets the width, so nothing around it moves.                                   |
+| direction      | 'up' \| 'down' |         | Forces the direction of the roll. `up` sends the old words up and brings the new ones from below.                                |
+| value          | number         |         | A number the label follows, such as a seat count: when it grows the words roll up, when it shrinks they roll down.               |
+| accessibleText | string         |         | The sentence read by screen readers instead of the visible words, for a label that changes on its own.                           |
+| className      | string         |         | Optional CSS class for the wrapper. The font size, weight and colour are inherited.                                              |
+
+Without `labels`, the width eases to the new words, so a longer label pushes what follows it smoothly instead of all at once. With neither `direction` nor `value`, the words roll up.
+
+A node word keeps its place while its own content changes and rolls only when its `key` changes. That is how a figure stays a Motion Number inside a rolling phrase: in `words={[{ key: 'amount', text: '€150', node: <MotionNumber value={150} /> }, 'a', 'month']}`, a new amount rolls its digits, and switching to `words={['No', 'cap']}` rolls the whole phrase.
+
+Screen readers hear the whole label once, never the rolling copy. Wrap a label that changes on a press in a polite live region to announce it. Under reduced motion the words fade to their new wording without moving.
+
+### Compared with Motion Number and Text Roll
+
+Motion Number rolls the digits of a figure on a wheel; Word Roll rolls whole words, so use it for the wording around a figure and keep the figure itself in a Motion Number. Text Roll flips every letter of a label on hover, while Word Roll answers a change of the label.
+
+## Credits
+
+The roll is inspired by the rotating city clock of the maintainer's portfolio.

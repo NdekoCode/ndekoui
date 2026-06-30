@@ -12,6 +12,7 @@ import {
 } from 'motion/react';
 import { useEffect, useId, useState } from 'react';
 
+import { WordRoll } from '@/components/core/word-roll';
 import {
   CheckIcon,
   LoaderCircleIcon,
@@ -587,7 +588,7 @@ export function UnsavedBar({
               role='status'
               className='min-w-0 flex-1 truncate text-[13px] tabular-nums'
             >
-              {text}
+              <WordRoll text={text} value={changeCount} />
             </p>
             <Button
               variant='ghost'

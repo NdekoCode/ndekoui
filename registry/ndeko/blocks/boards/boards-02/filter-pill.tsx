@@ -9,6 +9,7 @@ import {
 } from 'motion/react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { WordRoll } from '@/components/core/word-roll';
 import { XIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 
@@ -50,6 +51,7 @@ export function FilterPill({ hiddenCount, onClear }: FilterPillProps) {
   const shouldReduceMotion = useReducedMotion();
   const variants = pillVariantsOf(shouldReduceMotion);
   const isVisible = hiddenCount > 0;
+  const hiddenLabel = hiddenLabelOf(hiddenCount);
 
   return (
     <div className='pointer-events-none absolute inset-x-0 bottom-4 z-10 flex justify-center px-4'>
@@ -66,9 +68,11 @@ export function FilterPill({ hiddenCount, onClear }: FilterPillProps) {
           >
             <span className='flex items-center gap-1'>
               <MotionNumber value={hiddenCount} className='font-medium' />
-              <span className='text-muted-foreground'>
-                {hiddenLabelOf(hiddenCount)}
-              </span>
+              <WordRoll
+                text={hiddenLabel}
+                value={hiddenCount}
+                className='text-muted-foreground'
+              />
             </span>
             <Button variant='secondary' size='sm' onClick={onClear}>
               <XIcon />

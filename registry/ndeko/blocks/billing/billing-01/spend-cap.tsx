@@ -10,6 +10,7 @@ import {
 import { useEffect, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { WordRoll, type WordRollWord } from '@/components/core/word-roll';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -212,21 +213,35 @@ type CapFigureProps = {
   cap: SpendCap;
 };
 
-function CapFigure({ cap }: CapFigureProps) {
+const NO_CAP_WORD: WordRollWord = {
+  key: 'no-cap',
+  text: 'No cap',
+  node: <span className='font-medium'>No cap</span>,
+};
+
+/** The amount keeps its slot while it changes, so a new cap rolls its digits and only a switch rolls the words. */
+function capWordsOf(cap: SpendCap): WordRollWord[] {
   if (!cap.isCapped) {
-    return <span className='font-medium'>No cap</span>;
+    return [NO_CAP_WORD];
   }
-  return (
-    <span className='inline-flex items-baseline gap-1'>
+  const amount: WordRollWord = {
+    key: 'amount',
+    text: formatWholeMoney(cap.amount),
+    node: (
       <MotionNumber
         value={cap.amount}
         locale={MONEY_LOCALE}
         format={WHOLE_MONEY_FORMAT}
         className='font-medium'
       />
-      a month
-    </span>
-  );
+    ),
+  };
+  return [amount, 'a', 'month'];
+}
+
+function CapFigure({ cap }: CapFigureProps) {
+  const words = capWordsOf(cap);
+  return <WordRoll words={words} />;
 }
 
 function shownCapOf(isEditing: boolean, draft: SpendCap, cap: SpendCap) {

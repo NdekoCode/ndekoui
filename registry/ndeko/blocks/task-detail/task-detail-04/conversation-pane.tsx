@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useEffect, useRef } from 'react';
 
+import { WordRoll } from '@/components/core/word-roll';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 
@@ -253,6 +254,8 @@ export function ConversationPane({
   const hasScrolled = useRef(false);
   const items = itemsOf(comments, events, typing);
   const itemCount = items.length;
+  const commentCount = comments.length;
+  const commentWord = commentWordOf(commentCount);
 
   useEffect(() => {
     const area = scrollRef.current;
@@ -281,8 +284,8 @@ export function ConversationPane({
       <header className='flex items-baseline justify-between gap-3 px-4 pt-4'>
         <h2 className='text-sm font-medium'>Conversation</h2>
         <p className='text-muted-foreground text-xs'>
-          <RollingCount value={comments.length} />{' '}
-          {commentWordOf(comments.length)}
+          <RollingCount value={commentCount} />{' '}
+          <WordRoll text={commentWord} value={commentCount} />
         </p>
       </header>
       <div

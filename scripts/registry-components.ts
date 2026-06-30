@@ -178,6 +178,14 @@ export const components: ComponentDefinition[] = [
     description: 'A component that creates a wave-like shimmer effect on text.',
   },
   {
+    name: 'word-roll',
+    path: path.join(__dirname, '../components/core/word-roll.tsx'),
+    registryDependencies: [],
+    dependencies: ['motion'],
+    description:
+      'A short label whose changed words roll out and the new ones rise in, in the direction of the change.',
+  },
+  {
     name: 'magnetic',
     path: path.join(__dirname, '../components/core/magnetic.tsx'),
     registryDependencies: [],

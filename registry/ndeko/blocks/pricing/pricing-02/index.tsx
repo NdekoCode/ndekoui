@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { WordRoll } from '@/components/core/word-roll';
 import { MinusIcon, PlusIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 
@@ -131,9 +132,11 @@ export default function Pricing02() {
                   format={PRICE_FORMAT}
                   className='font-semibold'
                 />
-                <span className='text-muted-foreground text-xs'>
-                  {seatsLabel}
-                </span>
+                <WordRoll
+                  text={seatsLabel}
+                  value={seats}
+                  className='text-muted-foreground text-xs'
+                />
               </span>
             </div>
             <Button size='lg' nativeButton={false} render={<a href='#' />}>

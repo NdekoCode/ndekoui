@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { WordRoll } from '@/components/core/word-roll';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Chip } from '@/registry/ndeko/ui/chip';
@@ -18,6 +19,11 @@ import {
 } from './data';
 
 const MONTHS_PER_YEAR = 12;
+
+const PERIOD_ORDER: Record<BillingPeriod, number> = {
+  monthly: 0,
+  yearly: 1,
+};
 
 const PRICE_FORMAT: Intl.NumberFormatOptions = {
   style: 'currency',
@@ -50,7 +56,7 @@ function monthlyFigureOf(plan: Plan, period: BillingPeriod) {
 function billingNoteOf(plan: Plan, period: BillingPeriod) {
   if (period === 'yearly') {
     const total = formatPrice(plan.yearlyPrice);
-    return `${total} billed once a year`;
+    return `Billed ${total} once a year`;
   }
   return 'Billed every month';
 }
@@ -77,6 +83,7 @@ type PlanCardProps = {
 function PlanCard({ plan, period }: PlanCardProps) {
   const figure = monthlyFigureOf(plan, period);
   const note = billingNoteOf(plan, period);
+  const periodOrder = PERIOD_ORDER[period];
   const surface = surfaceOf(plan);
   const actionVariant = actionVariantOf(plan);
 
@@ -100,7 +107,9 @@ function PlanCard({ plan, period }: PlanCardProps) {
           />
           <span className='text-muted-foreground text-[13px]'>per month</span>
         </p>
-        <p className='text-muted-foreground text-xs tabular-nums'>{note}</p>
+        <p className='text-muted-foreground text-xs tabular-nums'>
+          <WordRoll text={note} value={periodOrder} />
+        </p>
       </div>
       <Button
         size='lg'
