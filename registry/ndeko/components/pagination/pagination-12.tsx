@@ -104,17 +104,17 @@ export default function Pagination12() {
   }
 
   return (
-    <div className='flex items-center justify-between gap-4'>
+    <div className='flex flex-wrap items-center justify-center gap-x-4 gap-y-3 sm:justify-between'>
       <LayoutGroup id={layoutGroupId}>
         <Pagination className='mx-0 w-auto'>
-          <PaginationContent>
+          <PaginationContent className='max-sm:gap-0.5'>
             <PaginationItem>
               <PaginationLink
                 href={hrefOf(previousPage)}
                 aria-label='Go to previous page'
                 isDisabled={isFirstPage}
                 onClick={(event) => goToPage(event, previousPage)}
-                className='rounded-full'
+                className='rounded-full max-sm:size-8'
               >
                 <ChevronLeftIcon />
               </PaginationLink>
@@ -133,7 +133,7 @@ export default function Pagination12() {
                     href={hrefOf(page)}
                     aria-current={ariaCurrentOf(isCurrent)}
                     onClick={(event) => goToPage(event, page)}
-                    className='rounded-full'
+                    className='rounded-full max-sm:size-8'
                   >
                     {isCurrent && (
                       <motion.span
@@ -158,7 +158,7 @@ export default function Pagination12() {
                 aria-label='Go to next page'
                 isDisabled={isLastPage}
                 onClick={(event) => goToPage(event, nextPage)}
-                className='rounded-full'
+                className='rounded-full max-sm:size-8'
               >
                 <ChevronRightIcon />
               </PaginationLink>

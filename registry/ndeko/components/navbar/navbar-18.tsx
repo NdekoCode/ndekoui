@@ -12,7 +12,9 @@ export default function Navbar18() {
         <div className='flex flex-1 items-center gap-2'>
           <TeamSwitcher teams={TEAMS} defaultTeam={TEAMS[0]} />
         </div>
-        <AppToggle />
+        <div className='max-sm:hidden'>
+          <AppToggle />
+        </div>
         <div className='flex flex-1 items-center justify-end gap-2'>
           <Button variant='ghost' className='max-sm:aspect-square max-sm:px-0'>
             <UploadIcon className='opacity-60' />

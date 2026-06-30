@@ -35,7 +35,7 @@ export default function Navbar14() {
 
   return (
     <header className='hairline-b border-border px-4 md:px-6'>
-      <div className='flex h-16 items-center justify-between gap-4'>
+      <div className='flex h-16 items-center justify-between gap-2 sm:gap-4'>
         <div className='flex flex-1 items-center gap-2'>
           <MobileNav className='w-48'>
             <MobileNavLinks
@@ -54,7 +54,7 @@ export default function Navbar14() {
           display='icon'
           className='max-md:hidden'
         />
-        <div className='flex flex-1 items-center justify-end gap-4'>
+        <div className='flex flex-1 items-center justify-end gap-2 sm:gap-4'>
           <Button className='max-sm:aspect-square max-sm:px-0'>
             <PlusIcon className='opacity-60' />
             <span className='max-sm:sr-only'>Post</span>

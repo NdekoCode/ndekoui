@@ -7,7 +7,7 @@ import type { DateRange } from 'react-day-picker';
 import { AnimatedCalendar } from './_parts/animated-calendar';
 
 const THREE_MONTHS = {
-  months: 'gap-8 sm:flex-col md:flex-row',
+  months: 'flex-row flex-wrap justify-center gap-x-8 gap-y-4',
   month: [
     'relative before:absolute before:bg-border first-of-type:before:hidden',
     'max-md:before:inset-x-2 max-md:before:-top-4 max-md:before:h-(--hairline)',

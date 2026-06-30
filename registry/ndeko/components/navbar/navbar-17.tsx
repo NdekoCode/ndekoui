@@ -16,7 +16,7 @@ import { Button } from '@/registry/ndeko/ui/button';
 export default function Navbar17() {
   return (
     <header className='hairline-b border-border px-4 md:px-6'>
-      <div className='flex h-16 items-center justify-between gap-4'>
+      <div className='flex h-16 items-center justify-between gap-2 sm:gap-4'>
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>

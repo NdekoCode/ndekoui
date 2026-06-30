@@ -15,14 +15,14 @@ const PRICE_SPREAD = 121;
 const DATE_KEY = 'yyyy-MM-dd';
 
 const PRICING_CLASS_NAMES = {
-  months: 'gap-8 sm:flex-col md:flex-row',
+  months: 'flex-row flex-wrap justify-center gap-x-8 gap-y-4',
   month: [
     'relative before:absolute before:bg-border first-of-type:before:hidden',
     'max-md:before:inset-x-2 max-md:before:-top-4 max-md:before:h-(--hairline)',
     'md:before:inset-y-2 md:before:-left-4 md:before:w-(--hairline)',
   ].join(' '),
-  weekday: 'w-12',
-  day_button: 'size-12',
+  weekday: 'w-10 sm:w-12',
+  day_button: 'size-10 sm:size-12',
   today: '*:after:hidden',
 };
 

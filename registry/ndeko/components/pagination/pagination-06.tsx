@@ -80,13 +80,13 @@ export default function Pagination06() {
   return (
     <LayoutGroup id={layoutGroupId}>
       <Pagination>
-        <PaginationContent>
+        <PaginationContent className='max-sm:gap-0.5'>
           <PaginationItem>
             <PaginationPrevious
               href={hrefOf(previousPage)}
               isDisabled={isFirstPage}
               onClick={(event) => goToPage(event, previousPage)}
-              className='rounded-full'
+              className='rounded-full max-sm:size-8'
             />
           </PaginationItem>
           {showLeftEllipsis && (
@@ -103,7 +103,7 @@ export default function Pagination06() {
                   href={hrefOf(page)}
                   aria-current={ariaCurrentOf(isCurrent)}
                   onClick={(event) => goToPage(event, page)}
-                  className='rounded-full'
+                  className='rounded-full max-sm:size-8'
                 >
                   {isCurrent && (
                     <motion.span
@@ -127,7 +127,7 @@ export default function Pagination06() {
               href={hrefOf(nextPage)}
               isDisabled={isLastPage}
               onClick={(event) => goToPage(event, nextPage)}
-              className='rounded-full'
+              className='rounded-full max-sm:size-8'
             />
           </PaginationItem>
         </PaginationContent>

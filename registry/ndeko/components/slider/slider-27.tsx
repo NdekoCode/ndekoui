@@ -91,7 +91,7 @@ function EqualizerBand({ band }: { band: Band }) {
 
 export default function Slider27() {
   return (
-    <fieldset className='flex w-full max-w-xs flex-col'>
+    <fieldset className='flex w-full max-w-xs flex-col px-2'>
       <legend className='mb-4 text-[13px] font-medium'>Equalizer</legend>
       <div className='flex h-48 justify-center gap-8'>
         {BANDS.map((band) => (

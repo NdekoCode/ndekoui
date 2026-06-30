@@ -74,12 +74,18 @@ export default function Navbar20() {
               />
               Online
             </Badge>
-            <Badge variant='outline' className='gap-1.5 tabular-nums'>
+            <Badge
+              variant='outline'
+              className='gap-1.5 tabular-nums max-sm:hidden'
+            >
               <ZapIcon className='opacity-60' />
               <span className='sr-only'>Uptime</span>
               99.9%
             </Badge>
-            <Badge variant='outline' className='gap-1.5 tabular-nums'>
+            <Badge
+              variant='outline'
+              className='gap-1.5 tabular-nums max-sm:hidden'
+            >
               <ClockIcon className='opacity-60' />
               <span className='sr-only'>Response time</span>
               45ms

@@ -90,7 +90,7 @@ export default function Navbar19() {
           >
             <UserRoundPlusIcon />
           </Button>
-          <ul className='ml-2 flex items-center gap-2'>
+          <ul className='ml-2 flex items-center gap-2 max-sm:hidden'>
             {COLLABORATORS.map((collaborator) => (
               <li key={collaborator.name} className='relative flex'>
                 <Avatar>

@@ -39,7 +39,7 @@ export default function Slider14() {
   }
 
   return (
-    <div className='flex w-full max-w-xs flex-col gap-3'>
+    <div className='flex w-full max-w-xs flex-col gap-3 px-3'>
       <Label>Gradient stops</Label>
       <Slider
         value={stops}
