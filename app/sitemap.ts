@@ -6,7 +6,14 @@ import { NAVIGATION } from '@/app/docs/navigation';
 
 const SITE_URL = 'https://ui.ndekocode.dev';
 
-const STATIC_PATHS = ['/', '/kit', '/components', '/blocks', '/templates'];
+const STATIC_PATHS = [
+  '/',
+  '/kit',
+  '/components',
+  '/blocks',
+  '/templates',
+  '/mcp/connect',
+];
 
 function entryOf(pathname: string): MetadataRoute.Sitemap[number] {
   return { url: `${SITE_URL}${pathname}` };

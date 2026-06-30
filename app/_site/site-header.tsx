@@ -23,6 +23,7 @@ const NAVIGATION = [
   { href: '/blocks', label: 'Blocks' },
   { href: '/templates', label: 'Templates' },
   { href: '/docs', label: 'Motion' },
+  { href: '/mcp/connect', label: 'MCP' },
 ];
 
 function ariaCurrentOf(isCurrent: boolean) {
