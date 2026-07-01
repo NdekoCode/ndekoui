@@ -36,7 +36,7 @@ const COLUMNS: WallColumn[] = [
     items: [Timeline06, Radio08, Slider26, Notification09],
     duration: '[--marquee-duration:85s]',
     isReversed: true,
-    visibility: 'flex',
+    visibility: 'hidden sm:flex',
   },
   {
     items: [Tree03, Tabs01, Checkbox14, FileUpload08],
@@ -89,12 +89,15 @@ function WallColumnView({ column }: { column: WallColumn }) {
 }
 
 /** Live compositions drifting in columns: the catalogue itself, not a picture of it. */
-export function LivingWall() {
+export function LivingWall({ className }: { className?: string }) {
   return (
     <div
       inert
       aria-hidden
-      className='bg-foreground/[0.025] relative h-[560px] overflow-hidden rounded-2xl mask-y-from-85% px-4 sm:h-[620px]'
+      className={cn(
+        'bg-foreground/[0.025] relative h-[560px] overflow-hidden rounded-2xl mask-y-from-85% px-4 sm:h-[620px]',
+        className
+      )}
     >
       <div className='flex gap-4'>
         {COLUMNS.map((column) => (
