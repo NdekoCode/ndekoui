@@ -30,10 +30,12 @@ const RELEASES: LinearModalFeature[] = [
 
 export function LinearModalReleaseNotes() {
   return (
-    <LinearModal
-      features={RELEASES}
-      closeLabel='Close release note'
-      className='w-full max-w-sm sm:grid-cols-1'
-    />
+    <div className='bg-foreground/[0.035] w-full max-w-sm rounded-2xl p-3'>
+      <LinearModal
+        features={RELEASES}
+        closeLabel='Close release note'
+        className='sm:grid-cols-1'
+      />
+    </div>
   );
 }

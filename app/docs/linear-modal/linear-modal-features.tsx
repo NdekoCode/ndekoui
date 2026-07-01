@@ -117,5 +117,9 @@ const FEATURES: LinearModalFeature[] = [
 ];
 
 export function LinearModalFeatures() {
-  return <LinearModal features={FEATURES} className='w-full max-w-2xl' />;
+  return (
+    <div className='bg-foreground/[0.035] w-full max-w-2xl rounded-2xl p-3 sm:p-4'>
+      <LinearModal features={FEATURES} />
+    </div>
+  );
 }

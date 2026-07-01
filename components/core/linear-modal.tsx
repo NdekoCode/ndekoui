@@ -78,9 +78,17 @@ function layoutIdsOf(scope: string, feature: LinearModalFeature): LayoutIds {
 
 const CARD = [
   'group/card flex w-full cursor-pointer flex-col overflow-hidden bg-card text-left text-card-foreground',
-  'hairline-ring ring-border shadow-[0_1px_2px_rgb(0_0_0/0.04)]',
   'outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
 ].join(' ');
+
+/*
+ * Shadows go through `style`, not classes: motion corrects a style shadow while the frame scales
+ * between card and dialog, where a class shadow or ring would thicken and thin on every frame.
+ */
+const CARD_SHADOW =
+  '0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 1px rgba(0, 0, 0, 0.03)';
+
+const MODAL_SHADOW = '0 24px 48px -16px rgba(0, 0, 0, 0.28)';
 
 const PLUS_TILE = [
   'keycap-3d grid size-7 shrink-0 place-items-center rounded-full text-muted-foreground',
@@ -108,7 +116,7 @@ function FeatureCard({ feature, ids, transition, onOpen }: FeatureCardProps) {
       transition={transition}
       onClick={open}
       className={CARD}
-      style={{ borderRadius: CARD_RADIUS }}
+      style={{ borderRadius: CARD_RADIUS, boxShadow: CARD_SHADOW }}
     >
       <motion.img
         layoutId={ids.image}
@@ -181,7 +189,6 @@ type FeatureModalProps = {
 
 const MODAL = [
   'relative m-auto flex w-full max-w-xl flex-col overflow-hidden bg-card text-card-foreground outline-none',
-  'hairline-ring ring-border shadow-xl shadow-black/8',
 ].join(' ');
 
 function FeatureModal({
@@ -215,7 +222,7 @@ function FeatureModal({
               layoutId={ids.frame}
               layoutCrossfade={false}
               transition={transitions.open}
-              style={{ borderRadius: MODAL_RADIUS }}
+              style={{ borderRadius: MODAL_RADIUS, boxShadow: MODAL_SHADOW }}
             />
           }
         >
