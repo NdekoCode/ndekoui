@@ -2,12 +2,18 @@ import Link from 'next/link';
 
 import { groupsOf } from '@/app/blocks/_shared/bundles';
 import { catalog } from '@/app/components/_generated/catalog';
-import { NdekoUILLogo } from '@/components/website/icons/ndekoui-logo';
+import {
+  NdekoUIGlyph,
+  NdekoUILLogo,
+} from '@/components/website/icons/ndekoui-logo';
 import { GithubIcon } from '@/registry/ndeko/lib/icons';
+import { Button } from '@/registry/ndeko/ui/button';
 
-const COLUMN_SIZE = 7;
+import { REPOSITORY_URL } from './repository';
 
-const REPOSITORY_URL = 'https://github.com/ndekocode/ndekoui';
+const COLUMN_SIZE = 6;
+
+const WATERMARK_COUNT = 9;
 
 type FooterLink = { href: string; label: string };
 
@@ -17,7 +23,12 @@ const LIBRARY_LINKS: FooterLink[] = [
   { href: '/blocks', label: 'Blocks' },
   { href: '/templates', label: 'Templates' },
   { href: '/docs', label: 'Motion' },
+];
+
+const RESOURCE_LINKS: FooterLink[] = [
   { href: '/docs/installation', label: 'Installation' },
+  { href: '/mcp/connect', label: 'MCP server' },
+  { href: '/r/registry.json', label: 'Registry index' },
 ];
 
 const PROJECT_LINKS: FooterLink[] = [
@@ -36,6 +47,8 @@ const PROJECT_LINKS: FooterLink[] = [
 
 const FOOTER_LINK =
   'rounded-sm text-[13px] text-muted-foreground outline-none transition-colors hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50';
+
+const WATERMARKS = Array.from({ length: WATERMARK_COUNT }, (_, index) => index);
 
 function largestCategoryLinks(): FooterLink[] {
   const bySize = [...catalog].sort(
@@ -58,39 +71,57 @@ function blockGroupLinks(): FooterLink[] {
   return [...links, { href: '/blocks', label: 'All blocks' }];
 }
 
+function currentYear() {
+  return new Date().getFullYear();
+}
+
 export function SiteFooter() {
   return (
-    <footer className='hairline-t border-border'>
-      <div className='mx-auto grid w-full max-w-6xl gap-10 px-4 py-12 md:px-6 lg:grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))]'>
-        <div className='flex flex-col gap-3'>
-          <Link
-            href='/'
-            className='focus-visible:ring-ring/25 flex w-fit items-center gap-2 rounded-md text-sm font-semibold outline-none focus-visible:ring-[3px]'
+    <footer className='dark bg-background text-foreground relative isolate overflow-hidden'>
+      <div className='mx-auto flex w-full max-w-6xl flex-col gap-14 px-4 pt-16 pb-12 md:px-6 md:pt-20'>
+        <div className='flex flex-wrap items-start justify-between gap-6'>
+          <div className='flex max-w-sm flex-col gap-3'>
+            <Link
+              href='/'
+              className='focus-visible:ring-ring/50 flex w-fit items-center gap-2.5 rounded-lg text-[15px] font-semibold tracking-tight outline-none focus-visible:ring-[3px]'
+            >
+              <NdekoUILLogo aria-hidden className='size-7' />
+              Ndeko UI
+            </Link>
+            <p className='text-muted-foreground text-[13px] text-pretty'>
+              Open-source React components that animate every change of state,
+              installed with the shadcn CLI or through MCP.
+            </p>
+          </div>
+          <Button
+            variant='outline'
+            size='icon'
+            nativeButton={false}
+            aria-label='Ndeko UI on GitHub'
+            role='link'
+            render={<a href={REPOSITORY_URL} />}
           >
-            <NdekoUILLogo aria-hidden className='size-6' />
-            Ndeko UI
-          </Link>
-          <p className='text-muted-foreground max-w-xs text-[13px] text-pretty'>
-            Open-source React components that animate every change of state,
-            installed with the shadcn CLI.
-          </p>
-          <a
-            href={REPOSITORY_URL}
-            className={`${FOOTER_LINK} flex w-fit items-center gap-1.5`}
-          >
-            <GithubIcon className='size-4' />
-            ndekocode/ndekoui
-          </a>
+            <GithubIcon />
+          </Button>
         </div>
-        <div className='grid grid-cols-2 gap-8 sm:grid-cols-4 lg:col-span-4'>
+        <div className='grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:grid-cols-5'>
           <FooterColumn title='Library' links={LIBRARY_LINKS} />
           <FooterColumn title='Components' links={largestCategoryLinks()} />
           <FooterColumn title='Blocks' links={blockGroupLinks()} />
+          <FooterColumn title='Resources' links={RESOURCE_LINKS} />
           <FooterColumn title='Project' links={PROJECT_LINKS} />
         </div>
+        <p className='text-muted-foreground text-center text-xs'>
+          {`© ${currentYear()} ndekocode. Open source under the MIT licence.`}
+        </p>
       </div>
-      <div className='text-muted-foreground mx-auto w-full max-w-6xl px-4 pb-10 text-xs md:px-6'>
-        Ndeko UI is open source under the MIT licence, built by ndekocode
+      <div
+        aria-hidden='true'
+        className='text-primary/15 flex h-28 translate-y-6 justify-center gap-10 overflow-hidden mask-x-from-70% sm:h-36'
+      >
+        {WATERMARKS.map((index) => (
+          <NdekoUIGlyph key={index} className='h-full' />
+        ))}
       </div>
     </footer>
   );
@@ -103,9 +134,9 @@ type FooterColumnProps = {
 
 function FooterColumn({ title, links }: FooterColumnProps) {
   return (
-    <div className='flex flex-col gap-2.5'>
-      <p className='text-foreground text-xs font-medium'>{title}</p>
-      <ul className='flex flex-col gap-2'>
+    <div className='flex flex-col gap-3'>
+      <p className='text-foreground text-[13px] font-medium'>{title}</p>
+      <ul className='flex flex-col gap-2.5'>
         {links.map((link) => (
           <li key={link.href}>
             <Link href={link.href} className={FOOTER_LINK}>
