@@ -47,6 +47,8 @@ A surface nested in another keeps the corners concentric: its radius is the oute
   - `surface-raised`: a floating layer (menu, popover, select, dialog).
   - `surface-brand`: the one lifted object of a block (a timer card, a featured plan).
 - Relief stays on labels. The state of a control (pressed, selected, checked) stays flat.
+- **Backgrounds before borders.** The outermost surface (a card, a dialog, a preview stage) keeps its one hairline. Everything inside it separates by a tint (`bg-foreground/[0.04]`, `bg-muted`, `bg-card` on a tinted parent) or by space, never by a second ring. A piece that reaches the edge of its container gets inner padding, so two rings never meet.
+- **Diagram nodes** (beam ends, orbit icons) are flat `bg-muted` tiles: the line or path that reaches them stays clean.
 
 ## 4. Shadows
 

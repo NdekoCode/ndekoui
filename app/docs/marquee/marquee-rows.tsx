@@ -1,7 +1,4 @@
 import { Marquee } from '@/components/core/marquee';
-import { Chip } from '@/registry/ndeko/ui/chip';
-
-const NEUTRAL = 'var(--muted-foreground)';
 
 const FIRST_ROW = [
   'Design tokens',
@@ -25,9 +22,9 @@ const SECOND_ROW = [
 
 function TopicChip({ label }: { label: string }) {
   return (
-    <Chip color={NEUTRAL} className='h-7 rounded-md px-2.5 text-[13px]'>
+    <span className='bg-foreground/[0.05] text-foreground inline-flex h-7 shrink-0 items-center rounded-md px-2.5 text-[13px] font-medium whitespace-nowrap'>
       {label}
-    </Chip>
+    </span>
   );
 }
 

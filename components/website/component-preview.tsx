@@ -67,7 +67,7 @@ export default function ComponentPreview({
   return (
     <div
       className={cn(
-        'group @container/tile-header flex min-h-[350px] w-full items-center justify-center rounded-xl',
+        'group @container/tile-header flex min-h-[350px] w-full items-center justify-center rounded-xl p-4 sm:p-6',
         className
       )}
     >

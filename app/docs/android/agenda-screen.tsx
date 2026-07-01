@@ -135,7 +135,7 @@ function EventRow({ event }: { event: AgendaEvent }) {
       <span className='text-muted-foreground w-9 shrink-0 pt-2.5 text-xs tabular-nums'>
         {event.start}
       </span>
-      <div className='bg-card hairline-ring ring-border flex min-w-0 flex-1 flex-col gap-0.5 rounded-xl px-3 py-2.5 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
+      <div className='bg-foreground/[0.04] flex min-w-0 flex-1 flex-col gap-0.5 rounded-xl px-3 py-2.5'>
         <span className='flex items-center justify-between gap-2'>
           <span className='truncate text-sm font-medium'>{event.title}</span>
           {event.isNow && <Chip>Now</Chip>}

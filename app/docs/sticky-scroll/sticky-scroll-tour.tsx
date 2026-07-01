@@ -7,7 +7,7 @@ import {
 
 function SceneFrame({ image }: { image: string }) {
   return (
-    <div className='bg-card hairline-ring ring-border rounded-2xl p-1.5 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
+    <div className='bg-foreground/[0.04] rounded-2xl p-1.5'>
       {/* eslint-disable-next-line @next/next/no-img-element -- registry examples land in any React app, where next/image may not exist */}
       <img
         src={image}

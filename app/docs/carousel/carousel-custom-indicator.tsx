@@ -73,8 +73,8 @@ export function CarouselCustomIndicator() {
               aria-current={isActive}
               onClick={() => setIndex(stepIndex)}
               className={cn(
-                'text-muted-foreground hairline-ring ring-border size-12 rounded-lg text-[13px] font-medium tabular-nums transition-colors',
-                isActive && 'bg-foreground/[0.06] text-foreground'
+                'bg-foreground/[0.03] text-muted-foreground size-12 rounded-lg text-[13px] font-medium tabular-nums transition-colors',
+                isActive && 'bg-foreground/[0.08] text-foreground'
               )}
             >
               {stepIndex + 1}

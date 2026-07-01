@@ -47,7 +47,7 @@ export function OrbitingCirclesTeam() {
         aria-label='Five members of a fictional team around their workspace'
         className='relative h-[300px] w-full max-w-sm overflow-hidden'
       >
-        <span className='keycap-3d text-muted-foreground absolute top-1/2 left-1/2 flex size-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-xl'>
+        <span className='bg-muted text-muted-foreground absolute top-1/2 left-1/2 flex size-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-xl'>
           <UsersIcon className='size-5' />
         </span>
         <OrbitingCircles

@@ -62,7 +62,7 @@ const STOPS: Stop[] = [
 
 function StopCard({ stop }: { stop: Stop }) {
   return (
-    <article className='bg-card hairline-ring ring-border w-[248px] shrink-0 rounded-xl p-1.5 shadow-[0_1px_2px_rgb(0_0_0/0.04)] sm:w-[288px]'>
+    <article className='bg-foreground/[0.04] w-[248px] shrink-0 rounded-xl p-1.5 sm:w-[288px]'>
       {/* eslint-disable-next-line @next/next/no-img-element -- registry examples land in any React app, where next/image may not exist */}
       <img
         src={stop.image}

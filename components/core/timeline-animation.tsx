@@ -140,7 +140,7 @@ export function TimelineAnimationItem({
       </span>
       <span
         aria-hidden='true'
-        className='bg-card hairline-ring ring-border absolute start-0 top-0.5 grid size-4 place-items-center rounded-full'
+        className='bg-muted absolute start-0 top-0.5 grid size-4 place-items-center rounded-full'
       >
         <span className='bg-foreground/15 col-start-1 row-start-1 size-1.5 rounded-full' />
         <motion.span

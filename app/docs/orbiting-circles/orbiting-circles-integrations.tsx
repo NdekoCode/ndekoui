@@ -24,7 +24,7 @@ const OUTER: Icon[] = [
 
 function Tile({ icon: TileIcon }: { icon: Icon }) {
   return (
-    <span className='keycap-3d text-muted-foreground flex size-full items-center justify-center rounded-lg'>
+    <span className='bg-muted text-muted-foreground flex size-full items-center justify-center rounded-lg'>
       <TileIcon className='size-4' />
     </span>
   );

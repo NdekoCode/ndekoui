@@ -274,6 +274,7 @@ const NODE_SIZES = {
 } as const;
 
 const NODE_MATERIALS = {
+  tile: 'bg-muted text-muted-foreground',
   keycap: 'keycap-3d text-muted-foreground',
   gem: 'gem-plate [--gem:var(--primary)]',
 } as const;
@@ -284,7 +285,7 @@ export type BeamNodeProps = React.ComponentProps<'div'> & {
 };
 
 export function BeamNode({
-  material = 'keycap',
+  material = 'tile',
   size = 'md',
   className,
   ...props

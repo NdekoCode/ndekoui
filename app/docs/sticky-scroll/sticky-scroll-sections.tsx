@@ -21,6 +21,14 @@ const MOMENTS = [
   },
 ];
 
+function surfaceOf(index: number) {
+  const isEven = index % 2 === 0;
+  if (isEven) {
+    return 'bg-card';
+  }
+  return 'bg-muted';
+}
+
 export function StickyScrollSections() {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -38,8 +46,9 @@ export function StickyScrollSections() {
               key={moment.time}
               aria-label={moment.title}
               className={cn(
-                'bg-card h-[400px] justify-center gap-3 px-8 sm:px-12',
-                !isFirst && 'hairline-ring ring-border rounded-t-2xl'
+                'h-[400px] justify-center gap-3 px-8 sm:px-12',
+                surfaceOf(index),
+                !isFirst && 'rounded-t-2xl'
               )}
             >
               <span className='text-muted-foreground text-[13px] tabular-nums'>

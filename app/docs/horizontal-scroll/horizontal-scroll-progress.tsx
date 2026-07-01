@@ -61,7 +61,7 @@ function StepCard({
   const Glyph = step.icon;
 
   return (
-    <article className='bg-card hairline-ring ring-border flex h-[220px] w-[232px] shrink-0 flex-col justify-between rounded-xl p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
+    <article className='bg-foreground/[0.04] flex h-[220px] w-[232px] shrink-0 flex-col justify-between rounded-xl p-4'>
       <div className='flex items-center justify-between'>
         <span className='gem-plate grid size-8 place-items-center rounded-md [--gem:var(--primary)]'>
           <Glyph className='size-4' />

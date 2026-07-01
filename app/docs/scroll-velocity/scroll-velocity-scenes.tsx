@@ -37,7 +37,7 @@ function SceneTiles({ scenes }: { scenes: readonly Scene[] }) {
       {scenes.map((scene) => (
         <div
           key={scene.src}
-          className='hairline-ring ring-border h-28 w-44 shrink-0 overflow-hidden rounded-xl'
+          className='bg-muted h-28 w-44 shrink-0 overflow-hidden rounded-xl'
         >
           {/* eslint-disable-next-line @next/next/no-img-element -- registry examples land in any React app, where next/image may not exist */}
           <img

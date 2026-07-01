@@ -32,7 +32,7 @@ export function CarouselSpacing() {
         <CarouselContent className='-ml-4'>
           {DAYS.map((day) => (
             <CarouselItem key={day.day} className='basis-1/3 pl-4'>
-              <div className='bg-card hairline-ring ring-border flex aspect-square flex-col items-center justify-center rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
+              <div className='bg-foreground/[0.04] flex aspect-square flex-col items-center justify-center rounded-xl'>
                 <span className='text-muted-foreground text-xs'>{day.day}</span>
                 <span className='text-foreground text-lg font-semibold tabular-nums'>
                   {day.date}

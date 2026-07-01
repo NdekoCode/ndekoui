@@ -24,7 +24,7 @@ export function MarqueeVertical() {
       {NOTES.map((release) => (
         <div
           key={release.version}
-          className='bg-card hairline-ring ring-border flex flex-col gap-1 rounded-xl px-3.5 py-3 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
+          className='bg-foreground/[0.04] flex flex-col gap-1 rounded-xl px-3.5 py-3'
         >
           <span className='text-muted-foreground font-mono text-xs tabular-nums'>
             {release.version}

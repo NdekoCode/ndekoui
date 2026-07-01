@@ -159,7 +159,7 @@ function PostMediaGrid({ media }: { media: PostMedia[] }) {
   const layout = MEDIA_LAYOUTS[shown.length];
 
   return (
-    <div className='hairline-ring ring-border mt-3 grid aspect-video grid-cols-2 grid-rows-2 gap-0.5 overflow-hidden rounded-lg'>
+    <div className='mt-3 grid aspect-video grid-cols-2 grid-rows-2 gap-0.5 overflow-hidden rounded-lg'>
       {shown.map((item, index) => (
         // eslint-disable-next-line @next/next/no-img-element -- registry items land in any React app, where next/image may not exist
         <img

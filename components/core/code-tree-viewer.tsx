@@ -449,7 +449,7 @@ export function CodeTreeViewer({
         className
       )}
     >
-      <div className='hairline-b border-border md:hairline-r max-h-40 shrink-0 overflow-auto p-1.5 md:max-h-none md:w-56 md:border-b-0'>
+      <div className='bg-foreground/[0.04] max-h-40 shrink-0 overflow-auto p-1.5 md:max-h-none md:w-56'>
         <Tree aria-label={ariaLabel} indent={INDENT} tree={tree}>
           {tree.getItems().map((item) => (
             <TreeItem key={item.getId()} item={item}>

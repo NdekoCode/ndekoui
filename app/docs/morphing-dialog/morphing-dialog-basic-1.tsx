@@ -64,7 +64,7 @@ export function MorphingDialogBasicOne() {
           </div>
           <span
             aria-hidden='true'
-            className='hairline-ring ring-border text-muted-foreground ml-1 grid size-6 shrink-0 place-items-center rounded-md'
+            className='bg-foreground/[0.05] text-muted-foreground ml-1 grid size-6 shrink-0 place-items-center rounded-md'
           >
             <PlusIcon className='size-3' />
           </span>

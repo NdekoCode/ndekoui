@@ -33,7 +33,7 @@ export function SmoothScrollNested() {
         ))}
         <ul
           aria-label='Orders'
-          className='bg-card hairline-ring ring-border h-48 overflow-y-auto rounded-xl px-1 py-1 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
+          className='bg-foreground/[0.04] h-48 overflow-y-auto rounded-xl px-1 py-1'
         >
           {ORDERS.map((order) => (
             <li

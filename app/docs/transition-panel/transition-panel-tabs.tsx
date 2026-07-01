@@ -55,7 +55,7 @@ export function TabsTransitionPanel() {
           );
         })}
       </div>
-      <div className='hairline-t border-border overflow-hidden'>
+      <div className='overflow-hidden'>
         <TransitionPanel
           activeIndex={activeIndex}
           transition={{ duration: 0.2, ease: EASE_IN_OUT_STRONG }}

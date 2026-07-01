@@ -7,8 +7,7 @@ import {
 } from '@/registry/ndeko/ui/avatar';
 import { cn } from '@/registry/ndeko/lib/utils';
 
-const CARD =
-  'bg-card hairline-ring ring-border flex flex-col gap-2 rounded-xl p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)]';
+const CARD = 'bg-foreground/[0.04] flex flex-col gap-2 rounded-xl p-4';
 
 const PACKING = [
   { label: 'Two warm layers', done: true },
@@ -64,7 +63,7 @@ function checkTone(done: boolean) {
   if (done) {
     return 'bg-primary text-primary-foreground';
   }
-  return 'hairline-ring ring-border';
+  return 'hairline-ring ring-foreground/20';
 }
 
 export function MasonryGridMixed() {
