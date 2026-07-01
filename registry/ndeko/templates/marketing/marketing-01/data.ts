@@ -233,6 +233,69 @@ const CARD_LIST: BoardCard[] = [
     due: 'Mon',
     owner: JONAS,
   },
+  {
+    id: 'changelog',
+    title: 'Write the changelog',
+    label: 'Copy',
+    due: 'Wed',
+    owner: AMA,
+  },
+  {
+    id: 'landing-hero',
+    title: 'Launch page hero',
+    label: 'Design',
+    due: 'Tue',
+    owner: JONAS,
+  },
+  {
+    id: 'pricing-tiers',
+    title: 'Pricing tiers',
+    label: 'Product',
+    due: 'Mon',
+    owner: DEV,
+  },
+  {
+    id: 'faq',
+    title: 'Update the FAQ',
+    label: 'Copy',
+    due: 'Mon',
+    owner: LUCIA,
+  },
+  {
+    id: 'translate-email',
+    title: 'Translate the launch email',
+    label: 'Copy',
+    due: 'Fri',
+    owner: LUCIA,
+  },
+  {
+    id: 'customer-stories',
+    title: 'Collect customer stories',
+    label: 'Research',
+    due: 'Wed',
+    owner: AMA,
+  },
+  {
+    id: 'status-page',
+    title: 'Set up the status page',
+    label: 'Product',
+    due: 'Thu',
+    owner: DEV,
+  },
+  {
+    id: 'brand-colors',
+    title: 'Brand colors',
+    label: 'Design',
+    due: 'Mon',
+    owner: JONAS,
+  },
+  {
+    id: 'invite-list',
+    title: 'Beta invite list',
+    label: 'Research',
+    due: 'Mon',
+    owner: AMA,
+  },
 ];
 
 const CARD_ENTRIES = CARD_LIST.map((card) => [card.id, card] as const);
@@ -241,9 +304,30 @@ export const CARDS: Record<string, BoardCard> =
   Object.fromEntries(CARD_ENTRIES);
 
 export const COLUMNS: Columns = {
-  todo: ['launch-email', 'launch-photos', 'demo-video', 'help-center'],
-  doing: ['pricing-copy', 'onboarding', 'social-posts'],
-  done: ['beta-notes', 'press-kit'],
+  todo: [
+    'launch-email',
+    'launch-photos',
+    'demo-video',
+    'help-center',
+    'changelog',
+    'translate-email',
+  ],
+  doing: [
+    'pricing-copy',
+    'onboarding',
+    'social-posts',
+    'landing-hero',
+    'customer-stories',
+    'status-page',
+  ],
+  done: [
+    'beta-notes',
+    'press-kit',
+    'pricing-tiers',
+    'faq',
+    'brand-colors',
+    'invite-list',
+  ],
 };
 
 export const BOARD = {

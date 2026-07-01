@@ -18,7 +18,7 @@ function hiddenFromReadersOf(isRepeated: boolean) {
 
 export function LogoCloud() {
   return (
-    <section className='px-4 py-12 sm:px-6 sm:py-16 lg:px-8'>
+    <section className='px-4 pt-4 pb-12 sm:px-6 sm:pt-6 sm:pb-16 lg:px-8'>
       <div className='mx-auto flex max-w-6xl flex-col gap-8'>
         <h2 className='text-muted-foreground text-center text-sm font-medium text-balance'>
           {LOGO_CLOUD.title}
