@@ -96,7 +96,7 @@ The brand marks in `registry/ndeko/lib/brand-logos.tsx`, the v0, Cursor and Clau
 
 ## Magic UI
 
-Several motion components take their idea and their props from Magic UI (<https://magicui.design>, MIT): globe, dotted map, orbiting circles, lens, border beam, shine border, magic card, confetti, the post card, the word rotate, the highlighter, text 3D flip, scroll velocity, and the Safari, iPhone and Android mockups. Their code is written for Ndeko UI; none of Magic UI's code was copied.
+Several motion components take their idea and their props from Magic UI (<https://magicui.design>, MIT): globe, dotted map, orbiting circles, lens, border beam, shine border, magic card, confetti, the post card, the word rotate, the highlighter, text 3D flip, scroll velocity, and the Safari, iPhone and Android mockups. The circular theme change of the site (`lib/theme-transition.ts`) follows the mechanism of Magic UI's animated theme toggler, by way of the author's portfolio. Their code is written for Ndeko UI; none of Magic UI's code was copied.
 
 The land grid in `components/core/dotted-map-points.ts` is generated once by `scripts/generate-dotted-map.ts` from the countries data that ships with dotted-map (MIT).
 
