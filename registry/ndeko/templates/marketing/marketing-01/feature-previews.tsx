@@ -15,7 +15,7 @@ import {
 } from './data';
 
 const CARD =
-  'bg-card hairline-ring ring-border dark:bg-foreground/[0.05] rounded-lg shadow-[0_1px_2px_rgb(0_0_0/0.04)]';
+  'bg-card dark:bg-foreground/[0.05] rounded-lg shadow-[0_1px_2px_rgb(0_0_0/0.06)]';
 
 const CHART = {
   width: 320,

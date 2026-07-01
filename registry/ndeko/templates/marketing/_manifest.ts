@@ -5,7 +5,7 @@ export const manifest: BlockManifest = [
     name: 'marketing-01',
     title: 'Planning board landing page',
     description:
-      'A Loomboard home page: a navbar with sliding menu panels, a hero whose board keeps moving a card across the lanes, a marquee of placeholder marks, four views beside a live preview, a call to action and a footer with a newsletter field.',
+      'A Loomboard home page: a navbar with sliding menu panels, a hero with a working board whose cards drag between lanes by pointer or keyboard, a marquee of placeholder marks, four views beside a live preview, a call to action and a footer with a newsletter field.',
     files: [
       'index.tsx',
       'site-header.tsx',
@@ -15,6 +15,9 @@ export const manifest: BlockManifest = [
       'brand-mark.tsx',
       'hero.tsx',
       'board-stage.tsx',
+      'board-lane.tsx',
+      'board-card.tsx',
+      'board-moves.ts',
       'logo-cloud.tsx',
       'mark-shape.tsx',
       'features.tsx',

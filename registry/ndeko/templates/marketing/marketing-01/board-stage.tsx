@@ -1,158 +1,104 @@
 'use client';
 
 import {
-  AnimatePresence,
-  LayoutGroup,
-  motion,
-  type Transition,
-  type Variants,
-  useReducedMotion,
-} from 'motion/react';
-import { useEffect, useState } from 'react';
+  DndContext,
+  DragOverlay,
+  KeyboardSensor,
+  MeasuringStrategy,
+  MouseSensor,
+  TouchSensor,
+  defaultDropAnimationSideEffects,
+  useSensor,
+  useSensors,
+  type Announcements,
+  type CollisionDetection,
+  type DragEndEvent,
+  type DragMoveEvent,
+  type DragOverEvent,
+  type DragStartEvent,
+  type DropAnimation,
+  type UniqueIdentifier,
+} from '@dnd-kit/core';
+import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
+import { useMotionValue, useReducedMotion } from 'motion/react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
 
-import { LayoutGridIcon, ZapIcon } from '@/registry/ndeko/lib/icons';
-import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { LayoutGridIcon } from '@/registry/ndeko/lib/icons';
 import { Chip } from '@/registry/ndeko/ui/chip';
-import { Kbd } from '@/registry/ndeko/ui/kbd';
-import { Switch } from '@/registry/ndeko/ui/switch';
 
+import { DragOverlayCard, PersonAvatar } from './board-card';
+import { BoardLane } from './board-lane';
+import {
+  detectBoardCollision,
+  laneOf,
+  moveAcrossLanes,
+  reorderInLane,
+  targetLaneOf,
+} from './board-moves';
 import {
   BOARD,
-  BOARD_RULE,
   type BoardCard,
+  CARDS,
+  COLUMNS,
+  type Columns,
   LANES,
-  MOVING_CARD,
+  type LaneId,
   PEOPLE,
-  type Person,
 } from './data';
 
-const MOVE_INTERVAL_MS = 2800;
+const MEASURING = { droppable: { strategy: MeasuringStrategy.Always } };
 
-const DONE_LANE_INDEX = LANES.length - 1;
-
-const CARD_SPRING: Transition = { type: 'spring', bounce: 0.12, duration: 0.7 };
-
-const INSTANT: Transition = { duration: 0 };
-
-const SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };
-
-const SWAP_VARIANTS: Variants = {
-  enter: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },
-  visible: { opacity: 1, scale: 1, filter: 'blur(0px)' },
-  exit: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },
+const DROP_ANIMATION: DropAnimation = {
+  duration: 220,
+  easing: 'cubic-bezier(0.23, 1, 0.32, 1)',
+  sideEffects: defaultDropAnimationSideEffects({
+    styles: { active: { opacity: '0.4' } },
+  }),
 };
 
-const FADE_VARIANTS: Variants = {
-  enter: { opacity: 0 },
-  visible: { opacity: 1 },
-  exit: { opacity: 0 },
+const SCREEN_READER_INSTRUCTIONS = {
+  draggable:
+    'To pick up a card, press Space or Enter. Use the arrow keys to move it between lanes and cards, Space or Enter to drop it, Escape to cancel.',
 };
 
-function nextLaneIndexOf(index: number) {
-  const next = index + 1;
-  return next % LANES.length;
-}
+const BOARD_LABEL = `${BOARD.title}, ${BOARD.week}`;
 
-function cardTransitionOf(shouldReduceMotion: boolean | null) {
+function dropAnimationOf(shouldReduceMotion: boolean | null) {
   if (shouldReduceMotion) {
-    return INSTANT;
+    return null;
   }
-  return CARD_SPRING;
+  return DROP_ANIMATION;
 }
 
-function initialsOf(name: string) {
-  const words = name.split(' ');
-  const letters = words.map((word) => word.charAt(0));
-  return letters.join('');
-}
-
-function swapVariantsOf(shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return FADE_VARIANTS;
+function laneTitleOf(laneId: LaneId | null) {
+  const lane = LANES.find((candidate) => candidate.id === laneId);
+  if (lane) {
+    return lane.title;
   }
-  return SWAP_VARIANTS;
+  return 'the board';
 }
 
-function laneCountOf(cardCount: number, holdsMovingCard: boolean) {
-  if (holdsMovingCard) {
-    return cardCount + 1;
-  }
-  return cardCount;
-}
-
-function ruleStatusOf(hasRuleRun: boolean) {
-  if (hasRuleRun) {
-    return BOARD_RULE.done;
-  }
-  return BOARD_RULE.waiting;
-}
-
-function PersonAvatar({
-  person,
-  className,
-}: {
-  person: Person;
-  className?: string;
-}) {
-  return (
-    <Avatar className={className}>
-      <AvatarImage src={person.image} alt={person.name} />
-      <AvatarFallback className='text-[10px]'>
-        {initialsOf(person.name)}
-      </AvatarFallback>
-    </Avatar>
-  );
-}
-
-function BoardCardView({
-  card,
-  isMoving = false,
-}: {
-  card: BoardCard;
-  isMoving?: boolean;
-}) {
-  return (
-    <div
-      className={cn(
-        'bg-card hairline-ring ring-border dark:bg-foreground/[0.05] flex flex-col gap-2 rounded-lg p-2 shadow-[0_1px_2px_rgb(0_0_0/0.04)] sm:p-2.5',
-        isMoving && 'ring-primary/45 shadow-[0_10px_24px_-10px_rgb(0_0_0/0.22)]'
-      )}
-    >
-      <p className='line-clamp-2 text-xs leading-snug font-medium sm:text-[13px]'>
-        {card.title}
-      </p>
-      <div className='flex items-center justify-between gap-1'>
-        <Chip color='var(--muted-foreground)'>{card.label}</Chip>
-        <PersonAvatar
-          person={card.owner}
-          className='hidden size-5 sm:inline-flex'
-        />
-      </div>
-    </div>
-  );
+function cardTitleOf(cardId: UniqueIdentifier) {
+  const card = CARDS[String(cardId)];
+  return card.title;
 }
 
 function BoardHeader() {
   return (
-    <div className='flex items-center gap-2.5 px-3 pt-3 sm:px-4 sm:pt-4'>
-      <span className='gem-plate flex size-6 items-center justify-center rounded-md [--gem:var(--primary)]'>
+    <div className='flex items-center gap-2.5 px-5 pt-4 pb-2'>
+      <span className='gem-plate flex size-6 shrink-0 items-center justify-center rounded-md [--gem:var(--primary)]'>
         <LayoutGridIcon className='size-3.5' />
       </span>
-      <p className='text-sm font-medium'>{BOARD.title}</p>
+      <p className='truncate text-sm font-medium'>{BOARD.title}</p>
       <Chip color='var(--muted-foreground)' className='hidden sm:inline-flex'>
         {BOARD.week}
       </Chip>
-      <div className='ms-auto flex -space-x-1.5'>
+      <div className='ms-auto flex shrink-0 -space-x-1.5'>
         {PEOPLE.map((person) => (
           <PersonAvatar
             key={person.name}
             person={person}
-            className='ring-card size-6 ring-2'
+            className='ring-card size-6 text-[10px] ring-2'
           />
         ))}
       </div>
@@ -160,103 +106,163 @@ function BoardHeader() {
   );
 }
 
-function RuleCard({ hasRuleRun }: { hasRuleRun: boolean }) {
-  const shouldReduceMotion = useReducedMotion();
-  const status = ruleStatusOf(hasRuleRun);
-  const swapVariants = swapVariantsOf(shouldReduceMotion);
-
-  return (
-    <div className='surface-raised motion-safe:animate-float absolute right-4 -bottom-6 hidden w-64 items-center gap-3 rounded-xl p-3 sm:flex lg:right-8'>
-      <span className='keycap-3d text-muted-foreground flex size-8 shrink-0 items-center justify-center rounded-lg'>
-        <ZapIcon />
-      </span>
-      <div className='flex min-w-0 flex-1 flex-col gap-0.5'>
-        <p className='truncate text-[13px] font-medium'>{BOARD_RULE.trigger}</p>
-        <AnimatePresence mode='popLayout' initial={false}>
-          <motion.p
-            key={status}
-            className='text-muted-foreground truncate text-xs'
-            variants={swapVariants}
-            initial='enter'
-            animate='visible'
-            exit='exit'
-            transition={SWAP_TRANSITION}
-          >
-            {status}
-          </motion.p>
-        </AnimatePresence>
-      </div>
-      <Switch defaultChecked aria-label='Rule is on' />
-    </div>
-  );
-}
-
 export function BoardStage() {
-  const [movingLaneIndex, setMovingLaneIndex] = useState(0);
+  const [columns, setColumns] = useState<Columns>(COLUMNS);
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const [targetLaneId, setTargetLaneId] = useState<LaneId | null>(null);
+  const columnsRef = useRef(columns);
+  const snapshotRef = useRef<Columns | null>(null);
+  const lastOverIdRef = useRef<UniqueIdentifier | null>(null);
+  const movedLaneRef = useRef(false);
+  const dragX = useMotionValue(0);
   const shouldReduceMotion = useReducedMotion();
-  const cardTransition = cardTransitionOf(shouldReduceMotion);
-  const hasRuleRun = movingLaneIndex === DONE_LANE_INDEX;
+  const dndContextId = useId();
+  const sensors = useSensors(
+    useSensor(MouseSensor, { activationConstraint: { distance: 4 } }),
+    useSensor(TouchSensor, {
+      activationConstraint: { delay: 180, tolerance: 6 },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  let activeCard: BoardCard | null = null;
+  if (activeId) {
+    activeCard = CARDS[activeId];
+  }
 
   useEffect(() => {
-    if (shouldReduceMotion) {
+    columnsRef.current = columns;
+    const frame = requestAnimationFrame(() => {
+      movedLaneRef.current = false;
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [columns]);
+
+  const collisionDetection = useCallback<CollisionDetection>((args) => {
+    const hits = detectBoardCollision(args, columnsRef.current);
+    if (hits.length > 0) {
+      lastOverIdRef.current = hits[0].id;
+      return hits;
+    }
+    if (movedLaneRef.current) {
+      lastOverIdRef.current = args.active.id;
+    }
+    const lastOverId = lastOverIdRef.current;
+    if (lastOverId) {
+      return [{ id: lastOverId }];
+    }
+    return [];
+  }, []);
+
+  const announcements: Announcements = {
+    onDragStart({ active }) {
+      const lane = laneOf(columnsRef.current, String(active.id));
+      return `Picked up ${cardTitleOf(active.id)} in ${laneTitleOf(lane)}`;
+    },
+    onDragOver({ active, over }) {
+      if (!over) {
+        return `${cardTitleOf(active.id)} is no longer over a lane`;
+      }
+      const lane = targetLaneOf(columnsRef.current, String(over.id));
+      return `${cardTitleOf(active.id)} is over ${laneTitleOf(lane)}`;
+    },
+    onDragEnd({ active }) {
+      const lane = laneOf(columnsRef.current, String(active.id));
+      return `${cardTitleOf(active.id)} dropped in ${laneTitleOf(lane)}`;
+    },
+    onDragCancel({ active }) {
+      return `Moving ${cardTitleOf(active.id)} was cancelled`;
+    },
+  };
+
+  function handleDragStart({ active }: DragStartEvent) {
+    const cardId = String(active.id);
+    snapshotRef.current = columns;
+    dragX.set(0);
+    setActiveId(cardId);
+    setTargetLaneId(laneOf(columns, cardId));
+  }
+
+  function handleDragMove({ delta }: DragMoveEvent) {
+    dragX.set(delta.x);
+  }
+
+  function handleDragOver({ active, over }: DragOverEvent) {
+    if (!over) {
       return;
     }
-    const interval = window.setInterval(() => {
-      setMovingLaneIndex(nextLaneIndexOf);
-    }, MOVE_INTERVAL_MS);
-    return () => window.clearInterval(interval);
-  }, [shouldReduceMotion]);
+    const overLane = targetLaneOf(columnsRef.current, String(over.id));
+    setTargetLaneId(overLane);
+    const fromLane = laneOf(columnsRef.current, String(active.id));
+    const isOtherLane = fromLane !== overLane;
+    if (!isOtherLane) {
+      return;
+    }
+    movedLaneRef.current = true;
+    setColumns((previous) => moveAcrossLanes(previous, active, over));
+  }
+
+  function handleDragEnd({ active, over }: DragEndEvent) {
+    setActiveId(null);
+    setTargetLaneId(null);
+    snapshotRef.current = null;
+    if (!over) {
+      return;
+    }
+    const activeCardId = String(active.id);
+    const overId = String(over.id);
+    setColumns((previous) => reorderInLane(previous, activeCardId, overId));
+  }
+
+  function handleDragCancel() {
+    const snapshot = snapshotRef.current;
+    if (snapshot) {
+      setColumns(snapshot);
+    }
+    snapshotRef.current = null;
+    setActiveId(null);
+    setTargetLaneId(null);
+  }
 
   return (
-    <div
-      inert
-      aria-hidden='true'
-      className='bg-foreground/[0.025] relative rounded-2xl p-3 pb-10 sm:p-6 sm:pb-12'
+    <section
+      aria-label={BOARD_LABEL}
+      className='bg-card hairline-ring ring-border overflow-hidden rounded-2xl shadow-[0_1px_2px_rgb(0_0_0/0.04),0_12px_32px_-16px_rgb(0_0_0/0.12)]'
     >
-      <div className='bg-card hairline-ring ring-border dark:bg-foreground/[0.03] flex flex-col gap-3 rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04),0_12px_32px_-16px_rgb(0_0_0/0.12)] sm:gap-4'>
-        <BoardHeader />
-        <LayoutGroup id='marketing-01-board'>
-          <div className='grid grid-cols-3 gap-2 px-2 pb-2 sm:gap-3 sm:px-4 sm:pb-4'>
-            {LANES.map((lane, index) => {
-              const holdsMovingCard = index === movingLaneIndex;
-              const count = laneCountOf(lane.cards.length, holdsMovingCard);
-
-              return (
-                <div
-                  key={lane.id}
-                  className='bg-foreground/[0.03] flex min-w-0 flex-col gap-2 rounded-lg p-1.5 sm:p-2'
-                >
-                  <div className='flex items-center justify-between gap-1 px-1 pt-0.5'>
-                    <span className='truncate text-xs font-medium'>
-                      {lane.title}
-                    </span>
-                    <Kbd>{count}</Kbd>
-                  </div>
-                  {holdsMovingCard && (
-                    <motion.div
-                      layoutId='marketing-01-moving-card'
-                      transition={cardTransition}
-                      className='relative z-10'
-                    >
-                      <BoardCardView card={MOVING_CARD} isMoving />
-                    </motion.div>
-                  )}
-                  {lane.cards.map((card) => (
-                    <motion.div
-                      key={card.id}
-                      layout='position'
-                      transition={cardTransition}
-                    >
-                      <BoardCardView card={card} />
-                    </motion.div>
-                  ))}
-                </div>
-              );
-            })}
+      <BoardHeader />
+      <DndContext
+        id={dndContextId}
+        sensors={sensors}
+        collisionDetection={collisionDetection}
+        measuring={MEASURING}
+        accessibility={{
+          announcements,
+          screenReaderInstructions: SCREEN_READER_INSTRUCTIONS,
+        }}
+        onDragStart={handleDragStart}
+        onDragMove={handleDragMove}
+        onDragOver={handleDragOver}
+        onDragEnd={handleDragEnd}
+        onDragCancel={handleDragCancel}
+      >
+        <div className='overflow-x-auto overscroll-x-contain max-md:snap-x max-md:snap-proximity max-md:scroll-px-2'>
+          <div className='grid h-[26rem] min-w-[42rem] grid-cols-3 grid-rows-[minmax(0,1fr)] gap-2 p-2'>
+            {LANES.map((lane) => (
+              <BoardLane
+                key={lane.id}
+                lane={lane}
+                cardIds={columns[lane.id]}
+                isTarget={targetLaneId === lane.id}
+              />
+            ))}
           </div>
-        </LayoutGroup>
-      </div>
-      <RuleCard hasRuleRun={hasRuleRun} />
-    </div>
+        </div>
+        <DragOverlay dropAnimation={dropAnimationOf(shouldReduceMotion)}>
+          {activeCard && <DragOverlayCard card={activeCard} dragX={dragX} />}
+        </DragOverlay>
+      </DndContext>
+    </section>
   );
 }

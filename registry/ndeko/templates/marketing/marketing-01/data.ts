@@ -2,6 +2,9 @@ import {
   BookOpenIcon,
   CalendarIcon,
   ChartLineIcon,
+  CircleCheckIcon,
+  CircleIcon,
+  EclipseIcon,
   GithubIcon,
   HistoryIcon,
   type Icon,
@@ -114,17 +117,33 @@ export type Person = {
   image: string;
 };
 
+export type WeekDay = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri';
+
+export const DAY_NAMES: Record<WeekDay, string> = {
+  Mon: 'Monday',
+  Tue: 'Tuesday',
+  Wed: 'Wednesday',
+  Thu: 'Thursday',
+  Fri: 'Friday',
+};
+
 export type BoardCard = {
   id: string;
   title: string;
   label: string;
+  due: WeekDay;
   owner: Person;
 };
 
+export type LaneId = 'todo' | 'doing' | 'done';
+
+export type Columns = Record<LaneId, string[]>;
+
 export type Lane = {
-  id: string;
+  id: LaneId;
   title: string;
-  cards: BoardCard[];
+  color: string;
+  icon: Icon;
 };
 
 const AMA: Person = { name: 'Ama Mensah', image: '/avatars/avatar-03.svg' };
@@ -135,66 +154,101 @@ const DEV: Person = { name: 'Dev Raman', image: '/avatars/avatar-06.svg' };
 export const PEOPLE: Person[] = [AMA, JONAS, LUCIA, DEV];
 
 export const LANES: Lane[] = [
-  {
-    id: 'todo',
-    title: 'To do',
-    cards: [
-      {
-        id: 'pricing-copy',
-        title: 'Pricing page copy',
-        label: 'Copy',
-        owner: LUCIA,
-      },
-      {
-        id: 'launch-photos',
-        title: 'Book launch photos',
-        label: 'Design',
-        owner: JONAS,
-      },
-    ],
-  },
+  { id: 'todo', title: 'To do', color: 'var(--info)', icon: CircleIcon },
   {
     id: 'doing',
     title: 'In progress',
-    cards: [
-      {
-        id: 'onboarding',
-        title: 'Onboarding checklist',
-        label: 'Product',
-        owner: DEV,
-      },
-    ],
+    color: 'var(--warning)',
+    icon: EclipseIcon,
   },
   {
     id: 'done',
     title: 'Done',
-    cards: [
-      {
-        id: 'beta-notes',
-        title: 'Beta feedback notes',
-        label: 'Research',
-        owner: AMA,
-      },
-    ],
+    color: 'var(--success)',
+    icon: CircleCheckIcon,
   },
 ];
 
-export const MOVING_CARD: BoardCard = {
-  id: 'launch-email',
-  title: 'Write the launch email',
-  label: 'Copy',
-  owner: AMA,
+const CARD_LIST: BoardCard[] = [
+  {
+    id: 'launch-email',
+    title: 'Write the launch email',
+    label: 'Copy',
+    due: 'Fri',
+    owner: AMA,
+  },
+  {
+    id: 'launch-photos',
+    title: 'Book launch photos',
+    label: 'Design',
+    due: 'Thu',
+    owner: JONAS,
+  },
+  {
+    id: 'demo-video',
+    title: 'Record the demo video',
+    label: 'Product',
+    due: 'Fri',
+    owner: DEV,
+  },
+  {
+    id: 'help-center',
+    title: 'Update the help center',
+    label: 'Copy',
+    due: 'Thu',
+    owner: LUCIA,
+  },
+  {
+    id: 'pricing-copy',
+    title: 'Pricing page copy',
+    label: 'Copy',
+    due: 'Tue',
+    owner: LUCIA,
+  },
+  {
+    id: 'onboarding',
+    title: 'Onboarding checklist',
+    label: 'Product',
+    due: 'Thu',
+    owner: DEV,
+  },
+  {
+    id: 'social-posts',
+    title: 'Launch day social posts',
+    label: 'Design',
+    due: 'Wed',
+    owner: JONAS,
+  },
+  {
+    id: 'beta-notes',
+    title: 'Beta feedback notes',
+    label: 'Research',
+    due: 'Mon',
+    owner: AMA,
+  },
+  {
+    id: 'press-kit',
+    title: 'Press kit',
+    label: 'Design',
+    due: 'Mon',
+    owner: JONAS,
+  },
+];
+
+const CARD_ENTRIES = CARD_LIST.map((card) => [card.id, card] as const);
+
+export const CARDS: Record<string, BoardCard> =
+  Object.fromEntries(CARD_ENTRIES);
+
+export const COLUMNS: Columns = {
+  todo: ['launch-email', 'launch-photos', 'demo-video', 'help-center'],
+  doing: ['pricing-copy', 'onboarding', 'social-posts'],
+  done: ['beta-notes', 'press-kit'],
 };
 
 export const BOARD = {
   title: 'Launch plan',
   week: 'Week 46',
-};
-
-export const BOARD_RULE = {
-  trigger: 'When a card reaches Done',
-  waiting: 'Waiting for the next card',
-  done: 'Posted in #launch',
 };
 
 export const HERO = {
