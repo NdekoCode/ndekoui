@@ -1,12 +1,15 @@
 'use client';
 
 import { Menu as MenuPrimitive } from '@base-ui/react/menu';
+import { motion, useReducedMotion } from 'motion/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 import { NdekoUILLogo } from '@/components/website/icons/ndekoui-logo';
-import { GithubIcon, MenuIcon } from '@/registry/ndeko/lib/icons';
+import { GithubIcon, MenuIcon, StarIcon } from '@/registry/ndeko/lib/icons';
 import { MENU_ITEM } from '@/registry/ndeko/lib/recipes';
+import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
   DropdownMenu,
@@ -14,6 +17,7 @@ import {
   DropdownMenuTrigger,
 } from '@/registry/ndeko/ui/dropdown-menu';
 
+import { REPOSITORY_URL } from './repository';
 import { SiteSearch } from './site-search/site-search';
 import { ThemeToggle } from './theme-toggle';
 
@@ -26,6 +30,16 @@ const NAVIGATION = [
   { href: '/mcp/connect', label: 'MCP' },
 ];
 
+const SCROLLED_AFTER_PX = 8;
+
+const HIGHLIGHT_TRAVEL = {
+  type: 'spring',
+  duration: 0.3,
+  bounce: 0,
+} as const;
+
+const NO_TRAVEL = { duration: 0 } as const;
+
 function ariaCurrentOf(isCurrent: boolean) {
   if (isCurrent) {
     return 'page' as const;
@@ -37,6 +51,29 @@ function isCurrentSection(pathname: string, href: string) {
   const isExact = pathname === href;
   const isNested = pathname.startsWith(`${href}/`);
   return isExact || isNested;
+}
+
+function travelOf(prefersReducedMotion: boolean | null) {
+  if (prefersReducedMotion) {
+    return NO_TRAVEL;
+  }
+  return HIGHLIGHT_TRAVEL;
+}
+
+function useIsScrolled() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    function readScroll() {
+      const hasLeftTop = window.scrollY > SCROLLED_AFTER_PX;
+      setIsScrolled(hasLeftTop);
+    }
+    readScroll();
+    window.addEventListener('scroll', readScroll, { passive: true });
+    return () => window.removeEventListener('scroll', readScroll);
+  }, []);
+
+  return isScrolled;
 }
 
 function SectionMenu({ pathname }: { pathname: string }) {
@@ -73,53 +110,99 @@ function SectionMenu({ pathname }: { pathname: string }) {
   );
 }
 
-export function SiteHeader() {
-  const pathname = usePathname();
+function SectionNavigation({ pathname }: { pathname: string }) {
+  const [hoveredHref, setHoveredHref] = useState<string | null>(null);
+  const prefersReducedMotion = useReducedMotion();
+  const travel = travelOf(prefersReducedMotion);
+
+  function clearHover() {
+    setHoveredHref(null);
+  }
 
   return (
-    <header className='hairline-b border-border bg-background/90 sticky top-0 z-40 backdrop-blur-sm'>
-      <div className='mx-auto flex h-14 w-full max-w-6xl items-center gap-4 px-4 md:px-6'>
+    <nav
+      aria-label='Sections'
+      className='hidden items-center md:flex'
+      onPointerLeave={clearHover}
+    >
+      {NAVIGATION.map((item) => {
+        const isCurrent = isCurrentSection(pathname, item.href);
+        const isHovered = hoveredHref === item.href;
+
+        function showHover() {
+          setHoveredHref(item.href);
+        }
+
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            aria-current={ariaCurrentOf(isCurrent)}
+            onPointerEnter={showHover}
+            onFocus={showHover}
+            onBlur={clearHover}
+            className='text-muted-foreground aria-[current=page]:text-foreground hover:text-foreground focus-visible:ring-ring/25 relative rounded-full px-3 py-1.5 text-[13px] font-medium transition-colors outline-none focus-visible:ring-[3px]'
+          >
+            {isHovered && (
+              <motion.span
+                layoutId='site-nav-hover'
+                transition={travel}
+                aria-hidden='true'
+                className='bg-foreground/[0.06] absolute inset-0 rounded-full'
+              />
+            )}
+            <span className='relative'>{item.label}</span>
+          </Link>
+        );
+      })}
+    </nav>
+  );
+}
+
+function GithubStarLink() {
+  return (
+    <Button
+      variant='outline'
+      size='sm'
+      nativeButton={false}
+      aria-label='Star Ndeko UI on GitHub'
+      className='hidden rounded-full sm:inline-flex'
+      render={<a href={REPOSITORY_URL} />}
+    >
+      <GithubIcon />
+      Star
+      <StarIcon className='text-muted-foreground' />
+    </Button>
+  );
+}
+
+export function SiteHeader() {
+  const pathname = usePathname();
+  const isScrolled = useIsScrolled();
+
+  return (
+    <header
+      data-scrolled={isScrolled}
+      className={cn(
+        'sticky top-0 z-40 transition-[background-color,box-shadow,backdrop-filter] duration-200',
+        isScrolled &&
+          'bg-background/80 shadow-[0_1px_0_var(--border)] backdrop-blur-md'
+      )}
+    >
+      <div className='mx-auto flex h-16 w-full max-w-6xl items-center gap-4 px-4 md:grid md:grid-cols-[1fr_auto_1fr] md:px-6'>
         <Link
           href='/'
-          className='focus-visible:ring-ring/25 flex items-center gap-2 rounded-md text-sm font-semibold outline-none focus-visible:ring-[3px]'
+          className='focus-visible:ring-ring/25 flex w-fit items-center gap-2.5 rounded-lg text-[15px] font-semibold tracking-tight outline-none focus-visible:ring-[3px]'
         >
-          <NdekoUILLogo aria-hidden className='size-6' />
+          <NdekoUILLogo aria-hidden className='size-7' />
           Ndeko UI
         </Link>
-        <nav
-          aria-label='Sections'
-          className='hidden items-center gap-1 md:flex'
-        >
-          {NAVIGATION.map((item) => {
-            const isCurrent = isCurrentSection(pathname, item.href);
-            return (
-              <Button
-                key={item.href}
-                variant='ghost'
-                size='sm'
-                nativeButton={false}
-                aria-current={ariaCurrentOf(isCurrent)}
-                className='text-muted-foreground aria-[current=page]:text-foreground'
-                render={<Link href={item.href} />}
-              >
-                {item.label}
-              </Button>
-            );
-          })}
-        </nav>
-        <div className='ml-auto flex items-center gap-1'>
+        <SectionNavigation pathname={pathname} />
+        <div className='ml-auto flex items-center gap-1 md:justify-self-end'>
           <SiteSearch />
           <SectionMenu pathname={pathname} />
           <ThemeToggle />
-          <Button
-            variant='ghost'
-            size='icon-sm'
-            nativeButton={false}
-            aria-label='Ndeko UI on GitHub'
-            render={<a href='https://github.com/ndekocode/ndekoui' />}
-          >
-            <GithubIcon />
-          </Button>
+          <GithubStarLink />
         </div>
       </div>
     </header>
