@@ -76,7 +76,7 @@ const ROW_ICON_TILE =
   'keycap-3d text-muted-foreground flex size-10 shrink-0 items-center justify-center rounded-lg';
 
 const FILE_ROW =
-  'bg-card hairline-ring ring-border flex items-center justify-between gap-2 rounded-xl p-2 pe-3 shadow-[0_1px_2px_rgb(0_0_0/0.04)]';
+  'bg-foreground/[0.04] flex items-center justify-between gap-2 rounded-xl p-2 pe-3';
 
 const COUNT =
   'keycap-3d inline-flex h-5 min-w-5 items-center justify-center rounded-[5px] px-1 text-[11px] font-medium tabular-nums text-muted-foreground';

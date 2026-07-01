@@ -9,6 +9,7 @@ import {
   FileTextIcon,
   type Icon,
 } from '@/registry/ndeko/lib/icons';
+import { Badge, type BadgeProps } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Chip } from '@/registry/ndeko/ui/chip';
 import { ToggleGroup, ToggleGroupItem } from '@/registry/ndeko/ui/toggle-group';
@@ -165,11 +166,21 @@ function shareOf(minutes: number, total: number) {
   return Math.round(share);
 }
 
-function noteChipOf(isPrivate: boolean) {
+type NoteBadge = {
+  label: string;
+  variant: BadgeProps['variant'];
+  className?: string;
+};
+
+function noteBadgeOf(isPrivate: boolean): NoteBadge {
   if (isPrivate) {
-    return { label: 'Private', color: 'var(--muted-foreground)' };
+    return {
+      label: 'Private',
+      variant: 'secondary',
+      className: 'text-muted-foreground',
+    };
   }
-  return { label: 'Team', color: 'var(--info)' };
+  return { label: 'Team', variant: 'info' };
 }
 
 function DetailRow({
@@ -305,8 +316,12 @@ function MemberProfile() {
           </span>
         </DetailRow>
         <DetailRow label='Teams'>
-          <Chip color='var(--muted-foreground)'>Product</Chip>
-          <Chip color='var(--muted-foreground)'>Platform</Chip>
+          <Badge variant='secondary' className='text-muted-foreground'>
+            Product
+          </Badge>
+          <Badge variant='secondary' className='text-muted-foreground'>
+            Platform
+          </Badge>
         </DetailRow>
       </div>
       <DayTime />
@@ -337,13 +352,15 @@ function MemberProfile() {
         <ul className='flex flex-col gap-3'>
           {NOTES.map((note) => {
             const author = PEOPLE.find((person) => person.id === note.authorId);
-            const chip = noteChipOf(note.isPrivate);
+            const badge = noteBadgeOf(note.isPrivate);
 
             return (
               <li key={note.id} className='flex flex-col gap-1'>
                 <p className='flex items-center gap-1.5 text-xs'>
                   <span className='font-medium'>{author?.name}</span>
-                  <Chip color={chip.color}>{chip.label}</Chip>
+                  <Badge variant={badge.variant} className={badge.className}>
+                    {badge.label}
+                  </Badge>
                   <span className='text-muted-foreground ml-auto'>
                     {note.date}
                   </span>

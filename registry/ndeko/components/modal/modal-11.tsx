@@ -16,6 +16,7 @@ import {
 } from '@/registry/ndeko/lib/icons';
 import { CONTROL_RECIPE } from '@/registry/ndeko/lib/recipes';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { Badge } from '@/registry/ndeko/ui/badge';
 import { Chip } from '@/registry/ndeko/ui/chip';
 import { Kbd } from '@/registry/ndeko/ui/kbd';
 import { SelectedMark } from '@/registry/ndeko/ui/selected-mark';
@@ -262,9 +263,12 @@ function ResultRow({
         )}
       </span>
       {isGuest && (
-        <Chip color='var(--muted-foreground)' className='font-normal'>
+        <Badge
+          variant='secondary'
+          className='text-muted-foreground font-normal'
+        >
           Guest
-        </Chip>
+        </Badge>
       )}
       {isPicked && <SelectedMark label='Mentioned' />}
     </li>

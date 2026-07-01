@@ -18,8 +18,8 @@ import {
 } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
+import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
-import { Chip } from '@/registry/ndeko/ui/chip';
 
 import {
   AsideCloseButton,
@@ -302,8 +302,12 @@ function ProjectDetails() {
           <span className='text-muted-foreground ml-1 text-xs'>67 days</span>
         </PropertyRow>
         <PropertyRow icon={UsersIcon} label='Teams'>
-          <Chip color='var(--muted-foreground)'>Product</Chip>
-          <Chip color='var(--muted-foreground)'>Platform</Chip>
+          <Badge variant='secondary' className='text-muted-foreground'>
+            Product
+          </Badge>
+          <Badge variant='secondary' className='text-muted-foreground'>
+            Platform
+          </Badge>
         </PropertyRow>
         <PropertyRow icon={ClockIcon} label='Budget'>
           <span className='tabular-nums'>320 h</span>
@@ -312,8 +316,12 @@ function ProjectDetails() {
           </span>
         </PropertyRow>
         <PropertyRow icon={HashIcon} label='Labels'>
-          <Chip color='var(--muted-foreground)'>Design system</Chip>
-          <Chip color='var(--muted-foreground)'>Q4</Chip>
+          <Badge variant='secondary' className='text-muted-foreground'>
+            Design system
+          </Badge>
+          <Badge variant='secondary' className='text-muted-foreground'>
+            Q4
+          </Badge>
         </PropertyRow>
       </div>
       <p className='bg-foreground/[0.03] rounded-xl px-3.5 py-3 text-[13px] leading-5'>

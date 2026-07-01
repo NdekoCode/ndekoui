@@ -15,7 +15,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from '@/registry/ndeko/ui/avatar';
-import { Chip } from '@/registry/ndeko/ui/chip';
+import { Badge } from '@/registry/ndeko/ui/badge';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -166,8 +166,8 @@ function AttendeeChip({
       exit='hidden'
       className='flex'
     >
-      <Chip
-        color='var(--muted-foreground)'
+      <Badge
+        variant='secondary'
         className='h-7 gap-1.5 rounded-full pr-0.5 pl-0.5 text-[13px]'
       >
         <Avatar className='size-5 text-[9px]'>
@@ -183,7 +183,7 @@ function AttendeeChip({
         >
           <XIcon className='size-3' />
         </button>
-      </Chip>
+      </Badge>
     </motion.li>
   );
 }

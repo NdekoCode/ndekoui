@@ -11,7 +11,7 @@ import {
 } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
-import { Chip } from '@/registry/ndeko/ui/chip';
+import { Badge } from '@/registry/ndeko/ui/badge';
 import { Switch } from '@/registry/ndeko/ui/switch';
 
 import { ActionButton, useTimedAction } from './_parts/action-button';
@@ -157,10 +157,7 @@ function DomainChip({
       exit='hidden'
       className='flex'
     >
-      <Chip
-        color='var(--muted-foreground)'
-        className='h-7 gap-1 pr-0.5 pl-2 text-[13px]'
-      >
+      <Badge variant='secondary' className='h-7 gap-1 pr-0.5 pl-2 text-[13px]'>
         {`@${domain}`}
         <button
           type='button'
@@ -170,7 +167,7 @@ function DomainChip({
         >
           <XIcon className='size-3' />
         </button>
-      </Chip>
+      </Badge>
     </motion.li>
   );
 }

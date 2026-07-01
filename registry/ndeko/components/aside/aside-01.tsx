@@ -17,6 +17,7 @@ import {
   type Icon,
 } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Checkbox } from '@/registry/ndeko/ui/checkbox';
 import { Chip } from '@/registry/ndeko/ui/chip';
@@ -218,13 +219,13 @@ function Assignees({
             exit='hidden'
             className='flex'
           >
-            <Chip
-              color='var(--muted-foreground)'
-              className='h-6 gap-1.5 pr-2 pl-0.5'
+            <Badge
+              variant='secondary'
+              className='text-muted-foreground h-6 gap-1.5 pr-2 pl-0.5'
             >
               <PersonAvatar person={person} size='xs' />
               {firstNameOf(person)}
-            </Chip>
+            </Badge>
           </motion.span>
         ))}
       </AnimatePresence>
@@ -492,12 +493,12 @@ function TaskDetails() {
             <Assignees assigneeIds={assigneeIds} onToggle={toggleAssignee} />
           </PropertyRow>
           <PropertyRow icon={HashIcon} label='Labels'>
-            <Chip color='var(--muted-foreground)' className='h-6'>
+            <Badge variant='secondary' className='text-muted-foreground h-6'>
               Design
-            </Chip>
-            <Chip color='var(--muted-foreground)' className='h-6'>
+            </Badge>
+            <Badge variant='secondary' className='text-muted-foreground h-6'>
               Onboarding
-            </Chip>
+            </Badge>
           </PropertyRow>
           <PropertyRow icon={CalendarIcon} label='Due date'>
             <span className='text-[13px]'>Nov 8</span>

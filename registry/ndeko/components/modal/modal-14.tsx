@@ -111,7 +111,7 @@ function StatusChip({ isPaid }: { isPaid: boolean }) {
 
 function EntriesTable({ totalMinutes }: { totalMinutes: number }) {
   return (
-    <div className='bg-card hairline-ring ring-border overflow-hidden rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
+    <div className='bg-foreground/[0.04] overflow-hidden rounded-xl'>
       <table className='w-full text-[13px]'>
         <caption className='sr-only'>Time entries of the invoice</caption>
         <thead>

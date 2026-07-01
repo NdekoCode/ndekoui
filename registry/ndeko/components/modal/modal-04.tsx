@@ -5,8 +5,8 @@ import { useId, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import { LayersIcon, SearchIcon, XIcon } from '@/registry/ndeko/lib/icons';
+import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
-import { Chip } from '@/registry/ndeko/ui/chip';
 import {
   Combobox,
   ComboboxContent,
@@ -122,7 +122,9 @@ function OwnerRow() {
       <div className='flex min-w-0 flex-1 flex-col gap-0.5'>
         <p className='flex items-center gap-1.5 text-[13px] leading-tight font-medium'>
           <span className='truncate'>{CURRENT_USER.name}</span>
-          <Chip color='var(--muted-foreground)'>You</Chip>
+          <Badge variant='secondary' className='text-muted-foreground'>
+            You
+          </Badge>
         </p>
         <p className='text-muted-foreground truncate text-xs leading-tight'>
           {CURRENT_USER.email}
