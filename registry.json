@@ -26158,6 +26158,7 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/field.json",
@@ -26609,6 +26610,7 @@
       "description": "A monthly and yearly segmented switch whose thumb travels while the digits of both prices roll to their new value, over two plans with example prices.",
       "dependencies": [],
       "registryDependencies": [
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
@@ -28561,6 +28563,7 @@
         "https://ui.ndekocode.dev/r/accordion.json",
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/field.json",

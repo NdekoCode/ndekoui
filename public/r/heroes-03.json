@@ -9,6 +9,7 @@
   "registryDependencies": [
     "https://ui.ndekocode.dev/r/animated-size.json",
     "https://ui.ndekocode.dev/r/avatar.json",
+    "https://ui.ndekocode.dev/r/badge.json",
     "https://ui.ndekocode.dev/r/button.json",
     "https://ui.ndekocode.dev/r/chip.json",
     "https://ui.ndekocode.dev/r/field.json",
@@ -21,7 +22,7 @@
   "files": [
     {
       "path": "registry/ndeko/blocks/heroes/heroes-03/index.tsx",
-      "content": "import { Chip } from '@/registry/ndeko/ui/chip';\n\nimport { HERO } from './data';\nimport { IssuePreview } from './issue-preview';\nimport { WaitlistForm } from './waitlist-form';\n\nexport default function Heroes03() {\n  return (\n    <section className='px-4 py-16 sm:px-6 sm:py-24 lg:px-8'>\n      <div className='mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[minmax(0,1fr)_24rem] lg:gap-16'>\n        <div className='flex max-w-xl flex-col items-start gap-6'>\n          <Chip color='var(--muted-foreground)' className='h-6 px-2'>\n            {HERO.eyebrow}\n          </Chip>\n          <h1 className='text-4xl font-semibold text-balance sm:text-5xl'>\n            {HERO.title}\n          </h1>\n          <p className='text-muted-foreground text-base text-pretty'>\n            {HERO.description}\n          </p>\n          <WaitlistForm />\n        </div>\n        <div className='hidden lg:block'>\n          <IssuePreview />\n        </div>\n      </div>\n    </section>\n  );\n}\n",
+      "content": "import { Badge } from '@/registry/ndeko/ui/badge';\n\nimport { HERO } from './data';\nimport { IssuePreview } from './issue-preview';\nimport { WaitlistForm } from './waitlist-form';\n\nexport default function Heroes03() {\n  return (\n    <section className='px-4 py-16 sm:px-6 sm:py-24 lg:px-8'>\n      <div className='mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[minmax(0,1fr)_24rem] lg:gap-16'>\n        <div className='flex max-w-xl flex-col items-start gap-6'>\n          <Badge variant='secondary' className='text-muted-foreground h-6 px-2'>\n            {HERO.eyebrow}\n          </Badge>\n          <h1 className='text-4xl font-semibold text-balance sm:text-5xl'>\n            {HERO.title}\n          </h1>\n          <p className='text-muted-foreground text-base text-pretty'>\n            {HERO.description}\n          </p>\n          <WaitlistForm />\n        </div>\n        <div className='hidden lg:block'>\n          <IssuePreview />\n        </div>\n      </div>\n    </section>\n  );\n}\n",
       "type": "registry:component",
       "target": "components/blocks/heroes-03/index.tsx"
     },
