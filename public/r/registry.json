@@ -28405,9 +28405,12 @@
       "name": "marketing-01",
       "type": "registry:block",
       "title": "Planning board landing page",
-      "description": "A Loomboard home page: a navbar with sliding menu panels, a hero whose board keeps moving a card across the lanes, a marquee of placeholder marks, four views beside a live preview, a call to action and a footer with a newsletter field.",
+      "description": "A Loomboard home page: a navbar with sliding menu panels, a hero with a working board whose cards drag between lanes by pointer or keyboard, a marquee of placeholder marks, four views beside a live preview, a call to action and a footer with a newsletter field.",
       "dependencies": [
         "@base-ui/react",
+        "@dnd-kit/core",
+        "@dnd-kit/sortable",
+        "@dnd-kit/utilities",
         "motion"
       ],
       "registryDependencies": [
@@ -28421,6 +28424,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/navigation-menu.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
@@ -28468,6 +28472,21 @@
           "path": "registry/ndeko/templates/marketing/marketing-01/board-stage.tsx",
           "type": "registry:component",
           "target": "components/templates/marketing-01/board-stage.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/marketing/marketing-01/board-lane.tsx",
+          "type": "registry:component",
+          "target": "components/templates/marketing-01/board-lane.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/marketing/marketing-01/board-card.tsx",
+          "type": "registry:component",
+          "target": "components/templates/marketing-01/board-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/marketing/marketing-01/board-moves.ts",
+          "type": "registry:component",
+          "target": "components/templates/marketing-01/board-moves.ts"
         },
         {
           "path": "registry/ndeko/templates/marketing/marketing-01/logo-cloud.tsx",
