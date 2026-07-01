@@ -17,14 +17,12 @@ import {
   AvatarFallback,
   AvatarImage,
 } from '@/registry/ndeko/ui/avatar';
-import { Chip } from '@/registry/ndeko/ui/chip';
+import { Badge } from '@/registry/ndeko/ui/badge';
 
 import { type BoardCard, DAY_NAMES, type Person } from './data';
 
 export const CARD_SURFACE =
   'bg-card dark:bg-foreground/[0.05] rounded-lg shadow-[0_1px_2px_rgb(0_0_0/0.06)]';
-
-const NEUTRAL_CHIP = 'var(--muted-foreground)';
 
 const VELOCITY_RANGE = [-1400, 0, 1400];
 
@@ -88,7 +86,9 @@ export const BoardCardBody = memo(function BoardCardBody({
         {card.title}
       </p>
       <div className='flex items-center gap-2'>
-        <Chip color={NEUTRAL_CHIP}>{card.label}</Chip>
+        <Badge variant='secondary' className='text-muted-foreground'>
+          {card.label}
+        </Badge>
         <span className='text-muted-foreground ms-auto flex items-center gap-1 text-xs tabular-nums'>
           <CalendarIcon className='size-3.5' />
           {card.due}

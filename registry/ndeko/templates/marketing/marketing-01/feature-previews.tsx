@@ -1,4 +1,5 @@
 import { cn } from '@/registry/ndeko/lib/utils';
+import { Badge } from '@/registry/ndeko/ui/badge';
 import { Chip } from '@/registry/ndeko/ui/chip';
 import { Kbd } from '@/registry/ndeko/ui/kbd';
 import { Switch } from '@/registry/ndeko/ui/switch';
@@ -53,7 +54,9 @@ function BoardsPreview() {
               <p className='line-clamp-2 text-xs leading-snug font-medium'>
                 {card.title}
               </p>
-              <Chip color='var(--muted-foreground)'>{card.label}</Chip>
+              <Badge variant='secondary' className='text-muted-foreground'>
+                {card.label}
+              </Badge>
             </div>
           ))}
         </div>
@@ -122,9 +125,9 @@ function AutomationsPreview() {
         <div className='flex flex-wrap items-center gap-2'>
           <dt className='text-muted-foreground w-12'>When</dt>
           <dd className='flex flex-wrap items-center gap-1.5'>
-            <Chip color='var(--muted-foreground)'>
+            <Badge variant='secondary' className='text-muted-foreground'>
               {AUTOMATION_RULE.triggerField}
-            </Chip>
+            </Badge>
             is
             <Chip color='var(--success)'>{AUTOMATION_RULE.triggerValue}</Chip>
           </dd>
@@ -133,9 +136,9 @@ function AutomationsPreview() {
           <dt className='text-muted-foreground w-12'>Then</dt>
           <dd className='flex flex-wrap items-center gap-1.5'>
             {AUTOMATION_RULE.action}
-            <Chip color='var(--muted-foreground)'>
+            <Badge variant='secondary' className='text-muted-foreground'>
               {AUTOMATION_RULE.channel}
-            </Chip>
+            </Badge>
           </dd>
         </div>
       </dl>
@@ -222,7 +225,9 @@ function ReportsPreview() {
             {hoursLabelOf(totalHours)} logged
           </p>
         </div>
-        <Chip color='var(--muted-foreground)'>Illustrative</Chip>
+        <Badge variant='secondary' className='text-muted-foreground'>
+          Illustrative
+        </Badge>
       </div>
       <svg viewBox={viewBox} aria-hidden='true' className='h-auto w-full'>
         {gridHours.map((hours) => {

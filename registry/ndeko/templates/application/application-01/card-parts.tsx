@@ -7,6 +7,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from '@/registry/ndeko/ui/avatar';
+import { Badge } from '@/registry/ndeko/ui/badge';
 import { Chip } from '@/registry/ndeko/ui/chip';
 
 import type { BoardCard } from './board-model';
@@ -16,8 +17,6 @@ import { labelsOf, peopleOf, priorityOf } from './task-model';
 const VISIBLE_LABELS = 2;
 
 const VISIBLE_ASSIGNEES = 3;
-
-const NEUTRAL_CHIP = 'var(--muted-foreground)';
 
 export const CARD_SURFACE =
   'bg-card hairline-ring ring-border rounded-lg shadow-[0_1px_2px_rgb(0_0_0/0.04)]';
@@ -95,14 +94,23 @@ export const TaskCardBody = memo(function TaskCardBody({
     <div className='flex flex-col gap-2.5 p-3'>
       <div className='flex flex-wrap items-center gap-1'>
         {hasPriority && <Chip color={priority.color}>{priority.name}</Chip>}
-        {task.size && <Chip color={NEUTRAL_CHIP}>{`Size ${task.size}`}</Chip>}
+        {task.size && (
+          <Badge variant='secondary' className='text-muted-foreground'>
+            {`Size ${task.size}`}
+          </Badge>
+        )}
         {shownLabels.map((label) => (
           <Chip key={label.id} color={label.color}>
             {label.name}
           </Chip>
         ))}
         {hasHiddenLabels && (
-          <Chip color={NEUTRAL_CHIP}>{`+${hiddenLabelCount}`}</Chip>
+          <Badge
+            variant='secondary'
+            className='text-muted-foreground tabular-nums'
+          >
+            {`+${hiddenLabelCount}`}
+          </Badge>
         )}
       </div>
       <div className='flex flex-col gap-1'>
@@ -129,7 +137,7 @@ export const TaskCardBody = memo(function TaskCardBody({
           />
         </div>
       )}
-      <div className='hairline-t border-border flex items-center justify-between gap-2 border-dashed pt-2.5'>
+      <div className='flex items-center justify-between gap-2 pt-1'>
         <AssigneeStack assigneeIds={task.assigneeIds} />
         <span
           className={cn(
