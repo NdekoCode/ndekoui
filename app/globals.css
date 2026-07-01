@@ -83,6 +83,32 @@
   }
 }
 
+/* Theme change (lib/theme-transition.ts): no crossfade, a circle animated from script. The
+   overlay lets the pointer through, so the page stays clickable while it plays. Towards light the
+   new page starts as a point, set here so no frame of the new theme shows first in Firefox.
+   Towards dark the old light page sits on top and closes. */
+::view-transition {
+  pointer-events: none;
+}
+
+html[data-vt='theme']::view-transition-old(root),
+html[data-vt='theme']::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html[data-vt-theme='light']::view-transition-new(root) {
+  clip-path: var(--vt-clip-from);
+}
+
+html[data-vt-theme='dark']::view-transition-old(root) {
+  z-index: 1;
+}
+
+html[data-vt='theme']::view-transition-group(root) {
+  animation-duration: var(--vt-duration);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
