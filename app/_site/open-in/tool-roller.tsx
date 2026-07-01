@@ -3,6 +3,8 @@
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useSyncExternalStore, type ComponentType } from 'react';
 
+import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
+
 import {
   ChatGptMark,
   ClaudeMark,
@@ -98,7 +100,8 @@ function ToolLabel({ tool }: { tool: Tool }) {
 
 /**
  * The builders the Open in menu reaches, one at a time: each leaves upwards with a blur while the
- * next rises in. The name shows when the header has room; a narrow tile keeps the mark alone.
+ * next rises in, and the button eases to the new width. The name shows when the header has room; a
+ * narrow tile keeps the mark alone.
  */
 export function ToolRoller() {
   const prefersReducedMotion = useReducedMotion();
@@ -111,26 +114,20 @@ export function ToolRoller() {
   const tool = TOOLS[index];
 
   return (
-    <span aria-hidden='true' className='inline-grid overflow-hidden'>
-      {TOOLS.map((reserved) => (
-        <span
-          key={reserved.id}
-          className='invisible col-start-1 row-start-1 flex items-center gap-1.5'
-        >
-          <ToolLabel tool={reserved} />
-        </span>
-      ))}
-      <AnimatePresence initial={false}>
-        <motion.span
-          key={tool.id}
-          className='col-start-1 row-start-1 flex items-center gap-1.5'
-          initial={ENTER}
-          animate={{ ...SHOWN, transition: ENTER_TIMING }}
-          exit={{ ...LEAVE, transition: LEAVE_TIMING }}
-        >
-          <ToolLabel tool={tool} />
-        </motion.span>
-      </AnimatePresence>
-    </span>
+    <AnimatedSize axis='width' as='span' aria-hidden='true'>
+      <span className='inline-grid overflow-hidden'>
+        <AnimatePresence initial={false}>
+          <motion.span
+            key={tool.id}
+            className='col-start-1 row-start-1 flex items-center gap-1.5'
+            initial={ENTER}
+            animate={{ ...SHOWN, transition: ENTER_TIMING }}
+            exit={{ ...LEAVE, transition: LEAVE_TIMING }}
+          >
+            <ToolLabel tool={tool} />
+          </motion.span>
+        </AnimatePresence>
+      </span>
+    </AnimatedSize>
   );
 }
