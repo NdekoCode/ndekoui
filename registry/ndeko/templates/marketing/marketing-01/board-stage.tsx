@@ -247,7 +247,7 @@ export function BoardStage() {
         onDragEnd={handleDragEnd}
         onDragCancel={handleDragCancel}
       >
-        <div className='overflow-x-auto overscroll-x-contain max-md:snap-x max-md:snap-proximity max-md:scroll-px-2'>
+        <div className='relative overflow-x-auto overscroll-x-contain max-md:snap-x max-md:snap-proximity max-md:scroll-px-2'>
           <div className='grid h-[26rem] min-w-[42rem] grid-cols-3 grid-rows-[minmax(0,1fr)] gap-2 p-2'>
             {LANES.map((lane) => (
               <BoardLane
