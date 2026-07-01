@@ -1,9 +1,12 @@
+import { Accordion } from '@base-ui/react/accordion';
+import type { ComponentType } from 'react';
+
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/registry/ndeko/ui/accordion';
+  CodeIcon,
+  GitPullRequestIcon,
+  InfoIcon,
+  MessageCircleIcon,
+} from '@/registry/ndeko/lib/icons';
 
 import { SectionHeading } from './section-heading';
 
@@ -15,12 +18,14 @@ type Question = {
 
 type QuestionGroup = {
   name: string;
+  icon: ComponentType<{ className?: string }>;
   questions: Question[];
 };
 
 const GROUPS: QuestionGroup[] = [
   {
     name: 'General',
+    icon: InfoIcon,
     questions: [
       {
         id: 'free',
@@ -38,6 +43,7 @@ const GROUPS: QuestionGroup[] = [
   },
   {
     name: 'Using it',
+    icon: CodeIcon,
     questions: [
       {
         id: 'install',
@@ -67,6 +73,7 @@ const GROUPS: QuestionGroup[] = [
   },
   {
     name: 'Contributing',
+    icon: GitPullRequestIcon,
     questions: [
       {
         id: 'contribute',
@@ -78,36 +85,63 @@ const GROUPS: QuestionGroup[] = [
   },
 ];
 
+function PlusMinus() {
+  return (
+    <span
+      aria-hidden='true'
+      className='bg-foreground/[0.05] group-data-[panel-open]:bg-primary group-data-[panel-open]:text-primary-foreground relative flex size-6 shrink-0 items-center justify-center rounded-md transition-colors duration-200'
+    >
+      <span className='absolute h-px w-2.5 bg-current' />
+      <span className='absolute h-2.5 w-px bg-current transition-transform duration-200 ease-out group-data-[panel-open]:scale-y-0' />
+    </span>
+  );
+}
+
+function QuestionCard({ item }: { item: Question }) {
+  return (
+    <Accordion.Item
+      value={item.id}
+      className='bg-card hairline-ring ring-border rounded-2xl shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
+    >
+      <Accordion.Header>
+        <Accordion.Trigger className='group focus-visible:ring-ring/25 data-[panel-open]:text-primary-ink flex w-full items-center justify-between gap-4 rounded-2xl px-5 py-4 text-left text-[15px] font-medium outline-none focus-visible:ring-[3px] sm:text-base'>
+          {item.question}
+          <PlusMinus />
+        </Accordion.Trigger>
+      </Accordion.Header>
+      <Accordion.Panel className='h-[var(--accordion-panel-height)] overflow-hidden transition-[height] duration-200 ease-out data-[ending-style]:h-0 data-[starting-style]:h-0 motion-reduce:transition-none'>
+        <p className='text-muted-foreground px-5 pb-5 text-sm leading-relaxed text-pretty sm:text-[15px]'>
+          {item.answer}
+        </p>
+      </Accordion.Panel>
+    </Accordion.Item>
+  );
+}
+
 export function HomeFaq() {
   return (
-    <section
-      aria-labelledby='faq-title'
-      className='grid gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]'
-    >
+    <section aria-labelledby='faq-title' className='flex flex-col gap-12'>
       <SectionHeading
         id='faq-title'
+        icon={MessageCircleIcon}
         eyebrow='Questions'
-        title='Everything people ask first'
+        lead='Everything'
+        title='people ask first'
         description='The short answers. The repository has the long ones.'
+        align='center'
       />
-      <div className='flex flex-col gap-8'>
+      <div className='mx-auto flex w-full max-w-3xl flex-col gap-8'>
         {GROUPS.map((group) => (
-          <div key={group.name} className='flex flex-col gap-1'>
-            <p className='text-muted-foreground text-xs font-medium'>
+          <div key={group.name} className='flex flex-col gap-3'>
+            <p className='text-muted-foreground flex items-center gap-2 text-sm font-medium'>
+              <group.icon className='size-4' />
               {group.name}
             </p>
-            <Accordion>
+            <Accordion.Root className='flex flex-col gap-3'>
               {group.questions.map((item) => (
-                <AccordionItem key={item.id} value={item.id}>
-                  <AccordionTrigger className='text-sm'>
-                    {item.question}
-                  </AccordionTrigger>
-                  <AccordionContent className='text-muted-foreground text-sm leading-relaxed'>
-                    {item.answer}
-                  </AccordionContent>
-                </AccordionItem>
+                <QuestionCard key={item.id} item={item} />
               ))}
-            </Accordion>
+            </Accordion.Root>
           </div>
         ))}
       </div>
