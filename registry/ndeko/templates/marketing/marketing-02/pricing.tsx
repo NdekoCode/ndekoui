@@ -6,6 +6,7 @@ import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll } from '@/components/core/word-roll';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
+import { Badge } from '@/registry/ndeko/ui/badge';
 import { Chip } from '@/registry/ndeko/ui/chip';
 import { Tabs, TabsList, TabsTab } from '@/registry/ndeko/ui/tabs';
 
@@ -165,7 +166,9 @@ export function Pricing() {
                 <TabsTab value='yearly'>Yearly</TabsTab>
               </TabsList>
             </Tabs>
-            <Chip color='var(--muted-foreground)'>{PRICING.yearlyNote}</Chip>
+            <Badge variant='secondary' className='text-muted-foreground'>
+              {PRICING.yearlyNote}
+            </Badge>
           </div>
         </div>
         <div className='grid gap-4 md:grid-cols-2'>

@@ -1,4 +1,4 @@
-import { Chip } from '@/registry/ndeko/ui/chip';
+import { Badge } from '@/registry/ndeko/ui/badge';
 
 import { HERO, WAITLIST_ANCHOR } from './data';
 import { IssuePreview } from './issue-preview';
@@ -12,9 +12,9 @@ export function Hero() {
     >
       <div className='mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[minmax(0,1fr)_24rem] lg:gap-16'>
         <div className='flex max-w-xl flex-col items-start gap-6'>
-          <Chip color='var(--muted-foreground)' className='h-6 px-2'>
+          <Badge variant='secondary' className='text-muted-foreground h-6 px-2'>
             {HERO.eyebrow}
-          </Chip>
+          </Badge>
           <h1 className='text-4xl font-semibold text-balance sm:text-5xl'>
             {HERO.title}
           </h1>
