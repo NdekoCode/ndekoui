@@ -136,11 +136,11 @@ function Toolbar({ url, mode }: { url: string; mode: SafariMode }) {
     <div
       aria-hidden='true'
       className={cn(
-        'hairline-b border-border bg-foreground/[0.03] dark:bg-foreground/[0.05] grid grid-cols-[1fr_minmax(0,30rem)_1fr] items-center gap-3 pr-3 pl-5 select-none dark:shadow-[inset_0_1px_0_rgb(255_255_255/0.06)]',
+        'hairline-b border-border bg-foreground/[0.03] dark:bg-foreground/[0.05] grid grid-cols-[minmax(max-content,1fr)_minmax(0,30rem)_minmax(max-content,1fr)] items-center gap-3 pr-3 pl-5 select-none dark:shadow-[inset_0_1px_0_rgb(255_255_255/0.06)]',
         TOOLBAR_HEIGHT[mode]
       )}
     >
-      <span className='text-muted-foreground flex min-w-0 items-center gap-5'>
+      <span className='text-muted-foreground flex items-center gap-5'>
         <TrafficLights />
         {isFull && (
           <span className='flex items-center'>
