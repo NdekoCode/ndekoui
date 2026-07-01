@@ -13,6 +13,23 @@
   --font-mono:
     ui-monospace, SFMono-Regular, Menlo, Monaco, 'Cascadia Mono',
     'Liberation Mono', monospace;
+
+  --animate-tile-glow: tile-glow 7s ease-in-out infinite;
+
+  @keyframes tile-glow {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+}
+
+/* Site only: the first line of a two-tone heading, an ink pulled towards the brand. */
+@utility text-tint {
+  color: color-mix(in oklab, var(--primary-ink) 62%, var(--foreground));
 }
 
 /*
