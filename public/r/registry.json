@@ -5077,6 +5077,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/checkbox.json",
         "https://ui.ndekocode.dev/r/chip.json",
@@ -5146,6 +5147,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/icons.json",
@@ -5307,8 +5309,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/sheet.json",
@@ -14575,8 +14577,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/combobox.json",
         "https://ui.ndekocode.dev/r/dialog.json",
         "https://ui.ndekocode.dev/r/icons.json",
@@ -14773,8 +14775,8 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/dialog.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
@@ -14967,8 +14969,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/dialog.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
@@ -15042,6 +15044,7 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/dialog.json",
@@ -24037,9 +24040,9 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/breadcrumb.json",
         "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/command.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
@@ -24120,9 +24123,9 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/breadcrumb.json",
         "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/command.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
@@ -24204,6 +24207,7 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/alert-dialog.json",
         "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/breadcrumb.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
@@ -24543,6 +24547,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/icons.json",
@@ -24602,6 +24607,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
@@ -25615,6 +25621,7 @@
       "description": "Three rows that swap sides on wide screens, each pairing a short text with an invoice, a reminder list or a payment list drawn from primitives.",
       "dependencies": [],
       "registryDependencies": [
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/icons.json",
@@ -25683,6 +25690,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
@@ -26076,8 +26084,8 @@
       "description": "The title on the left, a short paragraph and two actions on the right, under an announcement link.",
       "dependencies": [],
       "registryDependencies": [
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
@@ -26108,8 +26116,8 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
@@ -27182,6 +27190,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
@@ -27292,6 +27301,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/checkbox.json",
         "https://ui.ndekocode.dev/r/chip.json",
@@ -27408,6 +27418,7 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
@@ -27474,6 +27485,7 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
@@ -27540,6 +27552,7 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/icons.json",
@@ -27651,6 +27664,7 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/breadcrumb.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
@@ -28417,6 +28431,7 @@
         "https://ui.ndekocode.dev/r/accordion.json",
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/collapsible.json",
