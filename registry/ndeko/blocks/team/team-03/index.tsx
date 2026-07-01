@@ -5,8 +5,8 @@ import { useId, useState } from 'react';
 
 import { MailIcon, UserRoundPlusIcon } from '@/registry/ndeko/lib/icons';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
+import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
-import { Chip } from '@/registry/ndeko/ui/chip';
 import {
   Avatar,
   AvatarFallback,
@@ -202,9 +202,9 @@ export default function Team03() {
                     {member.email}
                   </p>
                 </div>
-                <Chip color='var(--muted-foreground)'>
+                <Badge variant='secondary' className='text-muted-foreground'>
                   {ROLE_LABEL[member.role]}
-                </Chip>
+                </Badge>
               </li>
             ))}
           </ul>

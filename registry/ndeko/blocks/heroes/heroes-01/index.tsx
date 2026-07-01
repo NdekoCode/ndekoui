@@ -1,6 +1,6 @@
 import { ArrowRightIcon, ChevronRightIcon } from '@/registry/ndeko/lib/icons';
+import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
-import { Chip } from '@/registry/ndeko/ui/chip';
 
 import { HERO } from './data';
 
@@ -13,9 +13,12 @@ export default function Heroes01() {
             href={HERO.announcement.href}
             className='bg-card hairline-ring ring-border hover:bg-foreground/[0.03] focus-visible:ring-ring/25 dark:bg-foreground/[0.04] inline-flex max-w-full items-center gap-2 rounded-full py-1 ps-1 pe-3 text-xs font-medium shadow-[0_1px_2px_rgb(0_0_0/0.04)] transition-[background-color,scale] duration-150 ease-(--ease-out-strong) outline-none focus-visible:ring-[3px] active:scale-[0.97]'
           >
-            <Chip color='var(--muted-foreground)' className='rounded-full'>
+            <Badge
+              variant='secondary'
+              className='text-muted-foreground rounded-full'
+            >
               {HERO.announcement.label}
-            </Chip>
+            </Badge>
             <span className='truncate'>{HERO.announcement.text}</span>
             <ChevronRightIcon className='text-muted-foreground size-3.5 shrink-0' />
           </a>

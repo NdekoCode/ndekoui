@@ -12,6 +12,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from '@/registry/ndeko/ui/avatar';
+import { Badge } from '@/registry/ndeko/ui/badge';
 import { Chip } from '@/registry/ndeko/ui/chip';
 
 import type {
@@ -316,9 +317,12 @@ export function LabelChips({ labelIds }: { labelIds: string[] }) {
         </Chip>
       ))}
       {hasHidden && (
-        <Chip color='var(--muted-foreground)' className='tabular-nums'>
+        <Badge
+          variant='secondary'
+          className='text-muted-foreground tabular-nums'
+        >
           +{hiddenCount}
-        </Chip>
+        </Badge>
       )}
     </span>
   );

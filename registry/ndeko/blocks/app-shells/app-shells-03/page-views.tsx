@@ -18,8 +18,8 @@ import {
   type Icon,
 } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
-import { Chip } from '@/registry/ndeko/ui/chip';
 import { Tabs, TabsList, TabsTab } from '@/registry/ndeko/ui/tabs';
 
 import {
@@ -34,10 +34,8 @@ import {
 } from './data';
 import { PersonAvatar } from './sidebar-parts';
 
-const NEUTRAL_CHIP = 'var(--muted-foreground)';
-
 const LIST_SURFACE =
-  'bg-card hairline-ring ring-border hairline-divide-y divide-border overflow-hidden rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04)]';
+  'bg-card hairline-ring ring-border overflow-hidden rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04)]';
 
 const PRESENCE_IN: Transition = { duration: 0.2, ease: [0.23, 1, 0.32, 1] };
 
@@ -100,7 +98,7 @@ function PageToolbar({
   children?: React.ReactNode;
 }) {
   return (
-    <div className='hairline-b border-border flex shrink-0 flex-wrap items-center gap-x-3 gap-y-2 px-4 py-3 md:px-6'>
+    <div className='flex shrink-0 flex-wrap items-center gap-x-3 gap-y-2 px-4 py-3 md:px-6'>
       <div className='flex min-w-0 items-baseline gap-2'>
         <h1 className='truncate text-lg font-semibold text-balance'>{title}</h1>
         <span className='text-muted-foreground shrink-0 text-xs tabular-nums'>
@@ -213,9 +211,12 @@ function TaskRow({
       >
         {task.title}
       </span>
-      <Chip color={NEUTRAL_CHIP} className='hidden sm:inline-flex'>
+      <Badge
+        variant='secondary'
+        className='text-muted-foreground hidden sm:inline-flex'
+      >
         {project.name}
-      </Chip>
+      </Badge>
       <span className='text-muted-foreground hidden w-20 shrink-0 text-right text-xs md:block'>
         {task.due}
       </span>
@@ -546,7 +547,12 @@ export function MembersPage({ people }: { people: Person[] }) {
                     {person.name}
                   </span>
                   {isCurrentUser && (
-                    <Chip color='var(--muted-foreground)'>You</Chip>
+                    <Badge
+                      variant='secondary'
+                      className='text-muted-foreground'
+                    >
+                      You
+                    </Badge>
                   )}
                 </span>
                 <span className='text-muted-foreground truncate text-xs'>

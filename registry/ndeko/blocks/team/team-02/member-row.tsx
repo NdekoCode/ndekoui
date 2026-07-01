@@ -19,8 +19,8 @@ import {
   XIcon,
 } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
-import { Chip } from '@/registry/ndeko/ui/chip';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -373,7 +373,7 @@ function ActivityPanel({
   return (
     <div
       id={panelId}
-      className='hairline-t border-border flex flex-col gap-3 border-dashed px-4 py-3'
+      className='bg-foreground/[0.04] flex flex-col gap-3 px-4 py-3'
     >
       <p className='text-muted-foreground text-xs font-medium'>Today</p>
       {!hasActivity && (
@@ -553,7 +553,9 @@ export function MemberRow({ member, openTasks, actions }: MemberRowProps) {
           <p className='flex min-w-0 items-center gap-2 text-[13px] font-medium'>
             <span className='truncate'>{member.name}</span>
             {member.isCurrentUser && (
-              <Chip color='var(--muted-foreground)'>You</Chip>
+              <Badge variant='secondary' className='text-muted-foreground'>
+                You
+              </Badge>
             )}
           </p>
           <p className='text-muted-foreground hidden truncate text-xs md:block'>

@@ -10,6 +10,7 @@ import {
 import { useId, useState } from 'react';
 
 import { CircleIcon, PlusIcon } from '@/registry/ndeko/lib/icons';
+import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Chip } from '@/registry/ndeko/ui/chip';
 import { Input } from '@/registry/ndeko/ui/input';
@@ -392,7 +393,12 @@ function TeamMembersPage({ settings, onChange }: PageProps) {
                 <p className='flex items-center gap-2 text-[13px] font-medium'>
                   <span className='truncate'>{person.name}</span>
                   {isCurrentUser && (
-                    <Chip color='var(--muted-foreground)'>You</Chip>
+                    <Badge
+                      variant='secondary'
+                      className='text-muted-foreground'
+                    >
+                      You
+                    </Badge>
                   )}
                 </p>
                 <p className='text-muted-foreground truncate text-xs'>

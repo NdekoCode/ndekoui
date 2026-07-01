@@ -153,7 +153,7 @@ export default function Filters01() {
           />
         </div>
         <section aria-label='Matching invoices' className={LIST_SURFACE}>
-          <ul className='hairline-divide-y divide-border max-h-[30rem] overflow-y-auto'>
+          <ul className='max-h-[30rem] overflow-y-auto'>
             <AnimatePresence initial={false}>
               {shown.map((invoice) => (
                 <motion.li

@@ -17,7 +17,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from '@/registry/ndeko/ui/avatar';
-import { Chip } from '@/registry/ndeko/ui/chip';
+import { Badge } from '@/registry/ndeko/ui/badge';
 import { Kbd } from '@/registry/ndeko/ui/kbd';
 import { Switch } from '@/registry/ndeko/ui/switch';
 
@@ -119,15 +119,18 @@ function BoardCardView({
   return (
     <div
       className={cn(
-        'bg-card hairline-ring ring-border dark:bg-foreground/[0.05] flex flex-col gap-2 rounded-lg p-2 shadow-[0_1px_2px_rgb(0_0_0/0.04)] sm:p-2.5',
-        isMoving && 'ring-primary/45 shadow-[0_10px_24px_-10px_rgb(0_0_0/0.22)]'
+        'bg-card dark:bg-foreground/[0.05] flex flex-col gap-2 rounded-lg p-2 shadow-[0_1px_2px_rgb(0_0_0/0.06)] sm:p-2.5',
+        isMoving &&
+          'hairline-ring ring-primary/45 shadow-[0_10px_24px_-10px_rgb(0_0_0/0.22)]'
       )}
     >
       <p className='line-clamp-2 text-xs leading-snug font-medium sm:text-[13px]'>
         {card.title}
       </p>
       <div className='flex items-center justify-between gap-1'>
-        <Chip color='var(--muted-foreground)'>{card.label}</Chip>
+        <Badge variant='secondary' className='text-muted-foreground'>
+          {card.label}
+        </Badge>
         <PersonAvatar
           person={card.owner}
           className='hidden size-5 sm:inline-flex'
@@ -144,9 +147,12 @@ function BoardHeader() {
         <LayoutGridIcon className='size-3.5' />
       </span>
       <p className='text-sm font-medium'>{BOARD.title}</p>
-      <Chip color='var(--muted-foreground)' className='hidden sm:inline-flex'>
+      <Badge
+        variant='secondary'
+        className='text-muted-foreground hidden sm:inline-flex'
+      >
         {BOARD.week}
-      </Chip>
+      </Badge>
       <div className='ms-auto flex -space-x-1.5'>
         {PEOPLE.map((person) => (
           <PersonAvatar

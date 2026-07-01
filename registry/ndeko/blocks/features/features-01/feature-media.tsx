@@ -1,4 +1,5 @@
 import { cn } from '@/registry/ndeko/lib/utils';
+import { Badge } from '@/registry/ndeko/ui/badge';
 import { Chip } from '@/registry/ndeko/ui/chip';
 import { StatusOrb } from '@/registry/ndeko/ui/status-orb';
 
@@ -54,7 +55,9 @@ function InvoiceMedia() {
             {INVOICE.number}, {INVOICE.period}
           </p>
         </div>
-        <Chip color='var(--muted-foreground)'>{INVOICE.status}</Chip>
+        <Badge variant='secondary' className='text-muted-foreground'>
+          {INVOICE.status}
+        </Badge>
       </div>
       <table className='w-full text-[13px]'>
         <caption className='sr-only'>Invoice lines</caption>

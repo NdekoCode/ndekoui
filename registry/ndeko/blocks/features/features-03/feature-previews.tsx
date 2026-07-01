@@ -1,4 +1,5 @@
 import { cn } from '@/registry/ndeko/lib/utils';
+import { Badge } from '@/registry/ndeko/ui/badge';
 import { Chip } from '@/registry/ndeko/ui/chip';
 import { Kbd } from '@/registry/ndeko/ui/kbd';
 import { Switch } from '@/registry/ndeko/ui/switch';
@@ -16,6 +17,9 @@ import {
 
 const CARD =
   'bg-card hairline-ring ring-border dark:bg-foreground/[0.05] rounded-lg shadow-[0_1px_2px_rgb(0_0_0/0.04)]';
+
+const LANE_CARD =
+  'bg-card dark:bg-foreground/[0.05] rounded-lg shadow-[0_1px_2px_rgb(0_0_0/0.06)]';
 
 const CHART = {
   width: 320,
@@ -48,12 +52,14 @@ function BoardsPreview() {
           {lane.cards.map((card) => (
             <div
               key={card.title}
-              className={cn(CARD, 'flex flex-col gap-2 p-2')}
+              className={cn(LANE_CARD, 'flex flex-col gap-2 p-2')}
             >
               <p className='line-clamp-2 text-xs leading-snug font-medium'>
                 {card.title}
               </p>
-              <Chip color='var(--muted-foreground)'>{card.label}</Chip>
+              <Badge variant='secondary' className='text-muted-foreground'>
+                {card.label}
+              </Badge>
             </div>
           ))}
         </div>
@@ -119,7 +125,9 @@ function AutomationsPreview() {
         <div className='flex flex-wrap items-center gap-2'>
           <dt className='text-muted-foreground w-12'>When</dt>
           <dd className='flex flex-wrap items-center gap-1.5'>
-            <Chip color='var(--muted-foreground)'>{RULE.triggerField}</Chip>
+            <Badge variant='secondary' className='text-muted-foreground'>
+              {RULE.triggerField}
+            </Badge>
             is
             <Chip color='var(--success)'>{RULE.triggerValue}</Chip>
           </dd>
@@ -128,7 +136,9 @@ function AutomationsPreview() {
           <dt className='text-muted-foreground w-12'>Then</dt>
           <dd className='flex flex-wrap items-center gap-1.5'>
             {RULE.action}
-            <Chip color='var(--muted-foreground)'>{RULE.channel}</Chip>
+            <Badge variant='secondary' className='text-muted-foreground'>
+              {RULE.channel}
+            </Badge>
           </dd>
         </div>
       </dl>
@@ -215,7 +225,9 @@ function ReportsPreview() {
             {hoursLabelOf(totalHours)} logged
           </p>
         </div>
-        <Chip color='var(--muted-foreground)'>Illustrative</Chip>
+        <Badge variant='secondary' className='text-muted-foreground'>
+          Illustrative
+        </Badge>
       </div>
       <svg viewBox={viewBox} aria-hidden='true' className='h-auto w-full'>
         {gridHours.map((hours) => {

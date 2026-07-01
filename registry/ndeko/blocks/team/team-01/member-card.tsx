@@ -19,8 +19,8 @@ import {
   XIcon,
 } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
-import { Chip } from '@/registry/ndeko/ui/chip';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -370,7 +370,7 @@ function ActivityPanel({
   return (
     <div
       id={panelId}
-      className='hairline-t border-border flex flex-col gap-3 border-dashed px-4 py-3'
+      className='bg-foreground/[0.04] flex flex-col gap-3 rounded-b-xl px-4 py-3'
     >
       <p className='text-muted-foreground text-xs font-medium'>Today</p>
       {!hasActivity && (
@@ -481,7 +481,9 @@ export function MemberCard({ member, openTasks, actions }: MemberCardProps) {
           <p className='flex min-w-0 items-center gap-2 text-[13px] font-medium'>
             <span className='truncate'>{member.name}</span>
             {member.isCurrentUser && (
-              <Chip color='var(--muted-foreground)'>You</Chip>
+              <Badge variant='secondary' className='text-muted-foreground'>
+                You
+              </Badge>
             )}
           </p>
           <p className='text-muted-foreground truncate text-xs'>
@@ -493,11 +495,11 @@ export function MemberCard({ member, openTasks, actions }: MemberCardProps) {
       <div className='xl:hairline-l border-border col-span-3 flex min-w-0 items-center px-4 pb-3 xl:col-span-1 xl:py-3'>
         <TaskCell member={member} openTasks={openTasks} actions={actions} />
       </div>
-      <div className='hairline-t xl:hairline-l border-border flex flex-col justify-center gap-1 border-dashed px-4 py-3 xl:items-center xl:border-t-0 xl:border-solid'>
+      <div className='xl:hairline-l border-border flex flex-col justify-center gap-1 px-4 py-3 xl:items-center'>
         <span className={FIGURE_LABEL}>Worked today</span>
         <DurationFigure minutes={worked} className='text-[13px] font-medium' />
       </div>
-      <div className='hairline-t hairline-l border-border flex flex-col justify-center gap-1 border-dashed px-4 py-3 xl:items-center xl:border-t-0 xl:border-solid'>
+      <div className='xl:hairline-l border-border flex flex-col justify-center gap-1 px-4 py-3 xl:items-center'>
         <span className={FIGURE_LABEL}>Estimate</span>
         {task && (
           <EstimateField
@@ -513,7 +515,7 @@ export function MemberCard({ member, openTasks, actions }: MemberCardProps) {
           </span>
         )}
       </div>
-      <div className='hairline-t hairline-l border-border flex flex-col justify-center gap-1 border-dashed px-4 py-3 xl:items-center xl:border-t-0 xl:border-solid'>
+      <div className='xl:hairline-l border-border flex flex-col justify-center gap-1 px-4 py-3 xl:items-center'>
         <span className={FIGURE_LABEL}>Total today</span>
         <button
           type='button'
