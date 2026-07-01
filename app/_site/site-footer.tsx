@@ -132,6 +132,28 @@ type FooterColumnProps = {
   links: FooterLink[];
 };
 
+/** Next prefetches every internal Link as a page, so a static file such as the registry index gets a plain anchor. */
+function isPageRoute(href: string) {
+  const isInternal = href.startsWith('/');
+  const isFile = href.endsWith('.json');
+  return isInternal && !isFile;
+}
+
+function FooterLinkView({ link }: { link: FooterLink }) {
+  if (isPageRoute(link.href)) {
+    return (
+      <Link href={link.href} className={FOOTER_LINK}>
+        {link.label}
+      </Link>
+    );
+  }
+  return (
+    <a href={link.href} className={FOOTER_LINK}>
+      {link.label}
+    </a>
+  );
+}
+
 function FooterColumn({ title, links }: FooterColumnProps) {
   return (
     <div className='flex flex-col gap-3'>
@@ -139,9 +161,7 @@ function FooterColumn({ title, links }: FooterColumnProps) {
       <ul className='flex flex-col gap-2.5'>
         {links.map((link) => (
           <li key={link.href}>
-            <Link href={link.href} className={FOOTER_LINK}>
-              {link.label}
-            </Link>
+            <FooterLinkView link={link} />
           </li>
         ))}
       </ul>
