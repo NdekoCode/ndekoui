@@ -137,7 +137,7 @@ export const TaskCardBody = memo(function TaskCardBody({
           />
         </div>
       )}
-      <div className='flex items-center justify-between gap-2 pt-1'>
+      <div className='hairline-t border-border flex items-center justify-between gap-2 border-dashed pt-2.5'>
         <AssigneeStack assigneeIds={task.assigneeIds} />
         <span
           className={cn(
