@@ -22,6 +22,9 @@ import {
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
 
+import { Reveal } from './reveal';
+import { ROW_TITLE, STAGGER_MS } from './section-heading';
+
 type Capability = {
   title: string;
   detail: string;
@@ -73,23 +76,23 @@ function detailTimingOf(prefersReducedMotion: boolean | null) {
 function CapabilityList() {
   return (
     <ul className='flex flex-col gap-3'>
-      {CAPABILITIES.map((capability) => (
-        <li
+      {CAPABILITIES.map((capability, index) => (
+        <Reveal
+          as='li'
           key={capability.title}
+          delay={index * STAGGER_MS}
           className='bg-card hairline-ring ring-border flex items-center gap-4 rounded-2xl p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
         >
           <span className='bg-primary text-primary-foreground flex size-10 shrink-0 items-center justify-center rounded-full shadow-[inset_0_1px_0_rgb(255_255_255/0.25)]'>
-            <capability.icon className='size-[1.15rem]' />
+            <capability.icon className='size-[1.125rem]' />
           </span>
           <span className='flex flex-col'>
-            <span className='text-[15px] font-semibold'>
-              {capability.title}
-            </span>
+            <span className={ROW_TITLE}>{capability.title}</span>
             <span className='text-muted-foreground text-sm'>
               {capability.detail}
             </span>
           </span>
-        </li>
+        </Reveal>
       ))}
     </ul>
   );
@@ -147,7 +150,7 @@ function ToolList() {
             >
               <span className='flex items-center justify-between gap-3'>
                 <span className='text-sm font-medium'>{tool.title}</span>
-                <code className='text-muted-foreground font-mono text-[11px]'>
+                <code className='text-muted-foreground font-mono text-xs'>
                   {tool.name}
                 </code>
               </span>
@@ -178,20 +181,22 @@ export function EditorSection() {
     <div className='grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-10'>
       <div className='flex flex-col gap-6'>
         <CapabilityList />
-        <Button
-          variant='outline'
-          nativeButton={false}
-          className='w-fit rounded-full'
-          render={<Link href={MCP_PAGE_PATH} />}
-        >
-          Connect your editor
-          <ArrowRightIcon />
-        </Button>
+        <Reveal delay={CAPABILITIES.length * STAGGER_MS}>
+          <Button
+            variant='outline'
+            nativeButton={false}
+            className='w-fit rounded-full'
+            render={<Link href={MCP_PAGE_PATH} />}
+          >
+            Connect your editor
+            <ArrowRightIcon />
+          </Button>
+        </Reveal>
       </div>
-      <div className='flex min-w-0 flex-col gap-4'>
+      <Reveal className='flex min-w-0 flex-col gap-4' delay={STAGGER_MS * 2}>
         <TerminalCard />
         <ToolList />
-      </div>
+      </Reveal>
     </div>
   );
 }
