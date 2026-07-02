@@ -19,7 +19,7 @@ export const foundationItems: RegistryItemDefinition[] = [
     type: 'registry:lib',
     title: 'cn',
     description:
-      'Class merging that knows the hairline utilities of the Ndeko UI theme.',
+      'Class merging that knows the hairline utilities of the ndekoui theme.',
     files: [{ path: 'registry/ndeko/lib/utils.ts', type: 'registry:lib' }],
     dependencies: ['clsx', 'tailwind-merge'],
     categories: ['foundations'],

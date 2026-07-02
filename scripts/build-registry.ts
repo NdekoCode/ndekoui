@@ -157,7 +157,7 @@ async function buildRegistry() {
   const themeItem = {
     name: 'theme',
     type: 'registry:theme',
-    title: 'Ndeko UI theme',
+    title: 'ndekoui theme',
     description:
       'Tokens for light and dark, ink colours that pass AA, hairlines and the 3D materials.',
     cssVars,

@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "utils",
   "title": "cn",
-  "description": "Class merging that knows the hairline utilities of the Ndeko UI theme.",
+  "description": "Class merging that knows the hairline utilities of the ndekoui theme.",
   "dependencies": [
     "clsx",
     "tailwind-merge"

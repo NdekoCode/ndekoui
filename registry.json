@@ -6,7 +6,7 @@
     {
       "name": "theme",
       "type": "registry:theme",
-      "title": "Ndeko UI theme",
+      "title": "ndekoui theme",
       "description": "Tokens for light and dark, ink colours that pass AA, hairlines and the 3D materials.",
       "cssVars": {
         "theme": {
@@ -288,7 +288,7 @@
       "name": "utils",
       "type": "registry:lib",
       "title": "cn",
-      "description": "Class merging that knows the hairline utilities of the Ndeko UI theme.",
+      "description": "Class merging that knows the hairline utilities of the ndekoui theme.",
       "dependencies": [
         "clsx",
         "tailwind-merge"
@@ -3877,7 +3877,7 @@
       "name": "use-character-limit",
       "type": "registry:hook",
       "title": "Use character limit",
-      "description": "The use-character-limit hook used by Ndeko UI components.",
+      "description": "The use-character-limit hook used by ndekoui components.",
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3894,7 +3894,7 @@
       "name": "use-file-upload",
       "type": "registry:hook",
       "title": "Use file upload",
-      "description": "The use-file-upload hook used by Ndeko UI components.",
+      "description": "The use-file-upload hook used by ndekoui components.",
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3911,7 +3911,7 @@
       "name": "use-pagination",
       "type": "registry:hook",
       "title": "Use pagination",
-      "description": "The use-pagination hook used by Ndeko UI components.",
+      "description": "The use-pagination hook used by ndekoui components.",
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3928,7 +3928,7 @@
       "name": "use-slider-with-input",
       "type": "registry:hook",
       "title": "Use slider with input",
-      "description": "The use-slider-with-input hook used by Ndeko UI components.",
+      "description": "The use-slider-with-input hook used by ndekoui components.",
       "dependencies": [],
       "registryDependencies": [],
       "files": [

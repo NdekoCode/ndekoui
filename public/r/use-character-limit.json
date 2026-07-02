@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "use-character-limit",
   "title": "Use character limit",
-  "description": "The use-character-limit hook used by Ndeko UI components.",
+  "description": "The use-character-limit hook used by ndekoui components.",
   "dependencies": [],
   "registryDependencies": [],
   "files": [

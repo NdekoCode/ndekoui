@@ -2,7 +2,7 @@ import { cn } from '@/registry/ndeko/lib/utils';
 
 type MarkPath = { d: string; className: string };
 
-/** The Ndeko UI mark: a folded N on a tile in the theme's primary colour. */
+/** The ndekoui mark: a folded N on a tile in the theme's primary colour. */
 const MARK_PATHS: MarkPath[] = [
   {
     d: 'M25.879 33.9253C26.397 33.8505 27.3449 33.0551 27.8482 32.7934C31.2706 31.0138 35.0704 30.2776 38.8319 31.4451C36.2173 33.2119 33.4965 34.8313 30.8988 36.6176C27.7958 38.9794 25.6232 41.9445 24.5587 45.7034C24.4404 46.1207 24.2353 47.6012 24.0464 47.8503C24.0211 46.5372 24.0389 45.2209 24.0397 43.9075C24.0417 41.0209 24.0077 38.5195 25.0282 35.7475C25.2515 35.1412 25.5137 34.4627 25.879 33.9253Z',

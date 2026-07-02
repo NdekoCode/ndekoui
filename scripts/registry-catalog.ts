@@ -320,7 +320,7 @@ export function hookItemsOf(): RegistryItemDefinition[] {
       name,
       type: 'registry:hook',
       title: titleOf(name),
-      description: `The ${name} hook used by Ndeko UI components.`,
+      description: `The ${name} hook used by ndekoui components.`,
       files: [{ path: relativePath, type: 'registry:hook' }],
       dependencies,
       registryDependencies: registryDependencies.filter(
