@@ -13,6 +13,7 @@ import {
   SourceCodeIcon,
 } from '@/registry/ndeko/lib/icons';
 import { MENU_ITEM, MENU_SEPARATOR } from '@/registry/ndeko/lib/recipes';
+import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
   DropdownMenu,
@@ -64,6 +65,19 @@ function swapStatesOf(prefersReducedMotion: boolean | null) {
   return { shown: SWAP_IN, hidden: SWAP_OUT };
 }
 
+/** A row with a hint holds two lines, so it grows with them and its icons sit on the first line. */
+const TWO_LINE_ITEM = cn(
+  MENU_ITEM,
+  'h-auto items-start py-1.5 [&>svg]:mt-0.5 [&>span:first-child]:mt-0.5'
+);
+
+function itemClassOf(hint: string | undefined) {
+  if (hint) {
+    return TWO_LINE_ITEM;
+  }
+  return MENU_ITEM;
+}
+
 type OpenLinkProps = {
   href: string;
   icon: ReactNode;
@@ -74,7 +88,7 @@ type OpenLinkProps = {
 function OpenLink({ href, icon, hint, children }: OpenLinkProps) {
   return (
     <MenuPrimitive.LinkItem
-      className={MENU_ITEM}
+      className={itemClassOf(hint)}
       render={<a href={href} target='_blank' rel='noreferrer' />}
     >
       {icon}
@@ -126,7 +140,7 @@ function CopyItem({
     <MenuPrimitive.Item
       closeOnClick={false}
       onClick={onCopy}
-      className={MENU_ITEM}
+      className={itemClassOf(hint)}
     >
       <span className='relative flex size-4 items-center justify-center'>
         <AnimatePresence mode='popLayout' initial={false}>
