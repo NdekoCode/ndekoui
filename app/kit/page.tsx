@@ -9,9 +9,9 @@ import { KIT_GROUPS } from './kit-groups';
 import { ThemeSwitch } from './theme-switch';
 
 export const metadata: Metadata = {
-  title: 'Primitives - Ndeko UI',
+  title: 'Primitives - ndekoui',
   description:
-    'Every Ndeko UI primitive on one page, in light and dark, each with its code and the command that installs it.',
+    'Every ndekoui primitive on one page, in light and dark, each with its code and the command that installs it.',
 };
 
 const KIT_ITEMS = [...primitiveItems, ...chatItems];

@@ -3,9 +3,9 @@ import type { Metadata } from 'next';
 import { BundleIndexPage } from './_shared/bundle-pages';
 
 export const metadata: Metadata = {
-  title: 'Blocks - Ndeko UI',
+  title: 'Blocks - ndekoui',
   description:
-    'Whole sections of a product built from Ndeko UI components with fictional data, installable with the shadcn CLI.',
+    'Whole sections of a product built from ndekoui components with fictional data, installable with the shadcn CLI.',
 };
 
 export default function BlocksPage() {

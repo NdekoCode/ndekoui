@@ -32,8 +32,8 @@ export async function generateMetadata({
     return {};
   }
   return {
-    title: `${category.name} components - Ndeko UI`,
-    description: `${countLabel(category.entries.length, 'component', 'components')} of the ${category.name.toLowerCase()} category, built on Ndeko UI primitives and installable with the shadcn CLI.`,
+    title: `${category.name} components - ndekoui`,
+    description: `${countLabel(category.entries.length, 'component', 'components')} of the ${category.name.toLowerCase()} category, built on ndekoui primitives and installable with the shadcn CLI.`,
   };
 }
 
@@ -71,7 +71,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             {category.name}
           </h1>
           <p className='text-muted-foreground max-w-xl text-[13px] text-balance'>
-            Every variant is built on Ndeko UI primitives and its design
+            Every variant is built on ndekoui primitives and its design
             language. Open the code of any of them to copy it or the command
             that installs it.
           </p>

@@ -44,7 +44,7 @@ function partsOf({
   templateTotal,
 }: StatementProps): StatementPart[] {
   return [
-    { kind: 'text', text: 'Ndeko UI is', tone: 'soft' },
+    { kind: 'text', text: 'ndekoui is', tone: 'soft' },
     {
       kind: 'text',
       text: `a library of ${componentTotal} components, ${blockTotal} blocks and ${templateTotal} templates`,

@@ -30,7 +30,7 @@ const GROUPS: QuestionGroup[] = [
     questions: [
       {
         id: 'free',
-        question: 'Is Ndeko UI free?',
+        question: 'Is ndekoui free?',
         answer:
           'Yes. Every primitive, component, block and template is MIT licensed, for personal and commercial projects.',
       },

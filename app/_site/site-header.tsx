@@ -165,7 +165,7 @@ function GithubStarLink() {
       variant='outline'
       size='sm'
       nativeButton={false}
-      aria-label='Star Ndeko UI on GitHub'
+      aria-label='Star ndekoui on GitHub'
       className='hidden rounded-full sm:inline-flex'
       render={<a href={REPOSITORY_URL} />}
     >
@@ -212,7 +212,7 @@ export function SiteHeader({ isWide = false }: SiteHeaderProps) {
           className='focus-visible:ring-ring/25 flex w-fit items-center gap-2.5 rounded-lg text-[15px] font-semibold outline-none focus-visible:ring-[3px]'
         >
           <NdekoUILLogo aria-hidden className='size-7' />
-          Ndeko UI
+          ndekoui
         </Link>
         <SectionNavigation pathname={pathname} />
         <div className='ml-auto flex items-center gap-1 md:justify-self-end'>

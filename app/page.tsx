@@ -28,7 +28,7 @@ import { SectionHeading } from './_home/section-heading';
 import { Statement } from './_home/statement';
 
 export const metadata: Metadata = {
-  title: 'Ndeko UI - React components that animate every change of state',
+  title: 'ndekoui - React components that animate every change of state',
   description:
     'Open-source primitives, components, blocks and templates for React, built on Base UI, motion and Tailwind CSS, installable with the shadcn CLI or through MCP.',
 };
@@ -120,8 +120,8 @@ export default async function HomePage() {
                 icon={CpuIcon}
                 eyebrow='MCP server'
                 lead='Connect Claude, Codex and Cursor'
-                title='to Ndeko UI with MCP'
-                description='The Ndeko UI server lets your editor search the catalogue, read the full source and install what a screen needs, with the theme and the design rules it follows.'
+                title='to ndekoui with MCP'
+                description='The ndekoui server lets your editor search the catalogue, read the full source and install what a screen needs, with the theme and the design rules it follows.'
               />
               <Reveal isLarge>
                 <EditorGrid />

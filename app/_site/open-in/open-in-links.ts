@@ -4,12 +4,12 @@ import { installCommandOf, itemUrlOf } from '@/lib/site';
 export function promptOf(title: string, itemName: string) {
   const installCommand = installCommandOf(itemName);
   const lines = [
-    `Add "${title}" from Ndeko UI to this project.`,
+    `Add "${title}" from ndekoui to this project.`,
     '',
     `Run: ${installCommand}`,
     '',
     'The project needs React 19 and Tailwind CSS 4. If it has no components.json yet, run npx shadcn@latest init first and keep the defaults.',
-    'The command installs the files, the Ndeko UI theme, the sample images and every piece they depend on. Keep the installed files as they are.',
+    'The command installs the files, the ndekoui theme, the sample images and every piece they depend on. Keep the installed files as they are.',
     'Then render it on a page so I can see it.',
   ];
   return lines.join('\n');

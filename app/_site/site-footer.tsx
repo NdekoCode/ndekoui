@@ -112,7 +112,7 @@ export function SiteFooter() {
               className='focus-visible:ring-ring/50 flex w-fit items-center gap-2.5 rounded-lg text-[15px] font-semibold outline-none focus-visible:ring-[3px]'
             >
               <NdekoUILLogo aria-hidden className='size-7' />
-              Ndeko UI
+              ndekoui
             </Link>
             <p className='text-muted-foreground text-[13px] text-pretty'>
               Open-source React components that animate every change of state,
@@ -123,7 +123,7 @@ export function SiteFooter() {
             variant='outline'
             size='icon'
             nativeButton={false}
-            aria-label='Ndeko UI on GitHub'
+            aria-label='ndekoui on GitHub'
             role='link'
             render={<a href={REPOSITORY_URL} />}
           >
@@ -138,7 +138,7 @@ export function SiteFooter() {
           <FooterColumn title='Project' links={PROJECT_LINKS} />
         </div>
         <div className='text-muted-foreground flex flex-wrap items-center justify-between gap-x-6 gap-y-2 text-[13px]'>
-          <p>{`© ${currentYear()} Ndeko UI, open source under the MIT licence`}</p>
+          <p>{`© ${currentYear()} ndekoui, open source under the MIT licence`}</p>
           <p>
             {'Built by '}
             <a

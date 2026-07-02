@@ -9,7 +9,7 @@ export const MCP_PAGE_PATH = '/mcp/connect';
 
 export const SERVER_NAME = 'ndeko-ui';
 
-export const SERVER_TITLE = 'Ndeko UI';
+export const SERVER_TITLE = 'ndekoui';
 
 export const REGISTRY_NAMESPACE = '@ndeko';
 

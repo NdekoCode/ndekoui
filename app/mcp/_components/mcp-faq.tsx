@@ -36,7 +36,7 @@ const QUESTIONS: Question[] = [
     id: 'shadcn',
     question: "How is it different from shadcn's MCP server?",
     answer:
-      "shadcn's server lists, searches and installs items from every registry in your components.json, Ndeko UI included once you declare it. This server adds what keeps the rest of the code in the same style: the design rules, a summary of the theme and the map of the catalogue. Both can run side by side.",
+      "shadcn's server lists, searches and installs items from every registry in your components.json, ndekoui included once you declare it. This server adds what keeps the rest of the code in the same style: the design rules, a summary of the theme and the map of the catalogue. Both can run side by side.",
   },
   {
     id: 'fresh',
@@ -53,7 +53,7 @@ const QUESTIONS: Question[] = [
     id: 'not-used',
     question: 'Why does my agent ignore it?',
     answer:
-      'Name the library in your request, for example "with Ndeko UI", or start from one of the two prompts the server ships. Some clients also need the server switched on in their list of tools.',
+      'Name the library in your request, for example "with ndekoui", or start from one of the two prompts the server ships. Some clients also need the server switched on in their list of tools.',
   },
 ];
 

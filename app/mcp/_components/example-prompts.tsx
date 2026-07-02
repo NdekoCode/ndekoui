@@ -1,11 +1,11 @@
 import { CopyButton } from '@/app/_site/copy-button';
 
 const EXAMPLE_PROMPTS = [
-  'Use Ndeko UI to build the pricing page of a time tracking app, with a switch between monthly and yearly billing',
-  'Find the Ndeko UI range calendar and put it in the booking step of our checkout',
-  'Rebuild our team settings screen with Ndeko UI blocks and keep the current form logic',
-  'Which Ndeko UI pieces animate a number that changes? Install the one that fits the cart quantity',
-  'Read the Ndeko UI design guidelines, then review this card against them and fix what differs',
+  'Use ndekoui to build the pricing page of a time tracking app, with a switch between monthly and yearly billing',
+  'Find the ndekoui range calendar and put it in the booking step of our checkout',
+  'Rebuild our team settings screen with ndekoui blocks and keep the current form logic',
+  'Which ndekoui pieces animate a number that changes? Install the one that fits the cart quantity',
+  'Read the ndekoui design guidelines, then review this card against them and fix what differs',
 ];
 
 export function ExamplePrompts() {

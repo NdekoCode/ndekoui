@@ -63,7 +63,7 @@ export function ShadcnRoute() {
         id='shadcn-title'
         eyebrow='shadcn MCP'
         title="Already use shadcn's MCP server?"
-        description='It installs from every registry declared in components.json. Declare Ndeko UI once and it browses, searches and installs our items next to the others. Our server adds the design rules, the theme and the catalogue map; you can run both.'
+        description='It installs from every registry declared in components.json. Declare ndekoui once and it browses, searches and installs our items next to the others. Our server adds the design rules, the theme and the catalogue map; you can run both.'
       />
       <ol className='flex flex-col gap-8'>
         {STEPS.map((step, index) => (

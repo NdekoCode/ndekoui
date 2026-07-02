@@ -22,7 +22,7 @@ export function InViewBasic() {
               <strong className='text-foreground font-medium'>
                 Motion components for product teams.
               </strong>{' '}
-              Ndeko UI ships the small movements that tell people the interface
+              ndekoui ships the small movements that tell people the interface
               heard them: a press that gives, a label that becomes its next
               state, a panel that grows to fit. Copy a component and keep the
               code.

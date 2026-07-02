@@ -13,7 +13,7 @@ const SECTION_HEADING = /^## /m;
 const NUMBERED_TITLE = /^(\d+)\.\s+(.*)$/;
 
 /** The short version an agent reads before writing UI. Each rule points to the section that explains it. */
-const KEY_RULES = `# Writing UI with Ndeko UI
+const KEY_RULES = `# Writing UI with ndekoui
 
 Install pieces with the shadcn CLI and compose them; do not restyle them. Every piece depends on the \`theme\` item, which ships the tokens and utilities named below.
 

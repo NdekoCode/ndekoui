@@ -136,7 +136,7 @@ function SearchInputRow({
         ref={inputRef}
         value={query}
         onValueChange={onQueryChange}
-        placeholder='Search Ndeko UI'
+        placeholder='Search ndekoui'
         className={INPUT_CLASS}
       />
       <DialogClose
@@ -334,7 +334,7 @@ function PaletteBody({ inputRef, onClose }: PaletteBodyProps) {
 
   return (
     <Command
-      label='Search Ndeko UI'
+      label='Search ndekoui'
       shouldFilter={false}
       loop
       vimBindings={false}
@@ -438,7 +438,7 @@ export function SearchPalette({ open, onOpenChange }: SearchPaletteProps) {
         contentClassName='min-h-0 gap-0'
         className={PALETTE_CLASS}
       >
-        <DialogTitle className='sr-only'>Search Ndeko UI</DialogTitle>
+        <DialogTitle className='sr-only'>Search ndekoui</DialogTitle>
         <DialogDescription className='sr-only'>{DESCRIPTION}</DialogDescription>
         <PaletteBody inputRef={inputRef} onClose={close} />
       </DialogContent>

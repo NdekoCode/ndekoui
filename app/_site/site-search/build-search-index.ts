@@ -33,7 +33,7 @@ const GUIDE_PAGES = new Map<string, GuidePage>([
     '/docs/installation',
     {
       name: 'installation',
-      description: 'How to install Ndeko UI in your project',
+      description: 'How to install ndekoui in your project',
     },
   ],
 ]);

@@ -19,9 +19,9 @@ import { countLabel } from '@/lib/site';
 import { TabsPanel } from '@/registry/ndeko/ui/tabs';
 
 export const metadata: Metadata = {
-  title: 'MCP server - Ndeko UI',
+  title: 'MCP server - ndekoui',
   description:
-    'Connect Claude, Cursor, Codex and any MCP client to Ndeko UI. Your agent searches the catalogue, reads the source, installs pieces with the shadcn CLI and follows the design rules.',
+    'Connect Claude, Cursor, Codex and any MCP client to ndekoui. Your agent searches the catalogue, reads the source, installs pieces with the shadcn CLI and follows the design rules.',
 };
 
 function McpHero() {
@@ -30,7 +30,7 @@ function McpHero() {
       <div className='flex flex-col gap-3'>
         <p className='text-primary-ink text-xs font-medium'>MCP server</p>
         <h1 className='text-3xl font-semibold text-balance sm:text-4xl'>
-          Connect Claude, Cursor and Codex to Ndeko UI with MCP
+          Connect Claude, Cursor and Codex to ndekoui with MCP
         </h1>
       </div>
       <div className='flex flex-col gap-5'>

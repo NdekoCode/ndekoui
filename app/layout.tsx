@@ -9,7 +9,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ui.ndekocode.dev'),
-  title: 'Ndeko UI',
+  title: 'ndekoui',
   description:
     'Open-source primitives, components, blocks and templates for React and Tailwind CSS, installed with the shadcn CLI and animated around what people do.',
 };

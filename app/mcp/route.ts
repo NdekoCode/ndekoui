@@ -9,7 +9,7 @@ import { MCP_PAGE_PATH, SERVER_NAME } from './_shared/mcp-config';
 export const dynamic = 'force-dynamic';
 
 const SERVER_INSTRUCTIONS = [
-  'Ndeko UI is an open-source React library (Base UI, motion, Tailwind CSS 4) installed with the shadcn CLI: primitives, components, blocks, templates and motion components that share one theme.',
+  'ndekoui is an open-source React library (Base UI, motion, Tailwind CSS 4) installed with the shadcn CLI: primitives, components, blocks, templates and motion components that share one theme.',
   'Call get_design_guidelines once before writing UI. Find pieces with search_items, or browse with list_categories and list_items. Read one with get_item, then install with the command from get_install_command.',
   'The server is read-only: it returns data and commands, and never changes a project.',
 ].join('\n');

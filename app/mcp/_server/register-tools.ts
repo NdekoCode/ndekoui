@@ -170,7 +170,7 @@ function errorResult(message: string): ToolResult {
 
 function unknownItemResult(name: string) {
   return errorResult(
-    `No Ndeko UI item is named "${name}". Call search_items with what it does, or list_items with a kind, to find its name.`
+    `No ndekoui item is named "${name}". Call search_items with what it does, or list_items with a kind, to find its name.`
   );
 }
 

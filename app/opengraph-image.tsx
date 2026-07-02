@@ -3,7 +3,7 @@ import { ImageResponse } from 'next/og';
 import { logoDataUrl } from './_site/logo-data-url';
 
 export const alt =
-  'Ndeko UI: React components that animate every change of state.';
+  'ndekoui: React components that animate every change of state.';
 
 export const size = { width: 1200, height: 630 };
 
@@ -60,7 +60,7 @@ export default async function OpenGraphImage() {
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
         <img src={logo} width={48} height={48} alt='' />
-        <div style={{ fontSize: 32, fontWeight: 600 }}>Ndeko UI</div>
+        <div style={{ fontSize: 32, fontWeight: 600 }}>ndekoui</div>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
         <div

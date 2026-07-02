@@ -8,9 +8,9 @@ import { countComponents, publishedFamilies } from './_catalog/families';
 import { catalog } from './_generated/catalog';
 
 export const metadata: Metadata = {
-  title: 'Components - Ndeko UI',
+  title: 'Components - ndekoui',
   description:
-    'Ready-made components built on Ndeko UI primitives, grouped by family, each installable with the shadcn CLI.',
+    'Ready-made components built on ndekoui primitives, grouped by family, each installable with the shadcn CLI.',
 };
 
 export default function ComponentsIndexPage() {

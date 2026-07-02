@@ -39,7 +39,7 @@ export async function generateMetadata({
     return {};
   }
   return {
-    title: `${presented.entry.title} - Ndeko UI`,
+    title: `${presented.entry.title} - ndekoui`,
     description: presented.entry.description,
   };
 }

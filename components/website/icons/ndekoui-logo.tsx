@@ -61,7 +61,7 @@ function fillOf(tone: MarkTone, leftEdgeId: string, rightEdgeId: string) {
   return `url(#${rightEdgeId})`;
 }
 
-/** The Ndeko UI mark: the folded N on an indigo tile. */
+/** The ndekoui mark: the folded N on an indigo tile. */
 export function NdekoUILLogo({ className, ...props }: SVGProps<SVGSVGElement>) {
   const baseId = useId();
   const tileId = `${baseId}-tile`;
@@ -71,7 +71,7 @@ export function NdekoUILLogo({ className, ...props }: SVGProps<SVGSVGElement>) {
   return (
     <svg
       role='img'
-      aria-label='Ndeko UI'
+      aria-label='ndekoui'
       className={cn('shrink-0', className)}
       width={92}
       height={92}

@@ -1,5 +1,5 @@
 // Adapted from https://github.com/adobe/react-spectrum/blob/main/packages/%40react-aria/overlays/src/usePreventScroll.ts
-// Copyright 2020 Adobe, Apache License 2.0 (see LICENSES/Apache-2.0.txt). Modified for Ndeko UI.
+// Copyright 2020 Adobe, Apache License 2.0 (see LICENSES/Apache-2.0.txt). Modified for ndekoui.
 
 import { useEffect, useLayoutEffect } from 'react';
 
