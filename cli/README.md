@@ -53,7 +53,7 @@ The CLI automatically detects which package manager you're using based on lock f
 
 ## Available Components
 
-Ndeko UI  offers a variety of beautiful and performant animated components, including:
+ndekoui offers a variety of beautiful and performant animated components, including:
 
 - **Animated UI Elements**: Accordion, Dialog, Text Effects, Carousels
 - **Interactive Animations**: Magnetic elements, Spotlights, Tilt effects

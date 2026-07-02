@@ -103,7 +103,7 @@ function displayBanner() {
   console.log(`
 ┌────────────────────────────────────────────┐
 │                                            │
-│           Ndeko UI  CLI            │
+│                ndekoui CLI                 │
 │                                            │
 │      Beautiful, animated components        │
 │          for your React projects           │
