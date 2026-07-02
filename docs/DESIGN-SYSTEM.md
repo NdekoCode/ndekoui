@@ -66,7 +66,7 @@ Modal layers (dialog, alert dialog, sheet, command palette) sit on `bg-black/40 
 
 ## 5. Typography
 
-Components inherit the font of the app. The site and the previews use the system UI stack. Weight stops at `font-semibold`; no `tracking-*` in new code; `text-balance` on headings; `tabular-nums` on every aligned number.
+Components inherit the font of the app. The site and the previews use the system UI stack. Weight stops at `font-semibold`; no `tracking-*` in new code, except the display titles of the home page (section 12); `text-balance` on headings; `tabular-nums` on every aligned number.
 
 | Role                       | Classes                                                               |
 | -------------------------- | --------------------------------------------------------------------- |
@@ -157,8 +157,9 @@ The home page is the one marketing surface of the site, and it follows the maint
 
 - **One wash.** A single radial tint of the primary colour behind the hero, and the same tint under the closing band. One hue, never a second one, never behind content cards.
 - **Entrances.** On load, the lines of the hero sharpen and rise into place once, 70ms apart (`animate-settle`: opacity, 12px, 8px blur, 700ms, `--ease-out-strong`). On scroll, each heading, card and row does the same the first time it enters the screen (`Reveal` in `app/_home/reveal.tsx`, 600ms, 60ms between neighbours). Large surfaces (device frames, grids of live previews) fade and rise without the blur. Nothing replays, and reduced motion keeps only a fade.
-- **One type scale.** `DISPLAY_TITLE`, `SECTION_TITLE`, `SECTION_LEAD`, `CARD_TITLE`, `ROW_TITLE` and `CARD_TEXT` in `app/_home/section-heading.tsx`. A section never sets its own heading size.
-- **One rhythm.** Sections sit `gap-24 lg:gap-32` apart and a heading sits `gap-10 lg:gap-12` above its content. A section never adds its own vertical padding, except the two full-width bands (MCP, closing).
+- **One type scale.** `DISPLAY_TITLE`, `SECTION_TITLE`, `SECTION_LEAD`, `CARD_TITLE`, `ROW_TITLE` and `CARD_TEXT` in `app/_home/section-heading.tsx`. A section never sets its own heading size. Display and section titles are the one place with negative tracking (-0.02em to -0.03em), because large text set at zero reads loose. A section is named by a quiet label (icon and words in the brand ink), never a pill.
+- **One rhythm.** Sections sit `gap-24 lg:gap-32` apart in a `max-w-7xl` column, and a heading sits `gap-10 lg:gap-12` above its content. A section never adds its own vertical padding, except the two full-width bands (MCP, closing). In dark mode the MCP band sits one step darker than the page, between two hairlines.
+- **Real components, never drawings.** The opening is a stage of catalogue items rendered as they install: the travelling board of heroes-02, the checklist of subtask-01 and the live feed of activity-05, each captioned with its item name and a link to it. The steps and the families scroll show catalogue items too (`app/_home/showcase-pieces.tsx`). Category thumbnails stay on the catalogue.
 - **Its sections are made of the library.** The families scroll runs on Sticky scroll, the giant line on Scroll text marquee, the install step on Terminal, the device frames on Safari and iPhone. Each says so with a link to the component.
 
 The catalogue, the kit and the docs stay still: no entrance, no scroll reveal.
