@@ -30,10 +30,11 @@ const MARKED_CLIENT_IDS = new Set([
   'v0',
 ]);
 
-const GLOW_STYLE: CSSProperties = {
-  backgroundImage:
-    'radial-gradient(70% 55% at 50% 0%, color-mix(in oklab, var(--primary) 20%, transparent), transparent 72%)',
-};
+/* One wash of the primary colour behind the hero: lavender in light, a deeper indigo in dark. */
+const LIGHT_GLOW =
+  'bg-[radial-gradient(70%_55%_at_50%_0%,color-mix(in_oklab,var(--primary)_22%,transparent),transparent_72%)] dark:hidden';
+const DARK_GLOW =
+  'hidden bg-[radial-gradient(60%_50%_at_50%_0%,color-mix(in_oklab,var(--primary)_34%,transparent),transparent_70%),radial-gradient(45%_40%_at_50%_58%,color-mix(in_oklab,var(--primary)_14%,transparent),transparent_75%)] dark:block';
 
 const SETTLE_STEP_MS = 70;
 
@@ -102,7 +103,8 @@ export function HeroBackdrop() {
       aria-hidden='true'
       className='pointer-events-none absolute inset-x-0 top-0 -z-10 h-[64rem] mask-b-from-60%'
     >
-      <div className='absolute inset-0' style={GLOW_STYLE} />
+      <div className={cn('absolute inset-0', LIGHT_GLOW)} />
+      <div className={cn('absolute inset-0', DARK_GLOW)} />
       <TileField className='top-24' />
     </div>
   );
@@ -211,15 +213,15 @@ export function HomeHero({
           <StarCount starCount={starCount} />
         </Button>
       </Settle>
-      <Settle step={5} className='mt-14'>
-        <WorksWith />
-      </Settle>
       <Settle
-        step={7}
+        step={5}
         isLarge
-        className='mt-16 w-full max-w-6xl sm:mt-20 md:px-2'
+        className='mt-14 w-full max-w-7xl sm:mt-16 md:px-4'
       >
         {children}
+      </Settle>
+      <Settle step={7} className='mt-20 sm:mt-24'>
+        <WorksWith />
       </Settle>
     </section>
   );

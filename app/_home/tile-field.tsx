@@ -4,7 +4,7 @@ import { cn } from '@/registry/ndeko/lib/utils';
 
 const COLUMNS = 8;
 const ROWS = 11;
-const SHOWN_BELOW = 0.42;
+const SHOWN_BELOW = 0.34;
 const GLOWING_BELOW = 0.14;
 const GLOW_CYCLE_SECONDS = 7;
 
@@ -92,7 +92,7 @@ function TileSide({ side }: { side: Side }) {
         <span
           key={tile.key}
           style={placementOf(tile)}
-          className='bg-card/70 hairline-ring ring-foreground/[0.06] dark:bg-foreground/[0.025] relative rounded-[0.7rem] shadow-[0_1px_2px_rgb(0_0_0/0.03)]'
+          className='bg-card/70 hairline-ring ring-foreground/[0.06] dark:ring-foreground/[0.08] relative rounded-[0.7rem] shadow-[0_1px_2px_rgb(0_0_0/0.03)] dark:bg-transparent dark:shadow-none'
         >
           {tile.isGlowing && (
             <span
