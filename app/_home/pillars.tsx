@@ -18,6 +18,7 @@ import { Switch } from '@/registry/ndeko/ui/switch';
 
 import { Reveal } from './reveal';
 import { CARD_TEXT, CARD_TITLE, STAGGER_MS } from './section-heading';
+import { MOTION_PIECES } from './showcase-pieces';
 import { usePrefersReducedMotion } from './use-prefers-reduced-motion';
 
 type SaveState = 'idle' | 'saving' | 'saved';
@@ -214,26 +215,50 @@ type PillarProps = {
   description: string;
   order: number;
   isDecorative?: boolean;
+  /** The first reason gets the tall card on wide screens, with a stage that fills it. */
+  isLead?: boolean;
   children: React.ReactNode;
 };
+
+function pillarLayoutOf(isLead: boolean) {
+  if (isLead) {
+    return 'md:col-span-2';
+  }
+  return '';
+}
+
+function stageSizeOf(isLead: boolean) {
+  if (isLead) {
+    return 'h-auto min-h-56 py-10';
+  }
+  return 'h-44';
+}
 
 function Pillar({
   title,
   description,
   order,
   isDecorative = false,
+  isLead = false,
   children,
 }: PillarProps) {
   return (
     <Reveal
       as='li'
       delay={order * STAGGER_MS}
-      className='bg-card hairline-ring ring-border flex min-w-0 flex-col gap-5 rounded-2xl p-2 pb-6 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
+      className={cn(
+        'bg-card hairline-ring ring-border flex min-w-0 flex-col gap-5 rounded-2xl p-2 pb-6 shadow-[0_1px_2px_rgb(0_0_0/0.04)]',
+        pillarLayoutOf(isLead)
+      )}
     >
-      <div aria-hidden={isDecorative} inert={isDecorative} className={STAGE}>
+      <div
+        aria-hidden={isDecorative}
+        inert={isDecorative}
+        className={cn(STAGE, stageSizeOf(isLead))}
+      >
         {children}
       </div>
-      <div className='flex flex-col gap-2 px-4 text-center'>
+      <div className='flex flex-col gap-2 px-4'>
         <h3 className={CARD_TITLE}>{title}</h3>
         <p className={CARD_TEXT}>{description}</p>
       </div>
@@ -241,7 +266,29 @@ function Pillar({
   );
 }
 
-/** Three reasons, each shown by a piece that moves rather than an icon. */
+/** The saving button and three catalogue pieces, each named by the micro-interaction it carries. */
+function MotionStage({ isRunning }: { isRunning: boolean }) {
+  return (
+    <div className='grid w-full max-w-3xl grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4'>
+      <figure className='flex flex-col items-center gap-3'>
+        <SavingButton isRunning={isRunning} />
+        <figcaption className='text-muted-foreground font-mono text-xs'>
+          Morph
+        </figcaption>
+      </figure>
+      {MOTION_PIECES.map(({ motion: motionName, piece }) => (
+        <figure key={piece.name} className='flex flex-col items-center gap-3'>
+          <piece.Piece />
+          <figcaption className='text-muted-foreground font-mono text-xs'>
+            {motionName}
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  );
+}
+
+/** Three reasons, each shown by pieces that move rather than an icon. */
 export function Pillars() {
   const listRef = useRef<HTMLUListElement>(null);
   const isInView = useInView(listRef, { margin: '-15% 0px' });
@@ -251,15 +298,15 @@ export function Pillars() {
   return (
     <ul
       ref={listRef}
-      className='grid grid-cols-[minmax(0,1fr)] gap-4 md:grid-cols-3'
+      className='grid grid-cols-[minmax(0,1fr)] gap-4 md:grid-cols-2'
     >
       <Pillar
         order={0}
+        isLead
         title='Motion on every change of state'
-        description='A button that saves says so, a dialog grows to its next step, a tab slides to the new choice. The motion ships with the component.'
-        isDecorative
+        description='A button that saves says so, a tab slides to the new choice, a task strikes through when it is done. The motion ships with the component, and you can try each one here.'
       >
-        <SavingButton isRunning={isRunning} />
+        <MotionStage isRunning={isRunning} />
       </Pillar>
       <Pillar
         order={1}
