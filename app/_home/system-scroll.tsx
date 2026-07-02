@@ -2,12 +2,13 @@
 
 import Link from 'next/link';
 
-import { CategoryThumbnail } from '@/app/components/_catalog/category-thumbnail';
 import {
   StickyScroll,
   type StickyScrollStep,
 } from '@/components/core/sticky-scroll';
 import { countLabel } from '@/lib/site';
+
+import { PIECES_BY_FAMILY } from './showcase-pieces';
 
 export type SystemCategory = {
   slug: string;
@@ -21,17 +22,6 @@ export type SystemFamily = {
   count: number;
   categories: SystemCategory[];
 };
-
-const FULL_PREVIEW = 4;
-const SHORT_PREVIEW = 2;
-
-/** Two columns of tiles never leave a hole: four tiles when the family has them, two otherwise. */
-function previewCountOf(total: number) {
-  if (total >= FULL_PREVIEW) {
-    return FULL_PREVIEW;
-  }
-  return Math.min(total, SHORT_PREVIEW);
-}
 
 function FamilyTitle({ family }: { family: SystemFamily }) {
   return (
@@ -67,30 +57,30 @@ function FamilyDetails({ family }: { family: SystemFamily }) {
   );
 }
 
+/**
+ * The family's real components on one stage. The sticky panel is decorative for assistive
+ * technology (the categories on the other side are the links), so the pieces are inert there.
+ */
 function FamilyPreview({ family }: { family: SystemFamily }) {
-  const previewCount = previewCountOf(family.categories.length);
-  const shown = family.categories.slice(0, previewCount);
+  const pieces = PIECES_BY_FAMILY[family.name] ?? [];
 
   return (
-    <div className='bg-foreground/[0.03] hidden items-center rounded-3xl p-4 @xl:flex'>
-      <ul className='grid w-full grid-cols-2 gap-3'>
-        {shown.map((category) => (
-          <li
-            key={category.slug}
-            className='bg-card hairline-ring ring-border flex flex-col gap-2.5 rounded-2xl p-2 pb-2.5 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
-          >
-            <CategoryThumbnail slug={category.slug} />
-            <span className='flex items-baseline justify-between gap-2 px-1'>
-              <span className='truncate text-[13px] font-medium'>
-                {category.name}
-              </span>
-              <span className='text-muted-foreground text-xs tabular-nums'>
-                {category.count}
-              </span>
+    <div className='bg-foreground/[0.03] hidden rounded-3xl p-3 @xl:block'>
+      <div
+        inert
+        className='bg-card hairline-ring ring-border flex min-h-[30rem] flex-col items-center justify-center gap-8 rounded-2xl p-8 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
+      >
+        {pieces.map(({ name, Piece }) => (
+          <div key={name} className='flex w-full flex-col items-center gap-2'>
+            <div className='flex w-full justify-center'>
+              <Piece />
+            </div>
+            <span className='text-muted-foreground font-mono text-xs'>
+              {name}
             </span>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

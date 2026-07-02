@@ -3,19 +3,19 @@
 import { Tabs as TabsPrimitive } from '@base-ui/react/tabs';
 import { AnimatePresence, motion, useInView } from 'motion/react';
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 
 import { InstallCommand } from '@/app/blocks/_shared/install-command';
-import { CategoryThumbnail } from '@/app/components/_catalog/category-thumbnail';
 import { Terminal, type TerminalLine } from '@/components/core/terminal';
 import { WordRoll } from '@/components/core/word-roll';
 import { countLabel, installCommandOf } from '@/lib/site';
-import { SearchIcon } from '@/registry/ndeko/lib/icons';
+import { ArrowUpRightIcon, SearchIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Tabs, TabsList, TabsTab } from '@/registry/ndeko/ui/tabs';
 
 import { ROW_TITLE } from './section-heading';
+import { PIECE_BY_CATEGORY, pieceHrefOf } from './showcase-pieces';
 import { usePrefersReducedMotion } from './use-prefers-reduced-motion';
 
 export type FoundCategory = { slug: string; name: string; count: number };
@@ -150,6 +150,41 @@ function FindRow({ category, index, isActive, onPick }: FindRowProps) {
   );
 }
 
+/** The real component of the category found, in a stage, named so it can be opened in the catalogue. */
+function LivePiece({ slug }: { slug: string }) {
+  const showcase = PIECE_BY_CATEGORY[slug];
+  if (!showcase) {
+    return null;
+  }
+  const { name, Piece } = showcase;
+
+  return (
+    <div className='bg-foreground/[0.03] hidden h-full min-h-0 flex-col rounded-2xl p-4 md:flex'>
+      <AnimatePresence mode='popLayout' initial={false}>
+        <motion.div
+          key={name}
+          initial={SWAP.initial}
+          animate={SWAP.animate}
+          exit={SWAP.exit}
+          transition={SWAP_TIMING}
+          className='flex min-h-0 flex-1 flex-col gap-3'
+        >
+          <Link
+            href={pieceHrefOf(name)}
+            className='text-muted-foreground hover:text-foreground focus-visible:ring-ring/25 inline-flex w-fit items-center gap-1 rounded-sm font-mono text-xs transition-colors outline-none focus-visible:ring-[3px]'
+          >
+            {name}
+            <ArrowUpRightIcon className='size-3' />
+          </Link>
+          <div className='flex min-h-0 flex-1 items-center justify-center'>
+            <Piece />
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}
+
 function FindPanel({
   categories,
   isRunning,
@@ -164,10 +199,10 @@ function FindPanel({
     <div
       className={cn(
         PANEL_PADDING,
-        'grid items-center gap-8 md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]'
+        'grid gap-6 md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] md:items-stretch'
       )}
     >
-      <div className='flex flex-col gap-3'>
+      <div className='flex flex-col justify-center gap-3'>
         <div className='bg-background hairline-ring ring-border flex h-11 items-center gap-2.5 rounded-xl px-3.5 shadow-[0_1px_2px_rgb(0_0_0/0.05)]'>
           <SearchIcon className='text-muted-foreground size-4' />
           <AnimatePresence mode='popLayout' initial={false}>
@@ -195,29 +230,7 @@ function FindPanel({
           ))}
         </ul>
       </div>
-      <div
-        aria-hidden='true'
-        className='bg-foreground/[0.03] mx-auto hidden w-full max-w-[21rem] rounded-2xl p-3 md:block'
-      >
-        <AnimatePresence mode='popLayout' initial={false}>
-          <motion.div
-            key={active.slug}
-            initial={SWAP.initial}
-            animate={SWAP.animate}
-            exit={SWAP.exit}
-            transition={SWAP_TIMING}
-            className='bg-card hairline-ring ring-border flex flex-col gap-3 rounded-xl p-2 pb-3 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
-          >
-            <CategoryThumbnail slug={active.slug} />
-            <span className='flex items-baseline justify-between gap-2 px-1'>
-              <span className='text-[13px] font-medium'>{active.name}</span>
-              <span className='text-muted-foreground text-xs tabular-nums'>
-                {countLabel(active.count, 'component', 'components')}
-              </span>
-            </span>
-          </motion.div>
-        </AnimatePresence>
-      </div>
+      <LivePiece slug={active.slug} />
     </div>
   );
 }
@@ -366,7 +379,13 @@ function ActivePanel({ activeId, categories, isRunning }: ActivePanelProps) {
 }
 
 /** Three steps that take turns on their own, each one a working piece: a search, a terminal, a file. */
-export function HowItWorks({ categories }: { categories: FoundCategory[] }) {
+type HowItWorksProps = {
+  categories: FoundCategory[];
+  /** The section heading, set above the steps in the first column. */
+  heading: ReactNode;
+};
+
+export function HowItWorks({ categories, heading }: HowItWorksProps) {
   const [activeId, setActiveId] = useState(STEPS[0].id);
   const [isPaused, setIsPaused] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -404,53 +423,62 @@ export function HowItWorks({ categories }: { categories: FoundCategory[] }) {
       <TabsPrimitive.Root
         value={activeId}
         onValueChange={pickStep}
-        className='flex flex-col gap-8'
+        className='grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-center lg:gap-14'
       >
-        <TabsPrimitive.List
-          aria-label='How it works'
-          className='mx-auto grid w-full max-w-3xl grid-cols-3 gap-3 sm:gap-6'
-        >
-          {STEPS.map((step, index) => {
-            const isActive = step.id === activeId;
-            return (
-              <TabsPrimitive.Tab
-                key={step.id}
-                value={step.id}
-                className='focus-visible:ring-ring/25 flex flex-col items-center gap-2 rounded-xl pb-1 text-center outline-none focus-visible:ring-[3px]'
-              >
-                <span className='bg-foreground/[0.08] relative h-1 w-full overflow-hidden rounded-full'>
-                  <ProgressFill
-                    isActive={isActive}
-                    isRunning={isRunning}
-                    onDone={showNextStep}
-                  />
-                </span>
-                <span
+        <div className='flex flex-col gap-10'>
+          {heading}
+          <TabsPrimitive.List
+            aria-label='How it works'
+            className='grid grid-cols-3 gap-3 lg:grid-cols-1 lg:gap-1'
+          >
+            {STEPS.map((step, index) => {
+              const isActive = step.id === activeId;
+              return (
+                <TabsPrimitive.Tab
+                  key={step.id}
+                  value={step.id}
                   className={cn(
-                    'mt-2 flex size-6 items-center justify-center rounded-md text-xs font-semibold tabular-nums transition-colors duration-200',
-                    isActive && 'bg-primary text-primary-foreground',
-                    !isActive && 'bg-foreground/[0.08] text-muted-foreground'
+                    'focus-visible:ring-ring/25 relative flex flex-col items-center gap-2 overflow-hidden rounded-xl px-2 pt-3 pb-4 text-center transition-colors duration-200 outline-none focus-visible:ring-[3px] lg:flex-row lg:items-start lg:gap-4 lg:px-4 lg:py-4 lg:text-left',
+                    isActive && 'lg:bg-foreground/[0.04]',
+                    !isActive && 'lg:hover:bg-foreground/[0.02]'
                   )}
                 >
-                  {index + 1}
-                </span>
-                <span
-                  className={cn(
-                    ROW_TITLE,
-                    'transition-colors duration-200',
-                    !isActive && 'text-muted-foreground'
-                  )}
-                >
-                  {step.title}
-                </span>
-                <span className='text-muted-foreground hidden text-sm sm:block'>
-                  {step.hint}
-                </span>
-              </TabsPrimitive.Tab>
-            );
-          })}
-        </TabsPrimitive.List>
-        <div className='bg-card hairline-ring ring-border relative h-[27rem] overflow-hidden rounded-3xl shadow-[0_1px_2px_rgb(0_0_0/0.04)] md:h-[26rem]'>
+                  <span
+                    className={cn(
+                      'flex size-7 shrink-0 items-center justify-center rounded-lg text-xs font-semibold tabular-nums transition-colors duration-200',
+                      isActive && 'bg-primary text-primary-foreground',
+                      !isActive && 'bg-foreground/[0.08] text-muted-foreground'
+                    )}
+                  >
+                    {index + 1}
+                  </span>
+                  <span className='flex flex-col gap-1'>
+                    <span
+                      className={cn(
+                        ROW_TITLE,
+                        'transition-colors duration-200',
+                        !isActive && 'text-muted-foreground'
+                      )}
+                    >
+                      {step.title}
+                    </span>
+                    <span className='text-muted-foreground hidden text-sm lg:block'>
+                      {step.hint}
+                    </span>
+                  </span>
+                  <span className='bg-foreground/[0.08] absolute inset-x-2 bottom-0 h-0.5 overflow-hidden rounded-full lg:inset-x-4 lg:bottom-1.5'>
+                    <ProgressFill
+                      isActive={isActive}
+                      isRunning={isRunning}
+                      onDone={showNextStep}
+                    />
+                  </span>
+                </TabsPrimitive.Tab>
+              );
+            })}
+          </TabsPrimitive.List>
+        </div>
+        <div className='bg-card hairline-ring ring-border relative h-[27rem] overflow-hidden rounded-3xl shadow-[0_1px_2px_rgb(0_0_0/0.04)] md:h-[28rem]'>
           <AnimatePresence mode='wait' initial={false}>
             <motion.div
               key={activeId}
