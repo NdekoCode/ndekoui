@@ -8,7 +8,8 @@ import {
   MessageCircleIcon,
 } from '@/registry/ndeko/lib/icons';
 
-import { SectionHeading } from './section-heading';
+import { Reveal } from './reveal';
+import { SectionHeading, STAGGER_MS } from './section-heading';
 
 type Question = {
   id: string;
@@ -104,13 +105,13 @@ function QuestionCard({ item }: { item: Question }) {
       className='bg-card hairline-ring ring-border rounded-2xl shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
     >
       <Accordion.Header>
-        <Accordion.Trigger className='group focus-visible:ring-ring/25 data-[panel-open]:text-primary-ink flex w-full items-center justify-between gap-4 rounded-2xl px-5 py-4 text-left text-[15px] font-medium outline-none focus-visible:ring-[3px] sm:text-base'>
+        <Accordion.Trigger className='group focus-visible:ring-ring/25 data-[panel-open]:text-primary-ink flex w-full items-center justify-between gap-4 rounded-2xl px-5 py-4 text-left text-base font-medium outline-none focus-visible:ring-[3px]'>
           {item.question}
           <PlusMinus />
         </Accordion.Trigger>
       </Accordion.Header>
       <Accordion.Panel className='h-[var(--accordion-panel-height)] overflow-hidden transition-[height] duration-200 ease-out data-[ending-style]:h-0 data-[starting-style]:h-0 motion-reduce:transition-none'>
-        <p className='text-muted-foreground px-5 pb-5 text-sm leading-relaxed text-pretty sm:text-[15px]'>
+        <p className='text-muted-foreground px-5 pb-5 text-sm leading-relaxed text-pretty'>
           {item.answer}
         </p>
       </Accordion.Panel>
@@ -120,7 +121,10 @@ function QuestionCard({ item }: { item: Question }) {
 
 export function HomeFaq() {
   return (
-    <section aria-labelledby='faq-title' className='flex flex-col gap-12'>
+    <section
+      aria-labelledby='faq-title'
+      className='flex flex-col gap-10 lg:gap-12'
+    >
       <SectionHeading
         id='faq-title'
         icon={MessageCircleIcon}
@@ -131,8 +135,12 @@ export function HomeFaq() {
         align='center'
       />
       <div className='mx-auto flex w-full max-w-3xl flex-col gap-8'>
-        {GROUPS.map((group) => (
-          <div key={group.name} className='flex flex-col gap-3'>
+        {GROUPS.map((group, index) => (
+          <Reveal
+            key={group.name}
+            delay={index * STAGGER_MS}
+            className='flex flex-col gap-3'
+          >
             <p className='text-muted-foreground flex items-center gap-2 text-sm font-medium'>
               <group.icon className='size-4' />
               {group.name}
@@ -142,7 +150,7 @@ export function HomeFaq() {
                 <QuestionCard key={item.id} item={item} />
               ))}
             </Accordion.Root>
-          </div>
+          </Reveal>
         ))}
       </div>
     </section>

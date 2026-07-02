@@ -8,11 +8,8 @@ export function AnnouncementBar() {
   return (
     <div className='dark bg-background text-foreground relative z-50 shadow-[0_1px_0_var(--border)]'>
       <p className='mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-2 gap-y-1 px-4 py-2 text-center text-[13px]'>
-        <span className='bg-primary text-primary-foreground rounded-full px-2 py-0.5 text-[11px] font-semibold'>
-          New
-        </span>
         <span className='text-muted-foreground'>
-          Your editor can now search and install Ndeko UI through MCP.
+          New: your editor can search and install Ndeko UI through MCP
         </span>
         <Link
           href={MCP_PAGE_PATH}

@@ -9,16 +9,21 @@ import {
   GithubIcon,
   StarIcon,
 } from '@/registry/ndeko/lib/icons';
+import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
 
-import { Eyebrow } from './section-heading';
+import { Reveal } from './reveal';
+import {
+  Eyebrow,
+  SECTION_LEAD,
+  SECTION_TITLE,
+  STAGGER_MS,
+} from './section-heading';
 import { TileField } from './tile-field';
 
 const BAND_STYLE: CSSProperties = {
-  backgroundImage: [
+  backgroundImage:
     'radial-gradient(60% 80% at 50% 100%, color-mix(in oklab, var(--primary) 18%, transparent), transparent 75%)',
-    'radial-gradient(40% 60% at 80% 0%, color-mix(in oklab, hsl(292 80% 72%) 8%, transparent), transparent 70%)',
-  ].join(', '),
 };
 
 const NUMBER_FORMAT = new Intl.NumberFormat('en-US');
@@ -39,23 +44,26 @@ export function ClosingBand({ starCount }: { starCount: number | null }) {
   return (
     <section
       aria-labelledby='closing-title'
-      className='relative isolate overflow-hidden px-4 py-24 sm:py-32'
+      className='relative isolate overflow-hidden px-4 py-20 sm:py-28'
       style={BAND_STYLE}
     >
       <TileField className='top-6 opacity-80' />
       <div className='relative mx-auto flex max-w-2xl flex-col items-center gap-6 text-center'>
-        <Eyebrow icon={StarIcon}>Free and MIT licensed</Eyebrow>
-        <h2
-          id='closing-title'
-          className='text-3xl font-semibold tracking-tight text-balance sm:text-5xl sm:leading-[1.1]'
-        >
-          <span className='text-tint'>Start your next screen</span> from pieces
-          that already move
-        </h2>
-        <p className='text-muted-foreground max-w-lg text-base text-pretty'>
-          Star the repository to follow new components, blocks and templates as
-          they land, or connect your editor and ask it for the next one.
-        </p>
+        <Reveal>
+          <Eyebrow icon={StarIcon}>Free and MIT licensed</Eyebrow>
+        </Reveal>
+        <Reveal delay={STAGGER_MS}>
+          <h2 id='closing-title' className={SECTION_TITLE}>
+            <span className='text-tint'>Start your next screen</span> from
+            pieces that already move
+          </h2>
+        </Reveal>
+        <Reveal delay={STAGGER_MS * 2}>
+          <p className={cn(SECTION_LEAD, 'max-w-lg')}>
+            Star the repository to follow new components, blocks and templates
+            as they land, or connect your editor and ask it for the next one.
+          </p>
+        </Reveal>
         <div className='flex flex-wrap items-center justify-center gap-3'>
           <Button
             size='lg'

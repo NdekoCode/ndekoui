@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
-import { BundleTileGrid } from '@/app/_site/bundle-tiles';
+import type { BundleTile } from '@/app/_site/bundle-tiles';
 import { fetchStarCount } from '@/app/_site/repository';
 import { SiteFooter } from '@/app/_site/site-footer';
 import { SiteHeader } from '@/app/_site/site-header';
@@ -30,13 +30,10 @@ import { Toaster } from '@/registry/ndeko/ui/sonner';
 import { TooltipProvider } from '@/registry/ndeko/ui/tooltip';
 
 import { AnnouncementBar } from './_home/announcement-bar';
+import { BuiltWith } from './_home/built-with';
 import { BundlesShowcase, type BundleShelf } from './_home/bundles-showcase';
-import {
-  CatalogueExplorer,
-  type ExplorerCategory,
-  type ExplorerFamily,
-} from './_home/catalogue-explorer';
 import { ClosingBand } from './_home/closing-band';
+import { EditorMarquee } from './_home/editor-marquee';
 import { EditorSection } from './_home/editor-section';
 import { EveryScreen } from './_home/every-screen';
 import { HomeFaq } from './_home/home-faq';
@@ -46,8 +43,14 @@ import { MotionShowcase } from './_home/motion-showcase';
 import { Pillars } from './_home/pillars';
 import { PrimitivesShowcase } from './_home/primitives-showcase';
 import { ProductStage } from './_home/product-stage';
+import { Reveal } from './_home/reveal';
 import { SectionHeading } from './_home/section-heading';
 import { Statement } from './_home/statement';
+import {
+  SystemScroll,
+  type SystemCategory,
+  type SystemFamily,
+} from './_home/system-scroll';
 
 export const metadata: Metadata = {
   title: 'Ndeko UI - React components that animate every change of state',
@@ -71,49 +74,43 @@ const MARKETING_GROUPS = new Set([
 
 const GETTING_STARTED = 'Getting Started';
 
-const SEARCH_EXAMPLE_COUNT = 6;
+const SEARCH_EXAMPLE_COUNT = 5;
 
 const SHELF_TILE_COUNT = 6;
 
+/* One rhythm for the whole page: the same space between sections, the same space under a heading. */
+const PAGE_RHYTHM = 'flex flex-col gap-24 lg:gap-32';
 const SECTION = 'mx-auto w-full max-w-6xl px-4 md:px-6';
+const SECTION_STACK = 'flex flex-col gap-10 lg:gap-12';
 
-const SECTION_GAP = 'flex flex-col gap-12';
+/** Without scripts nothing would ever mark a block as entered, so they all show from the start. */
+const NO_SCRIPT_STYLE =
+  '.reveal,.reveal-plain{opacity:1;translate:none;filter:none}';
 
-function explorerCategoryOf(category: (typeof catalog)[number]) {
-  const explored: ExplorerCategory = {
+function systemCategoryOf(category: (typeof catalog)[number]) {
+  const shown: SystemCategory = {
     slug: category.slug,
     name: category.name,
     count: category.entries.length,
   };
-  return explored;
+  return shown;
 }
 
-function largestCategoriesFirst() {
-  return [...catalog].sort(
-    (first, second) => second.entries.length - first.entries.length
-  );
-}
-
-function explorerFamilies(): ExplorerFamily[] {
-  const allFamily: ExplorerFamily = {
-    name: 'All components',
-    count: countComponents(catalog),
-    categories: largestCategoriesFirst().map(explorerCategoryOf),
-  };
-  const families = publishedFamilies(catalog).map((family) => ({
+function systemFamilies(): SystemFamily[] {
+  return publishedFamilies(catalog).map((family) => ({
     name: family.name,
+    description: family.description,
     count: countComponents(family.categories),
-    categories: family.categories.map(explorerCategoryOf),
+    categories: family.categories.map(systemCategoryOf),
   }));
-  return [allFamily, ...families];
 }
 
 function searchExamples(): FoundCategory[] {
-  const largest = largestCategoriesFirst().slice(0, SEARCH_EXAMPLE_COUNT);
-  return largest.map((category) => ({
-    name: category.name,
-    count: category.entries.length,
-  }));
+  const largestFirst = [...catalog].sort(
+    (first, second) => second.entries.length - first.entries.length
+  );
+  const largest = largestFirst.slice(0, SEARCH_EXAMPLE_COUNT);
+  return largest.map(systemCategoryOf);
 }
 
 function isMarketingGroup(slug: string) {
@@ -172,6 +169,27 @@ function LinkButton({ href, children }: { href: string; children: string }) {
   );
 }
 
+/** The template groups as quiet links, under the screens that already show two of them live. */
+function GroupLinks({ tiles }: { tiles: BundleTile[] }) {
+  return (
+    <ul className='flex flex-wrap justify-center gap-2'>
+      {tiles.map((tile) => (
+        <li key={tile.href}>
+          <Link
+            href={tile.href}
+            className='bg-foreground/[0.05] hover:bg-foreground/[0.09] focus-visible:ring-ring/25 inline-flex h-8 items-center gap-2 rounded-full px-3.5 text-[13px] font-medium transition-colors outline-none focus-visible:ring-[3px]'
+          >
+            {tile.name}
+            <span className='text-muted-foreground text-xs font-normal tabular-nums'>
+              {countLabel(tile.count, tile.singular, tile.plural)}
+            </span>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export default async function HomePage() {
   const starCount = await fetchStarCount();
   const componentTotal = countComponents(catalog);
@@ -180,7 +198,6 @@ export default async function HomePage() {
   const blockGroupTotal = groupsOf('blocks').length;
   const templateTotal = entryTotal('templates');
   const templateTiles = tilesOf('templates', groupsOf('templates'));
-  const hasTemplates = templateTiles.length > 0;
   const motionTotal = motionComponentTotal();
   const categoryCount = countLabel(catalog.length, 'category', 'categories');
 
@@ -189,15 +206,17 @@ export default async function HomePage() {
       <div
         className={`${SYSTEM_FONT_CLASS} bg-background text-foreground relative isolate min-h-screen antialiased`}
       >
+        <noscript>
+          <style>{NO_SCRIPT_STYLE}</style>
+        </noscript>
         <HeroBackdrop />
         <AnnouncementBar />
         <SiteHeader />
-        <main className='flex flex-col'>
-          <HomeHero componentTotal={componentTotal} starCount={starCount} />
-          <div className={`${SECTION} pt-16 sm:pt-20`}>
+        <main className={PAGE_RHYTHM}>
+          <HomeHero componentTotal={componentTotal} starCount={starCount}>
             <ProductStage />
-          </div>
-          <div className={`${SECTION} py-28 sm:py-36`}>
+          </HomeHero>
+          <div className={SECTION}>
             <Statement
               componentTotal={componentTotal}
               blockTotal={blockTotal}
@@ -206,7 +225,7 @@ export default async function HomePage() {
           </div>
           <section
             aria-labelledby='why-title'
-            className={`${SECTION} ${SECTION_GAP} pb-24 sm:pb-32`}
+            className={`${SECTION} ${SECTION_STACK}`}
           >
             <SectionHeading
               id='why-title'
@@ -214,14 +233,14 @@ export default async function HomePage() {
               eyebrow='Why Ndeko UI'
               lead='Everything a screen needs,'
               title='already moving'
-              description='Each piece carries the small motion of its state changes, installs in one line and follows one set of tokens.'
+              description='Each piece carries the small motion of its state changes, installs in one line and follows one set of tokens'
               align='center'
             />
             <Pillars />
           </section>
           <section
             aria-labelledby='how-title'
-            className={`${SECTION} ${SECTION_GAP} py-24 sm:py-32`}
+            className={`${SECTION} ${SECTION_STACK}`}
           >
             <SectionHeading
               id='how-title'
@@ -229,14 +248,16 @@ export default async function HomePage() {
               eyebrow='How it works'
               lead='From the catalogue'
               title='to your project in three steps'
-              description='Find a piece, install it with the command it shows, and change it like any other file of yours.'
+              description='Find a piece, install it with the command it shows, and change it like any other file of yours'
               align='center'
             />
-            <HowItWorks categories={searchExamples()} />
+            <Reveal isLarge>
+              <HowItWorks categories={searchExamples()} />
+            </Reveal>
           </section>
           <section
             aria-labelledby='components-title'
-            className={`${SECTION} ${SECTION_GAP} py-24 sm:py-32`}
+            className={`${SECTION} flex flex-col gap-4`}
           >
             <SectionHeading
               id='components-title'
@@ -244,18 +265,19 @@ export default async function HomePage() {
               eyebrow={`${countLabel(componentTotal, 'component', 'components')} in ${categoryCount}`}
               lead='Every component,'
               title='grouped by what it does'
-              description='Each category shows its variants side by side, with their code and the command that installs them.'
+              description='Scroll through the families: each one lists its categories and how many components they hold'
               action={
                 <LinkButton href='/components'>
                   {`All ${catalog.length} categories`}
                 </LinkButton>
               }
             />
-            <CatalogueExplorer families={explorerFamilies()} />
+            <SystemScroll families={systemFamilies()} />
+            <BuiltWith name='Sticky scroll' href='/docs/sticky-scroll' />
           </section>
           <section
             aria-labelledby='primitives-title'
-            className={`${SECTION} ${SECTION_GAP} py-24 sm:py-32`}
+            className={`${SECTION} ${SECTION_STACK}`}
           >
             <SectionHeading
               id='primitives-title'
@@ -266,27 +288,38 @@ export default async function HomePage() {
               description='Every component is built from these primitives on Base UI. Press, slide and open them here: the motion you feel is the motion you install.'
               action={<LinkButton href='/kit'>See every primitive</LinkButton>}
             />
-            <PrimitivesShowcase />
+            <Reveal isLarge>
+              <PrimitivesShowcase />
+            </Reveal>
           </section>
           <section
             aria-labelledby='editor-title'
-            className='dark bg-background text-foreground'
+            className='dark bg-background text-foreground flex flex-col gap-16 overflow-hidden py-20 lg:gap-20 lg:py-28'
           >
-            <div className={`${SECTION} ${SECTION_GAP} py-24 sm:py-32`}>
+            <div className='flex flex-col gap-4'>
+              <EditorMarquee />
+              <div className={SECTION}>
+                <BuiltWith
+                  name='Scroll text marquee'
+                  href='/docs/scroll-text-marquee'
+                />
+              </div>
+            </div>
+            <div className={`${SECTION} ${SECTION_STACK}`}>
               <SectionHeading
                 id='editor-title'
                 icon={CpuIcon}
                 eyebrow='MCP server'
                 lead='The library,'
                 title='inside your editor'
-                description='Claude Code, Cursor, Windsurf and the rest search the catalogue, read the source and install what the screen needs.'
+                description='Claude Code, Cursor, Windsurf and the rest search the catalogue, read the source and install what the screen needs'
               />
               <EditorSection />
             </div>
           </section>
           <section
             aria-labelledby='screens-title'
-            className={`${SECTION} ${SECTION_GAP} py-24 sm:py-32`}
+            className={`${SECTION} ${SECTION_STACK}`}
           >
             <SectionHeading
               id='screens-title'
@@ -297,12 +330,14 @@ export default async function HomePage() {
               description='Complete pages assembled from the blocks, one fictional product each. The same pieces reorder from a phone to a wide screen.'
               action={<LinkButton href='/templates'>All templates</LinkButton>}
             />
-            <EveryScreen />
-            {hasTemplates && <BundleTileGrid tiles={templateTiles} />}
+            <Reveal isLarge>
+              <EveryScreen />
+            </Reveal>
+            <GroupLinks tiles={templateTiles} />
           </section>
           <section
             aria-labelledby='blocks-title'
-            className={`${SECTION} ${SECTION_GAP} py-24 sm:py-32`}
+            className={`${SECTION} ${SECTION_STACK}`}
           >
             <SectionHeading
               id='blocks-title'
@@ -313,11 +348,13 @@ export default async function HomePage() {
               description='App shells, boards, task lists, settings and marketing sections. Each one installs with its parts.'
               action={<LinkButton href='/blocks'>All blocks</LinkButton>}
             />
-            <BundlesShowcase shelves={blockShelves()} />
+            <Reveal isLarge>
+              <BundlesShowcase shelves={blockShelves()} />
+            </Reveal>
           </section>
           <section
             aria-labelledby='motion-title'
-            className={`${SECTION} ${SECTION_GAP} py-24 sm:py-32`}
+            className={`${SECTION} ${SECTION_STACK}`}
           >
             <SectionHeading
               id='motion-title'
@@ -334,9 +371,11 @@ export default async function HomePage() {
                 <LinkButton href='/docs'>All motion components</LinkButton>
               }
             />
-            <MotionShowcase />
+            <Reveal isLarge>
+              <MotionShowcase />
+            </Reveal>
           </section>
-          <div className={`${SECTION} py-24 sm:py-32`}>
+          <div className={SECTION}>
             <HomeFaq />
           </div>
           <ClosingBand starCount={starCount} />
