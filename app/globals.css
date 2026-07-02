@@ -15,6 +15,8 @@
     'Liberation Mono', monospace;
 
   --animate-tile-glow: tile-glow 7s ease-in-out infinite;
+  --animate-settle: settle 700ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  --animate-settle-plain: settle-plain 700ms cubic-bezier(0.23, 1, 0.32, 1) both;
 
   @keyframes tile-glow {
     0%,
@@ -25,11 +27,76 @@
       opacity: 1;
     }
   }
+
+  /* The home hero on load: each line sharpens and rises into place, once. */
+  @keyframes settle {
+    from {
+      opacity: 0;
+      translate: 0 12px;
+      filter: blur(8px);
+    }
+  }
+
+  /* The same entrance without the blur, for the product window. */
+  @keyframes settle-plain {
+    from {
+      opacity: 0;
+      translate: 0 16px;
+    }
+  }
 }
 
 /* Site only: the first line of a two-tone heading, an ink pulled towards the brand. */
 @utility text-tint {
   color: color-mix(in oklab, var(--primary-ink) 62%, var(--foreground));
+}
+
+/*
+  Site only, home page: a block that sharpens and rises into place the first time it enters the
+  screen (app/_home/reveal.tsx sets data-inview). A transition, so it retargets if interrupted.
+  Reduced motion keeps the fade and drops the movement and the blur.
+*/
+@utility reveal {
+  opacity: 0;
+  translate: 0 12px;
+  filter: blur(8px);
+  transition:
+    opacity 600ms cubic-bezier(0.23, 1, 0.32, 1),
+    translate 600ms cubic-bezier(0.23, 1, 0.32, 1),
+    filter 600ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+
+  &[data-inview='true'] {
+    opacity: 1;
+    translate: 0 0;
+    filter: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    translate: none;
+    filter: none;
+    transition: opacity 300ms linear;
+  }
+}
+
+/* The same entrance without the blur, for large blocks (device frames, grids of live previews) where a blur would cost frames. */
+@utility reveal-plain {
+  opacity: 0;
+  translate: 0 16px;
+  transition:
+    opacity 600ms cubic-bezier(0.23, 1, 0.32, 1),
+    translate 600ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+
+  &[data-inview='true'] {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    translate: none;
+    transition: opacity 300ms linear;
+  }
 }
 
 /*

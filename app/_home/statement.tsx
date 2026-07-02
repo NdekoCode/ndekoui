@@ -2,12 +2,13 @@
 
 import {
   motion,
-  useReducedMotion,
   useScroll,
   useTransform,
   type MotionValue,
 } from 'motion/react';
 import { useRef } from 'react';
+
+import { usePrefersReducedMotion } from './use-prefers-reduced-motion';
 
 import {
   CodeIcon,
@@ -144,12 +145,12 @@ function rangeOf(index: number, total: number): [number, number] {
 }
 
 const STATEMENT_TEXT =
-  'mx-auto max-w-4xl text-center text-[1.75rem] leading-[1.3] font-medium tracking-tight text-balance sm:text-4xl lg:text-5xl lg:leading-[1.2]';
+  'mx-auto max-w-4xl text-center text-2xl leading-[1.3] font-medium text-balance sm:text-4xl lg:text-5xl lg:leading-[1.2]';
 
 /** One paragraph about the library, lit word by word as it scrolls through the screen. */
 export function Statement(props: StatementProps) {
   const sectionRef = useRef<HTMLParagraphElement>(null);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: [...SCROLL_OFFSET],

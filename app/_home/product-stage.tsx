@@ -1,16 +1,12 @@
 'use client';
 
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from 'motion/react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import { useRef } from 'react';
 
 import { Safari } from '@/components/core/safari';
 
 import { LivingWall } from './living-wall';
+import { usePrefersReducedMotion } from './use-prefers-reduced-motion';
 
 const SCROLL_OFFSET = ['start end', 'start 0.3'] as const;
 
@@ -21,7 +17,7 @@ function RisingFrame({ children }: { children: React.ReactNode }) {
     offset: [...SCROLL_OFFSET],
   });
   const scale = useTransform(scrollYProgress, [0, 1], [0.9, 1]);
-  const rotateX = useTransform(scrollYProgress, [0, 1], [14, 0]);
+  const rotateX = useTransform(scrollYProgress, [0, 1], [10, 0]);
   const y = useTransform(scrollYProgress, [0, 1], [48, 0]);
 
   return (
@@ -51,7 +47,7 @@ function StageWindow() {
 
 /** The catalogue in a browser window that straightens and grows as it scrolls into place. */
 export function ProductStage() {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   if (prefersReducedMotion) {
     return <StageWindow />;

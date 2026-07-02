@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import type { CSSProperties } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 import { REPOSITORY_URL } from '@/app/_site/repository';
 import { CLIENTS } from '@/app/mcp/_components/clients';
@@ -11,8 +11,10 @@ import {
   ReactBrandIcon,
   StarIcon,
 } from '@/registry/ndeko/lib/icons';
+import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
 
+import { DISPLAY_TITLE } from './section-heading';
 import { TileField } from './tile-field';
 
 /** Clients drawn with a real mark; the others only have a monogram, which reads as a placeholder here. */
@@ -29,21 +31,54 @@ const MARKED_CLIENT_IDS = new Set([
 ]);
 
 const GLOW_STYLE: CSSProperties = {
-  backgroundImage: [
+  backgroundImage:
     'radial-gradient(70% 55% at 50% 0%, color-mix(in oklab, var(--primary) 20%, transparent), transparent 72%)',
-    'radial-gradient(40% 32% at 50% 42%, color-mix(in oklab, hsl(292 80% 72%) 10%, transparent), transparent 75%)',
-  ].join(', '),
 };
+
+const SETTLE_STEP_MS = 70;
 
 const NUMBER_FORMAT = new Intl.NumberFormat('en-US');
 
 type HomeHeroProps = {
   componentTotal: number;
   starCount: number | null;
+  children: ReactNode;
 };
 
 function markedClients() {
   return CLIENTS.filter((client) => MARKED_CLIENT_IDS.has(client.id));
+}
+
+function settleDelayOf(step: number): CSSProperties {
+  const delay = step * SETTLE_STEP_MS;
+  return { animationDelay: `${delay}ms` };
+}
+
+type SettleProps = {
+  step: number;
+  /** A large surface fades and rises without the blur. */
+  isLarge?: boolean;
+  className?: string;
+  children: ReactNode;
+};
+
+function settleClassOf(isLarge: boolean) {
+  if (isLarge) {
+    return 'motion-safe:animate-settle-plain';
+  }
+  return 'motion-safe:animate-settle';
+}
+
+/** One line of the hero: it sharpens and rises into place on load, a beat after the line above it. */
+function Settle({ step, isLarge = false, className, children }: SettleProps) {
+  return (
+    <div
+      style={settleDelayOf(step)}
+      className={cn(settleClassOf(isLarge), className)}
+    >
+      {children}
+    </div>
+  );
 }
 
 function StarCount({ starCount }: { starCount: number | null }) {
@@ -75,15 +110,15 @@ export function HeroBackdrop() {
 
 function BuiltWith() {
   return (
-    <p className='flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[15px] font-medium sm:text-base'>
+    <p className='flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-base font-medium'>
       <span className='flex items-center gap-2'>
         Built for
-        <ReactBrandIcon className='size-[1.15em] text-[#58c4dc]' />
+        <ReactBrandIcon className='size-5 text-[#58c4dc]' />
         React
       </span>
       <span className='flex items-center gap-2'>
         Installed with
-        <ShadcnMark className='size-[1em]' />
+        <ShadcnMark className='size-4' />
         shadcn
       </span>
     </p>
@@ -95,10 +130,10 @@ function WorksWith() {
 
   return (
     <div className='flex flex-col items-center gap-5'>
-      <p className='text-muted-foreground text-[15px]'>
+      <p className='text-muted-foreground text-sm'>
         Open it in, or connect it to, the tools you already use
       </p>
-      <ul className='flex max-w-2xl flex-wrap justify-center gap-x-9 gap-y-5 grayscale'>
+      <ul className='flex max-w-2xl flex-wrap justify-center gap-x-8 gap-y-5 grayscale'>
         {clients.map((client) => (
           <li
             key={client.id}
@@ -114,30 +149,46 @@ function WorksWith() {
   );
 }
 
-export function HomeHero({ componentTotal, starCount }: HomeHeroProps) {
+/** The first screen. Its children are the product view, which settles last. */
+export function HomeHero({
+  componentTotal,
+  starCount,
+  children,
+}: HomeHeroProps) {
   const componentCount = countLabel(componentTotal, 'component', 'components');
 
   return (
     <section
       aria-labelledby='home-title'
-      className='flex flex-col items-center gap-8 px-4 pt-14 text-center sm:pt-20'
+      className='flex flex-col items-center px-4 pt-12 text-center sm:pt-20'
     >
-      <p className='bg-card/80 text-primary-ink hairline-ring ring-border rounded-full px-3 py-1 text-xs font-medium shadow-[0_1px_2px_rgb(0_0_0/0.04)] backdrop-blur-sm'>
-        {`${componentCount}, free and open source`}
-      </p>
-      <h1
-        id='home-title'
-        className='max-w-4xl text-[2.6rem] leading-[1.05] font-semibold tracking-tight text-balance sm:text-6xl lg:text-7xl'
+      <div className='flex flex-col items-center gap-6'>
+        <Settle step={0}>
+          <p className='bg-card/80 text-primary-ink hairline-ring ring-border rounded-full px-3 py-1 text-xs font-medium shadow-[0_1px_2px_rgb(0_0_0/0.04)] backdrop-blur-sm'>
+            {`${componentCount}, free and open source`}
+          </p>
+        </Settle>
+        <Settle step={1}>
+          <h1 id='home-title' className={cn(DISPLAY_TITLE, 'max-w-4xl')}>
+            <span className='text-tint'>React components</span> that animate
+            every change of state
+          </h1>
+        </Settle>
+        <Settle step={2}>
+          <BuiltWith />
+        </Settle>
+        <Settle step={3}>
+          <p className='text-muted-foreground max-w-xl text-base text-pretty sm:text-lg'>
+            Primitives, components, blocks and templates on one design language.
+            Copy them with one command, or let your editor fetch them through
+            MCP.
+          </p>
+        </Settle>
+      </div>
+      <Settle
+        step={4}
+        className='mt-8 flex flex-wrap items-center justify-center gap-3'
       >
-        <span className='text-tint'>React components</span> that animate every
-        change of state
-      </h1>
-      <BuiltWith />
-      <p className='text-muted-foreground max-w-xl text-base text-pretty sm:text-lg'>
-        Primitives, components, blocks and templates on one design language.
-        Copy them with one command, or let your editor fetch them through MCP.
-      </p>
-      <div className='flex flex-wrap items-center justify-center gap-3'>
         <Button
           size='lg'
           nativeButton={false}
@@ -159,10 +210,17 @@ export function HomeHero({ componentTotal, starCount }: HomeHeroProps) {
           Star on GitHub
           <StarCount starCount={starCount} />
         </Button>
-      </div>
-      <div className='pt-6'>
+      </Settle>
+      <Settle step={5} className='mt-14'>
         <WorksWith />
-      </div>
+      </Settle>
+      <Settle
+        step={7}
+        isLarge
+        className='mt-16 w-full max-w-6xl sm:mt-20 md:px-2'
+      >
+        {children}
+      </Settle>
     </section>
   );
 }

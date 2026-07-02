@@ -2,7 +2,21 @@ import type { ComponentType, ReactNode } from 'react';
 
 import { cn } from '@/registry/ndeko/lib/utils';
 
+import { Reveal } from './reveal';
+
 type IconComponent = ComponentType<{ className?: string }>;
+
+/* The type scale of the home page. Every heading and paragraph of a section picks from these. */
+export const DISPLAY_TITLE =
+  'text-4xl leading-[1.1] font-semibold text-balance sm:text-6xl lg:text-7xl lg:leading-[1.05]';
+export const SECTION_TITLE =
+  'text-3xl leading-[1.15] font-semibold text-balance sm:text-4xl lg:text-5xl lg:leading-[1.1]';
+export const SECTION_LEAD = 'text-muted-foreground text-base text-pretty';
+export const CARD_TITLE = 'text-lg font-semibold';
+export const ROW_TITLE = 'text-base font-medium';
+export const CARD_TEXT = 'text-muted-foreground text-sm text-pretty';
+
+export const STAGGER_MS = 60;
 
 type EyebrowProps = {
   icon?: IconComponent;
@@ -36,7 +50,7 @@ type SectionHeadingProps = {
   action?: ReactNode;
 };
 
-/** A two-tone title: the lead in the brand ink, the rest in the text colour. */
+/** A two-tone title: the lead in the brand ink, the rest in the text colour. Its lines settle one after the other. */
 export function SectionHeading({
   id,
   icon,
@@ -62,19 +76,20 @@ export function SectionHeading({
           isCentered && 'items-center'
         )}
       >
-        <Eyebrow icon={icon}>{eyebrow}</Eyebrow>
-        <h2
-          id={id}
-          className='text-3xl font-semibold tracking-tight text-balance sm:text-4xl lg:text-[2.75rem] lg:leading-[1.1]'
-        >
-          {lead && <span className='text-tint'>{`${lead} `}</span>}
-          {title}
-        </h2>
-        <p className='text-muted-foreground max-w-xl text-[15px] text-pretty sm:text-base'>
-          {description}
-        </p>
+        <Reveal>
+          <Eyebrow icon={icon}>{eyebrow}</Eyebrow>
+        </Reveal>
+        <Reveal delay={STAGGER_MS}>
+          <h2 id={id} className={SECTION_TITLE}>
+            {lead && <span className='text-tint'>{`${lead} `}</span>}
+            {title}
+          </h2>
+        </Reveal>
+        <Reveal delay={STAGGER_MS * 2}>
+          <p className={cn(SECTION_LEAD, 'max-w-xl')}>{description}</p>
+        </Reveal>
       </div>
-      {action}
+      {action && <Reveal delay={STAGGER_MS * 3}>{action}</Reveal>}
     </div>
   );
 }
