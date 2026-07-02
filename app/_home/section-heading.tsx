@@ -12,9 +12,6 @@ export const DISPLAY_TITLE =
 export const SECTION_TITLE =
   'text-3xl leading-[1.12] font-semibold tracking-[-0.02em] text-balance sm:text-4xl lg:text-5xl lg:leading-[1.06] lg:tracking-[-0.025em]';
 export const SECTION_LEAD = 'text-muted-foreground text-base text-pretty';
-export const CARD_TITLE = 'text-lg font-semibold';
-export const ROW_TITLE = 'text-base font-medium';
-export const CARD_TEXT = 'text-muted-foreground text-sm text-pretty';
 
 export const STAGGER_MS = 60;
 
