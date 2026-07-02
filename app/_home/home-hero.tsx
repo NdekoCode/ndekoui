@@ -162,9 +162,9 @@ export function HomeHero({
   return (
     <section
       aria-labelledby='home-title'
-      className='flex flex-col items-center px-4 pt-12 text-center sm:pt-20'
+      className='flex flex-col items-center px-4 pt-10 text-center sm:pt-14'
     >
-      <div className='flex flex-col items-center gap-6'>
+      <div className='flex flex-col items-center gap-5'>
         <Settle step={0}>
           <p className='bg-card/80 text-primary-ink hairline-ring ring-border rounded-full px-3 py-1 text-xs font-medium shadow-[0_1px_2px_rgb(0_0_0/0.04)] backdrop-blur-sm'>
             {`${componentCount}, free and open source`}
@@ -180,7 +180,7 @@ export function HomeHero({
           <BuiltWith />
         </Settle>
         <Settle step={3}>
-          <p className='text-muted-foreground max-w-xl text-base text-pretty sm:text-lg'>
+          <p className='text-muted-foreground max-w-2xl text-base text-pretty sm:text-lg'>
             Primitives, components, blocks and templates on one design language.
             Copy them with one command, or let your editor fetch them through
             MCP.
@@ -216,7 +216,7 @@ export function HomeHero({
       <Settle
         step={5}
         isLarge
-        className='mt-14 w-full max-w-7xl sm:mt-16 md:px-4'
+        className='mt-12 w-full max-w-7xl sm:mt-14 md:px-4'
       >
         {children}
       </Settle>
