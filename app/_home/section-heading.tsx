@@ -8,9 +8,9 @@ type IconComponent = ComponentType<{ className?: string }>;
 
 /* The type scale of the home page. Every heading and paragraph of a section picks from these. */
 export const DISPLAY_TITLE =
-  'text-4xl leading-[1.1] font-semibold text-balance sm:text-6xl lg:text-7xl lg:leading-[1.05]';
+  'text-[2.5rem] leading-[1.05] font-semibold tracking-[-0.03em] text-balance sm:text-6xl lg:text-7xl lg:leading-[1.02]';
 export const SECTION_TITLE =
-  'text-3xl leading-[1.15] font-semibold text-balance sm:text-4xl lg:text-5xl lg:leading-[1.1]';
+  'text-3xl leading-[1.12] font-semibold tracking-[-0.02em] text-balance sm:text-4xl lg:text-5xl lg:leading-[1.06] lg:tracking-[-0.025em]';
 export const SECTION_LEAD = 'text-muted-foreground text-base text-pretty';
 export const CARD_TITLE = 'text-lg font-semibold';
 export const ROW_TITLE = 'text-base font-medium';
@@ -24,16 +24,16 @@ type EyebrowProps = {
   className?: string;
 };
 
-/** The small pill that names a section, above its title. */
+/** The quiet label that names a section, above its title: an icon and a few words in the brand ink. */
 export function Eyebrow({ icon: Icon, children, className }: EyebrowProps) {
   return (
     <p
       className={cn(
-        'bg-card text-primary-ink hairline-ring ring-border inline-flex w-fit items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium tabular-nums shadow-[0_1px_2px_rgb(0_0_0/0.04)]',
+        'text-primary-ink inline-flex w-fit items-center gap-2 text-sm font-medium tabular-nums',
         className
       )}
     >
-      {Icon && <Icon className='size-3.5' />}
+      {Icon && <Icon className='size-4' />}
       {children}
     </p>
   );

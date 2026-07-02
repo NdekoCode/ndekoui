@@ -83,7 +83,7 @@ function Wordmark() {
   return (
     <div
       aria-hidden='true'
-      className='relative mx-auto mt-16 flex w-full max-w-6xl justify-center px-4 select-none md:px-6'
+      className='relative mx-auto mt-16 flex w-full max-w-7xl justify-center px-4 select-none md:px-8'
     >
       <span className='text-foreground/[0.16] mask-b-from-35% mask-b-to-95% text-[clamp(4.5rem,23.5vw,18.5rem)] leading-[0.82] font-semibold'>
         ndekoui
@@ -104,7 +104,7 @@ function Wordmark() {
 export function SiteFooter() {
   return (
     <footer className='dark bg-background text-foreground relative isolate overflow-hidden'>
-      <div className='mx-auto flex w-full max-w-6xl flex-col gap-12 px-4 pt-16 md:px-6 md:pt-20'>
+      <div className='mx-auto flex w-full max-w-7xl flex-col gap-12 px-4 pt-16 md:px-8 md:pt-20'>
         <div className='flex flex-wrap items-start justify-between gap-6'>
           <div className='flex max-w-sm flex-col gap-3'>
             <Link

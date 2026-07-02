@@ -38,11 +38,11 @@ import { EditorSection } from './_home/editor-section';
 import { EveryScreen } from './_home/every-screen';
 import { HomeFaq } from './_home/home-faq';
 import { HeroBackdrop, HomeHero } from './_home/home-hero';
+import { HeroStage } from './_home/hero-stage';
 import { HowItWorks, type FoundCategory } from './_home/how-it-works';
 import { MotionShowcase } from './_home/motion-showcase';
 import { Pillars } from './_home/pillars';
 import { PrimitivesShowcase } from './_home/primitives-showcase';
-import { ProductStage } from './_home/product-stage';
 import { Reveal } from './_home/reveal';
 import { SectionHeading } from './_home/section-heading';
 import { Statement } from './_home/statement';
@@ -80,7 +80,7 @@ const SHELF_TILE_COUNT = 6;
 
 /* One rhythm for the whole page: the same space between sections, the same space under a heading. */
 const PAGE_RHYTHM = 'flex flex-col gap-24 lg:gap-32';
-const SECTION = 'mx-auto w-full max-w-6xl px-4 md:px-6';
+const SECTION = 'mx-auto w-full max-w-7xl px-4 md:px-8';
 const SECTION_STACK = 'flex flex-col gap-10 lg:gap-12';
 
 /** Without scripts nothing would ever mark a block as entered, so they all show from the start. */
@@ -211,10 +211,10 @@ export default async function HomePage() {
         </noscript>
         <HeroBackdrop />
         <AnnouncementBar />
-        <SiteHeader />
+        <SiteHeader isWide />
         <main className={PAGE_RHYTHM}>
           <HomeHero componentTotal={componentTotal} starCount={starCount}>
-            <ProductStage />
+            <HeroStage />
           </HomeHero>
           <div className={SECTION}>
             <Statement
@@ -238,22 +238,20 @@ export default async function HomePage() {
             />
             <Pillars />
           </section>
-          <section
-            aria-labelledby='how-title'
-            className={`${SECTION} ${SECTION_STACK}`}
-          >
-            <SectionHeading
-              id='how-title'
-              icon={RocketIcon}
-              eyebrow='How it works'
-              lead='From the catalogue'
-              title='to your project in three steps'
-              description='Find a piece, install it with the command it shows, and change it like any other file of yours'
-              align='center'
+          <section aria-labelledby='how-title' className={SECTION}>
+            <HowItWorks
+              categories={searchExamples()}
+              heading={
+                <SectionHeading
+                  id='how-title'
+                  icon={RocketIcon}
+                  eyebrow='How it works'
+                  lead='From the catalogue'
+                  title='to your project in three steps'
+                  description='Find a piece, install it with the command it shows, and change it like any other file of yours'
+                />
+              }
             />
-            <Reveal isLarge>
-              <HowItWorks categories={searchExamples()} />
-            </Reveal>
           </section>
           <section
             aria-labelledby='components-title'
@@ -294,7 +292,7 @@ export default async function HomePage() {
           </section>
           <section
             aria-labelledby='editor-title'
-            className='dark bg-background text-foreground flex flex-col gap-16 overflow-hidden py-20 lg:gap-20 lg:py-28'
+            className='dark bg-background text-foreground flex flex-col gap-12 overflow-hidden py-16 lg:gap-16 lg:py-20 dark:bg-[hsl(240_6%_4.5%)] dark:shadow-[inset_0_1px_0_var(--border),inset_0_-1px_0_var(--border)]'
           >
             <div className='flex flex-col gap-4'>
               <EditorMarquee />

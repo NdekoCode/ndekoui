@@ -176,7 +176,19 @@ function GithubStarLink() {
   );
 }
 
-export function SiteHeader() {
+type SiteHeaderProps = {
+  /** The home page runs wider than the catalogue, and its header lines up with it. */
+  isWide?: boolean;
+};
+
+function containerWidthOf(isWide: boolean) {
+  if (isWide) {
+    return 'max-w-7xl md:px-8';
+  }
+  return 'max-w-6xl md:px-6';
+}
+
+export function SiteHeader({ isWide = false }: SiteHeaderProps) {
   const pathname = usePathname();
   const isScrolled = useIsScrolled();
 
@@ -189,7 +201,12 @@ export function SiteHeader() {
           'bg-background/80 shadow-[0_1px_0_var(--border)] backdrop-blur-md'
       )}
     >
-      <div className='mx-auto flex h-16 w-full max-w-6xl items-center gap-4 px-4 md:grid md:grid-cols-[1fr_auto_1fr] md:px-6'>
+      <div
+        className={cn(
+          'mx-auto flex h-16 w-full items-center gap-4 px-4 md:grid md:grid-cols-[1fr_auto_1fr]',
+          containerWidthOf(isWide)
+        )}
+      >
         <Link
           href='/'
           className='focus-visible:ring-ring/25 flex w-fit items-center gap-2.5 rounded-lg text-[15px] font-semibold outline-none focus-visible:ring-[3px]'
