@@ -1,6 +1,6 @@
 # Third-party notices
 
-Ndeko UI includes or adapts work from the projects below. Each keeps its own licence and copyright notice.
+ndekoui includes or adapts work from the projects below. Each keeps its own licence and copyright notice.
 
 ## Motion Primitives
 
@@ -60,7 +60,7 @@ SOFTWARE.
 
 ## prompt-kit
 
-The chat primitives under `registry/ndeko/ui/chat-*` are adapted from prompt-kit at commit `5a94966` (2026-09-28) of <https://github.com/ibelick/prompt-kit>, redrawn on the Ndeko UI primitives, tokens and recipes.
+The chat primitives under `registry/ndeko/ui/chat-*` are adapted from prompt-kit at commit `5a94966` (2026-09-28) of <https://github.com/ibelick/prompt-kit>, redrawn on the ndekoui primitives, tokens and recipes.
 
 ```text
 MIT License
@@ -88,15 +88,15 @@ SOFTWARE.
 
 ## React Spectrum
 
-`hooks/usePreventScroll.tsx` is adapted from `usePreventScroll` in React Aria, part of React Spectrum (<https://github.com/adobe/react-spectrum>), Copyright 2020 Adobe. It is licensed under the Apache License, Version 2.0; the full text is in `LICENSES/Apache-2.0.txt`. The file was modified for Ndeko UI: types, formatting and lint fixes.
+`hooks/usePreventScroll.tsx` is adapted from `usePreventScroll` in React Aria, part of React Spectrum (<https://github.com/adobe/react-spectrum>), Copyright 2020 Adobe. It is licensed under the Apache License, Version 2.0; the full text is in `LICENSES/Apache-2.0.txt`. The file was modified for ndekoui: types, formatting and lint fixes.
 
 ## Simple Icons
 
-The brand marks in `registry/ndeko/lib/brand-logos.tsx`, the v0, Cursor and Claude marks of the site's Open in menu (`app/_site/open-in/tool-marks.tsx`), and the client marks of the MCP page (`app/mcp/_components/client-marks.tsx`), are SVG paths and colours taken from Simple Icons 16.33.0 (<https://github.com/simple-icons/simple-icons>), released under CC0 1.0 Universal. Every mark is a trademark of its owner. It is shown only to name the tool a block connects to, and its use stays subject to that brand's own guidelines. No brand endorses Ndeko UI.
+The brand marks in `registry/ndeko/lib/brand-logos.tsx`, the v0, Cursor and Claude marks of the site's Open in menu (`app/_site/open-in/tool-marks.tsx`), and the client marks of the MCP page (`app/mcp/_components/client-marks.tsx`), are SVG paths and colours taken from Simple Icons 16.33.0 (<https://github.com/simple-icons/simple-icons>), released under CC0 1.0 Universal. Every mark is a trademark of its owner. It is shown only to name the tool a block connects to, and its use stays subject to that brand's own guidelines. No brand endorses ndekoui.
 
 ## Magic UI
 
-Several motion components take their idea and their props from Magic UI (<https://magicui.design>, MIT): globe, dotted map, orbiting circles, lens, border beam, shine border, magic card, confetti, the post card, the word rotate, the highlighter, text 3D flip, scroll velocity, and the Safari, iPhone and Android mockups. The circular theme change of the site (`lib/theme-transition.ts`) follows the mechanism of Magic UI's animated theme toggler, by way of the author's portfolio. Their code is written for Ndeko UI; none of Magic UI's code was copied.
+Several motion components take their idea and their props from Magic UI (<https://magicui.design>, MIT): globe, dotted map, orbiting circles, lens, border beam, shine border, magic card, confetti, the post card, the word rotate, the highlighter, text 3D flip, scroll velocity, and the Safari, iPhone and Android mockups. The circular theme change of the site (`lib/theme-transition.ts`) follows the mechanism of Magic UI's animated theme toggler, by way of the author's portfolio. Their code is written for ndekoui; none of Magic UI's code was copied.
 
 The land grid in `components/core/dotted-map-points.ts` is generated once by `scripts/generate-dotted-map.ts` from the countries data that ships with dotted-map (MIT).
 

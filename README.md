@@ -1,4 +1,4 @@
-# Ndeko UI
+# ndekoui
 
 Open-source primitives, components, blocks and templates for React, drawn on one design language and animated around what the user does. Built on [Base UI](https://base-ui.com), [motion](https://motion.dev) and [Tailwind CSS](https://tailwindcss.com), installable with the [shadcn CLI](https://ui.shadcn.com/docs/cli).
 
@@ -43,4 +43,4 @@ Read the [contributing guide](CONTRIBUTING.md) and the port checklist in the roa
 
 ## Credits and licence
 
-Ndeko UI is MIT licensed, see [LICENCE.md](LICENCE.md). It started from [Motion Primitives](https://github.com/ibelick/motion-primitives) by ibelick and redraws compositions from the MIT edition of [Origin UI](https://github.com/origin-space/originui); their notices are in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+ndekoui is MIT licensed, see [LICENCE.md](LICENCE.md). It started from [Motion Primitives](https://github.com/ibelick/motion-primitives) by ibelick and redraws compositions from the MIT edition of [Origin UI](https://github.com/origin-space/originui); their notices are in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

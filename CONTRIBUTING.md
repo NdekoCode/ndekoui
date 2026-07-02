@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for your interest in contributing to Ndeko UI. We're happy to have you here.
+Thanks for your interest in contributing to ndekoui. We're happy to have you here.
 
 Read `docs/DESIGN-SYSTEM.md` before drawing anything and `docs/ROADMAP.md` for the port checklist. Code is accepted only under the MIT licence: never copy a file from a project with another licence.
 

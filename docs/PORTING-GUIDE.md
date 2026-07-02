@@ -1,4 +1,4 @@
-# Porting guide: Origin UI compositions into Ndeko UI
+# Porting guide: Origin UI compositions into ndekoui
 
 This guide is the brief for anyone, person or agent, who ports a category of the Origin UI catalogue. Read it completely before writing a file. Progress lives in `docs/PORT-PROGRESS.md`.
 

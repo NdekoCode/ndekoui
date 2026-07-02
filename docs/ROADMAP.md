@@ -1,6 +1,6 @@
-# Ndeko UI roadmap
+# ndekoui roadmap
 
-Ndeko UI becomes an open-source library of primitives, components, blocks and templates, installable with the shadcn CLI, drawn on one design language (`docs/DESIGN-SYSTEM.md`) and animated around what the user does. Micro-interactions are its identity: every piece carries the small movements of its state changes (section 7 of the design system). The goal is simple: start the next project from these pieces instead of rebuilding them.
+ndekoui becomes an open-source library of primitives, components, blocks and templates, installable with the shadcn CLI, drawn on one design language (`docs/DESIGN-SYSTEM.md`) and animated around what the user does. Micro-interactions are its identity: every piece carries the small movements of its state changes (section 7 of the design system). The goal is simple: start the next project from these pieces instead of rebuilding them.
 
 ## Sources and licences
 
@@ -113,6 +113,6 @@ README with installation and contribution paths, CONTRIBUTING with the port chec
 ## Open points for the owner
 
 - Ever Teams components: the Ever Teams code is AGPL-3.0, copyright Ever Co. LTD. Publishing those components under MIT needs Ever Co.'s written agreement; without it, blocks are rebuilt here from the design language only.
-- `app/layout.tsx` loads Umami with website id `17e8fc96-321d-43a6-94e7-d571c4c66a04`: confirm it belongs to the Ndeko UI account. Umami sets no cookie, so no consent banner is needed while it is the only measure.
+- `app/layout.tsx` loads Umami with website id `17e8fc96-321d-43a6-94e7-d571c4c66a04`: confirm it belongs to the ndekoui account. Umami sets no cookie, so no consent banner is needed while it is the only measure.
 - Before launch the site still needs a privacy page, a legal notice and a contact address. Their content is the owner's to give.
 - The logo mark is an orange to magenta gradient tile, while the brand colour of the library is indigo. Keep it as the brand, or draw a flat version in one colour.

@@ -1,6 +1,6 @@
 # Blocks guide
 
-The brief for building blocks: whole sections of a product (an app shell, a member list, a board, a settings page, a hero, a pricing section) made from Ndeko UI primitives with fictional data. Read `docs/DESIGN-SYSTEM.md` and `docs/PORTING-GUIDE.md` first: their rules on tokens, lines, motion, icons, honesty and code style apply here unchanged.
+The brief for building blocks: whole sections of a product (an app shell, a member list, a board, a settings page, a hero, a pricing section) made from ndekoui primitives with fictional data. Read `docs/DESIGN-SYSTEM.md` and `docs/PORTING-GUIDE.md` first: their rules on tokens, lines, motion, icons, honesty and code style apply here unchanged.
 
 ## Where the design comes from
 

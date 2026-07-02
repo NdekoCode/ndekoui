@@ -1,4 +1,4 @@
-# Ndeko UI design system
+# ndekoui design system
 
 This is the law for everything published in the registry: primitives, components, blocks, templates and the site itself. The code is the reference. When this document and a component disagree, the component wins and this document gets fixed in the same change.
 
@@ -86,7 +86,7 @@ Components inherit the font of the app. The site and the previews use the system
 
 ## 7. Motion: micro-interactions are the identity
 
-Ndeko UI exists for its micro-interactions. Every component, block, template and page carries the small movements that tell people the interface heard them: a press that gives, a label that becomes its next state, a panel that grows to fit what it now holds, an indicator that travels to the new choice. A component without the micro-interactions natural to it is unfinished. The look comes from this document; the motion ideas come from the libraries the maintainer follows (Aceternity UI, Magic UI, Kokonut UI, React Bits, 21st.dev, Animate UI, UI Layouts, SmoothUI, Cult UI), always redrawn on our tokens and our recipes. Emil Kowalski's design engineering rules (the `emil-design-eng` skill) are the reference for timing and easing.
+ndekoui exists for its micro-interactions. Every component, block, template and page carries the small movements that tell people the interface heard them: a press that gives, a label that becomes its next state, a panel that grows to fit what it now holds, an indicator that travels to the new choice. A component without the micro-interactions natural to it is unfinished. The look comes from this document; the motion ideas come from the libraries the maintainer follows (Aceternity UI, Magic UI, Kokonut UI, React Bits, 21st.dev, Animate UI, UI Layouts, SmoothUI, Cult UI), always redrawn on our tokens and our recipes. Emil Kowalski's design engineering rules (the `emil-design-eng` skill) are the reference for timing and easing.
 
 ### What moves, and why
 
