@@ -1,9 +1,21 @@
 'use client';
 
 import { useReducedMotion } from 'motion/react';
-import { createContext, use, useCallback, useMemo, useState } from 'react';
+import {
+  createContext,
+  use,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
-import { clientTabIdOf, DEFAULT_CLIENT_ID, SETUP_SECTION_ID } from './clients';
+import {
+  CLIENTS,
+  clientTabIdOf,
+  DEFAULT_CLIENT_ID,
+  SETUP_SECTION_ID,
+} from './clients';
 
 type ClientChoice = {
   clientId: string;
@@ -13,6 +25,21 @@ type ClientChoice = {
 };
 
 const ClientChoiceContext = createContext<ClientChoice | null>(null);
+
+const CLIENT_PARAM = 'client';
+
+const ARRIVAL_DELAY_MS = 300;
+
+/** The client named in the address (`?client=cursor`, from the home page), when it is one we list. */
+function requestedClientId() {
+  const params = new URLSearchParams(window.location.search);
+  const requested = params.get(CLIENT_PARAM);
+  const isListed = CLIENTS.some((client) => client.id === requested);
+  if (!isListed) {
+    return null;
+  }
+  return requested;
+}
 
 function scrollBehaviourOf(shouldReduceMotion: boolean | null) {
   if (shouldReduceMotion) {
@@ -41,6 +68,20 @@ export function ClientChoiceProvider({
     },
     [shouldReduceMotion]
   );
+
+  useEffect(() => {
+    const requested = requestedClientId();
+    if (!requested) {
+      return;
+    }
+    const clientId = requested;
+    function showRequestedClient() {
+      showClient(clientId);
+    }
+    // After the router's own scroll handling on arrival, or it would undo the scroll to the steps.
+    const timer = window.setTimeout(showRequestedClient, ARRIVAL_DELAY_MS);
+    return () => window.clearTimeout(timer);
+  }, [showClient]);
 
   const choice = useMemo(
     () => ({ clientId, setClientId, showClient }),
