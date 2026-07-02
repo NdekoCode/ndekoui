@@ -145,11 +145,23 @@ References give mechanisms to recompose: how a layer opens, what a list shows, h
 
 The maintainer's references are Tailwind Plus, Origin UI and Preline. What we take from them, and what we leave:
 
-- **Taken**: a split hero (title on the left, a short paragraph and two actions on the right); the catalogue grouped by family (forms, overlays, navigation, data display, feedback, layout) behind one segmented switch for Components, Blocks and Templates; one tile per category with a drawn thumbnail, its name and its count; a docs layout with a left rail of families and categories with their counts; a templates gallery; an FAQ with the title on the left and grouped questions on the right; a footer made of category lists; "Suggest a component" at the end of a category.
+- **Taken**: the catalogue grouped by family (forms, overlays, navigation, data display, feedback, layout) behind one segmented switch for Components, Blocks and Templates; one tile per category with a drawn thumbnail, its name and its count; a docs layout with a left rail of families and categories with their counts; a templates gallery; an FAQ of grouped questions; a footer made of category lists; "Suggest a component" at the end of a category.
 - **Left out**: full-page guide lines, frames and rules running through sections, vertical section labels, bordered grid cells between previews, fake testimonials and pricing tiers. Sections and tiles are separated by space and surfaces only.
 - **One unit per item**: a composition, block or template on a catalogue page is one unit in a soft tray (`bg-foreground/[0.025]`, `rounded-2xl`, no ring). Its header comes first (title, item name in mono, an outline Code button with its icon), the preview sits right under it on a card stage. A caption under a floating preview leaves people unsure which component it names, so it is not used.
 - **Width follows the kind, nothing is cut**: small controls take a third of the row, accordions, alerts, notices and single calendars a half, navbars, tables, banners, horizontal steppers and multi-month calendars the full row (`app/components/_catalog/preview-widths.ts`). A tile never hides overflow.
 - **Our own**: thumbnails are drawn with our materials (`chip-3d`, `keycap-3d`, `gem-plate`, `surface-raised`) and the brand hue, never grey wireframes; previews sit on cards with generous space between them; the hero illustration is made of live Ndeko components that move continuously (a marquee of chips, a menu that opens and closes, a segmented thumb that slides), never a static screenshot.
+
+### The home page
+
+The home page is the one marketing surface of the site, and it follows the maintainer's own reference (`templates/ndekoui` in the workspace). It is the only page allowed the following.
+
+- **One wash.** A single radial tint of the primary colour behind the hero, and the same tint under the closing band. One hue, never a second one, never behind content cards.
+- **Entrances.** On load, the lines of the hero sharpen and rise into place once, 70ms apart (`animate-settle`: opacity, 12px, 8px blur, 700ms, `--ease-out-strong`). On scroll, each heading, card and row does the same the first time it enters the screen (`Reveal` in `app/_home/reveal.tsx`, 600ms, 60ms between neighbours). Large surfaces (device frames, grids of live previews) fade and rise without the blur. Nothing replays, and reduced motion keeps only a fade.
+- **One type scale.** `DISPLAY_TITLE`, `SECTION_TITLE`, `SECTION_LEAD`, `CARD_TITLE`, `ROW_TITLE` and `CARD_TEXT` in `app/_home/section-heading.tsx`. A section never sets its own heading size.
+- **One rhythm.** Sections sit `gap-24 lg:gap-32` apart and a heading sits `gap-10 lg:gap-12` above its content. A section never adds its own vertical padding, except the two full-width bands (MCP, closing).
+- **Its sections are made of the library.** The families scroll runs on Sticky scroll, the giant line on Scroll text marquee, the install step on Terminal, the device frames on Safari and iPhone. Each says so with a link to the component.
+
+The catalogue, the kit and the docs stay still: no entrance, no scroll reveal.
 
 ## 13. Nothing that looks machine-made
 
@@ -158,7 +170,7 @@ Every element is chosen, never left there by default. The maintainer's checklist
 - **Colour**: no gradient from one hue to another on a surface, a button, text or a logo; no glow, coloured shadow, orb, blurred blob, dot grid or neon. A colour means something (the primary action, a status, a series), so a row of chips in five hues that mean nothing becomes neutral chips. The page is the tinted `--background`, never pure white.
 - **Layout**: no three feature cards with an icon on top, three pricing tiers, bento grid, fake terminal window or decorative band by reflex. When a section has three equal items, ask whether it has three things to say. A product with one offer shows one offer.
 - **Icons**: no sparkle for anything, no emoji as an icon, no green check before every benefit. One icon set, the icon module.
-- **Motion**: no bouncing arrow inviting a scroll, no animation on a hover over something that cannot be clicked. Ambient motion (marquee, float) stays on marketing surfaces, as section 7 says. The scroll-driven motion components (scroll text, stacking cards, sticky and horizontal scroll, scroll reveals, smooth scroll) are opt-in pieces for marketing pages: the site's own pages and the application blocks do not reveal content on scroll, and every scroll piece shows its final state under reduced motion.
+- **Motion**: no bouncing arrow inviting a scroll, no animation on a hover over something that cannot be clicked. Ambient motion (marquee, float) stays on marketing surfaces, as section 7 says. The scroll-driven motion components (scroll text, stacking cards, sticky and horizontal scroll, scroll reveals, smooth scroll) are opt-in pieces for marketing pages. The home page uses them as section 12 describes; the catalogue, the kit, the docs and the application blocks do not reveal content on scroll. Every scroll piece shows its final state under reduced motion.
 - **Type**: the system UI stack, chosen because components inherit the font of the app they land in. No display face nobody chose, no uppercase tracked labels, no italic for emphasis.
 - **Copy**: a headline says what this library does with its own nouns, so it would not fit another product; no exclamation marks; no full stop on labels, buttons and short captions; no hype words (supercharge, seamless, unlock, magic, effortless, powerful).
 - **Proof**: no testimonial, user count, star rating or company logo that is not real. A demo shows a live component, never a static screenshot.
