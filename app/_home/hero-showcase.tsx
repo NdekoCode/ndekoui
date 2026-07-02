@@ -2,14 +2,19 @@
 
 import { useState, type ComponentType, type CSSProperties } from 'react';
 
+import {
+  CARD_SURFACE as TASK_CARD_SURFACE,
+  TaskCardBody,
+  TRACKED_CARD,
+} from '@/registry/ndeko/blocks/boards/boards-01/card-parts';
+import { TASKS } from '@/registry/ndeko/blocks/boards/boards-01/data';
 import Activity05 from '@/registry/ndeko/components/activity/activity-05';
-import Avatar23 from '@/registry/ndeko/components/avatar/avatar-23';
 import Button27 from '@/registry/ndeko/components/button/button-27';
 import Button35 from '@/registry/ndeko/components/button/button-35';
 import Button40 from '@/registry/ndeko/components/button/button-40';
 import CalendarDatePicker02 from '@/registry/ndeko/components/calendar-date-picker/calendar-date-picker-02';
 import Comment03 from '@/registry/ndeko/components/comment/comment-03';
-import Input25 from '@/registry/ndeko/components/input/input-25';
+import Notification16 from '@/registry/ndeko/components/notification/notification-16';
 import Notification28 from '@/registry/ndeko/components/notification/notification-28';
 import Slider26 from '@/registry/ndeko/components/slider/slider-26';
 import Subtask01 from '@/registry/ndeko/components/subtask/subtask-01';
@@ -68,17 +73,44 @@ type Piece = {
   Piece: ComponentType;
   /** It draws its own card, so it sits on the stage without a second ring around it. */
   hasOwnSurface?: boolean;
+  /**
+   * Shown as a still picture. The notification stack opens on hover and focus in the catalogue;
+   * on the stage it would grow under the fade, so it keeps its folded look and loses its controls.
+   */
+  isStill?: boolean;
 };
 
-/* Pieces that read without a click, one list per column, balanced by height on a wide screen. */
+const SHOWN_TASK = TASKS['task-142'];
+
+function TaskCard() {
+  return (
+    <div className={cn(TASK_CARD_SURFACE, TRACKED_CARD, 'w-full')}>
+      <TaskCardBody task={SHOWN_TASK} />
+    </div>
+  );
+}
+
+/*
+ * Pieces that read without a click, one list per column. The columns are balanced by height so
+ * they all run a little past the bottom of the stage and fade out on the same line.
+ */
 const COLUMNS: Piece[][][] = [
   [
-    [{ name: 'input-25', Piece: Input25 }],
+    [{ name: 'notification-16', Piece: Notification16, hasOwnSurface: true }],
+    [{ name: 'boards-01-card', Piece: TaskCard, hasOwnSurface: true }],
     [{ name: 'slider-26', Piece: Slider26 }],
     [
       { name: 'switch-12', Piece: Switch12 },
       { name: 'button-35', Piece: Button35 },
     ],
+    [{ name: 'comment-03', Piece: Comment03 }],
+  ],
+  [
+    [{ name: 'tooltip-09', Piece: Tooltip09 }],
+    [{ name: 'subtask-01', Piece: Subtask01 }],
+    [{ name: 'teams-08', Piece: Teams08, hasOwnSurface: true }],
+  ],
+  [
     [
       {
         name: 'calendar-date-picker-02',
@@ -86,32 +118,17 @@ const COLUMNS: Piece[][][] = [
         hasOwnSurface: true,
       },
     ],
-    [{ name: 'avatar-23', Piece: Avatar23 }],
-  ],
-  [
-    [{ name: 'comment-03', Piece: Comment03 }],
-    [{ name: 'tooltip-09', Piece: Tooltip09 }],
+    [{ name: 'notification-28', Piece: Notification28, isStill: true }],
     [
       { name: 'button-40', Piece: Button40 },
       { name: 'button-27', Piece: Button27 },
     ],
-    [{ name: 'teams-08', Piece: Teams08, hasOwnSurface: true }],
-  ],
-  [
-    [{ name: 'subtask-01', Piece: Subtask01 }],
     [{ name: 'activity-05', Piece: Activity05 }],
-    [{ name: 'notification-28', Piece: Notification28 }],
   ],
 ];
 
-/** The third column spans the row on a medium screen and splits its own cards in two. */
-function columnClassOf(index: number) {
-  const isLast = index === COLUMNS.length - 1;
-  if (isLast) {
-    return 'md:col-span-2 md:block md:columns-2 md:gap-3 xl:col-span-1 xl:flex xl:columns-1';
-  }
-  return '';
-}
+/** A column that would sit below the stage is not rendered, so keyboard focus never lands out of sight. */
+const COLUMN_VISIBILITY = ['flex', 'hidden md:flex', 'hidden xl:flex'];
 
 function columnKeyOf(column: Piece[][]) {
   return column.map(groupKeyOf).join('|');
@@ -200,16 +217,26 @@ function surfaceOf(group: Piece[]) {
   return CARD_SURFACE;
 }
 
+/** A still piece keeps its picture and drops the row of buttons under it. */
+const STILL_PIECE = '[&>div>div]:hidden';
+
 function PieceCard({ group }: { group: Piece[] }) {
   return (
     <div
       className={cn(
         surfaceOf(group),
-        'mb-3 flex break-inside-avoid flex-wrap items-center justify-center gap-4 rounded-2xl last:mb-0 md:last:mb-3 xl:last:mb-0'
+        'mb-3 flex flex-wrap items-center justify-center gap-4 rounded-2xl last:mb-0'
       )}
     >
-      {group.map(({ name, Piece }) => (
-        <div key={name} className='flex max-w-full min-w-0 grow justify-center'>
+      {group.map(({ name, Piece, isStill }) => (
+        <div
+          key={name}
+          inert={isStill}
+          className={cn(
+            'flex max-w-full min-w-0 grow justify-center',
+            isStill && STILL_PIECE
+          )}
+        >
           <Piece />
         </div>
       ))}
@@ -217,9 +244,16 @@ function PieceCard({ group }: { group: Piece[] }) {
   );
 }
 
+/** Shorter than the shortest column at every width, so all of them run past the same line. */
+const STAGE_HEIGHT = 'h-[36rem] md:h-[52rem]';
+
+/** The stage dissolves into the page, as the board does under the marketing-01 hero. */
+const STAGE_FADE =
+  '[mask-image:linear-gradient(to_bottom,black_62%,transparent_98%)]';
+
 /**
  * Catalogue items laid out on one stage, as they install, with a colour picker that re-themes all
- * of them at once. Every one of them can be clicked.
+ * of them at once. All of them answer clicks, except the notification stack, shown still.
  */
 export function HeroShowcase() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -236,15 +270,21 @@ export function HeroShowcase() {
       <div
         style={themeStyleOf(active)}
         className={cn(
-          'bg-foreground/[0.025] rounded-3xl p-3',
+          'bg-foreground/[0.025] relative overflow-clip rounded-3xl p-3',
+          STAGE_HEIGHT,
+          STAGE_FADE,
           themeClassOf(active)
         )}
       >
+        <div
+          aria-hidden='true'
+          className='pointer-events-none absolute inset-x-0 bottom-0 z-10 h-40 [mask-image:linear-gradient(to_bottom,transparent,black_75%)] backdrop-blur-[3px]'
+        />
         <div className='grid grid-cols-[minmax(0,1fr)] gap-x-3 md:grid-cols-2 xl:grid-cols-3'>
           {COLUMNS.map((column, index) => (
             <div
               key={columnKeyOf(column)}
-              className={cn('flex min-w-0 flex-col', columnClassOf(index))}
+              className={cn('min-w-0 flex-col', COLUMN_VISIBILITY[index])}
             >
               {column.map((group) => (
                 <PieceCard key={groupKeyOf(group)} group={group} />
