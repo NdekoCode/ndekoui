@@ -10,7 +10,7 @@ import { catalog } from '@/app/components/_generated/catalog';
 import { countLabel, SYSTEM_FONT_CLASS } from '@/lib/site';
 import { chatItems } from '@/registry/chat-items';
 import { primitiveItems } from '@/registry/items';
-import { CpuIcon, LayersIcon } from '@/registry/ndeko/lib/icons';
+import { CpuIcon, LayersIcon, PlayIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Toaster } from '@/registry/ndeko/ui/sonner';
 import { TooltipProvider } from '@/registry/ndeko/ui/tooltip';
@@ -23,6 +23,7 @@ import { HomeFaq } from './_home/home-faq';
 import { HeroShowcase } from './_home/hero-showcase';
 import { HeroBackdrop, HomeHero } from './_home/home-hero';
 import { PrimitivesShowcase } from './_home/primitives-showcase';
+import { ReplaySection } from './_home/replay/replay-section';
 import { Reveal } from './_home/reveal';
 import { SectionHeading } from './_home/section-heading';
 import { Statement } from './_home/statement';
@@ -107,6 +108,22 @@ export default async function HomePage() {
             />
             <Reveal isLarge>
               <PrimitivesShowcase />
+            </Reveal>
+          </section>
+          <section
+            aria-labelledby='replay-title'
+            className={`${SECTION} ${SECTION_STACK}`}
+          >
+            <SectionHeading
+              id='replay-title'
+              icon={PlayIcon}
+              eyebrow='From prompt to page'
+              lead='Ask in your editor'
+              title='and it lands in your project'
+              description='A replay of the whole path in Claude Code: the ndekoui server finds the component, the shadcn CLI installs it, and it shows up on the page. The search results, the command and the files it writes are the real ones.'
+            />
+            <Reveal isLarge>
+              <ReplaySection />
             </Reveal>
           </section>
           <section
