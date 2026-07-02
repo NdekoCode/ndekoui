@@ -192,7 +192,7 @@ export function SiteHeader() {
       <div className='mx-auto flex h-16 w-full max-w-6xl items-center gap-4 px-4 md:grid md:grid-cols-[1fr_auto_1fr] md:px-6'>
         <Link
           href='/'
-          className='focus-visible:ring-ring/25 flex w-fit items-center gap-2.5 rounded-lg text-[15px] font-semibold tracking-tight outline-none focus-visible:ring-[3px]'
+          className='focus-visible:ring-ring/25 flex w-fit items-center gap-2.5 rounded-lg text-[15px] font-semibold outline-none focus-visible:ring-[3px]'
         >
           <NdekoUILLogo aria-hidden className='size-7' />
           Ndeko UI

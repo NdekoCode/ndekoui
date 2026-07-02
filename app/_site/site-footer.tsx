@@ -2,18 +2,16 @@ import Link from 'next/link';
 
 import { groupsOf } from '@/app/blocks/_shared/bundles';
 import { catalog } from '@/app/components/_generated/catalog';
-import {
-  NdekoUIGlyph,
-  NdekoUILLogo,
-} from '@/components/website/icons/ndekoui-logo';
-import { GithubIcon } from '@/registry/ndeko/lib/icons';
+import { NdekoUILLogo } from '@/components/website/icons/ndekoui-logo';
+import { ArrowUpRightIcon, GithubIcon } from '@/registry/ndeko/lib/icons';
+import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
 
 import { REPOSITORY_URL } from './repository';
 
 const COLUMN_SIZE = 6;
 
-const WATERMARK_COUNT = 9;
+const AUTHOR_URL = 'https://ndekocode.dev';
 
 type FooterLink = { href: string; label: string };
 
@@ -48,7 +46,12 @@ const PROJECT_LINKS: FooterLink[] = [
 const FOOTER_LINK =
   'rounded-sm text-[13px] text-muted-foreground outline-none transition-colors hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50';
 
-const WATERMARKS = Array.from({ length: WATERMARK_COUNT }, (_, index) => index);
+/** Where each mark sits around the wordmark: its place, its size and its turn. */
+const WORDMARK_TILES = [
+  'left-[1%] top-[-6%] size-[clamp(2.5rem,6.5vw,5rem)] -rotate-12',
+  'right-[2%] top-[-14%] size-[clamp(2.25rem,5.5vw,4.25rem)] rotate-12',
+  'left-[52%] top-[-10%] size-[clamp(1.75rem,3.5vw,2.75rem)] rotate-6',
+];
 
 function largestCategoryLinks(): FooterLink[] {
   const bySize = [...catalog].sort(
@@ -75,15 +78,38 @@ function currentYear() {
   return new Date().getFullYear();
 }
 
+/** The name set very large and faint at the foot of the page, with a few marks placed around it. */
+function Wordmark() {
+  return (
+    <div
+      aria-hidden='true'
+      className='relative mx-auto mt-16 flex w-full max-w-6xl justify-center px-4 select-none md:px-6'
+    >
+      <span className='text-foreground/[0.16] mask-b-from-35% mask-b-to-95% text-[clamp(4.5rem,23.5vw,18.5rem)] leading-[0.82] font-semibold'>
+        ndekoui
+      </span>
+      {WORDMARK_TILES.map((placement) => (
+        <NdekoUILLogo
+          key={placement}
+          className={cn(
+            'absolute drop-shadow-[0_8px_14px_rgb(0_0_0/0.5)]',
+            placement
+          )}
+        />
+      ))}
+    </div>
+  );
+}
+
 export function SiteFooter() {
   return (
     <footer className='dark bg-background text-foreground relative isolate overflow-hidden'>
-      <div className='mx-auto flex w-full max-w-6xl flex-col gap-14 px-4 pt-16 pb-12 md:px-6 md:pt-20'>
+      <div className='mx-auto flex w-full max-w-6xl flex-col gap-12 px-4 pt-16 md:px-6 md:pt-20'>
         <div className='flex flex-wrap items-start justify-between gap-6'>
           <div className='flex max-w-sm flex-col gap-3'>
             <Link
               href='/'
-              className='focus-visible:ring-ring/50 flex w-fit items-center gap-2.5 rounded-lg text-[15px] font-semibold tracking-tight outline-none focus-visible:ring-[3px]'
+              className='focus-visible:ring-ring/50 flex w-fit items-center gap-2.5 rounded-lg text-[15px] font-semibold outline-none focus-visible:ring-[3px]'
             >
               <NdekoUILLogo aria-hidden className='size-7' />
               Ndeko UI
@@ -111,18 +137,21 @@ export function SiteFooter() {
           <FooterColumn title='Resources' links={RESOURCE_LINKS} />
           <FooterColumn title='Project' links={PROJECT_LINKS} />
         </div>
-        <p className='text-muted-foreground text-center text-xs'>
-          {`© ${currentYear()} ndekocode. Open source under the MIT licence.`}
-        </p>
+        <div className='text-muted-foreground flex flex-wrap items-center justify-between gap-x-6 gap-y-2 text-[13px]'>
+          <p>{`© ${currentYear()} Ndeko UI, open source under the MIT licence`}</p>
+          <p>
+            {'Built by '}
+            <a
+              href={AUTHOR_URL}
+              className='text-foreground focus-visible:ring-ring/50 inline-flex items-center gap-0.5 rounded-sm font-medium underline-offset-4 outline-none hover:underline focus-visible:ring-[3px]'
+            >
+              ndekocode
+              <ArrowUpRightIcon className='size-3.5' />
+            </a>
+          </p>
+        </div>
       </div>
-      <div
-        aria-hidden='true'
-        className='text-primary/15 flex h-28 translate-y-6 justify-center gap-10 overflow-hidden mask-x-from-70% sm:h-36'
-      >
-        {WATERMARKS.map((index) => (
-          <NdekoUIGlyph key={index} className='h-full' />
-        ))}
-      </div>
+      <Wordmark />
     </footer>
   );
 }
