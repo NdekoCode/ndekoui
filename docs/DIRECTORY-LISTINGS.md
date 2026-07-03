@@ -14,11 +14,7 @@ Where ndekoui is listed, so search engines, developers and AI tools can find it.
 | mcp.so                                             | Form at mcp.so/submit                                                                            | Manual                                                             |
 | Smithery                                           | Closed to new servers since 31 October 2026, curated only                                        | Not possible                                                       |
 
-The signature for the shadcn commit and the remote servers listing go out with one script, run from the maintainer's terminal:
-
-```bash
-bash ~/.cache/ndekoui-listings/next-listings.sh
-```
+The scripts that sent them are in `~/.cache/ndekoui-listings` (`submit-listings.sh`, `next-listings.sh`).
 
 ## shadcn registry directory
 
