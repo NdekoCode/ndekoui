@@ -242,320 +242,602 @@ function createIcon(glyph: IconSvgElement, displayName: string): Icon {
   return NamedIcon;
 }
 
-export const AlarmClockIcon = createIcon(AlarmClockGlyph, 'AlarmClockIcon');
-export const AlertCircleIcon = createIcon(AlertCircleGlyph, 'AlertCircleIcon');
-export const AlignCenterIcon = createIcon(AlignCenterGlyph, 'AlignCenterIcon');
-export const AlignJustifyIcon = createIcon(
+export const AlarmClockIcon = /* @__PURE__ */ createIcon(
+  AlarmClockGlyph,
+  'AlarmClockIcon'
+);
+export const AlertCircleIcon = /* @__PURE__ */ createIcon(
+  AlertCircleGlyph,
+  'AlertCircleIcon'
+);
+export const AlignCenterIcon = /* @__PURE__ */ createIcon(
+  AlignCenterGlyph,
+  'AlignCenterIcon'
+);
+export const AlignJustifyIcon = /* @__PURE__ */ createIcon(
   AlignJustifyGlyph,
   'AlignJustifyIcon'
 );
-export const AlignLeftIcon = createIcon(AlignLeftGlyph, 'AlignLeftIcon');
-export const AlignRightIcon = createIcon(AlignRightGlyph, 'AlignRightIcon');
-export const AppleBrandIcon = createIcon(AppleBrandGlyph, 'AppleBrandIcon');
-export const ArchiveIcon = createIcon(ArchiveGlyph, 'ArchiveIcon');
-export const ArchiveRestoreIcon = createIcon(
+export const AlignLeftIcon = /* @__PURE__ */ createIcon(
+  AlignLeftGlyph,
+  'AlignLeftIcon'
+);
+export const AlignRightIcon = /* @__PURE__ */ createIcon(
+  AlignRightGlyph,
+  'AlignRightIcon'
+);
+export const AppleBrandIcon = /* @__PURE__ */ createIcon(
+  AppleBrandGlyph,
+  'AppleBrandIcon'
+);
+export const ArchiveIcon = /* @__PURE__ */ createIcon(
+  ArchiveGlyph,
+  'ArchiveIcon'
+);
+export const ArchiveRestoreIcon = /* @__PURE__ */ createIcon(
   ArchiveRestoreGlyph,
   'ArchiveRestoreIcon'
 );
-export const ArrowLeftIcon = createIcon(ArrowLeftGlyph, 'ArrowLeftIcon');
-export const ArrowLeftToLineIcon = createIcon(
+export const ArrowLeftIcon = /* @__PURE__ */ createIcon(
+  ArrowLeftGlyph,
+  'ArrowLeftIcon'
+);
+export const ArrowLeftToLineIcon = /* @__PURE__ */ createIcon(
   ArrowLeftToLineGlyph,
   'ArrowLeftToLineIcon'
 );
-export const ArrowRightIcon = createIcon(ArrowRightGlyph, 'ArrowRightIcon');
-export const ArrowUpIcon = createIcon(ArrowUpGlyph, 'ArrowUpIcon');
-export const ArrowRightToLineIcon = createIcon(
+export const ArrowRightIcon = /* @__PURE__ */ createIcon(
+  ArrowRightGlyph,
+  'ArrowRightIcon'
+);
+export const ArrowUpIcon = /* @__PURE__ */ createIcon(
+  ArrowUpGlyph,
+  'ArrowUpIcon'
+);
+export const ArrowRightToLineIcon = /* @__PURE__ */ createIcon(
   ArrowRightToLineGlyph,
   'ArrowRightToLineIcon'
 );
-export const ArrowUpRightIcon = createIcon(
+export const ArrowUpRightIcon = /* @__PURE__ */ createIcon(
   ArrowUpRightGlyph,
   'ArrowUpRightIcon'
 );
-export const AtSignIcon = createIcon(AtSignGlyph, 'AtSignIcon');
-export const BadgeCheckIcon = createIcon(BadgeCheckGlyph, 'BadgeCheckIcon');
-export const BellIcon = createIcon(BellGlyph, 'BellIcon');
-export const BellOffIcon = createIcon(BellOffGlyph, 'BellOffIcon');
-export const BlocksIcon = createIcon(BlocksGlyph, 'BlocksIcon');
-export const BoltIcon = createIcon(BoltGlyph, 'BoltIcon');
-export const BookIcon = createIcon(BookGlyph, 'BookIcon');
-export const BookOpenIcon = createIcon(BookOpenGlyph, 'BookOpenIcon');
-export const BookmarkIcon = createIcon(BookmarkGlyph, 'BookmarkIcon');
-export const BotMessageSquareIcon = createIcon(
+export const AtSignIcon = /* @__PURE__ */ createIcon(AtSignGlyph, 'AtSignIcon');
+export const BadgeCheckIcon = /* @__PURE__ */ createIcon(
+  BadgeCheckGlyph,
+  'BadgeCheckIcon'
+);
+export const BellIcon = /* @__PURE__ */ createIcon(BellGlyph, 'BellIcon');
+export const BellOffIcon = /* @__PURE__ */ createIcon(
+  BellOffGlyph,
+  'BellOffIcon'
+);
+export const BlocksIcon = /* @__PURE__ */ createIcon(BlocksGlyph, 'BlocksIcon');
+export const BoltIcon = /* @__PURE__ */ createIcon(BoltGlyph, 'BoltIcon');
+export const BookIcon = /* @__PURE__ */ createIcon(BookGlyph, 'BookIcon');
+export const BookOpenIcon = /* @__PURE__ */ createIcon(
+  BookOpenGlyph,
+  'BookOpenIcon'
+);
+export const BookmarkIcon = /* @__PURE__ */ createIcon(
+  BookmarkGlyph,
+  'BookmarkIcon'
+);
+export const BotMessageSquareIcon = /* @__PURE__ */ createIcon(
   BotMessageSquareGlyph,
   'BotMessageSquareIcon'
 );
-export const BoxIcon = createIcon(BoxGlyph, 'BoxIcon');
-export const BrainIcon = createIcon(BrainGlyph, 'BrainIcon');
-export const BriefcaseIcon = createIcon(BriefcaseGlyph, 'BriefcaseIcon');
-export const BrushIcon = createIcon(BrushGlyph, 'BrushIcon');
-export const CalendarCheckIcon = createIcon(
+export const BoxIcon = /* @__PURE__ */ createIcon(BoxGlyph, 'BoxIcon');
+export const BrainIcon = /* @__PURE__ */ createIcon(BrainGlyph, 'BrainIcon');
+export const BriefcaseIcon = /* @__PURE__ */ createIcon(
+  BriefcaseGlyph,
+  'BriefcaseIcon'
+);
+export const BrushIcon = /* @__PURE__ */ createIcon(BrushGlyph, 'BrushIcon');
+export const CalendarCheckIcon = /* @__PURE__ */ createIcon(
   CalendarCheckGlyph,
   'CalendarCheckIcon'
 );
-export const CalendarIcon = createIcon(CalendarGlyph, 'CalendarIcon');
-export const ChartLineIcon = createIcon(ChartLineGlyph, 'ChartLineIcon');
-export const CheckCheckIcon = createIcon(CheckCheckGlyph, 'CheckCheckIcon');
-export const CheckIcon = createIcon(CheckGlyph, 'CheckIcon');
-export const ChevronDownIcon = createIcon(ChevronDownGlyph, 'ChevronDownIcon');
-export const ChevronFirstIcon = createIcon(
+export const CalendarIcon = /* @__PURE__ */ createIcon(
+  CalendarGlyph,
+  'CalendarIcon'
+);
+export const ChartLineIcon = /* @__PURE__ */ createIcon(
+  ChartLineGlyph,
+  'ChartLineIcon'
+);
+export const CheckCheckIcon = /* @__PURE__ */ createIcon(
+  CheckCheckGlyph,
+  'CheckCheckIcon'
+);
+export const CheckIcon = /* @__PURE__ */ createIcon(CheckGlyph, 'CheckIcon');
+export const ChevronDownIcon = /* @__PURE__ */ createIcon(
+  ChevronDownGlyph,
+  'ChevronDownIcon'
+);
+export const ChevronFirstIcon = /* @__PURE__ */ createIcon(
   ChevronFirstGlyph,
   'ChevronFirstIcon'
 );
-export const ChevronLastIcon = createIcon(ChevronLastGlyph, 'ChevronLastIcon');
-export const ChevronLeftIcon = createIcon(ChevronLeftGlyph, 'ChevronLeftIcon');
-export const ChevronRightIcon = createIcon(
+export const ChevronLastIcon = /* @__PURE__ */ createIcon(
+  ChevronLastGlyph,
+  'ChevronLastIcon'
+);
+export const ChevronLeftIcon = /* @__PURE__ */ createIcon(
+  ChevronLeftGlyph,
+  'ChevronLeftIcon'
+);
+export const ChevronRightIcon = /* @__PURE__ */ createIcon(
   ChevronRightGlyph,
   'ChevronRightIcon'
 );
-export const ChevronUpIcon = createIcon(ChevronUpGlyph, 'ChevronUpIcon');
-export const ChevronsUpDownIcon = createIcon(
+export const ChevronUpIcon = /* @__PURE__ */ createIcon(
+  ChevronUpGlyph,
+  'ChevronUpIcon'
+);
+export const ChevronsUpDownIcon = /* @__PURE__ */ createIcon(
   ChevronsUpDownGlyph,
   'ChevronsUpDownIcon'
 );
-export const CircleAlertIcon = createIcon(CircleAlertGlyph, 'CircleAlertIcon');
-export const CircleCheckIcon = createIcon(CircleCheckGlyph, 'CircleCheckIcon');
-export const CircleDashedIcon = createIcon(
+export const CircleAlertIcon = /* @__PURE__ */ createIcon(
+  CircleAlertGlyph,
+  'CircleAlertIcon'
+);
+export const CircleCheckIcon = /* @__PURE__ */ createIcon(
+  CircleCheckGlyph,
+  'CircleCheckIcon'
+);
+export const CircleDashedIcon = /* @__PURE__ */ createIcon(
   CircleDashedGlyph,
   'CircleDashedIcon'
 );
-export const CircleFadingPlusIcon = createIcon(
+export const CircleFadingPlusIcon = /* @__PURE__ */ createIcon(
   CircleFadingPlusGlyph,
   'CircleFadingPlusIcon'
 );
-export const CircleIcon = createIcon(CircleGlyph, 'CircleIcon');
-export const CircleUserRoundIcon = createIcon(
+export const CircleIcon = /* @__PURE__ */ createIcon(CircleGlyph, 'CircleIcon');
+export const CircleUserRoundIcon = /* @__PURE__ */ createIcon(
   CircleUserRoundGlyph,
   'CircleUserRoundIcon'
 );
-export const CircleXIcon = createIcon(CircleXGlyph, 'CircleXIcon');
-export const ClockIcon = createIcon(ClockGlyph, 'ClockIcon');
-export const ClubIcon = createIcon(ClubGlyph, 'ClubIcon');
-export const CodeIcon = createIcon(CodeGlyph, 'CodeIcon');
-export const Columns3Icon = createIcon(Columns3Glyph, 'Columns3Icon');
-export const CommandIcon = createIcon(CommandGlyph, 'CommandIcon');
-export const CompassIcon = createIcon(CompassGlyph, 'CompassIcon');
-export const ComponentIcon = createIcon(ComponentGlyph, 'ComponentIcon');
-export const CopyIcon = createIcon(CopyGlyph, 'CopyIcon');
-export const CopyPlusIcon = createIcon(CopyPlusGlyph, 'CopyPlusIcon');
-export const CpuIcon = createIcon(CpuGlyph, 'CpuIcon');
-export const CreditCardIcon = createIcon(CreditCardGlyph, 'CreditCardIcon');
-export const DatabaseIcon = createIcon(DatabaseGlyph, 'DatabaseIcon');
-export const DiamondIcon = createIcon(DiamondGlyph, 'DiamondIcon');
-export const DiscordBrandIcon = createIcon(
+export const CircleXIcon = /* @__PURE__ */ createIcon(
+  CircleXGlyph,
+  'CircleXIcon'
+);
+export const ClockIcon = /* @__PURE__ */ createIcon(ClockGlyph, 'ClockIcon');
+export const ClubIcon = /* @__PURE__ */ createIcon(ClubGlyph, 'ClubIcon');
+export const CodeIcon = /* @__PURE__ */ createIcon(CodeGlyph, 'CodeIcon');
+export const Columns3Icon = /* @__PURE__ */ createIcon(
+  Columns3Glyph,
+  'Columns3Icon'
+);
+export const CommandIcon = /* @__PURE__ */ createIcon(
+  CommandGlyph,
+  'CommandIcon'
+);
+export const CompassIcon = /* @__PURE__ */ createIcon(
+  CompassGlyph,
+  'CompassIcon'
+);
+export const ComponentIcon = /* @__PURE__ */ createIcon(
+  ComponentGlyph,
+  'ComponentIcon'
+);
+export const CopyIcon = /* @__PURE__ */ createIcon(CopyGlyph, 'CopyIcon');
+export const CopyPlusIcon = /* @__PURE__ */ createIcon(
+  CopyPlusGlyph,
+  'CopyPlusIcon'
+);
+export const CpuIcon = /* @__PURE__ */ createIcon(CpuGlyph, 'CpuIcon');
+export const CreditCardIcon = /* @__PURE__ */ createIcon(
+  CreditCardGlyph,
+  'CreditCardIcon'
+);
+export const DatabaseIcon = /* @__PURE__ */ createIcon(
+  DatabaseGlyph,
+  'DatabaseIcon'
+);
+export const DiamondIcon = /* @__PURE__ */ createIcon(
+  DiamondGlyph,
+  'DiamondIcon'
+);
+export const DiscordBrandIcon = /* @__PURE__ */ createIcon(
   DiscordBrandGlyph,
   'DiscordBrandIcon'
 );
-export const DownloadIcon = createIcon(DownloadGlyph, 'DownloadIcon');
-export const EclipseIcon = createIcon(EclipseGlyph, 'EclipseIcon');
-export const EllipsisIcon = createIcon(EllipsisGlyph, 'EllipsisIcon');
-export const EraserIcon = createIcon(EraserGlyph, 'EraserIcon');
-export const ExternalLinkIcon = createIcon(
+export const DownloadIcon = /* @__PURE__ */ createIcon(
+  DownloadGlyph,
+  'DownloadIcon'
+);
+export const EclipseIcon = /* @__PURE__ */ createIcon(
+  EclipseGlyph,
+  'EclipseIcon'
+);
+export const EllipsisIcon = /* @__PURE__ */ createIcon(
+  EllipsisGlyph,
+  'EllipsisIcon'
+);
+export const EraserIcon = /* @__PURE__ */ createIcon(EraserGlyph, 'EraserIcon');
+export const ExternalLinkIcon = /* @__PURE__ */ createIcon(
   ExternalLinkGlyph,
   'ExternalLinkIcon'
 );
-export const EyeIcon = createIcon(EyeGlyph, 'EyeIcon');
-export const EyeOffIcon = createIcon(EyeOffGlyph, 'EyeOffIcon');
-export const FacebookBrandIcon = createIcon(
+export const EyeIcon = /* @__PURE__ */ createIcon(EyeGlyph, 'EyeIcon');
+export const EyeOffIcon = /* @__PURE__ */ createIcon(EyeOffGlyph, 'EyeOffIcon');
+export const FacebookBrandIcon = /* @__PURE__ */ createIcon(
   FacebookBrandGlyph,
   'FacebookBrandIcon'
 );
-export const FeatherIcon = createIcon(FeatherGlyph, 'FeatherIcon');
-export const FileArchiveIcon = createIcon(FileArchiveGlyph, 'FileArchiveIcon');
-export const FileIcon = createIcon(FileGlyph, 'FileIcon');
-export const FileInputIcon = createIcon(FileInputGlyph, 'FileInputIcon');
-export const FileSpreadsheetIcon = createIcon(
+export const FeatherIcon = /* @__PURE__ */ createIcon(
+  FeatherGlyph,
+  'FeatherIcon'
+);
+export const FileArchiveIcon = /* @__PURE__ */ createIcon(
+  FileArchiveGlyph,
+  'FileArchiveIcon'
+);
+export const FileIcon = /* @__PURE__ */ createIcon(FileGlyph, 'FileIcon');
+export const FileInputIcon = /* @__PURE__ */ createIcon(
+  FileInputGlyph,
+  'FileInputIcon'
+);
+export const FileSpreadsheetIcon = /* @__PURE__ */ createIcon(
   FileSpreadsheetGlyph,
   'FileSpreadsheetIcon'
 );
-export const FileTextIcon = createIcon(FileTextGlyph, 'FileTextIcon');
-export const FileUpIcon = createIcon(FileUpGlyph, 'FileUpIcon');
-export const FilesIcon = createIcon(FilesGlyph, 'FilesIcon');
-export const FilmIcon = createIcon(FilmGlyph, 'FilmIcon');
-export const FilterIcon = createIcon(FilterGlyph, 'FilterIcon');
-export const FlipHorizontalIcon = createIcon(
+export const FileTextIcon = /* @__PURE__ */ createIcon(
+  FileTextGlyph,
+  'FileTextIcon'
+);
+export const FileUpIcon = /* @__PURE__ */ createIcon(FileUpGlyph, 'FileUpIcon');
+export const FilesIcon = /* @__PURE__ */ createIcon(FilesGlyph, 'FilesIcon');
+export const FilmIcon = /* @__PURE__ */ createIcon(FilmGlyph, 'FilmIcon');
+export const FilterIcon = /* @__PURE__ */ createIcon(FilterGlyph, 'FilterIcon');
+export const FlipHorizontalIcon = /* @__PURE__ */ createIcon(
   FlipHorizontalGlyph,
   'FlipHorizontalIcon'
 );
-export const FlipVerticalIcon = createIcon(
+export const FlipVerticalIcon = /* @__PURE__ */ createIcon(
   FlipVerticalGlyph,
   'FlipVerticalIcon'
 );
-export const FolderIcon = createIcon(FolderGlyph, 'FolderIcon');
-export const FolderOpenIcon = createIcon(FolderOpenGlyph, 'FolderOpenIcon');
-export const FolderPlusIcon = createIcon(FolderPlusGlyph, 'FolderPlusIcon');
-export const FoldersIcon = createIcon(FoldersGlyph, 'FoldersIcon');
-export const GaugeIcon = createIcon(GaugeGlyph, 'GaugeIcon');
-export const GitCompareIcon = createIcon(GitCompareGlyph, 'GitCompareIcon');
-export const GitForkIcon = createIcon(GitForkGlyph, 'GitForkIcon');
-export const GitMergeIcon = createIcon(GitMergeGlyph, 'GitMergeIcon');
-export const GitPullRequestIcon = createIcon(
+export const FolderIcon = /* @__PURE__ */ createIcon(FolderGlyph, 'FolderIcon');
+export const FolderOpenIcon = /* @__PURE__ */ createIcon(
+  FolderOpenGlyph,
+  'FolderOpenIcon'
+);
+export const FolderPlusIcon = /* @__PURE__ */ createIcon(
+  FolderPlusGlyph,
+  'FolderPlusIcon'
+);
+export const FoldersIcon = /* @__PURE__ */ createIcon(
+  FoldersGlyph,
+  'FoldersIcon'
+);
+export const GaugeIcon = /* @__PURE__ */ createIcon(GaugeGlyph, 'GaugeIcon');
+export const GitCompareIcon = /* @__PURE__ */ createIcon(
+  GitCompareGlyph,
+  'GitCompareIcon'
+);
+export const GitForkIcon = /* @__PURE__ */ createIcon(
+  GitForkGlyph,
+  'GitForkIcon'
+);
+export const GitMergeIcon = /* @__PURE__ */ createIcon(
+  GitMergeGlyph,
+  'GitMergeIcon'
+);
+export const GitPullRequestIcon = /* @__PURE__ */ createIcon(
   GitPullRequestGlyph,
   'GitPullRequestIcon'
 );
-export const GithubIcon = createIcon(GithubGlyph, 'GithubIcon');
-export const GlobeIcon = createIcon(GlobeGlyph, 'GlobeIcon');
-export const GoogleBrandIcon = createIcon(GoogleBrandGlyph, 'GoogleBrandIcon');
-export const GripVerticalIcon = createIcon(
+export const GithubIcon = /* @__PURE__ */ createIcon(GithubGlyph, 'GithubIcon');
+export const GlobeIcon = /* @__PURE__ */ createIcon(GlobeGlyph, 'GlobeIcon');
+export const GoogleBrandIcon = /* @__PURE__ */ createIcon(
+  GoogleBrandGlyph,
+  'GoogleBrandIcon'
+);
+export const GripVerticalIcon = /* @__PURE__ */ createIcon(
   GripVerticalGlyph,
   'GripVerticalIcon'
 );
-export const HashIcon = createIcon(HashGlyph, 'HashIcon');
-export const Heading1Icon = createIcon(Heading1Glyph, 'Heading1Icon');
-export const Heading2Icon = createIcon(Heading2Glyph, 'Heading2Icon');
-export const HeadphonesIcon = createIcon(HeadphonesGlyph, 'HeadphonesIcon');
-export const HeartIcon = createIcon(HeartGlyph, 'HeartIcon');
-export const HistoryIcon = createIcon(HistoryGlyph, 'HistoryIcon');
-export const HomeIcon = createIcon(HomeGlyph, 'HomeIcon');
-export const HouseIcon = createIcon(HouseGlyph, 'HouseIcon');
-export const ImageIcon = createIcon(ImageGlyph, 'ImageIcon');
-export const ImagePlusIcon = createIcon(ImagePlusGlyph, 'ImagePlusIcon');
-export const ImageUpIcon = createIcon(ImageUpGlyph, 'ImageUpIcon');
-export const InboxIcon = createIcon(InboxGlyph, 'InboxIcon');
-export const InfoIcon = createIcon(InfoGlyph, 'InfoIcon');
-export const InstagramBrandIcon = createIcon(
+export const HashIcon = /* @__PURE__ */ createIcon(HashGlyph, 'HashIcon');
+export const Heading1Icon = /* @__PURE__ */ createIcon(
+  Heading1Glyph,
+  'Heading1Icon'
+);
+export const Heading2Icon = /* @__PURE__ */ createIcon(
+  Heading2Glyph,
+  'Heading2Icon'
+);
+export const HeadphonesIcon = /* @__PURE__ */ createIcon(
+  HeadphonesGlyph,
+  'HeadphonesIcon'
+);
+export const HeartIcon = /* @__PURE__ */ createIcon(HeartGlyph, 'HeartIcon');
+export const HistoryIcon = /* @__PURE__ */ createIcon(
+  HistoryGlyph,
+  'HistoryIcon'
+);
+export const HomeIcon = /* @__PURE__ */ createIcon(HomeGlyph, 'HomeIcon');
+export const HouseIcon = /* @__PURE__ */ createIcon(HouseGlyph, 'HouseIcon');
+export const ImageIcon = /* @__PURE__ */ createIcon(ImageGlyph, 'ImageIcon');
+export const ImagePlusIcon = /* @__PURE__ */ createIcon(
+  ImagePlusGlyph,
+  'ImagePlusIcon'
+);
+export const ImageUpIcon = /* @__PURE__ */ createIcon(
+  ImageUpGlyph,
+  'ImageUpIcon'
+);
+export const InboxIcon = /* @__PURE__ */ createIcon(InboxGlyph, 'InboxIcon');
+export const InfoIcon = /* @__PURE__ */ createIcon(InfoGlyph, 'InfoIcon');
+export const InstagramBrandIcon = /* @__PURE__ */ createIcon(
   InstagramBrandGlyph,
   'InstagramBrandIcon'
 );
-export const Layers2Icon = createIcon(Layers2Glyph, 'Layers2Icon');
-export const LayersIcon = createIcon(LayersGlyph, 'LayersIcon');
-export const LayoutGridIcon = createIcon(LayoutGridGlyph, 'LayoutGridIcon');
-export const LayoutIcon = createIcon(LayoutGlyph, 'LayoutIcon');
-export const LifeBuoyIcon = createIcon(LifeBuoyGlyph, 'LifeBuoyIcon');
-export const LineChartIcon = createIcon(LineChartGlyph, 'LineChartIcon');
-export const Link2Icon = createIcon(Link2Glyph, 'Link2Icon');
-export const LinkIcon = createIcon(LinkGlyph, 'LinkIcon');
-export const LinkedinBrandIcon = createIcon(
+export const Layers2Icon = /* @__PURE__ */ createIcon(
+  Layers2Glyph,
+  'Layers2Icon'
+);
+export const LayersIcon = /* @__PURE__ */ createIcon(LayersGlyph, 'LayersIcon');
+export const LayoutGridIcon = /* @__PURE__ */ createIcon(
+  LayoutGridGlyph,
+  'LayoutGridIcon'
+);
+export const LayoutIcon = /* @__PURE__ */ createIcon(LayoutGlyph, 'LayoutIcon');
+export const LifeBuoyIcon = /* @__PURE__ */ createIcon(
+  LifeBuoyGlyph,
+  'LifeBuoyIcon'
+);
+export const LineChartIcon = /* @__PURE__ */ createIcon(
+  LineChartGlyph,
+  'LineChartIcon'
+);
+export const Link2Icon = /* @__PURE__ */ createIcon(Link2Glyph, 'Link2Icon');
+export const LinkIcon = /* @__PURE__ */ createIcon(LinkGlyph, 'LinkIcon');
+export const LinkedinBrandIcon = /* @__PURE__ */ createIcon(
   LinkedinBrandGlyph,
   'LinkedinBrandIcon'
 );
-export const ListCollapseIcon = createIcon(
+export const ListCollapseIcon = /* @__PURE__ */ createIcon(
   ListCollapseGlyph,
   'ListCollapseIcon'
 );
-export const ListFilterIcon = createIcon(ListFilterGlyph, 'ListFilterIcon');
-export const ListTreeIcon = createIcon(ListTreeGlyph, 'ListTreeIcon');
-export const LoaderCircleIcon = createIcon(
+export const ListFilterIcon = /* @__PURE__ */ createIcon(
+  ListFilterGlyph,
+  'ListFilterIcon'
+);
+export const ListTreeIcon = /* @__PURE__ */ createIcon(
+  ListTreeGlyph,
+  'ListTreeIcon'
+);
+export const LoaderCircleIcon = /* @__PURE__ */ createIcon(
   LoaderCircleGlyph,
   'LoaderCircleIcon'
 );
-export const LoaderIcon = createIcon(LoaderGlyph, 'LoaderIcon');
-export const LockIcon = createIcon(LockGlyph, 'LockIcon');
-export const LogOutIcon = createIcon(LogOutGlyph, 'LogOutIcon');
-export const MailIcon = createIcon(MailGlyph, 'MailIcon');
-export const MenuIcon = createIcon(MenuGlyph, 'MenuIcon');
-export const MessageCircleDashedIcon = createIcon(
+export const LoaderIcon = /* @__PURE__ */ createIcon(LoaderGlyph, 'LoaderIcon');
+export const LockIcon = /* @__PURE__ */ createIcon(LockGlyph, 'LockIcon');
+export const LogOutIcon = /* @__PURE__ */ createIcon(LogOutGlyph, 'LogOutIcon');
+export const MailIcon = /* @__PURE__ */ createIcon(MailGlyph, 'MailIcon');
+export const MenuIcon = /* @__PURE__ */ createIcon(MenuGlyph, 'MenuIcon');
+export const MessageCircleDashedIcon = /* @__PURE__ */ createIcon(
   MessageCircleDashedGlyph,
   'MessageCircleDashedIcon'
 );
-export const MessageCircleIcon = createIcon(
+export const MessageCircleIcon = /* @__PURE__ */ createIcon(
   MessageCircleGlyph,
   'MessageCircleIcon'
 );
-export const MessageCircleMoreIcon = createIcon(
+export const MessageCircleMoreIcon = /* @__PURE__ */ createIcon(
   MessageCircleMoreGlyph,
   'MessageCircleMoreIcon'
 );
-export const MessageSquareTextIcon = createIcon(
+export const MessageSquareTextIcon = /* @__PURE__ */ createIcon(
   MessageSquareTextGlyph,
   'MessageSquareTextIcon'
 );
-export const MicIcon = createIcon(MicGlyph, 'MicIcon');
-export const MinusIcon = createIcon(MinusGlyph, 'MinusIcon');
-export const MonitorIcon = createIcon(MonitorGlyph, 'MonitorIcon');
-export const MoonIcon = createIcon(MoonGlyph, 'MoonIcon');
-export const NetworkIcon = createIcon(NetworkGlyph, 'NetworkIcon');
-export const PanelsTopLeftIcon = createIcon(
+export const MicIcon = /* @__PURE__ */ createIcon(MicGlyph, 'MicIcon');
+export const MinusIcon = /* @__PURE__ */ createIcon(MinusGlyph, 'MinusIcon');
+export const MonitorIcon = /* @__PURE__ */ createIcon(
+  MonitorGlyph,
+  'MonitorIcon'
+);
+export const MoonIcon = /* @__PURE__ */ createIcon(MoonGlyph, 'MoonIcon');
+export const NetworkIcon = /* @__PURE__ */ createIcon(
+  NetworkGlyph,
+  'NetworkIcon'
+);
+export const PanelsTopLeftIcon = /* @__PURE__ */ createIcon(
   PanelsTopLeftGlyph,
   'PanelsTopLeftIcon'
 );
-export const PaperclipIcon = createIcon(PaperclipGlyph, 'PaperclipIcon');
-export const PaypalBrandIcon = createIcon(PaypalBrandGlyph, 'PaypalBrandIcon');
-export const PencilIcon = createIcon(PencilGlyph, 'PencilIcon');
-export const PhoneIcon = createIcon(PhoneGlyph, 'PhoneIcon');
-export const PinIcon = createIcon(PinGlyph, 'PinIcon');
-export const PlayIcon = createIcon(PlayGlyph, 'PlayIcon');
-export const PauseIcon = createIcon(PauseGlyph, 'PauseIcon');
-export const CloudIcon = createIcon(CloudGlyph, 'CloudIcon');
-export const LightbulbIcon = createIcon(LightbulbGlyph, 'LightbulbIcon');
-export const MaximizeIcon = createIcon(MaximizeGlyph, 'MaximizeIcon');
-export const MotionIcon = createIcon(MotionGlyph, 'MotionIcon');
-export const PadlockIcon = createIcon(PadlockGlyph, 'PadlockIcon');
-export const PanelLeftIcon = createIcon(PanelLeftGlyph, 'PanelLeftIcon');
-export const PinOffIcon = createIcon(PinOffGlyph, 'PinOffIcon');
-export const PlusIcon = createIcon(PlusGlyph, 'PlusIcon');
-export const PowerIcon = createIcon(PowerGlyph, 'PowerIcon');
-export const PowerOffIcon = createIcon(PowerOffGlyph, 'PowerOffIcon');
-export const PrinterIcon = createIcon(PrinterGlyph, 'PrinterIcon');
-export const QrCodeIcon = createIcon(QrCodeGlyph, 'QrCodeIcon');
-export const RadioIcon = createIcon(RadioGlyph, 'RadioIcon');
-export const ReactBrandIcon = createIcon(ReactBrandGlyph, 'ReactBrandIcon');
-export const RefreshCcwIcon = createIcon(RefreshCcwGlyph, 'RefreshCcwIcon');
-export const RefreshCwIcon = createIcon(RefreshCwGlyph, 'RefreshCwIcon');
-export const RepeatIcon = createIcon(RepeatGlyph, 'RepeatIcon');
-export const RocketIcon = createIcon(RocketGlyph, 'RocketIcon');
-export const RotateCcwIcon = createIcon(RotateCcwGlyph, 'RotateCcwIcon');
-export const ScissorsIcon = createIcon(ScissorsGlyph, 'ScissorsIcon');
-export const SearchIcon = createIcon(SearchGlyph, 'SearchIcon');
-export const SendIcon = createIcon(SendGlyph, 'SendIcon');
-export const ServerIcon = createIcon(ServerGlyph, 'ServerIcon');
-export const SettingsIcon = createIcon(SettingsGlyph, 'SettingsIcon');
-export const Share2Icon = createIcon(Share2Glyph, 'Share2Icon');
-export const ShareBoxIcon = createIcon(ShareBoxGlyph, 'ShareBoxIcon');
-export const ShareIcon = createIcon(ShareGlyph, 'ShareIcon');
-export const ShieldCheckIcon = createIcon(ShieldCheckGlyph, 'ShieldCheckIcon');
-export const ShuffleIcon = createIcon(ShuffleGlyph, 'ShuffleIcon');
-export const SmartphoneIcon = createIcon(SmartphoneGlyph, 'SmartphoneIcon');
-export const SmileIcon = createIcon(SmileGlyph, 'SmileIcon');
-export const SourceCodeIcon = createIcon(SourceCodeGlyph, 'SourceCodeIcon');
-export const SpadeIcon = createIcon(SpadeGlyph, 'SpadeIcon');
-export const SparklesIcon = createIcon(SparklesGlyph, 'SparklesIcon');
-export const SquareArrowOutUpRightIcon = createIcon(
+export const PaperclipIcon = /* @__PURE__ */ createIcon(
+  PaperclipGlyph,
+  'PaperclipIcon'
+);
+export const PaypalBrandIcon = /* @__PURE__ */ createIcon(
+  PaypalBrandGlyph,
+  'PaypalBrandIcon'
+);
+export const PencilIcon = /* @__PURE__ */ createIcon(PencilGlyph, 'PencilIcon');
+export const PhoneIcon = /* @__PURE__ */ createIcon(PhoneGlyph, 'PhoneIcon');
+export const PinIcon = /* @__PURE__ */ createIcon(PinGlyph, 'PinIcon');
+export const PlayIcon = /* @__PURE__ */ createIcon(PlayGlyph, 'PlayIcon');
+export const PauseIcon = /* @__PURE__ */ createIcon(PauseGlyph, 'PauseIcon');
+export const CloudIcon = /* @__PURE__ */ createIcon(CloudGlyph, 'CloudIcon');
+export const LightbulbIcon = /* @__PURE__ */ createIcon(
+  LightbulbGlyph,
+  'LightbulbIcon'
+);
+export const MaximizeIcon = /* @__PURE__ */ createIcon(
+  MaximizeGlyph,
+  'MaximizeIcon'
+);
+export const MotionIcon = /* @__PURE__ */ createIcon(MotionGlyph, 'MotionIcon');
+export const PadlockIcon = /* @__PURE__ */ createIcon(
+  PadlockGlyph,
+  'PadlockIcon'
+);
+export const PanelLeftIcon = /* @__PURE__ */ createIcon(
+  PanelLeftGlyph,
+  'PanelLeftIcon'
+);
+export const PinOffIcon = /* @__PURE__ */ createIcon(PinOffGlyph, 'PinOffIcon');
+export const PlusIcon = /* @__PURE__ */ createIcon(PlusGlyph, 'PlusIcon');
+export const PowerIcon = /* @__PURE__ */ createIcon(PowerGlyph, 'PowerIcon');
+export const PowerOffIcon = /* @__PURE__ */ createIcon(
+  PowerOffGlyph,
+  'PowerOffIcon'
+);
+export const PrinterIcon = /* @__PURE__ */ createIcon(
+  PrinterGlyph,
+  'PrinterIcon'
+);
+export const QrCodeIcon = /* @__PURE__ */ createIcon(QrCodeGlyph, 'QrCodeIcon');
+export const RadioIcon = /* @__PURE__ */ createIcon(RadioGlyph, 'RadioIcon');
+export const ReactBrandIcon = /* @__PURE__ */ createIcon(
+  ReactBrandGlyph,
+  'ReactBrandIcon'
+);
+export const RefreshCcwIcon = /* @__PURE__ */ createIcon(
+  RefreshCcwGlyph,
+  'RefreshCcwIcon'
+);
+export const RefreshCwIcon = /* @__PURE__ */ createIcon(
+  RefreshCwGlyph,
+  'RefreshCwIcon'
+);
+export const RepeatIcon = /* @__PURE__ */ createIcon(RepeatGlyph, 'RepeatIcon');
+export const RocketIcon = /* @__PURE__ */ createIcon(RocketGlyph, 'RocketIcon');
+export const RotateCcwIcon = /* @__PURE__ */ createIcon(
+  RotateCcwGlyph,
+  'RotateCcwIcon'
+);
+export const ScissorsIcon = /* @__PURE__ */ createIcon(
+  ScissorsGlyph,
+  'ScissorsIcon'
+);
+export const SearchIcon = /* @__PURE__ */ createIcon(SearchGlyph, 'SearchIcon');
+export const SendIcon = /* @__PURE__ */ createIcon(SendGlyph, 'SendIcon');
+export const ServerIcon = /* @__PURE__ */ createIcon(ServerGlyph, 'ServerIcon');
+export const SettingsIcon = /* @__PURE__ */ createIcon(
+  SettingsGlyph,
+  'SettingsIcon'
+);
+export const Share2Icon = /* @__PURE__ */ createIcon(Share2Glyph, 'Share2Icon');
+export const ShareBoxIcon = /* @__PURE__ */ createIcon(
+  ShareBoxGlyph,
+  'ShareBoxIcon'
+);
+export const ShareIcon = /* @__PURE__ */ createIcon(ShareGlyph, 'ShareIcon');
+export const ShieldCheckIcon = /* @__PURE__ */ createIcon(
+  ShieldCheckGlyph,
+  'ShieldCheckIcon'
+);
+export const ShuffleIcon = /* @__PURE__ */ createIcon(
+  ShuffleGlyph,
+  'ShuffleIcon'
+);
+export const SmartphoneIcon = /* @__PURE__ */ createIcon(
+  SmartphoneGlyph,
+  'SmartphoneIcon'
+);
+export const SmileIcon = /* @__PURE__ */ createIcon(SmileGlyph, 'SmileIcon');
+export const SourceCodeIcon = /* @__PURE__ */ createIcon(
+  SourceCodeGlyph,
+  'SourceCodeIcon'
+);
+export const SpadeIcon = /* @__PURE__ */ createIcon(SpadeGlyph, 'SpadeIcon');
+export const SparklesIcon = /* @__PURE__ */ createIcon(
+  SparklesGlyph,
+  'SparklesIcon'
+);
+export const SquareArrowOutUpRightIcon = /* @__PURE__ */ createIcon(
   SquareArrowOutUpRightGlyph,
   'SquareArrowOutUpRightIcon'
 );
-export const StarIcon = createIcon(StarGlyph, 'StarIcon');
-export const StoreIcon = createIcon(StoreGlyph, 'StoreIcon');
-export const SunIcon = createIcon(SunGlyph, 'SunIcon');
-export const SwatchBookIcon = createIcon(SwatchBookGlyph, 'SwatchBookIcon');
-export const TabletIcon = createIcon(TabletGlyph, 'TabletIcon');
-export const TextQuoteIcon = createIcon(TextQuoteGlyph, 'TextQuoteIcon');
-export const ThumbsUpIcon = createIcon(ThumbsUpGlyph, 'ThumbsUpIcon');
-export const TicketPercentIcon = createIcon(
+export const StarIcon = /* @__PURE__ */ createIcon(StarGlyph, 'StarIcon');
+export const StoreIcon = /* @__PURE__ */ createIcon(StoreGlyph, 'StoreIcon');
+export const SunIcon = /* @__PURE__ */ createIcon(SunGlyph, 'SunIcon');
+export const SwatchBookIcon = /* @__PURE__ */ createIcon(
+  SwatchBookGlyph,
+  'SwatchBookIcon'
+);
+export const TabletIcon = /* @__PURE__ */ createIcon(TabletGlyph, 'TabletIcon');
+export const TextQuoteIcon = /* @__PURE__ */ createIcon(
+  TextQuoteGlyph,
+  'TextQuoteIcon'
+);
+export const ThumbsUpIcon = /* @__PURE__ */ createIcon(
+  ThumbsUpGlyph,
+  'ThumbsUpIcon'
+);
+export const TicketPercentIcon = /* @__PURE__ */ createIcon(
   TicketPercentGlyph,
   'TicketPercentIcon'
 );
-export const Trash2Icon = createIcon(Trash2Glyph, 'Trash2Icon');
-export const TrashIcon = createIcon(TrashGlyph, 'TrashIcon');
-export const TriangleAlertIcon = createIcon(
+export const Trash2Icon = /* @__PURE__ */ createIcon(Trash2Glyph, 'Trash2Icon');
+export const TrashIcon = /* @__PURE__ */ createIcon(TrashGlyph, 'TrashIcon');
+export const TriangleAlertIcon = /* @__PURE__ */ createIcon(
   TriangleAlertGlyph,
   'TriangleAlertIcon'
 );
-export const TwitterXIcon = createIcon(TwitterXGlyph, 'TwitterXIcon');
-export const TypeIcon = createIcon(TypeGlyph, 'TypeIcon');
-export const UploadCloudIcon = createIcon(UploadCloudGlyph, 'UploadCloudIcon');
-export const UploadIcon = createIcon(UploadGlyph, 'UploadIcon');
-export const UserIcon = createIcon(UserGlyph, 'UserIcon');
-export const UserMinusIcon = createIcon(UserMinusGlyph, 'UserMinusIcon');
-export const UserPenIcon = createIcon(UserPenGlyph, 'UserPenIcon');
-export const UserRoundIcon = createIcon(UserRoundGlyph, 'UserRoundIcon');
-export const UserRoundPlusIcon = createIcon(
+export const TwitterXIcon = /* @__PURE__ */ createIcon(
+  TwitterXGlyph,
+  'TwitterXIcon'
+);
+export const TypeIcon = /* @__PURE__ */ createIcon(TypeGlyph, 'TypeIcon');
+export const UploadCloudIcon = /* @__PURE__ */ createIcon(
+  UploadCloudGlyph,
+  'UploadCloudIcon'
+);
+export const UploadIcon = /* @__PURE__ */ createIcon(UploadGlyph, 'UploadIcon');
+export const UserIcon = /* @__PURE__ */ createIcon(UserGlyph, 'UserIcon');
+export const UserMinusIcon = /* @__PURE__ */ createIcon(
+  UserMinusGlyph,
+  'UserMinusIcon'
+);
+export const UserPenIcon = /* @__PURE__ */ createIcon(
+  UserPenGlyph,
+  'UserPenIcon'
+);
+export const UserRoundIcon = /* @__PURE__ */ createIcon(
+  UserRoundGlyph,
+  'UserRoundIcon'
+);
+export const UserRoundPlusIcon = /* @__PURE__ */ createIcon(
   UserRoundPlusGlyph,
   'UserRoundPlusIcon'
 );
-export const UsersIcon = createIcon(UsersGlyph, 'UsersIcon');
-export const UsersRoundIcon = createIcon(UsersRoundGlyph, 'UsersRoundIcon');
-export const VideoIcon = createIcon(VideoGlyph, 'VideoIcon');
-export const Volume1Icon = createIcon(Volume1Glyph, 'Volume1Icon');
-export const Volume2Icon = createIcon(Volume2Glyph, 'Volume2Icon');
-export const VolumeIcon = createIcon(VolumeGlyph, 'VolumeIcon');
-export const VolumeXIcon = createIcon(VolumeXGlyph, 'VolumeXIcon');
-export const WalletIcon = createIcon(WalletGlyph, 'WalletIcon');
-export const XIcon = createIcon(XGlyph, 'XIcon');
-export const YoutubeBrandIcon = createIcon(
+export const UsersIcon = /* @__PURE__ */ createIcon(UsersGlyph, 'UsersIcon');
+export const UsersRoundIcon = /* @__PURE__ */ createIcon(
+  UsersRoundGlyph,
+  'UsersRoundIcon'
+);
+export const VideoIcon = /* @__PURE__ */ createIcon(VideoGlyph, 'VideoIcon');
+export const Volume1Icon = /* @__PURE__ */ createIcon(
+  Volume1Glyph,
+  'Volume1Icon'
+);
+export const Volume2Icon = /* @__PURE__ */ createIcon(
+  Volume2Glyph,
+  'Volume2Icon'
+);
+export const VolumeIcon = /* @__PURE__ */ createIcon(VolumeGlyph, 'VolumeIcon');
+export const VolumeXIcon = /* @__PURE__ */ createIcon(
+  VolumeXGlyph,
+  'VolumeXIcon'
+);
+export const WalletIcon = /* @__PURE__ */ createIcon(WalletGlyph, 'WalletIcon');
+export const XIcon = /* @__PURE__ */ createIcon(XGlyph, 'XIcon');
+export const YoutubeBrandIcon = /* @__PURE__ */ createIcon(
   YoutubeBrandGlyph,
   'YoutubeBrandIcon'
 );
-export const ZapIcon = createIcon(ZapGlyph, 'ZapIcon');
-export const ZoomInIcon = createIcon(ZoomInGlyph, 'ZoomInIcon');
-export const ZoomOutIcon = createIcon(ZoomOutGlyph, 'ZoomOutIcon');
+export const ZapIcon = /* @__PURE__ */ createIcon(ZapGlyph, 'ZapIcon');
+export const ZoomInIcon = /* @__PURE__ */ createIcon(ZoomInGlyph, 'ZoomInIcon');
+export const ZoomOutIcon = /* @__PURE__ */ createIcon(
+  ZoomOutGlyph,
+  'ZoomOutIcon'
+);
