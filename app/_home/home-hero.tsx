@@ -59,11 +59,19 @@ type SettleProps = {
   step: number;
   /** A large surface fades and rises without the blur. */
   isLarge?: boolean;
+  /**
+   * The title, the largest text of the page: it sharpens and rises without fading in. A browser
+   * counts a line still at opacity 0 as not shown, and a slow phone would wait seconds for it.
+   */
+  isShownAtOnce?: boolean;
   className?: string;
   children: ReactNode;
 };
 
-function settleClassOf(isLarge: boolean) {
+function settleClassOf(isLarge: boolean, isShownAtOnce: boolean) {
+  if (isShownAtOnce) {
+    return 'motion-safe:animate-sharpen';
+  }
   if (isLarge) {
     return 'motion-safe:animate-settle-plain';
   }
@@ -71,11 +79,17 @@ function settleClassOf(isLarge: boolean) {
 }
 
 /** One line of the hero: it sharpens and rises into place on load, a beat after the line above it. */
-function Settle({ step, isLarge = false, className, children }: SettleProps) {
+function Settle({
+  step,
+  isLarge = false,
+  isShownAtOnce = false,
+  className,
+  children,
+}: SettleProps) {
   return (
     <div
       style={settleDelayOf(step)}
-      className={cn(settleClassOf(isLarge), className)}
+      className={cn(settleClassOf(isLarge, isShownAtOnce), className)}
     >
       {children}
     </div>
@@ -170,7 +184,7 @@ export function HomeHero({
             {`${componentCount}, free and open source`}
           </p>
         </Settle>
-        <Settle step={1}>
+        <Settle step={1} isShownAtOnce>
           <h1 id='home-title' className={cn(DISPLAY_TITLE, 'max-w-4xl')}>
             <span className='text-tint'>React components</span> that animate
             every change of state

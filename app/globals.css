@@ -18,6 +18,7 @@
   --animate-settle: settle 700ms cubic-bezier(0.23, 1, 0.32, 1) both;
   --animate-settle-plain: settle-plain 700ms cubic-bezier(0.23, 1, 0.32, 1) both;
   --animate-line-in: line-in 220ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  --animate-sharpen: sharpen 700ms cubic-bezier(0.23, 1, 0.32, 1) both;
 
   @keyframes tile-glow {
     0%,
@@ -43,6 +44,14 @@
     from {
       opacity: 0;
       translate: 0 16px;
+    }
+  }
+
+  /* The home title: the same entrance without the fade, so it counts as shown on the first frame. */
+  @keyframes sharpen {
+    from {
+      translate: 0 12px;
+      filter: blur(8px);
     }
   }
 
