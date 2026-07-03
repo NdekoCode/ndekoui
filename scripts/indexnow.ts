@@ -63,4 +63,7 @@ async function submit() {
   }
 }
 
-await submit();
+submit().catch((error: unknown) => {
+  console.error(error);
+  process.exitCode = 1;
+});
