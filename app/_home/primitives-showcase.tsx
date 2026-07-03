@@ -301,7 +301,7 @@ const CELLS: PrimitiveCell[] = [
     motion: 'The list grows from its trigger',
     demo: (
       <Select items={PRIORITIES} defaultValue='medium'>
-        <SelectTrigger className='w-40'>
+        <SelectTrigger aria-label='Priority' className='w-40'>
           <SelectValue placeholder='Pick a priority' />
         </SelectTrigger>
         <SelectContent>
