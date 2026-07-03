@@ -1,28 +1,13 @@
-import type { ComponentType } from 'react';
-
-import {
-  groups as blockGroups,
-  loaders as blockLoaders,
-} from '@/app/blocks/_generated';
-import {
-  groups as templateGroups,
-  loaders as templateLoaders,
-} from '@/app/templates/_generated';
+import { groups as blockGroups } from '@/app/blocks/_generated';
+import { groups as templateGroups } from '@/app/templates/_generated';
 
 import type { BundleTile } from '@/app/_site/bundle-tiles';
 
 import type { BundleGroup, BundleKind } from './types';
 
-type Loader = () => Promise<{ previews: Record<string, ComponentType> }>;
-
 const GROUPS: Record<BundleKind, BundleGroup[]> = {
   blocks: blockGroups,
   templates: templateGroups,
-};
-
-const LOADERS: Record<BundleKind, Record<string, Loader>> = {
-  blocks: blockLoaders,
-  templates: templateLoaders,
 };
 
 export function isBundleKind(value: string): value is BundleKind {
@@ -37,15 +22,6 @@ export function groupsOf(kind: BundleKind) {
 
 export function groupOf(kind: BundleKind, slug: string) {
   return GROUPS[kind].find((group) => group.slug === slug);
-}
-
-export async function previewOf(kind: BundleKind, slug: string, name: string) {
-  const loader = LOADERS[kind][slug];
-  if (!loader) {
-    return undefined;
-  }
-  const { previews } = await loader();
-  return previews[name];
 }
 
 export function bundleEntryOf(kind: BundleKind, slug: string, name: string) {

@@ -7,9 +7,10 @@ import { countLabel } from '@/lib/site';
 import { Button } from '@/registry/ndeko/ui/button';
 
 import { CatalogRail } from '../_catalog/catalog-rail';
+import { ComponentPreview } from '../_catalog/component-preview';
 import { ComponentTile } from '../_catalog/component-tile';
 import { publishedFamilies } from '../_catalog/families';
-import { catalog, loaders } from '../_generated/catalog';
+import { catalog } from '../_generated/catalog';
 
 type CategoryPageProps = {
   params: Promise<{ category: string }>;
@@ -53,11 +54,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   if (!category) {
     notFound();
   }
-  const loader = loaders[slug];
-  if (!loader) {
-    notFound();
-  }
-  const { previews } = await loader();
   const count = countLabel(category.entries.length, 'component', 'components');
   const families = publishedFamilies(catalog);
 
@@ -96,15 +92,15 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           })}
         </nav>
         <div className='grid grid-cols-1 gap-4 sm:grid-cols-6'>
-          {category.entries.map((entry) => {
-            const Preview = previews[entry.name];
-            if (!Preview) {
-              return null;
-            }
-            return (
-              <ComponentTile key={entry.name} entry={entry} Preview={Preview} />
-            );
-          })}
+          {category.entries.map((entry) => (
+            <ComponentTile
+              key={entry.name}
+              entry={entry}
+              preview={
+                <ComponentPreview category={category.slug} name={entry.name} />
+              }
+            />
+          ))}
         </div>
         <SuggestComponent categoryName={category.name} />
       </div>

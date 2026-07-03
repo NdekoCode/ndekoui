@@ -116,23 +116,40 @@ function previewModuleOf(kind: BundleKind, group: BundleGroup) {
 }
 
 function indexModuleOf(groups: BundleGroup[]) {
-  const loaders = groups.map(
-    (group) => `  '${group.slug}': () => import('./${group.slug}'),`
-  );
   const data = JSON.stringify(groups, null, 2);
   return [
     GENERATED_NOTICE,
-    "import type { ComponentType } from 'react';",
-    '',
     "import type { BundleGroup } from '@/app/blocks/_shared/types';",
     '',
     `export const groups: BundleGroup[] = ${data};`,
     '',
-    'export const loaders: Record<',
-    '  string,',
-    '  () => Promise<{ previews: Record<string, ComponentType> }>',
-    '> = {',
-    ...loaders,
+  ].join('\n');
+}
+
+/*
+ * Apart from the data, and on the client: next/dynamic splits every group into its own chunk, so a
+ * page ships only the group it renders. Imported from the server, the same imports would put every
+ * group in every page that reaches them.
+ */
+function previewHostsModuleOf(groups: BundleGroup[]) {
+  const hosts = groups.map(
+    (group) =>
+      `  '${group.slug}': dynamic(() => import('./${group.slug}').then(previewHostOf)),`
+  );
+  return [
+    GENERATED_NOTICE,
+    "'use client';",
+    '',
+    "import dynamic from 'next/dynamic';",
+    "import type { ComponentType } from 'react';",
+    '',
+    'import {',
+    '  previewHostOf,',
+    '  type PreviewHostProps,',
+    "} from '@/app/_site/preview-host';",
+    '',
+    'export const previewHosts: Record<string, ComponentType<PreviewHostProps>> = {',
+    ...hosts,
     '};',
     '',
   ].join('\n');
@@ -147,4 +164,6 @@ export function writeBundleModules(kind: BundleKind, groups: BundleGroup[]) {
   }
   const indexTarget = path.join(generatedDir, 'index.ts');
   fs.writeFileSync(indexTarget, indexModuleOf(groups));
+  const hostsTarget = path.join(generatedDir, 'preview-hosts.tsx');
+  fs.writeFileSync(hostsTarget, previewHostsModuleOf(groups));
 }

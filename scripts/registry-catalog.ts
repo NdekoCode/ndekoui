@@ -353,23 +353,40 @@ function previewModuleOf(category: CatalogCategory) {
 }
 
 function catalogModuleOf(categories: CatalogCategory[]) {
-  const loaders = categories.map(
-    (category) => `  '${category.slug}': () => import('./${category.slug}'),`
-  );
   const data = JSON.stringify(categories, null, 2);
   return [
     GENERATED_NOTICE,
-    "import type { ComponentType } from 'react';",
-    '',
     "import type { CatalogCategory } from '../_catalog/types';",
     '',
     `export const catalog: CatalogCategory[] = ${data};`,
     '',
-    'export const loaders: Record<',
-    '  string,',
-    '  () => Promise<{ previews: Record<string, ComponentType> }>',
-    '> = {',
-    ...loaders,
+  ].join('\n');
+}
+
+/*
+ * Apart from the data, and on the client: next/dynamic splits every category into its own chunk, so a
+ * page ships only the category it renders. Imported from the server, the same imports would put every
+ * category in every page that reaches them.
+ */
+function previewHostsModuleOf(categories: CatalogCategory[]) {
+  const hosts = categories.map(
+    (category) =>
+      `  '${category.slug}': dynamic(() => import('./${category.slug}').then(previewHostOf)),`
+  );
+  return [
+    GENERATED_NOTICE,
+    "'use client';",
+    '',
+    "import dynamic from 'next/dynamic';",
+    "import type { ComponentType } from 'react';",
+    '',
+    'import {',
+    '  previewHostOf,',
+    '  type PreviewHostProps,',
+    "} from '@/app/_site/preview-host';",
+    '',
+    'export const previewHosts: Record<string, ComponentType<PreviewHostProps>> = {',
+    ...hosts,
     '};',
     '',
   ].join('\n');
@@ -383,4 +400,6 @@ export function writePreviewModules(categories: CatalogCategory[]) {
   }
   const catalogTarget = path.join(GENERATED_DIR, 'catalog.ts');
   fs.writeFileSync(catalogTarget, catalogModuleOf(categories));
+  const hostsTarget = path.join(GENERATED_DIR, 'preview-hosts.tsx');
+  fs.writeFileSync(hostsTarget, previewHostsModuleOf(categories));
 }

@@ -1,9 +1,9 @@
 import { notFound } from 'next/navigation';
 
+import { BundlePreview } from '@/app/blocks/_shared/bundle-preview';
 import {
-  groupOf,
+  bundleEntryOf,
   isBundleKind,
-  previewOf,
   viewParamsOf,
 } from '@/app/blocks/_shared/bundles';
 
@@ -20,13 +20,9 @@ export default async function ViewPage({ params }: ViewPageProps) {
   if (!isBundleKind(kind)) {
     notFound();
   }
-  const group = groupOf(kind, groupSlug);
-  if (!group) {
+  const found = bundleEntryOf(kind, groupSlug, name);
+  if (!found) {
     notFound();
   }
-  const Preview = await previewOf(kind, groupSlug, name);
-  if (!Preview) {
-    notFound();
-  }
-  return <Preview />;
+  return <BundlePreview kind={kind} group={groupSlug} name={name} />;
 }

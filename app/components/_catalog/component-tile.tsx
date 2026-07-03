@@ -1,4 +1,4 @@
-import type { ComponentType } from 'react';
+import type { ReactNode } from 'react';
 
 import { cn } from '@/registry/ndeko/lib/utils';
 
@@ -13,7 +13,7 @@ import type { CatalogEntry } from './types';
 
 type ComponentTileProps = {
   entry: CatalogEntry;
-  Preview: ComponentType;
+  preview: ReactNode;
 };
 
 const STAGE_CLASSES: Record<PreviewWidth, string> = {
@@ -22,7 +22,7 @@ const STAGE_CLASSES: Record<PreviewWidth, string> = {
   full: 'px-3 py-6 sm:p-6',
 };
 
-export function ComponentTile({ entry, Preview }: ComponentTileProps) {
+export function ComponentTile({ entry, preview }: ComponentTileProps) {
   const width = previewWidthOf(entry);
 
   return (
@@ -52,7 +52,7 @@ export function ComponentTile({ entry, Preview }: ComponentTileProps) {
           STAGE_CLASSES[width]
         )}
       >
-        <Preview />
+        {preview}
       </PreviewStage>
     </article>
   );
