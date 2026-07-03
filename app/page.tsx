@@ -31,11 +31,15 @@ import { Reveal } from './_home/reveal';
 import { SectionHeading } from './_home/section-heading';
 import { Statement } from './_home/statement';
 
-const HOME_DESCRIPTION =
-  'Open-source primitives, components, blocks and templates for React, built on Base UI, motion and Tailwind CSS, installable with the shadcn CLI or through MCP.';
+const COMPONENT_TOTAL = countComponents(catalog);
+
+/* The title names the kind of thing ndekoui is, for people who do not know the name yet. */
+const HOME_TITLE = 'ndekoui - Animated React UI component library';
+
+const HOME_DESCRIPTION = `${COMPONENT_TOTAL} free, open-source React components, plus blocks and templates, built on Base UI, motion and Tailwind CSS 4. Install them with the shadcn CLI or through MCP.`;
 
 export const metadata: Metadata = pageMetadataOf({
-  title: 'ndekoui - React components that animate every change of state',
+  title: HOME_TITLE,
   description: HOME_DESCRIPTION,
   path: '/',
 });
@@ -72,7 +76,7 @@ function LinkButton({ href, children }: { href: string; children: string }) {
 
 export default async function HomePage() {
   const starCount = await fetchStarCount();
-  const componentTotal = countComponents(catalog);
+  const componentTotal = COMPONENT_TOTAL;
   const primitiveTotal = primitiveItems.length + chatItems.length;
   const blockTotal = entryTotal('blocks');
   const templateTotal = entryTotal('templates');
