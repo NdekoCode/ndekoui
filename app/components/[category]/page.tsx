@@ -35,10 +35,18 @@ export async function generateMetadata({
     return {};
   }
   const count = countLabel(category.entries.length, 'component', 'components');
+  const subject = category.name.toLowerCase();
   return pageMetadataOf({
-    title: `${category.name} components - ndekoui`,
-    description: `${count} of the ${category.name.toLowerCase()} category, built on ndekoui primitives and installable with the shadcn CLI.`,
+    title: `${category.name} components for React and Tailwind CSS - ndekoui`,
+    description: `${count} of the ${subject} category for React, built on Base UI, motion and Tailwind CSS 4, animated and installable with the shadcn CLI.`,
     path: `/components/${category.slug}`,
+    keywords: [
+      `React ${subject} component`,
+      `${subject} component`,
+      `Tailwind CSS ${subject}`,
+      `shadcn ${subject}`,
+      `animated ${subject}`,
+    ],
   });
 }
 

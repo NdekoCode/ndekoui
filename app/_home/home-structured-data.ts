@@ -3,6 +3,7 @@ import {
   absoluteUrlOf,
   AUTHOR_NAME,
   AUTHOR_URL,
+  SITE_KEYWORDS,
   SITE_NAME,
 } from '@/app/_site/seo';
 
@@ -25,6 +26,7 @@ function faqItemOf(entry: { question: string; answer: string }) {
 /** What the home page says about the library, in schema.org terms: the site, the code, its author, the questions. */
 export function homeStructuredDataOf(description: string) {
   const siteUrl = absoluteUrlOf('/');
+  const keywords = SITE_KEYWORDS.join(', ');
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -45,6 +47,7 @@ export function homeStructuredDataOf(description: string) {
         url: siteUrl,
         codeRepository: REPOSITORY_URL,
         license: MIT_LICENCE_URL,
+        keywords,
         programmingLanguage: ['TypeScript', 'React'],
         runtimePlatform: 'React',
         author: { '@id': AUTHOR_ID },

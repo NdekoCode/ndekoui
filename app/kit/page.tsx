@@ -10,9 +10,15 @@ import { KIT_GROUPS } from './kit-groups';
 import { ThemeSwitch } from './theme-switch';
 
 export const metadata: Metadata = pageMetadataOf({
-  title: 'Primitives - ndekoui',
+  title: 'React UI primitives on Base UI - ndekoui',
   description:
     'Every ndekoui primitive on one page, in light and dark, each with its code and the command that installs it.',
+  keywords: [
+    'React primitives',
+    'Base UI components',
+    'accessible React components',
+    'headless UI',
+  ],
   path: '/kit',
 });
 

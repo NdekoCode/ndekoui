@@ -91,10 +91,17 @@ export function bundleGroupMetadataOf(
   }
   const count = countLabel(group.entries.length, copy.singular, copy.plural);
   const titles = entryTitlesOf(group.entries.map((entry) => entry.title));
+  const subject = group.name.toLowerCase();
   return pageMetadataOf({
-    title: `${group.name} ${copy.plural} - ndekoui`,
+    title: `${group.name} ${copy.plural} for React and Tailwind CSS - ndekoui`,
     description: `${count}: ${titles}. Built from ndekoui components, previewed live and installable with the shadcn CLI.`,
     path: `/${kind}/${group.slug}`,
+    keywords: [
+      `React ${subject} ${copy.singular}`,
+      `${subject} ${copy.singular}`,
+      `Tailwind CSS ${subject}`,
+      `shadcn ${subject}`,
+    ],
   });
 }
 

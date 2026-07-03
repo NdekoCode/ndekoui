@@ -20,9 +20,18 @@ import { countLabel } from '@/lib/site';
 import { TabsPanel } from '@/registry/ndeko/ui/tabs';
 
 export const metadata: Metadata = pageMetadataOf({
-  title: 'MCP server - ndekoui',
+  title: 'MCP server for React components - ndekoui',
   description:
     'Connect Claude, Cursor, Codex and any MCP client to ndekoui. Your agent searches the catalogue, reads the source, installs pieces with the shadcn CLI and follows the design rules.',
+  keywords: [
+    'Model Context Protocol',
+    'Claude Code MCP',
+    'Cursor MCP',
+    'Codex MCP',
+    'VS Code MCP',
+    'shadcn MCP',
+    'AI coding assistant',
+  ],
   path: '/mcp/connect',
 });
 

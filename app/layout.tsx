@@ -7,12 +7,16 @@ import { ThemeProvider } from '@/components/website/theme-provider';
 
 import type { Metadata } from 'next';
 
+import { searchVerificationOf, SITE_KEYWORDS } from '@/app/_site/seo';
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://ui.ndekocode.dev'),
   title: 'ndekoui',
   description:
     'Open-source primitives, components, blocks and templates for React and Tailwind CSS, installed with the shadcn CLI and animated around what people do.',
   applicationName: 'ndekoui',
+  keywords: SITE_KEYWORDS,
+  verification: searchVerificationOf(),
   authors: [{ name: 'ndekocode', url: 'https://ndekocode.dev' }],
   creator: 'ndekocode',
   openGraph: {

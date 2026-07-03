@@ -12,21 +12,56 @@ export function absoluteUrlOf(path: string) {
   return `${SITE_URL}${path}`;
 }
 
+/*
+ * The words people and assistants search with, for every page. Each page adds its own subject.
+ * They also sit in titles and descriptions, which is where search engines weigh them.
+ */
+export const SITE_KEYWORDS = [
+  'ndekoui',
+  'React components',
+  'React component library',
+  'React UI library',
+  'animated React components',
+  'UI components',
+  'Tailwind CSS components',
+  'Tailwind CSS 4',
+  'shadcn',
+  'shadcn/ui',
+  'shadcn registry',
+  'Base UI',
+  'motion',
+  'Framer Motion',
+  'Next.js components',
+  'TypeScript',
+  'design system',
+  'open source UI',
+  'free React components',
+  'dashboard components',
+  'SaaS UI',
+  'UI blocks',
+  'UI templates',
+  'MCP server',
+  'AI coding',
+];
+
 type PageSeo = {
   title: string;
   description: string;
   path: string;
+  keywords?: string[];
 };
 
-/** Title, description, canonical address and sharing card of a page, set in one place. */
+/** Title, description, keywords, canonical address and sharing card of a page, set in one place. */
 export function pageMetadataOf({
   title,
   description,
   path,
+  keywords = [],
 }: PageSeo): Metadata {
   return {
     title,
     description,
+    keywords: [...keywords, ...SITE_KEYWORDS],
     alternates: { canonical: path },
     openGraph: {
       title,
@@ -80,5 +115,35 @@ export function itemListOf(pagePath: string, entries: ListedEntry[]) {
     '@type': 'ItemList',
     numberOfItems: entries.length,
     itemListElement,
+  };
+}
+
+/*
+ * Search engines prove that the site is ours with a code each. The codes are not secret: they are
+ * set as environment variables in Vercel, so a new engine needs no code change.
+ */
+const VERIFICATION_TAGS = [
+  { env: 'BING_SITE_VERIFICATION', name: 'msvalidate.01' },
+  { env: 'BAIDU_SITE_VERIFICATION', name: 'baidu-site-verification' },
+  { env: 'NAVER_SITE_VERIFICATION', name: 'naver-site-verification' },
+  { env: 'SEZNAM_SITE_VERIFICATION', name: 'seznam-wmt' },
+];
+
+function otherVerificationTags() {
+  const tags: Record<string, string> = {};
+  for (const tag of VERIFICATION_TAGS) {
+    const code = process.env[tag.env];
+    if (code) {
+      tags[tag.name] = code;
+    }
+  }
+  return tags;
+}
+
+export function searchVerificationOf(): Metadata['verification'] {
+  return {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
+    yandex: process.env.YANDEX_SITE_VERIFICATION,
+    other: otherVerificationTags(),
   };
 }

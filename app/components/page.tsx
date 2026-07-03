@@ -9,9 +9,15 @@ import { countComponents, publishedFamilies } from './_catalog/families';
 import { catalog } from './_generated/catalog';
 
 export const metadata: Metadata = pageMetadataOf({
-  title: 'Components - ndekoui',
+  title: 'React components for Tailwind CSS and shadcn - ndekoui',
   description:
     'Ready-made components built on ndekoui primitives, grouped by family, each installable with the shadcn CLI.',
+  keywords: [
+    'React UI components',
+    'Tailwind CSS UI kit',
+    'shadcn components',
+    'animated UI components',
+  ],
   path: '/components',
 });
 
