@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+import { JsonLd } from '@/app/_site/json-ld';
 import { fetchStarCount } from '@/app/_site/repository';
+import { pageMetadataOf } from '@/app/_site/seo';
 import { SiteFooter } from '@/app/_site/site-footer';
 import { SiteHeader } from '@/app/_site/site-header';
 import { groupsOf } from '@/app/blocks/_shared/bundles';
@@ -20,6 +22,7 @@ import { ClosingBand } from './_home/closing-band';
 import { EditorGrid } from './_home/editor-grid';
 import { EditorMarquee } from './_home/editor-marquee';
 import { HomeFaq } from './_home/home-faq';
+import { homeStructuredDataOf } from './_home/home-structured-data';
 import { HeroShowcase } from './_home/hero-showcase';
 import { HeroBackdrop, HomeHero } from './_home/home-hero';
 import { PrimitivesShowcase } from './_home/primitives-showcase';
@@ -28,11 +31,14 @@ import { Reveal } from './_home/reveal';
 import { SectionHeading } from './_home/section-heading';
 import { Statement } from './_home/statement';
 
-export const metadata: Metadata = {
+const HOME_DESCRIPTION =
+  'Open-source primitives, components, blocks and templates for React, built on Base UI, motion and Tailwind CSS, installable with the shadcn CLI or through MCP.';
+
+export const metadata: Metadata = pageMetadataOf({
   title: 'ndekoui - React components that animate every change of state',
-  description:
-    'Open-source primitives, components, blocks and templates for React, built on Base UI, motion and Tailwind CSS, installable with the shadcn CLI or through MCP.',
-};
+  description: HOME_DESCRIPTION,
+  path: '/',
+});
 
 /* One rhythm for the whole page: the same space between sections, the same space under a heading. */
 const PAGE_RHYTHM = 'flex flex-col gap-24 lg:gap-32';
@@ -151,6 +157,7 @@ export default async function HomePage() {
           <ClosingBand starCount={starCount} />
         </main>
         <SiteFooter />
+        <JsonLd data={homeStructuredDataOf(HOME_DESCRIPTION)} />
         <Toaster />
       </div>
     </TooltipProvider>

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+import { pageMetadataOf } from '@/app/_site/seo';
 import { countLabel } from '@/lib/site';
 import { chatItems } from '@/registry/chat-items';
 import { primitiveItems, type RegistryItemDefinition } from '@/registry/items';
@@ -8,11 +9,12 @@ import { KitGroupSection } from './kit-group';
 import { KIT_GROUPS } from './kit-groups';
 import { ThemeSwitch } from './theme-switch';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadataOf({
   title: 'Primitives - ndekoui',
   description:
     'Every ndekoui primitive on one page, in light and dark, each with its code and the command that installs it.',
-};
+  path: '/kit',
+});
 
 const KIT_ITEMS = [...primitiveItems, ...chatItems];
 

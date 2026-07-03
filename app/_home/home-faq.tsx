@@ -119,6 +119,9 @@ function QuestionCard({ item }: { item: Question }) {
   );
 }
 
+/** The questions as plain text, for the structured data of the page. */
+export const FAQ_QUESTIONS = GROUPS.flatMap((group) => group.questions);
+
 export function HomeFaq() {
   return (
     <section

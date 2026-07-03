@@ -1,7 +1,10 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { BundleTileGrid } from '@/app/_site/bundle-tiles';
+import { JsonLd } from '@/app/_site/json-ld';
+import { breadcrumbOf, itemListOf, pageMetadataOf } from '@/app/_site/seo';
 import { countLabel } from '@/lib/site';
 
 import { BundleCard } from './bundle-card';
@@ -66,6 +69,35 @@ export function BundleIndexPage({ kind }: { kind: BundleKind }) {
   );
 }
 
+function kindNameOf(kind: BundleKind) {
+  const plural = COPY[kind].plural;
+  const initial = plural.charAt(0).toUpperCase();
+  return `${initial}${plural.slice(1)}`;
+}
+
+function entryTitlesOf(titles: string[]) {
+  return titles.join(', ');
+}
+
+/** The tab title, description and canonical address of a group page, named after what it holds. */
+export function bundleGroupMetadataOf(
+  kind: BundleKind,
+  slug: string
+): Metadata {
+  const copy = COPY[kind];
+  const group = groupOf(kind, slug);
+  if (!group) {
+    return {};
+  }
+  const count = countLabel(group.entries.length, copy.singular, copy.plural);
+  const titles = entryTitlesOf(group.entries.map((entry) => entry.title));
+  return pageMetadataOf({
+    title: `${group.name} ${copy.plural} - ndekoui`,
+    description: `${count}: ${titles}. Built from ndekoui components, previewed live and installable with the shadcn CLI.`,
+    path: `/${kind}/${group.slug}`,
+  });
+}
+
 export function BundleGroupPage({
   kind,
   slug,
@@ -78,9 +110,22 @@ export function BundleGroupPage({
   if (!group) {
     notFound();
   }
+  const groupPath = `/${kind}/${group.slug}`;
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      breadcrumbOf([
+        { name: 'ndekoui', path: '/' },
+        { name: kindNameOf(kind), path: `/${kind}` },
+        { name: group.name, path: groupPath },
+      ]),
+      itemListOf(groupPath, group.entries),
+    ],
+  };
 
   return (
     <div className='flex flex-col gap-12'>
+      <JsonLd data={structuredData} />
       <header className='flex flex-col gap-1'>
         <Link
           href={`/${kind}`}

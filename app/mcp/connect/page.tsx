@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+import { pageMetadataOf } from '@/app/_site/seo';
 import { SectionHeading } from '@/app/_home/section-heading';
 import { SiteShell } from '@/app/_site/site-shell';
 import { ClientChoiceProvider } from '@/app/mcp/_components/client-choice';
@@ -18,11 +19,12 @@ import { PROMPTS, TOOLS } from '@/app/mcp/_shared/tool-catalogue';
 import { countLabel } from '@/lib/site';
 import { TabsPanel } from '@/registry/ndeko/ui/tabs';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadataOf({
   title: 'MCP server - ndekoui',
   description:
     'Connect Claude, Cursor, Codex and any MCP client to ndekoui. Your agent searches the catalogue, reads the source, installs pieces with the shadcn CLI and follows the design rules.',
-};
+  path: '/mcp/connect',
+});
 
 function McpHero() {
   return (

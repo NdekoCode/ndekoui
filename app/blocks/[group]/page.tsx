@@ -1,5 +1,10 @@
+import type { Metadata } from 'next';
+
 import { groupsOf } from '../_shared/bundles';
-import { BundleGroupPage } from '../_shared/bundle-pages';
+import {
+  BundleGroupPage,
+  bundleGroupMetadataOf,
+} from '../_shared/bundle-pages';
 
 type BlockGroupPageProps = {
   params: Promise<{ group: string }>;
@@ -7,6 +12,13 @@ type BlockGroupPageProps = {
 
 export function generateStaticParams() {
   return groupsOf('blocks').map((group) => ({ group: group.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: BlockGroupPageProps): Promise<Metadata> {
+  const { group } = await params;
+  return bundleGroupMetadataOf('blocks', group);
 }
 
 export default async function BlockGroupPage({ params }: BlockGroupPageProps) {

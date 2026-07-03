@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+import { JsonLd } from '@/app/_site/json-ld';
+import { breadcrumbOf, itemListOf, pageMetadataOf } from '@/app/_site/seo';
 import { countLabel } from '@/lib/site';
 
 import { Button } from '@/registry/ndeko/ui/button';
@@ -32,10 +34,12 @@ export async function generateMetadata({
   if (!category) {
     return {};
   }
-  return {
+  const count = countLabel(category.entries.length, 'component', 'components');
+  return pageMetadataOf({
     title: `${category.name} components - ndekoui`,
-    description: `${countLabel(category.entries.length, 'component', 'components')} of the ${category.name.toLowerCase()} category, built on ndekoui primitives and installable with the shadcn CLI.`,
-  };
+    description: `${count} of the ${category.name.toLowerCase()} category, built on ndekoui primitives and installable with the shadcn CLI.`,
+    path: `/components/${category.slug}`,
+  });
 }
 
 const CATEGORY_LINK =
@@ -56,9 +60,22 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   }
   const count = countLabel(category.entries.length, 'component', 'components');
   const families = publishedFamilies(catalog);
+  const categoryPath = `/components/${category.slug}`;
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      breadcrumbOf([
+        { name: 'ndekoui', path: '/' },
+        { name: 'Components', path: '/components' },
+        { name: category.name, path: categoryPath },
+      ]),
+      itemListOf(categoryPath, category.entries),
+    ],
+  };
 
   return (
     <div className='grid gap-10 lg:grid-cols-[12.5rem_minmax(0,1fr)]'>
+      <JsonLd data={structuredData} />
       <CatalogRail families={families} currentSlug={category.slug} />
       <div className='flex min-w-0 flex-col gap-8'>
         <header className='flex flex-col gap-1'>

@@ -1,17 +1,19 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+import { pageMetadataOf } from '@/app/_site/seo';
 import { countLabel } from '@/lib/site';
 
 import { CategoryThumbnail } from './_catalog/category-thumbnail';
 import { countComponents, publishedFamilies } from './_catalog/families';
 import { catalog } from './_generated/catalog';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadataOf({
   title: 'Components - ndekoui',
   description:
     'Ready-made components built on ndekoui primitives, grouped by family, each installable with the shadcn CLI.',
-};
+  path: '/components',
+});
 
 export default function ComponentsIndexPage() {
   const families = publishedFamilies(catalog);

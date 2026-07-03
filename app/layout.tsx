@@ -12,6 +12,15 @@ export const metadata: Metadata = {
   title: 'ndekoui',
   description:
     'Open-source primitives, components, blocks and templates for React and Tailwind CSS, installed with the shadcn CLI and animated around what people do.',
+  applicationName: 'ndekoui',
+  authors: [{ name: 'ndekocode', url: 'https://ndekocode.dev' }],
+  creator: 'ndekocode',
+  openGraph: {
+    siteName: 'ndekoui',
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: { card: 'summary_large_image' },
 };
 
 export default function RootLayout({
