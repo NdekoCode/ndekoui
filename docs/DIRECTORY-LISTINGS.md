@@ -4,20 +4,20 @@ Where ndekoui is listed, so search engines, developers and AI tools can find it.
 
 ## Status
 
-| Directory                                          | How                                                                                               | Status             |
-| -------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------ |
-| shadcn registry directory (`@ndeko`)               | Pull request to `shadcn-ui/ui`, prepared in `~/.cache/ndekoui-listings/shadcn-ui`                 | Ready to send      |
-| awesome-shadcn-ui                                  | Pull request, prepared in `~/.cache/ndekoui-listings/awesome-shadcn-ui`                           | Ready to send      |
-| Official MCP Registry (`dev.ndekocode.ui/ndekoui`) | `mcp-publisher` with the HTTP key at `/.well-known/mcp-registry-auth`                             | Ready to send      |
-| Glama                                              | Picks servers up from the official registry; otherwise add the repository at glama.ai/mcp/servers | After the registry |
-| awesome-remote-mcp-servers                         | Pull request, needs the Glama connector badge and a star on the repository                        | After Glama        |
-| mcp.so                                             | Form at mcp.so/submit                                                                             | Manual             |
-| Smithery                                           | Closed to new servers since 31 October 2026, curated only                                         | Not possible       |
+| Directory                                          | How                                                                                              | Status                                                             |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| shadcn registry directory (`@ndeko`)               | [shadcn-ui/ui#12625](https://github.com/shadcn-ui/ui/pull/12625)                                 | Open; the commit must be signed within 14 days                     |
+| awesome-shadcn-ui                                  | [birobirobiro/awesome-shadcn-ui#742](https://github.com/birobirobiro/awesome-shadcn-ui/pull/742) | Open                                                               |
+| Official MCP Registry (`dev.ndekocode.ui/ndekoui`) | `mcp-publisher` with the HTTP key at `/.well-known/mcp-registry-auth`                            | Published 2026-11-06, version 1.0.0                                |
+| Glama                                              | Picked up from the official registry                                                             | [Listed](https://glama.ai/mcp/connectors/dev.ndekocode.ui/ndekoui) |
+| awesome-remote-mcp-servers                         | Pull request, prepared in `~/.cache/ndekoui-listings/awesome-remote-mcp-servers`                 | Ready to send                                                      |
+| mcp.so                                             | Form at mcp.so/submit                                                                            | Manual                                                             |
+| Smithery                                           | Closed to new servers since 31 October 2026, curated only                                        | Not possible                                                       |
 
-The first three go out with one script, run from the maintainer's terminal:
+The signature for the shadcn commit and the remote servers listing go out with one script, run from the maintainer's terminal:
 
 ```bash
-bash ~/.cache/ndekoui-listings/submit-listings.sh
+bash ~/.cache/ndekoui-listings/next-listings.sh
 ```
 
 ## shadcn registry directory
