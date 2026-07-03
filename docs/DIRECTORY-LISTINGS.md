@@ -4,15 +4,15 @@ Where ndekoui is listed, so search engines, developers and AI tools can find it.
 
 ## Status
 
-| Directory | How | Status |
-| --- | --- | --- |
-| shadcn registry directory (`@ndeko`) | Pull request to `shadcn-ui/ui`, prepared in `~/.cache/ndekoui-listings/shadcn-ui` | Ready to send |
-| awesome-shadcn-ui | Pull request, prepared in `~/.cache/ndekoui-listings/awesome-shadcn-ui` | Ready to send |
-| Official MCP Registry (`dev.ndekocode.ui/ndekoui`) | `mcp-publisher` with the HTTP key at `/.well-known/mcp-registry-auth` | Ready to send |
-| Glama | Picks servers up from the official registry; otherwise add the repository at glama.ai/mcp/servers | After the registry |
-| awesome-remote-mcp-servers | Pull request, needs the Glama connector badge and a star on the repository | After Glama |
-| mcp.so | Form at mcp.so/submit | Manual |
-| Smithery | Closed to new servers since 31 October 2026, curated only | Not possible |
+| Directory                                          | How                                                                                               | Status             |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------ |
+| shadcn registry directory (`@ndeko`)               | Pull request to `shadcn-ui/ui`, prepared in `~/.cache/ndekoui-listings/shadcn-ui`                 | Ready to send      |
+| awesome-shadcn-ui                                  | Pull request, prepared in `~/.cache/ndekoui-listings/awesome-shadcn-ui`                           | Ready to send      |
+| Official MCP Registry (`dev.ndekocode.ui/ndekoui`) | `mcp-publisher` with the HTTP key at `/.well-known/mcp-registry-auth`                             | Ready to send      |
+| Glama                                              | Picks servers up from the official registry; otherwise add the repository at glama.ai/mcp/servers | After the registry |
+| awesome-remote-mcp-servers                         | Pull request, needs the Glama connector badge and a star on the repository                        | After Glama        |
+| mcp.so                                             | Form at mcp.so/submit                                                                             | Manual             |
+| Smithery                                           | Closed to new servers since 31 October 2026, curated only                                         | Not possible       |
 
 The first three go out with one script, run from the maintainer's terminal:
 
