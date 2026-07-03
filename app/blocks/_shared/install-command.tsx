@@ -6,8 +6,9 @@ import {
   useReducedMotion,
   type Transition,
 } from 'motion/react';
-import { useState } from 'react';
+import { useState, type ComponentType } from 'react';
 
+import { BunMark, NpmMark, PnpmMark, YarnMark } from '@/app/_site/brand-marks';
 import { CopyButton } from '@/app/_site/copy-button';
 import { REGISTRY_URL } from '@/lib/site';
 import { ChevronDownIcon } from '@/registry/ndeko/lib/icons';
@@ -150,6 +151,21 @@ function RunnerLabel({ runner, isAnswering }: RunnerLabelProps) {
   );
 }
 
+const PACKAGE_MANAGER_MARKS: Record<
+  PackageManager,
+  ComponentType<{ className?: string }>
+> = {
+  pnpm: PnpmMark,
+  npm: NpmMark,
+  yarn: YarnMark,
+  bun: BunMark,
+};
+
+function PackageManagerMark({ manager }: { manager: PackageManager }) {
+  const Mark = PACKAGE_MANAGER_MARKS[manager];
+  return <Mark className='size-3.5' />;
+}
+
 function PackageManagerMenu({ manager }: { manager: PackageManager }) {
   const [chosenHere, setChosenHere] = useState<PackageManager | null>(null);
   const runner = runnerOf(manager);
@@ -175,6 +191,7 @@ function PackageManagerMenu({ manager }: { manager: PackageManager }) {
           />
         }
       >
+        <PackageManagerMark manager={manager} />
         <RunnerLabel runner={runner} isAnswering={isAnswering} />
         <ChevronDownIcon className='text-muted-foreground size-3.5' />
       </DropdownMenuTrigger>
@@ -191,6 +208,7 @@ function PackageManagerMenu({ manager }: { manager: PackageManager }) {
                 value={option.id}
                 closeOnClick
               >
+                <PackageManagerMark manager={option.id} />
                 <span className='flex-1'>{option.id}</span>
                 <span className='text-muted-foreground font-mono text-xs'>
                   {option.runner}
