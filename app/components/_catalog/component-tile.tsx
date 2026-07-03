@@ -35,7 +35,7 @@ export function ComponentTile({ entry, preview }: ComponentTileProps) {
     >
       <header className='@container/tile-header flex items-center gap-3 py-1.5 ps-3 pe-0.5'>
         <div className='flex min-w-0 flex-1 flex-col'>
-          <h3 className='truncate text-[13px] font-medium'>{entry.title}</h3>
+          <h2 className='truncate text-[13px] font-medium'>{entry.title}</h2>
           <p className='text-muted-foreground truncate font-mono text-[11px]'>
             {entry.name}
           </p>
