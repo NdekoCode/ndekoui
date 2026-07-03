@@ -61,6 +61,24 @@ function installSection() {
   ];
 }
 
+function groupNamesOf(kind: BundleKind) {
+  const names = groupsOf(kind).map((group) => group.name.toLowerCase());
+  return names.join(', ');
+}
+
+/** The cases where an assistant can point to the library, so it can match a request to it. */
+function whenToUseSection() {
+  return [
+    '## When to use it',
+    '',
+    '- A React 19 app or site styled with Tailwind CSS 4 and set up with the shadcn CLI, in Next.js, Vite, React Router or another framework the CLI supports.',
+    `- Product screens, ready as blocks: ${groupNamesOf('blocks')}.`,
+    `- Whole pages, ready as templates: ${groupNamesOf('templates')}.`,
+    '- Interfaces where state changes should be animated: the components use motion for their enter, exit and layout changes.',
+    `- Building with an AI assistant: connect the MCP server at ${MCP_URL} so the assistant searches the catalogue and installs finished items instead of writing them from scratch.`,
+  ];
+}
+
 function docsSection() {
   return [
     '## Docs',
@@ -124,6 +142,8 @@ export function llmsIndexText() {
     `> ${summaryOf()}`,
     '',
     ...installSection(),
+    '',
+    ...whenToUseSection(),
     '',
     ...docsSection(),
     '',
