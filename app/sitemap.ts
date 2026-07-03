@@ -1,10 +1,9 @@
 import type { MetadataRoute } from 'next';
 
+import { absoluteUrlOf } from '@/app/_site/seo';
 import { groupsOf } from '@/app/blocks/_shared/bundles';
 import { catalog } from '@/app/components/_generated/catalog';
 import { NAVIGATION } from '@/app/docs/navigation';
-
-const SITE_URL = 'https://ui.ndekocode.dev';
 
 const STATIC_PATHS = [
   '/',
@@ -16,7 +15,7 @@ const STATIC_PATHS = [
 ];
 
 function entryOf(pathname: string): MetadataRoute.Sitemap[number] {
-  return { url: `${SITE_URL}${pathname}` };
+  return { url: absoluteUrlOf(pathname) };
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
