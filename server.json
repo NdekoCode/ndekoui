@@ -1,0 +1,18 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "dev.ndekocode.ui/ndekoui",
+  "title": "ndekoui",
+  "description": "Search, read and install ndekoui React components, blocks and templates with the shadcn CLI.",
+  "version": "1.0.0",
+  "websiteUrl": "https://ui.ndekocode.dev/mcp/connect",
+  "repository": {
+    "url": "https://github.com/NdekoCode/ndekoui",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://ui.ndekocode.dev/mcp"
+    }
+  ]
+}
