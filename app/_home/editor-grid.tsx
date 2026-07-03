@@ -24,14 +24,21 @@ const GRID_CLIENT_IDS = [
 
 const OTHER_CLIENT_ID = 'other';
 
-/* Tile colours from Simple Icons 16.33.0, the set the marks come from. Clients it has no mark for keep a neutral tile. */
+/*
+ * Tile colours from the brands: Simple Icons 16.33.0, and the colours of the LobeHub and Iconify
+ * marks for ChatGPT, Codex and Kiro. VS Code's mark has its own colours, so it sits on white.
+ */
 const TILE_COLOURS: Record<string, string> = {
   claude: '#D97757',
   'claude-code': '#D97757',
+  chatgpt: '#000000',
+  codex: '#3941FF',
   cursor: '#000000',
+  'vs-code': '#FFFFFF',
   windsurf: '#0B100F',
   'gemini-cli': '#8E75B2',
   zed: '#084CCF',
+  kiro: '#9046FF',
   opencode: '#000000',
   warp: '#01A4FF',
 };

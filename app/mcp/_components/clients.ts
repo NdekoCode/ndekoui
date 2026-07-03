@@ -1,3 +1,10 @@
+import {
+  CodexMark,
+  KiroMark,
+  LovableMark,
+  OpenAiMark,
+  VsCodeMark,
+} from '@/app/_site/brand-marks';
 import { ClaudeMark, CursorMark, V0Mark } from '@/app/_site/open-in/tool-marks';
 import {
   MCP_URL,
@@ -9,7 +16,6 @@ import {
   ClaudeCodeMark,
   GeminiMark,
   McpMark,
-  monogramOf,
   OpenCodeMark,
   WarpMark,
   WindsurfMark,
@@ -144,7 +150,7 @@ const CLAUDE: ClientSetup = {
 const CHATGPT: ClientSetup = {
   id: 'chatgpt',
   name: 'ChatGPT',
-  Mark: monogramOf('G'),
+  Mark: OpenAiMark,
   isFeatured: true,
   steps: [
     {
@@ -165,7 +171,7 @@ const CHATGPT: ClientSetup = {
 const CODEX: ClientSetup = {
   id: 'codex',
   name: 'Codex',
-  Mark: monogramOf('Cx'),
+  Mark: CodexMark,
   isFeatured: true,
   steps: [
     {
@@ -210,7 +216,7 @@ const CURSOR: ClientSetup = {
 const VS_CODE: ClientSetup = {
   id: 'vs-code',
   name: 'VS Code',
-  Mark: monogramOf('VS'),
+  Mark: VsCodeMark,
   isFeatured: true,
   installLink: vsCodeInstallLink(),
   steps: [
@@ -304,7 +310,7 @@ const ZED: ClientSetup = {
 const KIRO: ClientSetup = {
   id: 'kiro',
   name: 'Kiro',
-  Mark: monogramOf('K'),
+  Mark: KiroMark,
   isFeatured: false,
   installLink: kiroInstallLink(),
   steps: [
@@ -382,7 +388,7 @@ const V0: ClientSetup = {
 const LOVABLE: ClientSetup = {
   id: 'lovable',
   name: 'Lovable',
-  Mark: monogramOf('L'),
+  Mark: LovableMark,
   isFeatured: false,
   steps: [
     {

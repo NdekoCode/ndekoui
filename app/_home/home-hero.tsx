@@ -17,18 +17,8 @@ import { Button } from '@/registry/ndeko/ui/button';
 import { DISPLAY_TITLE } from './section-heading';
 import { TileField } from './tile-field';
 
-/** Clients drawn with a real mark; the others only have a monogram, which reads as a placeholder here. */
-const MARKED_CLIENT_IDS = new Set([
-  'claude-code',
-  'claude',
-  'cursor',
-  'windsurf',
-  'gemini-cli',
-  'zed',
-  'warp',
-  'opencode',
-  'v0',
-]);
+/** The manual setup entry is not a tool of its own. */
+const OTHER_CLIENT_ID = 'other';
 
 /* One wash of the primary colour behind the hero: lavender in light, a deeper indigo in dark. */
 const LIGHT_GLOW =
@@ -47,7 +37,7 @@ type HomeHeroProps = {
 };
 
 function markedClients() {
-  return CLIENTS.filter((client) => MARKED_CLIENT_IDS.has(client.id));
+  return CLIENTS.filter((client) => client.id !== OTHER_CLIENT_ID);
 }
 
 function settleDelayOf(step: number): CSSProperties {

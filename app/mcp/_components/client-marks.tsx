@@ -6,7 +6,8 @@ export type MarkComponent = (props: MarkProps) => React.JSX.Element;
 
 /*
  * Marks from Simple Icons 16.33.0 (CC0 1.0), one path each on a 24 by 24 grid.
- * The names and marks stay the trademarks of their owners. Clients without a mark in that set get a monogram.
+ * The names and marks stay the trademarks of their owners. Marks missing from that set live in
+ * app/_site/brand-marks.tsx. A mark in a brand colour keeps it until a tile asks for white.
  */
 
 const CLAUDE_CODE_PATH =
@@ -54,11 +55,15 @@ export function ClaudeCodeMark({ className }: MarkProps) {
 }
 
 export function GeminiMark({ className }: MarkProps) {
-  return <PathMark path={GEMINI_PATH} className={className} />;
+  return (
+    <PathMark path={GEMINI_PATH} className={cn('text-[#8E75B2]', className)} />
+  );
 }
 
 export function ZedMark({ className }: MarkProps) {
-  return <PathMark path={ZED_PATH} className={className} />;
+  return (
+    <PathMark path={ZED_PATH} className={cn('text-[#084CCF]', className)} />
+  );
 }
 
 export function OpenCodeMark({ className }: MarkProps) {
@@ -66,7 +71,9 @@ export function OpenCodeMark({ className }: MarkProps) {
 }
 
 export function WarpMark({ className }: MarkProps) {
-  return <PathMark path={WARP_PATH} className={className} />;
+  return (
+    <PathMark path={WARP_PATH} className={cn('text-[#01A4FF]', className)} />
+  );
 }
 
 export function WindsurfMark({ className }: MarkProps) {
@@ -79,22 +86,4 @@ export function McpMark({ className }: MarkProps) {
 
 export function ShadcnMark({ className }: MarkProps) {
   return <PathMark path={SHADCN_PATH} className={className} />;
-}
-
-/** One or two letters in a small tile, so a client without a mark keeps its place in a row of marks. */
-export function monogramOf(letters: string): MarkComponent {
-  function Monogram({ className }: MarkProps) {
-    return (
-      <span
-        aria-hidden='true'
-        className={cn(
-          'inline-flex size-4 shrink-0 items-center justify-center rounded-[4px] bg-current/15 text-[8px] leading-none font-semibold',
-          className
-        )}
-      >
-        {letters}
-      </span>
-    );
-  }
-  return Monogram;
 }

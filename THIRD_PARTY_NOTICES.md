@@ -94,6 +94,38 @@ SOFTWARE.
 
 The brand marks in `registry/ndeko/lib/brand-logos.tsx`, the v0, Cursor and Claude marks of the site's Open in menu (`app/_site/open-in/tool-marks.tsx`), and the client marks of the MCP page (`app/mcp/_components/client-marks.tsx`), are SVG paths and colours taken from Simple Icons 16.33.0 (<https://github.com/simple-icons/simple-icons>), released under CC0 1.0 Universal. Every mark is a trademark of its owner. It is shown only to name the tool a block connects to, and its use stays subject to that brand's own guidelines. No brand endorses ndekoui.
 
+## LobeHub Icons
+
+The OpenAI (ChatGPT), Codex and Kiro marks in `app/_site/brand-marks.tsx` are SVG paths from `@lobehub/icons-static-svg` 1.102.0 (<https://github.com/lobehub/lobe-icons>), declared MIT by its author, LobeHub. The Kiro ghost is cut out of the Kiro app icon of that set. Every mark is a trademark of its owner, shown only to name the tool, and no brand endorses ndekoui.
+
+```text
+MIT License
+
+Copyright (c) LobeHub
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+## Iconify Logos
+
+The coloured marks in `public/brands` (VS Code, Lovable, npm, pnpm, yarn and bun) come from `@iconify-json/logos` 1.2.19 (<https://github.com/gilbarbara/logos>, by Gil Barbara), released under CC0 1.0 Universal. The pnpm mark keeps its squares and leaves out its word, which cannot be read at icon size. Every mark is a trademark of its owner, shown only to name the tool, and no brand endorses ndekoui.
+
 ## Magic UI
 
 Several motion components take their idea and their props from Magic UI (<https://magicui.design>, MIT): globe, dotted map, orbiting circles, lens, border beam, shine border, magic card, confetti, the post card, the word rotate, the highlighter, text 3D flip, scroll velocity, and the Safari, iPhone and Android mockups. The circular theme change of the site (`lib/theme-transition.ts`) follows the mechanism of Magic UI's animated theme toggler, by way of the author's portfolio. Their code is written for ndekoui; none of Magic UI's code was copied.
