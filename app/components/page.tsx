@@ -5,7 +5,11 @@ import { pageMetadataOf } from '@/app/_site/seo';
 import { countLabel } from '@/lib/site';
 
 import { CategoryThumbnail } from './_catalog/category-thumbnail';
-import { countComponents, publishedFamilies } from './_catalog/families';
+import {
+  countComponents,
+  familyAnchorOf,
+  publishedFamilies,
+} from './_catalog/families';
 import { catalog } from './_generated/catalog';
 
 export const metadata: Metadata = pageMetadataOf({
@@ -50,7 +54,11 @@ export default function ComponentsIndexPage() {
         </p>
       )}
       {families.map((family) => (
-        <section key={family.name} className='flex flex-col gap-5'>
+        <section
+          key={family.name}
+          id={familyAnchorOf(family.name)}
+          className='flex scroll-mt-24 flex-col gap-5'
+        >
           <div className='flex flex-col gap-1'>
             <h2 className='text-base font-semibold'>{family.name}</h2>
             <p className='text-muted-foreground text-[13px]'>

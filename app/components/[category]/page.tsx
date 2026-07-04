@@ -9,6 +9,7 @@ import { countLabel } from '@/lib/site';
 import { Button } from '@/registry/ndeko/ui/button';
 
 import { CatalogRail } from '../_catalog/catalog-rail';
+import { categoryIntroOf } from '../_catalog/category-intros';
 import { ComponentPreview } from '../_catalog/component-preview';
 import { ComponentTile } from '../_catalog/component-tile';
 import { publishedFamilies } from '../_catalog/families';
@@ -92,9 +93,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             {category.name}
           </h1>
           <p className='text-muted-foreground max-w-xl text-[13px] text-balance'>
-            Every variant is built on ndekoui primitives and its design
-            language. Open the code of any of them to copy it or the command
-            that installs it.
+            {categoryIntroOf(category.slug)}
           </p>
         </header>
         <nav

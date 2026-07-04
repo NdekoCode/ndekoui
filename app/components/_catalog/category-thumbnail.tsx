@@ -764,31 +764,285 @@ function AsideThumb() {
   );
 }
 
+function seriesStyle(slot: number) {
+  return { '--chip': `var(--series-${slot})` } as React.CSSProperties;
+}
+
+function seriesFill(slot: number) {
+  return { backgroundColor: `var(--series-${slot})` } as React.CSSProperties;
+}
+
+function SeriesDot({ slot }: { slot: number }) {
+  return (
+    <span
+      className='chip-3d block size-2.5 shrink-0 rounded-full'
+      style={seriesStyle(slot)}
+    />
+  );
+}
+
+function PromptThumb() {
+  return (
+    <div className='bg-card hairline-ring ring-foreground/12 flex w-44 flex-col gap-3 rounded-xl p-2.5 shadow-[0_1px_2px_rgb(0_0_0/0.05)]'>
+      <div className='flex flex-col gap-1.5'>
+        <StrongLine className='w-28' />
+        <Line className='w-20' />
+      </div>
+      <div className='flex items-center gap-1.5'>
+        <span className={cn(OUTLINE_PILL, 'h-4 w-12')} />
+        <span className={cn(OUTLINE_PILL, 'h-4 w-8')} />
+        <span className='bg-foreground ms-auto block size-5 rounded-full' />
+      </div>
+    </div>
+  );
+}
+
+function CitationMark({ label }: { label: string }) {
+  return (
+    <span className='bg-primary/15 text-primary-ink flex h-3 min-w-3 items-center justify-center rounded-[3px] px-0.5 text-[7px] font-semibold'>
+      {label}
+    </span>
+  );
+}
+
+function AnswerThumb() {
+  return (
+    <div className='flex w-44 flex-col gap-2'>
+      <div className='flex items-center gap-1'>
+        <Line className='w-24' />
+        <CitationMark label='1' />
+      </div>
+      <div className='flex items-center gap-1'>
+        <Line className='w-16' />
+        <CitationMark label='2' />
+        <Line className='w-10' />
+      </div>
+      <Line className='w-28' />
+      <div className='mt-1 flex items-center gap-1.5'>
+        <span className={cn(OUTLINE_PILL, 'h-4 w-14')} />
+        <span className={cn(OUTLINE_PILL, 'h-4 w-12')} />
+      </div>
+    </div>
+  );
+}
+
+const LANES = [
+  { slot: 1, start: 'ms-0', width: 'w-20' },
+  { slot: 2, start: 'ms-6', width: 'w-16' },
+  { slot: 3, start: 'ms-3', width: 'w-24' },
+];
+
+function AgentThumb() {
+  return (
+    <div className='flex w-44 flex-col gap-2.5'>
+      {LANES.map((lane) => (
+        <div key={lane.slot} className='flex items-center gap-2'>
+          <SeriesDot slot={lane.slot} />
+          <div className='bg-foreground/[0.05] flex h-3 flex-1 items-center rounded-full'>
+            <span
+              className={cn(
+                'block h-3 rounded-full opacity-80',
+                lane.start,
+                lane.width
+              )}
+              style={seriesFill(lane.slot)}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+const RUN_ROWS = [
+  { state: 'done', width: 'w-20' },
+  { state: 'done', width: 'w-16' },
+  { state: 'running', width: 'w-24' },
+];
+
+function RunMark({ state }: { state: string }) {
+  if (state === 'running') {
+    return (
+      <span className='border-foreground/20 border-t-primary block size-3 shrink-0 rounded-full border-[1.5px]' />
+    );
+  }
+  return <Orb color='var(--success)' />;
+}
+
+function RunThumb() {
+  return (
+    <div className='flex w-44 flex-col gap-2'>
+      {RUN_ROWS.map((row, index) => (
+        <div key={index} className='flex items-center gap-2'>
+          <RunMark state={row.state} />
+          <Line className={row.width} />
+          <span className='text-muted-foreground ms-auto text-[8px] tabular-nums'>
+            1.2s
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ReviewThumb() {
+  return (
+    <div className={cn(RAISED, 'flex w-44 flex-col gap-2.5 rounded-xl p-2.5')}>
+      <div className='bg-foreground/[0.04] flex h-5 items-center rounded-md px-1.5'>
+        <span className='text-muted-foreground font-mono text-[7px]'>
+          rm -rf ./cache
+        </span>
+      </div>
+      <div className='flex items-center gap-1.5'>
+        <MiniChip color='var(--warning)' className='w-8' />
+        <span className={cn(OUTLINE_PILL, 'ms-auto h-4 w-9')} />
+        <span className={cn(PRIMARY_PILL, 'h-4 w-10')} />
+      </div>
+    </div>
+  );
+}
+
+const VOICE_BARS = ['h-2', 'h-4', 'h-6', 'h-3', 'h-5', 'h-2', 'h-4'];
+
+function VoiceThumb() {
+  return (
+    <div className='flex items-center gap-4'>
+      <span className='bg-card hairline-ring ring-foreground/15 flex size-12 items-center justify-center rounded-full shadow-[0_1px_2px_rgb(0_0_0/0.05)]'>
+        <span className='bg-primary/80 block size-6 rounded-full' />
+      </span>
+      <div className='flex items-center gap-0.5'>
+        {VOICE_BARS.map((height, index) => (
+          <span
+            key={index}
+            className={cn('bg-foreground/30 block w-1 rounded-full', height)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+const CHART_BARS = ['h-5', 'h-8', 'h-6', 'h-10', 'h-7', 'h-12', 'h-9'];
+
+function ChartThumb() {
+  return (
+    <div className='relative flex h-16 w-44 items-end gap-1.5'>
+      {CHART_BARS.map((height, index) => (
+        <span
+          key={index}
+          className={cn('bg-primary/80 block flex-1 rounded-t-[3px]', height)}
+        />
+      ))}
+      <span className='border-foreground/30 absolute inset-x-0 bottom-7 border-t border-dashed' />
+    </div>
+  );
+}
+
+function BackgroundThumb() {
+  return (
+    <div className='relative h-20 w-44 overflow-hidden rounded-lg [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]'>
+      <div className='absolute inset-0 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:12px_12px]' />
+      <span className='bg-primary/30 absolute top-6 left-12 block size-3' />
+      <span className='bg-primary/20 absolute top-12 left-24 block size-3' />
+    </div>
+  );
+}
+
+function IllustrationThumb() {
+  return (
+    <div className='relative flex size-24 items-center justify-center'>
+      <span className='border-foreground/15 absolute inset-0 rounded-full border' />
+      <span className='border-foreground/10 absolute inset-5 rounded-full border' />
+      <span className='keycap-3d flex size-7 items-center justify-center rounded-lg'>
+        <span className='bg-primary block size-2.5 rounded-full' />
+      </span>
+      <span className='absolute top-1 left-9'>
+        <SeriesDot slot={2} />
+      </span>
+      <span className='absolute right-2 bottom-5'>
+        <SeriesDot slot={4} />
+      </span>
+      <span className='absolute bottom-7 left-6'>
+        <SeriesDot slot={3} />
+      </span>
+    </div>
+  );
+}
+
+function TextEffectThumb() {
+  return (
+    <div className='flex items-center gap-1'>
+      <span className='text-foreground text-3xl font-semibold'>Type</span>
+      <span className='bg-primary block h-7 w-0.5 rounded-full' />
+    </div>
+  );
+}
+
+function EffectThumb() {
+  return (
+    <div className='relative h-20 w-28'>
+      <span className='bg-card hairline-ring ring-foreground/12 absolute inset-x-4 top-2 bottom-2 block origin-bottom -rotate-12 rounded-lg shadow-[0_1px_2px_rgb(0_0_0/0.05)]' />
+      <span className='bg-card hairline-ring ring-foreground/12 absolute inset-x-4 top-2 bottom-2 block origin-bottom rotate-12 rounded-lg shadow-[0_1px_2px_rgb(0_0_0/0.05)]' />
+      <span className='bg-card hairline-ring ring-foreground/12 absolute inset-x-4 top-1 bottom-3 flex flex-col gap-1.5 rounded-lg p-2 shadow-[0_1px_2px_rgb(0_0_0/0.05)]'>
+        <StrongLine className='w-10' />
+        <Line className='w-12' />
+      </span>
+    </div>
+  );
+}
+
+function LoadingThumb() {
+  return (
+    <div className='relative flex w-44 flex-col gap-2 overflow-hidden'>
+      <div className='flex items-center gap-2'>
+        <span className='bg-foreground/10 block size-6 rounded-full' />
+        <div className='flex flex-col gap-1.5'>
+          <Line className='w-20' />
+          <Line className='w-12' />
+        </div>
+      </div>
+      <Line className='w-36' />
+      <Line className='w-28' />
+      <span className='via-card/80 absolute inset-y-0 left-12 block w-10 -skew-x-12 bg-gradient-to-r from-transparent to-transparent' />
+    </div>
+  );
+}
+
 const THUMBNAILS: Record<string, () => React.ReactNode> = {
   accordion: AccordionThumb,
   activity: ActivityThumb,
+  agent: AgentThumb,
   alert: AlertThumb,
+  answer: AnswerThumb,
   aside: AsideThumb,
+  background: BackgroundThumb,
   avatar: AvatarThumb,
   badge: BadgeThumb,
   banner: BannerThumb,
   breadcrumb: BreadcrumbThumb,
   button: ButtonThumb,
   'calendar-date-picker': DatePickerThumb,
+  chart: ChartThumb,
   checkbox: CheckboxThumb,
   comment: CommentThumb,
   dialog: DialogThumb,
   dropdown: DropdownThumb,
+  effect: EffectThumb,
   'event-calendar': EventCalendarThumb,
   'file-upload': FileUploadThumb,
+  illustration: IllustrationThumb,
   'image-cropper': ImageCropperThumb,
   input: InputThumb,
+  loading: LoadingThumb,
   modal: ModalThumb,
   navbar: NavbarThumb,
   notification: NotificationThumb,
   pagination: PaginationThumb,
   popover: PopoverThumb,
+  prompt: PromptThumb,
   radio: RadioThumb,
+  review: ReviewThumb,
+  run: RunThumb,
   select: SelectThumb,
   slider: SliderThumb,
   stepper: StepperThumb,
@@ -797,10 +1051,12 @@ const THUMBNAILS: Record<string, () => React.ReactNode> = {
   table: TableThumb,
   tabs: TabsThumb,
   teams: TeamsThumb,
+  'text-effect': TextEffectThumb,
   textarea: TextareaThumb,
   timeline: TimelineThumb,
   tooltip: TooltipThumb,
   tree: TreeThumb,
+  voice: VoiceThumb,
 };
 
 export function CategoryThumbnail({ slug }: { slug: string }) {

@@ -8,6 +8,12 @@ type CatalogFamily = {
 
 export const FAMILIES: CatalogFamily[] = [
   {
+    name: 'AI',
+    description:
+      'Prompts, answers, agents at work and what they ask a person to decide.',
+    slugs: ['prompt', 'answer', 'agent', 'run', 'review', 'voice'],
+  },
+  {
     name: 'Actions',
     description: 'Buttons and the menus they open.',
     slugs: ['button', 'dropdown'],
@@ -52,6 +58,11 @@ export const FAMILIES: CatalogFamily[] = [
     ],
   },
   {
+    name: 'Charts',
+    description: 'Charts that say what they show and answer a pointer.',
+    slugs: ['chart'],
+  },
+  {
     name: 'Collaboration',
     description:
       'The work around a task: its sub-tasks, comments, activity and team.',
@@ -60,7 +71,13 @@ export const FAMILIES: CatalogFamily[] = [
   {
     name: 'Feedback',
     description: 'Messages about what just happened.',
-    slugs: ['alert', 'banner', 'notification'],
+    slugs: ['alert', 'banner', 'notification', 'loading'],
+  },
+  {
+    name: 'Motion and effects',
+    description:
+      'Living scenes, quiet backgrounds and text that moves, for the site around the product.',
+    slugs: ['illustration', 'background', 'text-effect', 'effect'],
   },
 ];
 
@@ -101,6 +118,11 @@ export function publishedFamilies(catalog: CatalogCategory[]) {
     });
   }
   return families;
+}
+
+export function familyAnchorOf(name: string) {
+  const lowered = name.toLowerCase();
+  return lowered.split(' ').join('-');
 }
 
 export function countComponents(categories: CatalogCategory[]) {
