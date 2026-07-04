@@ -19,6 +19,7 @@ All tokens live in `registry/ndeko/styles/ndeko.css` and ship as the `theme` reg
 | `--primary-ink`                                     | `hsl(243 75% 59%)` | `hsl(234 89% 74%)`                   | brand text and links                                        |
 | `--success`, `--warning`, `--info`, `--destructive` | measured pairs     | measured pairs                       | tints and fills                                             |
 | `--*-foreground`, `--destructive-ink`               | measured pairs     | measured pairs                       | status text                                                 |
+| `--series-1` to `--series-5`                        | validated set      | validated set                        | identity of agents and chart series, in this fixed order    |
 
 Rules:
 
@@ -27,6 +28,7 @@ Rules:
 - A fill token is never used as text on the page. Indigo-500 measures 4.28:1 on the light page and fails AA; brand text uses `text-primary-ink` (6.02:1 light, 6.64:1 dark).
 - Status colours appear as soft pairs (`bg-success/10 text-success-foreground`), chips, dots and orbs. A saturated fill with white text never carries a status.
 - State greys come from foreground alpha, never from named greys, so one hover works on the page and on a card: `2.5 / 3 / 4 / 5 / 6 / 10 / 15 / 20` percent.
+- Series colours (indigo, orange, violet, lime, pink) name an entity: an agent, a model, a chart series. They are taken in order through `seriesColorOf` and never by rank, so a filter never repaints what stays. The set passes the colour-blind and contrast checks of the dataviz method in both themes and stays clear of the status hues. Text never wears them; a dot, a lane, a line or a chip does.
 
 ## 2. Radius
 
