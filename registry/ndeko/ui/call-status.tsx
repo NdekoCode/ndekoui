@@ -5,7 +5,7 @@ import {
   CircleCheckIcon,
   CircleXIcon,
   LoaderIcon,
-  UserRoundIcon,
+  HandIcon,
 } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
@@ -30,7 +30,7 @@ function GlyphOf({ status }: { status: CallStatus }) {
     return <LoaderIcon className='text-muted-foreground size-4 animate-spin' />;
   }
   if (status === 'waiting') {
-    return <UserRoundIcon className='text-warning-foreground size-4' />;
+    return <HandIcon className='text-warning-foreground size-4' />;
   }
   if (status === 'done') {
     return <CircleCheckIcon className='text-success-foreground size-4' />;
