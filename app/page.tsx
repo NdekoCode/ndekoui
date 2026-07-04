@@ -17,6 +17,7 @@ import { Button } from '@/registry/ndeko/ui/button';
 import { Toaster } from '@/registry/ndeko/ui/sonner';
 import { TooltipProvider } from '@/registry/ndeko/ui/tooltip';
 
+import { AiKitSection } from './_home/ai-kit/ai-kit-section';
 import { AnnouncementBar } from './_home/announcement-bar';
 import { ClosingBand } from './_home/closing-band';
 import { EditorGrid } from './_home/editor-grid';
@@ -29,6 +30,7 @@ import { PrimitivesShowcase } from './_home/primitives-showcase';
 import { ReplaySection } from './_home/replay/replay-section';
 import { Reveal } from './_home/reveal';
 import { SectionHeading } from './_home/section-heading';
+import { StatesSection } from './_home/states/states-section';
 import { Statement } from './_home/statement';
 
 const COMPONENT_TOTAL = countComponents(catalog);
@@ -103,6 +105,8 @@ export default async function HomePage() {
               templateTotal={templateTotal}
             />
           </div>
+          <AiKitSection className={`${SECTION} ${SECTION_STACK}`} />
+          <StatesSection className={`${SECTION} ${SECTION_STACK}`} />
           <section
             aria-labelledby='primitives-title'
             className={`${SECTION} ${SECTION_STACK}`}
