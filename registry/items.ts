@@ -1,3 +1,4 @@
+import { aiFoundationItems, aiItems } from './ai-items';
 import { chatItems } from './chat-items';
 
 import {
@@ -41,6 +42,16 @@ export const foundationItems: RegistryItemDefinition[] = [
     description:
       'Shared class recipes: the field control, floating surfaces, menu rows.',
     files: [{ path: 'registry/ndeko/lib/recipes.ts', type: 'registry:lib' }],
+    categories: ['foundations'],
+  },
+  {
+    name: 'agent-run',
+    type: 'registry:lib',
+    title: 'Agent run',
+    description:
+      'The shape of an agent run every AI view reads (agents, plan, tool calls, approvals, usage), a tiny store to feed it events from any backend, and the formats for time, tokens and cost.',
+    files: [{ path: 'registry/ndeko/lib/agent-run.ts', type: 'registry:lib' }],
+    registryDependencies: ['theme'],
     categories: ['foundations'],
   },
   {
@@ -368,6 +379,8 @@ export const primitiveItems: RegistryItemDefinition[] = [
 
 export const registryItems: RegistryItemDefinition[] = [
   ...foundationItems,
+  ...aiFoundationItems,
   ...primitiveItems,
   ...chatItems,
+  ...aiItems,
 ];
