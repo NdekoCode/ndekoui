@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "replay-button",
+  "title": "Replay Button",
+  "description": "A Replay button that rises in once a demo run has ended.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/motion-presets.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/replay-button.tsx",
+      "content": "'use client';\n\nimport { AnimatePresence, motion, useReducedMotion } from 'motion/react';\n\nimport { RotateCcwIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nimport { risePresenceOf } from '@/registry/ndeko/lib/motion-presets';\n\ntype ReplayButtonProps = {\n  isShown: boolean;\n  onReplay: () => void;\n  label?: string;\n};\n\nexport function ReplayButton({\n  isShown,\n  onReplay,\n  label = 'Replay the run',\n}: ReplayButtonProps) {\n  const shouldReduceMotion = useReducedMotion();\n  const presence = risePresenceOf(shouldReduceMotion);\n\n  return (\n    <AnimatePresence initial={false}>\n      {isShown && (\n        <motion.span key='replay' className='inline-flex' {...presence}>\n          <Button\n            type='button'\n            variant='ghost'\n            size='sm'\n            onClick={onReplay}\n            className='text-muted-foreground'\n          >\n            <RotateCcwIcon />\n            {label}\n          </Button>\n        </motion.span>\n      )}\n    </AnimatePresence>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives",
+    "ai"
+  ],
+  "type": "registry:ui"
+}

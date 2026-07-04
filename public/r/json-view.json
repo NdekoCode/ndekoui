@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "json-view",
+  "title": "JSON View",
+  "description": "Arguments and results shown as small highlighted JSON.",
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/json-view.tsx",
+      "content": "import { cn } from '@/registry/ndeko/lib/utils';\n\ntype JsonTokenKind = 'key' | 'string' | 'number' | 'literal' | 'mark' | 'space';\n\ntype JsonToken = {\n  kind: JsonTokenKind;\n  text: string;\n};\n\nconst TOKEN_PATTERN =\n  /(\"(?:\\\\.|[^\"\\\\])*\")(\\s*:)?|(-?\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?)|(true|false|null)|([{}[\\],:])|(\\s+)/g;\n\nconst TOKEN_CLASS: Record<JsonTokenKind, string> = {\n  key: 'text-foreground',\n  string: 'text-primary-ink',\n  number: 'text-muted-foreground',\n  literal: 'text-muted-foreground',\n  mark: 'text-muted-foreground/60',\n  space: '',\n};\n\nfunction tokensOfMatch(match: RegExpMatchArray): JsonToken[] {\n  const [, quoted, colon, number, literal, mark, space] = match;\n  if (quoted !== undefined) {\n    if (colon !== undefined) {\n      return [\n        { kind: 'key', text: quoted },\n        { kind: 'mark', text: colon },\n      ];\n    }\n    return [{ kind: 'string', text: quoted }];\n  }\n  if (number !== undefined) {\n    return [{ kind: 'number', text: number }];\n  }\n  if (literal !== undefined) {\n    return [{ kind: 'literal', text: literal }];\n  }\n  if (mark !== undefined) {\n    return [{ kind: 'mark', text: mark }];\n  }\n  return [{ kind: 'space', text: space ?? '' }];\n}\n\nexport function jsonTokensOf(source: string) {\n  const tokens: JsonToken[] = [];\n  for (const match of source.matchAll(TOKEN_PATTERN)) {\n    const matchTokens = tokensOfMatch(match);\n    tokens.push(...matchTokens);\n  }\n  return tokens;\n}\n\nexport function jsonTextOf(value: unknown) {\n  if (value === undefined) {\n    return '';\n  }\n  return JSON.stringify(value, null, 2);\n}\n\ntype JsonViewProps = {\n  value: unknown;\n  className?: string;\n};\n\nexport function JsonView({ value, className }: JsonViewProps) {\n  const source = jsonTextOf(value);\n  const tokens = jsonTokensOf(source);\n\n  return (\n    <pre\n      className={cn(\n        'bg-foreground/[0.03] dark:bg-foreground/[0.05] overflow-x-auto rounded-lg p-2.5 font-mono text-xs leading-relaxed',\n        className\n      )}\n    >\n      <code>\n        {tokens.map((token, index) => (\n          <span key={index} className={TOKEN_CLASS[token.kind]}>\n            {token.text}\n          </span>\n        ))}\n      </code>\n    </pre>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives",
+    "ai"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-timeouts",
+  "title": "Use timeouts",
+  "description": "The use-timeouts hook used by ndekoui components.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ndeko/hooks/use-timeouts.ts",
+      "content": "'use client';\n\nimport { useCallback, useEffect, useRef } from 'react';\n\ntype Timer = ReturnType<typeof setTimeout>;\n\nexport function useTimeouts() {\n  const timers = useRef<Set<Timer>>(new Set());\n\n  useEffect(() => {\n    const pending = timers.current;\n    return () => {\n      pending.forEach((timer) => clearTimeout(timer));\n      pending.clear();\n    };\n  }, []);\n\n  const schedule = useCallback((task: () => void, delay: number) => {\n    const pending = timers.current;\n    const timer = setTimeout(() => {\n      pending.delete(timer);\n      task();\n    }, delay);\n    pending.add(timer);\n  }, []);\n\n  const clearAll = useCallback(() => {\n    const pending = timers.current;\n    pending.forEach((timer) => clearTimeout(timer));\n    pending.clear();\n  }, []);\n\n  return { schedule, clearAll };\n}\n",
+      "type": "registry:hook"
+    }
+  ],
+  "categories": [
+    "hooks"
+  ],
+  "type": "registry:hook"
+}

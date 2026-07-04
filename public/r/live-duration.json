@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "live-duration",
+  "title": "Live Duration",
+  "description": "A duration that ticks while its work runs and freezes when it ends, re-rendering only itself.",
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json",
+    "https://ui.ndekocode.dev/r/agent-run.json",
+    "https://ui.ndekocode.dev/r/use-agent-run.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/live-duration.tsx",
+      "content": "'use client';\n\nimport { createContext, useContext } from 'react';\n\nimport { useNow } from '@/registry/ndeko/hooks/use-agent-run';\nimport { elapsedOf, formatDuration } from '@/registry/ndeko/lib/agent-run';\nimport { cn } from '@/registry/ndeko/lib/utils';\n\n/** Off screen, every live clock under it holds still, so nothing re-renders where no one looks. */\nconst ClockGateContext = createContext(true);\n\ntype ClockGateProps = {\n  isActive: boolean;\n  children: React.ReactNode;\n};\n\nexport function ClockGate({ isActive, children }: ClockGateProps) {\n  return (\n    <ClockGateContext.Provider value={isActive}>\n      {children}\n    </ClockGateContext.Provider>\n  );\n}\n\nexport function useLiveNow(intervalMs: number, isRunning: boolean) {\n  const isOpen = useContext(ClockGateContext);\n  const isTicking = isRunning && isOpen;\n  return useNow(intervalMs, isTicking);\n}\n\ntype Timed = { startedAt?: number; endedAt?: number };\n\ntype LiveDurationProps = {\n  item: Timed;\n  isRunning: boolean;\n  className?: string;\n};\n\nexport function LiveDuration({\n  item,\n  isRunning,\n  className,\n}: LiveDurationProps) {\n  const now = useLiveNow(100, isRunning);\n  const elapsed = elapsedOf(item, now);\n  const text = formatDuration(elapsed);\n\n  return <span className={cn('tabular-nums', className)}>{text}</span>;\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives",
+    "ai"
+  ],
+  "type": "registry:ui"
+}

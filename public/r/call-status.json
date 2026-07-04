@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "call-status",
+  "title": "Call Status",
+  "description": "The mark of a tool call (queued, running, waiting, done, failed) that swaps when the state changes.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json",
+    "https://ui.ndekocode.dev/r/agent-run.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/chat-motion.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/call-status.tsx",
+      "content": "'use client';\n\nimport type { CallStatus } from '@/registry/ndeko/lib/agent-run';\nimport {\n  CircleCheckIcon,\n  CircleXIcon,\n  LoaderIcon,\n  UserRoundIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Swap } from '@/registry/ndeko/ui/chat-motion';\n\nexport const CALL_STATUS_WORD: Record<CallStatus, string> = {\n  queued: 'Queued',\n  running: 'Running',\n  waiting: 'Waiting on you',\n  done: 'Done',\n  failed: 'Failed',\n};\n\nfunction GlyphOf({ status }: { status: CallStatus }) {\n  if (status === 'queued') {\n    return (\n      <span className='flex size-4 items-center justify-center'>\n        <span className='bg-muted-foreground/50 size-1.5 rounded-full' />\n      </span>\n    );\n  }\n  if (status === 'running') {\n    return <LoaderIcon className='text-muted-foreground size-4 animate-spin' />;\n  }\n  if (status === 'waiting') {\n    return <UserRoundIcon className='text-warning-foreground size-4' />;\n  }\n  if (status === 'done') {\n    return <CircleCheckIcon className='text-success-foreground size-4' />;\n  }\n  return <CircleXIcon className='text-destructive-ink size-4' />;\n}\n\ntype CallStatusMarkProps = {\n  status: CallStatus;\n  className?: string;\n};\n\nexport function CallStatusMark({ status, className }: CallStatusMarkProps) {\n  return (\n    <span className={cn('inline-flex size-4 shrink-0', className)}>\n      <Swap swapKey={status} className='size-4'>\n        <GlyphOf status={status} />\n      </Swap>\n      <span className='sr-only'>{CALL_STATUS_WORD[status]}</span>\n    </span>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives",
+    "ai"
+  ],
+  "type": "registry:ui"
+}

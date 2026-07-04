@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "motion-presets",
+  "title": "Motion presets",
+  "description": "The easings, springs and presence presets the AI pieces share, each with its reduced-motion fallback.",
+  "dependencies": [
+    "motion"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/lib/motion-presets.ts",
+      "content": "import type { MotionProps, Transition } from 'motion/react';\n\nexport const EASE_OUT_STRONG: [number, number, number, number] = [\n  0.23, 1, 0.32, 1,\n];\n\nexport const EASE_IN_OUT_STRONG: [number, number, number, number] = [\n  0.77, 0, 0.175, 1,\n];\n\nexport const SPRING: Transition = { type: 'spring', bounce: 0, duration: 0.3 };\n\nexport const SLOW_SPRING: Transition = {\n  type: 'spring',\n  bounce: 0,\n  duration: 0.5,\n};\n\nexport const INSTANT: Transition = { duration: 0 };\n\nexport const FADE: Transition = { duration: 0.2, ease: EASE_OUT_STRONG };\n\nexport function springOf(shouldReduceMotion: boolean | null): Transition {\n  if (shouldReduceMotion) {\n    return INSTANT;\n  }\n  return SPRING;\n}\n\nexport function slowSpringOf(shouldReduceMotion: boolean | null): Transition {\n  if (shouldReduceMotion) {\n    return INSTANT;\n  }\n  return SLOW_SPRING;\n}\n\ntype PresenceProps = Pick<\n  MotionProps,\n  'initial' | 'animate' | 'exit' | 'transition'\n>;\n\nconst ENTER: Transition = { duration: 0.2, ease: EASE_OUT_STRONG };\n\nconst EXIT: Transition = { duration: 0.14, ease: EASE_OUT_STRONG };\n\nconst ROW_PRESENCE: PresenceProps = {\n  initial: { height: 0, opacity: 0 },\n  animate: { height: 'auto', opacity: 1 },\n  exit: { height: 0, opacity: 0, transition: EXIT },\n  transition: ENTER,\n};\n\nconst RISE_PRESENCE: PresenceProps = {\n  initial: { opacity: 0, y: 10 },\n  animate: { opacity: 1, y: 0 },\n  exit: { opacity: 0, y: -6, transition: EXIT },\n  transition: SPRING,\n};\n\nconst FADE_PRESENCE: PresenceProps = {\n  initial: { opacity: 0 },\n  animate: { opacity: 1 },\n  exit: { opacity: 0, transition: EXIT },\n  transition: ENTER,\n};\n\n/** A row added to or removed from a list: its height and opacity change, its spacing sits inside it. */\nexport function rowPresenceOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_PRESENCE;\n  }\n  return ROW_PRESENCE;\n}\n\nexport function risePresenceOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_PRESENCE;\n  }\n  return RISE_PRESENCE;\n}\n\nexport function fadePresence() {\n  return FADE_PRESENCE;\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "categories": [
+    "foundations"
+  ],
+  "type": "registry:lib"
+}

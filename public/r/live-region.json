@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "live-region",
+  "title": "Live Region",
+  "description": "A polite, visually hidden line that tells screen readers what just changed.",
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/live-region.tsx",
+      "content": "type LiveRegionProps = {\n  message: string;\n};\n\nexport function LiveRegion({ message }: LiveRegionProps) {\n  return (\n    <p aria-live='polite' aria-atomic='true' className='sr-only'>\n      {message}\n    </p>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives",
+    "ai"
+  ],
+  "type": "registry:ui"
+}

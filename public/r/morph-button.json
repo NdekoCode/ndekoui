@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "morph-button",
+  "title": "Morph Button",
+  "description": "A button whose label morphs from the action to its work and to its result.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/animated-size.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/morph-button.tsx",
+      "content": "'use client';\n\nimport {\n  AnimatePresence,\n  motion,\n  useReducedMotion,\n  type Transition,\n  type Variants,\n} from 'motion/react';\n\nimport { CheckIcon, LoaderCircleIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { AnimatedSize } from '@/registry/ndeko/ui/animated-size';\nimport { Button, type ButtonProps } from '@/registry/ndeko/ui/button';\n\nexport type MorphState = 'idle' | 'busy' | 'done';\n\nconst SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };\n\nconst SWAP_VARIANTS: Variants = {\n  enter: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },\n  visible: { opacity: 1, scale: 1, filter: 'blur(0px)' },\n  exit: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },\n};\n\nconst FADE_VARIANTS: Variants = {\n  enter: { opacity: 0 },\n  visible: { opacity: 1 },\n  exit: { opacity: 0 },\n};\n\nfunction variantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return FADE_VARIANTS;\n  }\n  return SWAP_VARIANTS;\n}\n\ntype Glyph = { key: string; icon: React.ReactNode };\n\nfunction glyphOf(state: MorphState, idleIcon: React.ReactNode): Glyph | null {\n  if (state === 'busy') {\n    return {\n      key: 'busy',\n      icon: <LoaderCircleIcon className='animate-spin' />,\n    };\n  }\n  if (state === 'done') {\n    return { key: 'done', icon: <CheckIcon /> };\n  }\n  if (idleIcon) {\n    return { key: 'idle', icon: idleIcon };\n  }\n  return null;\n}\n\n/** While busy or done, the pill keeps its full colour: it is working, not unavailable. */\nfunction busyClassOf(isBusy: boolean) {\n  if (isBusy) {\n    return 'data-disabled:opacity-100 disabled:opacity-100';\n  }\n  return undefined;\n}\n\ntype MorphButtonProps = Omit<ButtonProps, 'children'> & {\n  state: MorphState;\n  labels: Record<MorphState, string>;\n  idleIcon?: React.ReactNode;\n};\n\nexport function MorphButton({\n  state,\n  labels,\n  idleIcon,\n  disabled,\n  className,\n  ...props\n}: MorphButtonProps) {\n  const shouldReduceMotion = useReducedMotion();\n  const variants = variantsOf(shouldReduceMotion);\n  const label = labels[state];\n  const glyph = glyphOf(state, idleIcon);\n  const isBusy = state !== 'idle';\n  const isDisabled = disabled || isBusy;\n\n  return (\n    <Button\n      disabled={isDisabled}\n      focusableWhenDisabled\n      className={cn(busyClassOf(isBusy), className)}\n      {...props}\n    >\n      <AnimatedSize\n        as='span'\n        axis='width'\n        contentClassName='relative flex items-center gap-1.5'\n      >\n        <AnimatePresence mode='popLayout' initial={false}>\n          {glyph && (\n            <motion.span\n              key={glyph.key}\n              variants={variants}\n              initial='enter'\n              animate='visible'\n              exit='exit'\n              transition={SWAP_TRANSITION}\n              className='flex'\n            >\n              {glyph.icon}\n            </motion.span>\n          )}\n        </AnimatePresence>\n        <AnimatePresence mode='popLayout' initial={false}>\n          <motion.span\n            key={label}\n            variants={variants}\n            initial='enter'\n            animate='visible'\n            exit='exit'\n            transition={SWAP_TRANSITION}\n          >\n            {label}\n          </motion.span>\n        </AnimatePresence>\n      </AnimatedSize>\n    </Button>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives",
+    "ai"
+  ],
+  "type": "registry:ui"
+}

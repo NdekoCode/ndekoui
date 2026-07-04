@@ -3599,6 +3599,122 @@ export const catalog: CatalogCategory[] = [
     ],
   },
   {
+    slug: 'review',
+    name: 'Review',
+    entries: [
+      {
+        name: 'review-01',
+        source: 'ndeko',
+        title: 'Approval prompt',
+        description:
+          'Requests stacked under a waiting count, the first open with its preview, where Approve turns into a one-line trace with Undo and the next request slides up.',
+        category: 'review',
+      },
+      {
+        name: 'review-02',
+        source: 'ndeko',
+        title: 'Permission request',
+        description:
+          'An agent asks to run an exact command with its risk and a once, session or always scope, and the card resizes into what was allowed.',
+        category: 'review',
+      },
+      {
+        name: 'review-03',
+        source: 'ndeko',
+        title: 'Autonomy dial',
+        description:
+          'A detented dial for how much an agent may do alone, then each tool on its own switch that follows the default or asks to confirm.',
+        category: 'review',
+      },
+    ],
+  },
+  {
+    slug: 'run',
+    name: 'Run',
+    entries: [
+      {
+        name: 'run-01',
+        source: 'ndeko',
+        title: 'Tool calls',
+        description:
+          "A turn's tool calls under one line that sums them up, each call folding open for its arguments and result, a failed one retried in place.",
+        category: 'run',
+      },
+      {
+        name: 'run-03',
+        source: 'ndeko',
+        title: 'Run in sentences',
+        description:
+          'One bar of where the time went and a sentence per step on its own track, where a step waiting on you lifts out with Approve.',
+        category: 'run',
+      },
+      {
+        name: 'run-02',
+        source: 'ndeko',
+        title: 'Trace waterfall',
+        description:
+          'Every call of a run on one live time axis, nested by agent, with filters, search, a drag to zoom and the critical path.',
+        category: 'run',
+      },
+      {
+        name: 'run-05',
+        source: 'ndeko',
+        title: 'Context window bar',
+        description:
+          'How full a model context is, its parts on one bar that resizes with a spring, with removable files and Compact near the limit.',
+        category: 'run',
+      },
+      {
+        name: 'run-06',
+        source: 'ndeko',
+        title: 'Context cells',
+        description:
+          'The context as a field of cells, one per thousand tokens, filling in order as turns arrive and lighting up by part.',
+        category: 'run',
+      },
+      {
+        name: 'run-04',
+        source: 'ndeko',
+        title: 'Agent terminal',
+        description:
+          "An agent's shell where output streams in and folds when long, a risky command waits for Run or Skip, and any command runs again.",
+        category: 'run',
+      },
+      {
+        name: 'run-07',
+        source: 'ndeko',
+        title: 'Context ring',
+        description:
+          'A ring for a composer corner that fills as messages are sent, turns to warning above 85% and opens the breakdown.',
+        category: 'run',
+      },
+      {
+        name: 'run-08',
+        source: 'ndeko',
+        title: 'Context treemap',
+        description:
+          'What fills a context as a treemap whose tiles glide as sizes change, the old turns folding into one summary tile.',
+        category: 'run',
+      },
+      {
+        name: 'run-09',
+        source: 'ndeko',
+        title: 'Usage by model',
+        description:
+          'Spend against a plan stacked by model or by agent, with rolling figures, a limit tick that travels, daily bars and a notice above 80%.',
+        category: 'run',
+      },
+      {
+        name: 'run-10',
+        source: 'ndeko',
+        title: 'Agent health',
+        description:
+          "One agent's health: a gauge, five signals whose lines morph between periods, a summary written word by word and one action to apply.",
+        category: 'run',
+      },
+    ],
+  },
+  {
     slug: 'select',
     name: 'Select',
     entries: [

@@ -50,6 +50,11 @@
           "color-chart-3": "var(--chart-3)",
           "color-chart-4": "var(--chart-4)",
           "color-chart-5": "var(--chart-5)",
+          "color-series-1": "var(--series-1)",
+          "color-series-2": "var(--series-2)",
+          "color-series-3": "var(--series-3)",
+          "color-series-4": "var(--series-4)",
+          "color-series-5": "var(--series-5)",
           "radius-sm": "calc(var(--radius) - 4px)",
           "radius-md": "calc(var(--radius) - 2px)",
           "radius-lg": "var(--radius)",
@@ -107,7 +112,12 @@
           "chart-2": "hsl(234 89% 74%)",
           "chart-3": "hsl(230 94% 82%)",
           "chart-4": "hsl(228 96% 89%)",
-          "chart-5": "hsl(240 5% 65%)"
+          "chart-5": "hsl(240 5% 65%)",
+          "series-1": "#6366f1",
+          "series-2": "#eb6834",
+          "series-3": "#9333ea",
+          "series-4": "#65a30d",
+          "series-5": "#db2777"
         },
         "dark": {
           "background": "hsl(240 5% 7%)",
@@ -144,7 +154,12 @@
           "sidebar-accent": "hsl(240 4% 14%)",
           "sidebar-accent-foreground": "hsl(0 0% 100%)",
           "sidebar-border": "hsl(240 4% 16%)",
-          "sidebar-ring": "hsl(0 0% 40%)"
+          "sidebar-ring": "hsl(0 0% 40%)",
+          "series-1": "#7177f4",
+          "series-2": "#e8692f",
+          "series-3": "#9a5cf0",
+          "series-4": "#6aa616",
+          "series-5": "#e0438a"
         }
       },
       "css": {
@@ -338,6 +353,24 @@
       ]
     },
     {
+      "name": "agent-run",
+      "type": "registry:lib",
+      "title": "Agent run",
+      "description": "The shape of an agent run every AI view reads (agents, plan, tool calls, approvals, usage), a tiny store to feed it events from any backend, and the formats for time, tokens and cost.",
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/lib/agent-run.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "categories": [
+        "foundations"
+      ]
+    },
+    {
       "name": "brand-logos",
       "type": "registry:lib",
       "title": "Brand logos",
@@ -349,6 +382,39 @@
       "files": [
         {
           "path": "registry/ndeko/lib/brand-logos.tsx",
+          "type": "registry:lib"
+        }
+      ],
+      "categories": [
+        "foundations"
+      ]
+    },
+    {
+      "name": "motion-presets",
+      "type": "registry:lib",
+      "title": "Motion presets",
+      "description": "The easings, springs and presence presets the AI pieces share, each with its reduced-motion fallback.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/lib/motion-presets.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "categories": [
+        "foundations"
+      ]
+    },
+    {
+      "name": "hatch",
+      "type": "registry:lib",
+      "title": "Hatch",
+      "description": "A diagonal hatch in any colour, for reserved space and failed bars.",
+      "files": [
+        {
+          "path": "registry/ndeko/lib/hatch.ts",
           "type": "registry:lib"
         }
       ],
@@ -1982,6 +2048,197 @@
       "categories": [
         "primitives",
         "chat"
+      ]
+    },
+    {
+      "name": "copy-button",
+      "type": "registry:ui",
+      "title": "Copy Button",
+      "description": "Copies a text and turns into a check for a moment.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/ui/copy-button.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitives",
+        "ai"
+      ]
+    },
+    {
+      "name": "morph-button",
+      "type": "registry:ui",
+      "title": "Morph Button",
+      "description": "A button whose label morphs from the action to its work and to its result.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/animated-size.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/ui/morph-button.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitives",
+        "ai"
+      ]
+    },
+    {
+      "name": "live-region",
+      "type": "registry:ui",
+      "title": "Live Region",
+      "description": "A polite, visually hidden line that tells screen readers what just changed.",
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/ui/live-region.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitives",
+        "ai"
+      ]
+    },
+    {
+      "name": "live-duration",
+      "type": "registry:ui",
+      "title": "Live Duration",
+      "description": "A duration that ticks while its work runs and freezes when it ends, re-rendering only itself.",
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json",
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/ui/live-duration.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitives",
+        "ai"
+      ]
+    },
+    {
+      "name": "segments",
+      "type": "registry:ui",
+      "title": "Segments",
+      "description": "A segmented switch whose thumb travels to the picked option.",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json",
+        "https://ui.ndekocode.dev/r/toggle-group.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/ui/segments.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitives",
+        "ai"
+      ]
+    },
+    {
+      "name": "json-view",
+      "type": "registry:ui",
+      "title": "JSON View",
+      "description": "Arguments and results shown as small highlighted JSON.",
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/ui/json-view.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitives",
+        "ai"
+      ]
+    },
+    {
+      "name": "call-status",
+      "type": "registry:ui",
+      "title": "Call Status",
+      "description": "The mark of a tool call (queued, running, waiting, done, failed) that swaps when the state changes.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json",
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/ui/call-status.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitives",
+        "ai"
+      ]
+    },
+    {
+      "name": "replay-button",
+      "type": "registry:ui",
+      "title": "Replay Button",
+      "description": "A Replay button that rises in once a demo run has ended.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/ui/replay-button.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitives",
+        "ai"
       ]
     },
     {
@@ -3874,6 +4131,25 @@
       ]
     },
     {
+      "name": "use-agent-run",
+      "type": "registry:hook",
+      "title": "Use agent run",
+      "description": "The use-agent-run hook used by ndekoui components.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/hooks/use-agent-run.ts",
+          "type": "registry:hook"
+        }
+      ],
+      "categories": [
+        "hooks"
+      ]
+    },
+    {
       "name": "use-character-limit",
       "type": "registry:hook",
       "title": "Use character limit",
@@ -3883,6 +4159,28 @@
       "files": [
         {
           "path": "registry/ndeko/hooks/use-character-limit.ts",
+          "type": "registry:hook"
+        }
+      ],
+      "categories": [
+        "hooks"
+      ]
+    },
+    {
+      "name": "use-demo-run",
+      "type": "registry:hook",
+      "title": "Use demo run",
+      "description": "The use-demo-run hook used by ndekoui components.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/hooks/use-demo-run.ts",
           "type": "registry:hook"
         }
       ],
@@ -3934,6 +4232,23 @@
       "files": [
         {
           "path": "registry/ndeko/hooks/use-slider-with-input.ts",
+          "type": "registry:hook"
+        }
+      ],
+      "categories": [
+        "hooks"
+      ]
+    },
+    {
+      "name": "use-timeouts",
+      "type": "registry:hook",
+      "title": "Use timeouts",
+      "description": "The use-timeouts hook used by ndekoui components.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ndeko/hooks/use-timeouts.ts",
           "type": "registry:hook"
         }
       ],
@@ -18305,6 +18620,612 @@
       "categories": [
         "components",
         "radio"
+      ]
+    },
+    {
+      "name": "review-01",
+      "type": "registry:component",
+      "title": "Approval prompt",
+      "description": "Requests stacked under a waiting count, the first open with its preview, where Approve turns into a one-line trace with Undo and the next request slides up.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/textarea.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/review/review-01.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "review"
+      ]
+    },
+    {
+      "name": "review-02",
+      "type": "registry:component",
+      "title": "Permission request",
+      "description": "An agent asks to run an exact command with its risk and a once, session or always scope, and the card resizes into what was allowed.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/copy-button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/review/review-02.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "review"
+      ]
+    },
+    {
+      "name": "review-03",
+      "type": "registry:component",
+      "title": "Autonomy dial",
+      "description": "A detented dial for how much an agent may do alone, then each tool on its own switch that follows the default or asks to confirm.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/checkbox.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/review/review-03.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "review"
+      ]
+    },
+    {
+      "name": "run-01",
+      "type": "registry:component",
+      "title": "Tool calls",
+      "description": "A turn's tool calls under one line that sums them up, each call folding open for its arguments and result, a failed one retried in place.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/call-status.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/copy-button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/json-view.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/run/run-01.tsx",
+          "type": "registry:component",
+          "target": "components/run/run-01.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/scenario.ts",
+          "type": "registry:component",
+          "target": "components/run/_parts/scenario.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "run"
+      ]
+    },
+    {
+      "name": "run-03",
+      "type": "registry:component",
+      "title": "Run in sentences",
+      "description": "One bar of where the time went and a sentence per step on its own track, where a step waiting on you lifts out with Approve.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/call-status.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/run/run-03.tsx",
+          "type": "registry:component",
+          "target": "components/run/run-03.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/scenario.ts",
+          "type": "registry:component",
+          "target": "components/run/_parts/scenario.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "run"
+      ]
+    },
+    {
+      "name": "run-02",
+      "type": "registry:component",
+      "title": "Trace waterfall",
+      "description": "Every call of a run on one live time axis, nested by agent, with filters, search, a drag to zoom and the critical path.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/hatch.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/json-view.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/toggle.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/run/run-02.tsx",
+          "type": "registry:component",
+          "target": "components/run/run-02.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/scenario.ts",
+          "type": "registry:component",
+          "target": "components/run/_parts/scenario.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "run"
+      ]
+    },
+    {
+      "name": "run-05",
+      "type": "registry:component",
+      "title": "Context window bar",
+      "description": "How full a model context is, its parts on one bar that resizes with a spring, with removable files and Compact near the limit.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/hatch.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/run/run-05.tsx",
+          "type": "registry:component",
+          "target": "components/run/run-05.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/compact-offer.tsx",
+          "type": "registry:component",
+          "target": "components/run/_parts/compact-offer.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/context-header.tsx",
+          "type": "registry:component",
+          "target": "components/run/_parts/context-header.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/context.ts",
+          "type": "registry:component",
+          "target": "components/run/_parts/context.ts"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/scenario.ts",
+          "type": "registry:component",
+          "target": "components/run/_parts/scenario.ts"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/token-count.tsx",
+          "type": "registry:component",
+          "target": "components/run/_parts/token-count.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/use-context-demo.ts",
+          "type": "registry:component",
+          "target": "components/run/_parts/use-context-demo.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "run"
+      ]
+    },
+    {
+      "name": "run-06",
+      "type": "registry:component",
+      "title": "Context cells",
+      "description": "The context as a field of cells, one per thousand tokens, filling in order as turns arrive and lighting up by part.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/hatch.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/run/run-06.tsx",
+          "type": "registry:component",
+          "target": "components/run/run-06.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/compact-offer.tsx",
+          "type": "registry:component",
+          "target": "components/run/_parts/compact-offer.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/context-header.tsx",
+          "type": "registry:component",
+          "target": "components/run/_parts/context-header.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/context.ts",
+          "type": "registry:component",
+          "target": "components/run/_parts/context.ts"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/scenario.ts",
+          "type": "registry:component",
+          "target": "components/run/_parts/scenario.ts"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/token-count.tsx",
+          "type": "registry:component",
+          "target": "components/run/_parts/token-count.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/use-context-demo.ts",
+          "type": "registry:component",
+          "target": "components/run/_parts/use-context-demo.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "run"
+      ]
+    },
+    {
+      "name": "run-04",
+      "type": "registry:component",
+      "title": "Agent terminal",
+      "description": "An agent's shell where output streams in and folds when long, a risky command waits for Run or Skip, and any command runs again.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/copy-button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/spinner.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/run/run-04.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "run"
+      ]
+    },
+    {
+      "name": "run-07",
+      "type": "registry:component",
+      "title": "Context ring",
+      "description": "A ring for a composer corner that fills as messages are sent, turns to warning above 85% and opens the breakdown.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/hatch.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/popover.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/run/run-07.tsx",
+          "type": "registry:component",
+          "target": "components/run/run-07.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/context.ts",
+          "type": "registry:component",
+          "target": "components/run/_parts/context.ts"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/scenario.ts",
+          "type": "registry:component",
+          "target": "components/run/_parts/scenario.ts"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/token-count.tsx",
+          "type": "registry:component",
+          "target": "components/run/_parts/token-count.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/use-context-demo.ts",
+          "type": "registry:component",
+          "target": "components/run/_parts/use-context-demo.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "run"
+      ]
+    },
+    {
+      "name": "run-08",
+      "type": "registry:component",
+      "title": "Context treemap",
+      "description": "What fills a context as a treemap whose tiles glide as sizes change, the old turns folding into one summary tile.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/hatch.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/run/run-08.tsx",
+          "type": "registry:component",
+          "target": "components/run/run-08.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/compact-offer.tsx",
+          "type": "registry:component",
+          "target": "components/run/_parts/compact-offer.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/context-header.tsx",
+          "type": "registry:component",
+          "target": "components/run/_parts/context-header.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/context.ts",
+          "type": "registry:component",
+          "target": "components/run/_parts/context.ts"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/scenario.ts",
+          "type": "registry:component",
+          "target": "components/run/_parts/scenario.ts"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/token-count.tsx",
+          "type": "registry:component",
+          "target": "components/run/_parts/token-count.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/treemap.ts",
+          "type": "registry:component",
+          "target": "components/run/_parts/treemap.ts"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/use-context-demo.ts",
+          "type": "registry:component",
+          "target": "components/run/_parts/use-context-demo.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "run"
+      ]
+    },
+    {
+      "name": "run-09",
+      "type": "registry:component",
+      "title": "Usage by model",
+      "description": "Spend against a plan stacked by model or by agent, with rolling figures, a limit tick that travels, daily bars and a notice above 80%.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/run/run-09.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "run"
+      ]
+    },
+    {
+      "name": "run-10",
+      "type": "registry:component",
+      "title": "Agent health",
+      "description": "One agent's health: a gauge, five signals whose lines morph between periods, a summary written word by word and one action to apply.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-text-shimmer.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/status-orb.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/run/run-10.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "run"
       ]
     },
     {

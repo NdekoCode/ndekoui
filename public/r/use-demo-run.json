@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-demo-run",
+  "title": "Use demo run",
+  "description": "The use-demo-run hook used by ndekoui components.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/agent-run.json",
+    "https://ui.ndekocode.dev/r/use-agent-run.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/hooks/use-demo-run.ts",
+      "content": "'use client';\n\nimport { useInView } from 'motion/react';\nimport { useRef, useState } from 'react';\n\nimport {\n  useRunScript,\n  type RunScriptStep,\n} from '@/registry/ndeko/hooks/use-agent-run';\nimport type { RunSnapshot } from '@/registry/ndeko/lib/agent-run';\n\ntype DemoRunOptions = {\n  initial: RunSnapshot;\n  /** While it returns true (a request waits on a person), the script holds its place. Keep it at module level. */\n  holdWhile?: (snapshot: RunSnapshot) => boolean;\n  loopAfter?: number;\n};\n\nfunction neverHold() {\n  return false;\n}\n\nexport function useDemoRun<Element extends HTMLElement = HTMLDivElement>(\n  script: RunScriptStep[],\n  { initial, holdWhile = neverHold, loopAfter }: DemoRunOptions\n) {\n  const ref = useRef<Element>(null);\n  const isInView = useInView(ref, { amount: 0.3 });\n  const [isHeld, setIsHeld] = useState(false);\n  const isActive = isInView && !isHeld;\n  const run = useRunScript(script, { initial, isActive, loopAfter });\n  const shouldHold = holdWhile(run.snapshot);\n  if (shouldHold !== isHeld) {\n    setIsHeld(shouldHold);\n  }\n  return { ref, isInView, ...run };\n}\n",
+      "type": "registry:hook"
+    }
+  ],
+  "categories": [
+    "hooks"
+  ],
+  "type": "registry:hook"
+}
