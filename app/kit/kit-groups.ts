@@ -37,6 +37,16 @@ import {
   TableDemo,
   TimelineDemo,
 } from './_demos/data-display-demos';
+import {
+  CallStatusDemo,
+  CopyButtonDemo,
+  JsonViewDemo,
+  LiveDurationDemo,
+  LiveRegionDemo,
+  MorphButtonDemo,
+  ReplayButtonDemo,
+  SegmentsDemo,
+} from './_demos/ai-live';
 import { SelectedMarkDemo, TreeDemo } from './_demos/data-display-live';
 import {
   SkeletonDemo,
@@ -223,6 +233,22 @@ export const KIT_GROUPS: KitGroup[] = [
       },
       { name: 'chat-feedback-bar', width: 'compact', Demo: FeedbackBarDemo },
       { name: 'chat-scroll-button', width: 'compact', Demo: ScrollButtonDemo },
+    ],
+  },
+  {
+    id: 'ai',
+    title: 'AI',
+    description:
+      'The small pieces the AI views share: copying, a label that becomes its result, live time, segmented choices, JSON and the states of a call.',
+    units: [
+      { name: 'copy-button', width: 'compact', Demo: CopyButtonDemo },
+      { name: 'morph-button', width: 'compact', Demo: MorphButtonDemo },
+      { name: 'live-duration', width: 'compact', Demo: LiveDurationDemo },
+      { name: 'segments', width: 'compact', Demo: SegmentsDemo },
+      { name: 'json-view', width: 'compact', Demo: JsonViewDemo },
+      { name: 'call-status', width: 'compact', Demo: CallStatusDemo },
+      { name: 'replay-button', width: 'compact', Demo: ReplayButtonDemo },
+      { name: 'live-region', width: 'compact', Demo: LiveRegionDemo },
     ],
   },
 ];
