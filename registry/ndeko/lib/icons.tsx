@@ -211,6 +211,48 @@ import {
   ZapIcon as ZapGlyph,
   ZoomInIcon as ZoomInGlyph,
   ZoomOutIcon as ZoomOutGlyph,
+  HandIcon as HandGlyph,
+  StopIcon as StopGlyph,
+  ArrowDown02Icon as ArrowDownGlyph,
+  MicOff01Icon as MicOffGlyph,
+  AudioWave01Icon as AudioLinesGlyph,
+  BotIcon as BotGlyph,
+  FlowConnectionIcon as WorkflowGlyph,
+  CommandLineIcon as TerminalGlyph,
+  Key01Icon as KeyGlyph,
+  PlugSocketIcon as PlugGlyph,
+  Shield01Icon as ShieldGlyph,
+  GitBranchIcon as GitBranchGlyph,
+  GitCommitIcon as GitCommitGlyph,
+  ThumbsDownIcon as ThumbsDownGlyph,
+  QuoteDownIcon as QuoteGlyph,
+  HourglassIcon as HourglassGlyph,
+  Timer01Icon as TimerGlyph,
+  Route01Icon as RouteGlyph,
+  WebhookIcon as WebhookGlyph,
+  CheckListIcon as ListChecksGlyph,
+  BrainCircuitIcon as MemoryGlyph,
+  ScanIcon as ScanGlyph,
+  Cursor01Icon as MousePointerGlyph,
+  CursorPointer01Icon as MousePointerClickGlyph,
+  SquareUnlock01Icon as UnlockGlyph,
+  LaptopIcon as LaptopGlyph,
+  Location01Icon as MapPinGlyph,
+  CallEnd01Icon as PhoneOffGlyph,
+  Invoice01Icon as ReceiptGlyph,
+  Table01Icon as TableGlyph,
+  ChartColumnIcon as ChartBarGlyph,
+  PieChartIcon as PieChartGlyph,
+  ChartIncreaseIcon as TrendingUpGlyph,
+  ChartDecreaseIcon as TrendingDownGlyph,
+  LassoToolIcon as LassoGlyph,
+  SlidersHorizontalIcon as SlidersGlyph,
+  MagicWand01Icon as WandGlyph,
+  Undo02Icon as UndoGlyph,
+  Redo02Icon as RedoGlyph,
+  MessageSquareIcon as MessageSquareGlyph,
+  LanguageSkillIcon as LanguagesGlyph,
+  GridViewIcon as GridGlyph,
 } from '@hugeicons/core-free-icons';
 import {
   HugeiconsIcon,
@@ -841,3 +883,108 @@ export const ZoomOutIcon = /* @__PURE__ */ createIcon(
   ZoomOutGlyph,
   'ZoomOutIcon'
 );
+export const HandIcon = /* @__PURE__ */ createIcon(HandGlyph, 'HandIcon');
+export const StopIcon = /* @__PURE__ */ createIcon(StopGlyph, 'StopIcon');
+export const ArrowDownIcon = /* @__PURE__ */ createIcon(
+  ArrowDownGlyph,
+  'ArrowDownIcon'
+);
+export const MicOffIcon = /* @__PURE__ */ createIcon(MicOffGlyph, 'MicOffIcon');
+export const AudioLinesIcon = /* @__PURE__ */ createIcon(
+  AudioLinesGlyph,
+  'AudioLinesIcon'
+);
+export const BotIcon = /* @__PURE__ */ createIcon(BotGlyph, 'BotIcon');
+export const WorkflowIcon = /* @__PURE__ */ createIcon(
+  WorkflowGlyph,
+  'WorkflowIcon'
+);
+export const TerminalIcon = /* @__PURE__ */ createIcon(
+  TerminalGlyph,
+  'TerminalIcon'
+);
+export const KeyIcon = /* @__PURE__ */ createIcon(KeyGlyph, 'KeyIcon');
+export const PlugIcon = /* @__PURE__ */ createIcon(PlugGlyph, 'PlugIcon');
+export const ShieldIcon = /* @__PURE__ */ createIcon(ShieldGlyph, 'ShieldIcon');
+export const GitBranchIcon = /* @__PURE__ */ createIcon(
+  GitBranchGlyph,
+  'GitBranchIcon'
+);
+export const GitCommitIcon = /* @__PURE__ */ createIcon(
+  GitCommitGlyph,
+  'GitCommitIcon'
+);
+export const ThumbsDownIcon = /* @__PURE__ */ createIcon(
+  ThumbsDownGlyph,
+  'ThumbsDownIcon'
+);
+export const QuoteIcon = /* @__PURE__ */ createIcon(QuoteGlyph, 'QuoteIcon');
+export const HourglassIcon = /* @__PURE__ */ createIcon(
+  HourglassGlyph,
+  'HourglassIcon'
+);
+export const TimerIcon = /* @__PURE__ */ createIcon(TimerGlyph, 'TimerIcon');
+export const RouteIcon = /* @__PURE__ */ createIcon(RouteGlyph, 'RouteIcon');
+export const WebhookIcon = /* @__PURE__ */ createIcon(
+  WebhookGlyph,
+  'WebhookIcon'
+);
+export const ListChecksIcon = /* @__PURE__ */ createIcon(
+  ListChecksGlyph,
+  'ListChecksIcon'
+);
+export const MemoryIcon = /* @__PURE__ */ createIcon(MemoryGlyph, 'MemoryIcon');
+export const ScanIcon = /* @__PURE__ */ createIcon(ScanGlyph, 'ScanIcon');
+export const MousePointerIcon = /* @__PURE__ */ createIcon(
+  MousePointerGlyph,
+  'MousePointerIcon'
+);
+export const MousePointerClickIcon = /* @__PURE__ */ createIcon(
+  MousePointerClickGlyph,
+  'MousePointerClickIcon'
+);
+export const UnlockIcon = /* @__PURE__ */ createIcon(UnlockGlyph, 'UnlockIcon');
+export const LaptopIcon = /* @__PURE__ */ createIcon(LaptopGlyph, 'LaptopIcon');
+export const MapPinIcon = /* @__PURE__ */ createIcon(MapPinGlyph, 'MapPinIcon');
+export const PhoneOffIcon = /* @__PURE__ */ createIcon(
+  PhoneOffGlyph,
+  'PhoneOffIcon'
+);
+export const ReceiptIcon = /* @__PURE__ */ createIcon(
+  ReceiptGlyph,
+  'ReceiptIcon'
+);
+export const TableIcon = /* @__PURE__ */ createIcon(TableGlyph, 'TableIcon');
+export const ChartBarIcon = /* @__PURE__ */ createIcon(
+  ChartBarGlyph,
+  'ChartBarIcon'
+);
+export const PieChartIcon = /* @__PURE__ */ createIcon(
+  PieChartGlyph,
+  'PieChartIcon'
+);
+export const TrendingUpIcon = /* @__PURE__ */ createIcon(
+  TrendingUpGlyph,
+  'TrendingUpIcon'
+);
+export const TrendingDownIcon = /* @__PURE__ */ createIcon(
+  TrendingDownGlyph,
+  'TrendingDownIcon'
+);
+export const LassoIcon = /* @__PURE__ */ createIcon(LassoGlyph, 'LassoIcon');
+export const SlidersIcon = /* @__PURE__ */ createIcon(
+  SlidersGlyph,
+  'SlidersIcon'
+);
+export const WandIcon = /* @__PURE__ */ createIcon(WandGlyph, 'WandIcon');
+export const UndoIcon = /* @__PURE__ */ createIcon(UndoGlyph, 'UndoIcon');
+export const RedoIcon = /* @__PURE__ */ createIcon(RedoGlyph, 'RedoIcon');
+export const MessageSquareIcon = /* @__PURE__ */ createIcon(
+  MessageSquareGlyph,
+  'MessageSquareIcon'
+);
+export const LanguagesIcon = /* @__PURE__ */ createIcon(
+  LanguagesGlyph,
+  'LanguagesIcon'
+);
+export const GridIcon = /* @__PURE__ */ createIcon(GridGlyph, 'GridIcon');
