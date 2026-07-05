@@ -764,7 +764,7 @@ function RowDetail({ row, runStart }: { row: TraceRow; runStart: number }) {
   );
 }
 
-const ROW_GRID = 'grid grid-cols-[7.5rem_1fr] sm:grid-cols-[10rem_1fr]';
+const ROW_GRID = 'grid grid-cols-[7.5rem_1fr] @lg:grid-cols-[10rem_1fr]';
 
 type TraceRowItemProps = {
   row: TraceRow;
@@ -1158,7 +1158,7 @@ export function TraceWaterfall({
     <section
       aria-label={`Trace of ${run.title}`}
       className={cn(
-        'bg-card hairline-ring ring-border flex flex-col gap-3 rounded-xl p-3 shadow-[0_1px_2px_rgb(0_0_0/0.04)] sm:p-4',
+        'bg-card hairline-ring ring-border @container flex flex-col gap-3 rounded-xl p-3 shadow-[0_1px_2px_rgb(0_0_0/0.04)] sm:p-4',
         className
       )}
     >

@@ -200,11 +200,11 @@ export function ToolCallCard({
         aria-expanded={isOpen}
         aria-controls={panelId}
         onClick={toggle}
-        className='hover:bg-foreground/[0.03] focus-visible:ring-ring/25 flex min-h-10 w-full cursor-pointer items-center gap-3 rounded-lg px-2 py-2 text-start outline-none focus-visible:ring-[3px]'
+        className='hover:bg-foreground/[0.03] focus-visible:ring-ring/25 @container flex min-h-10 w-full cursor-pointer items-center gap-3 rounded-lg px-2 py-2 text-start outline-none focus-visible:ring-[3px]'
       >
         <CallStatusMark status={call.status} />
-        <span className='flex min-w-0 flex-1 flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-2'>
-          <span className='text-muted-foreground order-1 shrink-0 font-mono text-[11px] sm:order-none sm:text-xs'>
+        <span className='flex min-w-0 flex-1 flex-col gap-0.5 @md:flex-row @md:items-baseline @md:gap-2'>
+          <span className='text-muted-foreground order-1 shrink-0 font-mono text-[11px] @md:order-none @md:text-xs'>
             {call.tool}
           </span>
           <span className='min-w-0 truncate text-[13px]'>{call.label}</span>

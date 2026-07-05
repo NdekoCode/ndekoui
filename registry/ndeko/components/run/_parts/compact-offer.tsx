@@ -74,8 +74,8 @@ export function CompactOffer({
   return (
     <AnimatePresence initial={false} mode='popLayout'>
       {isOffered && (
-        <motion.div key='offer' {...risePresence}>
-          <div className='bg-warning/10 flex flex-col gap-2.5 rounded-lg p-3 sm:flex-row sm:items-center'>
+        <motion.div key='offer' className='@container' {...risePresence}>
+          <div className='bg-warning/10 flex flex-col gap-2.5 rounded-lg p-3 @lg:flex-row @lg:items-center'>
             <p className='text-warning-foreground min-w-0 flex-1 text-xs leading-5'>
               {freeText} tokens left before the reserve. Fold the older turns
               into a summary to keep going.

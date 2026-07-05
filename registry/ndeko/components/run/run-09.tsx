@@ -395,8 +395,8 @@ export function UsageByModel({
 
       <AnimatePresence initial={false} mode='popLayout'>
         {isNoticeShown && (
-          <motion.div key='notice' {...risePresence}>
-            <div className='bg-warning/10 flex flex-col gap-2.5 rounded-lg p-3 sm:flex-row sm:items-center'>
+          <motion.div key='notice' className='@container' {...risePresence}>
+            <div className='bg-warning/10 flex flex-col gap-2.5 rounded-lg p-3 @lg:flex-row @lg:items-center'>
               <p className='text-warning-foreground flex min-w-0 flex-1 items-start gap-2 text-xs leading-5'>
                 <TriangleAlertIcon className='mt-0.5 size-3.5 shrink-0' />
                 Agents pause when the limit is reached. Raise it to keep them

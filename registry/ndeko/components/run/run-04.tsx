@@ -162,26 +162,28 @@ function ApprovalBar({ command, onApprove, onSkip }: ApprovalBarProps) {
   }
 
   return (
-    <div
-      role='group'
-      tabIndex={0}
-      aria-label={`${command.command} needs your approval. Enter runs it, Escape skips it.`}
-      onKeyDown={decideFromKeys}
-      className='bg-warning/10 focus-visible:ring-ring/25 mt-2 flex flex-col gap-2.5 rounded-lg p-2.5 font-sans outline-none focus-visible:ring-[3px] sm:flex-row sm:items-center'
-    >
-      <p className='text-warning-foreground flex min-w-0 flex-1 items-start gap-2 text-xs leading-5'>
-        <TriangleAlertIcon className='mt-0.5 size-3.5 shrink-0' />
-        {command.reason}
-      </p>
-      <div className='flex shrink-0 items-center gap-2'>
-        <Button type='button' size='sm' onClick={approve}>
-          Run
-          <Kbd className='ms-0.5'>Enter</Kbd>
-        </Button>
-        <Button type='button' variant='outline' size='sm' onClick={skip}>
-          Skip
-          <Kbd className='ms-0.5'>Esc</Kbd>
-        </Button>
+    <div className='@container'>
+      <div
+        role='group'
+        tabIndex={0}
+        aria-label={`${command.command} needs your approval. Enter runs it, Escape skips it.`}
+        onKeyDown={decideFromKeys}
+        className='bg-warning/10 focus-visible:ring-ring/25 mt-2 flex flex-col gap-2.5 rounded-lg p-2.5 font-sans outline-none focus-visible:ring-[3px] @lg:flex-row @lg:items-center'
+      >
+        <p className='text-warning-foreground flex min-w-0 flex-1 items-start gap-2 text-xs leading-5'>
+          <TriangleAlertIcon className='mt-0.5 size-3.5 shrink-0' />
+          {command.reason}
+        </p>
+        <div className='flex shrink-0 items-center gap-2'>
+          <Button type='button' size='sm' onClick={approve}>
+            Run
+            <Kbd className='ms-0.5'>Enter</Kbd>
+          </Button>
+          <Button type='button' variant='outline' size='sm' onClick={skip}>
+            Skip
+            <Kbd className='ms-0.5'>Esc</Kbd>
+          </Button>
+        </div>
       </div>
     </div>
   );
