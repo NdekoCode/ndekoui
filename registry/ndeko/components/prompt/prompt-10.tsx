@@ -1,8 +1,12 @@
 'use client';
 
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { useId, useRef, useState } from 'react';
+import { useId, useImperativeHandle, useRef, useState } from 'react';
 
+import {
+  useAutoplay,
+  type AutoplayStep,
+} from '@/registry/ndeko/hooks/use-autoplay';
 import {
   EllipsisIcon,
   PencilIcon,
@@ -26,6 +30,12 @@ import {
 import { Input } from '@/registry/ndeko/ui/input';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 
+import {
+  hold,
+  keyDelayOf,
+  prefixesOf,
+  spokenUnless,
+} from './_parts/demonstration';
 import { Marked, includesQuery } from './_parts/marked';
 import { countOf } from './_parts/words';
 
@@ -149,14 +159,57 @@ function pinLabelOf(isPinned: boolean) {
   return 'Pin';
 }
 
-type RenameFieldProps = {
-  title: string;
-  onEnd: (title: string | null) => void;
+export type ConversationListHandle = {
+  /** Opens a chat, as a click on its row does. */
+  select: (id: string) => void;
+  /** Pins or unpins a chat, as its menu does. */
+  pin: (id: string, isPinned: boolean) => void;
+  /** Turns a row into its rename field, as F2 does. */
+  startRename: (id: string) => void;
+  /** Replaces the title being typed in the rename field. */
+  typeRename: (title: string) => void;
+  /** Saves the rename, as Enter does. */
+  saveRename: () => void;
+  search: (query: string) => void;
 };
 
-/** Mounted for each rename, so it starts from the current title; Enter or leaving saves, Escape keeps the old one. */
-function RenameField({ title, onEnd }: RenameFieldProps) {
-  const [draft, setDraft] = useState(title);
+const POP = {
+  initial: { opacity: 0, scale: 0.6 },
+  animate: { opacity: 1, scale: 1 },
+  exit: { opacity: 0, scale: 0.6, transition: { duration: 0.1 } },
+  transition: { duration: 0.15 },
+};
+
+const POP_FADE = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0, transition: { duration: 0.1 } },
+  transition: { duration: 0.15 },
+};
+
+/** A small mark that comes with a change of state: the pin of a row, the cross of a search. */
+function popOf(shouldReduceMotion: boolean | null) {
+  if (shouldReduceMotion) {
+    return POP_FADE;
+  }
+  return POP;
+}
+
+type RenameFieldProps = {
+  draft: string;
+  onDraftChange: (draft: string) => void;
+  onEnd: (title: string | null) => void;
+  /** False in a demonstration, which types into the field without taking the focus. */
+  takesFocus: boolean;
+};
+
+/** Mounted for each rename; Enter or leaving saves, Escape keeps the old title. */
+function RenameField({
+  draft,
+  onDraftChange,
+  onEnd,
+  takesFocus,
+}: RenameFieldProps) {
   const isDone = useRef(false);
 
   function end(next: string | null) {
@@ -181,13 +234,14 @@ function RenameField({ title, onEnd }: RenameFieldProps) {
 
   return (
     <input
+      data-rename-field=''
       value={draft}
-      onChange={(event) => setDraft(event.target.value)}
+      onChange={(event) => onDraftChange(event.target.value)}
       onKeyDown={handleKeys}
       onBlur={() => end(draft)}
       onFocus={(event) => event.currentTarget.select()}
       aria-label='Rename the chat'
-      autoFocus
+      autoFocus={takesFocus}
       className='bg-card hairline-ring ring-ring/40 focus-visible:ring-ring/25 relative h-7 w-full min-w-0 rounded-md px-2 text-[13px] outline-none focus-visible:ring-[3px]'
     />
   );
@@ -201,6 +255,11 @@ type ConversationRowProps = {
   isTabStop: boolean;
   mode: RowMode;
   highlightId: string;
+  /** The chat that is open: the highlight is only measured again when it changes. */
+  activeId: string;
+  renameDraft: string;
+  takesFocus: boolean;
+  onRenameDraftChange: (draft: string) => void;
   onSelect: (id: string) => void;
   onKeys: (event: React.KeyboardEvent<HTMLButtonElement>, id: string) => void;
   onStartRename: (id: string) => void;
@@ -219,6 +278,10 @@ function ConversationRow({
   isTabStop,
   mode,
   highlightId,
+  activeId,
+  renameDraft,
+  takesFocus,
+  onRenameDraftChange,
   onSelect,
   onKeys,
   onStartRename,
@@ -230,6 +293,7 @@ function ConversationRow({
 }: ConversationRowProps) {
   const shouldReduceMotion = useReducedMotion();
   const spring = springOf(shouldReduceMotion);
+  const pinPop = popOf(shouldReduceMotion);
   const tabIndex = tabIndexOf(isTabStop);
   const groupWord = GROUP_LABEL[group];
   const isRenaming = mode === 'rename';
@@ -255,6 +319,7 @@ function ConversationRow({
       {showsHighlight && (
         <motion.span
           layoutId={highlightId}
+          layoutDependency={activeId}
           transition={spring}
           aria-hidden='true'
           className='bg-foreground/[0.06] dark:bg-foreground/[0.08] absolute inset-0 rounded-md'
@@ -262,8 +327,10 @@ function ConversationRow({
       )}
       {isRenaming && (
         <RenameField
-          title={conversation.title}
+          draft={renameDraft}
+          onDraftChange={onRenameDraftChange}
           onEnd={(title) => onEndRename(conversation.id, title)}
+          takesFocus={takesFocus}
         />
       )}
       {isConfirming && (
@@ -312,9 +379,13 @@ function ConversationRow({
               rowToneOf(isActive)
             )}
           >
-            {conversation.isPinned && (
-              <PinIcon className='text-muted-foreground size-3.5 shrink-0' />
-            )}
+            <AnimatePresence initial={false}>
+              {conversation.isPinned && (
+                <motion.span key='pin' className='flex shrink-0' {...pinPop}>
+                  <PinIcon className='text-muted-foreground size-3.5' />
+                </motion.span>
+              )}
+            </AnimatePresence>
             <span className='truncate'>
               <Marked text={conversation.title} query={query} />
             </span>
@@ -439,6 +510,10 @@ export type ConversationListProps = {
   onRename: (id: string, title: string) => void;
   onPinChange: (id: string, isPinned: boolean) => void;
   onDelete: (id: string) => void;
+  /** Runs what the rows, their menus and the search do, for a demonstration or a control beside the list. */
+  handleRef?: React.Ref<ConversationListHandle>;
+  /** A demonstration drives the list: nothing takes the focus and nothing is read aloud. */
+  isDemonstrated?: boolean;
   className?: string;
 };
 
@@ -450,11 +525,14 @@ export function ConversationList({
   onRename,
   onPinChange,
   onDelete,
+  handleRef,
+  isDemonstrated = false,
   className,
 }: ConversationListProps) {
   const [query, setQuery] = useState('');
   const [focusId, setFocusId] = useState<string | null>(null);
   const [renamingId, setRenamingId] = useState<string | null>(null);
+  const [renameDraft, setRenameDraft] = useState('');
   const [confirmingId, setConfirmingId] = useState<string | null>(null);
   const [announcement, setAnnouncement] = useState('');
   const listRef = useRef<HTMLUListElement>(null);
@@ -464,7 +542,10 @@ export function ConversationList({
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const spring = springOf(shouldReduceMotion);
   const rowTransition = { ...rowPresence.transition, layout: spring };
+  const clearPop = popOf(shouldReduceMotion);
   const entries = entriesOf(conversations, now, query);
+  const entryKeys = entries.map((entry) => entry.key);
+  const order = entryKeys.join(' ');
   const rows = rowsOf(entries);
   const tabStopId = tabStopOf(rows, focusId, activeId);
   const isEmpty = rows.length === 0;
@@ -474,6 +555,9 @@ export function ConversationList({
 
   function focusRow(id: string, action: string) {
     setFocusId(id);
+    if (isDemonstrated) {
+      return;
+    }
     requestAnimationFrame(() => {
       const selector = `[data-row="${id}"] [data-action="${action}"]`;
       const target = listRef.current?.querySelector<HTMLElement>(selector);
@@ -492,9 +576,35 @@ export function ConversationList({
   }
 
   function startRename(id: string) {
+    const conversation = conversations.find((item) => item.id === id);
     setConfirmingId(null);
+    setRenameDraft(conversation?.title ?? '');
     setRenamingId(id);
     setFocusId(id);
+  }
+
+  function saveRename() {
+    if (renamingId === null) {
+      return;
+    }
+    endRename(renamingId, renameDraft);
+  }
+
+  /** A rename the demonstration left open ends when the person acts anywhere but in its field. */
+  function endScriptedRename(event: React.SyntheticEvent) {
+    const isScripted = isDemonstrated && renamingId !== null;
+    if (!isScripted) {
+      return;
+    }
+    const target = event.target;
+    if (!(target instanceof Element)) {
+      return;
+    }
+    const field = target.closest('[data-rename-field]');
+    if (field) {
+      return;
+    }
+    setRenamingId(null);
   }
 
   function endRename(id: string, title: string | null) {
@@ -578,9 +688,20 @@ export function ConversationList({
     setQuery('');
   }
 
+  useImperativeHandle(handleRef, () => ({
+    select,
+    pin: changePin,
+    startRename,
+    typeRename: setRenameDraft,
+    saveRename,
+    search: setQuery,
+  }));
+
   return (
     <nav
       aria-label='Chat history'
+      onPointerDownCapture={endScriptedRename}
+      onKeyDownCapture={endScriptedRename}
       className={cn('flex flex-col gap-2', className)}
     >
       <div className='relative'>
@@ -597,18 +718,26 @@ export function ConversationList({
           placeholder='Search chats'
           className='ps-8 pe-8'
         />
-        {hasQuery && (
-          <Button
-            type='button'
-            variant='ghost'
-            size='icon-sm'
-            aria-label='Clear the search'
-            onClick={clearSearch}
-            className='text-muted-foreground absolute end-0.5 top-1/2 size-6 -translate-y-1/2'
-          >
-            <XIcon className='size-3.5' />
-          </Button>
-        )}
+        <AnimatePresence initial={false}>
+          {hasQuery && (
+            <motion.span
+              key='clear'
+              className='absolute end-0.5 top-1/2 flex -translate-y-1/2'
+              {...clearPop}
+            >
+              <Button
+                type='button'
+                variant='ghost'
+                size='icon-sm'
+                aria-label='Clear the search'
+                onClick={clearSearch}
+                className='text-muted-foreground size-6'
+              >
+                <XIcon className='size-3.5' />
+              </Button>
+            </motion.span>
+          )}
+        </AnimatePresence>
       </div>
       <ul ref={listRef} aria-label='Chats' className='flex flex-col'>
         <AnimatePresence initial={false}>
@@ -617,6 +746,7 @@ export function ConversationList({
               key={entry.key}
               role={roleOf(entry)}
               layout='position'
+              layoutDependency={order}
               className='overflow-hidden'
               {...rowPresence}
               transition={rowTransition}
@@ -638,6 +768,10 @@ export function ConversationList({
                   isTabStop={entry.conversation.id === tabStopId}
                   mode={modeOf(entry.conversation.id)}
                   highlightId={highlightId}
+                  activeId={activeId}
+                  renameDraft={renameDraft}
+                  takesFocus={!isDemonstrated}
+                  onRenameDraftChange={setRenameDraft}
                   onSelect={select}
                   onKeys={handleRowKeys}
                   onStartRename={startRename}
@@ -673,7 +807,7 @@ export function ConversationList({
           </motion.div>
         )}
       </AnimatePresence>
-      <LiveRegion message={message} />
+      <LiveRegion message={spokenUnless(isDemonstrated, message)} />
     </nav>
   );
 }
@@ -785,9 +919,16 @@ const CONVERSATIONS: Conversation[] = [
   },
 ];
 
+const START_CHAT = 'credit-request';
+
+const RENAMED_TITLE = 'Invoice and shipping terms';
+
+const DEMO_SEARCH = 'invoice';
+
 export default function Prompt10() {
   const [conversations, setConversations] = useState(CONVERSATIONS);
-  const [activeId, setActiveId] = useState('credit-request');
+  const [activeId, setActiveId] = useState(START_CHAT);
+  const list = useRef<ConversationListHandle>(null);
 
   function update(id: string, patch: Partial<Conversation>) {
     setConversations((current) =>
@@ -814,8 +955,41 @@ export default function Prompt10() {
     );
   }
 
+  function resetDemo() {
+    setConversations(CONVERSATIONS);
+    setActiveId(START_CHAT);
+    list.current?.search('');
+  }
+
+  const renameTyping = prefixesOf(RENAMED_TITLE).map((typed, index) => ({
+    after: keyDelayOf(index, 500, 48),
+    run: () => list.current?.typeRename(typed),
+  }));
+  const searchTyping = prefixesOf(DEMO_SEARCH).map((typed, index) => ({
+    after: keyDelayOf(index, 1200, 95),
+    run: () => list.current?.search(typed),
+  }));
+  const steps: AutoplayStep[] = [
+    { after: 1400, run: () => list.current?.select('shipping-terms') },
+    { after: 650, run: () => list.current?.select('csv-import') },
+    { after: 1000, run: () => list.current?.pin('csv-import', true) },
+    { after: 1700, run: () => list.current?.startRename('shipping-terms') },
+    ...renameTyping,
+    { after: 600, run: () => list.current?.saveRename() },
+    ...searchTyping,
+    { after: 1800, run: () => list.current?.search('') },
+    { after: 900, run: hold },
+  ];
+  const { ref, isAutoplaying } = useAutoplay(steps, {
+    loopAfter: 2400,
+    onReset: resetDemo,
+  });
+
   return (
-    <div className='bg-card hairline-ring ring-border flex w-full max-w-[19rem] flex-col rounded-xl p-2 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
+    <div
+      ref={ref}
+      className='bg-card hairline-ring ring-border flex w-full max-w-[19rem] flex-col rounded-xl p-2 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
+    >
       <ConversationList
         conversations={conversations}
         activeId={activeId}
@@ -824,6 +998,8 @@ export default function Prompt10() {
         onRename={rename}
         onPinChange={changePin}
         onDelete={remove}
+        handleRef={list}
+        isDemonstrated={isAutoplaying}
       />
     </div>
   );

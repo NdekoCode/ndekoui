@@ -1,10 +1,20 @@
 'use client';
 
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { useId, useLayoutEffect, useRef, useState } from 'react';
+import {
+  useId,
+  useImperativeHandle,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll } from '@/components/core/word-roll';
+import {
+  useAutoplay,
+  type AutoplayStep,
+} from '@/registry/ndeko/hooks/use-autoplay';
 import {
   CalendarIcon,
   CircleCheckIcon,
@@ -24,6 +34,15 @@ import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 
+import {
+  hold,
+  keyDelayOf,
+  prefixesOf,
+  PRESS_LEAD_MS,
+  pressedQuietOf,
+  spokenUnless,
+  usePress,
+} from './_parts/demonstration';
 import { useAutosize } from './_parts/use-autosize';
 import { nounOf } from './_parts/words';
 
@@ -51,7 +70,19 @@ type PeriodKind =
   | 'this-month'
   | 'last-month';
 
-type WeekReading = 'calendar' | 'rolling';
+export type WeekReading = 'calendar' | 'rolling';
+
+export type AskFilterHandle = {
+  /** Replaces the question, as typing in the field does. */
+  type: (text: string) => void;
+  /** Shows a button held down: `week:rolling`, `week:calendar` or `chip:` and the key of a filter. */
+  press: (key: string) => void;
+  answerWeek: (reading: WeekReading) => void;
+  /** Removes a filter by its key, as the cross of its chip does. */
+  remove: (key: string) => void;
+  /** A new question with nothing removed and nothing answered yet. */
+  reset: (text: string) => void;
+};
 
 type DayRange = {
   from: string;
@@ -432,9 +463,15 @@ type FilterChipProps = {
   filter: ParsedFilter;
   reading: WeekReading | null;
   onRemove: (key: string) => void;
+  isRemovePressed: boolean;
 };
 
-function FilterChip({ filter, reading, onRemove }: FilterChipProps) {
+function FilterChip({
+  filter,
+  reading,
+  onRemove,
+  isRemovePressed,
+}: FilterChipProps) {
   const KindIcon = KIND_ICON[filter.kind];
   const label = labelOfFilter(filter, reading);
   const isAsking = isAmbiguous(filter) && reading === null;
@@ -455,7 +492,7 @@ function FilterChip({ filter, reading, onRemove }: FilterChipProps) {
         size='icon-sm'
         aria-label={`Remove the filter ${label}`}
         onClick={() => onRemove(filter.key)}
-        className='size-5 rounded-full'
+        className={cn('size-5 rounded-full', pressedQuietOf(isRemovePressed))}
       >
         <XIcon className='size-3' />
       </Button>
@@ -474,6 +511,10 @@ type AskFilterProps = {
   orders: Order[];
   value: string;
   onValueChange: (value: string) => void;
+  /** Runs what the field, the chips and the question do, for a demonstration or a control beside them. */
+  handleRef?: React.Ref<AskFilterHandle>;
+  /** A demonstration drives the piece: its counts are not read aloud. */
+  isDemonstrated?: boolean;
   className?: string;
 };
 
@@ -481,10 +522,13 @@ export function AskFilter({
   orders,
   value,
   onValueChange,
+  handleRef,
+  isDemonstrated = false,
   className,
 }: AskFilterProps) {
   const [dismissed, setDismissed] = useState<string[]>([]);
   const [reading, setReading] = useState<WeekReading | null>(null);
+  const { pressed, press } = usePress<string>();
   const containerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const mirrorRef = useRef<HTMLDivElement>(null);
@@ -519,6 +563,19 @@ export function AskFilter({
     }
     const root: HTMLElement = element;
     placeThreads(root);
+    const observer = new ResizeObserver(() => placeThreads(root));
+    observer.observe(root);
+    return () => observer.disconnect();
+  }, [value]);
+
+  // The chips glide to their new place when a filter comes, goes or gets its answer:
+  // the threads follow them for that long, and only then.
+  useLayoutEffect(() => {
+    const element = containerRef.current;
+    if (!element) {
+      return;
+    }
+    const root: HTMLElement = element;
     const until = performance.now() + FOLLOW_LAYOUT_MS;
     let frame = 0;
     function follow(now: number) {
@@ -528,16 +585,17 @@ export function AskFilter({
       }
     }
     frame = requestAnimationFrame(follow);
-    const observer = new ResizeObserver(() => placeThreads(root));
-    observer.observe(root);
-    return () => {
-      cancelAnimationFrame(frame);
-      observer.disconnect();
-    };
-  }, [value, threadKeys, reading]);
+    return () => cancelAnimationFrame(frame);
+  }, [threadKeys, reading]);
 
   function remove(key: string) {
     setDismissed((current) => [...current, key]);
+  }
+
+  function reset(text: string) {
+    onValueChange(text);
+    setDismissed([]);
+    setReading(null);
   }
 
   function clearFilters() {
@@ -548,7 +606,10 @@ export function AskFilter({
   }
 
   function changeText(event: React.ChangeEvent<HTMLTextAreaElement>) {
-    const next = event.target.value;
+    applyText(event.target.value);
+  }
+
+  function applyText(next: string) {
     onValueChange(next);
     const nextKeys = parseFilters(next).map((filter) => filter.key);
     setDismissed((current) => current.filter((key) => nextKeys.includes(key)));
@@ -573,6 +634,14 @@ export function AskFilter({
     }
   }
 
+  useImperativeHandle(handleRef, () => ({
+    type: applyText,
+    press,
+    answerWeek: setReading,
+    remove,
+    reset,
+  }));
+
   return (
     <div
       ref={containerRef}
@@ -593,14 +662,14 @@ export function AskFilter({
           >
             {pieces.map((piece, index) => {
               if (piece.key === null) {
-                return <span key={index}>{piece.text}</span>;
+                return <span key={`text:${index}`}>{piece.text}</span>;
               }
               return (
                 <span
-                  key={index}
+                  key={`${index}:${piece.key}`}
                   data-phrase={piece.key}
                   className={cn(
-                    'rounded-[2px] transition-[text-decoration-color] duration-200',
+                    'rounded-[2px] transition-[text-decoration-color] duration-300 starting:decoration-transparent',
                     phraseClassOf(piece.look)
                   )}
                 >
@@ -656,6 +725,7 @@ export function AskFilter({
               <motion.li
                 key={filter.key}
                 layout
+                layoutDependency={threadKeys}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
@@ -665,6 +735,7 @@ export function AskFilter({
                   filter={filter}
                   reading={reading}
                   onRemove={remove}
+                  isRemovePressed={pressed === `chip:${filter.key}`}
                 />
               </motion.li>
             ))}
@@ -693,6 +764,7 @@ export function AskFilter({
                     variant='outline'
                     size='sm'
                     onClick={() => setReading('calendar')}
+                    className={pressedQuietOf(pressed === 'week:calendar')}
                   >
                     Calendar week, {WEEK_LABEL.calendar}
                   </Button>
@@ -701,6 +773,7 @@ export function AskFilter({
                     variant='outline'
                     size='sm'
                     onClick={() => setReading('rolling')}
+                    className={pressedQuietOf(pressed === 'week:rolling')}
                   >
                     Last 7 days
                   </Button>
@@ -735,7 +808,7 @@ export function AskFilter({
           </motion.div>
         )}
       </AnimatePresence>
-      <LiveRegion message={announcement} />
+      <LiveRegion message={spokenUnless(isDemonstrated, announcement)} />
     </div>
   );
 }
@@ -950,22 +1023,66 @@ const EXAMPLES = [
 
 const START_QUERY = 'orders over 500 from last week to Canada';
 
+type DemoQuestion = {
+  text: string;
+  /** The key of the filter the demonstration removes at the end. */
+  removes: string;
+};
+
+/** A round types one of these questions, a different one each time. Both leave the week to be asked. */
+const DEMO_QUESTIONS: DemoQuestion[] = [
+  { text: 'paid orders to Canada last week', removes: 'status:paid' },
+  { text: 'orders from last week to Japan', removes: 'country:to japan' },
+];
+
 export default function Prompt08() {
   const [query, setQuery] = useState(START_QUERY);
+  const [exampleRound, setExampleRound] = useState(0);
   const [round, setRound] = useState(0);
+  const filter = useRef<AskFilterHandle>(null);
+  const question = DEMO_QUESTIONS[round % DEMO_QUESTIONS.length];
+  const removedChip = `chip:${question.removes}`;
 
   function tryExample(example: string) {
     setQuery(example);
+    setExampleRound((current) => current + 1);
+  }
+
+  function resetDemo() {
+    filter.current?.reset(START_QUERY);
     setRound((current) => current + 1);
   }
 
+  const typing = prefixesOf(question.text).map((typed, index) => ({
+    after: keyDelayOf(index, 700, 52),
+    run: () => filter.current?.type(typed),
+  }));
+  const steps: AutoplayStep[] = [
+    { after: 1800, run: () => filter.current?.type('') },
+    ...typing,
+    { after: 1100, run: () => filter.current?.press('week:rolling') },
+    { after: PRESS_LEAD_MS, run: () => filter.current?.answerWeek('rolling') },
+    { after: 1900, run: () => filter.current?.press(removedChip) },
+    {
+      after: PRESS_LEAD_MS,
+      run: () => filter.current?.remove(question.removes),
+    },
+    { after: 1700, run: hold },
+  ];
+  const { ref, isAutoplaying } = useAutoplay(steps, {
+    loopAfter: 2400,
+    onReset: resetDemo,
+  });
+
   return (
-    <div className='flex w-full max-w-[40rem] flex-col gap-3'>
+    <div ref={ref} className='flex w-full max-w-[40rem] flex-col gap-3'>
       <AskFilter
-        key={round}
+        key={exampleRound}
         orders={ORDERS}
         value={query}
         onValueChange={setQuery}
+        handleRef={filter}
+        isDemonstrated={isAutoplaying}
         className='bg-card hairline-ring ring-border rounded-xl p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
       />
       <div className='flex flex-wrap items-center gap-1.5 px-1'>

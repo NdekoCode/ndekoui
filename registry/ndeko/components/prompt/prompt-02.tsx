@@ -2,10 +2,15 @@
 
 import { Menu as MenuPrimitive } from '@base-ui/react/menu';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll } from '@/components/core/word-roll';
+import { ClockGateContext } from '@/registry/ndeko/hooks/use-agent-run';
+import {
+  useAutoplay,
+  type AutoplayStep,
+} from '@/registry/ndeko/hooks/use-autoplay';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import {
   ArrowUpIcon,
@@ -29,7 +34,7 @@ import {
   type Icon,
 } from '@/registry/ndeko/lib/icons';
 import {
-  rowPresenceOf,
+  fadePresence,
   risePresenceOf,
   springOf,
 } from '@/registry/ndeko/lib/motion-presets';
@@ -47,10 +52,19 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from '@/registry/ndeko/ui/dropdown-menu';
+import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { Textarea } from '@/registry/ndeko/ui/textarea';
 
 import { ClockSince } from './_parts/clock';
+import {
+  hold,
+  PRESS_LEAD_MS,
+  pressedQuietOf,
+  pressedSolidOf,
+  spokenUnless,
+  usePress,
+} from './_parts/demonstration';
 import { LabTile } from './_parts/lab-tile';
 import { MODELS, modelOf } from './_parts/labs';
 import { LevelBars } from '@/registry/ndeko/ui/level-bars';
@@ -444,9 +458,51 @@ export function formatBytes(size: number) {
 
 const UPLOAD_MS = 1100;
 
+/** How long the closed ring keeps its check before the tile shows what it holds. */
+const CHECK_HOLD_MS = 900;
+
 const RING_RADIUS = 7;
 
-function UploadRing({ className }: { className?: string }) {
+const RING_CHECK = 'M5.7 9.2 8 11.4 12.4 6.6';
+
+const CHECK_DRAW = { duration: 0.24, ease: [0.23, 1, 0.32, 1] } as const;
+
+type UploadPhase = 'uploading' | 'confirming' | 'settled';
+
+/** After the upload, the tile confirms it for a moment before it settles. */
+function useUploadPhase(isUploading: boolean): UploadPhase {
+  const [wasUploading, setWasUploading] = useState(isUploading);
+  const [isConfirming, setIsConfirming] = useState(false);
+  const hasChanged = wasUploading !== isUploading;
+  if (hasChanged) {
+    setWasUploading(isUploading);
+    setIsConfirming(!isUploading);
+  }
+
+  useEffect(() => {
+    if (!isConfirming) {
+      return;
+    }
+    const timer = setTimeout(() => setIsConfirming(false), CHECK_HOLD_MS);
+    return () => clearTimeout(timer);
+  }, [isConfirming]);
+
+  if (isUploading) {
+    return 'uploading';
+  }
+  if (isConfirming) {
+    return 'confirming';
+  }
+  return 'settled';
+}
+
+type UploadRingProps = {
+  /** The ring is closed: a check draws itself inside it. */
+  isDone: boolean;
+  className?: string;
+};
+
+function UploadRing({ isDone, className }: UploadRingProps) {
   const shouldReduceMotion = useReducedMotion();
   const transition = ringTransitionOf(shouldReduceMotion);
 
@@ -454,30 +510,52 @@ function UploadRing({ className }: { className?: string }) {
     <svg
       aria-hidden='true'
       viewBox='0 0 18 18'
-      className={cn('size-[18px] -rotate-90', className)}
+      className={cn('size-[18px]', className)}
     >
-      <circle
-        cx='9'
-        cy='9'
-        r={RING_RADIUS}
-        fill='none'
-        strokeWidth='2'
-        className='stroke-current opacity-25'
-      />
-      <motion.circle
-        cx='9'
-        cy='9'
-        r={RING_RADIUS}
-        fill='none'
-        strokeWidth='2'
-        strokeLinecap='round'
-        className='stroke-current'
-        initial={{ pathLength: 0.04 }}
-        animate={{ pathLength: 1 }}
-        transition={transition}
-      />
+      <g transform='rotate(-90 9 9)'>
+        <circle
+          cx='9'
+          cy='9'
+          r={RING_RADIUS}
+          fill='none'
+          strokeWidth='2'
+          className='stroke-current opacity-25'
+        />
+        <motion.circle
+          cx='9'
+          cy='9'
+          r={RING_RADIUS}
+          fill='none'
+          strokeWidth='2'
+          strokeLinecap='round'
+          className='stroke-current'
+          initial={{ pathLength: 0.04 }}
+          animate={{ pathLength: 1 }}
+          transition={transition}
+        />
+      </g>
+      {isDone && (
+        <motion.path
+          d={RING_CHECK}
+          fill='none'
+          strokeWidth='1.75'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+          className='stroke-current'
+          initial={checkStartOf(shouldReduceMotion)}
+          animate={{ pathLength: 1 }}
+          transition={CHECK_DRAW}
+        />
+      )}
     </svg>
   );
+}
+
+function checkStartOf(shouldReduceMotion: boolean | null) {
+  if (shouldReduceMotion) {
+    return { pathLength: 1 };
+  }
+  return { pathLength: 0 };
 }
 
 function ringTransitionOf(shouldReduceMotion: boolean | null) {
@@ -486,6 +564,13 @@ function ringTransitionOf(shouldReduceMotion: boolean | null) {
   }
   const seconds = UPLOAD_MS / 1000;
   return { duration: seconds, ease: [0.4, 0, 0.2, 1] as const };
+}
+
+function glyphKeyOf(showsRing: boolean) {
+  if (showsRing) {
+    return 'ring';
+  }
+  return 'file';
 }
 
 function thumbnailStyleOf(previewUrl: string | undefined) {
@@ -513,11 +598,14 @@ export function AttachmentTile({
   onRemove,
   disabled,
 }: AttachmentTileProps) {
+  const phase = useUploadPhase(attachment.isUploading);
   const isImage = attachment.kind === 'image';
   const thumbnailStyle = thumbnailStyleOf(attachment.previewUrl);
   const hasPreview = thumbnailStyle !== undefined;
   const detail = uploadWordOf(attachment);
   const removeLabel = `Remove ${attachment.name}`;
+  const showsRing = phase !== 'settled';
+  const isConfirmed = phase === 'confirming';
 
   if (isImage) {
     return (
@@ -532,7 +620,7 @@ export function AttachmentTile({
             <ImageIcon className='text-muted-foreground size-4' />
           )}
           <AnimatePresence initial={false}>
-            {attachment.isUploading && (
+            {showsRing && (
               <motion.span
                 key='upload'
                 initial={{ opacity: 0 }}
@@ -540,7 +628,7 @@ export function AttachmentTile({
                 exit={{ opacity: 0 }}
                 className='bg-card/70 text-primary absolute inset-0 flex items-center justify-center rounded-lg'
               >
-                <UploadRing />
+                <UploadRing isDone={isConfirmed} />
               </motion.span>
             )}
           </AnimatePresence>
@@ -566,9 +654,9 @@ export function AttachmentTile({
         aria-hidden='true'
         className='text-primary bg-primary/10 flex size-7 shrink-0 items-center justify-center rounded-md'
       >
-        <Swap swapKey={String(attachment.isUploading)}>
-          {attachment.isUploading && <UploadRing />}
-          {!attachment.isUploading && <FileTextIcon className='size-3.5' />}
+        <Swap swapKey={glyphKeyOf(showsRing)}>
+          {showsRing && <UploadRing isDone={isConfirmed} />}
+          {!showsRing && <FileTextIcon className='size-3.5' />}
         </Swap>
       </span>
       <span className='min-w-0 flex-1'>
@@ -594,13 +682,14 @@ export function AttachmentTile({
   );
 }
 
-function RecordingDot() {
+function RecordingDot({ isBlinking }: { isBlinking: boolean }) {
   return (
-    <motion.span
+    <span
       aria-hidden='true'
-      className='bg-destructive size-2 shrink-0 rounded-full'
-      animate={{ opacity: [1, 0.35, 1] }}
-      transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
+      className={cn(
+        'bg-destructive size-2 shrink-0 rounded-full',
+        isBlinking && 'animate-pulse'
+      )}
     />
   );
 }
@@ -610,6 +699,8 @@ type RecordingStripProps = {
   onCancel: () => void;
   onDone: () => void;
   doneRef?: React.Ref<HTMLButtonElement>;
+  /** Shows Done held down, for a demonstration that presses it. */
+  isDonePressed?: boolean;
 };
 
 export function RecordingStrip({
@@ -617,12 +708,15 @@ export function RecordingStrip({
   onCancel,
   onDone,
   doneRef,
+  isDonePressed = false,
 }: RecordingStripProps) {
+  const isOnScreen = useContext(ClockGateContext);
+
   return (
     <div className='flex h-8 items-center gap-2.5 ps-2'>
-      <RecordingDot />
+      <RecordingDot isBlinking={isOnScreen} />
       <LevelBars
-        isActive
+        isActive={isOnScreen}
         count={28}
         seed={0.6}
         className='min-w-0 flex-1 justify-end overflow-hidden'
@@ -630,7 +724,7 @@ export function RecordingStrip({
       <ClockSince
         startedAt={startedAt}
         isRunning
-        className='text-muted-foreground w-9 text-end text-xs'
+        className='text-muted-foreground w-9 shrink-0 text-end text-xs'
       />
       <Button
         type='button'
@@ -641,7 +735,13 @@ export function RecordingStrip({
       >
         Cancel
       </Button>
-      <Button ref={doneRef} type='button' size='sm' onClick={onDone}>
+      <Button
+        ref={doneRef}
+        type='button'
+        size='sm'
+        onClick={onDone}
+        className={pressedSolidOf(isDonePressed)}
+      >
         Done
       </Button>
     </div>
@@ -702,8 +802,27 @@ const WORD_GAP_MS = 70;
 
 const MAX_FIELD_HEIGHT = 200;
 
-const TRANSCRIPT =
-  'Draft a plan to move the billing settings into the new account page';
+const TRANSCRIPT = 'Keep the old settings page live until the launch';
+
+const SEED_DRAFT = 'Plan the billing move with the roadmap attached.';
+
+const SEED_NOTICE: Notice = { tone: 'done', text: 'Lumen answered' };
+
+/** What a picked, pasted or dropped file brings; a demonstration attaches one without a file behind it. */
+type Incoming = {
+  name: string;
+  size: number;
+  kind: ComposerAttachment['kind'];
+  file?: File;
+};
+
+const DEMO_FILE: Incoming = {
+  name: 'q3-invoices.csv',
+  size: 86_400,
+  kind: 'file',
+};
+
+type PressKey = 'attach' | 'mic' | 'done' | 'send';
 
 const MODE_PHRASE: Record<PermissionMode, string> = {
   ask: 'it asks before each edit',
@@ -719,12 +838,25 @@ function kindOf(file: File): ComposerAttachment['kind'] {
   return 'file';
 }
 
-function previewUrlOf(file: File) {
-  const isImage = file.type.startsWith('image/');
-  if (!isImage) {
+function incomingOf(file: File): Incoming {
+  return { name: file.name, size: file.size, kind: kindOf(file), file };
+}
+
+function previewUrlOf(incoming: Incoming) {
+  if (!incoming.file) {
     return undefined;
   }
-  return URL.createObjectURL(file);
+  if (incoming.kind !== 'image') {
+    return undefined;
+  }
+  return URL.createObjectURL(incoming.file);
+}
+
+function footerClassOf(isRecording: boolean) {
+  if (isRecording) {
+    return 'opacity-0';
+  }
+  return 'opacity-100';
 }
 
 function refusalOf(tooLargeName: string | null, hasOverflow: boolean) {
@@ -762,7 +894,7 @@ function noticeKeyOf(notice: Notice) {
 }
 
 export default function Prompt02() {
-  const [draft, setDraft] = useState('');
+  const [draft, setDraft] = useState(SEED_DRAFT);
   const [attachments, setAttachments] =
     useState<ComposerAttachment[]>(SEED_ATTACHMENTS);
   const [mode, setMode] = useState<PermissionMode>('ask');
@@ -771,9 +903,10 @@ export default function Prompt02() {
   const [folder, setFolder] = useState(FOLDERS[0]);
   const [phase, setPhase] = useState<Phase>('idle');
   const [recordingSince, setRecordingSince] = useState(0);
-  const [notice, setNotice] = useState<Notice | null>(null);
+  const [notice, setNotice] = useState<Notice | null>(SEED_NOTICE);
   const [isDraggingFiles, setIsDraggingFiles] = useState(false);
   const { schedule, clearAll } = useTimeouts();
+  const { pressed, press } = usePress<PressKey>();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const doneRef = useRef<HTMLButtonElement>(null);
@@ -783,8 +916,8 @@ export default function Prompt02() {
   const idCounter = useRef(0);
   const sentDraft = useRef('');
   const shouldReduceMotion = useReducedMotion();
-  const rowPresence = rowPresenceOf(shouldReduceMotion);
-  const swapPresence = risePresenceOf(shouldReduceMotion);
+  const noticePresence = fadePresence();
+  const stripPresence = risePresenceOf(shouldReduceMotion);
   const layoutSpring = springOf(shouldReduceMotion);
   const isRecording = phase === 'recording';
   const isAnswering = phase === 'answering';
@@ -797,6 +930,8 @@ export default function Prompt02() {
   const isKeyEnabled = isAnswering || canSend;
   const model = modelOf(modelId);
   const announcement = notice?.text ?? '';
+  const attachmentIds = attachments.map((item) => item.id);
+  const attachmentOrder = attachmentIds.join(' ');
   useAutosize(textareaRef, draft, MAX_FIELD_HEIGHT);
 
   useEffect(() => {
@@ -823,15 +958,15 @@ export default function Prompt02() {
     );
   }
 
-  function addFiles(files: File[]) {
+  function attach(incoming: Incoming[]) {
     const room = MAX_FILES - attachments.length;
     const accepted: ComposerAttachment[] = [];
     let tooLargeName: string | null = null;
     let hasOverflow = false;
-    for (const file of files) {
-      const isTooLarge = file.size > MAX_BYTES;
+    for (const item of incoming) {
+      const isTooLarge = item.size > MAX_BYTES;
       if (isTooLarge) {
-        tooLargeName = file.name;
+        tooLargeName = item.name;
         continue;
       }
       const isOutOfRoom = accepted.length >= room;
@@ -839,15 +974,15 @@ export default function Prompt02() {
         hasOverflow = true;
         continue;
       }
-      const previewUrl = previewUrlOf(file);
+      const previewUrl = previewUrlOf(item);
       if (previewUrl) {
         previews.current.add(previewUrl);
       }
       accepted.push({
         id: nextId(),
-        name: file.name,
-        size: file.size,
-        kind: kindOf(file),
+        name: item.name,
+        size: item.size,
+        kind: item.kind,
         isUploading: true,
         previewUrl,
       });
@@ -861,6 +996,10 @@ export default function Prompt02() {
     if (refusal) {
       setNotice({ tone: 'refusal', text: refusal });
     }
+  }
+
+  function addFiles(files: File[]) {
+    attach(files.map(incomingOf));
   }
 
   function removeAttachment(id: string) {
@@ -932,6 +1071,9 @@ export default function Prompt02() {
     setNotice(null);
     setRecordingSince(Date.now());
     setPhase('recording');
+    if (isAutoplaying) {
+      return;
+    }
     requestAnimationFrame(() => doneRef.current?.focus());
   }
 
@@ -947,6 +1089,9 @@ export default function Prompt02() {
       const delay = (index + 1) * WORD_GAP_MS;
       schedule(() => setDraft((current) => appendWord(current, word)), delay);
     });
+    if (isAutoplaying) {
+      return;
+    }
     const streamEnd = (words.length + 1) * WORD_GAP_MS;
     schedule(() => caretToEnd(textareaRef), streamEnd);
     caretToEnd(textareaRef);
@@ -1021,190 +1166,241 @@ export default function Prompt02() {
     }
   }
 
+  function resetDemo() {
+    clearAll();
+    setAttachments(SEED_ATTACHMENTS);
+    setDraft(SEED_DRAFT);
+    setMode('ask');
+    setModelId('lumen');
+    setPhase('idle');
+    setNotice(SEED_NOTICE);
+  }
+
+  const dictatedWords = wordsOf(TRANSCRIPT);
+  const streamMs = (dictatedWords.length + 1) * WORD_GAP_MS;
+  const steps: AutoplayStep[] = [
+    { after: 1500, run: () => press('attach') },
+    { after: PRESS_LEAD_MS, run: () => attach([DEMO_FILE]) },
+    { after: UPLOAD_MS + CHECK_HOLD_MS + 500, run: () => setMode('accept') },
+    { after: 1300, run: () => setMode('ask') },
+    { after: 900, run: () => setModelId('lumen-max') },
+    { after: 1100, run: () => press('mic') },
+    { after: PRESS_LEAD_MS, run: startRecording },
+    { after: 2400, run: () => press('done') },
+    { after: PRESS_LEAD_MS, run: finishRecording },
+    { after: streamMs + 700, run: () => press('send') },
+    { after: PRESS_LEAD_MS, run: pressSendKey },
+    { after: ANSWER_MS + 500, run: hold },
+  ];
+  const { ref, isInView, isAutoplaying } = useAutoplay(steps, {
+    loopAfter: 2600,
+    onReset: resetDemo,
+  });
+
   return (
     <div
+      ref={ref}
       onKeyDown={handleEscape}
       className='flex w-full max-w-2xl flex-col gap-2'
     >
-      <div
-        onDragEnter={enterDrag}
-        onDragOver={holdDrag}
-        onDragLeave={leaveDrag}
-        onDrop={dropFiles}
-        className='bg-card hairline-ring ring-foreground/12 dark:ring-foreground/15 has-[textarea:focus]:ring-ring/25 relative flex flex-col rounded-xl p-2 shadow-[0_1px_2px_rgb(0_0_0/0.04)] transition-shadow duration-150 has-[textarea:focus]:ring-[3px]'
-      >
-        <AnimatedSize>
-          <ul
-            aria-label='Attachments'
-            className={cn(
-              'flex flex-wrap gap-2',
-              hasAttachments && 'px-1 pt-1.5 pb-2'
-            )}
-          >
-            <AnimatePresence initial={false} mode='popLayout'>
-              {attachments.map((attachment) => (
-                <motion.li
-                  key={attachment.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={layoutSpring}
-                >
-                  <AttachmentTile
-                    attachment={attachment}
-                    onRemove={removeAttachment}
-                    disabled={isBusy}
-                  />
-                </motion.li>
-              ))}
-            </AnimatePresence>
-          </ul>
-          <Textarea
-            ref={textareaRef}
-            rows={1}
-            value={draft}
-            onChange={(event) => setDraft(event.target.value)}
-            onKeyDown={handleFieldKeys}
-            onPaste={pasteFiles}
-            readOnly={isRecording}
-            aria-label='Prompt'
-            placeholder='Ask Lumen to plan, edit or explain. Paste or drop files'
-            className='max-h-none min-h-10 border-0 bg-transparent px-2 py-1.5 shadow-none ring-0 focus-visible:ring-0 dark:bg-transparent'
-          />
-          <input
-            ref={fileInputRef}
-            type='file'
-            multiple
-            tabIndex={-1}
-            aria-hidden='true'
-            className='hidden'
-            onChange={pickFiles}
-          />
+      <ClockGate isActive={isInView}>
+        <div
+          onDragEnter={enterDrag}
+          onDragOver={holdDrag}
+          onDragLeave={leaveDrag}
+          onDrop={dropFiles}
+          className='bg-card hairline-ring ring-foreground/12 dark:ring-foreground/15 has-[textarea:focus]:ring-ring/25 relative flex flex-col rounded-xl p-2 shadow-[0_1px_2px_rgb(0_0_0/0.04)] transition-shadow duration-150 has-[textarea:focus]:ring-[3px]'
+        >
+          <AnimatedSize>
+            <ul
+              aria-label='Attachments'
+              className={cn(
+                'flex flex-wrap gap-2',
+                hasAttachments && 'px-1 pt-1.5 pb-2'
+              )}
+            >
+              <AnimatePresence initial={false} mode='popLayout'>
+                {attachments.map((attachment) => (
+                  <motion.li
+                    key={attachment.id}
+                    layout
+                    layoutDependency={attachmentOrder}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={layoutSpring}
+                  >
+                    <AttachmentTile
+                      attachment={attachment}
+                      onRemove={removeAttachment}
+                      disabled={isBusy}
+                    />
+                  </motion.li>
+                ))}
+              </AnimatePresence>
+            </ul>
+            <Textarea
+              ref={textareaRef}
+              rows={1}
+              value={draft}
+              onChange={(event) => setDraft(event.target.value)}
+              onKeyDown={handleFieldKeys}
+              onPaste={pasteFiles}
+              readOnly={isRecording}
+              aria-label='Prompt'
+              placeholder='Ask Lumen to plan, edit or explain. Paste or drop files'
+              className='max-h-none min-h-10 border-0 bg-transparent px-2 py-1.5 shadow-none ring-0 focus-visible:ring-0 dark:bg-transparent'
+            />
+            <input
+              ref={fileInputRef}
+              type='file'
+              multiple
+              tabIndex={-1}
+              aria-hidden='true'
+              className='hidden'
+              onChange={pickFiles}
+            />
+          </AnimatedSize>
+          {/*
+                The strip lies over a footer that keeps its place, so nothing resizes when one
+                becomes the other and the clock of the strip ticks outside any resizing box.
+              */}
           <div className='relative pt-1'>
-            <AnimatePresence initial={false} mode='popLayout'>
+            <div
+              inert={isRecording}
+              className={cn(
+                'flex flex-wrap items-center gap-1 transition-opacity duration-150',
+                footerClassOf(isRecording)
+              )}
+            >
+              <Button
+                type='button'
+                variant='ghost'
+                size='icon'
+                aria-label='Attach files'
+                disabled={isBusy}
+                onClick={() => fileInputRef.current?.click()}
+                className={cn(
+                  'text-muted-foreground',
+                  pressedQuietOf(pressed === 'attach')
+                )}
+              >
+                <PaperclipIcon />
+              </Button>
+              <PermissionModeMenu
+                value={mode}
+                onValueChange={setMode}
+                disabled={isBusy}
+              />
+              <ModelMenu
+                value={modelId}
+                onValueChange={setModelId}
+                disabled={isBusy}
+              />
+              <ConnectedAppsMenu
+                value={apps}
+                onValueChange={setApps}
+                disabled={isBusy}
+              />
+              <FolderMenu
+                value={folder}
+                folders={FOLDERS}
+                onValueChange={setFolder}
+                disabled={isBusy}
+              />
+              <span className='ms-auto flex items-center gap-1'>
+                <Button
+                  ref={micRef}
+                  type='button'
+                  variant='ghost'
+                  size='icon'
+                  aria-label='Dictate'
+                  disabled={isBusy}
+                  onClick={startRecording}
+                  className={cn(
+                    'text-muted-foreground',
+                    pressedQuietOf(pressed === 'mic')
+                  )}
+                >
+                  <MicIcon />
+                </Button>
+                <Button
+                  type='button'
+                  size='icon'
+                  aria-label={sendKeyLabelOf(isAnswering)}
+                  disabled={!isKeyEnabled}
+                  focusableWhenDisabled
+                  onClick={pressSendKey}
+                  className={pressedSolidOf(pressed === 'send')}
+                >
+                  <Swap swapKey={String(isAnswering)}>
+                    {isAnswering && (
+                      <span
+                        aria-hidden='true'
+                        className='size-2.5 rounded-[2px] bg-current'
+                      />
+                    )}
+                    {!isAnswering && <ArrowUpIcon />}
+                  </Swap>
+                </Button>
+              </span>
+            </div>
+            <AnimatePresence initial={false}>
               {isRecording && (
-                <motion.div key='strip' {...swapPresence}>
+                <motion.div
+                  key='strip'
+                  className='absolute inset-x-0 bottom-0'
+                  {...stripPresence}
+                >
                   <RecordingStrip
                     startedAt={recordingSince}
                     onCancel={cancelRecording}
                     onDone={finishRecording}
                     doneRef={doneRef}
+                    isDonePressed={pressed === 'done'}
                   />
-                </motion.div>
-              )}
-              {!isRecording && (
-                <motion.div
-                  key='footer'
-                  className='flex flex-wrap items-center gap-1'
-                  {...swapPresence}
-                >
-                  <Button
-                    type='button'
-                    variant='ghost'
-                    size='icon'
-                    aria-label='Attach files'
-                    disabled={isBusy}
-                    onClick={() => fileInputRef.current?.click()}
-                    className='text-muted-foreground'
-                  >
-                    <PaperclipIcon />
-                  </Button>
-                  <PermissionModeMenu
-                    value={mode}
-                    onValueChange={setMode}
-                    disabled={isBusy}
-                  />
-                  <ModelMenu
-                    value={modelId}
-                    onValueChange={setModelId}
-                    disabled={isBusy}
-                  />
-                  <ConnectedAppsMenu
-                    value={apps}
-                    onValueChange={setApps}
-                    disabled={isBusy}
-                  />
-                  <FolderMenu
-                    value={folder}
-                    folders={FOLDERS}
-                    onValueChange={setFolder}
-                    disabled={isBusy}
-                  />
-                  <span className='ms-auto flex items-center gap-1'>
-                    <Button
-                      ref={micRef}
-                      type='button'
-                      variant='ghost'
-                      size='icon'
-                      aria-label='Dictate'
-                      disabled={isBusy}
-                      onClick={startRecording}
-                      className='text-muted-foreground'
-                    >
-                      <MicIcon />
-                    </Button>
-                    <Button
-                      type='button'
-                      size='icon'
-                      aria-label={sendKeyLabelOf(isAnswering)}
-                      disabled={!isKeyEnabled}
-                      focusableWhenDisabled
-                      onClick={pressSendKey}
-                    >
-                      <Swap swapKey={String(isAnswering)}>
-                        {isAnswering && (
-                          <span
-                            aria-hidden='true'
-                            className='size-2.5 rounded-[2px] bg-current'
-                          />
-                        )}
-                        {!isAnswering && <ArrowUpIcon />}
-                      </Swap>
-                    </Button>
-                  </span>
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
+          <AnimatePresence>
+            {isDraggingFiles && (
+              <motion.div
+                key='drop'
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.15 }}
+                className='bg-card/90 hairline-border border-primary/50 pointer-events-none absolute inset-1 flex flex-col items-center justify-center gap-1.5 rounded-[calc(var(--radius-xl)-0.25rem)] border-dashed'
+              >
+                <UploadCloudIcon className='text-primary-ink size-5' />
+                <p className='text-[13px] font-medium'>Drop to attach</p>
+                <p className='text-muted-foreground text-xs'>
+                  Up to {countOf(MAX_FILES, 'file')}, {formatBytes(MAX_BYTES)}{' '}
+                  each
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+        <AnimatedSize>
+          <AnimatePresence initial={false} mode='popLayout'>
+            {notice && (
+              <motion.p
+                key={noticeKeyOf(notice)}
+                className='text-muted-foreground flex items-start gap-2 px-1 pt-1 text-[13px] leading-5'
+                {...noticePresence}
+              >
+                <span className='mt-0.5 shrink-0'>
+                  {NOTICE_ICON[notice.tone]}
+                </span>
+                {notice.text}
+              </motion.p>
+            )}
+          </AnimatePresence>
         </AnimatedSize>
-        <AnimatePresence>
-          {isDraggingFiles && (
-            <motion.div
-              key='drop'
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.15 }}
-              className='bg-card/90 hairline-border border-primary/50 pointer-events-none absolute inset-1 flex flex-col items-center justify-center gap-1.5 rounded-[calc(var(--radius-xl)-0.25rem)] border-dashed'
-            >
-              <UploadCloudIcon className='text-primary-ink size-5' />
-              <p className='text-[13px] font-medium'>Drop to attach</p>
-              <p className='text-muted-foreground text-xs'>
-                Up to {countOf(MAX_FILES, 'file')}, {formatBytes(MAX_BYTES)}{' '}
-                each
-              </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-      <AnimatedSize>
-        <AnimatePresence initial={false} mode='popLayout'>
-          {notice && (
-            <motion.p
-              key={noticeKeyOf(notice)}
-              className='text-muted-foreground flex items-start gap-2 px-1 pt-1 text-[13px] leading-5'
-              {...rowPresence}
-            >
-              <span className='mt-0.5 shrink-0'>
-                {NOTICE_ICON[notice.tone]}
-              </span>
-              {notice.text}
-            </motion.p>
-          )}
-        </AnimatePresence>
-      </AnimatedSize>
-      <LiveRegion message={announcement} />
+      </ClockGate>
+      <LiveRegion message={spokenUnless(isAutoplaying, announcement)} />
     </div>
   );
 }

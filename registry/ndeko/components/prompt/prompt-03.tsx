@@ -1,8 +1,19 @@
 'use client';
 
-import { useId, useRef, useState, useSyncExternalStore } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import {
+  useId,
+  useImperativeHandle,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from 'react';
 
 import { WordRoll } from '@/components/core/word-roll';
+import {
+  useAutoplay,
+  type AutoplayStep,
+} from '@/registry/ndeko/hooks/use-autoplay';
 import {
   CheckIcon,
   ChevronsUpDownIcon,
@@ -10,6 +21,7 @@ import {
   SearchIcon,
   XIcon,
 } from '@/registry/ndeko/lib/icons';
+import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { MENU_LABEL } from '@/registry/ndeko/lib/recipes';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
@@ -31,9 +43,15 @@ import {
   PopoverTrigger,
 } from '@/registry/ndeko/ui/popover';
 import { Segments, type Segment } from '@/registry/ndeko/ui/segments';
-import { SelectedMark } from '@/registry/ndeko/ui/selected-mark';
 import { Switch } from '@/registry/ndeko/ui/switch';
 
+import {
+  hold,
+  keyDelayOf,
+  prefixesOf,
+  spokenUnless,
+} from './_parts/demonstration';
+import { DrawnCheck } from './_parts/drawn-check';
 import { LabTile } from './_parts/lab-tile';
 import {
   CAPABILITIES,
@@ -52,7 +70,31 @@ import {
 import { includesQuery, Marked } from './_parts/marked';
 import { countOf } from './_parts/words';
 
-export type PickerSurface = 'popover' | 'dialog';
+/** `inline` draws the panel in the page under its trigger, with no layer to open. */
+export type PickerSurface = 'popover' | 'dialog' | 'inline';
+
+export type ModelPickerHandle = {
+  /** Moves the highlight by rows, as the arrow keys do. */
+  move: (step: number) => void;
+  /** Puts the highlight on a model, as the pointer does. */
+  highlight: (modelId: string) => void;
+  search: (query: string) => void;
+  /** Picks the highlighted model, as Enter does. */
+  pickHighlighted: () => void;
+  compare: (isComparing: boolean) => void;
+};
+
+/** Quicker than a tab thumb: the highlight follows the pointer from row to row. */
+const HIGHLIGHT_TRAVEL = { type: 'spring', bounce: 0, duration: 0.22 } as const;
+
+const NO_TRAVEL = { duration: 0 };
+
+function highlightTravelOf(shouldReduceMotion: boolean | null) {
+  if (shouldReduceMotion) {
+    return NO_TRAVEL;
+  }
+  return HIGHLIGHT_TRAVEL;
+}
 
 const WIDE_QUERY = '(min-width: 640px)';
 
@@ -229,13 +271,6 @@ function keepInView(list: HTMLElement | null, optionId: string) {
   }
 }
 
-function optionToneOf(isActive: boolean) {
-  if (isActive) {
-    return 'bg-foreground/5';
-  }
-  return '';
-}
-
 function compareOtherOf(
   active: ModelOption | undefined,
   picked: ModelOption,
@@ -385,6 +420,8 @@ type ModelPanelProps = {
   onPick: (modelId: string) => void;
   layout: PickerSurface;
   searchRef: React.RefObject<HTMLInputElement | null>;
+  handleRef?: React.Ref<ModelPickerHandle>;
+  isDemonstrated: boolean;
 };
 
 function ModelPanel({
@@ -393,6 +430,8 @@ function ModelPanel({
   onPick,
   layout,
   searchRef,
+  handleRef,
+  isDemonstrated,
 }: ModelPanelProps) {
   const [query, setQuery] = useState('');
   const [activeId, setActiveId] = useState(pickedId);
@@ -410,6 +449,13 @@ function ModelPanel({
   const isEmpty = visible.length === 0;
   const results = resultsLineOf(visible.length, query);
   const isSide = layout === 'popover';
+  const hasCloseButton = layout === 'dialog';
+
+  function pickHighlighted() {
+    if (active) {
+      onPick(active.id);
+    }
+  }
 
   function optionIdFor(modelId: string) {
     return optionIdOf(baseId, modelId) ?? '';
@@ -437,10 +483,9 @@ function ModelPanel({
       moveActive(-1);
       return;
     }
-    const isPick = event.key === 'Enter' && active !== undefined;
-    if (isPick) {
+    if (event.key === 'Enter') {
       event.preventDefault();
-      onPick(active.id);
+      pickHighlighted();
     }
   }
 
@@ -454,13 +499,21 @@ function ModelPanel({
     searchRef.current?.focus();
   }
 
+  useImperativeHandle(handleRef, () => ({
+    move: moveActive,
+    highlight: setActiveId,
+    search: changeQuery,
+    pickHighlighted,
+    compare: setIsComparing,
+  }));
+
   return (
     <AnimatedSize axis={sizeAxisOf(layout)}>
       <div className={cn('flex flex-col', panelWidthOf(isComparing, layout))}>
         <div
           className={cn(
             'flex items-center justify-between gap-3 px-3 pt-3 pb-2',
-            !isSide && 'pe-12'
+            hasCloseButton && 'pe-12'
           )}
         >
           <p className='text-sm font-medium'>Choose a model</p>
@@ -541,7 +594,7 @@ function ModelPanel({
           Speed and price: estimate for this demo
         </p>
       </div>
-      <LiveRegion message={results} />
+      <LiveRegion message={spokenUnless(isDemonstrated, results)} />
     </AnimatedSize>
   );
 }
@@ -581,6 +634,9 @@ function ModelGroupRows({
   onPick,
 }: ModelGroupRowsProps) {
   const headingId = `${baseId}-lab-${group.lab.id}`;
+  const highlightId = `${baseId}-highlight`;
+  const shouldReduceMotion = useReducedMotion();
+  const travel = highlightTravelOf(shouldReduceMotion);
 
   return (
     <div role='group' aria-labelledby={headingId}>
@@ -600,12 +656,18 @@ function ModelGroupRows({
             onPointerMove={() => onActivate(model.id)}
             onMouseDown={(event) => event.preventDefault()}
             onClick={() => onPick(model.id)}
-            className={cn(
-              'flex cursor-default items-start gap-2.5 rounded-md px-2 py-2',
-              optionToneOf(isActive)
-            )}
+            className='relative flex cursor-default items-start gap-2.5 rounded-md px-2 py-2'
           >
-            <span className='flex min-w-0 flex-1 flex-col gap-1'>
+            {isActive && (
+              <motion.span
+                layoutId={highlightId}
+                layoutDependency={activeId}
+                transition={travel}
+                aria-hidden='true'
+                className='bg-foreground/5 absolute inset-0 rounded-md'
+              />
+            )}
+            <span className='relative flex min-w-0 flex-1 flex-col gap-1'>
               <span className='flex items-baseline gap-2'>
                 <span className='shrink-0 text-[13px] font-medium'>
                   <Marked text={model.name} query={query} />
@@ -617,9 +679,15 @@ function ModelGroupRows({
               <ModelFacts model={model} />
               <CapabilityChips model={model} />
             </span>
-            {isPicked && (
-              <SelectedMark label='Current model' className='mt-0.5' />
-            )}
+            <AnimatePresence initial={false}>
+              {isPicked && (
+                <DrawnCheck
+                  key='mark'
+                  label='Current model'
+                  className='relative mt-0.5'
+                />
+              )}
+            </AnimatePresence>
           </div>
         );
       })}
@@ -653,6 +721,10 @@ export type ModelPickerProps = {
   onValueChange: (modelId: string) => void;
   /** Left out, the picker is a dialog under 640px and a popover above. */
   as?: PickerSurface;
+  /** Runs what the keys of the panel do while it is shown, for a demonstration or a control beside it. */
+  handleRef?: React.Ref<ModelPickerHandle>;
+  /** A demonstration drives the panel: its result counts are not read aloud. */
+  isDemonstrated?: boolean;
 };
 
 export function ModelPicker({
@@ -660,9 +732,15 @@ export function ModelPicker({
   value,
   onValueChange,
   as,
+  handleRef,
+  isDemonstrated = false,
 }: ModelPickerProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isInlineOpen, setIsInlineOpen] = useState(true);
   const searchRef = useRef<HTMLInputElement>(null);
+  const panelId = useId();
+  const shouldReduceMotion = useReducedMotion();
+  const inlinePresence = rowPresenceOf(shouldReduceMotion);
   const isWide = useSyncExternalStore(
     subscribeToWidth,
     isWideNow,
@@ -683,8 +761,41 @@ export function ModelPicker({
       onPick={pick}
       layout={surface}
       searchRef={searchRef}
+      handleRef={handleRef}
+      isDemonstrated={isDemonstrated}
     />
   );
+
+  if (surface === 'inline') {
+    return (
+      <div className='flex flex-col gap-2'>
+        <div>
+          <PickerTrigger
+            model={picked}
+            aria-expanded={isInlineOpen}
+            aria-controls={panelId}
+            onClick={() => setIsInlineOpen((current) => !current)}
+          />
+        </div>
+        <AnimatePresence initial={false}>
+          {isInlineOpen && (
+            <motion.div
+              key='panel'
+              id={panelId}
+              role='group'
+              aria-label='Choose a model'
+              className='overflow-hidden'
+              {...inlinePresence}
+            >
+              <div className='bg-foreground/[0.03] dark:bg-foreground/[0.05] rounded-lg'>
+                {panel}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    );
+  }
 
   if (surface === 'dialog') {
     return (
@@ -721,10 +832,15 @@ export function ModelPicker({
 type SurfaceChoice = 'auto' | PickerSurface;
 
 const SURFACES: Segment<SurfaceChoice>[] = [
+  { value: 'inline', label: 'Inline' },
   { value: 'auto', label: 'Auto' },
   { value: 'popover', label: 'Popover' },
   { value: 'dialog', label: 'Dialog' },
 ];
+
+const START_MODEL = 'lumen';
+
+const DEMO_SEARCH = 'hal';
 
 function asOf(choice: SurfaceChoice) {
   if (choice === 'auto') {
@@ -740,13 +856,41 @@ function summaryOf(model: ModelOption) {
 }
 
 export default function Prompt03() {
-  const [modelId, setModelId] = useState('lumen');
-  const [surface, setSurface] = useState<SurfaceChoice>('auto');
+  const [modelId, setModelId] = useState(START_MODEL);
+  const [surface, setSurface] = useState<SurfaceChoice>('inline');
+  const picker = useRef<ModelPickerHandle>(null);
   const model = modelOf(modelId);
   const summary = summaryOf(model);
 
+  function resetDemo() {
+    setModelId(START_MODEL);
+    picker.current?.compare(false);
+    picker.current?.search('');
+    picker.current?.highlight(START_MODEL);
+  }
+
+  const searchTyping = prefixesOf(DEMO_SEARCH).map((typed, index) => ({
+    after: keyDelayOf(index, 900, 110),
+    run: () => picker.current?.search(typed),
+  }));
+  const steps: AutoplayStep[] = [
+    { after: 1400, run: () => picker.current?.move(1) },
+    { after: 520, run: () => picker.current?.move(1) },
+    { after: 520, run: () => picker.current?.move(1) },
+    ...searchTyping,
+    { after: 900, run: () => picker.current?.pickHighlighted() },
+    { after: 1300, run: () => picker.current?.search('') },
+    { after: 800, run: () => picker.current?.compare(true) },
+    { after: 2200, run: () => picker.current?.compare(false) },
+    { after: 600, run: hold },
+  ];
+  const { ref, isAutoplaying } = useAutoplay(steps, {
+    loopAfter: 2400,
+    onReset: resetDemo,
+  });
+
   return (
-    <div className='flex w-full max-w-[24rem] flex-col gap-3'>
+    <div ref={ref} className='flex w-full max-w-[24rem] flex-col gap-3'>
       <div className='bg-card hairline-ring ring-border flex flex-col gap-3 rounded-xl p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
         <div className='flex flex-col gap-1.5'>
           <p className='text-muted-foreground text-xs'>Answers come from</p>
@@ -755,6 +899,8 @@ export default function Prompt03() {
               value={modelId}
               onValueChange={setModelId}
               as={asOf(surface)}
+              handleRef={picker}
+              isDemonstrated={isAutoplaying}
             />
           </div>
         </div>
@@ -762,17 +908,20 @@ export default function Prompt03() {
           <WordRoll text={summary} />
         </p>
       </div>
-      <div className='flex items-center justify-between gap-3 px-1'>
+      <div className='flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 px-1'>
         <p className='text-muted-foreground text-xs'>Opens as</p>
         <Segments
           value={surface}
           segments={SURFACES}
           onValueChange={setSurface}
           label='Opens as'
-          className='w-52'
+          className='w-64 max-w-full'
+          itemClassName='px-1.5'
         />
       </div>
-      <LiveRegion message={`${model.name} picked`} />
+      <LiveRegion
+        message={spokenUnless(isAutoplaying, `${model.name} picked`)}
+      />
     </div>
   );
 }

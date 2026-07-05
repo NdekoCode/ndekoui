@@ -4,8 +4,8 @@ import {
   LayoutGroup,
   motion,
   Reorder,
+  useAnimate,
   useDragControls,
-  useInView,
   useReducedMotion,
 } from 'motion/react';
 import {
@@ -20,6 +20,10 @@ import {
 import { MotionNumber } from '@/components/core/motion-number';
 import { useDocumentVisible } from '@/registry/ndeko/hooks/use-agent-run';
 import {
+  useAutoplay,
+  type AutoplayStep,
+} from '@/registry/ndeko/hooks/use-autoplay';
+import {
   ArrowDownIcon,
   ArrowUpIcon,
   EllipsisIcon,
@@ -30,7 +34,8 @@ import {
   TrashIcon,
   XIcon,
 } from '@/registry/ndeko/lib/icons';
-import { springOf } from '@/registry/ndeko/lib/motion-presets';
+import { EASE_OUT_STRONG, springOf } from '@/registry/ndeko/lib/motion-presets';
+import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -47,6 +52,7 @@ import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
 import { Textarea } from '@/registry/ndeko/ui/textarea';
 
+import { spokenUnless } from './_parts/demonstration';
 import { isOwnKey, isSendKey, useAutosize } from './_parts/use-autosize';
 import { nounOf, wordsOf } from './_parts/words';
 
@@ -357,6 +363,10 @@ type Message = {
   role: 'user' | 'assistant';
   text: string;
   status: MessageStatus;
+  /** The prompt waited in the queue: its bubble flies in from its card and settles where it lands. */
+  cameFromQueue?: boolean;
+  /** Words already written when the answer first shows. */
+  startsAt?: number;
 };
 
 const WORD_MS = 85;
@@ -364,6 +374,13 @@ const WORD_MS = 85;
 const END_PAUSE_MS = 650;
 
 const STICK_DISTANCE = 48;
+
+/** The piece plays itself: once the queue is empty it waits this long and starts again. */
+const LOOP_AFTER_MS = 2800;
+
+const NO_STEPS: AutoplayStep[] = [];
+
+const LANDING = { duration: 0.32, ease: EASE_OUT_STRONG };
 
 const FIRST_PROMPT = 'Compare the shipping terms of Brightmoor and Ostrava';
 
@@ -381,6 +398,9 @@ const SEED_QUEUE: QueuedPrompt[] = [
   { id: 'finance', text: 'Then draft a short note for finance' },
 ];
 
+/** The piece opens with the first sentence of the answer written, so it reads before anything plays. */
+const SEED_WORDS = 16;
+
 const SEED_MESSAGES: Message[] = [
   { id: 'first', role: 'user', text: FIRST_PROMPT, status: 'done' },
   {
@@ -388,6 +408,7 @@ const SEED_MESSAGES: Message[] = [
     role: 'assistant',
     text: ANSWERS[FIRST_PROMPT],
     status: 'streaming',
+    startsAt: SEED_WORDS,
   },
 ];
 
@@ -399,9 +420,18 @@ function answerFor(prompt: string) {
   return `Looked into “${prompt}”. The two vendors differ less here: both answer within a day and both keep the details in their terms page, which I linked in the notes.`;
 }
 
-function promptMessagesOf(item: QueuedPrompt): Message[] {
+function promptMessagesOf(
+  item: QueuedPrompt,
+  cameFromQueue: boolean
+): Message[] {
   return [
-    { id: item.id, role: 'user', text: item.text, status: 'done' },
+    {
+      id: item.id,
+      role: 'user',
+      text: item.text,
+      status: 'done',
+      cameFromQueue,
+    },
     {
       id: `${item.id}-answer`,
       role: 'assistant',
@@ -451,39 +481,119 @@ function keyGlyphOf(isAnswering: boolean, hasText: boolean) {
 }
 
 function UserBubble({ message }: { message: Message }) {
+  const [scope, animate] = useAnimate<HTMLDivElement>();
+  const shouldReduceMotion = useReducedMotion();
+  const hasLanded = useRef(false);
+
+  function settle() {
+    const isFirstLanding = !hasLanded.current;
+    hasLanded.current = true;
+    if (!isFirstLanding) {
+      return;
+    }
+    if (!message.cameFromQueue) {
+      return;
+    }
+    if (shouldReduceMotion) {
+      return;
+    }
+    animate(scope.current, { scale: [1.04, 1] }, LANDING);
+  }
+
   return (
     <motion.div
+      ref={scope}
       layoutId={`prompt-${message.id}`}
+      layoutDependency={message.id}
+      onLayoutAnimationComplete={settle}
       className='bg-foreground/[0.05] dark:bg-foreground/[0.07] ms-auto max-w-[85%] rounded-2xl rounded-ee-md px-3 py-2 text-[13px] leading-5'
     >
-      <motion.span layout='position' className='block'>
+      <motion.span
+        layout='position'
+        layoutDependency={message.id}
+        className='block'
+      >
         {message.text}
       </motion.span>
     </motion.div>
   );
 }
 
-function AssistantText({
-  message,
-  shownWords,
-}: {
+type StreamProps = {
+  /** False off screen and in a hidden tab: the answer holds its place. */
+  isActive: boolean;
+  /** Called with the number of words written, each time one arrives. */
+  onProgress: (shownWords: number) => void;
+  onComplete: () => void;
+};
+
+type StreamingTextProps = StreamProps & {
   message: Message;
-  shownWords: number;
-}) {
-  const isStreaming = message.status === 'streaming';
-  const isStopped = message.status === 'stopped';
+};
+
+/** The words tick in here, so an answer that streams re-renders its own text and nothing around it. */
+function StreamingText({
+  message,
+  isActive,
+  onProgress,
+  onComplete,
+}: StreamingTextProps) {
+  const [shownWords, setShownWords] = useState(message.startsAt ?? 0);
   const words = wordsOf(message.text);
-  const visible = textOf(words, shownWords, isStreaming);
+  const shown = words.slice(0, shownWords);
+  const isComplete = shownWords >= words.length;
+  const reportProgress = useEffectEvent(onProgress);
+  const complete = useEffectEvent(onComplete);
+
+  useEffect(() => {
+    if (!isActive) {
+      return;
+    }
+    const timer = setTimeout(() => {
+      if (isComplete) {
+        complete();
+        return;
+      }
+      setShownWords((current) => current + 1);
+    }, delayOf(isComplete));
+    return () => clearTimeout(timer);
+  }, [isActive, shownWords, isComplete]);
+
+  useLayoutEffect(() => {
+    reportProgress(shownWords);
+  }, [shownWords]);
 
   return (
     <div className='text-[13px] leading-6 text-pretty'>
-      {visible}
-      {isStreaming && (
+      {shown.map((word, index) => (
         <span
-          aria-hidden='true'
-          className='bg-primary ms-0.5 inline-block h-3.5 w-1.5 animate-pulse rounded-[2px] align-[-2px]'
-        />
-      )}
+          key={index}
+          className='transition-opacity duration-300 starting:opacity-0'
+        >
+          {word}{' '}
+        </span>
+      ))}
+      <span
+        aria-hidden='true'
+        className={cn(
+          'bg-primary inline-block h-3.5 w-1.5 rounded-[2px] align-[-2px]',
+          isActive && 'animate-pulse'
+        )}
+      />
+    </div>
+  );
+}
+
+function AssistantText({ message, ...stream }: StreamingTextProps) {
+  if (message.status === 'streaming') {
+    return <StreamingText message={message} {...stream} />;
+  }
+  const isStopped = message.status === 'stopped';
+  const words = wordsOf(message.text);
+
+  return (
+    <div className='text-[13px] leading-6 text-pretty'>
+      {words.join(' ')}
       {isStopped && (
         <Badge variant='secondary' className='ms-1.5 align-[1px]'>
           Stopped
@@ -493,36 +603,24 @@ function AssistantText({
   );
 }
 
-function textOf(words: string[], shownWords: number, isStreaming: boolean) {
-  if (!isStreaming) {
-    return words.join(' ');
-  }
-  const shown = words.slice(0, shownWords);
-  return shown.join(' ');
-}
-
 export default function Prompt09() {
   const [messages, setMessages] = useState<Message[]>(SEED_MESSAGES);
   const [queue, setQueue] = useState<QueuedPrompt[]>(SEED_QUEUE);
-  const [shownWords, setShownWords] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [draft, setDraft] = useState('');
   const [message, setMessage] = useState('');
-  const rootRef = useRef<HTMLDivElement>(null);
+  const [hasActed, setHasActed] = useState(false);
   const threadRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const sticksToBottom = useRef(true);
+  const shownWords = useRef(SEED_WORDS);
   const idCounter = useRef(0);
   const layoutGroupId = useId();
-  const isInView = useInView(rootRef, { amount: 0.3 });
   const isVisible = useDocumentVisible();
   const shouldReduceMotion = useReducedMotion();
   const layoutSpring = springOf(shouldReduceMotion);
   const streaming = messages.find((item) => item.status === 'streaming');
-  const answerWordCount = wordsOf(streaming?.text ?? '').length;
   const isAnswering = streaming !== undefined;
-  const isOnScreen = isInView && isVisible;
-  const shouldStream = isAnswering && isOnScreen;
   const hasText = draft.trim() !== '';
   const keyLabel = sendLabelOf(isAnswering, hasText);
   const keyGlyph = keyGlyphOf(isAnswering, hasText);
@@ -530,7 +628,26 @@ export default function Prompt09() {
   const isFinished = !isAnswering && queue.length === 0;
   useAutosize(textareaRef, draft, 120);
 
-  const completeAnswer = useEffectEvent(() => {
+  function stickToBottom() {
+    const thread = threadRef.current;
+    if (!thread) {
+      return;
+    }
+    if (sticksToBottom.current) {
+      thread.scrollTop = thread.scrollHeight;
+    }
+  }
+
+  useLayoutEffect(() => {
+    stickToBottom();
+  }, [messages]);
+
+  function followAnswer(count: number) {
+    shownWords.current = count;
+    stickToBottom();
+  }
+
+  function completeAnswer() {
     const finished = finishedOf(messages, 'done');
     const [first, ...rest] = queue;
     const canContinue = first !== undefined && !isPaused;
@@ -539,36 +656,14 @@ export default function Prompt09() {
       setMessage('Answer finished');
       return;
     }
-    setMessages([...finished, ...promptMessagesOf(first)]);
+    setMessages([...finished, ...promptMessagesOf(first, true)]);
     setQueue(rest);
-    setShownWords(0);
     setMessage(`Answer finished. Sent the next prompt: ${first.text}`);
-  });
+  }
 
-  useEffect(() => {
-    if (!shouldStream) {
-      return;
-    }
-    const isComplete = shownWords >= answerWordCount;
-    const timer = setTimeout(() => {
-      if (isComplete) {
-        completeAnswer();
-        return;
-      }
-      setShownWords((current) => current + 1);
-    }, delayOf(isComplete));
-    return () => clearTimeout(timer);
-  }, [shouldStream, shownWords, answerWordCount]);
-
-  useLayoutEffect(() => {
-    const thread = threadRef.current;
-    if (!thread) {
-      return;
-    }
-    if (sticksToBottom.current) {
-      thread.scrollTop = thread.scrollHeight;
-    }
-  }, [messages, shownWords]);
+  function noteAction() {
+    setHasActed(true);
+  }
 
   function trackScroll(event: React.UIEvent<HTMLDivElement>) {
     const thread = event.currentTarget;
@@ -582,10 +677,10 @@ export default function Prompt09() {
     return `typed-${idCounter.current}`;
   }
 
-  function sendNow(item: QueuedPrompt) {
+  function sendNow(item: QueuedPrompt, cameFromQueue: boolean) {
     sticksToBottom.current = true;
-    setMessages((current) => [...current, ...promptMessagesOf(item)]);
-    setShownWords(0);
+    const sent = promptMessagesOf(item, cameFromQueue);
+    setMessages((current) => [...current, ...sent]);
   }
 
   function submit() {
@@ -600,7 +695,7 @@ export default function Prompt09() {
       setMessage(`Queued: ${text}`);
       return;
     }
-    sendNow(item);
+    sendNow(item, false);
     setMessage(`Sent: ${text}`);
   }
 
@@ -609,7 +704,8 @@ export default function Prompt09() {
       return;
     }
     const words = wordsOf(streaming.text);
-    const shownText = words.slice(0, shownWords).join(' ');
+    const shown = words.slice(0, shownWords.current);
+    const shownText = shown.join(' ');
     setMessages((current) => finishedOf(current, 'stopped', shownText));
     const hasQueue = queue.length > 0;
     setIsPaused(hasQueue);
@@ -623,7 +719,7 @@ export default function Prompt09() {
     }
     setIsPaused(false);
     setQueue(rest);
-    sendNow(first);
+    sendNow(first, true);
     setMessage(`Sent the next prompt: ${first.text}`);
   }
 
@@ -687,17 +783,37 @@ export default function Prompt09() {
     stop();
   }
 
-  function replay() {
+  function restart() {
     setMessages(SEED_MESSAGES);
     setQueue(SEED_QUEUE);
-    setShownWords(0);
     setIsPaused(false);
+    setMessage('');
     sticksToBottom.current = true;
+  }
+
+  function replay() {
+    restart();
     setMessage('The demo starts again');
   }
 
+  const { ref, isInView } = useAutoplay(NO_STEPS, {
+    loopAfter: LOOP_AFTER_MS,
+    onReset: restart,
+    isEnabled: isFinished,
+  });
+  // Under reduced motion the piece does not play by itself: the answer holds until a person acts on it.
+  const playsAlone = !shouldReduceMotion;
+  const canStream = playsAlone || hasActed;
+  const isOnScreen = isInView && isVisible;
+  const isStreaming = isOnScreen && canStream;
+
   return (
-    <div ref={rootRef} className='flex w-full max-w-[28rem] flex-col gap-2'>
+    <div
+      ref={ref}
+      onPointerDownCapture={noteAction}
+      onKeyDownCapture={noteAction}
+      className='flex w-full max-w-[28rem] flex-col gap-2'
+    >
       <div className='bg-card hairline-ring ring-border flex flex-col rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
         <LayoutGroup id={layoutGroupId}>
           <div
@@ -713,7 +829,9 @@ export default function Prompt09() {
                 <AssistantText
                   key={item.id}
                   message={item}
-                  shownWords={shownWords}
+                  isActive={isStreaming}
+                  onProgress={followAnswer}
+                  onComplete={completeAnswer}
                 />
               );
             })}
@@ -729,6 +847,7 @@ export default function Prompt09() {
             />
             <motion.div
               layout='position'
+              layoutDependency={queue.length}
               transition={layoutSpring}
               onKeyDown={handleEscape}
               className='bg-foreground/[0.03] dark:bg-foreground/[0.05] has-[textarea:focus]:ring-ring/25 flex items-end gap-1.5 rounded-lg p-1.5 has-[textarea:focus]:ring-[3px]'
@@ -773,7 +892,7 @@ export default function Prompt09() {
           label='Start over'
         />
       </div>
-      <LiveRegion message={message} />
+      <LiveRegion message={spokenUnless(!hasActed, message)} />
     </div>
   );
 }

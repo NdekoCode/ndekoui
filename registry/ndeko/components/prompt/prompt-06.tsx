@@ -1,8 +1,19 @@
 'use client';
 
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
+import {
+  useEffect,
+  useId,
+  useImperativeHandle,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 
+import {
+  useAutoplay,
+  type AutoplayStep,
+} from '@/registry/ndeko/hooks/use-autoplay';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import {
   ArrowUpIcon,
@@ -19,6 +30,15 @@ import { TextLoader } from '@/registry/ndeko/ui/chat-loader';
 import { Input } from '@/registry/ndeko/ui/input';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 
+import {
+  hiddenIf,
+  hold,
+  PRESS_LEAD_MS,
+  pressedQuietOf,
+  pressedSolidOf,
+  spokenUnless,
+  usePress,
+} from './_parts/demonstration';
 import { isOwnKey, useAutosize } from './_parts/use-autosize';
 
 export type RewriteRequest = {
@@ -45,7 +65,35 @@ type DiffPart = {
   word: string;
 };
 
-const QUICK_ASKS = ['Shorter', 'Friendlier', 'More direct'];
+const QUICK_ASKS = ['Shorter', 'Friendlier', 'More direct'] as const;
+
+export type QuickAsk = (typeof QUICK_ASKS)[number];
+
+/** A suggestion already on screen: the phrase, how it was asked and what came back. */
+export type RewriteReview = {
+  start: number;
+  end: number;
+  instruction: string;
+  proposal: string;
+};
+
+export type RewriteHandle = {
+  /** Selects a phrase, as dragging over it or Shift with the arrows does. */
+  select: (start: number, end: number) => void;
+  /** Shows a button of the bar held down. */
+  press: (key: QuickAsk | 'accept') => void;
+  ask: (instruction: string) => void;
+  accept: () => void;
+  discard: () => void;
+  review: (review: RewriteReview) => void;
+};
+
+/** The tint is one flat colour drawn as an image, so it can grow over the phrase from its first letter to its last, line after line. */
+const PHRASE_TINT = [
+  'rounded-[3px] bg-no-repeat [background-image:linear-gradient(var(--tint),var(--tint))]',
+  '[--tint:color-mix(in_oklab,var(--primary)_15%,transparent)] dark:[--tint:color-mix(in_oklab,var(--primary)_25%,transparent)]',
+  'bg-[length:100%_100%] transition-[background-size] duration-300 ease-(--ease-out-strong) starting:bg-[length:0%_100%]',
+].join(' ');
 
 const BAR_GAP = 8;
 
@@ -211,7 +259,7 @@ function placeBar(
 
 function wordStyleOf(kind: DiffKind) {
   if (kind === 'removed') {
-    return 'text-destructive-ink/60 decoration-destructive-ink/60 line-through';
+    return 'text-destructive-ink/60 decoration-destructive-ink/60 line-through transition-[color,text-decoration-color] duration-300 starting:text-foreground starting:decoration-transparent';
   }
   if (kind === 'added') {
     return 'text-primary-ink decoration-primary-ink/50 underline underline-offset-[3px]';
@@ -314,11 +362,19 @@ function arrivalOf(shouldReduceMotion: boolean | null) {
   return { opacity: 0, y: 3 };
 }
 
+const BAR_RISE = { duration: 0.18, ease: EASE_OUT_STRONG };
+
 const BAR_PRESENCE = {
-  initial: { opacity: 0, scale: 0.96 },
-  animate: { opacity: 1, scale: 1 },
-  exit: { opacity: 0, scale: 0.96, transition: { duration: 0.1 } },
-  transition: { duration: 0.15, ease: EASE_OUT_STRONG },
+  initial: { opacity: 0, y: 6, scale: 0.97 },
+  animate: { opacity: 1, y: 0, scale: 1 },
+  exit: { opacity: 0, scale: 0.97, transition: { duration: 0.1 } },
+  transition: BAR_RISE,
+};
+
+/** In a demonstration the bar waits for the tint to cross the phrase, so the two read as one after the other. */
+const BAR_AFTER_SWEEP = {
+  ...BAR_PRESENCE,
+  transition: { ...BAR_RISE, delay: 0.24 },
 };
 
 const BAR_FADE = {
@@ -328,11 +384,31 @@ const BAR_FADE = {
   transition: { duration: 0.15 },
 };
 
-function barPresenceOf(shouldReduceMotion: boolean | null) {
+function barPresenceOf(
+  shouldReduceMotion: boolean | null,
+  isDemonstrated: boolean
+) {
   if (shouldReduceMotion) {
     return BAR_FADE;
   }
+  if (isDemonstrated) {
+    return BAR_AFTER_SWEEP;
+  }
   return BAR_PRESENCE;
+}
+
+function rangeOfReview(review: RewriteReview | undefined): Range | null {
+  if (!review) {
+    return null;
+  }
+  return { start: review.start, end: review.end };
+}
+
+function modeOfReview(review: RewriteReview | undefined): Mode {
+  if (review) {
+    return 'review';
+  }
+  return 'idle';
 }
 
 function announcementOf(mode: Mode, proposal: string, isUnchanged: boolean) {
@@ -359,6 +435,12 @@ export type RewriteInPlaceProps = {
   onValueChange: (value: string) => void;
   rewrite: (request: RewriteRequest, signal: AbortSignal) => Promise<string>;
   label: string;
+  /** Opens on a suggestion already made, waiting to be accepted or discarded. */
+  defaultReview?: RewriteReview;
+  /** Runs what the pointer and the bar do, for a demonstration or a control beside the text. */
+  handleRef?: React.Ref<RewriteHandle>;
+  /** A demonstration drives the piece: nothing takes the focus and nothing is read aloud. */
+  isDemonstrated?: boolean;
   className?: string;
 };
 
@@ -367,16 +449,24 @@ export function RewriteInPlace({
   onValueChange,
   rewrite,
   label,
+  defaultReview,
+  handleRef,
+  isDemonstrated = false,
   className,
 }: RewriteInPlaceProps) {
-  const [selection, setSelection] = useState<Range | null>(null);
-  const [mode, setMode] = useState<Mode>('idle');
+  const [selection, setSelection] = useState<Range | null>(() =>
+    rangeOfReview(defaultReview)
+  );
+  const [mode, setMode] = useState<Mode>(() => modeOfReview(defaultReview));
   const [instruction, setInstruction] = useState('');
-  const [lastInstruction, setLastInstruction] = useState('');
-  const [proposal, setProposal] = useState('');
+  const [lastInstruction, setLastInstruction] = useState(
+    defaultReview?.instruction ?? ''
+  );
+  const [proposal, setProposal] = useState(defaultReview?.proposal ?? '');
   const [attempt, setAttempt] = useState(1);
   const [settledRange, setSettledRange] = useState<Range | null>(null);
   const { schedule, clearAll } = useTimeouts();
+  const { pressed, press } = usePress<QuickAsk | 'accept'>();
   const containerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
@@ -386,7 +476,8 @@ export function RewriteInPlace({
   const request = useRef<AbortController | null>(null);
   const hintId = useId();
   const shouldReduceMotion = useReducedMotion();
-  const barPresence = barPresenceOf(shouldReduceMotion);
+  const barPresence = barPresenceOf(shouldReduceMotion, isDemonstrated);
+  const canMoveFocus = !isDemonstrated;
   const isReviewing = mode === 'review';
   const isAccepting = mode === 'accepting';
   const isSettling = mode === 'settling';
@@ -447,7 +538,9 @@ export function RewriteInPlace({
     setLastInstruction(trimmed);
     setAttempt(take);
     setMode('rewriting');
-    barRef.current?.focus();
+    if (canMoveFocus) {
+      barRef.current?.focus();
+    }
     rewrite(
       { phrase, instruction: trimmed, before, after, attempt: take },
       controller.signal
@@ -458,7 +551,9 @@ export function RewriteInPlace({
         }
         setProposal(next);
         setMode('review');
-        requestAnimationFrame(() => focusReview(next));
+        if (canMoveFocus) {
+          requestAnimationFrame(() => focusReview(next));
+        }
       })
       .catch(() => {
         if (controller.signal.aborted) {
@@ -495,6 +590,9 @@ export function RewriteInPlace({
     setMode('idle');
     setProposal('');
     setInstruction('');
+    if (!canMoveFocus) {
+      return;
+    }
     requestAnimationFrame(() => {
       const textarea = textareaRef.current;
       textarea?.focus();
@@ -506,6 +604,9 @@ export function RewriteInPlace({
     request.current?.abort();
     setMode('idle');
     setProposal('');
+    if (!canMoveFocus) {
+      return;
+    }
     requestAnimationFrame(() => fieldRef.current?.focus());
   }
 
@@ -531,6 +632,9 @@ export function RewriteInPlace({
       setProposal('');
       setInstruction('');
       setMode('idle');
+      if (!canMoveFocus) {
+        return;
+      }
       requestAnimationFrame(() => {
         const textarea = textareaRef.current;
         textarea?.focus();
@@ -539,20 +643,36 @@ export function RewriteInPlace({
     }, ACCEPT_FADE_MS + SETTLE_MS);
   }
 
-  function readSelection(event: React.SyntheticEvent<HTMLTextAreaElement>) {
+  function selectPhrase(start: number, end: number) {
     if (mode !== 'idle') {
       return;
     }
-    const textarea = event.currentTarget;
-    const range = phraseRangeOf(
-      textarea.value,
-      textarea.selectionStart,
-      textarea.selectionEnd
-    );
+    const range = phraseRangeOf(value, start, end);
     if (sameRange(range, selection)) {
       return;
     }
     setSelection(range);
+  }
+
+  function readSelection(event: React.SyntheticEvent<HTMLTextAreaElement>) {
+    const textarea = event.currentTarget;
+    selectPhrase(textarea.selectionStart, textarea.selectionEnd);
+  }
+
+  function showReview(review: RewriteReview) {
+    request.current?.abort();
+    clearAll();
+    setSelection({ start: review.start, end: review.end });
+    setLastInstruction(review.instruction);
+    setProposal(review.proposal);
+    setInstruction('');
+    setAttempt(1);
+    setSettledRange(null);
+    setMode('review');
+  }
+
+  function askFirstTake(text: string) {
+    askFor(text, 1);
   }
 
   function handleKeys(event: React.KeyboardEvent<HTMLDivElement>) {
@@ -631,7 +751,7 @@ export function RewriteInPlace({
                 size='sm'
                 onClick={accept}
                 aria-keyshortcuts='Tab'
-                className='ms-auto'
+                className={cn('ms-auto', pressedSolidOf(pressed === 'accept'))}
               >
                 <CheckIcon />
                 Accept
@@ -649,7 +769,10 @@ export function RewriteInPlace({
           </p>
         )}
         {isRewriting && (
-          <p className='flex h-7 items-center px-2'>
+          <p
+            aria-hidden={hiddenIf(isDemonstrated)}
+            className='flex h-7 items-center px-2'
+          >
             <TextLoader text='Rewriting' size='sm' />
           </p>
         )}
@@ -674,7 +797,8 @@ export function RewriteInPlace({
                   type='button'
                   variant='outline'
                   size='sm'
-                  onClick={() => askFor(ask, 1)}
+                  onClick={() => askFirstTake(ask)}
+                  className={pressedQuietOf(pressed === ask)}
                 >
                   {ask}
                 </Button>
@@ -705,6 +829,15 @@ export function RewriteInPlace({
     </motion.div>
   );
 
+  useImperativeHandle(handleRef, () => ({
+    select: selectPhrase,
+    press,
+    ask: askFirstTake,
+    accept,
+    discard,
+    review: showReview,
+  }));
+
   return (
     <div
       ref={containerRef}
@@ -727,7 +860,7 @@ export function RewriteInPlace({
                   ref={phraseRef}
                   animate={{ opacity: highlightPulseOf(isRewriting) }}
                   transition={highlightTransitionOf(isRewriting)}
-                  className='bg-primary/15 dark:bg-primary/25 rounded-[3px]'
+                  className={PHRASE_TINT}
                 >
                   {phrase}
                 </motion.span>
@@ -767,12 +900,12 @@ export function RewriteInPlace({
           </div>
         )}
       </AnimatedSize>
-      <AnimatePresence>{showsBar && bar}</AnimatePresence>
+      <AnimatePresence initial={false}>{showsBar && bar}</AnimatePresence>
       <p id={hintId} className='sr-only'>
         Select a phrase with the mouse or with Shift and the arrow keys, then
         press Tab to reach the rewrite bar.
       </p>
-      <LiveRegion message={announcement} />
+      <LiveRegion message={spokenUnless(isDemonstrated, announcement)} />
     </div>
   );
 }
@@ -1039,12 +1172,78 @@ async function demoRewrite(request: RewriteRequest, signal: AbortSignal) {
 const LETTER =
   'Hi Dana, I just wanted to reach out because we were wondering if it might be possible to get a credit for the October order, since a few of the lines seem to have been billed above the price we agreed on. Please let us know at your earliest convenience.';
 
+const [OPENING, REASON, CLOSING] = PREPARED;
+
+const OPENING_START = LETTER.indexOf(OPENING.phrase);
+
+/** The piece opens on its best picture: the first sentence already rewritten, waiting for an answer. */
+const FIRST_REVIEW: RewriteReview = {
+  start: OPENING_START,
+  end: OPENING_START + OPENING.phrase.length,
+  instruction: 'Shorter',
+  proposal: OPENING.takes.shorter[0],
+};
+
+type DemoRewrite = {
+  phrase: string;
+  ask: QuickAsk;
+};
+
+/** After the first sentence, a round rewrites one of these, a different one each time. */
+const NEXT_REWRITES: DemoRewrite[] = [
+  { phrase: REASON.phrase, ask: 'More direct' },
+  { phrase: CLOSING.phrase, ask: 'Friendlier' },
+];
+
 export default function Prompt06() {
   const [letter, setLetter] = useState(LETTER);
+  const [round, setRound] = useState(0);
+  const rewriter = useRef<RewriteHandle>(null);
+  const { pressed, press } = usePress<'start-over'>();
   const isEdited = letter !== LETTER;
+  const next = NEXT_REWRITES[round % NEXT_REWRITES.length];
+
+  function startOver() {
+    setLetter(LETTER);
+  }
+
+  function selectNext() {
+    const start = letter.indexOf(next.phrase);
+    if (start < 0) {
+      return;
+    }
+    const end = start + next.phrase.length;
+    rewriter.current?.select(start, end);
+  }
+
+  function resetDemo() {
+    setLetter(LETTER);
+    rewriter.current?.review(FIRST_REVIEW);
+    setRound((current) => current + 1);
+  }
+
+  const steps: AutoplayStep[] = [
+    { after: 2200, run: () => rewriter.current?.press('accept') },
+    { after: PRESS_LEAD_MS, run: () => rewriter.current?.accept() },
+    { after: 2000, run: selectNext },
+    { after: 1300, run: () => rewriter.current?.press(next.ask) },
+    { after: PRESS_LEAD_MS, run: () => rewriter.current?.ask(next.ask) },
+    {
+      after: THINKING_MS + 2600,
+      run: () => rewriter.current?.press('accept'),
+    },
+    { after: PRESS_LEAD_MS, run: () => rewriter.current?.accept() },
+    { after: 2000, run: () => press('start-over') },
+    { after: PRESS_LEAD_MS, run: startOver },
+    { after: 300, run: hold },
+  ];
+  const { ref, isAutoplaying } = useAutoplay(steps, {
+    loopAfter: 2200,
+    onReset: resetDemo,
+  });
 
   return (
-    <div className='flex w-full max-w-[30rem] flex-col gap-3'>
+    <div ref={ref} className='flex w-full max-w-[30rem] flex-col gap-3'>
       <div className='bg-card hairline-ring ring-border flex flex-col gap-3 rounded-xl p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
         <div className='flex items-baseline justify-between gap-3'>
           <p className='text-sm font-medium'>Credit request to Brightmoor</p>
@@ -1055,6 +1254,9 @@ export default function Prompt06() {
           onValueChange={setLetter}
           rewrite={demoRewrite}
           label='Credit request to Brightmoor'
+          defaultReview={FIRST_REVIEW}
+          handleRef={rewriter}
+          isDemonstrated={isAutoplaying}
           className='-mx-1'
         />
       </div>
@@ -1067,8 +1269,11 @@ export default function Prompt06() {
             type='button'
             variant='ghost'
             size='sm'
-            onClick={() => setLetter(LETTER)}
-            className='text-muted-foreground'
+            onClick={startOver}
+            className={cn(
+              'text-muted-foreground',
+              pressedQuietOf(pressed === 'start-over')
+            )}
           >
             <RotateCcwIcon />
             Start over

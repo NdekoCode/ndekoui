@@ -2,16 +2,21 @@
 
 import {
   animate,
+  AnimatePresence,
   motion,
   useMotionValue,
   useMotionValueEvent,
   useReducedMotion,
   useTransform,
 } from 'motion/react';
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useImperativeHandle, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll } from '@/components/core/word-roll';
+import {
+  useAutoplay,
+  type AutoplayStep,
+} from '@/registry/ndeko/hooks/use-autoplay';
 import { ChevronDownIcon } from '@/registry/ndeko/lib/icons';
 import { springOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -24,8 +29,9 @@ import {
   PopoverTitle,
   PopoverTrigger,
 } from '@/registry/ndeko/ui/popover';
-import { SelectedMark } from '@/registry/ndeko/ui/selected-mark';
 
+import { hold, spokenUnless } from './_parts/demonstration';
+import { DrawnCheck } from './_parts/drawn-check';
 import { LabTile } from './_parts/lab-tile';
 import type { LabId } from './_parts/labs';
 
@@ -39,6 +45,11 @@ export type EffortModel = {
   seconds: [number, number];
   /** Dollars per answer at Low and at Max effort. */
   cost: [number, number];
+};
+
+export type EffortControlHandle = {
+  /** Glides the knob to a stop, held the way a finger holds it, and lets it catch there. */
+  moveTo: (effort: Effort) => void;
 };
 
 const EFFORTS: Effort[] = ['low', 'medium', 'high', 'max'];
@@ -88,6 +99,11 @@ function shareOfIndex(index: number) {
 function percentOf(share: number) {
   const percent = share * 100;
   return `${percent}%`;
+}
+
+/** The knob travels by transform: its share of the width of the track, which is a size container. */
+function knobOffsetOf(share: number) {
+  return `calc(${share} * 100cqw)`;
 }
 
 function stopDotStyleOf(index: number) {
@@ -197,6 +213,7 @@ type EffortTrackProps = {
   onValueChange: (effort: Effort) => void;
   onLiveChange: (position: number | null) => void;
   valueText: string;
+  handleRef?: React.Ref<EffortControlHandle>;
 };
 
 function EffortTrack({
@@ -205,13 +222,15 @@ function EffortTrack({
   onValueChange,
   onLiveChange,
   valueText,
+  handleRef,
 }: EffortTrackProps) {
   const shouldReduceMotion = useReducedMotion();
   const index = EFFORTS.indexOf(value);
   const share = useMotionValue(shareOfIndex(index));
-  const knobLeft = useTransform(share, percentOf);
+  const knobX = useTransform(share, knobOffsetOf);
   const fillScale = useTransform(share, clampedShare);
   const [isGrabbing, setIsGrabbing] = useState(false);
+  const [isLifted, setIsLifted] = useState(false);
   const trackRef = useRef<HTMLDivElement>(null);
   const knobRef = useRef<HTMLSpanElement>(null);
   const isDragging = useRef(false);
@@ -219,7 +238,8 @@ function EffortTrack({
   const interaction = useRef(0);
   const settling = useRef<ReturnType<typeof animate> | null>(null);
   const nearestStop = nearestIndexOf(livePosition);
-  const press = pressOf(isGrabbing, shouldReduceMotion);
+  const isHeld = isGrabbing || isLifted;
+  const press = pressOf(isHeld, shouldReduceMotion);
 
   useMotionValueEvent(share, 'change', (latest) => {
     if (!isInteracting.current) {
@@ -254,6 +274,7 @@ function EffortTrack({
       return;
     }
     isInteracting.current = false;
+    setIsLifted(false);
     onLiveChange(null);
   }
 
@@ -339,6 +360,15 @@ function EffortTrack({
     settleTo(stopIndex, 0);
   }
 
+  function moveTo(effort: Effort) {
+    const stopIndex = EFFORTS.indexOf(effort);
+    beginInteraction();
+    setIsLifted(true);
+    settleTo(stopIndex, 0);
+  }
+
+  useImperativeHandle(handleRef, () => ({ moveTo }));
+
   return (
     <div className='flex flex-col gap-1.5'>
       <div
@@ -351,7 +381,7 @@ function EffortTrack({
           cursorOf(isGrabbing)
         )}
       >
-        <div ref={trackRef} className='relative h-full'>
+        <div ref={trackRef} className='@container relative h-full'>
           <span className='bg-foreground/[0.08] absolute inset-x-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full' />
           <motion.span
             aria-hidden='true'
@@ -376,10 +406,10 @@ function EffortTrack({
             aria-valuenow={index}
             aria-valuetext={valueText}
             onKeyDown={moveFromKeys}
-            style={{ left: knobLeft }}
+            style={{ x: knobX }}
             animate={press}
             transition={{ duration: 0.12 }}
-            className='bg-card hairline-ring ring-foreground/15 dark:bg-foreground/90 focus-visible:ring-ring focus-visible:ring-offset-background absolute top-1/2 -mt-2.5 -ml-2.5 size-5 rounded-full shadow-[0_1px_3px_rgb(0_0_0/0.18)] outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
+            className='bg-card hairline-ring ring-foreground/15 dark:bg-foreground/90 focus-visible:ring-ring focus-visible:ring-offset-background absolute top-1/2 left-0 -mt-2.5 -ml-2.5 size-5 rounded-full shadow-[0_1px_3px_rgb(0_0_0/0.18)] outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
           />
         </div>
       </div>
@@ -392,7 +422,7 @@ function EffortTrack({
             onClick={() => jumpTo(stopIndex)}
             style={stopLeftOf(stopIndex)}
             className={cn(
-              'absolute top-0 cursor-pointer whitespace-nowrap transition-colors duration-150',
+              'absolute top-0 cursor-pointer whitespace-nowrap transition-[color,scale] duration-150 active:scale-[0.97]',
               stopAlignOf(stopIndex),
               stopToneOf(stopIndex === nearestStop)
             )}
@@ -412,8 +442,8 @@ function cursorOf(isGrabbing: boolean) {
   return 'cursor-grab';
 }
 
-function pressOf(isGrabbing: boolean, shouldReduceMotion: boolean | null) {
-  const canScale = isGrabbing && !shouldReduceMotion;
+function pressOf(isHeld: boolean, shouldReduceMotion: boolean | null) {
+  const canScale = isHeld && !shouldReduceMotion;
   if (canScale) {
     return { scale: 1.15 };
   }
@@ -518,6 +548,7 @@ function ModelRows({
               {isPicked && (
                 <motion.span
                   layoutId={highlightId}
+                  layoutDependency={modelId}
                   transition={spring}
                   aria-hidden='true'
                   className='bg-foreground/[0.05] dark:bg-foreground/[0.07] absolute inset-0 rounded-lg'
@@ -526,7 +557,9 @@ function ModelRows({
               <span className='relative flex min-w-0 items-center gap-2'>
                 <LabTile lab={model.lab} size='sm' />
                 <span className='truncate font-medium'>{model.name}</span>
-                {isPicked && <SelectedMark className='size-4 shrink-0' />}
+                <AnimatePresence initial={false}>
+                  {isPicked && <DrawnCheck key='mark' className='size-4' />}
+                </AnimatePresence>
               </span>
               <span className='text-muted-foreground relative text-end text-xs'>
                 <MotionNumber
@@ -573,6 +606,8 @@ export type EffortControlProps = {
   onModelChange: (modelId: string) => void;
   effort: Effort;
   onEffortChange: (effort: Effort) => void;
+  /** Moves the knob from outside, for a demonstration or a control beside it. */
+  handleRef?: React.Ref<EffortControlHandle>;
   className?: string;
 };
 
@@ -582,6 +617,7 @@ export function EffortControl({
   onModelChange,
   effort,
   onEffortChange,
+  handleRef,
   className,
 }: EffortControlProps) {
   const [livePosition, setLivePosition] = useState<number | null>(null);
@@ -611,6 +647,7 @@ export function EffortControl({
           onValueChange={onEffortChange}
           onLiveChange={setLivePosition}
           valueText={valueText}
+          handleRef={handleRef}
         />
       </div>
       <ModelRows
@@ -694,20 +731,47 @@ const MODELS: EffortModel[] = [
   },
 ];
 
+const START_MODEL = 'lumen';
+
+const START_EFFORT: Effort = 'high';
+
 export default function Prompt04() {
-  const [modelId, setModelId] = useState('lumen');
-  const [effort, setEffort] = useState<Effort>('high');
+  const [modelId, setModelId] = useState(START_MODEL);
+  const [effort, setEffort] = useState<Effort>(START_EFFORT);
+  const control = useRef<EffortControlHandle>(null);
   const model = modelIn(MODELS, modelId);
   const announcement = valueTextOf(model, effort);
 
+  function resetDemo() {
+    setModelId(START_MODEL);
+    setEffort(START_EFFORT);
+  }
+
+  const steps: AutoplayStep[] = [
+    { after: 1500, run: () => control.current?.moveTo('medium') },
+    { after: 620, run: () => control.current?.moveTo('low') },
+    { after: 1100, run: () => control.current?.moveTo('medium') },
+    { after: 620, run: () => control.current?.moveTo('high') },
+    { after: 620, run: () => control.current?.moveTo('max') },
+    { after: 1200, run: () => control.current?.moveTo('high') },
+    { after: 1200, run: () => setModelId('lumen-max') },
+    { after: 1500, run: () => setModelId(START_MODEL) },
+    { after: 500, run: hold },
+  ];
+  const { ref, isAutoplaying } = useAutoplay(steps, {
+    loopAfter: 2400,
+    onReset: resetDemo,
+  });
+
   return (
-    <div className='flex w-full max-w-[26rem] flex-col gap-3'>
+    <div ref={ref} className='flex w-full max-w-[26rem] flex-col gap-3'>
       <EffortControl
         models={MODELS}
         modelId={modelId}
         onModelChange={setModelId}
         effort={effort}
         onEffortChange={setEffort}
+        handleRef={control}
         className='bg-card hairline-ring ring-border rounded-xl p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
       />
       <div className='flex flex-col gap-1.5'>
@@ -727,7 +791,7 @@ export default function Prompt04() {
           />
         </div>
       </div>
-      <LiveRegion message={announcement} />
+      <LiveRegion message={spokenUnless(isAutoplaying, announcement)} />
     </div>
   );
 }

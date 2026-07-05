@@ -5,6 +5,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { WordRoll } from '@/components/core/word-roll';
 import {
+  useAutoplay,
+  type AutoplayStep,
+} from '@/registry/ndeko/hooks/use-autoplay';
+import {
   CircleAlertIcon,
   LoaderIcon,
   MicIcon,
@@ -18,6 +22,8 @@ import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { Segments, type Segment } from '@/registry/ndeko/ui/segments';
 
 import { speechLevelAt } from '@/registry/ndeko/lib/speech-envelope';
+
+import { spokenUnless } from './_parts/demonstration';
 
 export type VoiceState = 'idle' | 'listening' | 'thinking' | 'speaking';
 
@@ -36,28 +42,61 @@ const TAU = Math.PI * 2;
 
 const BAR_COUNT = 72;
 
-const DISC_SHARE = 0.27;
+const TICK_COUNT = 120;
 
-const RING_GAP_SHARE = 0.06;
+/** One tick in ten is longer, so the slow turn of the fine ring can be read. */
+const LONG_TICK_EVERY = 10;
+
+const DISC_SHARE = 0.235;
+
+const RING_GAP_SHARE = 0.055;
 
 const REST_LENGTH_SHARE = 0.022;
 
-const MAX_LENGTH_SHARE = 0.15;
+const MAX_LENGTH_SHARE = 0.125;
+
+const TICK_RING_SHARE = 0.455;
+
+const TICK_LENGTH_SHARE = 0.012;
+
+const LONG_TICK_LENGTH_SHARE = 0.028;
 
 const BAR_WIDTH = 1.6;
 
+const TICK_WIDTH = 1;
+
+const ARC_WIDTH = 2.5;
+
 const BASE_BAR_ALPHA = 0.24;
+
+const TICK_ALPHA = 0.16;
+
+const SPOKEN_ALPHA = 0.85;
+
+/** How far the bars reach while the agent speaks, as a share of their reach while it listens. */
+const SPOKEN_REACH = 0.7;
+
+const SWEEP_LIFT = 0.45;
 
 const BREATH_HERTZ = 0.22;
 
-const BREATH_DEPTH = 0.018;
+const BREATH_DEPTH = 0.02;
 
-const SWELL_DEPTH = 0.16;
+/** The disc grows by this share at the loudest level: it follows the voice without swelling. */
+const LEVEL_DEPTH = 0.03;
 
-/** Radians per second: a full turn of the thinking sweep takes about four seconds. */
+/** Radians per second: the bars drift one way and the fine ring the other, twice as fast, about a turn a minute. */
+const BAR_DRIFT = 0.05;
+
+const TICK_DRIFT = -0.1;
+
+/** Radians per second: a full turn of the thinking arc takes about four seconds. */
 const SWEEP_SPEED = 1.6;
 
 const SWEEP_WIDTH = 0.62;
+
+/** Radians: the length of the arc that travels the ring while the agent thinks. */
+const ARC_SPAN = 0.7;
 
 /** Seconds for the orb to ease most of the way into a new state. */
 const STATE_EASE_S = 0.22;
@@ -86,6 +125,18 @@ type OrbFrame = {
   seconds: number;
 };
 
+type Geometry = {
+  size: number;
+  centre: number;
+  disc: number;
+  ringStart: number;
+  restLength: number;
+  maxLength: number;
+  tickRing: number;
+  tickLength: number;
+  longTickLength: number;
+};
+
 function oneHotOf(state: VoiceState): Weights {
   return {
     idle: Number(state === 'idle'),
@@ -106,10 +157,37 @@ function paletteOf(element: HTMLElement): Palette {
   };
 }
 
-function angleOfBar(index: number) {
+function geometryOf(size: number): Geometry {
+  const disc = size * DISC_SHARE;
+  return {
+    size,
+    centre: size / 2,
+    disc,
+    ringStart: disc + size * RING_GAP_SHARE,
+    restLength: size * REST_LENGTH_SHARE,
+    maxLength: size * MAX_LENGTH_SHARE,
+    tickRing: size * TICK_RING_SHARE,
+    tickLength: size * TICK_LENGTH_SHARE,
+    longTickLength: size * LONG_TICK_LENGTH_SHARE,
+  };
+}
+
+function angleOfBar(index: number, seconds: number) {
   const share = index / BAR_COUNT;
   const angle = share * TAU;
-  return angle - Math.PI / 2;
+  const drift = seconds * BAR_DRIFT;
+  return angle + drift - Math.PI / 2;
+}
+
+function angleOfTick(index: number, seconds: number) {
+  const share = index / TICK_COUNT;
+  const angle = share * TAU;
+  const drift = seconds * TICK_DRIFT;
+  return angle + drift - Math.PI / 2;
+}
+
+function sweepAngleOf(seconds: number) {
+  return seconds * SWEEP_SPEED - Math.PI / 2;
 }
 
 /** A slow organic variation around the ring, so the bars never move as one block. */
@@ -130,10 +208,9 @@ function angularDistance(first: number, second: number) {
   return Math.min(wrapped, other);
 }
 
-function sweepOf(index: number, seconds: number) {
-  const sweepAngle = seconds * SWEEP_SPEED - Math.PI / 2;
-  const barAngle = angleOfBar(index);
-  const distance = angularDistance(barAngle, sweepAngle);
+/** How much a bar is lit by the thinking arc as it passes: 1 under it, 0 away from it. */
+function sweepOf(barAngle: number, seconds: number) {
+  const distance = angularDistance(barAngle, sweepAngleOf(seconds));
   const closeness = 1 - distance / SWEEP_WIDTH;
   const bounded = Math.max(0, closeness);
   return bounded * bounded;
@@ -142,13 +219,39 @@ function sweepOf(index: number, seconds: number) {
 function discScaleOf(frame: OrbFrame) {
   const breathAngle = frame.seconds * TAU * BREATH_HERTZ;
   const breath = Math.sin(breathAngle) * BREATH_DEPTH;
-  const idle = frame.weights.idle * breath;
-  const swell = frame.weights.speaking * frame.output * SWELL_DEPTH;
-  const lean = frame.weights.listening * frame.input * 0.03;
-  return 1 + idle + swell + lean;
+  const calm = frame.weights.idle + frame.weights.thinking;
+  const heard = frame.weights.listening * frame.input;
+  const spoken = frame.weights.speaking * frame.output;
+  const level = heard + spoken;
+  return 1 + calm * breath + level * LEVEL_DEPTH;
 }
 
-function strokeBar(
+function tickLengthOf(index: number, geometry: Geometry) {
+  const isLong = index % LONG_TICK_EVERY === 0;
+  if (isLong) {
+    return geometry.longTickLength;
+  }
+  return geometry.tickLength;
+}
+
+/** Where a bar ends: its rest length, plus what the voice and the passing arc add to it. */
+function barEndOf(
+  index: number,
+  angle: number,
+  frame: OrbFrame,
+  geometry: Geometry
+) {
+  const shape = shapeOf(index, frame.seconds);
+  const sweep = sweepOf(angle, frame.seconds) * frame.weights.thinking;
+  const heard = frame.weights.listening * frame.input * shape;
+  const spoken = frame.weights.speaking * frame.output * SPOKEN_REACH * shape;
+  const lit = sweep * SWEEP_LIFT;
+  const reach = heard + spoken + lit;
+  const length = geometry.restLength + reach * geometry.maxLength;
+  return geometry.ringStart + length;
+}
+
+function addSpoke(
   context: CanvasRenderingContext2D,
   centre: number,
   angle: number,
@@ -157,56 +260,130 @@ function strokeBar(
 ) {
   const cos = Math.cos(angle);
   const sin = Math.sin(angle);
-  const startX = centre + cos * from;
-  const startY = centre + sin * from;
-  const endX = centre + cos * to;
-  const endY = centre + sin * to;
+  context.moveTo(centre + cos * from, centre + sin * from);
+  context.lineTo(centre + cos * to, centre + sin * to);
+}
+
+/** The fine ring: every tick in one path, turning against the bars. */
+function drawTicks(
+  context: CanvasRenderingContext2D,
+  geometry: Geometry,
+  seconds: number,
+  palette: Palette
+) {
+  context.globalAlpha = TICK_ALPHA;
+  context.strokeStyle = palette.foreground;
+  context.lineWidth = TICK_WIDTH;
   context.beginPath();
-  context.moveTo(startX, startY);
-  context.lineTo(endX, endY);
+  for (let index = 0; index < TICK_COUNT; index += 1) {
+    const angle = angleOfTick(index, seconds);
+    const end = geometry.tickRing + tickLengthOf(index, geometry);
+    addSpoke(context, geometry.centre, angle, geometry.tickRing, end);
+  }
   context.stroke();
+}
+
+/** The ring that follows the voice: neutral while it hears, in the brand colour while the agent speaks. */
+function drawBars(
+  context: CanvasRenderingContext2D,
+  geometry: Geometry,
+  frame: OrbFrame,
+  palette: Palette
+) {
+  context.lineWidth = BAR_WIDTH;
+  context.beginPath();
+  for (let index = 0; index < BAR_COUNT; index += 1) {
+    const angle = angleOfBar(index, frame.seconds);
+    const end = barEndOf(index, angle, frame, geometry);
+    addSpoke(context, geometry.centre, angle, geometry.ringStart, end);
+  }
+  context.globalAlpha = BASE_BAR_ALPHA;
+  context.strokeStyle = palette.foreground;
+  context.stroke();
+  const spokenAlpha = frame.weights.speaking * SPOKEN_ALPHA;
+  if (spokenAlpha < 0.01) {
+    return;
+  }
+  context.globalAlpha = spokenAlpha;
+  context.strokeStyle = palette.primary;
+  context.stroke();
+}
+
+/** The bars the thinking arc passes over take its colour, the nearest the most. */
+function drawLitBars(
+  context: CanvasRenderingContext2D,
+  geometry: Geometry,
+  frame: OrbFrame,
+  palette: Palette
+) {
+  const strength = frame.weights.thinking;
+  if (strength < 0.01) {
+    return;
+  }
+  context.lineWidth = BAR_WIDTH;
+  context.strokeStyle = palette.primary;
+  for (let index = 0; index < BAR_COUNT; index += 1) {
+    const angle = angleOfBar(index, frame.seconds);
+    const sweep = sweepOf(angle, frame.seconds) * strength;
+    if (sweep < 0.01) {
+      continue;
+    }
+    const end = barEndOf(index, angle, frame, geometry);
+    context.globalAlpha = sweep;
+    context.beginPath();
+    addSpoke(context, geometry.centre, angle, geometry.ringStart, end);
+    context.stroke();
+  }
+}
+
+/** While the agent thinks, a short arc travels the fine ring. */
+function drawThinkingArc(
+  context: CanvasRenderingContext2D,
+  geometry: Geometry,
+  frame: OrbFrame,
+  palette: Palette
+) {
+  const strength = frame.weights.thinking;
+  if (strength < 0.01) {
+    return;
+  }
+  const head = sweepAngleOf(frame.seconds);
+  const radius = geometry.tickRing + geometry.longTickLength / 2;
+  context.globalAlpha = strength;
+  context.strokeStyle = palette.primary;
+  context.lineWidth = ARC_WIDTH;
+  context.beginPath();
+  context.arc(geometry.centre, geometry.centre, radius, head - ARC_SPAN, head);
+  context.stroke();
+}
+
+function drawDisc(
+  context: CanvasRenderingContext2D,
+  geometry: Geometry,
+  frame: OrbFrame,
+  palette: Palette
+) {
+  const radius = geometry.disc * discScaleOf(frame);
+  context.globalAlpha = 1;
+  context.fillStyle = palette.primary;
+  context.beginPath();
+  context.arc(geometry.centre, geometry.centre, radius, 0, TAU);
+  context.fill();
 }
 
 function drawOrb(
   context: CanvasRenderingContext2D,
-  size: number,
+  geometry: Geometry,
   frame: OrbFrame,
   palette: Palette
 ) {
-  const centre = size / 2;
-  const disc = size * DISC_SHARE;
-  const ringStart = disc + size * RING_GAP_SHARE;
-  const restLength = size * REST_LENGTH_SHARE;
-  const maxLength = size * MAX_LENGTH_SHARE;
-  const { weights, input, output, seconds } = frame;
-  context.clearRect(0, 0, size, size);
+  context.clearRect(0, 0, geometry.size, geometry.size);
   context.lineCap = 'round';
-  context.lineWidth = BAR_WIDTH;
-  for (let index = 0; index < BAR_COUNT; index += 1) {
-    const angle = angleOfBar(index);
-    const shape = shapeOf(index, seconds);
-    const sweepShare = sweepOf(index, seconds);
-    const sweep = sweepShare * weights.thinking;
-    const heard = weights.listening * input * maxLength * shape;
-    const spoken = weights.speaking * output * maxLength * 0.3 * shape;
-    const lit = sweep * maxLength * 0.45;
-    const length = restLength + heard + spoken + lit;
-    const ringEnd = ringStart + length;
-    context.globalAlpha = BASE_BAR_ALPHA;
-    context.strokeStyle = palette.foreground;
-    strokeBar(context, centre, angle, ringStart, ringEnd);
-    if (sweep > 0.01) {
-      context.globalAlpha = sweep;
-      context.strokeStyle = palette.primary;
-      strokeBar(context, centre, angle, ringStart, ringEnd);
-    }
-  }
-  const discRadius = disc * discScaleOf(frame);
-  context.globalAlpha = 1;
-  context.fillStyle = palette.primary;
-  context.beginPath();
-  context.arc(centre, centre, discRadius, 0, TAU);
-  context.fill();
+  drawTicks(context, geometry, frame.seconds, palette);
+  drawBars(context, geometry, frame, palette);
+  drawLitBars(context, geometry, frame, palette);
+  drawThinkingArc(context, geometry, frame, palette);
+  drawDisc(context, geometry, frame, palette);
 }
 
 function followOf(current: number, target: number) {
@@ -295,7 +472,7 @@ export function VoiceOrb({
     if (!context) {
       return;
     }
-    drawOrb(context, size, stillFrameOf(state), paletteOf(canvas));
+    drawOrb(context, geometryOf(size), stillFrameOf(state), paletteOf(canvas));
   }, [shouldReduceMotion, isInView, state, size]);
 
   useEffect(() => {
@@ -313,11 +490,11 @@ export function VoiceOrb({
     }
     const surface: HTMLCanvasElement = canvas;
     const pen: CanvasRenderingContext2D = context;
+    const geometry = geometryOf(size);
     const weights = oneHotOf(stateRef.current);
+    const shown: OrbFrame = { weights, input: 0, output: 0, seconds: 0 };
     let palette = paletteOf(surface);
     let paletteAt = performance.now();
-    let input = 0;
-    let output = 0;
     let last = performance.now();
     const startedAt = last;
     let frame = 0;
@@ -331,15 +508,15 @@ export function VoiceOrb({
       easeWeights(weights, oneHotOf(stateRef.current), amount);
       const heard = levelFrom(inputRef.current, elapsed, INPUT_SEED);
       const spoken = levelFrom(outputRef.current, elapsed, OUTPUT_SEED);
-      input = followOf(input, heard);
-      output = followOf(output, spoken);
+      shown.input = followOf(shown.input, heard);
+      shown.output = followOf(shown.output, spoken);
+      shown.seconds = elapsed / 1000;
       const isPaletteStale = now - paletteAt > COLOR_REFRESH_MS;
       if (isPaletteStale) {
         palette = paletteOf(surface);
         paletteAt = now;
       }
-      const seconds = elapsed / 1000;
-      drawOrb(pen, size, { weights, input, output, seconds }, palette);
+      drawOrb(pen, geometry, shown, palette);
       frame = requestAnimationFrame(draw);
     }
 
@@ -551,8 +728,13 @@ function inputOf(status: MicStatus, readLevel: () => number) {
   return undefined;
 }
 
+/** How long the demonstration stays in each state. */
+const STATE_HOLD_MS = 2400;
+
+const START_STATE: VoiceState = 'listening';
+
 export default function Voice01() {
-  const [state, setState] = useState<VoiceState>('listening');
+  const [state, setState] = useState<VoiceState>(START_STATE);
   const microphone = useMicrophoneLevel();
   const button = micButtonOf(microphone.status);
   const isOn = microphone.status === 'on';
@@ -571,8 +753,21 @@ export default function Voice01() {
     await microphone.start();
   }
 
+  const steps: AutoplayStep[] = [
+    { after: STATE_HOLD_MS, run: () => setState('thinking') },
+    { after: STATE_HOLD_MS, run: () => setState('speaking') },
+    { after: STATE_HOLD_MS, run: () => setState('idle') },
+  ];
+  const { ref, isAutoplaying } = useAutoplay(steps, {
+    loopAfter: STATE_HOLD_MS,
+    onReset: () => setState(START_STATE),
+  });
+
   return (
-    <div className='flex w-full max-w-[22rem] flex-col items-center gap-4'>
+    <div
+      ref={ref}
+      className='flex w-full max-w-[22rem] flex-col items-center gap-4'
+    >
       <div className='bg-card hairline-ring ring-border flex w-full flex-col items-center gap-3 rounded-xl px-4 pt-6 pb-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
         <VoiceOrb state={state} inputLevel={inputLevel} />
         <div className='flex flex-col items-center gap-0.5'>
@@ -624,7 +819,7 @@ export default function Voice01() {
           )}
         </AnimatedSize>
       </div>
-      <LiveRegion message={announcement} />
+      <LiveRegion message={spokenUnless(isAutoplaying, announcement)} />
     </div>
   );
 }

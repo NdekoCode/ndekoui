@@ -1,11 +1,24 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { useRef, useState } from 'react';
+import {
+  AnimatePresence,
+  motion,
+  useAnimate,
+  useReducedMotion,
+} from 'motion/react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll } from '@/components/core/word-roll';
-import { useRunSnapshot } from '@/registry/ndeko/hooks/use-agent-run';
+import {
+  ClockGateContext,
+  useRunSnapshot,
+} from '@/registry/ndeko/hooks/use-agent-run';
+import {
+  typingSteps,
+  useAutoplay,
+  type AutoplayStep,
+} from '@/registry/ndeko/hooks/use-autoplay';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import {
   createRunStore,
@@ -45,7 +58,7 @@ import {
   DropdownMenuGroupLabel,
   DropdownMenuTrigger,
 } from '@/registry/ndeko/ui/dropdown-menu';
-import { LiveDuration } from '@/registry/ndeko/ui/live-duration';
+import { ClockGate, LiveDuration } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { Segments, type Segment } from '@/registry/ndeko/ui/segments';
 import { Textarea } from '@/registry/ndeko/ui/textarea';
@@ -56,6 +69,14 @@ import {
 } from '@/registry/ndeko/ui/tooltip';
 
 import { ClockSince } from './_parts/clock';
+import {
+  hold,
+  PRESS_LEAD_MS,
+  pressedQuietOf,
+  pressedSolidOf,
+  spokenUnless,
+  usePress,
+} from './_parts/demonstration';
 import { LevelBars } from '@/registry/ndeko/ui/level-bars';
 import {
   caretToEnd,
@@ -75,30 +96,19 @@ export type TrayLine =
 
 type TrayLineKind = TrayLine['kind'];
 
-const LINE_SLIDE = {
-  initial: { y: '-100%', opacity: 0 },
-  animate: { y: '0%', opacity: 1 },
-  exit: {
-    y: '-100%',
-    opacity: 0,
-    transition: { duration: 0.18, ease: EASE_OUT_STRONG },
-  },
-  transition: SPRING,
-};
-
-const LINE_FADE = {
+const LINE_PRESENCE = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },
   exit: { opacity: 0, transition: { duration: 0.14 } },
   transition: { duration: 0.2 },
 };
 
-function lineMotionOf(shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return LINE_FADE;
-  }
-  return LINE_SLIDE;
-}
+const LANDING = { duration: 0.32, ease: EASE_OUT_STRONG };
+
+const NUDGE = { duration: 0.28, ease: EASE_OUT_STRONG };
+
+/** Wide enough for 1m 04s, so a tick never moves the words beside the clock. */
+const CLOCK_BOX = 'text-muted-foreground w-12 shrink-0 text-end';
 
 function runningStepOf(run: RunSnapshot) {
   return run.plan.find((step) => step.status === 'running');
@@ -187,10 +197,12 @@ function LineGlyph({
   kind: TrayLineKind;
   listeningIntensity: number;
 }) {
+  const isOnScreen = useContext(ClockGateContext);
+
   if (kind === 'listening') {
     return (
       <LevelBars
-        isActive
+        isActive={isOnScreen}
         intensity={listeningIntensity}
         count={4}
         seed={2}
@@ -219,21 +231,11 @@ function LineGlyph({
 function LineTime({ line }: { line: TrayLine }) {
   if (line.kind === 'listening') {
     return (
-      <ClockSince
-        startedAt={line.since}
-        isRunning
-        className='text-muted-foreground'
-      />
+      <ClockSince startedAt={line.since} isRunning className={CLOCK_BOX} />
     );
   }
   if (line.kind === 'working') {
-    return (
-      <LiveDuration
-        item={line.run}
-        isRunning
-        className='text-muted-foreground'
-      />
-    );
+    return <LiveDuration item={line.run} isRunning className={CLOCK_BOX} />;
   }
   return null;
 }
@@ -249,17 +251,43 @@ function StatusLine({
   line,
   listeningIntensity,
   onRetry,
+  isRetryPressed,
 }: {
   line: TrayLine;
   listeningIntensity: number;
   onRetry?: () => void;
+  isRetryPressed: boolean;
 }) {
+  const [scope, animate] = useAnimate<HTMLDivElement>();
+  const shouldReduceMotion = useReducedMotion();
+  const kind = line.kind;
+  const lastKind = useRef(kind);
   const text = lineTextOf(line);
-  const isFailed = line.kind === 'failed';
+  const isFailed = kind === 'failed';
   const canRetry = isFailed && onRetry !== undefined;
 
+  useEffect(() => {
+    const isSameKind = lastKind.current === kind;
+    lastKind.current = kind;
+    if (isSameKind) {
+      return;
+    }
+    if (shouldReduceMotion) {
+      return;
+    }
+    if (kind === 'answered') {
+      animate(scope.current, { scale: [1.04, 1] }, LANDING);
+    }
+    if (kind === 'failed') {
+      animate(scope.current, { x: [0, 4, 0] }, NUDGE);
+    }
+  }, [kind, shouldReduceMotion, animate, scope]);
+
   return (
-    <div className='flex h-9 items-center gap-2.5 ps-3 pe-1.5 text-xs'>
+    <div
+      ref={scope}
+      className='flex h-9 origin-left items-center gap-2.5 ps-3 pe-1.5 text-xs'
+    >
       <Swap swapKey={line.kind} className='size-3.5 shrink-0 justify-center'>
         <LineGlyph kind={line.kind} listeningIntensity={listeningIntensity} />
       </Swap>
@@ -278,7 +306,7 @@ function StatusLine({
           variant='ghost'
           size='sm'
           onClick={onRetry}
-          className='h-6 px-2'
+          className={cn('h-6 px-2', pressedQuietOf(isRetryPressed))}
         >
           <RotateCcwIcon className='size-3.5' />
           Retry
@@ -296,20 +324,31 @@ export type StatusTrayProps = {
   /** How loud the voice is while listening, from 0 for silence to 1. */
   listeningIntensity?: number;
   onRetry?: () => void;
+  /** Shows Retry held down, for a demonstration that presses it. */
+  isRetryPressed?: boolean;
+  /** A demonstration drives the tray: its line is shown but not read aloud. */
+  isDemonstrated?: boolean;
   children: React.ReactNode;
   className?: string;
 };
+
+function lineRoleOf(isDemonstrated: boolean) {
+  if (isDemonstrated) {
+    return undefined;
+  }
+  return 'status';
+}
 
 export function StatusTray({
   run,
   listeningSince = null,
   listeningIntensity = 1,
   onRetry,
+  isRetryPressed = false,
+  isDemonstrated = false,
   children,
   className,
 }: StatusTrayProps) {
-  const shouldReduceMotion = useReducedMotion();
-  const lineMotion = lineMotionOf(shouldReduceMotion);
   const line = trayLineOf(run, listeningSince);
 
   return (
@@ -320,19 +359,32 @@ export function StatusTray({
       )}
     >
       <div className='relative z-10'>{children}</div>
-      <AnimatedSize contentClassName='relative'>
-        <AnimatePresence initial={false} mode='popLayout'>
+      {/*
+        The line is pinned to the bottom of a box that grows, so it comes out from under the card.
+        It stays outside the resizing box because its clock ticks.
+      */}
+      <div className='relative overflow-hidden'>
+        <AnimatedSize>
+          {line && <div aria-hidden='true' className='h-9' />}
+        </AnimatedSize>
+        <AnimatePresence initial={false}>
           {line && (
-            <motion.div key='status' role='status' {...lineMotion}>
+            <motion.div
+              key='status'
+              role={lineRoleOf(isDemonstrated)}
+              className='absolute inset-x-0 bottom-0'
+              {...LINE_PRESENCE}
+            >
               <StatusLine
                 line={line}
                 listeningIntensity={listeningIntensity}
                 onRetry={onRetry}
+                isRetryPressed={isRetryPressed}
               />
             </motion.div>
           )}
         </AnimatePresence>
-      </AnimatedSize>
+      </div>
     </div>
   );
 }
@@ -384,9 +436,16 @@ type TrayKeyProps = {
   mode: TrayKeyMode;
   onPress: (mode: TrayKeyMode) => void;
   disabled?: boolean;
+  /** Shows the key held down, for a demonstration that presses it. */
+  isPressed?: boolean;
 };
 
-export function TrayKey({ mode, onPress, disabled }: TrayKeyProps) {
+export function TrayKey({
+  mode,
+  onPress,
+  disabled,
+  isPressed = false,
+}: TrayKeyProps) {
   return (
     <Button
       type='button'
@@ -394,6 +453,7 @@ export function TrayKey({ mode, onPress, disabled }: TrayKeyProps) {
       aria-label={KEY_LABEL[mode]}
       disabled={disabled}
       onClick={() => onPress(mode)}
+      className={pressedSolidOf(isPressed)}
     >
       <Swap swapKey={glyphKeyOf(mode)}>
         <KeyGlyph mode={mode} />
@@ -462,6 +522,26 @@ const DICTATION =
   'Summarize the open pull requests and flag any that touch billing';
 
 const IDLE_RUN = emptyRun({ id: 'answer', title: 'Answer' });
+
+/** The piece opens on an answer that just landed, so the tray shows before anything plays. */
+const ANSWERED_RUN = emptyRun({
+  id: 'answer',
+  title: 'Answer',
+  status: 'done',
+  startedAt: 0,
+  endedAt: 4300,
+});
+
+const DEMO_PROMPTS = [
+  DICTATION,
+  'Which Brightmoor invoices are still unpaid?',
+  'Draft a reply to the pricing question from Ostrava',
+];
+
+/** One answer in three fails, so the tray shows its error and Retry. */
+const FAILING_ROUND = 3;
+
+type PressKey = 'key' | 'retry';
 
 type TrayFile = {
   id: string;
@@ -606,6 +686,8 @@ function FileChips({
 }) {
   const shouldReduceMotion = useReducedMotion();
   const hasFiles = files.length > 0;
+  const fileIds = files.map((file) => file.id);
+  const order = fileIds.join(' ');
 
   return (
     <ul
@@ -617,6 +699,7 @@ function FileChips({
           <motion.li
             key={file.id}
             layout
+            layoutDependency={order}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
@@ -726,9 +809,11 @@ export default function Prompt01() {
   const [outcome, setOutcome] = useState<Outcome>('answers');
   const [listeningSince, setListeningSince] = useState<number | null>(null);
   const [wordsLeft, setWordsLeft] = useState(0);
-  const [store] = useState(() => createRunStore(IDLE_RUN));
+  const [round, setRound] = useState(0);
+  const [store] = useState(() => createRunStore(ANSWERED_RUN));
   const run = useRunSnapshot(store);
   const { schedule, clearAll } = useTimeouts();
+  const { pressed, press } = usePress<PressKey>();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const draftBeforeListening = useRef('');
@@ -758,10 +843,15 @@ export default function Prompt01() {
     for (const timed of timeline.events) {
       schedule(() => store.dispatch(timed.event), timed.at);
     }
-    if (!shouldFail) {
-      const foldAt = timeline.endsAt + ANSWERED_HOLD_MS;
-      schedule(fold, foldAt);
+    if (shouldFail) {
+      return;
     }
+    // A demonstration folds the tray itself when its next round starts, so the answered line holds through the loop.
+    if (isAutoplaying) {
+      return;
+    }
+    const foldAt = timeline.endsAt + ANSWERED_HOLD_MS;
+    schedule(fold, foldAt);
   }
 
   function endListening() {
@@ -909,78 +999,128 @@ export default function Prompt01() {
     setTools((current) => withTool(current, id, isOn));
   }
 
+  function resetDemo() {
+    clearAll();
+    store.dispatch({ type: 'reset', snapshot: ANSWERED_RUN });
+    setDraft('');
+    setOutcome('answers');
+    setRound((current) => current + 1);
+  }
+
+  const demoPrompt = DEMO_PROMPTS[round % DEMO_PROMPTS.length];
+  const demoPlan = planOf(files.length, tools);
+  const answerMs = timelineOf(demoPlan, false).endsAt;
+  const failureMs = timelineOf(demoPlan, true).endsAt;
+  const isFailingRound = round % FAILING_ROUND === FAILING_ROUND - 1;
+  const typing = typingSteps(demoPrompt, setDraft, {
+    startAfter: 800,
+    characterMs: 34,
+  });
+  const passing: AutoplayStep[] = [
+    { after: 560, run: () => press('key') },
+    { after: PRESS_LEAD_MS, run: () => pressKey('send') },
+    { after: answerMs + 400, run: hold },
+  ];
+  const failing: AutoplayStep[] = [
+    { after: 450, run: () => setOutcome('fails') },
+    { after: 600, run: () => press('key') },
+    { after: PRESS_LEAD_MS, run: () => pressKey('send') },
+    { after: failureMs + 1100, run: () => setOutcome('answers') },
+    { after: 700, run: () => press('retry') },
+    { after: PRESS_LEAD_MS, run: retry },
+    { after: answerMs + 400, run: hold },
+  ];
+  let ending = passing;
+  if (isFailingRound) {
+    ending = failing;
+  }
+  const steps = [{ after: 1600, run: fold }, ...typing, ...ending];
+  const { ref, isInView, isAutoplaying } = useAutoplay(steps, {
+    loopAfter: 2200,
+    onReset: resetDemo,
+  });
+
   return (
     <div
+      ref={ref}
       onKeyDown={handleEscape}
       className='flex w-full max-w-[26rem] flex-col gap-3'
     >
-      <StatusTray
-        run={run}
-        listeningSince={listeningSince}
-        listeningIntensity={listeningIntensity}
-        onRetry={retry}
-      >
-        <div className='bg-card hairline-ring ring-foreground/12 dark:ring-foreground/15 has-[textarea:focus]:ring-ring/25 flex flex-col gap-1 rounded-[calc(var(--radius-2xl)-0.25rem)] p-1.5 shadow-[0_1px_2px_rgb(0_0_0/0.04)] transition-shadow duration-150 has-[textarea:focus]:ring-[3px]'>
-          <FileChips files={files} onRemove={removeFile} />
-          <Textarea
-            ref={textareaRef}
-            rows={1}
-            value={draft}
-            onChange={(event) => setDraft(event.target.value)}
-            onKeyDown={handleFieldKeys}
-            readOnly={isListening}
-            aria-label='Prompt'
-            placeholder='Ask Lumen about this project'
-            className='max-h-none min-h-10 border-0 bg-transparent px-2 py-1.5 shadow-none ring-0 focus-visible:ring-0 dark:bg-transparent'
-          />
-          <div className='flex items-center gap-1.5 px-0.5 pb-0.5'>
-            <input
-              ref={fileInputRef}
-              type='file'
-              multiple
-              tabIndex={-1}
-              aria-hidden='true'
-              className='hidden'
-              onChange={addFiles}
+      <ClockGate isActive={isInView}>
+        <StatusTray
+          run={run}
+          listeningSince={listeningSince}
+          listeningIntensity={listeningIntensity}
+          onRetry={retry}
+          isRetryPressed={pressed === 'retry'}
+          isDemonstrated={isAutoplaying}
+        >
+          <div className='bg-card hairline-ring ring-foreground/12 dark:ring-foreground/15 has-[textarea:focus]:ring-ring/25 flex flex-col gap-1 rounded-[calc(var(--radius-2xl)-0.25rem)] p-1.5 shadow-[0_1px_2px_rgb(0_0_0/0.04)] transition-shadow duration-150 has-[textarea:focus]:ring-[3px]'>
+            <FileChips files={files} onRemove={removeFile} />
+            <Textarea
+              ref={textareaRef}
+              rows={1}
+              value={draft}
+              onChange={(event) => setDraft(event.target.value)}
+              onKeyDown={handleFieldKeys}
+              readOnly={isListening}
+              aria-label='Prompt'
+              placeholder='Ask Lumen about this project'
+              className='max-h-none min-h-10 border-0 bg-transparent px-2 py-1.5 shadow-none ring-0 focus-visible:ring-0 dark:bg-transparent'
             />
-            <Tooltip>
-              <TooltipTrigger
-                render={
-                  <Button
-                    type='button'
-                    variant='outline'
-                    size='icon'
-                    aria-label='Attach files'
-                    disabled={isAnswering}
-                    onClick={() => fileInputRef.current?.click()}
-                  />
-                }
-              >
-                <PaperclipIcon />
-              </TooltipTrigger>
-              <TooltipContent>Attach files</TooltipContent>
-            </Tooltip>
-            <ToolsMenu
-              tools={tools}
-              onToggle={toggleTool}
-              disabled={isAnswering}
-            />
-            <span className='flex-1' />
-            <TrayKey mode={keyMode} onPress={pressKey} />
+            <div className='flex items-center gap-1.5 px-0.5 pb-0.5'>
+              <input
+                ref={fileInputRef}
+                type='file'
+                multiple
+                tabIndex={-1}
+                aria-hidden='true'
+                className='hidden'
+                onChange={addFiles}
+              />
+              <Tooltip>
+                <TooltipTrigger
+                  render={
+                    <Button
+                      type='button'
+                      variant='outline'
+                      size='icon'
+                      aria-label='Attach files'
+                      disabled={isAnswering}
+                      onClick={() => fileInputRef.current?.click()}
+                    />
+                  }
+                >
+                  <PaperclipIcon />
+                </TooltipTrigger>
+                <TooltipContent>Attach files</TooltipContent>
+              </Tooltip>
+              <ToolsMenu
+                tools={tools}
+                onToggle={toggleTool}
+                disabled={isAnswering}
+              />
+              <span className='flex-1' />
+              <TrayKey
+                mode={keyMode}
+                onPress={pressKey}
+                isPressed={pressed === 'key'}
+              />
+            </div>
           </div>
+        </StatusTray>
+        <div className='flex items-center justify-between gap-3 px-1'>
+          <p className='text-muted-foreground text-xs'>Next answer</p>
+          <Segments
+            value={outcome}
+            segments={OUTCOMES}
+            onValueChange={setOutcome}
+            label='Next answer'
+            className='w-36'
+          />
         </div>
-      </StatusTray>
-      <div className='flex items-center justify-between gap-3 px-1'>
-        <p className='text-muted-foreground text-xs'>Next answer</p>
-        <Segments
-          value={outcome}
-          segments={OUTCOMES}
-          onValueChange={setOutcome}
-          label='Next answer'
-          className='w-36'
-        />
-      </div>
-      <LiveRegion message={announcement} />
+      </ClockGate>
+      <LiveRegion message={spokenUnless(isAutoplaying, announcement)} />
     </div>
   );
 }

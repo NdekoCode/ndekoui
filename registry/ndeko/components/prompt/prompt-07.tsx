@@ -1,10 +1,14 @@
 'use client';
 
-import { motion, useReducedMotion } from 'motion/react';
-import { useId, useRef, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { useId, useImperativeHandle, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll } from '@/components/core/word-roll';
+import {
+  useAutoplay,
+  type AutoplayStep,
+} from '@/registry/ndeko/hooks/use-autoplay';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import { FileTextIcon, SearchIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { springOf } from '@/registry/ndeko/lib/motion-presets';
@@ -23,6 +27,15 @@ import {
   SelectValue,
 } from '@/registry/ndeko/ui/select';
 
+import {
+  hold,
+  keyDelayOf,
+  prefixesOf,
+  PRESS_LEAD_MS,
+  pressedSolidOf,
+  spokenUnless,
+  usePress,
+} from './_parts/demonstration';
 import { includesQuery, Marked } from './_parts/marked';
 import { countOf } from './_parts/words';
 
@@ -385,11 +398,19 @@ const MORPH_HOLD_MS = 650;
 
 const DONE_HOLD_MS = 1500;
 
+export type TemplateEditorHandle = {
+  /** Shows Use prompt held down. */
+  press: () => void;
+  /** Sends the prompt, as Use prompt does. */
+  use: () => void;
+};
+
 type TemplateEditorProps = {
   template: PromptTemplate;
   values: TemplateValues;
   onValueChange: (fieldId: string, value: string) => void;
   onUse: (prompt: string) => void;
+  handleRef?: React.Ref<TemplateEditorHandle>;
 };
 
 export function TemplateEditor({
@@ -397,9 +418,11 @@ export function TemplateEditor({
   values,
   onValueChange,
   onUse,
+  handleRef,
 }: TemplateEditorProps) {
   const [sendState, setSendState] = useState<MorphState>('idle');
   const { schedule } = useTimeouts();
+  const { pressed, press } = usePress<'use'>();
   const fields = fieldsOf(template);
   const filledCount = filledCountOf(template, values);
   const missing = missingFieldOf(template, values);
@@ -429,6 +452,11 @@ export function TemplateEditor({
     }, MORPH_HOLD_MS);
     schedule(() => setSendState('idle'), MORPH_HOLD_MS + DONE_HOLD_MS);
   }
+
+  useImperativeHandle(handleRef, () => ({
+    press: () => press('use'),
+    use,
+  }));
 
   return (
     <div className='flex min-w-0 flex-col gap-4'>
@@ -472,6 +500,7 @@ export function TemplateEditor({
             }}
             disabled={!isReady}
             onClick={use}
+            className={pressedSolidOf(pressed === 'use')}
           />
         </div>
       </div>
@@ -579,6 +608,7 @@ function TemplateList({
                 {isActive && (
                   <motion.span
                     layoutId={highlightId}
+                    layoutDependency={activeId}
                     transition={spring}
                     aria-hidden='true'
                     className='bg-foreground/[0.05] dark:bg-foreground/[0.07] absolute inset-0 rounded-md'
@@ -641,23 +671,42 @@ function tabIndexOf(templateId: string, tabStopId: string | undefined) {
   return -1;
 }
 
+export type PromptTemplatesHandle = {
+  /** Opens a template, as a click on its row does. */
+  activate: (templateId: string) => void;
+  /** Writes into a blank of the open template, as typing or picking does. */
+  fill: (fieldId: string, value: string) => void;
+  /** Shows Use prompt held down. */
+  press: () => void;
+  use: () => void;
+  /** Back to the first template, the first values and an empty search. */
+  reset: () => void;
+};
+
 export type PromptTemplatesProps = {
   templates: PromptTemplate[];
   initialValues?: Record<string, TemplateValues>;
   onUse: (prompt: string) => void;
+  /** Runs what the list and the editor do, for a demonstration or a control beside them. */
+  handleRef?: React.Ref<PromptTemplatesHandle>;
   className?: string;
 };
+
+const EDITOR_ARRIVAL = { duration: 0.2 };
 
 export function PromptTemplates({
   templates,
   initialValues = {},
   onUse,
+  handleRef,
   className,
 }: PromptTemplatesProps) {
-  const [activeId, setActiveId] = useState(templates[0]?.id ?? '');
+  const firstId = templates[0]?.id ?? '';
+  const [activeId, setActiveId] = useState(firstId);
   const [query, setQuery] = useState('');
   const [values, setValues] =
     useState<Record<string, TemplateValues>>(initialValues);
+  const editor = useRef<TemplateEditorHandle>(null);
   const active = templates.find((template) => template.id === activeId);
 
   function changeValue(fieldId: string, value: string) {
@@ -667,6 +716,20 @@ export function PromptTemplates({
       return { ...current, [activeId]: nextForTemplate };
     });
   }
+
+  function reset() {
+    setActiveId(firstId);
+    setQuery('');
+    setValues(initialValues);
+  }
+
+  useImperativeHandle(handleRef, () => ({
+    activate: setActiveId,
+    fill: changeValue,
+    press: () => editor.current?.press(),
+    use: () => editor.current?.use(),
+    reset,
+  }));
 
   return (
     <div className={cn('@container', className)}>
@@ -678,15 +741,25 @@ export function PromptTemplates({
           query={query}
           onQueryChange={setQuery}
         />
-        {active && (
-          <TemplateEditor
-            key={active.id}
-            template={active}
-            values={values[active.id] ?? {}}
-            onValueChange={changeValue}
-            onUse={onUse}
-          />
-        )}
+        <AnimatePresence initial={false}>
+          {active && (
+            <motion.div
+              key={active.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={EDITOR_ARRIVAL}
+              className='min-w-0'
+            >
+              <TemplateEditor
+                template={active}
+                values={values[active.id] ?? {}}
+                onValueChange={changeValue}
+                onUse={onUse}
+                handleRef={editor}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
@@ -769,22 +842,91 @@ const SEED_VALUES: Record<string, TemplateValues> = {
   summary: { document: 'the Q3 vendor review', audience: 'an executive' },
 };
 
+type DemoBlank = {
+  fieldId: string;
+  value: string;
+  /** A text is typed key by key, a choice is picked at once. */
+  isTyped: boolean;
+};
+
+type DemoFill = {
+  templateId: string;
+  blanks: DemoBlank[];
+};
+
+/** A round opens one of these templates and fills its blanks, a different one each time. */
+const DEMO_FILLS: DemoFill[] = [
+  {
+    templateId: 'triage',
+    blanks: [
+      { fieldId: 'reporter', value: 'Mina Okafor', isTyped: true },
+      { fieldId: 'severity', value: 'high', isTyped: false },
+      { fieldId: 'next', value: 'a rollback plan', isTyped: true },
+    ],
+  },
+  {
+    templateId: 'agenda',
+    blanks: [
+      { fieldId: 'duration', value: '30 minute', isTyped: false },
+      { fieldId: 'meeting', value: 'the launch review', isTyped: true },
+      { fieldId: 'people', value: 'Priya and Jonas', isTyped: true },
+    ],
+  },
+];
+
 export default function Prompt07() {
   const [message, setMessage] = useState('');
+  const [round, setRound] = useState(0);
+  const templates = useRef<PromptTemplatesHandle>(null);
+  const fill = DEMO_FILLS[round % DEMO_FILLS.length];
 
   function use(prompt: string) {
     setMessage(`Prompt placed in the composer: ${prompt}`);
   }
 
+  function resetDemo() {
+    templates.current?.reset();
+    setMessage('');
+    setRound((current) => current + 1);
+  }
+
+  function stepsOfBlank(blank: DemoBlank): AutoplayStep[] {
+    if (!blank.isTyped) {
+      return [
+        {
+          after: 800,
+          run: () => templates.current?.fill(blank.fieldId, blank.value),
+        },
+      ];
+    }
+    return prefixesOf(blank.value).map((typed, index) => ({
+      after: keyDelayOf(index, 800, 55),
+      run: () => templates.current?.fill(blank.fieldId, typed),
+    }));
+  }
+
+  const steps: AutoplayStep[] = [
+    { after: 1600, run: () => templates.current?.activate(fill.templateId) },
+    ...fill.blanks.flatMap(stepsOfBlank),
+    { after: 900, run: () => templates.current?.press() },
+    { after: PRESS_LEAD_MS, run: () => templates.current?.use() },
+    { after: MORPH_HOLD_MS + DONE_HOLD_MS + 300, run: hold },
+  ];
+  const { ref, isAutoplaying } = useAutoplay(steps, {
+    loopAfter: 2400,
+    onReset: resetDemo,
+  });
+
   return (
-    <div className='flex w-full max-w-[44rem] flex-col gap-3'>
+    <div ref={ref} className='flex w-full max-w-[44rem] flex-col gap-3'>
       <PromptTemplates
         templates={TEMPLATES}
         initialValues={SEED_VALUES}
         onUse={use}
+        handleRef={templates}
         className='bg-card hairline-ring ring-border rounded-xl p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
       />
-      <LiveRegion message={message} />
+      <LiveRegion message={spokenUnless(isAutoplaying, message)} />
     </div>
   );
 }

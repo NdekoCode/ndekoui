@@ -1,9 +1,21 @@
 'use client';
 
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
+import {
+  useContext,
+  useEffect,
+  useId,
+  useImperativeHandle,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 
-import { useNow } from '@/registry/ndeko/hooks/use-agent-run';
+import { ClockGateContext, useNow } from '@/registry/ndeko/hooks/use-agent-run';
+import {
+  useAutoplay,
+  type AutoplayStep,
+} from '@/registry/ndeko/hooks/use-autoplay';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import {
   CheckIcon,
@@ -18,11 +30,23 @@ import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
 import { TextLoader } from '@/registry/ndeko/ui/chat-loader';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
+import { Kbd } from '@/registry/ndeko/ui/kbd';
+import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { Textarea } from '@/registry/ndeko/ui/textarea';
 
 import { formatClock } from '@/registry/ndeko/lib/media-clock';
 import { LevelBars } from '@/registry/ndeko/ui/level-bars';
+
+import {
+  hiddenIf,
+  hold,
+  PRESS_LEAD_MS,
+  pressedQuietOf,
+  pressedSolidOf,
+  spokenUnless,
+  usePress,
+} from './_parts/demonstration';
 
 export type DictationTake = {
   /** How long the person spoke, in milliseconds. */
@@ -115,13 +139,14 @@ function Elapsed({ since }: { since: number }) {
   );
 }
 
-function RecordingDot() {
+function RecordingDot({ isBlinking }: { isBlinking: boolean }) {
   return (
-    <motion.span
+    <span
       aria-hidden='true'
-      className='bg-destructive size-2 shrink-0 rounded-full'
-      animate={{ opacity: [1, 0.35, 1] }}
-      transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
+      className={cn(
+        'bg-destructive size-2 shrink-0 rounded-full',
+        isBlinking && 'animate-pulse'
+      )}
     />
   );
 }
@@ -139,6 +164,17 @@ function announcementOf(phase: Phase, failure: Failure | null, added: string) {
   return added;
 }
 
+export type DictationPressKey = 'key' | 'cancel';
+
+export type DictationHandle = {
+  /** Shows the microphone key or Cancel held down. */
+  press: (key: DictationPressKey) => void;
+  /** Starts a take, or stops it and transcribes, as the microphone key does. */
+  pressKey: () => void;
+  /** Drops the take, as Escape does. */
+  cancel: () => void;
+};
+
 export type DictationFieldProps = {
   value: string;
   onValueChange: (value: string) => void;
@@ -148,6 +184,10 @@ export type DictationFieldProps = {
   level?: () => number;
   label: string;
   placeholder?: string;
+  /** Runs what the microphone key and Escape do, for a demonstration or a control beside the field. */
+  handleRef?: React.Ref<DictationHandle>;
+  /** A demonstration drives the field: nothing takes the focus and nothing is read aloud. */
+  isDemonstrated?: boolean;
   className?: string;
 };
 
@@ -158,6 +198,8 @@ export function DictationField({
   level,
   label,
   placeholder,
+  handleRef,
+  isDemonstrated = false,
   className,
 }: DictationFieldProps) {
   const [phase, setPhase] = useState<Phase>('idle');
@@ -165,6 +207,9 @@ export function DictationField({
   const [recordingSince, setRecordingSince] = useState(0);
   const [added, setAdded] = useState('');
   const { schedule, clearAll } = useTimeouts();
+  const { pressed, press } = usePress<DictationPressKey>();
+  const isOnScreen = useContext(ClockGateContext);
+  const canMoveFocus = !isDemonstrated;
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const keyRef = useRef<HTMLButtonElement>(null);
   const selection = useRef<Range | null>(null);
@@ -231,7 +276,9 @@ export function DictationField({
     request.current?.abort();
     setPhase('idle');
     setAdded('Dictation cancelled');
-    keyRef.current?.focus();
+    if (canMoveFocus) {
+      keyRef.current?.focus();
+    }
   }
 
   function writeWords(text: string) {
@@ -258,10 +305,13 @@ export function DictationField({
     schedule(() => {
       setPhase('idle');
       setAdded(`Added: ${trimmedText}`);
+      selection.current = { start: caret, end: caret };
+      if (!canMoveFocus) {
+        return;
+      }
       const textarea = textareaRef.current;
       textarea?.focus();
       textarea?.setSelectionRange(caret, caret);
-      selection.current = { start: caret, end: caret };
     }, doneAt);
   }
 
@@ -334,11 +384,13 @@ export function DictationField({
     cancel();
   }
 
+  useImperativeHandle(handleRef, () => ({ press, pressKey, cancel }));
+
   return (
     <div
       onKeyDown={handleEscape}
       className={cn(
-        'bg-card hairline-ring ring-foreground/12 dark:ring-foreground/15 has-[textarea:focus]:ring-ring/25 flex flex-col rounded-xl p-1.5 shadow-[0_1px_2px_rgb(0_0_0/0.04)] transition-shadow duration-150 has-[textarea:focus]:ring-[3px]',
+        'bg-card hairline-ring ring-foreground/12 dark:ring-foreground/15 has-[textarea:focus]:ring-ring/25 @container flex flex-col rounded-xl p-1.5 shadow-[0_1px_2px_rgb(0_0_0/0.04)] transition-shadow duration-150 has-[textarea:focus]:ring-[3px]',
         className
       )}
     >
@@ -365,9 +417,9 @@ export function DictationField({
                 className='flex min-w-0 flex-1 items-center gap-2.5'
                 {...presence}
               >
-                <RecordingDot />
+                <RecordingDot isBlinking={isOnScreen} />
                 <LevelBars
-                  isActive
+                  isActive={isOnScreen}
                   level={level}
                   count={BAR_COUNT}
                   seed={0.8}
@@ -379,9 +431,16 @@ export function DictationField({
                   variant='ghost'
                   size='sm'
                   onClick={cancel}
-                  className='text-muted-foreground'
+                  aria-keyshortcuts='Escape'
+                  className={cn(
+                    'text-muted-foreground gap-1.5',
+                    pressedQuietOf(pressed === 'cancel')
+                  )}
                 >
                   Cancel
+                  <Kbd aria-hidden='true' className='hidden @xs:inline-flex'>
+                    Esc
+                  </Kbd>
                 </Button>
               </motion.div>
             )}
@@ -391,7 +450,9 @@ export function DictationField({
                 className='flex min-w-0 flex-1 items-center justify-between gap-2'
                 {...presence}
               >
-                <TextLoader text='Transcribing' size='sm' />
+                <span aria-hidden={hiddenIf(isDemonstrated)}>
+                  <TextLoader text='Transcribing' size='sm' />
+                </span>
                 <Button
                   type='button'
                   variant='ghost'
@@ -465,14 +526,14 @@ export function DictationField({
           disabled={isBusy}
           focusableWhenDisabled
           onClick={pressKey}
-          className={busyClassOf(isBusy)}
+          className={cn(busyClassOf(isBusy), pressedSolidOf(pressed === 'key'))}
         >
           <AnimatedSize as='span' axis='width'>
             <Swap swapKey={keyLook.key}>{keyLook.glyph}</Swap>
           </AnimatedSize>
         </Button>
       </div>
-      <LiveRegion message={announcement} />
+      <LiveRegion message={spokenUnless(isDemonstrated, announcement)} />
     </div>
   );
 }
@@ -521,25 +582,74 @@ async function demoTranscribe(take: DictationTake, signal: AbortSignal) {
   return LONG_PHRASE;
 }
 
-const START_TEXT = 'Notes for Monday: ';
+const START_TEXT = 'Notes for Monday: ask Priya for the rollout numbers. ';
+
+/** How long the demonstration speaks before it stops the take: short enough for the short sentence. */
+const TAKE_MS = 2600;
+
+/** One take in three is dropped with Escape, so the strip shows how it folds back. */
+const CANCEL_ROUND = 3;
+
+function writingMsOf(phrase: string) {
+  const words = wordsIn(phrase);
+  return (words.length + 1) * WORD_GAP_MS;
+}
+
+const WRITING_MS = writingMsOf(SHORT_PHRASE);
 
 export default function Voice03() {
   const [notes, setNotes] = useState(START_TEXT);
+  const [round, setRound] = useState(0);
+  const field = useRef<DictationHandle>(null);
+  const isCancelRound = round % CANCEL_ROUND === CANCEL_ROUND - 1;
+
+  function resetDemo() {
+    setNotes(START_TEXT);
+    setRound((current) => current + 1);
+  }
+
+  const transcribing: AutoplayStep[] = [
+    { after: TAKE_MS, run: () => field.current?.press('key') },
+    { after: PRESS_LEAD_MS, run: () => field.current?.pressKey() },
+    { after: TRANSCRIBE_MS + WRITING_MS + 900, run: hold },
+  ];
+  const cancelling: AutoplayStep[] = [
+    { after: 1900, run: () => field.current?.press('cancel') },
+    { after: PRESS_LEAD_MS, run: () => field.current?.cancel() },
+    { after: 900, run: hold },
+  ];
+  let ending = transcribing;
+  if (isCancelRound) {
+    ending = cancelling;
+  }
+  const steps: AutoplayStep[] = [
+    { after: 1400, run: () => field.current?.press('key') },
+    { after: PRESS_LEAD_MS, run: () => field.current?.pressKey() },
+    ...ending,
+  ];
+  const { ref, isInView, isAutoplaying } = useAutoplay(steps, {
+    loopAfter: 2600,
+    onReset: resetDemo,
+  });
 
   return (
-    <div className='flex w-full max-w-[26rem] flex-col gap-2'>
-      <p className='px-1 text-[13px] font-medium'>Meeting notes</p>
-      <DictationField
-        value={notes}
-        onValueChange={setNotes}
-        transcribe={demoTranscribe}
-        label='Meeting notes'
-        placeholder='Type or dictate your notes'
-      />
-      <p className='text-muted-foreground px-1 text-[11px]'>
-        Illustrative: the levels and the words are simulated, no microphone is
-        used
-      </p>
+    <div ref={ref} className='flex w-full max-w-[26rem] flex-col gap-2'>
+      <ClockGate isActive={isInView}>
+        <p className='px-1 text-[13px] font-medium'>Meeting notes</p>
+        <DictationField
+          value={notes}
+          onValueChange={setNotes}
+          transcribe={demoTranscribe}
+          label='Meeting notes'
+          placeholder='Type or dictate your notes'
+          handleRef={field}
+          isDemonstrated={isAutoplaying}
+        />
+        <p className='text-muted-foreground px-1 text-[11px]'>
+          Illustrative: the levels and the words are simulated, no microphone is
+          used
+        </p>
+      </ClockGate>
     </div>
   );
 }
