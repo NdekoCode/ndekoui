@@ -18,6 +18,9 @@ const MARKETING_GROUPS = new Set([
   'legal',
   'logo-clouds',
   'pricing',
+  'stats',
+  'team-sections',
+  'testimonials',
 ]);
 
 export function presentationLayoutOf(

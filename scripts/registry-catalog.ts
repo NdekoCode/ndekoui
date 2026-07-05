@@ -27,6 +27,11 @@ const CATEGORY_NAMES: Record<string, string> = {
   iphone: 'iPhone',
   subtask: 'Sub-task',
   aside: 'Side panel',
+  ctas: 'Calls to action',
+  faqs: 'FAQ',
+  'ai-data': 'AI data',
+  'ai-product': 'AI product',
+  'agent-ops': 'Agent operations',
 };
 
 export function titleOf(slug: string) {
