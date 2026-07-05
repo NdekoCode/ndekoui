@@ -18,6 +18,13 @@ import {
   type ToolCall,
 } from '@/registry/ndeko/lib/agent-run';
 import { SearchIcon, XIcon, ZoomOutIcon } from '@/registry/ndeko/lib/icons';
+import {
+  applyBatchAt,
+  batch,
+  reduceBatch,
+  restingOf,
+  type RunStep,
+} from '@/registry/ndeko/lib/run-session';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -38,13 +45,6 @@ import {
   rowPresenceOf,
 } from '@/registry/ndeko/lib/motion-presets';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
-import {
-  applyBatchAt,
-  batch,
-  reduceBatch,
-  restingOf,
-  type RunStep,
-} from './_parts/run-session';
 import {
   EMAIL_INPUT,
   EMAIL_OUTPUT,

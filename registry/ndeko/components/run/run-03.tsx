@@ -23,6 +23,14 @@ import {
   spokenUnless,
 } from '@/registry/ndeko/lib/demonstration';
 import { CheckIcon } from '@/registry/ndeko/lib/icons';
+import {
+  applyBatchAt,
+  batch,
+  batchOf,
+  reduceBatch,
+  restingOf,
+  type RunStep,
+} from '@/registry/ndeko/lib/run-session';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -42,14 +50,6 @@ import {
   springOf,
 } from '@/registry/ndeko/lib/motion-presets';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
-import {
-  applyBatchAt,
-  batch,
-  batchOf,
-  reduceBatch,
-  restingOf,
-  type RunStep,
-} from './_parts/run-session';
 import { PAGE_ERROR, RUN_TITLE } from './_parts/scenario';
 
 export type StepKind = 'thinking' | 'tools' | 'waiting' | 'writing';

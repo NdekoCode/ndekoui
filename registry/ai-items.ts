@@ -27,6 +27,17 @@ export const aiFoundationItems: RegistryItemDefinition[] = [
     categories: ['foundations'],
   },
   {
+    name: 'run-session',
+    type: 'registry:lib',
+    title: 'Run session',
+    description:
+      'Plays the events of an agent run as a scripted session: batches that land together, times stamped as a backend would stream them, and the state a script ends on for reduced motion.',
+    files: [
+      { path: 'registry/ndeko/lib/run-session.ts', type: 'registry:lib' },
+    ],
+    categories: ['foundations'],
+  },
+  {
     name: 'hatch',
     type: 'registry:lib',
     title: 'Hatch',

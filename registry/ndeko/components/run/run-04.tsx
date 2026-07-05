@@ -20,6 +20,7 @@ import {
   TriangleAlertIcon,
 } from '@/registry/ndeko/lib/icons';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
+import { restingOf } from '@/registry/ndeko/lib/run-session';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -32,7 +33,6 @@ import { CopyButton } from '@/registry/ndeko/ui/copy-button';
 import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
-import { restingOf } from './_parts/run-session';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 
 export type TerminalStatus = 'waiting' | 'running' | 'done' | 'skipped';

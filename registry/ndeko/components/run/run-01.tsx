@@ -23,6 +23,7 @@ import {
   spokenUnless,
 } from '@/registry/ndeko/lib/demonstration';
 import { ChevronDownIcon, RotateCcwIcon } from '@/registry/ndeko/lib/icons';
+import { applyBatchAt, restingOf } from '@/registry/ndeko/lib/run-session';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -39,7 +40,6 @@ import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
 import { Collapse } from './_parts/collapse';
-import { applyBatchAt, restingOf } from './_parts/run-session';
 import {
   PAGE_ERROR,
   PAGE_INPUT,
