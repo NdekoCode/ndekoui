@@ -41,6 +41,8 @@ import {
   CallStatusDemo,
   CopyButtonDemo,
   JsonViewDemo,
+  LetterTileDemo,
+  LevelBarsDemo,
   LiveDurationDemo,
   LiveRegionDemo,
   MorphButtonDemo,
@@ -239,7 +241,7 @@ export const KIT_GROUPS: KitGroup[] = [
     id: 'ai',
     title: 'AI',
     description:
-      'The small pieces the AI views share: copying, a label that becomes its result, live time, segmented choices, JSON and the states of a call.',
+      'The small pieces the AI views share: copying, a label that becomes its result, live time, segmented choices, JSON, the states of a call and the level of a voice.',
     units: [
       { name: 'copy-button', width: 'compact', Demo: CopyButtonDemo },
       { name: 'morph-button', width: 'compact', Demo: MorphButtonDemo },
@@ -248,6 +250,8 @@ export const KIT_GROUPS: KitGroup[] = [
       { name: 'json-view', width: 'compact', Demo: JsonViewDemo },
       { name: 'call-status', width: 'compact', Demo: CallStatusDemo },
       { name: 'replay-button', width: 'compact', Demo: ReplayButtonDemo },
+      { name: 'level-bars', width: 'compact', Demo: LevelBarsDemo },
+      { name: 'letter-tile', width: 'compact', Demo: LetterTileDemo },
       { name: 'live-region', width: 'compact', Demo: LiveRegionDemo },
     ],
   },

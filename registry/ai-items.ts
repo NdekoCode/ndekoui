@@ -24,6 +24,28 @@ export const aiFoundationItems: RegistryItemDefinition[] = [
     files: [{ path: 'registry/ndeko/lib/hatch.ts', type: 'registry:lib' }],
     categories: ['foundations'],
   },
+  {
+    name: 'speech-envelope',
+    type: 'registry:lib',
+    title: 'Speech envelope',
+    description:
+      'A simulated voice level that rises and falls like speech, the same for the same time and seed.',
+    files: [
+      { path: 'registry/ndeko/lib/speech-envelope.ts', type: 'registry:lib' },
+    ],
+    categories: ['foundations'],
+  },
+  {
+    name: 'media-clock',
+    type: 'registry:lib',
+    title: 'Media clock',
+    description:
+      'Recording and playback times written as 0:07 and read aloud as 7 seconds.',
+    files: [
+      { path: 'registry/ndeko/lib/media-clock.ts', type: 'registry:lib' },
+    ],
+    categories: ['foundations'],
+  },
 ];
 
 export const aiItems: RegistryItemDefinition[] = [
@@ -97,5 +119,21 @@ export const aiItems: RegistryItemDefinition[] = [
       registryDependencies: ['icons', 'button', 'motion-presets'],
       categories: AI,
     }
+  ),
+  primitive(
+    'level-bars',
+    'Level Bars',
+    'Bars that rise and fall with a voice while someone speaks and settle when it goes quiet.',
+    {
+      dependencies: ['motion'],
+      registryDependencies: ['speech-envelope'],
+      categories: AI,
+    }
+  ),
+  primitive(
+    'letter-tile',
+    'Letter Tile',
+    'A drawn initial for a model lab or a site, tinted by a series colour or left neutral.',
+    { registryDependencies: ['agent-run'], categories: AI }
   ),
 ];

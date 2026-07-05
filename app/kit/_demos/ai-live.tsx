@@ -11,6 +11,8 @@ import {
 } from '@/registry/ndeko/ui/call-status';
 import { CopyButton } from '@/registry/ndeko/ui/copy-button';
 import { JsonView } from '@/registry/ndeko/ui/json-view';
+import { LetterTile } from '@/registry/ndeko/ui/letter-tile';
+import { LevelBars } from '@/registry/ndeko/ui/level-bars';
 import { ClockGate, LiveDuration } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { MorphButton, type MorphState } from '@/registry/ndeko/ui/morph-button';
@@ -171,6 +173,59 @@ export function ReplayButtonDemo() {
       <span className='text-muted-foreground tabular-nums'>Round {round}</span>
       <ReplayButton isShown onReplay={replay} />
     </div>
+  );
+}
+
+function listenLabelOf(isListening: boolean) {
+  if (isListening) {
+    return 'Stop';
+  }
+  return 'Speak';
+}
+
+export function LevelBarsDemo() {
+  const [isListening, setIsListening] = useState(false);
+
+  function toggle() {
+    setIsListening((current) => !current);
+  }
+
+  return (
+    <div className='flex items-center gap-3 text-[13px]'>
+      <LevelBars isActive={isListening} intensity={1} count={20} />
+      <Button
+        type='button'
+        variant='outline'
+        size='sm'
+        aria-pressed={isListening}
+        onClick={toggle}
+      >
+        {listenLabelOf(isListening)}
+      </Button>
+    </div>
+  );
+}
+
+const LAB_TILES = [
+  { name: 'Lumen', initial: 'L', series: 1 },
+  { name: 'Quarry', initial: 'Q', series: 2 },
+  { name: 'Halden', initial: 'H', series: 3 },
+] as const;
+
+export function LetterTileDemo() {
+  return (
+    <ul className='flex flex-col gap-2 text-[13px]'>
+      {LAB_TILES.map((lab) => (
+        <li key={lab.name} className='flex items-center gap-2'>
+          <LetterTile initial={lab.initial} series={lab.series} />
+          {lab.name}
+        </li>
+      ))}
+      <li className='text-muted-foreground flex items-center gap-2'>
+        <LetterTile initial='D' />
+        docs.halden.example, neutral beside agents
+      </li>
+    </ul>
   );
 }
 
