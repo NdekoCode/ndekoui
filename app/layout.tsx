@@ -1,12 +1,11 @@
 import './globals.css';
 
-import Script from 'next/script';
-
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { ThemeProvider } from '@/components/website/theme-provider';
 
 import type { Metadata } from 'next';
 
+import { Analytics } from '@/app/_site/analytics';
 import { searchVerificationOf, SITE_KEYWORDS } from '@/app/_site/seo';
 
 export const metadata: Metadata = {
@@ -36,19 +35,13 @@ export default function RootLayout({
 
   return (
     <html lang='en' suppressHydrationWarning>
-      {isProduction && (
-        <Script
-          async
-          src='https://analytics.umami.is/script.js'
-          data-website-id='17e8fc96-321d-43a6-94e7-d571c4c66a04'
-        />
-      )}
       <body className='font-sans antialiased'>
         <ThemeProvider attribute='class' disableTransitionOnChange>
           <TooltipProvider>
             <div className='isolate min-h-screen'>{children}</div>
           </TooltipProvider>
         </ThemeProvider>
+        {isProduction && <Analytics />}
       </body>
     </html>
   );
