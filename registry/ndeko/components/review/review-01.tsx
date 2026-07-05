@@ -1,21 +1,29 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useInView,
-  useReducedMotion,
-} from 'motion/react';
+import { AnimatePresence, motion, useInView } from 'motion/react';
 import { useId, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll, type WordRollWord } from '@/components/core/word-roll';
 import { useNow } from '@/registry/ndeko/hooks/use-agent-run';
 import {
+  useAutoplay,
+  type AutoplayStep,
+} from '@/registry/ndeko/hooks/use-autoplay';
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import {
   seriesColorOf,
   type ApprovalRequest,
   type RunAgent,
 } from '@/registry/ndeko/lib/agent-run';
+import {
+  hold,
+  PRESS_LEAD_MS,
+  pressedSolidOf,
+  spokenUnless,
+  usePress,
+} from '@/registry/ndeko/lib/demonstration';
 import {
   CheckIcon,
   CircleXIcon,
@@ -30,6 +38,7 @@ import { Chip } from '@/registry/ndeko/ui/chip';
 import { Kbd } from '@/registry/ndeko/ui/kbd';
 import { Textarea } from '@/registry/ndeko/ui/textarea';
 
+import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { MorphButton, type MorphState } from '@/registry/ndeko/ui/morph-button';
 import {
@@ -96,6 +105,17 @@ const APPROVE_LABELS: Record<MorphState, string> = {
   done: 'Approved',
 };
 
+/** Once the approval went through, the key is no longer an action: it wears the result. */
+const APPROVED_LOOK =
+  'bg-success/15 text-success-foreground shadow-none ring-0';
+
+function approveLookOf(phase: ApprovalPhase, isPressed: boolean) {
+  if (phase === 'confirmed') {
+    return APPROVED_LOOK;
+  }
+  return pressedSolidOf(isPressed);
+}
+
 function isTypingTarget(target: EventTarget) {
   const isElement = target instanceof HTMLElement;
   if (!isElement) {
@@ -155,7 +175,7 @@ function TraceRow({
   entry: ApprovalEntry;
   onUndo?: (requestId: string) => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const risePresence = risePresenceOf(shouldReduceMotion);
   const isApproved = entry.phase === 'approved';
   const hasReason = Boolean(entry.reason);
@@ -255,11 +275,17 @@ function PreviewIcon({ preview }: { preview: ApprovalPreview }) {
 
 type RequestCardProps = {
   entry: ApprovalEntry;
+  isApprovePressed: boolean;
   onApprove?: (requestId: string) => void;
   onDeny?: (requestId: string, reason: string) => void;
 };
 
-function RequestCard({ entry, onApprove, onDeny }: RequestCardProps) {
+function RequestCard({
+  entry,
+  isApprovePressed,
+  onApprove,
+  onDeny,
+}: RequestCardProps) {
   const [isDenying, setIsDenying] = useState(false);
   const [reason, setReason] = useState('');
   const reasonId = useId();
@@ -334,7 +360,7 @@ function RequestCard({ entry, onApprove, onDeny }: RequestCardProps) {
       aria-labelledby={titleId}
       aria-describedby={`${titleId}-keys`}
       onKeyDown={decideFromKeys}
-      className='surface-raised focus-visible:ring-ring/25 relative flex flex-col gap-3 rounded-xl p-4 outline-none focus-visible:ring-[3px]'
+      className='surface-raised focus-visible:ring-ring/25 @container relative flex flex-col gap-3 rounded-xl p-4 outline-none focus-visible:ring-[3px]'
     >
       <div className='flex items-center gap-2'>
         <Chip color={chipColor}>{agent.name}</Chip>
@@ -400,6 +426,7 @@ function RequestCard({ entry, onApprove, onDeny }: RequestCardProps) {
               state={approveStateOf(entry.phase)}
               labels={APPROVE_LABELS}
               onClick={approve}
+              className={approveLookOf(entry.phase, isApprovePressed)}
             />
             <Button
               type='button'
@@ -412,7 +439,7 @@ function RequestCard({ entry, onApprove, onDeny }: RequestCardProps) {
             </Button>
             <span
               id={`${titleId}-keys`}
-              className='text-muted-foreground ms-auto hidden items-center gap-1 text-xs sm:flex'
+              className='text-muted-foreground ms-auto hidden items-center gap-1 text-xs @sm:flex'
             >
               <Kbd>A</Kbd> approves, <Kbd>D</Kbd> denies
             </span>
@@ -450,6 +477,8 @@ export type ApprovalPromptProps = {
   onUndo?: (requestId: string) => void;
   /** Shown when nothing waits, for example to load more requests. */
   emptyAction?: React.ReactNode;
+  /** Shows Approve held down on the request in front, for a demonstration that presses it. */
+  isApprovePressed?: boolean;
   className?: string;
 };
 
@@ -459,9 +488,10 @@ export function ApprovalPrompt({
   onDeny,
   onUndo,
   emptyAction,
+  isApprovePressed = false,
   className,
 }: ApprovalPromptProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const risePresence = risePresenceOf(shouldReduceMotion);
   const titleId = useId();
@@ -520,6 +550,7 @@ export function ApprovalPrompt({
             <motion.div key={front.request.id} {...risePresence}>
               <RequestCard
                 entry={front}
+                isApprovePressed={isApprovePressed}
                 onApprove={onApprove}
                 onDeny={onDeny}
               />
@@ -607,10 +638,16 @@ function titleOf(entries: ApprovalEntry[], requestId: string) {
   return entry?.request.title ?? '';
 }
 
+/** A request that waits on a person is approved by the demonstration after this long. */
+const DECIDE_AFTER_MS = 2500;
+
+type PressKey = 'approve';
+
 export default function Review01() {
   const [entries, setEntries] = useState(INITIAL_ENTRIES);
   const [message, setMessage] = useState('');
   const { schedule, clearAll } = useTimeouts();
+  const { pressed, press } = usePress<PressKey>();
 
   function update(requestId: string, patch: EntryPatch) {
     setEntries((current) =>
@@ -681,21 +718,44 @@ export default function Review01() {
     setMessage('Two requests wait for you again');
   }
 
+  const approveTime = APPROVING_MS + CONFIRMED_MS;
+  const nextAfter = approveTime + DECIDE_AFTER_MS;
+  const restAfter = approveTime + 2600;
+  const steps: AutoplayStep[] = [
+    { after: DECIDE_AFTER_MS, run: () => press('approve') },
+    { after: PRESS_LEAD_MS, run: () => approve('send-review') },
+    { after: nextAfter, run: () => press('approve') },
+    { after: PRESS_LEAD_MS, run: () => approve('write-note') },
+    { after: restAfter, run: hold },
+  ];
+  const { ref, isInView, isAutoplaying } = useAutoplay(steps, {
+    loopAfter: 3000,
+    onReset: reset,
+  });
+
+  useKeptHeight(ref);
+
   return (
-    <div className='flex w-full max-w-[28rem] flex-col gap-2'>
-      <ApprovalPrompt
-        entries={entries}
-        onApprove={approve}
-        onDeny={deny}
-        onUndo={undo}
-        emptyAction={
-          <Button type='button' variant='outline' size='sm' onClick={reset}>
-            <RotateCcwIcon />
-            Bring the requests back
-          </Button>
-        }
-      />
-      <LiveRegion message={message} />
+    <div
+      ref={ref}
+      className='flex min-h-[27.5rem] w-full max-w-[28rem] flex-col gap-2'
+    >
+      <ClockGate isActive={isInView}>
+        <ApprovalPrompt
+          entries={entries}
+          onApprove={approve}
+          onDeny={deny}
+          onUndo={undo}
+          isApprovePressed={pressed === 'approve'}
+          emptyAction={
+            <Button type='button' variant='outline' size='sm' onClick={reset}>
+              <RotateCcwIcon />
+              Bring the requests back
+            </Button>
+          }
+        />
+      </ClockGate>
+      <LiveRegion message={spokenUnless(isAutoplaying, message)} />
     </div>
   );
 }

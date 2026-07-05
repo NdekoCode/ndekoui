@@ -1,8 +1,10 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 
-import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { useSession } from '@/registry/ndeko/hooks/use-session';
 import {
   elapsedOf,
   emptyRun,
@@ -11,10 +13,15 @@ import {
   type ApprovalRequest,
   type CallStatus,
   type PlanStep,
+  type RunEvent,
   type RunSnapshot,
   type RunStatus,
   type StepStatus,
 } from '@/registry/ndeko/lib/agent-run';
+import {
+  pressedSolidOf,
+  spokenUnless,
+} from '@/registry/ndeko/lib/demonstration';
 import { CheckIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Badge } from '@/registry/ndeko/ui/badge';
@@ -28,10 +35,22 @@ import {
   useLiveNow,
 } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
-import { rowPresenceOf, springOf } from '@/registry/ndeko/lib/motion-presets';
+import {
+  INSTANT,
+  rowPresenceOf,
+  SPRING,
+  springOf,
+} from '@/registry/ndeko/lib/motion-presets';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
+import {
+  applyBatchAt,
+  batch,
+  batchOf,
+  reduceBatch,
+  restingOf,
+  type RunStep,
+} from './_parts/run-session';
 import { PAGE_ERROR, RUN_TITLE } from './_parts/scenario';
-import { useDemoRun } from '@/registry/ndeko/hooks/use-demo-run';
 
 export type StepKind = 'thinking' | 'tools' | 'waiting' | 'writing';
 
@@ -129,6 +148,42 @@ function rowSurfaceOf(isLifted: boolean, isDimmed: boolean) {
 
 type KindTotals = Record<StepKind, number>;
 
+type KindShare = {
+  kind: StepKind;
+  /** Where the kind starts on the bar and how much of it is its own, both from 0 to 1. */
+  start: number;
+  share: number;
+};
+
+/**
+ * The bar and the tracks are drawn one step ahead and travel there at a constant speed, so one
+ * transition plays per step. `GROW` below lasts exactly as long.
+ */
+const GROW_STEP_MS = 1000;
+
+const MIN_TRACK_SHARE = 0.012;
+
+const GROW =
+  'transition-transform duration-1000 ease-linear motion-reduce:transition-none';
+
+const GLIDE =
+  'transition-transform duration-300 ease-(--ease-in-out-strong) motion-reduce:transition-none';
+
+/** Without motion nothing travels, so nothing is drawn ahead of the present. */
+function leadOf(shouldReduceMotion: boolean | null) {
+  if (shouldReduceMotion) {
+    return 0;
+  }
+  return GROW_STEP_MS;
+}
+
+function travelOf(isLive: boolean) {
+  if (isLive) {
+    return GROW;
+  }
+  return GLIDE;
+}
+
 function totalsOf(sentences: RunSentence[], now: number): KindTotals {
   const totals: KindTotals = { thinking: 0, tools: 0, waiting: 0, writing: 0 };
   for (const sentence of sentences) {
@@ -138,8 +193,79 @@ function totalsOf(sentences: RunSentence[], now: number): KindTotals {
   return totals;
 }
 
-function shareStyleOf(kind: StepKind, total: number): React.CSSProperties {
-  return { flexGrow: total, backgroundColor: KIND_COLOR[kind] };
+function sharesOf(totals: KindTotals): KindShare[] {
+  let sum = 0;
+  for (const kind of KINDS) {
+    sum += totals[kind];
+  }
+  const whole = Math.max(1, sum);
+  const shares: KindShare[] = [];
+  let start = 0;
+  for (const kind of KINDS) {
+    const share = totals[kind] / whole;
+    shares.push({ kind, start, share });
+    start += share;
+  }
+  return shares;
+}
+
+/** A segment is the whole bar, moved to its start and scaled to its share: no width to lay out. */
+function segmentStyleOf(segment: KindShare): React.CSSProperties {
+  const offset = segment.start * 100;
+  return {
+    backgroundColor: KIND_COLOR[segment.kind],
+    transform: `translateX(${offset}%) scaleX(${segment.share})`,
+  };
+}
+
+/** A gap between two segments: a mark of the surface behind the bar, moved to where they meet. */
+function boundaryStyleOf(segment: KindShare): React.CSSProperties {
+  const offset = segment.start * 100;
+  return { transform: `translateX(${offset}%)` };
+}
+
+function isInsideBar(segment: KindShare) {
+  const isPastStart = segment.start > 0;
+  const isBeforeEnd = segment.start < 1;
+  return isPastStart && isBeforeEnd;
+}
+
+function isRunningKind(sentences: RunSentence[], kind: StepKind) {
+  return sentences.some((sentence) => {
+    const isKind = sentence.kind === kind;
+    const isRunning = sentence.step.status === 'running';
+    return isKind && isRunning;
+  });
+}
+
+function kindTotalOf(sentences: RunSentence[], kind: StepKind, now: number) {
+  let total = 0;
+  for (const sentence of sentences) {
+    if (sentence.kind === kind) {
+      total += elapsedOf(sentence.step, now);
+    }
+  }
+  return total;
+}
+
+type KindTimeProps = {
+  sentences: RunSentence[];
+  kind: StepKind;
+  isLive: boolean;
+};
+
+/** Only the figure of the kind being spent ticks: the three others hold still. */
+function KindTime({ sentences, kind, isLive }: KindTimeProps) {
+  const isSpending = isRunningKind(sentences, kind);
+  const isTicking = isLive && isSpending;
+  const now = useLiveNow(100, isTicking);
+  const total = kindTotalOf(sentences, kind, now);
+
+  return (
+    <span className='inline-block min-w-7 tabular-nums'>
+      {formatDuration(total)}
+    </span>
+  );
 }
 
 function TimeSplit({
@@ -149,22 +275,38 @@ function TimeSplit({
   sentences: RunSentence[];
   run: RunTiming;
 }) {
-  const now = useLiveNow(100, isLiveRun(run));
-  const totals = totalsOf(sentences, now);
-  const spentKinds = KINDS.filter((kind) => totals[kind] > 0);
+  const shouldReduceMotion = usePrefersReducedMotion();
+  const isLive = isLiveRun(run);
+  const now = useLiveNow(GROW_STEP_MS, isLive);
+  const lead = leadOf(shouldReduceMotion);
+  const reach = now + lead;
+  const totals = totalsOf(sentences, reach);
+  const shares = sharesOf(totals);
+  const laterShares = shares.slice(1);
+  const boundaries = laterShares.filter(isInsideBar);
+  const travel = travelOf(isLive);
 
   return (
     <div className='flex flex-col gap-2.5'>
       <div
         aria-hidden='true'
-        className='bg-foreground/[0.05] flex h-2.5 gap-0.5 overflow-hidden rounded-full'
+        className='bg-foreground/[0.05] relative h-2.5 overflow-hidden rounded-full'
       >
-        {spentKinds.map((kind) => (
+        {shares.map((segment) => (
           <span
-            key={kind}
-            className='h-full basis-0 rounded-[2px] first:rounded-s-full last:rounded-e-full'
-            style={shareStyleOf(kind, totals[kind])}
+            key={segment.kind}
+            className={cn('absolute inset-0 origin-left', travel)}
+            style={segmentStyleOf(segment)}
           />
+        ))}
+        {boundaries.map((segment) => (
+          <span
+            key={segment.kind}
+            className={cn('absolute inset-0', travel)}
+            style={boundaryStyleOf(segment)}
+          >
+            <span className='bg-card absolute inset-y-0 -start-px w-0.5' />
+          </span>
         ))}
       </div>
       <ul
@@ -178,7 +320,7 @@ function TimeSplit({
               style={{ backgroundColor: KIND_COLOR[kind] }}
             />
             <span className='text-muted-foreground'>{KIND_LABEL[kind]}</span>
-            <span className='tabular-nums'>{formatDuration(totals[kind])}</span>
+            <KindTime sentences={sentences} kind={kind} isLive={isLive} />
           </li>
         ))}
       </ul>
@@ -186,52 +328,88 @@ function TimeSplit({
   );
 }
 
+function trackWholeOf(run: RunTiming, reach: number, windowMs: number) {
+  const runStart = run.startedAt ?? reach;
+  const runEnd = run.endedAt ?? reach;
+  const spent = runEnd - runStart;
+  return Math.max(1, spent, windowMs);
+}
+
+/** A track is the whole lane, moved to where its step starts and scaled to how long it took. */
 function trackStyleOf(
   sentence: RunSentence,
   run: RunTiming,
-  now: number
-): React.CSSProperties {
-  const runStart = run.startedAt ?? now;
-  const runEnd = run.endedAt ?? now;
-  const total = Math.max(1, runEnd - runStart);
-  const stepStart = sentence.step.startedAt ?? now;
-  const stepElapsed = elapsedOf(sentence.step, now);
-  const offset = stepStart - runStart;
-  const left = (offset / total) * 100;
-  const width = (stepElapsed / total) * 100;
+  reach: number,
+  windowMs: number
+) {
+  const whole = trackWholeOf(run, reach, windowMs);
+  const runStart = run.startedAt ?? reach;
+  const stepStart = sentence.step.startedAt ?? reach;
+  const stepElapsed = elapsedOf(sentence.step, reach);
+  const waited = stepStart - runStart;
+  const startShare = waited / whole;
+  const share = stepElapsed / whole;
+  const shownShare = Math.max(share, MIN_TRACK_SHARE);
+  const offset = startShare * 100;
   return {
-    left: `${left}%`,
-    width: `${width}%`,
     backgroundColor: KIND_COLOR[sentence.kind],
-  };
+    transform: `translateX(${offset}%) scaleX(${shownShare})`,
+    '--track-from': `${offset}%`,
+  } as React.CSSProperties;
+}
+
+/** A step that is running starts from nothing, so its track is seen growing from the first frame. */
+function trackBirthOf(isRunning: boolean) {
+  if (isRunning) {
+    return 'starting:[transform:translateX(var(--track-from))_scaleX(0)]';
+  }
+  return undefined;
 }
 
 function StepTrack({
   sentence,
   run,
+  windowMs,
 }: {
   sentence: RunSentence;
   run: RunTiming;
+  windowMs: number;
 }) {
-  const now = useLiveNow(100, isLiveRun(run));
-  const style = trackStyleOf(sentence, run, now);
+  const shouldReduceMotion = usePrefersReducedMotion();
+  const isLive = isLiveRun(run);
+  const isRunning = sentence.step.status === 'running';
+  const now = useLiveNow(GROW_STEP_MS, isLive);
+  const stepStart = sentence.step.startedAt ?? now;
+  const present = Math.max(now, stepStart);
+  const lead = leadOf(shouldReduceMotion);
+  const reach = present + lead;
+  const style = trackStyleOf(sentence, run, reach, windowMs);
 
   return (
     <span
       aria-hidden='true'
       className='bg-foreground/[0.06] relative block h-1 overflow-hidden rounded-full'
     >
-      <span className='absolute inset-y-0 min-w-1 rounded-full' style={style} />
+      <span
+        className={cn(
+          'absolute inset-0 origin-left',
+          travelOf(isLive),
+          trackBirthOf(isRunning)
+        )}
+        style={style}
+      />
     </span>
   );
 }
 
 function ApprovalAsk({
   approval,
+  isApprovePressed,
   onApprove,
   onDeny,
 }: {
   approval: ApprovalRequest;
+  isApprovePressed: boolean;
   onApprove?: (approvalId: string) => void;
   onDeny?: (approvalId: string) => void;
 }) {
@@ -250,6 +428,7 @@ function ApprovalAsk({
           type='button'
           size='sm'
           onClick={() => onApprove?.(approval.id)}
+          className={pressedSolidOf(isApprovePressed)}
         >
           <CheckIcon />
           Approve
@@ -268,39 +447,54 @@ function ApprovalAsk({
   );
 }
 
-const SENTENCE_SWAP = {
+const WORD_SWAP = {
   initial: { opacity: 0, y: 4, filter: 'blur(2px)' },
   animate: { opacity: 1, y: 0, filter: 'blur(0px)' },
   exit: { opacity: 0, y: -4, filter: 'blur(2px)' },
-  transition: { duration: 0.2, ease: [0.23, 1, 0.32, 1] },
+  transition: { duration: 0.2, ease: [0.23, 1, 0.32, 1], layout: SPRING },
 } as const;
 
-const SENTENCE_FADE = {
+const WORD_FADE = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },
   exit: { opacity: 0 },
-  transition: { duration: 0.15 },
+  transition: { duration: 0.15, layout: INSTANT },
 } as const;
 
-function sentenceMotionOf(shouldReduceMotion: boolean | null) {
+function wordMotionOf(shouldReduceMotion: boolean | null) {
   if (shouldReduceMotion) {
-    return SENTENCE_FADE;
+    return WORD_FADE;
   }
-  return SENTENCE_SWAP;
+  return WORD_SWAP;
 }
 
-/** WordRoll never wraps and a step sentence must, so a changed sentence crossfades instead. */
+/**
+ * A step sentence wraps, so it rewrites itself word by word: a word that changed leaves and its
+ * replacement rises in, a word that stayed slides to its new place, once per rewrite.
+ */
 function SentenceText({ text }: { text: string }) {
-  const shouldReduceMotion = useReducedMotion();
-  const sentenceMotion = sentenceMotionOf(shouldReduceMotion);
+  const shouldReduceMotion = usePrefersReducedMotion();
+  const wordMotion = wordMotionOf(shouldReduceMotion);
+  const words = text.split(' ');
 
   return (
     <span className='relative min-w-0 flex-1 text-[13px] leading-5'>
-      <AnimatePresence initial={false} mode='popLayout'>
-        <motion.span key={text} className='block' {...sentenceMotion}>
-          {text}
-        </motion.span>
-      </AnimatePresence>
+      <span className='sr-only'>{text}</span>
+      <span aria-hidden='true'>
+        <AnimatePresence initial={false} mode='popLayout'>
+          {words.map((word, index) => (
+            <motion.span
+              key={`${index}:${word}`}
+              layout='position'
+              layoutDependency={text}
+              className='inline-block whitespace-pre'
+              {...wordMotion}
+            >
+              {`${word} `}
+            </motion.span>
+          ))}
+        </AnimatePresence>
+      </span>
     </span>
   );
 }
@@ -308,7 +502,9 @@ function SentenceText({ text }: { text: string }) {
 type SentenceRowProps = {
   sentence: RunSentence;
   run: RunTiming;
+  windowMs: number;
   isDimmed: boolean;
+  isApprovePressed: boolean;
   onApprove?: (approvalId: string) => void;
   onDeny?: (approvalId: string) => void;
 };
@@ -316,11 +512,13 @@ type SentenceRowProps = {
 function SentenceRow({
   sentence,
   run,
+  windowMs,
   isDimmed,
+  isApprovePressed,
   onApprove,
   onDeny,
 }: SentenceRowProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const { step, approval } = sentence;
   const askingApproval = pendingOf(approval);
@@ -351,14 +549,14 @@ function SentenceRow({
               <LiveDuration
                 item={step}
                 isRunning={isRunning}
-                className='text-muted-foreground shrink-0 text-xs'
+                className='text-muted-foreground min-w-8 shrink-0 text-end text-xs'
               />
             )}
           </div>
           {hasFailureDetail && (
             <p className='text-destructive-ink text-xs'>{step.detail}</p>
           )}
-          <StepTrack sentence={sentence} run={run} />
+          <StepTrack sentence={sentence} run={run} windowMs={windowMs} />
         </div>
       </div>
       <AnimatePresence initial={false}>
@@ -370,6 +568,7 @@ function SentenceRow({
           >
             <ApprovalAsk
               approval={askingApproval}
+              isApprovePressed={isApprovePressed}
               onApprove={onApprove}
               onDeny={onDeny}
             />
@@ -390,6 +589,13 @@ export type RunInSentencesProps = {
   sentences: RunSentence[];
   onApprove?: (approvalId: string) => void;
   onDeny?: (approvalId: string) => void;
+  /**
+   * How long each track spans from the start of the run. While the run fits in it a finished track
+   * never moves and the running one only grows. Without it the tracks follow the length of the run.
+   */
+  windowMs?: number;
+  /** Shows Approve held down, for a demonstration that presses it. */
+  isApprovePressed?: boolean;
   className?: string;
 };
 
@@ -399,9 +605,11 @@ export function RunInSentences({
   sentences,
   onApprove,
   onDeny,
+  windowMs = 0,
+  isApprovePressed = false,
   className,
 }: RunInSentencesProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const startedSentences = sentences.filter(hasStartedStep);
   const hasLifted = startedSentences.some((sentence) =>
@@ -447,7 +655,9 @@ export function RunInSentences({
               <SentenceRow
                 sentence={sentence}
                 run={run}
+                windowMs={windowMs}
                 isDimmed={isDimmed(sentence)}
+                isApprovePressed={isApprovePressed}
                 onApprove={onApprove}
                 onDeny={onDeny}
               />
@@ -481,17 +691,18 @@ function upcoming(id: string, title: string): PlanStep {
   return { id, title, status: 'upcoming' };
 }
 
+/** Each step is told in the present while it runs and rewritten in the past when it ends. */
 const PLAN: PlanStep[] = [
-  upcoming('scope', 'Worked out what the review needs'),
-  upcoming('search', 'Searched the web for Brightmoor prices'),
-  upcoming('page', 'Read the Brightmoor pricing page'),
-  upcoming('page-again', 'Read the pricing page again'),
-  upcoming('sheet', 'Read the Q3 invoices spreadsheet'),
-  upcoming('compare', 'Found six invoice lines above the list price'),
-  upcoming('draft', 'Wrote the email to Brightmoor accounts'),
+  upcoming('scope', 'Working out what the review needs'),
+  upcoming('search', 'Searching the web for Brightmoor prices'),
+  upcoming('page', 'Reading the Brightmoor pricing page'),
+  upcoming('page-again', 'Reading the pricing page again'),
+  upcoming('sheet', 'Reading the Q3 invoices spreadsheet'),
+  upcoming('compare', 'Comparing invoice lines with the list price'),
+  upcoming('draft', 'Writing the email to Brightmoor accounts'),
   upcoming('approve', 'Waiting for you to approve the email'),
-  upcoming('send', 'Sent the email to Brightmoor accounts'),
-  upcoming('summary', 'Wrote the summary for the finance team'),
+  upcoming('send', 'Sending the email to Brightmoor accounts'),
+  upcoming('summary', 'Writing the summary for the finance team'),
 ];
 
 const SEND_APPROVAL: ApprovalRequest = {
@@ -504,42 +715,125 @@ const SEND_APPROVAL: ApprovalRequest = {
 
 const INITIAL_RUN = emptyRun({ id: 'brightmoor-sentences', title: RUN_TITLE });
 
-function stepTo(
-  id: string,
-  status: StepStatus,
-  detail?: string
-): RunScriptStep['event'] {
-  if (detail) {
-    return { type: 'step.updated', id, patch: { status, detail } };
-  }
-  return { type: 'step.updated', id, patch: { status } };
+function started(id: string): RunEvent {
+  return { type: 'step.updated', id, patch: { status: 'running' } };
 }
 
-const SCRIPT: RunScriptStep[] = [
-  { after: 400, event: { type: 'run.started' } },
-  { after: 0, event: { type: 'plan.set', steps: PLAN } },
-  { after: 0, event: stepTo('scope', 'running') },
-  { after: 900, event: stepTo('scope', 'done') },
-  { after: 0, event: stepTo('search', 'running') },
-  { after: 1000, event: stepTo('search', 'done') },
-  { after: 0, event: stepTo('page', 'running') },
-  { after: 600, event: stepTo('page', 'failed', PAGE_ERROR) },
-  { after: 200, event: stepTo('page-again', 'running') },
-  { after: 800, event: stepTo('page-again', 'done') },
-  { after: 0, event: stepTo('sheet', 'running') },
-  { after: 700, event: stepTo('sheet', 'done') },
-  { after: 0, event: stepTo('compare', 'running') },
-  { after: 800, event: stepTo('compare', 'done') },
-  { after: 0, event: stepTo('draft', 'running') },
-  { after: 1400, event: stepTo('draft', 'done') },
-  { after: 0, event: stepTo('approve', 'running') },
-  { after: 0, event: { type: 'approval.requested', approval: SEND_APPROVAL } },
-  { after: 300, event: stepTo('send', 'running') },
-  { after: 600, event: stepTo('send', 'done') },
-  { after: 0, event: stepTo('summary', 'running') },
-  { after: 1000, event: stepTo('summary', 'done') },
-  { after: 0, event: { type: 'run.finished', status: 'done' } },
+function ended(id: string, title: string): RunEvent {
+  return { type: 'step.updated', id, patch: { status: 'done', title } };
+}
+
+const PAGE_FAILED: RunEvent = {
+  type: 'step.updated',
+  id: 'page',
+  patch: {
+    status: 'failed',
+    title: 'Could not read the Brightmoor pricing page',
+    detail: PAGE_ERROR,
+  },
+};
+
+const APPROVED = batchOf(
+  { type: 'approval.resolved', id: SEND_APPROVAL.id, decision: 'approved' },
+  ended('approve', 'You approved the email')
+);
+
+const DENIED = batchOf(
+  { type: 'approval.resolved', id: SEND_APPROVAL.id, decision: 'denied' },
+  {
+    type: 'step.updated',
+    id: 'approve',
+    patch: {
+      status: 'failed',
+      title: 'You stopped the email',
+      detail: 'The draft stays in the outbox',
+    },
+  },
+  { type: 'run.finished', status: 'cancelled' }
+);
+
+/** A request that waits on a person is answered by the demonstration after this long. */
+const DECIDE_AFTER_MS = 2500;
+
+function hasDecided(run: RunSnapshot) {
+  const pending = pendingApprovalsOf(run);
+  return pending.length === 0;
+}
+
+function isStopped(run: RunSnapshot) {
+  return run.status === 'cancelled';
+}
+
+const SCRIPT: RunStep[] = [
+  batch(
+    400,
+    { type: 'run.started' },
+    { type: 'plan.set', steps: PLAN },
+    started('scope')
+  ),
+  batch(
+    900,
+    ended('scope', 'Worked out what the review needs'),
+    started('search')
+  ),
+  batch(
+    1000,
+    ended('search', 'Searched the web for Brightmoor prices'),
+    started('page')
+  ),
+  batch(600, PAGE_FAILED),
+  batch(200, started('page-again')),
+  batch(
+    800,
+    ended('page-again', 'Read the pricing page again'),
+    started('sheet')
+  ),
+  batch(
+    700,
+    ended('sheet', 'Read the Q3 invoices spreadsheet'),
+    started('compare')
+  ),
+  batch(
+    800,
+    ended('compare', 'Found six invoice lines above the list price'),
+    started('draft')
+  ),
+  batch(
+    1400,
+    ended('draft', 'Wrote the email to Brightmoor accounts'),
+    started('approve'),
+    { type: 'approval.requested', approval: SEND_APPROVAL }
+  ),
+  {
+    after: DECIDE_AFTER_MS,
+    by: 'person',
+    press: 'approve',
+    action: APPROVED,
+    isAnswered: hasDecided,
+  },
+  batch(300, started('send')),
+  batch(
+    600,
+    ended('send', 'Sent the email to Brightmoor accounts'),
+    started('summary')
+  ),
+  batch(1000, ended('summary', 'Wrote the summary for the finance team'), {
+    type: 'run.finished',
+    status: 'done',
+  }),
 ];
+
+/** The run takes about eleven seconds with its approval, so every track fits in a window that never moves. */
+const WINDOW_MS = 12_000;
+
+const SESSION = {
+  reducer: reduceBatch,
+  initial: INITIAL_RUN,
+  resting: restingOf(INITIAL_RUN, SCRIPT, applyBatchAt),
+  script: SCRIPT,
+  loopAfter: 3000,
+  holdWhile: isStopped,
+};
 
 function sentencesOf(run: RunSnapshot): RunSentence[] {
   const approval = run.approvals.find(
@@ -573,68 +867,44 @@ function announcementOf(run: RunSnapshot) {
   return '';
 }
 
-function isWaitingOrStopped(run: RunSnapshot) {
-  const pending = pendingApprovalsOf(run);
-  const isWaiting = pending.length > 0;
-  const isStopped = run.status === 'cancelled';
-  return isWaiting || isStopped;
-}
-
 export default function Run03() {
-  const { ref, isInView, snapshot, store, restart } = useDemoRun(SCRIPT, {
-    initial: INITIAL_RUN,
-    holdWhile: isWaitingOrStopped,
-  });
-  const isEnded = snapshot.endedAt !== undefined;
-  const sentences = sentencesOf(snapshot);
-  const announcement = announcementOf(snapshot);
+  const { ref, isInView, isAutoplaying, state, act, pressed, restart } =
+    useSession(SESSION);
+  const isEnded = state.endedAt !== undefined;
+  const canReplay = isEnded && !isAutoplaying;
+  const sentences = sentencesOf(state);
+  const announcement = announcementOf(state);
 
-  function approve(approvalId: string) {
-    store.dispatch({
-      type: 'approval.resolved',
-      id: approvalId,
-      decision: 'approved',
-    });
-    store.dispatch({
-      type: 'step.updated',
-      id: 'approve',
-      patch: { status: 'done', title: 'You approved the email' },
-    });
+  function approve() {
+    act(APPROVED);
   }
 
-  function deny(approvalId: string) {
-    store.dispatch({
-      type: 'approval.resolved',
-      id: approvalId,
-      decision: 'denied',
-    });
-    store.dispatch({
-      type: 'step.updated',
-      id: 'approve',
-      patch: {
-        status: 'failed',
-        title: 'You stopped the email',
-        detail: 'The draft stays in the outbox',
-      },
-    });
-    store.dispatch({ type: 'run.finished', status: 'cancelled' });
+  function deny() {
+    act(DENIED);
   }
+
+  useKeptHeight(ref);
 
   return (
-    <div ref={ref} className='flex w-full max-w-[36rem] flex-col gap-2'>
+    <div
+      ref={ref}
+      className='flex min-h-[53.5rem] w-full max-w-[36rem] flex-col gap-2'
+    >
       <ClockGate isActive={isInView}>
         <RunInSentences
-          title={snapshot.title}
-          run={snapshot}
+          title={state.title}
+          run={state}
           sentences={sentences}
           onApprove={approve}
           onDeny={deny}
+          windowMs={WINDOW_MS}
+          isApprovePressed={pressed === 'approve'}
         />
       </ClockGate>
       <div className='flex h-7 items-center justify-end'>
-        <ReplayButton isShown={isEnded} onReplay={restart} />
+        <ReplayButton isShown={canReplay} onReplay={restart} />
       </div>
-      <LiveRegion message={announcement} />
+      <LiveRegion message={spokenUnless(isAutoplaying, announcement)} />
     </div>
   );
 }

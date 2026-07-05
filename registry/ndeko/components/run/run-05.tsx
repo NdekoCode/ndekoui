@@ -1,39 +1,42 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { formatTokens } from '@/registry/ndeko/lib/agent-run';
+import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
 import { ChevronDownIcon, FileIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Fold } from '@/registry/ndeko/ui/chat-motion';
 
 import { CompactOffer, contextAnnouncementOf } from './_parts/compact-offer';
 import {
+  foldableTokensOf,
   freeTokensOf,
   LEVEL_WORD,
   levelOf,
   PART_FILL,
   percentOf,
   RESERVE_STYLE,
+  shareOf,
   usedTokensOf,
   type Compaction,
   type ContextBudget,
   type ContextItem,
   type ContextPart,
+  type ContextPartId,
 } from './_parts/context';
 import { ContextHeader } from './_parts/context-header';
+import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
-import {
-  FADE,
-  rowPresenceOf,
-  springOf,
-} from '@/registry/ndeko/lib/motion-presets';
+import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
 import { TokenCount } from './_parts/token-count';
 import {
-  useContextControls,
-  useContextRun,
+  FILLING_SESSION,
+  useContextSession,
   type CompactStatus,
 } from './_parts/use-context-demo';
 
@@ -44,12 +47,101 @@ function chevronTurnOf(isOpen: boolean) {
   return 'rotate-0';
 }
 
-function segmentStyleOf(
-  part: ContextPart,
-  budget: ContextBudget
-): React.CSSProperties {
-  const width = percentOf(part.tokens, budget);
-  return { width: `${width}%`, backgroundColor: PART_FILL[part.id] };
+type BarSegment = {
+  id: ContextPartId;
+  /** Where the segment starts on the bar and how much of it is its own, both from 0 to 1. */
+  start: number;
+  share: number;
+};
+
+/** The order of the parts along the bar. The summary sits where the turns it replaces were. */
+const BAR_ORDER: ContextPartId[] = [
+  'system',
+  'tools',
+  'files',
+  'summary',
+  'conversation',
+];
+
+/** The summary is drawn last, over the conversation, so it can cover the turns it is folding. */
+const PAINT_ORDER: ContextPartId[] = [
+  'system',
+  'tools',
+  'files',
+  'conversation',
+  'summary',
+];
+
+const BAR_TRAVEL =
+  'transition-transform duration-500 ease-(--ease-out-strong) motion-reduce:transition-none';
+
+function tokensOfPart(budget: ContextBudget, id: ContextPartId) {
+  const part = budget.parts.find((candidate) => candidate.id === id);
+  return part?.tokens ?? 0;
+}
+
+function segmentsOf(budget: ContextBudget) {
+  const segments: BarSegment[] = [];
+  let start = 0;
+  for (const id of BAR_ORDER) {
+    const tokens = tokensOfPart(budget, id);
+    const share = shareOf(tokens, budget);
+    segments.push({ id, start, share });
+    start += share;
+  }
+  return segments;
+}
+
+/**
+ * While the context is compacted, the summary spreads over the turns it folds. When the compaction
+ * lands it shrinks to its own size and the turns that stay slide against it: the bar folds.
+ */
+function withFolding(segments: BarSegment[], foldingShare: number) {
+  return segments.map((segment) => {
+    if (segment.id !== 'summary') {
+      return segment;
+    }
+    return { ...segment, share: segment.share + foldingShare };
+  });
+}
+
+function foldingShareOf(budget: ContextBudget, compactStatus: CompactStatus) {
+  if (compactStatus !== 'compacting') {
+    return 0;
+  }
+  const folding = foldableTokensOf(budget);
+  return shareOf(folding, budget);
+}
+
+function paintedSegmentsOf(segments: BarSegment[]) {
+  const painted: BarSegment[] = [];
+  for (const id of PAINT_ORDER) {
+    const segment = segments.find((candidate) => candidate.id === id);
+    if (segment) {
+      painted.push(segment);
+    }
+  }
+  return painted;
+}
+
+/** A segment is the whole bar, moved to its start and scaled to its share: no width to lay out. */
+function segmentStyleOf(segment: BarSegment): React.CSSProperties {
+  const offset = segment.start * 100;
+  return {
+    backgroundColor: PART_FILL[segment.id],
+    transform: `translateX(${offset}%) scaleX(${segment.share})`,
+  };
+}
+
+/** A gap after a segment: a mark of the surface behind the bar, moved to where the segment ends. */
+function gapStyleOf(segment: BarSegment): React.CSSProperties {
+  const end = segment.start + segment.share;
+  const offset = end * 100;
+  return { transform: `translateX(${offset}%)` };
+}
+
+function isFilled(segment: BarSegment) {
+  return segment.share > 0;
 }
 
 function spokenUsageOf(budget: ContextBudget) {
@@ -58,10 +150,6 @@ function spokenUsageOf(budget: ContextBudget) {
   const usedText = formatTokens(used);
   const limitText = formatTokens(budget.limit);
   return `${usedText} of ${limitText} tokens used, ${LEVEL_WORD[level]}`;
-}
-
-function filledParts(budget: ContextBudget) {
-  return budget.parts.filter((part) => part.tokens > 0);
 }
 
 function PartDot({ fill }: { fill: string }) {
@@ -74,13 +162,21 @@ function PartDot({ fill }: { fill: string }) {
   );
 }
 
-function SegmentBar({ budget }: { budget: ContextBudget }) {
-  const shouldReduceMotion = useReducedMotion();
-  const spring = springOf(shouldReduceMotion);
+function SegmentBar({
+  budget,
+  compactStatus,
+}: {
+  budget: ContextBudget;
+  compactStatus: CompactStatus;
+}) {
   const used = usedTokensOf(budget);
   const reservePercent = percentOf(budget.reserve, budget);
   const spoken = spokenUsageOf(budget);
-  const parts = filledParts(budget);
+  const foldingShare = foldingShareOf(budget, compactStatus);
+  const laidOut = segmentsOf(budget);
+  const segments = withFolding(laidOut, foldingShare);
+  const painted = paintedSegmentsOf(segments);
+  const filled = segments.filter(isFilled);
 
   return (
     <div
@@ -90,31 +186,26 @@ function SegmentBar({ budget }: { budget: ContextBudget }) {
       aria-valuemax={budget.limit}
       aria-valuenow={used}
       aria-valuetext={spoken}
-      className='flex h-3 gap-0.5 overflow-hidden rounded-full'
+      className='bg-foreground/[0.05] relative h-3 overflow-hidden rounded-full'
     >
-      <AnimatePresence initial={false}>
-        {parts.map((part) => (
-          <motion.span
-            key={part.id}
-            layout
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ layout: spring, opacity: FADE }}
-            className='h-full shrink rounded-[3px] first:rounded-s-full'
-            style={segmentStyleOf(part, budget)}
-          />
-        ))}
-      </AnimatePresence>
-      <motion.span
-        layout
-        transition={{ layout: spring }}
-        className='bg-foreground/[0.05] h-full min-w-0 flex-1 rounded-[3px]'
-      />
-      <motion.span
-        layout
-        transition={{ layout: spring }}
-        className='h-full shrink-0 rounded-s-[3px] rounded-e-full'
+      {painted.map((segment) => (
+        <span
+          key={segment.id}
+          className={cn('absolute inset-0 origin-left', BAR_TRAVEL)}
+          style={segmentStyleOf(segment)}
+        />
+      ))}
+      {filled.map((segment) => (
+        <span
+          key={segment.id}
+          className={cn('absolute inset-0', BAR_TRAVEL)}
+          style={gapStyleOf(segment)}
+        >
+          <span className='bg-card absolute inset-y-0 start-0 w-0.5' />
+        </span>
+      ))}
+      <span
+        className='border-card absolute inset-y-0 end-0 border-s-2'
         style={{ ...RESERVE_STYLE, width: `${reservePercent}%` }}
       />
     </div>
@@ -170,7 +261,7 @@ function FilesRow({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const panelId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const hasFiles = part.items.length > 0;
 
@@ -246,6 +337,8 @@ export type ContextWindowBarProps = {
   compactStatus?: CompactStatus;
   canCompact?: boolean;
   compaction?: Compaction | null;
+  /** Shows Compact held down, for a demonstration that presses it. */
+  isCompactPressed?: boolean;
   className?: string;
 };
 
@@ -256,9 +349,10 @@ export function ContextWindowBar({
   compactStatus = 'idle',
   canCompact = false,
   compaction = null,
+  isCompactPressed = false,
   className,
 }: ContextWindowBarProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const free = freeTokensOf(budget);
   const titleId = useId();
@@ -273,7 +367,7 @@ export function ContextWindowBar({
     >
       <ContextHeader budget={budget} titleId={titleId} />
 
-      <SegmentBar budget={budget} />
+      <SegmentBar budget={budget} compactStatus={compactStatus} />
 
       <ul aria-label='What fills the context' className='-mx-2 flex flex-col'>
         <AnimatePresence initial={false}>
@@ -315,44 +409,60 @@ export function ContextWindowBar({
         compactStatus={compactStatus}
         compaction={compaction}
         onCompact={onCompact}
+        isPressed={isCompactPressed}
       />
     </section>
   );
 }
 
 export default function Run05() {
-  const { ref, turns, restart, isFinished } = useContextRun();
-  const controls = useContextControls(turns);
-  const level = levelOf(controls.budget);
+  const {
+    ref,
+    isInView,
+    isAutoplaying,
+    canReplay,
+    pressed,
+    budget,
+    compaction,
+    compactStatus,
+    canCompact,
+    removeFile,
+    compact,
+    replay,
+  } = useContextSession(FILLING_SESSION);
+  const level = levelOf(budget);
   const announcement = contextAnnouncementOf(
     level,
     LEVEL_WORD[level],
-    controls.compaction
+    compaction
   );
 
-  function replay() {
-    controls.reset();
-    restart();
-  }
+  useKeptHeight(ref);
 
   return (
-    <div ref={ref} className='flex w-full max-w-[26rem] flex-col gap-2'>
-      <ContextWindowBar
-        budget={controls.budget}
-        onRemoveItem={controls.removeFile}
-        onCompact={controls.compact}
-        compactStatus={controls.compactStatus}
-        canCompact={controls.canCompact}
-        compaction={controls.compaction}
-      />
+    <div
+      ref={ref}
+      className='flex min-h-[29.5rem] w-full max-w-[26rem] flex-col gap-2'
+    >
+      <ClockGate isActive={isInView}>
+        <ContextWindowBar
+          budget={budget}
+          onRemoveItem={removeFile}
+          onCompact={compact}
+          compactStatus={compactStatus}
+          canCompact={canCompact}
+          compaction={compaction}
+          isCompactPressed={pressed === 'compact'}
+        />
+      </ClockGate>
       <div className='flex h-7 items-center justify-end'>
         <ReplayButton
-          isShown={isFinished}
+          isShown={canReplay}
           onReplay={replay}
           label='Replay the conversation'
         />
       </div>
-      <LiveRegion message={announcement} />
+      <LiveRegion message={spokenUnless(isAutoplaying, announcement)} />
     </div>
   );
 }

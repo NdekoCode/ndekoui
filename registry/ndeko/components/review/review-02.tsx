@@ -1,8 +1,13 @@
 'use client';
 
 import { AnimatePresence, motion } from 'motion/react';
-import { useId, useState } from 'react';
+import { useId, useImperativeHandle, useRef, useState } from 'react';
 
+import {
+  useAutoplay,
+  type AutoplayStep,
+} from '@/registry/ndeko/hooks/use-autoplay';
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
 import {
   seriesColorOf,
   type ApprovalRequest,
@@ -10,6 +15,14 @@ import {
   type RiskLevel,
   type RunAgent,
 } from '@/registry/ndeko/lib/agent-run';
+import {
+  hold,
+  PRESS_LEAD_MS,
+  pressedQuietOf,
+  pressedSolidOf,
+  spokenUnless,
+  usePress,
+} from '@/registry/ndeko/lib/demonstration';
 import {
   CheckIcon,
   CircleAlertIcon,
@@ -27,6 +40,7 @@ import { Chip } from '@/registry/ndeko/ui/chip';
 import { Kbd } from '@/registry/ndeko/ui/kbd';
 
 import { CopyButton } from '@/registry/ndeko/ui/copy-button';
+import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { fadePresence } from '@/registry/ndeko/lib/motion-presets';
 import { Segments, type Segment } from '@/registry/ndeko/ui/segments';
@@ -41,6 +55,16 @@ export type PermissionEntry = {
 };
 
 export type PermissionDecision = 'allowed' | 'denied';
+
+/** The decision a demonstration holds down before it takes it. */
+export type PermissionPress = 'allow' | 'deny';
+
+export type PermissionRequestHandle = {
+  /** Picks how long the permission lasts, as the segmented switch does. */
+  pickScope: (scope: ApprovalScope) => void;
+  allow: () => void;
+  deny: () => void;
+};
 
 const SCOPES: Segment<ApprovalScope>[] = [
   { value: 'once', label: 'Once' },
@@ -122,6 +146,7 @@ function ResultLine({
 type RequestBodyProps = {
   entry: PermissionEntry;
   scope: ApprovalScope;
+  pressed: PermissionPress | null;
   onScopeChange: (scope: ApprovalScope) => void;
   onAllow: () => void;
   onDeny: () => void;
@@ -130,6 +155,7 @@ type RequestBodyProps = {
 function RequestBody({
   entry,
   scope,
+  pressed,
   onScopeChange,
   onAllow,
   onDeny,
@@ -164,7 +190,7 @@ function RequestBody({
       aria-labelledby={titleId}
       aria-describedby={keysId}
       onKeyDown={decideFromKeys}
-      className='focus-visible:ring-ring/25 flex flex-col gap-3 rounded-xl p-4 outline-none focus-visible:ring-[3px]'
+      className='focus-visible:ring-ring/25 @container flex flex-col gap-3 rounded-xl p-4 outline-none focus-visible:ring-[3px]'
     >
       <div className='flex flex-wrap items-center gap-2'>
         <Chip color={chipColor}>{agent.name}</Chip>
@@ -201,7 +227,7 @@ function RequestBody({
           segments={SCOPES}
           onValueChange={onScopeChange}
           label='How long the permission lasts'
-          className='w-full sm:w-fit'
+          className='w-full @sm:w-fit'
         />
         <Fold open={isAlways} id={warningId}>
           <p className='text-warning-foreground flex items-start gap-1.5 pt-1 text-xs leading-5'>
@@ -212,11 +238,22 @@ function RequestBody({
         </Fold>
       </div>
       <div className='flex flex-wrap items-center gap-2'>
-        <Button type='button' size='sm' onClick={onAllow}>
+        <Button
+          type='button'
+          size='sm'
+          onClick={onAllow}
+          className={pressedSolidOf(pressed === 'allow')}
+        >
           Allow
           <Kbd className='ms-0.5'>Enter</Kbd>
         </Button>
-        <Button type='button' size='sm' variant='outline' onClick={onDeny}>
+        <Button
+          type='button'
+          size='sm'
+          variant='outline'
+          onClick={onDeny}
+          className={pressedQuietOf(pressed === 'deny')}
+        >
           Deny
           <Kbd className='ms-0.5'>Esc</Kbd>
         </Button>
@@ -241,6 +278,10 @@ export type PermissionRequestCardProps = {
   /** Set once a decision is taken: the card resizes into one result line. */
   result?: { decision: PermissionDecision; scope: ApprovalScope } | null;
   onDecide?: (decision: PermissionDecision, scope: ApprovalScope) => void;
+  /** Picks a scope or decides from outside, for a demonstration or a shortcut of the page. */
+  handleRef?: React.Ref<PermissionRequestHandle>;
+  /** Shows Allow or Deny held down, for a demonstration that presses it. */
+  pressed?: PermissionPress | null;
   className?: string;
 };
 
@@ -248,6 +289,8 @@ export function PermissionRequestCard({
   entry,
   result = null,
   onDecide,
+  handleRef,
+  pressed = null,
   className,
 }: PermissionRequestCardProps) {
   const entryId = entry.request.id;
@@ -271,6 +314,12 @@ export function PermissionRequestCard({
     onDecide?.('denied', scope);
   }
 
+  useImperativeHandle(handleRef, () => ({
+    pickScope: changeScope,
+    allow,
+    deny,
+  }));
+
   return (
     <div className={cn('surface-raised overflow-hidden rounded-xl', className)}>
       <AnimatedSize>
@@ -287,6 +336,7 @@ export function PermissionRequestCard({
               <RequestBody
                 entry={entry}
                 scope={scope}
+                pressed={pressed}
                 onScopeChange={changeScope}
                 onAllow={allow}
                 onDeny={deny}
@@ -363,10 +413,15 @@ function announcementOf(entry: PermissionEntry, result: Result | null) {
   return `${command}: ${line}`;
 }
 
+/** A request that waits on a person is answered by the demonstration after this long. */
+const DECIDE_AFTER_MS = 2200;
+
 export default function Review02() {
   const [index, setIndex] = useState(0);
   const [result, setResult] = useState<Result | null>(null);
   const { schedule, clearAll } = useTimeouts();
+  const { pressed, press } = usePress<PermissionPress>();
+  const card = useRef<PermissionRequestHandle>(null);
   const entry = REQUESTS[index];
   const isLast = index === REQUESTS.length - 1;
   const isFinished = isLast && result !== null;
@@ -393,14 +448,46 @@ export default function Review02() {
     setIndex(0);
   }
 
+  const nextAfter = NEXT_REQUEST_MS + DECIDE_AFTER_MS;
+  const steps: AutoplayStep[] = [
+    { after: 1400, run: () => card.current?.pickScope('session') },
+    { after: 900, run: () => card.current?.pickScope('always') },
+    { after: 1800, run: () => card.current?.pickScope('session') },
+    { after: 800, run: () => press('allow') },
+    { after: PRESS_LEAD_MS, run: () => card.current?.allow() },
+    { after: nextAfter, run: () => press('allow') },
+    { after: PRESS_LEAD_MS, run: () => card.current?.allow() },
+    { after: nextAfter, run: () => press('deny') },
+    { after: PRESS_LEAD_MS, run: () => card.current?.deny() },
+    { after: 1600, run: hold },
+  ];
+  const { ref, isInView, isAutoplaying } = useAutoplay(steps, {
+    loopAfter: 2600,
+    onReset: startOver,
+  });
+  const canStartOver = isFinished && !isAutoplaying;
+
+  useKeptHeight(ref);
+
   return (
-    <div className='flex w-full max-w-[26rem] flex-col gap-2'>
-      <PermissionRequestCard entry={entry} result={result} onDecide={decide} />
+    <div
+      ref={ref}
+      className='flex min-h-[27rem] w-full max-w-[26rem] flex-col gap-2'
+    >
+      <ClockGate isActive={isInView}>
+        <PermissionRequestCard
+          entry={entry}
+          result={result}
+          onDecide={decide}
+          handleRef={card}
+          pressed={pressed}
+        />
+      </ClockGate>
       <div className='flex h-7 items-center justify-between gap-2 px-1'>
         <span className='text-muted-foreground text-xs tabular-nums'>
           {stepLabel}
         </span>
-        {isFinished && (
+        {canStartOver && (
           <Button
             type='button'
             variant='ghost'
@@ -413,7 +500,7 @@ export default function Review02() {
           </Button>
         )}
       </div>
-      <LiveRegion message={announcement} />
+      <LiveRegion message={spokenUnless(isAutoplaying, announcement)} />
     </div>
   );
 }

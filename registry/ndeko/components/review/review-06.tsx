@@ -1,10 +1,11 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll, type WordRollWord } from '@/components/core/word-roll';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ArrowRightIcon,
   ChevronDownIcon,
@@ -369,7 +370,7 @@ export function ChangeSummary({ files, className }: ChangeSummaryProps) {
   const [openPaths, setOpenPaths] = useState<string[]>([]);
   const [statuses, setStatuses] = useState<FileStatus[]>([]);
   const [notice, setNotice] = useState('');
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const totals = totalsOf(files);
   const shownFiles = files.filter((file) => isShownBy(file, statuses));

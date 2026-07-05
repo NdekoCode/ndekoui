@@ -1,21 +1,32 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import {
+  useAutoplay,
+  type AutoplayStep,
+} from '@/registry/ndeko/hooks/use-autoplay';
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { seriesColorOf, type SeriesSlot } from '@/registry/ndeko/lib/agent-run';
+import {
+  hold,
+  PRESS_LEAD_MS,
+  pressedQuietOf,
+  spokenUnless,
+  usePress,
+} from '@/registry/ndeko/lib/demonstration';
 import { CheckIcon, TriangleAlertIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Badge } from '@/registry/ndeko/ui/badge';
 
+import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { MorphButton, type MorphState } from '@/registry/ndeko/ui/morph-button';
-import {
-  FADE,
-  risePresenceOf,
-  springOf,
-} from '@/registry/ndeko/lib/motion-presets';
+import { FADE, risePresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { Segments, type Segment } from '@/registry/ndeko/ui/segments';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 
@@ -106,15 +117,45 @@ function entitiesOf(period: UsagePeriod, groupBy: GroupBy) {
   return period.byModel;
 }
 
-function segmentStyleOf(
-  entity: UsageEntity,
-  scale: number
-): React.CSSProperties {
-  const width = percentOf(entity.spendUsd, scale);
+type StackSegment = {
+  entity: UsageEntity;
+  /** Where the segment starts on the bar and how much of it is its own, both from 0 to 1. */
+  start: number;
+  share: number;
+};
+
+const BAR_TRAVEL =
+  'transition-transform duration-700 ease-(--ease-out-strong) motion-reduce:transition-none';
+
+function stackOf(entities: UsageEntity[], scale: number) {
+  const segments: StackSegment[] = [];
+  let start = 0;
+  for (const entity of entities) {
+    const share = entity.spendUsd / scale;
+    segments.push({ entity, start, share });
+    start += share;
+  }
+  return segments;
+}
+
+/** A segment is the whole bar, moved to its start and scaled to its share: no width to lay out. */
+function segmentStyleOf(segment: StackSegment): React.CSSProperties {
+  const offset = segment.start * 100;
   return {
-    width: `${width}%`,
-    backgroundColor: seriesColorOf(entity.series),
+    backgroundColor: seriesColorOf(segment.entity.series),
+    transform: `translateX(${offset}%) scaleX(${segment.share})`,
   };
+}
+
+/** A gap after a segment: a mark of the surface behind the bar, moved to where the segment ends. */
+function gapStyleOf(segment: StackSegment): React.CSSProperties {
+  const end = segment.start + segment.share;
+  const offset = end * 100;
+  return { transform: `translateX(${offset}%)` };
+}
+
+function hasSpend(segment: StackSegment) {
+  return segment.share > 0;
 }
 
 function StackedBar({
@@ -128,14 +169,14 @@ function StackedBar({
   scale: number;
   label: string;
 }) {
-  const shouldReduceMotion = useReducedMotion();
-  const spring = springOf(shouldReduceMotion);
   const total = totalOf(entities);
-  const tickLeft = percentOf(limit, scale);
+  const tickOffset = percentOf(limit, scale);
   const totalText = USD_TEXT.format(total);
   const limitText = USD_TEXT.format(limit);
   const spoken = `${totalText} spent of a ${limitText} limit`;
   const valueNow = Math.min(total, limit);
+  const segments = stackOf(entities, scale);
+  const spent = segments.filter(hasSpend);
 
   return (
     <div className='relative pt-1 pb-5'>
@@ -146,34 +187,43 @@ function StackedBar({
         aria-valuemax={limit}
         aria-valuenow={valueNow}
         aria-valuetext={spoken}
-        className='bg-foreground/[0.05] relative flex h-3 gap-0.5 overflow-hidden rounded-full'
+        className='bg-foreground/[0.05] relative h-3 overflow-hidden rounded-full'
       >
-        <AnimatePresence initial={false} mode='popLayout'>
-          {entities.map((entity) => (
+        <AnimatePresence initial={false}>
+          {segments.map((segment) => (
             <motion.span
-              key={entity.id}
-              layout
+              key={segment.entity.id}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ layout: spring, opacity: FADE }}
-              className='h-full shrink-0 rounded-[3px] first:rounded-s-full'
-              style={segmentStyleOf(entity, scale)}
+              transition={FADE}
+              className={cn('absolute inset-0 origin-left', BAR_TRAVEL)}
+              style={segmentStyleOf(segment)}
             />
           ))}
         </AnimatePresence>
+        {spent.map((segment) => (
+          <span
+            key={segment.entity.id}
+            className={cn('absolute inset-0', BAR_TRAVEL)}
+            style={gapStyleOf(segment)}
+          >
+            <span className='bg-card absolute inset-y-0 start-0 w-0.5' />
+          </span>
+        ))}
       </div>
-      <span
-        aria-hidden='true'
-        className='bg-foreground/60 absolute top-0 h-5 w-0.5 -translate-x-1/2 rounded-full transition-[left] duration-300 ease-(--ease-in-out-strong)'
-        style={{ left: `${tickLeft}%` }}
-      />
-      <span
-        className='text-muted-foreground absolute top-6 -translate-x-1/2 text-[11px] whitespace-nowrap tabular-nums transition-[left] duration-300 ease-(--ease-in-out-strong)'
-        style={{ left: `${tickLeft}%` }}
+      <div
+        className={cn('pointer-events-none absolute inset-0', BAR_TRAVEL)}
+        style={{ transform: `translateX(${tickOffset}%)` }}
       >
-        Limit {USD_TEXT.format(limit)}
-      </span>
+        <span
+          aria-hidden='true'
+          className='bg-foreground/60 absolute start-0 top-0 h-5 w-0.5 -translate-x-1/2 rounded-full'
+        />
+        <span className='text-muted-foreground absolute start-0 top-6 -translate-x-1/2 text-[11px] whitespace-nowrap'>
+          Limit <MotionNumber value={limit} format={WHOLE_USD} />
+        </span>
+      </div>
     </div>
   );
 }
@@ -183,49 +233,58 @@ function Legend({ entities }: { entities: UsageEntity[] }) {
   const base = Math.max(total, 1);
 
   return (
-    <ul aria-label='Spend by entity' className='flex flex-col'>
-      <AnimatePresence initial={false} mode='popLayout'>
-        {entities.map((entity) => {
-          const share = percentOf(entity.spendUsd, base);
-          return (
-            <motion.li
-              key={entity.id}
-              layout='position'
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={FADE}
-              className='flex h-8 items-center gap-2.5 text-[13px]'
-            >
-              <span
-                aria-hidden='true'
-                className='size-2 shrink-0 rounded-full'
-                style={{ backgroundColor: seriesColorOf(entity.series) }}
-              />
-              <span className='min-w-0 flex-1 truncate'>{entity.name}</span>
-              <MotionNumber
-                value={share}
-                format={PERCENT}
-                suffix='%'
-                className='text-muted-foreground w-10 justify-end text-xs'
-              />
-              <MotionNumber
-                value={entity.spendUsd}
-                format={USD}
-                className='w-20 justify-end'
-              />
-            </motion.li>
-          );
-        })}
-      </AnimatePresence>
-    </ul>
+    <AnimatedSize>
+      <ul aria-label='Spend by entity' className='flex flex-col'>
+        <AnimatePresence initial={false} mode='popLayout'>
+          {entities.map((entity) => {
+            const share = percentOf(entity.spendUsd, base);
+            return (
+              <motion.li
+                key={entity.id}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={FADE}
+                className='flex h-8 items-center gap-2.5 text-[13px]'
+              >
+                <span
+                  aria-hidden='true'
+                  className='size-2 shrink-0 rounded-full'
+                  style={{ backgroundColor: seriesColorOf(entity.series) }}
+                />
+                <span className='min-w-0 flex-1 truncate'>{entity.name}</span>
+                <MotionNumber
+                  value={share}
+                  format={PERCENT}
+                  suffix='%'
+                  className='text-muted-foreground w-10 justify-end text-xs'
+                />
+                <MotionNumber
+                  value={entity.spendUsd}
+                  format={USD}
+                  className='w-20 justify-end'
+                />
+              </motion.li>
+            );
+          })}
+        </AnimatePresence>
+      </ul>
+    </AnimatedSize>
   );
 }
 
-function dailyBarStyleOf(spend: number, maxSpend: number): React.CSSProperties {
+/** Days rise one after the other when a period arrives, 18ms apart. */
+const DAY_STAGGER_MS = 18;
+
+function dailyBarStyleOf(
+  spend: number,
+  maxSpend: number,
+  index: number
+): React.CSSProperties {
   const share = spend / maxSpend;
   const bounded = Math.max(0.04, share);
-  return { transform: `scaleY(${bounded})` };
+  const delay = index * DAY_STAGGER_MS;
+  return { transform: `scaleY(${bounded})`, transitionDelay: `${delay}ms` };
 }
 
 function dayFillOf(index: number, todayIndex: number | undefined) {
@@ -263,10 +322,10 @@ function DailyBars({ period }: { period: UsagePeriod }) {
           <span
             key={index}
             className={cn(
-              'h-full min-w-0 flex-1 origin-bottom rounded-t-[2px] transition-[transform,background-color] duration-300 ease-(--ease-out-strong)',
+              'h-full min-w-0 flex-1 origin-bottom rounded-t-[2px] transition-[transform,background-color] duration-300 ease-(--ease-out-strong) motion-reduce:transition-none',
               dayFillOf(index, period.todayIndex)
             )}
-            style={dailyBarStyleOf(spend, maxSpend)}
+            style={dailyBarStyleOf(spend, maxSpend, index)}
           />
         ))}
         {aheadDays.map((day) => (
@@ -303,6 +362,8 @@ export type UsageByModelProps = {
   raiseState?: MorphState;
   onRaiseLimit?: () => void;
   raisedLine?: string | null;
+  /** Shows Raise limit held down, for a demonstration that presses it. */
+  isRaisePressed?: boolean;
   className?: string;
 };
 
@@ -314,10 +375,11 @@ export function UsageByModel({
   raiseState = 'idle',
   onRaiseLimit,
   raisedLine = null,
+  isRaisePressed = false,
   className,
 }: UsageByModelProps) {
   const titleId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const risePresence = risePresenceOf(shouldReduceMotion);
   const entities = entitiesOf(period, groupBy);
   const total = totalOf(entities);
@@ -409,6 +471,7 @@ export function UsageByModel({
                 state={raiseState}
                 labels={RAISE_LABELS}
                 onClick={onRaiseLimit}
+                className={pressedQuietOf(isRaisePressed)}
               />
             </div>
           </motion.div>
@@ -496,14 +559,39 @@ const RAISE_BUSY_MS = 700;
 
 const RAISE_DONE_MS = 700;
 
-function periodOf(periodId: PeriodId, raisedLimit: number | null) {
+function unspent(entity: UsageEntity): UsageEntity {
+  return { ...entity, spendUsd: 0 };
+}
+
+/** The first morning of the month: nothing spent yet, every day still to come. */
+const MONTH_START: UsagePeriod = {
+  ...THIS_MONTH,
+  byModel: THIS_MONTH.byModel.map(unspent),
+  byAgent: THIS_MONTH.byAgent.map(unspent),
+  dailyUsd: THIS_MONTH.dailyUsd.map(() => 0),
+  todayIndex: 0,
+};
+
+function thisMonthOf(isStarting: boolean) {
+  if (isStarting) {
+    return MONTH_START;
+  }
+  return THIS_MONTH;
+}
+
+function periodOf(
+  periodId: PeriodId,
+  raisedLimit: number | null,
+  isStarting: boolean
+) {
   if (periodId === 'last-month') {
     return LAST_MONTH;
   }
+  const month = thisMonthOf(isStarting);
   if (raisedLimit === null) {
-    return THIS_MONTH;
+    return month;
   }
-  return { ...THIS_MONTH, limitUsd: raisedLimit };
+  return { ...month, limitUsd: raisedLimit };
 }
 
 function raisedLineOf(periodId: PeriodId, raisedLimit: number | null) {
@@ -518,19 +606,24 @@ function raisedLineOf(periodId: PeriodId, raisedLimit: number | null) {
   return `Limit raised to ${limitText} until the reset`;
 }
 
+/** The notice waits on a person: the demonstration raises the limit after this long. */
+const RAISE_AFTER_MS = 2500;
+
+type PressKey = 'raise';
+
 export default function Run09() {
   const [periodId, setPeriodId] = useState<PeriodId>('this-month');
   const [groupBy, setGroupBy] = useState<GroupBy>('model');
   const [raisedLimit, setRaisedLimit] = useState<number | null>(null);
   const [raiseState, setRaiseState] = useState<MorphState>('idle');
+  const [isMonthStarting, setIsMonthStarting] = useState(false);
   const [message, setMessage] = useState('');
-  const { schedule } = useTimeouts();
-  const period = periodOf(periodId, raisedLimit);
-  const raisedLine = raisedLineOf(periodId, raisedLimit);
+  const { schedule, clearAll } = useTimeouts();
+  const { pressed, press } = usePress<PressKey>();
 
   function changePeriod(next: PeriodId) {
     setPeriodId(next);
-    const nextPeriod = periodOf(next, raisedLimit);
+    const nextPeriod = periodOf(next, raisedLimit, false);
     const total = totalOf(nextPeriod.byModel);
     const totalText = USD_TEXT.format(total);
     setMessage(`${totalText} spent ${nextPeriod.label}`);
@@ -555,25 +648,62 @@ export default function Run09() {
     }, settleDelay);
   }
 
+  function resetDemo() {
+    clearAll();
+    setPeriodId('this-month');
+    setGroupBy('model');
+    setRaisedLimit(null);
+    setRaiseState('idle');
+    setIsMonthStarting(false);
+  }
+
+  const raiseTime = RAISE_BUSY_MS + RAISE_DONE_MS;
+  const regroupAfter = raiseTime + 1400;
+  const steps: AutoplayStep[] = [
+    { after: 1600, run: () => setIsMonthStarting(true) },
+    { after: 1000, run: () => setIsMonthStarting(false) },
+    { after: RAISE_AFTER_MS, run: () => press('raise') },
+    { after: PRESS_LEAD_MS, run: raiseLimit },
+    { after: regroupAfter, run: () => changeGroupBy('agent') },
+    { after: 2200, run: () => changeGroupBy('model') },
+    { after: 1200, run: hold },
+  ];
+  const { ref, isInView, isAutoplaying } = useAutoplay(steps, {
+    loopAfter: 2600,
+    onReset: resetDemo,
+  });
+  // A person who takes over while the month is being rewound gets the month as it stands today.
+  const isStarting = isMonthStarting && isAutoplaying;
+  const period = periodOf(periodId, raisedLimit, isStarting);
+  const raisedLine = raisedLineOf(periodId, raisedLimit);
+
+  useKeptHeight(ref);
+
   return (
-    <div className='flex w-full max-w-[30rem] flex-col gap-2'>
-      <UsageByModel
-        period={period}
-        groupBy={groupBy}
-        onGroupByChange={changeGroupBy}
-        periodSwitch={
-          <Segments
-            value={periodId}
-            segments={PERIODS}
-            onValueChange={changePeriod}
-            label='Period'
-          />
-        }
-        raiseState={raiseState}
-        onRaiseLimit={raiseLimit}
-        raisedLine={raisedLine}
-      />
-      <LiveRegion message={message} />
+    <div
+      ref={ref}
+      className='flex min-h-[34rem] w-full max-w-[30rem] flex-col gap-2'
+    >
+      <ClockGate isActive={isInView}>
+        <UsageByModel
+          period={period}
+          groupBy={groupBy}
+          onGroupByChange={changeGroupBy}
+          periodSwitch={
+            <Segments
+              value={periodId}
+              segments={PERIODS}
+              onValueChange={changePeriod}
+              label='Period'
+            />
+          }
+          raiseState={raiseState}
+          onRaiseLimit={raiseLimit}
+          raisedLine={raisedLine}
+          isRaisePressed={pressed === 'raise'}
+        />
+      </ClockGate>
+      <LiveRegion message={spokenUnless(isAutoplaying, message)} />
     </div>
   );
 }

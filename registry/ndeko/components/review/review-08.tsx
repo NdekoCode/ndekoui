@@ -1,11 +1,12 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useState } from 'react';
 
 import { WordRoll } from '@/components/core/word-roll';
 import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
 import { useDemoRun } from '@/registry/ndeko/hooks/use-demo-run';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import {
   emptyRun,
@@ -794,7 +795,7 @@ export default function Review08() {
   );
   const [mergeState, setMergeState] = useState<MorphState>('idle');
   const [notice, setNotice] = useState('');
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const risePresence = risePresenceOf(shouldReduceMotion);
   const { schedule, clearAll } = useTimeouts();
   const { ref, snapshot, restart } = useDemoRun(SCRIPT, {

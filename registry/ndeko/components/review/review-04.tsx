@@ -1,12 +1,13 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll, type WordRollWord } from '@/components/core/word-roll';
 import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
 import { useDemoRun } from '@/registry/ndeko/hooks/use-demo-run';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import {
   emptyRun,
@@ -326,7 +327,7 @@ export function HunkView({
   onFocusHunk,
   registerHunk,
 }: HunkViewProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const stampMotion = stampMotionOf(shouldReduceMotion);
   const layoutTransition = layoutTransitionOf(shouldReduceMotion);
   const visibleLines = hunk.lines.slice(0, shownLines);

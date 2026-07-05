@@ -1,12 +1,13 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll, type WordRollWord } from '@/components/core/word-roll';
 import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
 import { useDemoRun } from '@/registry/ndeko/hooks/use-demo-run';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import {
   emptyRun,
@@ -175,7 +176,7 @@ function threadMotionOf(shouldReduceMotion: boolean | null) {
 }
 
 function ThreadLayer({ thread }: { thread: Thread | null }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const threadMotion = threadMotionOf(shouldReduceMotion);
 
   return (
@@ -814,7 +815,7 @@ export default function Review09() {
   const [notice, setNotice] = useState('');
   const fieldNodes = useRef(new Map<string, HTMLElement>());
   const regionNodes = useRef(new Map<string, HTMLElement>());
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const risePresence = risePresenceOf(shouldReduceMotion);
   const { schedule, clearAll } = useTimeouts();

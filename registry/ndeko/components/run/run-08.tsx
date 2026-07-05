@@ -1,14 +1,20 @@
 'use client';
 
+import { AnimatePresence, motion, useIsPresent } from 'motion/react';
 import {
-  AnimatePresence,
-  LayoutGroup,
-  motion,
-  useReducedMotion,
-} from 'motion/react';
-import { useId, useState } from 'react';
+  createContext,
+  useContext,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { formatTokens } from '@/registry/ndeko/lib/agent-run';
+import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 
@@ -26,11 +32,12 @@ import {
   type ContextPartId,
 } from './_parts/context';
 import { ContextHeader } from './_parts/context-header';
+import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import {
+  EASE_IN_OUT_STRONG,
   FADE,
   risePresenceOf,
-  springOf,
 } from '@/registry/ndeko/lib/motion-presets';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
 import { Segments, type Segment } from '@/registry/ndeko/ui/segments';
@@ -40,8 +47,8 @@ import {
   type TreemapRect,
 } from './_parts/treemap';
 import {
-  useContextControls,
-  useContextRun,
+  FILLING_SESSION,
+  useContextSession,
   type CompactStatus,
 } from './_parts/use-context-demo';
 
@@ -196,18 +203,158 @@ function roomOf(rect: TreemapRect): TileRoom {
   return 'none';
 }
 
-function selectionRingOf(isSelected: boolean) {
+function selectionOf(isSelected: boolean) {
   if (isSelected) {
-    return 'ring-2 ring-foreground/60 ring-inset';
+    return 'opacity-100';
   }
-  return 'ring-0';
+  return 'opacity-0';
 }
 
-function tileShapeOf(kind: TileKind) {
+function boxShapeOf(kind: TileKind) {
   if (kind === 'free') {
-    return 'hairline-border border-dashed border-foreground/25 text-muted-foreground';
+    return 'hairline-border border-dashed border-foreground/25';
+  }
+  return undefined;
+}
+
+function labelToneOf(kind: TileKind) {
+  if (kind === 'free') {
+    return 'text-muted-foreground';
   }
   return 'text-foreground';
+}
+
+/** Where the turns go when they are folded: the place of the summary tile, for the tiles that leave. */
+const FoldTargetContext = createContext<TreemapRect | null>(null);
+
+const TRAVEL: KeyframeAnimationOptions = {
+  duration: 320,
+  easing: 'cubic-bezier(0.77, 0, 0.175, 1)',
+};
+
+const LANDING: KeyframeAnimationOptions = { ...TRAVEL, fill: 'forwards' };
+
+type Placement = {
+  shift: string;
+  scale: string;
+};
+
+/**
+ * What draws a tile of rectangle `own` where the rectangle `other` is, from its top left corner.
+ * Both rectangles come from the layout, so nothing is measured in the page.
+ */
+function placementOf(own: TreemapRect, other: TreemapRect): Placement {
+  const leftGap = other.x - own.x;
+  const topGap = other.y - own.y;
+  const shiftX = (leftGap / own.width) * 100;
+  const shiftY = (topGap / own.height) * 100;
+  const scaleX = other.width / own.width;
+  const scaleY = other.height / own.height;
+  return {
+    shift: `translate(${shiftX}%, ${shiftY}%)`,
+    scale: `scale(${scaleX}, ${scaleY})`,
+  };
+}
+
+function isSameRect(first: TreemapRect, second: TreemapRect) {
+  const isSamePlace = first.x === second.x && first.y === second.y;
+  const isSameWidth = first.width === second.width;
+  const isSameHeight = first.height === second.height;
+  return isSamePlace && isSameWidth && isSameHeight;
+}
+
+type TileParts = {
+  box: React.RefObject<HTMLSpanElement | null>;
+  label: React.RefObject<HTMLSpanElement | null>;
+};
+
+/**
+ * A tile sits at its new rectangle at once, then its plate plays the way there from the old one by
+ * transform. The label only travels, so its text never stretches.
+ */
+function useTileTravel(rect: TreemapRect, parts: TileParts) {
+  const shouldReduceMotion = usePrefersReducedMotion();
+  const previous = useRef<TreemapRect | null>(null);
+  const { x, y, width, height } = rect;
+  const { box, label } = parts;
+
+  useLayoutEffect(() => {
+    const from = previous.current;
+    const to = { x, y, width, height };
+    previous.current = to;
+    if (!from || shouldReduceMotion) {
+      return;
+    }
+    if (isSameRect(from, to)) {
+      return;
+    }
+    const start = placementOf(to, from);
+    box.current?.animate(
+      [{ transform: `${start.shift} ${start.scale}` }, { transform: 'none' }],
+      TRAVEL
+    );
+    label.current?.animate(
+      [{ transform: start.shift }, { transform: 'none' }],
+      TRAVEL
+    );
+  }, [x, y, width, height, shouldReduceMotion, box, label]);
+}
+
+/** A turn that leaves because it was folded flies into the summary tile while it fades. */
+function useFoldInto(tile: Tile, parts: TileParts) {
+  const shouldReduceMotion = usePrefersReducedMotion();
+  const isPresent = useIsPresent();
+  const target = useContext(FoldTargetContext);
+  const isTurn = tile.kind === 'conversation';
+  const { x, y, width, height } = tile.rect;
+  const { box, label } = parts;
+  const targetX = target?.x;
+  const targetY = target?.y;
+  const targetWidth = target?.width;
+  const targetHeight = target?.height;
+
+  useEffect(() => {
+    const isLeaving = !isPresent && isTurn;
+    if (!isLeaving || shouldReduceMotion) {
+      return;
+    }
+    const hasTarget = targetX !== undefined && targetY !== undefined;
+    const hasTargetSize =
+      targetWidth !== undefined && targetHeight !== undefined;
+    if (!hasTarget || !hasTargetSize) {
+      return;
+    }
+    const own = { x, y, width, height };
+    const summary = {
+      x: targetX,
+      y: targetY,
+      width: targetWidth,
+      height: targetHeight,
+    };
+    const end = placementOf(own, summary);
+    box.current?.animate(
+      [{ transform: 'none' }, { transform: `${end.shift} ${end.scale}` }],
+      LANDING
+    );
+    label.current?.animate(
+      [{ transform: 'none' }, { transform: end.shift }],
+      LANDING
+    );
+  }, [
+    isPresent,
+    isTurn,
+    shouldReduceMotion,
+    x,
+    y,
+    width,
+    height,
+    targetX,
+    targetY,
+    targetWidth,
+    targetHeight,
+    box,
+    label,
+  ]);
 }
 
 type TileButtonProps = {
@@ -217,10 +364,14 @@ type TileButtonProps = {
 };
 
 function TileButton({ tile, isSelected, onSelect }: TileButtonProps) {
+  const box = useRef<HTMLSpanElement>(null);
+  const label = useRef<HTMLSpanElement>(null);
   const room = roomOf(tile.rect);
   const showsName = room !== 'none';
   const showsTokens = room === 'full';
   const tokens = formatTokens(tile.tokens);
+  useTileTravel(tile.rect, { box, label });
+  useFoldInto(tile, { box, label });
 
   return (
     <button
@@ -228,29 +379,42 @@ function TileButton({ tile, isSelected, onSelect }: TileButtonProps) {
       aria-pressed={isSelected}
       aria-label={`${tile.label}, ${tile.group}, ${tokens} tokens`}
       onClick={() => onSelect(tile.id)}
-      className={cn(
-        'focus-visible:ring-ring/40 flex size-full cursor-pointer flex-col items-start justify-start overflow-hidden rounded-md p-1.5 text-start transition-[box-shadow] duration-150 outline-none focus-visible:ring-[3px]',
-        tileShapeOf(tile.kind),
-        selectionRingOf(isSelected)
-      )}
-      style={tileFillOf(tile.kind)}
+      className='focus-visible:ring-ring/40 relative block size-full cursor-pointer rounded-md text-start outline-none focus-visible:ring-[3px]'
     >
-      {showsName && (
-        <motion.span
-          layout='position'
-          className='w-full truncate text-[11px] leading-4 font-medium'
-        >
-          {tile.label}
-        </motion.span>
-      )}
-      {showsTokens && (
-        <motion.span
-          layout='position'
-          className='text-muted-foreground text-[11px] leading-4 tabular-nums'
-        >
-          {tokens}
-        </motion.span>
-      )}
+      <span
+        ref={box}
+        aria-hidden='true'
+        className={cn(
+          'absolute inset-0 origin-top-left rounded-md',
+          boxShapeOf(tile.kind)
+        )}
+        style={tileFillOf(tile.kind)}
+      >
+        <span
+          className={cn(
+            'ring-foreground/60 absolute inset-0 rounded-md ring-2 transition-opacity duration-150 ring-inset',
+            selectionOf(isSelected)
+          )}
+        />
+      </span>
+      <span
+        ref={label}
+        className={cn(
+          'relative flex size-full flex-col items-start justify-start overflow-hidden p-1.5',
+          labelToneOf(tile.kind)
+        )}
+      >
+        {showsName && (
+          <span className='w-full truncate text-[11px] leading-4 font-medium'>
+            {tile.label}
+          </span>
+        )}
+        {showsTokens && (
+          <span className='text-muted-foreground text-[11px] leading-4 tabular-nums'>
+            {tokens}
+          </span>
+        )}
+      </span>
     </button>
   );
 }
@@ -297,6 +461,17 @@ function viewedBudgetOf(
   return budget;
 }
 
+/** A tile that leaves stays long enough to be seen on its way before it is gone. */
+const TILE_EXIT = {
+  opacity: 0,
+  transition: { duration: 0.3, ease: EASE_IN_OUT_STRONG },
+};
+
+function summaryRectOf(tiles: Tile[]) {
+  const summary = tiles.find((tile) => tile.kind === 'summary');
+  return summary?.rect ?? null;
+}
+
 export type ContextTreemapProps = {
   budget: ContextBudget;
   /** The same context without the last compaction, for the Before view. */
@@ -305,6 +480,8 @@ export type ContextTreemapProps = {
   canCompact?: boolean;
   compactStatus?: CompactStatus;
   onCompact?: () => void;
+  /** Shows Compact held down, for a demonstration that presses it. */
+  isCompactPressed?: boolean;
   className?: string;
 };
 
@@ -315,19 +492,19 @@ export function ContextTreemap({
   canCompact = false,
   compactStatus = 'idle',
   onCompact,
+  isCompactPressed = false,
   className,
 }: ContextTreemapProps) {
   const [view, setView] = useState<View>('after');
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const titleId = useId();
-  const layoutGroupId = useId();
-  const shouldReduceMotion = useReducedMotion();
-  const spring = springOf(shouldReduceMotion);
+  const shouldReduceMotion = usePrefersReducedMotion();
   const risePresence = risePresenceOf(shouldReduceMotion);
   const hasCompaction = compaction !== null;
   const shownView = shownViewOf(view, hasCompaction);
   const shownBudget = viewedBudgetOf(shownView, budget, budgetBefore);
   const tiles = tilesOf(shownBudget);
+  const summaryRect = summaryRectOf(tiles);
   const selectedTile = tiles.find((tile) => tile.id === selectedId);
 
   function select(tileId: string) {
@@ -360,7 +537,7 @@ export function ContextTreemap({
           </motion.div>
         )}
       </AnimatePresence>
-      <LayoutGroup id={layoutGroupId}>
+      <FoldTargetContext.Provider value={summaryRect}>
         <ul
           aria-label='Tiles of the context, sized by tokens'
           className='relative aspect-[4/3] w-full'
@@ -368,13 +545,11 @@ export function ContextTreemap({
           <AnimatePresence initial={false}>
             {tiles.map((tile) => (
               <motion.li
-                key={tile.id}
-                layoutId={tile.layoutId}
-                layout
+                key={tile.layoutId}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ layout: spring, opacity: FADE }}
+                exit={TILE_EXIT}
+                transition={FADE}
                 className='absolute p-px'
                 style={rectStyleOf(tile.rect)}
               >
@@ -387,7 +562,7 @@ export function ContextTreemap({
             ))}
           </AnimatePresence>
         </ul>
-      </LayoutGroup>
+      </FoldTargetContext.Provider>
       <AnimatedSize>
         <TileDetails tile={selectedTile} budget={shownBudget} />
       </AnimatedSize>
@@ -397,6 +572,7 @@ export function ContextTreemap({
         compactStatus={compactStatus}
         compaction={compaction}
         onCompact={onCompact}
+        isPressed={isCompactPressed}
       />
     </section>
   );
@@ -410,38 +586,53 @@ function shownViewOf(view: View, hasCompaction: boolean): View {
 }
 
 export default function Run08() {
-  const { ref, turns, restart, isFinished } = useContextRun();
-  const controls = useContextControls(turns);
-  const level = levelOf(controls.budget);
+  const {
+    ref,
+    isInView,
+    isAutoplaying,
+    canReplay,
+    pressed,
+    budget,
+    budgetBefore,
+    compaction,
+    compactStatus,
+    canCompact,
+    compact,
+    replay,
+  } = useContextSession(FILLING_SESSION);
+  const level = levelOf(budget);
   const announcement = contextAnnouncementOf(
     level,
     LEVEL_WORD[level],
-    controls.compaction
+    compaction
   );
 
-  function replay() {
-    controls.reset();
-    restart();
-  }
+  useKeptHeight(ref);
 
   return (
-    <div ref={ref} className='flex w-full max-w-[30rem] flex-col gap-2'>
-      <ContextTreemap
-        budget={controls.budget}
-        budgetBefore={controls.budgetBefore}
-        compaction={controls.compaction}
-        canCompact={controls.canCompact}
-        compactStatus={controls.compactStatus}
-        onCompact={controls.compact}
-      />
+    <div
+      ref={ref}
+      className='flex min-h-[44.5rem] w-full max-w-[30rem] flex-col gap-2'
+    >
+      <ClockGate isActive={isInView}>
+        <ContextTreemap
+          budget={budget}
+          budgetBefore={budgetBefore}
+          compaction={compaction}
+          canCompact={canCompact}
+          compactStatus={compactStatus}
+          onCompact={compact}
+          isCompactPressed={pressed === 'compact'}
+        />
+      </ClockGate>
       <div className='flex h-7 items-center justify-end'>
         <ReplayButton
-          isShown={isFinished}
+          isShown={canReplay}
           onReplay={replay}
           label='Replay the conversation'
         />
       </div>
-      <LiveRegion message={announcement} />
+      <LiveRegion message={spokenUnless(isAutoplaying, announcement)} />
     </div>
   );
 }

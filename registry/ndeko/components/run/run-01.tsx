@@ -1,15 +1,27 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useState } from 'react';
 
 import { WordRoll } from '@/components/core/word-roll';
-import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import {
+  useSession,
+  type SessionStep,
+} from '@/registry/ndeko/hooks/use-session';
 import {
   emptyRun,
+  reduceRun,
   type CallStatus,
+  type RunEvent,
+  type RunSnapshot,
   type ToolCall,
 } from '@/registry/ndeko/lib/agent-run';
+import {
+  pressedQuietOf,
+  spokenUnless,
+} from '@/registry/ndeko/lib/demonstration';
 import { ChevronDownIcon, RotateCcwIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Badge } from '@/registry/ndeko/ui/badge';
@@ -26,6 +38,8 @@ import { ClockGate, LiveDuration } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
+import { Collapse } from './_parts/collapse';
+import { applyBatchAt, restingOf } from './_parts/run-session';
 import {
   PAGE_ERROR,
   PAGE_INPUT,
@@ -36,7 +50,6 @@ import {
   SHEET_INPUT,
   SHEET_OUTPUT,
 } from './_parts/scenario';
-import { useDemoRun } from '@/registry/ndeko/hooks/use-demo-run';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 
 function chevronTurnOf(isOpen: boolean) {
@@ -74,6 +87,10 @@ function timeKeyOf(status: CallStatus) {
   return 'timed';
 }
 
+/** A duration that ticks keeps its width, so nothing beside it shifts ten times a second. */
+const TICKING_TIME =
+  'text-muted-foreground inline-block min-w-8 text-end text-xs';
+
 function CallTime({ call }: { call: ToolCall }) {
   const isRunning = call.status === 'running';
   const hasStarted = call.startedAt !== undefined;
@@ -87,11 +104,7 @@ function CallTime({ call }: { call: ToolCall }) {
     return null;
   }
   return (
-    <LiveDuration
-      item={call}
-      isRunning={isRunning}
-      className='text-muted-foreground text-xs'
-    />
+    <LiveDuration item={call} isRunning={isRunning} className={TICKING_TIME} />
   );
 }
 
@@ -165,6 +178,10 @@ export type ToolCallCardProps = {
   /** How many times the call has run. From the second, the row says it was retried. */
   attempt?: number;
   onRetry?: (callId: string) => void;
+  /** One line on what came back. It slides in under the call when it is done. */
+  resultLine?: string;
+  /** Shows Retry held down, for a demonstration that presses it. */
+  isRetryPressed?: boolean;
   defaultOpen?: boolean;
   className?: string;
 };
@@ -173,14 +190,19 @@ export function ToolCallCard({
   call,
   attempt = 1,
   onRetry,
+  resultLine,
+  isRetryPressed = false,
   defaultOpen = false,
   className,
 }: ToolCallCardProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const panelId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const isFailed = call.status === 'failed';
+  const isDone = call.status === 'done';
+  const hasResultLine = resultLine !== undefined;
+  const showsResult = isDone && hasResultLine;
   const wasRetried = attempt > 1;
   const retryWord = retryWordOf(call.status);
   const canRetry = onRetry !== undefined;
@@ -238,6 +260,7 @@ export function ToolCallCard({
                   size='sm'
                   onClick={retry}
                   aria-label={`Retry ${call.tool}`}
+                  className={pressedQuietOf(isRetryPressed)}
                 >
                   <RotateCcwIcon />
                   Retry
@@ -245,6 +268,17 @@ export function ToolCallCard({
               )}
             </div>
           </motion.div>
+        )}
+        {showsResult && (
+          <motion.p
+            key='result'
+            className='text-muted-foreground overflow-hidden text-xs'
+            {...rowPresence}
+          >
+            <span className='block truncate ps-9 pe-2 pb-2 leading-5'>
+              {resultLine}
+            </span>
+          </motion.p>
         )}
       </AnimatePresence>
       <Fold open={isOpen} id={panelId}>
@@ -338,6 +372,10 @@ export type ToolCallGroupProps = {
   calls: ToolCall[];
   attempts?: Record<string, number>;
   onRetry?: (callId: string) => void;
+  /** One line per call id on what came back, shown under the call once it is done. */
+  resultLines?: Record<string, string>;
+  /** The call whose Retry a demonstration holds down. */
+  pressedRetryId?: string | null;
   defaultOpen?: boolean;
   className?: string;
 };
@@ -346,12 +384,14 @@ export function ToolCallGroup({
   calls,
   attempts = {},
   onRetry,
+  resultLines = {},
+  pressedRetryId = null,
   defaultOpen = true,
   className,
 }: ToolCallGroupProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const listId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const status = groupStatusOf(calls);
   const summary = groupSummaryOf(calls);
@@ -386,7 +426,7 @@ export function ToolCallGroup({
           <LiveDuration
             item={span}
             isRunning={isRunning}
-            className='text-muted-foreground text-xs'
+            className={TICKING_TIME}
           />
         )}
         <ChevronDownIcon
@@ -396,7 +436,7 @@ export function ToolCallGroup({
           )}
         />
       </button>
-      <Fold open={isOpen} id={listId}>
+      <Collapse open={isOpen} id={listId}>
         <ul className='flex flex-col'>
           <AnimatePresence initial={false}>
             {calls.map((call) => (
@@ -409,98 +449,202 @@ export function ToolCallGroup({
                   call={call}
                   attempt={attempts[call.id] ?? 1}
                   onRetry={onRetry}
+                  resultLine={resultLines[call.id]}
+                  isRetryPressed={pressedRetryId === call.id}
                 />
               </motion.li>
             ))}
           </AnimatePresence>
         </ul>
-      </Fold>
+      </Collapse>
     </section>
   );
 }
 
 const RETRY_MS = 1300;
 
+/** A call that waits on a person is retried by the demonstration after this long. */
+const RETRY_AFTER_MS = 2500;
+
 const INITIAL_RUN = emptyRun({ id: 'brightmoor-turn', title: RUN_TITLE });
 
-const SCRIPT: RunScriptStep[] = [
-  { after: 500, event: { type: 'run.started' } },
-  {
-    after: 200,
-    event: {
-      type: 'call.started',
-      call: {
-        id: 'search',
-        tool: 'web_search',
-        label: 'Searched the web for Brightmoor prices',
-        status: 'running',
-        input: SEARCH_INPUT,
-      },
+const RETRY_OUTPUTS: Record<string, unknown> = {
+  page: PAGE_OUTPUT,
+};
+
+const RESULT_LINES: Record<string, string> = {
+  search: '5 results, the price list first',
+  page: 'Wholesale pricing, 3 tables',
+  sheet: '117 rows, $48,210.50 in total',
+};
+
+type CallsState = {
+  run: RunSnapshot;
+  attempts: Record<string, number>;
+};
+
+type CallsAction =
+  | { type: 'events'; events: RunEvent[] }
+  | { type: 'retry'; callId: string }
+  | { type: 'retried'; callId: string };
+
+type CallsStep = SessionStep<CallsState, CallsAction>;
+
+const INITIAL: CallsState = { run: INITIAL_RUN, attempts: {} };
+
+function callOf(state: CallsState, callId: string) {
+  return state.run.calls.find((call) => call.id === callId);
+}
+
+function attemptOf(state: CallsState, callId: string) {
+  return state.attempts[callId] ?? 1;
+}
+
+function withRetry(state: CallsState, callId: string, now: number) {
+  const call = callOf(state, callId);
+  const isFailed = call?.status === 'failed';
+  if (!isFailed) {
+    return state;
+  }
+  const previous = attemptOf(state, callId);
+  const attempts = { ...state.attempts, [callId]: previous + 1 };
+  const event: RunEvent = {
+    type: 'call.updated',
+    id: callId,
+    patch: {
+      status: 'running',
+      error: undefined,
+      startedAt: undefined,
+      endedAt: undefined,
     },
-  },
-  {
-    after: 150,
-    event: {
-      type: 'call.started',
-      call: {
-        id: 'page',
-        tool: 'fetch_page',
-        label: 'Read the Brightmoor pricing page',
-        status: 'queued',
-        input: PAGE_INPUT,
-      },
+  };
+  const run = reduceRun(state.run, event, now);
+  return { run, attempts };
+}
+
+/** The script and the hand of a person may both land the same retry: only the first one counts. */
+function withRetryLanded(state: CallsState, callId: string, now: number) {
+  const call = callOf(state, callId);
+  const isRunning = call?.status === 'running';
+  const attempt = attemptOf(state, callId);
+  const wasRetried = attempt > 1;
+  const isRetrying = isRunning && wasRetried;
+  if (!isRetrying) {
+    return state;
+  }
+  const event: RunEvent = {
+    type: 'call.updated',
+    id: callId,
+    patch: { status: 'done', output: RETRY_OUTPUTS[callId] },
+  };
+  const run = reduceRun(state.run, event, now);
+  return { ...state, run };
+}
+
+function applyAt(
+  state: CallsState,
+  action: CallsAction,
+  now: number
+): CallsState {
+  if (action.type === 'retry') {
+    return withRetry(state, action.callId, now);
+  }
+  if (action.type === 'retried') {
+    return withRetryLanded(state, action.callId, now);
+  }
+  const run = applyBatchAt(state.run, action, now);
+  return { ...state, run };
+}
+
+/** Times are stamped when an action lands, as a backend would stream it. */
+function reducer(state: CallsState, action: CallsAction) {
+  return applyAt(state, action, Date.now());
+}
+
+function landing(after: number, ...events: RunEvent[]): CallsStep {
+  return { after, action: { type: 'events', events } };
+}
+
+function hasRetriedPage(state: CallsState) {
+  const attempt = attemptOf(state, 'page');
+  return attempt > 1;
+}
+
+const SCRIPT: CallsStep[] = [
+  landing(500, { type: 'run.started' }),
+  landing(200, {
+    type: 'call.started',
+    call: {
+      id: 'search',
+      tool: 'web_search',
+      label: 'Searched the web for Brightmoor prices',
+      status: 'running',
+      input: SEARCH_INPUT,
     },
-  },
-  {
-    after: 150,
-    event: {
-      type: 'call.started',
-      call: {
-        id: 'sheet',
-        tool: 'read_sheet',
-        label: 'Read the Q3 invoices spreadsheet',
-        status: 'queued',
-        input: SHEET_INPUT,
-      },
+  }),
+  landing(150, {
+    type: 'call.started',
+    call: {
+      id: 'page',
+      tool: 'fetch_page',
+      label: 'Read the Brightmoor pricing page',
+      status: 'queued',
+      input: PAGE_INPUT,
     },
-  },
-  {
-    after: 900,
-    event: {
+  }),
+  landing(150, {
+    type: 'call.started',
+    call: {
+      id: 'sheet',
+      tool: 'read_sheet',
+      label: 'Read the Q3 invoices spreadsheet',
+      status: 'queued',
+      input: SHEET_INPUT,
+    },
+  }),
+  landing(
+    900,
+    {
       type: 'call.updated',
       id: 'search',
       patch: { status: 'done', output: SEARCH_OUTPUT },
     },
-  },
-  {
-    after: 0,
-    event: { type: 'call.updated', id: 'page', patch: { status: 'running' } },
-  },
-  {
-    after: 1100,
-    event: {
+    { type: 'call.updated', id: 'page', patch: { status: 'running' } }
+  ),
+  landing(
+    1100,
+    {
       type: 'call.updated',
       id: 'page',
       patch: { status: 'failed', error: PAGE_ERROR },
     },
-  },
-  {
-    after: 0,
-    event: { type: 'call.updated', id: 'sheet', patch: { status: 'running' } },
-  },
-  {
-    after: 800,
-    event: {
+    { type: 'call.updated', id: 'sheet', patch: { status: 'running' } }
+  ),
+  landing(
+    800,
+    {
       type: 'call.updated',
       id: 'sheet',
       patch: { status: 'done', output: SHEET_OUTPUT },
     },
+    { type: 'run.finished', status: 'done' }
+  ),
+  {
+    after: RETRY_AFTER_MS,
+    by: 'person',
+    press: 'page',
+    action: { type: 'retry', callId: 'page' },
+    isAnswered: hasRetriedPage,
   },
-  { after: 0, event: { type: 'run.finished', status: 'done' } },
+  { after: RETRY_MS, action: { type: 'retried', callId: 'page' } },
 ];
 
-const RETRY_OUTPUTS: Record<string, unknown> = {
-  page: PAGE_OUTPUT,
+const SESSION = {
+  reducer,
+  initial: INITIAL,
+  resting: restingOf(INITIAL, SCRIPT, applyAt),
+  script: SCRIPT,
+  loopAfter: 3000,
 };
 
 function lastChangeOf(call: ToolCall) {
@@ -536,56 +680,51 @@ function announcementOf(calls: ToolCall[]) {
 }
 
 export default function Run01() {
-  const [attempts, setAttempts] = useState<Record<string, number>>({});
   const { schedule, clearAll } = useTimeouts();
-  const { ref, isInView, snapshot, store, restart, isFinished } = useDemoRun(
-    SCRIPT,
-    {
-      initial: INITIAL_RUN,
-    }
-  );
-  const calls = snapshot.calls;
+  const {
+    ref,
+    isInView,
+    isAutoplaying,
+    state,
+    act,
+    pressed,
+    isFinished,
+    restart,
+  } = useSession(SESSION);
+  const calls = state.run.calls;
   const announcement = announcementOf(calls);
+  const canReplay = isFinished && !isAutoplaying;
 
   function retry(callId: string) {
-    setAttempts((current) => {
-      const previous = current[callId] ?? 1;
-      return { ...current, [callId]: previous + 1 };
-    });
-    store.dispatch({
-      type: 'call.updated',
-      id: callId,
-      patch: {
-        status: 'running',
-        error: undefined,
-        startedAt: undefined,
-        endedAt: undefined,
-      },
-    });
-    schedule(() => {
-      store.dispatch({
-        type: 'call.updated',
-        id: callId,
-        patch: { status: 'done', output: RETRY_OUTPUTS[callId] },
-      });
-    }, RETRY_MS);
+    act({ type: 'retry', callId });
+    schedule(() => act({ type: 'retried', callId }), RETRY_MS);
   }
 
   function replay() {
     clearAll();
-    setAttempts({});
     restart();
   }
 
+  useKeptHeight(ref);
+
   return (
-    <div ref={ref} className='flex w-full max-w-[34rem] flex-col gap-2'>
+    <div
+      ref={ref}
+      className='flex min-h-[22rem] w-full max-w-[34rem] flex-col gap-2'
+    >
       <ClockGate isActive={isInView}>
-        <ToolCallGroup calls={calls} attempts={attempts} onRetry={retry} />
+        <ToolCallGroup
+          calls={calls}
+          attempts={state.attempts}
+          onRetry={retry}
+          resultLines={RESULT_LINES}
+          pressedRetryId={pressed}
+        />
       </ClockGate>
       <div className='flex h-7 items-center justify-end'>
-        <ReplayButton isShown={isFinished} onReplay={replay} />
+        <ReplayButton isShown={canReplay} onReplay={replay} />
       </div>
-      <LiveRegion message={announcement} />
+      <LiveRegion message={spokenUnless(isAutoplaying, announcement)} />
     </div>
   );
 }

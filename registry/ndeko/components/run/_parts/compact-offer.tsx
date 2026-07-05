@@ -1,8 +1,10 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { formatTokens } from '@/registry/ndeko/lib/agent-run';
+import { pressedSolidOf } from '@/registry/ndeko/lib/demonstration';
 import { CheckIcon } from '@/registry/ndeko/lib/icons';
 
 import {
@@ -54,6 +56,8 @@ type CompactOfferProps = {
   compactStatus: CompactStatus;
   compaction: Compaction | null;
   onCompact?: () => void;
+  /** Shows Compact held down, for a demonstration that presses it. */
+  isPressed?: boolean;
 };
 
 export function CompactOffer({
@@ -62,8 +66,9 @@ export function CompactOffer({
   compactStatus,
   compaction,
   onCompact,
+  isPressed = false,
 }: CompactOfferProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const risePresence = risePresenceOf(shouldReduceMotion);
   const level = levelOf(budget);
   const free = freeTokensOf(budget);
@@ -86,6 +91,7 @@ export function CompactOffer({
               state={morphStateOf(compactStatus)}
               labels={COMPACT_LABELS}
               onClick={onCompact}
+              className={pressedSolidOf(isPressed)}
             />
           </div>
         </motion.div>

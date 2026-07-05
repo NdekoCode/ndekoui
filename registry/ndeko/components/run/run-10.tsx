@@ -1,11 +1,24 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { useId, useState } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
+import { memo, useEffect, useId, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
-import { TextShimmer } from '@/components/core/text-shimmer';
+import {
+  useAutoplay,
+  type AutoplayStep,
+} from '@/registry/ndeko/hooks/use-autoplay';
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { seriesColorOf, type RunAgent } from '@/registry/ndeko/lib/agent-run';
+import {
+  hold,
+  PRESS_LEAD_MS,
+  pressedQuietOf,
+  pressedSolidOf,
+  spokenUnless,
+  usePress,
+} from '@/registry/ndeko/lib/demonstration';
 import {
   ArrowUpIcon,
   CircleXIcon,
@@ -21,6 +34,7 @@ import { Swap } from '@/registry/ndeko/ui/chat-motion';
 import { Chip } from '@/registry/ndeko/ui/chip';
 import { StatusOrb } from '@/registry/ndeko/ui/status-orb';
 
+import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { MorphButton, type MorphState } from '@/registry/ndeko/ui/morph-button';
 import {
@@ -109,7 +123,11 @@ function signedChangeOf(change: number) {
   return `up ${magnitude}`;
 }
 
-function HealthGauge({ report }: { report: HealthReport }) {
+const HealthGauge = memo(function HealthGauge({
+  report,
+}: {
+  report: HealthReport;
+}) {
   const dashOffset = 100 - report.score;
   const spokenChange = signedChangeOf(report.change);
   const spoken = `Health ${report.score} out of 100, ${spokenChange} ${report.changeLabel}`;
@@ -172,7 +190,7 @@ function HealthGauge({ report }: { report: HealthReport }) {
       </div>
     </div>
   );
-}
+});
 
 const SPARK_INNER_HEIGHT = SPARK_HEIGHT - SPARK_PADDING * 2;
 
@@ -215,7 +233,7 @@ function sparkToneOf(isOutOfRange: boolean) {
 }
 
 function Sparkline({ signal }: { signal: HealthSignal }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const path = sparkPathOf(signal.points);
   const transition = morphOf(shouldReduceMotion);
 
@@ -251,7 +269,41 @@ function morphOf(shouldReduceMotion: boolean | null) {
   return PATH_MORPH;
 }
 
-function SignalRow({ signal }: { signal: HealthSignal }) {
+/** The signals answer a change of period one after the other, this long apart. */
+const WAVE_MS = 70;
+
+function waveDelayOf(index: number, shouldReduceMotion: boolean | null) {
+  if (shouldReduceMotion) {
+    return 0;
+  }
+  return index * WAVE_MS;
+}
+
+/** A value that follows another one after a delay, so the rows of a list answer a change as a wave. */
+function useLagged<Value>(value: Value, delayMs: number) {
+  const [shown, setShown] = useState(value);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShown(value), delayMs);
+    return () => clearTimeout(timer);
+  }, [value, delayMs]);
+
+  return shown;
+}
+
+type SignalRowProps = {
+  signal: HealthSignal;
+  /** The place of the row in the list: the wave reaches it that many beats late. */
+  index: number;
+};
+
+const SignalRow = memo(function SignalRow({
+  signal: latest,
+  index,
+}: SignalRowProps) {
+  const shouldReduceMotion = usePrefersReducedMotion();
+  const delay = waveDelayOf(index, shouldReduceMotion);
+  const signal = useLagged(latest, delay);
   const statusKey = String(signal.isOutOfRange);
 
   return (
@@ -279,7 +331,7 @@ function SignalRow({ signal }: { signal: HealthSignal }) {
       </span>
     </li>
   );
-}
+});
 
 function signalStatusWordOf(signal: HealthSignal) {
   if (signal.isOutOfRange) {
@@ -292,10 +344,36 @@ function wordsOf(text: string) {
   return text.split(' ');
 }
 
+/**
+ * While it is written the summary already holds its whole text, each word hidden until its turn:
+ * the panel takes its size once and no line pushes the next one down.
+ */
+function laidOutWordsOf(status: SummaryStatus, words: string[], shown: number) {
+  if (status === 'streaming') {
+    return words;
+  }
+  return words.slice(0, shown);
+}
+
+function wordRevealOf(isShown: boolean) {
+  if (isShown) {
+    return 'opacity-100';
+  }
+  return 'opacity-0';
+}
+
+function hiddenUnless(isShown: boolean) {
+  if (isShown) {
+    return undefined;
+  }
+  return true;
+}
+
 type SummaryProps = {
   status: SummaryStatus;
   text: string;
   shownWords: number;
+  isGeneratePressed: boolean;
   onGenerate?: () => void;
   onStop?: () => void;
 };
@@ -304,17 +382,18 @@ function SummaryPanel({
   status,
   text,
   shownWords,
+  isGeneratePressed,
   onGenerate,
   onStop,
 }: SummaryProps) {
   const words = wordsOf(text);
-  const visibleWords = words.slice(0, shownWords);
+  const laidOutWords = laidOutWordsOf(status, words, shownWords);
   const isIdle = status === 'idle';
   const isThinking = status === 'thinking';
   const isStreaming = status === 'streaming';
   const isStopped = status === 'stopped';
   const isDone = status === 'done';
-  const hasWords = visibleWords.length > 0;
+  const hasWords = laidOutWords.length > 0;
   const canRetry = isStopped || isDone;
 
   return (
@@ -353,6 +432,7 @@ function SummaryPanel({
               variant='outline'
               size='sm'
               onClick={onGenerate}
+              className={pressedQuietOf(isGeneratePressed)}
             >
               <FeatherIcon />
               Generate summary
@@ -360,20 +440,27 @@ function SummaryPanel({
           </div>
         )}
         {isThinking && (
-          <TextShimmer as='p' className='text-[13px]'>
+          <p className='text-muted-foreground animate-pulse text-[13px] motion-reduce:animate-none'>
             Reading the signals
-          </TextShimmer>
+          </p>
         )}
         {hasWords && (
           <p className='text-[13px] leading-5'>
-            {visibleWords.map((word, index) => (
-              <span
-                key={index}
-                className='transition-opacity duration-200 starting:opacity-0'
-              >
-                {word}{' '}
-              </span>
-            ))}
+            {laidOutWords.map((word, index) => {
+              const isShown = index < shownWords;
+              return (
+                <span
+                  key={index}
+                  aria-hidden={hiddenUnless(isShown)}
+                  className={cn(
+                    'transition-opacity duration-200',
+                    wordRevealOf(isShown)
+                  )}
+                >
+                  {word}{' '}
+                </span>
+              );
+            })}
           </p>
         )}
         {isStopped && (
@@ -406,13 +493,15 @@ function applyLabelsOf(status: ActionStatus): Record<MorphState, string> {
 function ActionCard({
   action,
   status,
+  isApplyPressed,
   onApply,
 }: {
   action: HealthAction;
   status: ActionStatus;
+  isApplyPressed: boolean;
   onApply?: () => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const isFailed = status === 'failed';
   const isDone = status === 'done';
@@ -435,6 +524,7 @@ function ActionCard({
           state={applyStateOf(status)}
           labels={applyLabelsOf(status)}
           onClick={onApply}
+          className={pressedSolidOf(isApplyPressed)}
         />
       </div>
       <AnimatePresence initial={false}>
@@ -474,6 +564,9 @@ export type AgentHealthProps = {
   action: HealthAction;
   actionStatus: ActionStatus;
   onApplyAction?: () => void;
+  /** Show Generate summary or Apply held down, for a demonstration that presses them. */
+  isGeneratePressed?: boolean;
+  isApplyPressed?: boolean;
   className?: string;
 };
 
@@ -487,6 +580,8 @@ export function AgentHealth({
   action,
   actionStatus,
   onApplyAction,
+  isGeneratePressed = false,
+  isApplyPressed = false,
   className,
 }: AgentHealthProps) {
   const titleId = useId();
@@ -517,20 +612,22 @@ export function AgentHealth({
       </header>
       <HealthGauge report={report} />
       <ul aria-label='Signals' className='flex flex-col'>
-        {report.signals.map((signal) => (
-          <SignalRow key={signal.id} signal={signal} />
+        {report.signals.map((signal, index) => (
+          <SignalRow key={signal.id} signal={signal} index={index} />
         ))}
       </ul>
       <SummaryPanel
         status={summary.status}
         text={summary.text}
         shownWords={summary.shownWords}
+        isGeneratePressed={isGeneratePressed}
         onGenerate={onGenerateSummary}
         onStop={onStopSummary}
       />
       <ActionCard
         action={action}
         status={actionStatus}
+        isApplyPressed={isApplyPressed}
         onApply={onApplyAction}
       />
     </section>
@@ -703,9 +800,15 @@ const RESEARCHER_AGENT: Pick<RunAgent, 'name' | 'series' | 'model'> = {
 
 const THINK_MS = 1100;
 
-const WORD_MS = 55;
+/** The summary arrives a few words at a time: one render per group, never one per word. */
+const WORDS_PER_GROUP = 3;
+
+const GROUP_MS = 150;
 
 const APPLY_MS = 900;
+
+/** A control that waits on a person is pressed by the demonstration after this long. */
+const ANSWER_AFTER_MS = 2500;
 
 type SummaryState = {
   status: SummaryStatus;
@@ -756,6 +859,15 @@ function announcementOf(
   return fallback;
 }
 
+/** How long a summary takes to write itself, from the click to its last word. */
+function writingTimeOf(wordCount: number) {
+  const groups = Math.ceil(wordCount / WORDS_PER_GROUP);
+  const streamTime = groups * GROUP_MS;
+  return THINK_MS + streamTime;
+}
+
+type PressKey = 'generate' | 'apply';
+
 export default function Run10() {
   const [periodId, setPeriodId] = useState<PeriodId>('week');
   const [summaryState, setSummaryState] = useState<SummaryState>(IDLE_SUMMARY);
@@ -764,6 +876,7 @@ export default function Run10() {
   const [periodLine, setPeriodLine] = useState('');
   const summaryTimers = useTimeouts();
   const actionTimers = useTimeouts();
+  const { pressed, press } = usePress<PressKey>();
   const report = REPORTS[periodId];
   const summaryText = SUMMARIES[periodId];
   const wordCount = wordsOf(summaryText).length;
@@ -773,19 +886,20 @@ export default function Run10() {
     periodLine
   );
 
-  function streamFrom(index: number) {
-    if (index > wordCount) {
+  function streamFrom(shown: number) {
+    if (shown >= wordCount) {
       setSummaryState({ status: 'done', shownWords: wordCount });
       return;
     }
-    setSummaryState({ status: 'streaming', shownWords: index });
-    summaryTimers.schedule(() => streamFrom(index + 1), WORD_MS);
+    const next = shown + WORDS_PER_GROUP;
+    setSummaryState({ status: 'streaming', shownWords: shown });
+    summaryTimers.schedule(() => streamFrom(next), GROUP_MS);
   }
 
   function generateSummary() {
     summaryTimers.clearAll();
     setSummaryState({ status: 'thinking', shownWords: 0 });
-    summaryTimers.schedule(() => streamFrom(1), THINK_MS);
+    summaryTimers.schedule(() => streamFrom(WORDS_PER_GROUP), THINK_MS);
   }
 
   function stopSummary() {
@@ -819,31 +933,69 @@ export default function Run10() {
     }, APPLY_MS);
   }
 
+  function resetDemo() {
+    summaryTimers.clearAll();
+    actionTimers.clearAll();
+    setPeriodId('week');
+    setSummaryState(IDLE_SUMMARY);
+    setActionStatus('idle');
+    setAttempts(0);
+  }
+
+  const writingTime = writingTimeOf(wordCount);
+  const applyAfter = writingTime + 900;
+  const retryAfter = APPLY_MS + ANSWER_AFTER_MS;
+  const restAfter = APPLY_MS + 1600;
+  const steps: AutoplayStep[] = [
+    { after: 1500, run: () => changePeriod('month') },
+    { after: 2400, run: () => changePeriod('week') },
+    { after: 1500, run: () => press('generate') },
+    { after: PRESS_LEAD_MS, run: generateSummary },
+    { after: applyAfter, run: () => press('apply') },
+    { after: PRESS_LEAD_MS, run: applyAction },
+    { after: retryAfter, run: () => press('apply') },
+    { after: PRESS_LEAD_MS, run: applyAction },
+    { after: restAfter, run: hold },
+  ];
+  const { ref, isInView, isAutoplaying } = useAutoplay(steps, {
+    loopAfter: 2600,
+    onReset: resetDemo,
+  });
+
+  useKeptHeight(ref);
+
   return (
-    <div className='flex w-full max-w-[34rem] flex-col gap-2'>
-      <AgentHealth
-        agent={RESEARCHER_AGENT}
-        report={report}
-        periodSwitch={
-          <Segments
-            value={periodId}
-            segments={PERIODS}
-            onValueChange={changePeriod}
-            label='Period'
-          />
-        }
-        summary={{
-          status: summaryState.status,
-          text: summaryText,
-          shownWords: summaryState.shownWords,
-        }}
-        onGenerateSummary={generateSummary}
-        onStopSummary={stopSummary}
-        action={ACTION}
-        actionStatus={actionStatus}
-        onApplyAction={applyAction}
-      />
-      <LiveRegion message={announcement} />
+    <div
+      ref={ref}
+      className='flex min-h-[54rem] w-full max-w-[34rem] flex-col gap-2'
+    >
+      <ClockGate isActive={isInView}>
+        <AgentHealth
+          agent={RESEARCHER_AGENT}
+          report={report}
+          periodSwitch={
+            <Segments
+              value={periodId}
+              segments={PERIODS}
+              onValueChange={changePeriod}
+              label='Period'
+            />
+          }
+          summary={{
+            status: summaryState.status,
+            text: summaryText,
+            shownWords: summaryState.shownWords,
+          }}
+          onGenerateSummary={generateSummary}
+          onStopSummary={stopSummary}
+          action={ACTION}
+          actionStatus={actionStatus}
+          onApplyAction={applyAction}
+          isGeneratePressed={pressed === 'generate'}
+          isApplyPressed={pressed === 'apply'}
+        />
+      </ClockGate>
+      <LiveRegion message={spokenUnless(isAutoplaying, announcement)} />
     </div>
   );
 }

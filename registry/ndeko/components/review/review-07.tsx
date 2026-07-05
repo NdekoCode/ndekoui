@@ -1,17 +1,13 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useInView,
-  useReducedMotion,
-} from 'motion/react';
+import { AnimatePresence, motion, useInView } from 'motion/react';
 import { useRef, useState } from 'react';
 
 import {
   useRunScript,
   type RunScriptStep,
 } from '@/registry/ndeko/hooks/use-agent-run';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import {
   emptyRun,
@@ -374,7 +370,7 @@ type BranchGraphProps = {
 };
 
 function BranchGraph({ view }: BranchGraphProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const glide = slowSpringOf(shouldReduceMotion);
   const edges = edgesOf(view.nodes);
   const width = graphWidthOf();
@@ -716,7 +712,7 @@ export default function Review07() {
   const [notice, setNotice] = useState('');
   const rootRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(rootRef, { amount: 0.3 });
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const layoutTransition = slowSpringOf(shouldReduceMotion);
   const { schedule, clearAll } = useTimeouts();

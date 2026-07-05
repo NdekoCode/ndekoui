@@ -3,6 +3,9 @@ import { hatchOf } from '@/registry/ndeko/lib/hatch';
 export type ContextPartId =
   'system' | 'tools' | 'files' | 'summary' | 'conversation';
 
+/** A place in the window: one of its parts, the room left, or what is held back for the answer. */
+export type ContextSlot = ContextPartId | 'free' | 'reserve';
+
 export type ContextItem = {
   id: string;
   label: string;
@@ -167,6 +170,20 @@ export function turnsWithin(conversationTokens: number) {
     total = next;
   }
   return turns;
+}
+
+/** The tokens of the turns a compaction folds away: every turn of the conversation but the newest ones. */
+export function foldableTokensOf(budget: ContextBudget) {
+  const conversation = budget.parts.find((part) => part.id === 'conversation');
+  if (!conversation) {
+    return 0;
+  }
+  const foldedCount = conversation.items.length - KEPT_TURNS;
+  if (foldedCount < 1) {
+    return 0;
+  }
+  const folded = conversation.items.slice(0, foldedCount);
+  return sumTokens(folded);
 }
 
 export function compactionOf(turns: ContextItem[]): Compaction | null {

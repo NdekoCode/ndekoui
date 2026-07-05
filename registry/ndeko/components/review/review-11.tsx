@@ -1,10 +1,11 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useId, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll, type WordRollWord } from '@/components/core/word-roll';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CheckIcon, RotateCcwIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { springOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -208,7 +209,7 @@ function SuggestionCard({
   onAccept,
   onReject,
 }: SuggestionCardProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const glide = springOf(shouldReduceMotion);
 
   return (

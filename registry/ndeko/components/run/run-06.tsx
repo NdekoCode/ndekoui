@@ -1,9 +1,11 @@
 'use client';
 
-import { useReducedMotion } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { formatTokens } from '@/registry/ndeko/lib/agent-run';
+import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 import { CompactOffer, contextAnnouncementOf } from './_parts/compact-offer';
@@ -17,19 +19,23 @@ import {
   type Compaction,
   type ContextBudget,
   type ContextItem,
-  type ContextPartId,
+  type ContextSlot,
 } from './_parts/context';
 import { ContextHeader } from './_parts/context-header';
+import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
 import { TokenCount } from './_parts/token-count';
 import {
-  useContextControls,
-  useContextRun,
+  FILLING_SCRIPT,
+  FILLING_SESSION,
+  useContextSession,
   type CompactStatus,
+  type ContextSession,
+  type ContextStep,
 } from './_parts/use-context-demo';
 
-type CellKind = ContextPartId | 'free' | 'reserve';
+type CellKind = ContextSlot;
 
 type LegendEntry = {
   kind: CellKind;
@@ -44,14 +50,36 @@ const FILL_STAGGER_MS = 14;
 
 const FREE_FILL = 'color-mix(in oklab, var(--foreground) 6%, transparent)';
 
-function cellStyleOf(kind: CellKind): React.CSSProperties {
+function fillOf(kind: Exclude<CellKind, 'reserve'>) {
   if (kind === 'free') {
-    return { backgroundColor: FREE_FILL };
+    return FREE_FILL;
   }
+  return PART_FILL[kind];
+}
+
+function cellStyleOf(kind: CellKind): React.CSSProperties {
   if (kind === 'reserve') {
     return RESERVE_STYLE;
   }
-  return { backgroundColor: PART_FILL[kind] };
+  return { backgroundColor: fillOf(kind) };
+}
+
+const DIMMED_PERCENT = 25;
+
+const DIMMED_OPACITY = DIMMED_PERCENT / 100;
+
+/**
+ * A cell that steps back keeps a quarter of its colour. The colour itself fades, so two hundred
+ * cells dim in one repaint of the field and none of them becomes a layer of its own.
+ */
+function dimmedCellStyleOf(kind: CellKind): React.CSSProperties {
+  if (kind === 'reserve') {
+    return { ...RESERVE_STYLE, opacity: DIMMED_OPACITY };
+  }
+  const fill = fillOf(kind);
+  return {
+    backgroundColor: `color-mix(in oklab, ${fill} ${DIMMED_PERCENT}%, transparent)`,
+  };
 }
 
 function cellCountOf(tokens: number) {
@@ -108,14 +136,11 @@ function delayOf(index: number, history: FillHistory, isStaggered: boolean) {
   return 0;
 }
 
-function dimOf(kind: CellKind, activeKind: CellKind | null) {
+function isDimmedCell(kind: CellKind, activeKind: CellKind | null) {
   if (activeKind === null) {
-    return 'opacity-100';
+    return false;
   }
-  if (kind === activeKind) {
-    return 'opacity-100';
-  }
-  return 'opacity-25';
+  return kind !== activeKind;
 }
 
 function useFillHistory(filled: number) {
@@ -153,14 +178,23 @@ function spokenFieldOf(budget: ContextBudget) {
   return `${usedText} of ${limitText} tokens used, one cell per thousand`;
 }
 
+function cellColorOf(kind: CellKind, isDimmed: boolean) {
+  if (isDimmed) {
+    return dimmedCellStyleOf(kind);
+  }
+  return cellStyleOf(kind);
+}
+
 function cellLookOf(
   kind: CellKind,
   index: number,
   history: FillHistory,
-  isStaggered: boolean
+  isStaggered: boolean,
+  isDimmed: boolean
 ): React.CSSProperties {
   const delay = delayOf(index, history, isStaggered);
-  return { ...cellStyleOf(kind), transitionDelay: `${delay}ms` };
+  const color = cellColorOf(kind, isDimmed);
+  return { ...color, transitionDelay: `${delay}ms` };
 }
 
 function CellField({
@@ -170,7 +204,7 @@ function CellField({
   budget: ContextBudget;
   activeKind: CellKind | null;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const kinds = cellKindsOf(budget);
   const filled = filledCountOf(kinds);
   const history = useFillHistory(filled);
@@ -182,25 +216,38 @@ function CellField({
       {kinds.map((kind, index) => (
         <span
           key={index}
-          className={cn(
-            'aspect-square rounded-[3px] transition-[background-color,opacity] duration-300 ease-(--ease-out-strong)',
-            dimOf(kind, activeKind)
+          className='aspect-square rounded-[3px] transition-[background-color,opacity] duration-300 ease-(--ease-out-strong)'
+          style={cellLookOf(
+            kind,
+            index,
+            history,
+            isStaggered,
+            isDimmedCell(kind, activeKind)
           )}
-          style={cellLookOf(kind, index, history, isStaggered)}
         />
       ))}
     </div>
   );
 }
 
+function litRowOf(isLit: boolean) {
+  if (isLit) {
+    return 'bg-foreground/[0.03]';
+  }
+  return undefined;
+}
+
 function LegendButton({
   entry,
   isPinned,
+  isLit,
   onPreview,
   onTogglePin,
 }: {
   entry: LegendEntry;
   isPinned: boolean;
+  /** Its cells are the ones lit now, whoever pointed at them. */
+  isLit: boolean;
   onPreview: (kind: CellKind | null) => void;
   onTogglePin: (kind: CellKind) => void;
 }) {
@@ -221,7 +268,10 @@ function LegendButton({
       onFocus={preview}
       onBlur={clearPreview}
       onClick={() => onTogglePin(entry.kind)}
-      className='hover:bg-foreground/[0.03] focus-visible:ring-ring/25 aria-pressed:bg-foreground/[0.05] flex h-8 w-full cursor-pointer items-center gap-2.5 rounded-md px-2 text-start text-[13px] outline-none focus-visible:ring-[3px]'
+      className={cn(
+        'hover:bg-foreground/[0.03] focus-visible:ring-ring/25 aria-pressed:bg-foreground/[0.05] flex h-8 w-full cursor-pointer items-center gap-2.5 rounded-md px-2 text-start text-[13px] transition-colors duration-150 outline-none focus-visible:ring-[3px]',
+        litRowOf(isLit)
+      )}
     >
       <span
         aria-hidden='true'
@@ -310,11 +360,19 @@ function TurnSparkline({
   );
 }
 
-function activeKindOf(preview: CellKind | null, pinned: CellKind | null) {
+/** What a person points at comes first, then what they pinned, then what was lit from outside. */
+function activeKindOf(
+  preview: CellKind | null,
+  pinned: CellKind | null,
+  spotlight: CellKind | null
+) {
   if (preview !== null) {
     return preview;
   }
-  return pinned;
+  if (pinned !== null) {
+    return pinned;
+  }
+  return spotlight;
 }
 
 export type ContextCellsProps = {
@@ -324,6 +382,10 @@ export type ContextCellsProps = {
   canCompact?: boolean;
   compactStatus?: CompactStatus;
   onCompact?: () => void;
+  /** Lights the cells of one part from outside, for a demonstration or a control beside the field. */
+  spotlight?: ContextSlot | null;
+  /** Shows Compact held down, for a demonstration that presses it. */
+  isCompactPressed?: boolean;
   className?: string;
 };
 
@@ -334,13 +396,15 @@ export function ContextCells({
   canCompact = false,
   compactStatus = 'idle',
   onCompact,
+  spotlight = null,
+  isCompactPressed = false,
   className,
 }: ContextCellsProps) {
   const [previewKind, setPreviewKind] = useState<CellKind | null>(null);
   const [pinnedKind, setPinnedKind] = useState<CellKind | null>(null);
   const titleId = useId();
   const legend = legendOf(budget);
-  const activeKind = activeKindOf(previewKind, pinnedKind);
+  const activeKind = activeKindOf(previewKind, pinnedKind, spotlight);
   const foldedTurns = compaction?.foldedTurns ?? 0;
 
   function togglePin(kind: CellKind) {
@@ -371,6 +435,7 @@ export function ContextCells({
             <LegendButton
               entry={entry}
               isPinned={pinnedKind === entry.kind}
+              isLit={activeKind === entry.kind}
               onPreview={setPreviewKind}
               onTogglePin={togglePin}
             />
@@ -384,44 +449,89 @@ export function ContextCells({
         compactStatus={compactStatus}
         compaction={compaction}
         onCompact={onCompact}
+        isPressed={isCompactPressed}
       />
     </section>
   );
 }
 
+function spot(after: number, slot: ContextSlot | null): ContextStep {
+  return { after, by: 'demo', action: { type: 'spotlight', slot } };
+}
+
+/** The demonstration points at each part in turn before the conversation goes on. */
+const TOUR: ContextStep[] = [
+  spot(1200, 'system'),
+  spot(650, 'tools'),
+  spot(650, 'files'),
+  spot(650, 'conversation'),
+  spot(650, 'free'),
+  spot(900, null),
+];
+
+const SESSION: ContextSession = {
+  ...FILLING_SESSION,
+  script: [...TOUR, ...FILLING_SCRIPT],
+};
+
+/** A part lit by the demonstration lets go the moment a person takes over. */
+function spotlightOf(isAutoplaying: boolean, spotlight: ContextSlot | null) {
+  if (isAutoplaying) {
+    return spotlight;
+  }
+  return null;
+}
+
 export default function Run06() {
-  const { ref, turns, restart, isFinished } = useContextRun();
-  const controls = useContextControls(turns);
-  const level = levelOf(controls.budget);
+  const {
+    ref,
+    isInView,
+    isAutoplaying,
+    canReplay,
+    pressed,
+    turns,
+    budget,
+    compaction,
+    compactStatus,
+    canCompact,
+    spotlight,
+    compact,
+    replay,
+  } = useContextSession(SESSION);
+  const level = levelOf(budget);
   const announcement = contextAnnouncementOf(
     level,
     LEVEL_WORD[level],
-    controls.compaction
+    compaction
   );
 
-  function replay() {
-    controls.reset();
-    restart();
-  }
+  useKeptHeight(ref);
 
   return (
-    <div ref={ref} className='flex w-full max-w-[28rem] flex-col gap-2'>
-      <ContextCells
-        budget={controls.budget}
-        turns={turns}
-        compaction={controls.compaction}
-        canCompact={controls.canCompact}
-        compactStatus={controls.compactStatus}
-        onCompact={controls.compact}
-      />
+    <div
+      ref={ref}
+      className='flex min-h-[42.5rem] w-full max-w-[28rem] flex-col gap-2'
+    >
+      <ClockGate isActive={isInView}>
+        <ContextCells
+          budget={budget}
+          turns={turns}
+          compaction={compaction}
+          canCompact={canCompact}
+          compactStatus={compactStatus}
+          onCompact={compact}
+          spotlight={spotlightOf(isAutoplaying, spotlight)}
+          isCompactPressed={pressed === 'compact'}
+        />
+      </ClockGate>
       <div className='flex h-7 items-center justify-end'>
         <ReplayButton
-          isShown={isFinished}
+          isShown={canReplay}
           onReplay={replay}
           label='Replay the conversation'
         />
       </div>
-      <LiveRegion message={announcement} />
+      <LiveRegion message={spokenUnless(isAutoplaying, announcement)} />
     </div>
   );
 }

@@ -1,17 +1,13 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useInView,
-  useReducedMotion,
-} from 'motion/react';
+import { AnimatePresence, motion, useInView } from 'motion/react';
 import { useId, useRef, useState } from 'react';
 
 import {
   useRunScript,
   type RunScriptStep,
 } from '@/registry/ndeko/hooks/use-agent-run';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   emptyRun,
   pendingApprovalsOf,
@@ -126,7 +122,7 @@ function NamedPointer({
   pointerId: string;
   isShown: boolean;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const color = seriesColorOf(AGENT_SERIES);
   const pointerStyle = { color } as React.CSSProperties;
 
@@ -169,7 +165,7 @@ function pointerTransitionOf(shouldReduceMotion: boolean | null) {
 }
 
 function Ripple({ rippleKey }: { rippleKey: string }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const ripple = rippleMotionOf(shouldReduceMotion);
 
   return (
@@ -447,7 +443,7 @@ function BrowserFrame({
   banner,
   overlay,
 }: BrowserFrameProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const screenMotion = screenMotionOf(shouldReduceMotion);
 
   return (
@@ -752,7 +748,7 @@ type ActionLogProps = {
 };
 
 function ActionLog({ run, viewedIndex, onView }: ActionLogProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = risePresenceOf(shouldReduceMotion);
 
   return (

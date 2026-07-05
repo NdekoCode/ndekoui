@@ -1,10 +1,11 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll, type WordRollWord } from '@/components/core/word-roll';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CheckIcon,
   ChevronsUpDownIcon,
@@ -355,7 +356,7 @@ function HunkView({
   onDecide,
   onUndo,
 }: HunkViewProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const bodyMotion = bodyMotionOf(shouldReduceMotion);
   const header = hunkHeaderOf(lines);
   const bodyKey = `${decision ?? 'open'}-${layout}`;

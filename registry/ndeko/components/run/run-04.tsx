@@ -1,21 +1,26 @@
 'use client';
 
+import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
-import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
-  emptyRun,
-  seriesColorOf,
-  type RunAgent,
-  type ToolCall,
-} from '@/registry/ndeko/lib/agent-run';
+  useSession,
+  type SessionStep,
+} from '@/registry/ndeko/hooks/use-session';
+import { seriesColorOf, type RunAgent } from '@/registry/ndeko/lib/agent-run';
+import {
+  pressedSolidOf,
+  spokenUnless,
+} from '@/registry/ndeko/lib/demonstration';
 import {
   ChevronDownIcon,
   RotateCcwIcon,
   TriangleAlertIcon,
 } from '@/registry/ndeko/lib/icons';
+import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
-import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
@@ -24,9 +29,10 @@ import { Kbd } from '@/registry/ndeko/ui/kbd';
 import { Spinner } from '@/registry/ndeko/ui/spinner';
 
 import { CopyButton } from '@/registry/ndeko/ui/copy-button';
+import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
-import { useDemoRun } from '@/registry/ndeko/hooks/use-demo-run';
+import { restingOf } from './_parts/run-session';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 
 export type TerminalStatus = 'waiting' | 'running' | 'done' | 'skipped';
@@ -39,12 +45,6 @@ export type TerminalCommand = {
   exitCode?: number;
   /** Why the command waits for a person before it runs. */
   reason?: string;
-};
-
-type ShellOutput = {
-  lines: string[];
-  exitCode?: number;
-  skipped?: boolean;
 };
 
 /** Long output folds to its first lines once the command finishes. */
@@ -134,11 +134,17 @@ function CommandStatus({ command }: { command: TerminalCommand }) {
 
 type ApprovalBarProps = {
   command: TerminalCommand;
+  isApprovePressed: boolean;
   onApprove?: (commandId: string) => void;
   onSkip?: (commandId: string) => void;
 };
 
-function ApprovalBar({ command, onApprove, onSkip }: ApprovalBarProps) {
+function ApprovalBar({
+  command,
+  isApprovePressed,
+  onApprove,
+  onSkip,
+}: ApprovalBarProps) {
   function approve() {
     onApprove?.(command.id);
   }
@@ -175,7 +181,12 @@ function ApprovalBar({ command, onApprove, onSkip }: ApprovalBarProps) {
           {command.reason}
         </p>
         <div className='flex shrink-0 items-center gap-2'>
-          <Button type='button' size='sm' onClick={approve}>
+          <Button
+            type='button'
+            size='sm'
+            onClick={approve}
+            className={pressedSolidOf(isApprovePressed)}
+          >
             Run
             <Kbd className='ms-0.5'>Enter</Kbd>
           </Button>
@@ -189,20 +200,43 @@ function ApprovalBar({ command, onApprove, onSkip }: ApprovalBarProps) {
   );
 }
 
+const LINE_CLASS =
+  'block min-h-[1lh] break-words whitespace-pre-wrap transition-opacity duration-150 starting:opacity-0';
+
+function OutputLines({ lines }: { lines: string[] }) {
+  return (
+    <>
+      {lines.map((line, index) => (
+        <span key={index} className={cn(LINE_CLASS, lineToneOf(line))}>
+          {line}
+        </span>
+      ))}
+    </>
+  );
+}
+
 type CommandBlockProps = {
   command: TerminalCommand;
+  isApprovePressed: boolean;
   onApprove?: (commandId: string) => void;
   onSkip?: (commandId: string) => void;
   onRerun?: (commandId: string) => void;
 };
 
+/**
+ * Lines stream straight into the block: nothing resizes it line by line. Only what a person or the
+ * end of the command changes at once is animated, the lines that fold away and the approval bar.
+ */
 function CommandBlock({
   command,
+  isApprovePressed,
   onApprove,
   onSkip,
   onRerun,
 }: CommandBlockProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const shouldReduceMotion = usePrefersReducedMotion();
+  const rowPresence = rowPresenceOf(shouldReduceMotion);
   const foldable = isFoldable(command);
   const isFolded = foldable && !isExpanded;
   const hiddenCount = command.lines.length - FOLDED_LINES;
@@ -210,7 +244,10 @@ function CommandBlock({
   const isFinished = isFinishedStatus(command.status);
   const canRerun = isFinished && onRerun !== undefined;
   const isEmptyFinished = isFinished && command.lines.length === 0;
-  const visibleLines = visibleLinesOf(command.lines, isFolded);
+  const firstLines = command.lines.slice(0, FOLDED_LINES);
+  const laterLines = command.lines.slice(FOLDED_LINES);
+  const hasLaterLines = laterLines.length > 0;
+  const showsLaterLines = hasLaterLines && !isFolded;
   const toggleLabel = foldToggleLabelOf(isExpanded, hiddenCount);
 
   function toggleFold() {
@@ -249,50 +286,51 @@ function CommandBlock({
           </Button>
         )}
       </div>
-      <AnimatedSize>
-        <div className='flex flex-col'>
-          {visibleLines.map((line, index) => (
-            <span
-              key={index}
-              className={cn(
-                'block min-h-[1lh] break-words whitespace-pre-wrap transition-opacity duration-150 starting:opacity-0',
-                lineToneOf(line)
-              )}
+      <div className='flex flex-col'>
+        <OutputLines lines={firstLines} />
+        <AnimatePresence initial={false}>
+          {showsLaterLines && (
+            <motion.div
+              key='later'
+              className='flex flex-col overflow-hidden'
+              {...rowPresence}
             >
-              {line}
-            </span>
-          ))}
-          {isEmptyFinished && (
-            <span className='text-muted-foreground font-sans'>No output</span>
+              <OutputLines lines={laterLines} />
+            </motion.div>
           )}
-          {foldable && (
-            <button
-              type='button'
-              aria-expanded={isExpanded}
-              onClick={toggleFold}
-              className='text-muted-foreground hover:text-foreground focus-visible:ring-ring/25 mt-1 w-fit cursor-pointer rounded-md font-sans text-xs outline-none focus-visible:ring-[3px]'
-            >
-              <Swap swapKey={toggleLabel}>{toggleLabel}</Swap>
-            </button>
-          )}
+        </AnimatePresence>
+        {isEmptyFinished && (
+          <span className='text-muted-foreground font-sans'>No output</span>
+        )}
+        {foldable && (
+          <button
+            type='button'
+            aria-expanded={isExpanded}
+            onClick={toggleFold}
+            className='text-muted-foreground hover:text-foreground focus-visible:ring-ring/25 mt-1 w-fit cursor-pointer rounded-md font-sans text-xs outline-none focus-visible:ring-[3px]'
+          >
+            <Swap swapKey={toggleLabel}>{toggleLabel}</Swap>
+          </button>
+        )}
+        <AnimatePresence initial={false}>
           {isWaiting && (
-            <ApprovalBar
-              command={command}
-              onApprove={onApprove}
-              onSkip={onSkip}
-            />
+            <motion.div
+              key='approval'
+              className='-m-1 overflow-hidden p-1'
+              {...rowPresence}
+            >
+              <ApprovalBar
+                command={command}
+                isApprovePressed={isApprovePressed}
+                onApprove={onApprove}
+                onSkip={onSkip}
+              />
+            </motion.div>
           )}
-        </div>
-      </AnimatedSize>
+        </AnimatePresence>
+      </div>
     </div>
   );
-}
-
-function visibleLinesOf(lines: string[], isFolded: boolean) {
-  if (isFolded) {
-    return lines.slice(0, FOLDED_LINES);
-  }
-  return lines;
 }
 
 function foldToggleLabelOf(isExpanded: boolean, hiddenCount: number) {
@@ -355,6 +393,8 @@ export type AgentTerminalProps = {
   onApprove?: (commandId: string) => void;
   onSkip?: (commandId: string) => void;
   onRerun?: (commandId: string) => void;
+  /** Shows Run held down on the command that waits, for a demonstration that presses it. */
+  isApprovePressed?: boolean;
   className?: string;
 };
 
@@ -365,6 +405,7 @@ export function AgentTerminal({
   onApprove,
   onSkip,
   onRerun,
+  isApprovePressed = false,
   className,
 }: AgentTerminalProps) {
   const { scrollerRef, contentRef, isPinned, updatePinned, jumpToBottom } =
@@ -400,6 +441,7 @@ export function AgentTerminal({
               <CommandBlock
                 key={command.id}
                 command={command}
+                isApprovePressed={isApprovePressed}
                 onApprove={onApprove}
                 onSkip={onSkip}
                 onRerun={onRerun}
@@ -486,127 +528,270 @@ const CLEAR_CACHE: CommandSpec = {
     'Deletes 214 cached files. They are not in git, so this cannot be undone.',
 };
 
+const PRICING_TEST: CommandSpec = {
+  command: 'npm test -- pricing',
+  exitCode: 0,
+  lines: [
+    '> brightmoor-review@1.4.0 test',
+    '> jest --ci pricing',
+    '',
+    'PASS src/pricing.test.ts',
+    '',
+    'Test Suites: 1 passed, 1 total',
+    'Tests:       8 passed, 8 total',
+    'Snapshots:   0 total',
+    'Time:        0.94 s',
+    'Ran all test suites matching /pricing/i.',
+  ],
+};
+
 const SPECS: Record<string, CommandSpec> = {
   test: NPM_TEST,
   diff: GIT_DIFF,
   cache: CLEAR_CACHE,
+  retest: PRICING_TEST,
 };
 
 const CODER: Pick<RunAgent, 'name' | 'series'> = { name: 'Coder', series: 5 };
 
-const LINE_MS = 110;
+/** Output lands a few lines at a time, the way a process flushes it: one render and one scroll per batch. */
+const LINES_PER_BATCH = 3;
+
+const BATCH_MS = 300;
 
 const SETTLE_MS = 250;
 
-function shellCall(
-  id: string,
-  spec: CommandSpec,
-  status: 'running' | 'waiting'
-): ToolCall {
-  return {
-    id,
-    tool: 'shell',
-    label: spec.command,
-    status,
-    input: { command: spec.command },
-    output: { lines: [] },
-  };
-}
+/** A command that waits on a person is run by the demonstration after this long. */
+const APPROVE_AFTER_MS = 2500;
 
-function finishedStatusOf(spec: CommandSpec) {
-  if (spec.exitCode === 0) {
-    return 'done';
-  }
-  return 'failed';
-}
+/** Who prints a command: the script plays its first run, a person's rerun is played by their own click. */
+type Source = 'script' | 'hand';
 
-function streamSteps(id: string, spec: CommandSpec): RunScriptStep[] {
-  const steps: RunScriptStep[] = [
-    {
-      after: 300,
-      event: { type: 'call.started', call: shellCall(id, spec, 'running') },
-    },
-  ];
-  for (let index = 1; index <= spec.lines.length; index += 1) {
-    const lines = spec.lines.slice(0, index);
-    steps.push({
-      after: LINE_MS,
-      event: { type: 'call.updated', id, patch: { output: { lines } } },
-    });
-  }
-  steps.push({
-    after: SETTLE_MS,
-    event: {
-      type: 'call.updated',
-      id,
-      patch: {
-        status: finishedStatusOf(spec),
-        output: { lines: spec.lines, exitCode: spec.exitCode },
-      },
-    },
-  });
-  return steps;
-}
+type ShellState = {
+  commands: TerminalCommand[];
+  /** The command the script is playing, if any. */
+  scriptedId: string | null;
+};
 
-const SCRIPT: RunScriptStep[] = [
-  { after: 400, event: { type: 'run.started' } },
-  ...streamSteps('test', NPM_TEST),
-  ...streamSteps('diff', GIT_DIFF),
-  {
-    after: 500,
-    event: {
-      type: 'call.started',
-      call: shellCall('cache', CLEAR_CACHE, 'waiting'),
-    },
-  },
-];
+type ShellAction =
+  | { type: 'start'; id: string }
+  | { type: 'print'; id: string; count: number; by: Source }
+  | { type: 'exit'; id: string; by: Source }
+  | { type: 'approve'; id: string }
+  | { type: 'skip'; id: string }
+  | { type: 'rerun'; id: string };
 
-const INITIAL_RUN = emptyRun({
-  id: 'brightmoor-shell',
-  title: 'Fix the Q3 price test',
-});
+type ShellStep = SessionStep<ShellState, ShellAction>;
 
-function isShellOutput(value: unknown): value is ShellOutput {
-  if (typeof value !== 'object' || value === null) {
-    return false;
-  }
-  return Array.isArray((value as ShellOutput).lines);
-}
+const INITIAL: ShellState = { commands: [], scriptedId: null };
 
-function shellOutputOf(value: unknown): ShellOutput {
-  if (isShellOutput(value)) {
-    return value;
-  }
-  return { lines: [] };
-}
-
-function terminalStatusOf(call: ToolCall, output: ShellOutput): TerminalStatus {
-  if (call.status === 'waiting') {
+function firstStatusOf(spec: CommandSpec): TerminalStatus {
+  if (spec.reason !== undefined) {
     return 'waiting';
   }
-  const isQueued = call.status === 'queued';
-  const isRunning = call.status === 'running';
-  if (isQueued || isRunning) {
-    return 'running';
-  }
-  if (output.skipped) {
-    return 'skipped';
-  }
-  return 'done';
+  return 'running';
 }
 
-function commandOf(call: ToolCall): TerminalCommand {
-  const output = shellOutputOf(call.output);
-  const spec = SPECS[call.id];
-  return {
-    id: call.id,
-    command: call.label,
-    status: terminalStatusOf(call, output),
-    lines: output.lines,
-    exitCode: output.exitCode,
-    reason: spec?.reason,
-  };
+function commandIn(state: ShellState, id: string) {
+  return state.commands.find((command) => command.id === id);
 }
+
+function withCommand(state: ShellState, next: TerminalCommand): ShellState {
+  const commands = state.commands.map((command) => {
+    if (command.id === next.id) {
+      return next;
+    }
+    return command;
+  });
+  return { ...state, commands };
+}
+
+function isPrintedBy(state: ShellState, id: string, by: Source) {
+  const isScripted = state.scriptedId === id;
+  if (by === 'script') {
+    return isScripted;
+  }
+  return !isScripted;
+}
+
+function started(state: ShellState, id: string): ShellState {
+  const spec = SPECS[id];
+  const isKnown = commandIn(state, id) !== undefined;
+  if (!spec || isKnown) {
+    return state;
+  }
+  const command: TerminalCommand = {
+    id,
+    command: spec.command,
+    status: firstStatusOf(spec),
+    lines: [],
+    reason: spec.reason,
+  };
+  return { commands: [...state.commands, command], scriptedId: id };
+}
+
+/** The running command, when the action comes from whoever is printing it. */
+function printableIn(state: ShellState, id: string, by: Source) {
+  const command = commandIn(state, id);
+  const isRunning = command?.status === 'running';
+  const isTheirs = isPrintedBy(state, id, by);
+  if (isRunning && isTheirs) {
+    return command;
+  }
+  return undefined;
+}
+
+function printed(state: ShellState, id: string, count: number, by: Source) {
+  const command = printableIn(state, id, by);
+  const spec = SPECS[id];
+  if (!command || !spec) {
+    return state;
+  }
+  const lines = spec.lines.slice(0, count);
+  return withCommand(state, { ...command, lines });
+}
+
+function scriptedAfterExit(state: ShellState, by: Source) {
+  if (by === 'script') {
+    return null;
+  }
+  return state.scriptedId;
+}
+
+function exited(state: ShellState, id: string, by: Source): ShellState {
+  const command = printableIn(state, id, by);
+  const spec = SPECS[id];
+  if (!command || !spec) {
+    return state;
+  }
+  const done: TerminalCommand = {
+    ...command,
+    status: 'done',
+    lines: spec.lines,
+    exitCode: spec.exitCode,
+  };
+  const next = withCommand(state, done);
+  return { ...next, scriptedId: scriptedAfterExit(state, by) };
+}
+
+function approved(state: ShellState, id: string) {
+  const command = commandIn(state, id);
+  if (command?.status !== 'waiting') {
+    return state;
+  }
+  return withCommand(state, { ...command, status: 'running' });
+}
+
+function scriptedAfterSkip(state: ShellState, id: string) {
+  if (state.scriptedId === id) {
+    return null;
+  }
+  return state.scriptedId;
+}
+
+function skipped(state: ShellState, id: string): ShellState {
+  const command = commandIn(state, id);
+  if (command?.status !== 'waiting') {
+    return state;
+  }
+  const next = withCommand(state, { ...command, status: 'skipped' });
+  return { ...next, scriptedId: scriptedAfterSkip(state, id) };
+}
+
+/** A command that needed approval asks again before it runs a second time. */
+function rerun(state: ShellState, id: string) {
+  const command = commandIn(state, id);
+  const spec = SPECS[id];
+  if (!command || !spec) {
+    return state;
+  }
+  if (!isFinishedStatus(command.status)) {
+    return state;
+  }
+  const again: TerminalCommand = {
+    ...command,
+    status: firstStatusOf(spec),
+    lines: [],
+    exitCode: undefined,
+  };
+  return withCommand(state, again);
+}
+
+function reducer(state: ShellState, action: ShellAction): ShellState {
+  switch (action.type) {
+    case 'start':
+      return started(state, action.id);
+    case 'print':
+      return printed(state, action.id, action.count, action.by);
+    case 'exit':
+      return exited(state, action.id, action.by);
+    case 'approve':
+      return approved(state, action.id);
+    case 'skip':
+      return skipped(state, action.id);
+    case 'rerun':
+      return rerun(state, action.id);
+  }
+}
+
+/** How many lines show after each batch: 3, 6, 9 and so on up to all of them. */
+function batchEndsOf(lineCount: number) {
+  const ends: number[] = [];
+  for (let end = LINES_PER_BATCH; end < lineCount; end += LINES_PER_BATCH) {
+    ends.push(end);
+  }
+  if (lineCount > 0) {
+    ends.push(lineCount);
+  }
+  return ends;
+}
+
+function printSteps(id: string): ShellStep[] {
+  const spec = SPECS[id];
+  const ends = batchEndsOf(spec.lines.length);
+  return ends.map((count) => ({
+    after: BATCH_MS,
+    action: { type: 'print', id, count, by: 'script' },
+  }));
+}
+
+function scriptedRun(id: string, startAfter: number): ShellStep[] {
+  return [
+    { after: startAfter, action: { type: 'start', id } },
+    ...printSteps(id),
+    { after: SETTLE_MS, action: { type: 'exit', id, by: 'script' } },
+  ];
+}
+
+function isCacheDecided(state: ShellState) {
+  const command = commandIn(state, 'cache');
+  const isAsked = command !== undefined;
+  const isWaiting = command?.status === 'waiting';
+  return isAsked && !isWaiting;
+}
+
+const SCRIPT: ShellStep[] = [
+  ...scriptedRun('test', 700),
+  ...scriptedRun('diff', 300),
+  { after: 500, action: { type: 'start', id: 'cache' } },
+  {
+    after: APPROVE_AFTER_MS,
+    by: 'person',
+    press: 'run',
+    action: { type: 'approve', id: 'cache' },
+    isAnswered: isCacheDecided,
+  },
+  { after: 700, action: { type: 'exit', id: 'cache', by: 'script' } },
+  ...scriptedRun('retest', 400),
+];
+
+const SESSION = {
+  reducer,
+  initial: INITIAL,
+  resting: restingOf(INITIAL, SCRIPT, reducer),
+  script: SCRIPT,
+  loopAfter: 3000,
+};
 
 function announcementOf(commands: TerminalCommand[]) {
   const last = commands[commands.length - 1];
@@ -627,82 +812,63 @@ function announcementOf(commands: TerminalCommand[]) {
 
 export default function Run04() {
   const { schedule, clearAll } = useTimeouts();
-  const { ref, snapshot, store, restart, isFinished } = useDemoRun(SCRIPT, {
-    initial: INITIAL_RUN,
-  });
-  const commands = snapshot.calls.map(commandOf);
+  const {
+    ref,
+    isInView,
+    isAutoplaying,
+    state,
+    act,
+    pressed,
+    isFinished,
+    restart,
+  } = useSession(SESSION);
+  const commands = state.commands;
   const announcement = announcementOf(commands);
   const isSettled = commands.every((command) =>
     isFinishedStatus(command.status)
   );
-  const canReplay = isFinished && isSettled;
+  const isOver = isFinished && isSettled;
+  const canReplay = isOver && !isAutoplaying;
 
   function stream(commandId: string) {
     const spec = SPECS[commandId];
     if (!spec) {
       return;
     }
-    store.dispatch({
-      type: 'call.updated',
-      id: commandId,
-      patch: {
-        status: 'running',
-        startedAt: undefined,
-        endedAt: undefined,
-        output: { lines: [] },
-      },
-    });
-    for (let index = 1; index <= spec.lines.length; index += 1) {
-      const lines = spec.lines.slice(0, index);
-      const delay = index * LINE_MS;
+    const ends = batchEndsOf(spec.lines.length);
+    ends.forEach((count, index) => {
+      const batchNumber = index + 1;
+      const printDelay = batchNumber * BATCH_MS;
       schedule(() => {
-        store.dispatch({
-          type: 'call.updated',
-          id: commandId,
-          patch: { output: { lines } },
-        });
-      }, delay);
-    }
-    const linesTime = spec.lines.length * LINE_MS;
-    const finishDelay = linesTime + SETTLE_MS;
+        act({ type: 'print', id: commandId, count, by: 'hand' });
+      }, printDelay);
+    });
+    const printTime = ends.length * BATCH_MS;
+    const exitDelay = printTime + SETTLE_MS;
     schedule(() => {
-      store.dispatch({
-        type: 'call.updated',
-        id: commandId,
-        patch: {
-          status: finishedStatusOf(spec),
-          output: { lines: spec.lines, exitCode: spec.exitCode },
-        },
-      });
-    }, finishDelay);
+      act({ type: 'exit', id: commandId, by: 'hand' });
+    }, exitDelay);
+  }
+
+  /** The script prints the command it asked about. Any other approved command is printed from here. */
+  function approve(commandId: string) {
+    act({ type: 'approve', id: commandId });
+    const isScripted = state.scriptedId === commandId;
+    if (!isScripted) {
+      stream(commandId);
+    }
   }
 
   function skip(commandId: string) {
-    store.dispatch({
-      type: 'call.updated',
-      id: commandId,
-      patch: { status: 'done', output: { lines: [], skipped: true } },
-    });
+    act({ type: 'skip', id: commandId });
   }
 
-  /** A command that needed approval asks again before it runs a second time. */
-  function rerun(commandId: string) {
-    const spec = SPECS[commandId];
-    const needsApproval = spec?.reason !== undefined;
+  function rerunCommand(commandId: string) {
+    act({ type: 'rerun', id: commandId });
+    const needsApproval = SPECS[commandId]?.reason !== undefined;
     if (!needsApproval) {
       stream(commandId);
-      return;
     }
-    store.dispatch({
-      type: 'call.updated',
-      id: commandId,
-      patch: {
-        status: 'waiting',
-        startedAt: undefined,
-        endedAt: undefined,
-        output: { lines: [] },
-      },
-    });
   }
 
   function replay() {
@@ -710,20 +876,28 @@ export default function Run04() {
     restart();
   }
 
+  useKeptHeight(ref);
+
   return (
-    <div ref={ref} className='flex w-full max-w-[40rem] flex-col gap-2'>
-      <AgentTerminal
-        commands={commands}
-        agent={CODER}
-        cwd='~/work/brightmoor-review'
-        onApprove={stream}
-        onSkip={skip}
-        onRerun={rerun}
-      />
+    <div
+      ref={ref}
+      className='flex min-h-[26.5rem] w-full max-w-[40rem] flex-col gap-2'
+    >
+      <ClockGate isActive={isInView}>
+        <AgentTerminal
+          commands={commands}
+          agent={CODER}
+          cwd='~/work/brightmoor-review'
+          onApprove={approve}
+          onSkip={skip}
+          onRerun={rerunCommand}
+          isApprovePressed={pressed === 'run'}
+        />
+      </ClockGate>
       <div className='flex h-7 items-center justify-end'>
         <ReplayButton isShown={canReplay} onReplay={replay} />
       </div>
-      <LiveRegion message={announcement} />
+      <LiveRegion message={spokenUnless(isAutoplaying, announcement)} />
     </div>
   );
 }
