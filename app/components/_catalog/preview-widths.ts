@@ -38,6 +38,9 @@ const CATEGORY_WIDTHS: Record<string, PreviewWidth> = {
 };
 
 const ENTRY_WIDTHS: Record<string, PreviewWidth> = {
+  'agent-02': 'full',
+  'agent-03': 'full',
+  'agent-06': 'full',
   'run-02': 'full',
   'run-04': 'full',
   'activity-03': 'compact',
