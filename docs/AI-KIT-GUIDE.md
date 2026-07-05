@@ -32,7 +32,7 @@ A piece that waits for a click to show what it does reads as a picture. A piece 
 
 ### Alive at first sight
 
-- **It plays itself.** While it is on screen, a piece demonstrates its own key interaction in a loop: it types, picks, drags, approves, the way a person would. Pieces driven by a run use `useDemoRun` with `loopAfter`; pieces driven by a person use `useAutoplay` from `hooks/use-autoplay` (steps that call the same handlers a person triggers, `typingSteps` for text); a block or a template that plays a whole session uses `useSession` from `hooks/use-session` (one reducer, a script of steps done by the agent, by the demonstration or by a person, a resting state), and never a private copy of it. The first click or key inside the piece ends the script for good and the piece behaves normally from there. Steps never move focus and never open a layer rendered outside the piece: a menu, a picker or a popover the demo wants to show is drawn inline in the demo. Under reduced motion nothing plays and the piece rests in its most telling state.
+- **It plays itself.** While it is on screen, a piece demonstrates its own key interaction in a loop: it types, picks, drags, approves, the way a person would. Pieces driven by a run use `useDemoRun` with `loopAfter`; pieces driven by a person use `useAutoplay` from `hooks/use-autoplay` (steps that call the same handlers a person triggers, `typingSteps` for text); a block or a template that plays a whole session uses `useSession` from `hooks/use-session` (one reducer, a script of steps done by the agent, by the demonstration or by a person, a resting state), and never a private copy of it. What a demonstration needs besides (the look of a pressed control, a text typed key by key, a live region that stays silent while it plays) comes from `lib/demonstration`: no piece writes its own. The first click or key inside the piece ends the script for good and the piece behaves normally from there. Steps never move focus and never open a layer rendered outside the piece: a menu, a picker or a popover the demo wants to show is drawn inline in the demo. Under reduced motion nothing plays and the piece rests in its most telling state.
 - **One signature moment.** Each piece has one movement a visitor remembers and its manifest description names it: a ring that fills, a stamp that lands, a thread that draws itself, digits that roll, a card that flies to its place, a key that becomes another key.
 - **Every change of state moves, and only what changed.** Press gives (scale 0.97). A label becomes the next label (`Swap`, `WordRoll`). A count rolls (`MotionNumber`). A row arrives with height and opacity, and leaves faster than it came. A check draws itself. An error nudges 4px once. A result lands with a short settle from 1.04 to 1. Text that streams arrives word by word with a soft fade. Nothing else on the piece moves at that moment.
 - **No entrance on scroll.** A piece is there when you reach it, in its resting state, and its demonstration starts. Revealing every piece as it scrolls into view is the reflex section 13 of the design system forbids. `Settle` and `SettleItem` (`ui/settle`) are for what appears because of an action or an event inside the piece: a result that lands, a panel that opens, the rows of a list that just loaded.
@@ -58,7 +58,7 @@ Section 13 of `docs/DESIGN-SYSTEM.md` applies to every piece, block and template
 
 ### Free at rest
 
-Measured on the built site with the processor slowed four times: a piece at rest costs nothing, a piece that plays stays under a third of one core.
+Measured on the built site with the processor slowed four times, in a browser that draws 120 frames a second (a 60 Hz screen costs about half): a piece at rest costs nothing, a piece that plays stays under a third of one core over a whole round.
 
 - **Loops move transform or opacity only**, as CSS keyframes when they can be. Never `left`, `top`, `width`, `height`, `background-position` or a stroke offset in a loop or in a transition that fires many times a second: a progress is `scaleX` on a full-width bar with `origin-left`, a position is `translateX`.
 - **Nothing runs off screen.** Scripts hold (the hooks do it), clocks hold (wrap the root of the piece in `ClockGate isActive={isInView}`), a `requestAnimationFrame` loop or a canvas stops when `isInView` is false.
@@ -66,6 +66,8 @@ Measured on the built site with the processor slowed four times: a piece at rest
 - **`MotionNumber` is for figures that change a few times a second at most.** A figure that ticks without stopping is plain tabular text.
 - **`layout` animations carry a `layoutDependency`** and never sit on a list of more than a dozen rows.
 - **A value that changes every frame is written to the element** (a ref and `style.transform`, or a canvas), never through React state.
+- **A round does not move the page.** The outer box of a piece that loops reserves a `min-h` near its tallest state and calls `useKeptHeight(ref)` (`hooks/use-kept-height`), so it keeps the tallest height it reached and what sits under it stays still.
+- **What still costs is script-driven**: `layout` animations, rows that open to `height: auto`, `AnimatedSize`, a path that morphs. Entrances and exits on transform, opacity and filter run without script. Keep the first kind short and rare.
 
 ### Fits a phone
 
