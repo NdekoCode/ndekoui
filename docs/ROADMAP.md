@@ -12,14 +12,11 @@ ndekoui becomes an open-source library of primitives, components, blocks and tem
 | Base UI                                               | MIT                                        | behaviour and accessibility of every primitive                   | dependency                                               |
 | Hugeicons free set                                    | MIT                                        | icons, behind `registry/ndeko/lib/icons.tsx`                     | dependency                                               |
 
-### Motion and pattern references
+### Chat pieces
 
-| Library                                             | Licence                    | Use                                                                                                                          |
-| --------------------------------------------------- | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| prompt-kit (ibelick)                                | MIT                        | chat and AI pieces of blocks and templates (prompt input, messages, reasoning, loaders), redrawn on our primitives, credited |
-| Magic UI, SmoothUI, Cult UI, Kokonut UI, UI Layouts | MIT                        | motion ideas and, when it helps, code adapted with credit in `THIRD_PARTY_NOTICES.md`                                        |
-| React Bits, Animate UI                              | MIT with Commons Clause    | ideas only: no code copied, every effect rewritten                                                                           |
-| Aceternity UI, 21st.dev, shadcn.io                  | no licence we could verify | ideas only until a licence is checked for the exact file                                                                     |
+| Library              | Licence | Use                                                                                                                          |
+| -------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| prompt-kit (ibelick) | MIT     | chat and AI pieces of blocks and templates (prompt input, messages, reasoning, loaders), redrawn on our primitives, credited |
 
 Code is never copied from a project that is not MIT or compatible. Components first written for another product are rebuilt here from the design language, with fictional data, unless their owner gave written permission to publish them under MIT.
 
@@ -93,7 +90,7 @@ Application pieces with fictional data: app shell with sidebar and inset panel, 
 
 ### 6. Product site
 
-A landing page and a catalogue in the family of tailark.com, magicui.design, ui.aceternity.com and ui-layouts.com: we take their mechanisms (live previews, copy and install from the page, a filterable catalogue, theme switch, Open in v0) and draw them with our own language. Plus: per-item docs generated from the registry, search, `llms.txt`, and the shadcn MCP server pointed at our registry.
+A landing page and a catalogue drawn in our own language: live previews, copy and install from the page, a filterable catalogue, a theme switch and Open in v0. Plus: per-item docs generated from the registry, search, `llms.txt`, and the shadcn MCP server pointed at our registry.
 
 ### 7. Open-source launch
 

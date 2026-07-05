@@ -1301,7 +1301,7 @@ export const catalog: CatalogCategory[] = [
       },
       {
         name: 'button-55',
-        source: 'ui-layouts:buttons',
+        source: 'ndeko',
         title: 'Label to icon on hover',
         description:
           'On hover the label slides out and a download icon slides in to take its place.',
@@ -1309,7 +1309,7 @@ export const catalog: CatalogCategory[] = [
       },
       {
         name: 'button-56',
-        source: 'ui-layouts:buttons',
+        source: 'ndeko',
         title: 'Travelling arrow',
         description:
           'The arrow in the cap leaves to the top right on hover while the next one arrives from the bottom left.',
@@ -1317,7 +1317,7 @@ export const catalog: CatalogCategory[] = [
       },
       {
         name: 'button-57',
-        source: 'ui-layouts:buttons',
+        source: 'ndeko',
         title: 'Rolling label',
         description:
           'Each letter rolls up on hover and its copy rolls in from below, one after the other.',
@@ -1325,7 +1325,7 @@ export const catalog: CatalogCategory[] = [
       },
       {
         name: 'button-58',
-        source: 'ui-layouts:buttons',
+        source: 'ndeko',
         title: 'Hold to delete',
         description:
           'A fill crosses the button while it is held for two seconds, snaps back on release and turns into a confirmation.',
@@ -1333,7 +1333,7 @@ export const catalog: CatalogCategory[] = [
       },
       {
         name: 'button-59',
-        source: 'ui-layouts:buttons',
+        source: 'ndeko',
         title: 'Follow toggle with fill',
         description:
           'Following fills the button from the point that was pressed, and unfollowing draws the fill back.',
@@ -1341,7 +1341,7 @@ export const catalog: CatalogCategory[] = [
       },
       {
         name: 'button-60',
-        source: 'ui-layouts:buttons',
+        source: 'ndeko',
         title: 'Publish with states',
         description:
           'The label and icon morph from publish to publishing to published, and the width follows.',
@@ -1349,7 +1349,7 @@ export const catalog: CatalogCategory[] = [
       },
       {
         name: 'button-61',
-        source: 'ui-layouts:buttons',
+        source: 'ndeko',
         title: 'Download with progress',
         description:
           'The button fills with the download progress, counts the percentage and ends on a check.',
@@ -1357,7 +1357,7 @@ export const catalog: CatalogCategory[] = [
       },
       {
         name: 'button-62',
-        source: 'ui-layouts:buttons',
+        source: 'ndeko',
         title: 'Watch with rolling digits',
         description:
           'Only the digits that change roll, in the direction of the change, when the watch count goes up or down.',
@@ -1365,7 +1365,7 @@ export const catalog: CatalogCategory[] = [
       },
       {
         name: 'button-63',
-        source: 'ui-layouts:buttons',
+        source: 'ndeko',
         title: 'Copy install command',
         description:
           'A command in a monospace pill that copies itself and swaps its icon for a check.',
@@ -1373,7 +1373,7 @@ export const catalog: CatalogCategory[] = [
       },
       {
         name: 'button-64',
-        source: 'ui-layouts:buttons',
+        source: 'ndeko',
         title: 'Confirm on second press',
         description:
           'The first press turns the button destructive with a three second countdown, the second removes.',
@@ -2805,7 +2805,7 @@ export const catalog: CatalogCategory[] = [
       },
       {
         name: 'input-60',
-        source: 'ui-layouts:password',
+        source: 'ndeko',
         title: 'Password with morphing reveal',
         description:
           'Showing the password turns each dot into its character one after the other, in a monospace face.',
@@ -2813,7 +2813,7 @@ export const catalog: CatalogCategory[] = [
       },
       {
         name: 'input-61',
-        source: 'ui-layouts:password',
+        source: 'ndeko',
         title: 'Password with Caps Lock warning',
         description:
           'The hint under the field becomes a warning while Caps Lock is on and the field has focus.',
@@ -2821,7 +2821,7 @@ export const catalog: CatalogCategory[] = [
       },
       {
         name: 'input-62',
-        source: 'ui-layouts:password',
+        source: 'ndeko',
         title: 'Confirm password with match state',
         description:
           'The confirmation stays quiet while it follows the password and shows a cross or a check once it differs or matches.',
@@ -2829,7 +2829,7 @@ export const catalog: CatalogCategory[] = [
       },
       {
         name: 'input-63',
-        source: 'ui-layouts:password',
+        source: 'ndeko',
         title: 'Segmented strength meter',
         description:
           'Four segments fill in turn as the password gets stronger and the strength label slides in the same direction.',
@@ -2837,7 +2837,7 @@ export const catalog: CatalogCategory[] = [
       },
       {
         name: 'input-64',
-        source: 'ui-layouts:password',
+        source: 'ndeko',
         title: 'Password rule chips',
         description:
           'Each rule is a chip that turns green and swaps its circle for a check once the password meets it.',

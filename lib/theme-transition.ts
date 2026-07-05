@@ -3,10 +3,9 @@ import { flushSync } from 'react-dom';
 /*
  * The theme change as a circle centred on the control that asked for it. Towards light, the new
  * page opens from that point to the farthest corner; towards dark, the old light page closes back
- * into it. Same gesture as the theme switch of the author's portfolio, after the mechanism of
- * Magic UI's animated theme toggler: the circle is written in percentages because Chrome offsets a
- * pixel circle on screens with a fractional scale, and its starting point is set in CSS so Firefox
- * never paints the new theme before the animation starts.
+ * into it. Same gesture as the theme switch of the author's portfolio. The circle is written in
+ * percentages because Chrome offsets a pixel circle on screens with a fractional scale, and its
+ * starting point is set in CSS so Firefox never paints the new theme before the animation starts.
  */
 
 export type ThemeName = 'light' | 'dark';

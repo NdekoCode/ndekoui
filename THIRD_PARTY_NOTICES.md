@@ -126,11 +126,9 @@ SOFTWARE.
 
 The coloured marks in `public/brands` (VS Code, Lovable, npm, pnpm, yarn and bun) come from `@iconify-json/logos` 1.2.19 (<https://github.com/gilbarbara/logos>, by Gil Barbara), released under CC0 1.0 Universal. The pnpm mark keeps its squares and leaves out its word, which cannot be read at icon size. Every mark is a trademark of its owner, shown only to name the tool, and no brand endorses ndekoui.
 
-## Magic UI
+## dotted-map
 
-Several motion components take their idea and their props from Magic UI (<https://magicui.design>, MIT): globe, dotted map, orbiting circles, lens, border beam, shine border, magic card, confetti, the post card, the word rotate, the highlighter, text 3D flip, scroll velocity, and the Safari, iPhone and Android mockups. The circular theme change of the site (`lib/theme-transition.ts`) follows the mechanism of Magic UI's animated theme toggler, by way of the author's portfolio. Their code is written for ndekoui; none of Magic UI's code was copied.
-
-The land grid in `components/core/dotted-map-points.ts` is generated once by `scripts/generate-dotted-map.ts` from the countries data that ships with dotted-map (MIT).
+The land grid in `components/core/dotted-map-points.ts` is generated once by `scripts/generate-dotted-map.ts` from the countries data that ships with dotted-map (<https://github.com/NTag/dotted-map>, MIT).
 
 ## Dependencies
 

@@ -5,7 +5,7 @@ The brief for building blocks: whole sections of a product (an app shell, a memb
 ## Where the design comes from
 
 - **Application blocks** are rebuilt from the maintainer's Ever Teams design language, described in prose in `/Users/ndekocode/Documents/Labs/ever-co/ever-projects/ever-teams/apps/web/docs/DESIGN-SYSTEM.md` (sections 16 to 26: shell, Linear finish, notifications, dashboards and reports, focused pages, settings, team tasks, task details, fills and borders, profile). Read that text for the decisions. Never open, read or copy Ever Teams source files: that code is AGPL and belongs to Ever Co. Nothing named Ever, Gauzy or Ever Teams appears in a block.
-- **Marketing blocks** take mechanisms from Tailwind Plus, Origin UI and Preline as listed in section 12 of our design system: no guide lines, no bordered grid cells, no fake testimonials, no invented figures, space and surfaces as the only separators.
+- **Marketing blocks** follow section 12 of our design system: no guide lines, no bordered grid cells, no fake testimonials, no invented figures, space and surfaces as the only separators.
 
 ## Output
 

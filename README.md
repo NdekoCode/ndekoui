@@ -65,4 +65,4 @@ Read the [contributing guide](CONTRIBUTING.md) and the port checklist in [docs/R
 
 ## Credits and licence
 
-ndekoui is MIT licensed, see [LICENCE.md](LICENCE.md). It started from [Motion Primitives](https://github.com/ibelick/motion-primitives) by ibelick and redraws compositions from the MIT edition of [Origin UI](https://github.com/origin-space/originui); their notices and those of the brand marks are in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+ndekoui is MIT licensed, see [LICENCE.md](LICENCE.md). It started from [Motion Primitives](https://github.com/ibelick/motion-primitives) by ibelick; the notices of the code and of the brand marks it carries are in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
