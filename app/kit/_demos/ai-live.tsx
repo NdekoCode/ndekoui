@@ -18,6 +18,7 @@ import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { MorphButton, type MorphState } from '@/registry/ndeko/ui/morph-button';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
 import { Segments, type Segment } from '@/registry/ndeko/ui/segments';
+import { Settle, SettleItem } from '@/registry/ndeko/ui/settle';
 
 const INSTALL_COMMAND =
   'npx shadcn@latest add https://ui.ndekocode.dev/r/run-01.json';
@@ -226,6 +227,31 @@ export function LetterTileDemo() {
         docs.halden.example, neutral beside agents
       </li>
     </ul>
+  );
+}
+
+export function SettleDemo() {
+  const [round, setRound] = useState(0);
+
+  function replay() {
+    setRound((current) => current + 1);
+  }
+
+  return (
+    <div className='flex flex-col items-start gap-3 text-[13px]'>
+      <Settle key={round} isShown className='flex flex-col gap-1.5'>
+        <SettleItem className='font-medium'>Quarterly vendor review</SettleItem>
+        <SettleItem className='text-muted-foreground'>
+          Six lines above the list price
+        </SettleItem>
+        <SettleItem className='text-muted-foreground'>
+          A credit request waits for you
+        </SettleItem>
+      </Settle>
+      <Button type='button' variant='outline' size='sm' onClick={replay}>
+        Play again
+      </Button>
+    </div>
   );
 }
 

@@ -131,6 +131,12 @@ export const aiItems: RegistryItemDefinition[] = [
     }
   ),
   primitive(
+    'settle',
+    'Settle',
+    'The parts of a piece arrive in order the first time it is seen, each sharpening and rising into place.',
+    { dependencies: ['motion'], categories: AI }
+  ),
+  primitive(
     'letter-tile',
     'Letter Tile',
     'A drawn initial for a model lab or a site, tinted by a series colour or left neutral.',

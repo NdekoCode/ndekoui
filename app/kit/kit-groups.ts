@@ -48,6 +48,7 @@ import {
   MorphButtonDemo,
   ReplayButtonDemo,
   SegmentsDemo,
+  SettleDemo,
 } from './_demos/ai-live';
 import { SelectedMarkDemo, TreeDemo } from './_demos/data-display-live';
 import {
@@ -252,6 +253,7 @@ export const KIT_GROUPS: KitGroup[] = [
       { name: 'replay-button', width: 'compact', Demo: ReplayButtonDemo },
       { name: 'level-bars', width: 'compact', Demo: LevelBarsDemo },
       { name: 'letter-tile', width: 'compact', Demo: LetterTileDemo },
+      { name: 'settle', width: 'compact', Demo: SettleDemo },
       { name: 'live-region', width: 'compact', Demo: LiveRegionDemo },
     ],
   },
