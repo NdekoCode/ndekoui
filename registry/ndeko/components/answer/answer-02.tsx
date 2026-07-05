@@ -603,7 +603,7 @@ export default function Answer02() {
         </p>
       </div>
       <div className='flex items-start gap-2.5'>
-        <LabTile lab='lumen' className='mt-0.5' />
+        <LabTile lab='anthropic' className='mt-0.5' />
         <GroundedAnswer
           sentences={SENTENCES}
           sources={SOURCES}

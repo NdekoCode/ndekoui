@@ -446,9 +446,9 @@ const THIS_MONTH: UsagePeriod = {
   label: 'this month',
   limitUsd: 500,
   byModel: [
-    { id: 'lumen-swift', name: 'Lumen Swift', series: 1, spendUsd: 96.4 },
-    { id: 'lumen', name: 'Lumen', series: 2, spendUsd: 171.2 },
-    { id: 'lumen-max', name: 'Lumen Max', series: 3, spendUsd: 147.6 },
+    { id: 'claude-haiku', name: 'Claude Haiku', series: 1, spendUsd: 96.4 },
+    { id: 'claude-sonnet', name: 'Claude Sonnet', series: 2, spendUsd: 171.2 },
+    { id: 'claude-opus', name: 'Claude Opus', series: 3, spendUsd: 147.6 },
   ],
   byAgent: [
     { id: 'planner', name: 'Planner', series: 1, spendUsd: 88.3 },
@@ -469,9 +469,9 @@ const LAST_MONTH: UsagePeriod = {
   label: 'last month',
   limitUsd: 500,
   byModel: [
-    { id: 'lumen-swift', name: 'Lumen Swift', series: 1, spendUsd: 82.1 },
-    { id: 'lumen', name: 'Lumen', series: 2, spendUsd: 131.7 },
-    { id: 'lumen-max', name: 'Lumen Max', series: 3, spendUsd: 104.8 },
+    { id: 'claude-haiku', name: 'Claude Haiku', series: 1, spendUsd: 82.1 },
+    { id: 'claude-sonnet', name: 'Claude Sonnet', series: 2, spendUsd: 131.7 },
+    { id: 'claude-opus', name: 'Claude Opus', series: 3, spendUsd: 104.8 },
   ],
   byAgent: [
     { id: 'planner', name: 'Planner', series: 1, spendUsd: 71.4 },

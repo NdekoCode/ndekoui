@@ -581,7 +581,7 @@ const PAGE_READER: RunAgent = {
   name: 'Page reader',
   series: 2,
   status: 'running',
-  model: 'Lumen Swift',
+  model: 'Claude Haiku',
   parentId: RESEARCHER.id,
   task: 'Reading brightmoor-supply.example/pricing',
 };
@@ -591,7 +591,7 @@ const SHEET_READER: RunAgent = {
   name: 'Sheet reader',
   series: 2,
   status: 'running',
-  model: 'Lumen Swift',
+  model: 'Claude Haiku',
   parentId: RESEARCHER.id,
   task: 'Reading q3-invoices.xlsx',
 };
@@ -601,7 +601,7 @@ const CHECKER: RunAgent = {
   name: 'Checker',
   series: 5,
   status: 'running',
-  model: 'Lumen Swift',
+  model: 'Claude Haiku',
   parentId: CODER.id,
   task: 'Trying compare_prices.py on 10 lines',
 };

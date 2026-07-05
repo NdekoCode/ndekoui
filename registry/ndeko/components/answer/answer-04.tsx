@@ -615,7 +615,7 @@ export default function Answer04() {
         </p>
       </div>
       <div className='flex items-start gap-2.5'>
-        <LabTile lab='lumen' className='mt-1.5' />
+        <LabTile lab='anthropic' className='mt-1.5' />
         <div className='flex min-w-0 flex-1 flex-col gap-3'>
           <ClockGate isActive={isInView}>
             <ThinkingBlock

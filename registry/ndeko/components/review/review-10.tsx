@@ -43,6 +43,7 @@ import { Button } from '@/registry/ndeko/ui/button';
 import { CallStatusMark } from '@/registry/ndeko/ui/call-status';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
 import { Chip } from '@/registry/ndeko/ui/chip';
+import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
 import { LetterTile } from '@/registry/ndeko/ui/letter-tile';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { Slider } from '@/registry/ndeko/ui/slider';
@@ -1087,8 +1088,8 @@ export default function Review10() {
             <span className='min-w-0 flex-1 truncate text-[13px] font-medium'>
               {AGENT_NAME}
             </span>
-            <LetterTile initial='L' size='sm' />
-            <span className='text-muted-foreground text-xs'>Lumen</span>
+            <BrandTile brand='claude' size='sm' />
+            <span className='text-muted-foreground text-xs'>Claude Sonnet</span>
           </header>
           <ActionLog run={snapshot} viewedIndex={shownIndex} onView={view} />
           {!hasActions && (

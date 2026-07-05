@@ -1,18 +1,17 @@
-import type { SeriesSlot } from '@/registry/ndeko/lib/agent-run';
+import type { BrandSlug } from '@/registry/ndeko/lib/brand-logos';
 
-export type LabId = 'lumen' | 'quarry' | 'halden';
+export type LabId = 'anthropic' | 'openai' | 'google';
 
 export type Lab = {
   id: LabId;
   name: string;
-  initial: string;
-  series: SeriesSlot;
+  brand: BrandSlug;
 };
 
 export const LABS: Lab[] = [
-  { id: 'lumen', name: 'Lumen', initial: 'L', series: 1 },
-  { id: 'quarry', name: 'Quarry', initial: 'Q', series: 2 },
-  { id: 'halden', name: 'Halden', initial: 'H', series: 3 },
+  { id: 'anthropic', name: 'Anthropic', brand: 'claude' },
+  { id: 'openai', name: 'OpenAI', brand: 'openai' },
+  { id: 'google', name: 'Google', brand: 'gemini' },
 ];
 
 const FALLBACK_LAB = LABS[0];

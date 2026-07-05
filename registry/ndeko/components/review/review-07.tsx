@@ -31,6 +31,8 @@ import {
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Chip } from '@/registry/ndeko/ui/chip';
+import type { BrandSlug } from '@/registry/ndeko/lib/brand-logos';
+import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
 import { LetterTile } from '@/registry/ndeko/ui/letter-tile';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { MorphButton, type MorphState } from '@/registry/ndeko/ui/morph-button';
@@ -55,7 +57,7 @@ export type GraphCommit = {
   minutesAgo: number;
   agent?: GraphAgent;
   /** The model the agent wrote the commit with, drawn neutral beside the agent colours. */
-  modelInitial?: string;
+  modelBrand?: BrandSlug;
   modelName?: string;
   author?: string;
   isCheckpoint?: boolean;
@@ -168,8 +170,8 @@ function squashCommitOf(history: GraphCommit[]): GraphCommit | null {
     parents: [mainTip.id],
     minutesAgo: -1,
     agent: CODER,
-    modelInitial: 'L',
-    modelName: 'Lumen',
+    modelBrand: 'claude',
+    modelName: 'Claude Sonnet',
   };
 }
 
@@ -516,9 +518,7 @@ function CommitRow({ node, tipBranch, canRestore, onRestore }: CommitRowProps) {
           Preview
         </span>
       )}
-      {commit.modelInitial && (
-        <LetterTile initial={commit.modelInitial} size='sm' />
-      )}
+      {commit.modelBrand && <BrandTile brand={commit.modelBrand} size='sm' />}
       {showsRestore && (
         <Button
           type='button'
@@ -600,8 +600,8 @@ const BASE_HISTORY: GraphCommit[] = [
     parents: ['m2'],
     minutesAgo: 42,
     agent: CODER,
-    modelInitial: 'L',
-    modelName: 'Lumen',
+    modelBrand: 'claude',
+    modelName: 'Claude Sonnet',
   },
   {
     id: 'm3',
@@ -618,8 +618,8 @@ const BASE_HISTORY: GraphCommit[] = [
     parents: ['c1'],
     minutesAgo: 21,
     agent: CODER,
-    modelInitial: 'L',
-    modelName: 'Lumen',
+    modelBrand: 'claude',
+    modelName: 'Claude Sonnet',
     isCheckpoint: true,
   },
   {
@@ -629,8 +629,8 @@ const BASE_HISTORY: GraphCommit[] = [
     parents: ['m3'],
     minutesAgo: 14,
     agent: WRITER,
-    modelInitial: 'Q',
-    modelName: 'Quarry Mini',
+    modelBrand: 'openai',
+    modelName: 'GPT mini',
   },
   {
     id: 'c3',
@@ -639,8 +639,8 @@ const BASE_HISTORY: GraphCommit[] = [
     parents: ['c2'],
     minutesAgo: 8,
     agent: CODER,
-    modelInitial: 'L',
-    modelName: 'Lumen',
+    modelBrand: 'claude',
+    modelName: 'Claude Sonnet',
   },
   {
     id: 'w2',
@@ -649,8 +649,8 @@ const BASE_HISTORY: GraphCommit[] = [
     parents: ['w1'],
     minutesAgo: 4,
     agent: WRITER,
-    modelInitial: 'Q',
-    modelName: 'Quarry Mini',
+    modelBrand: 'openai',
+    modelName: 'GPT mini',
   },
 ];
 
@@ -661,8 +661,8 @@ const LIVE_COMMIT: GraphCommit = {
   parents: ['c3'],
   minutesAgo: 0,
   agent: CODER,
-  modelInitial: 'L',
-  modelName: 'Lumen',
+  modelBrand: 'claude',
+  modelName: 'Claude Sonnet',
 };
 
 const SCRIPT: RunScriptStep[] = [

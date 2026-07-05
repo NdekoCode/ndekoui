@@ -351,7 +351,7 @@ export default function Run07() {
           </Swap>
         </p>
         <div className='flex items-center gap-2'>
-          <Badge variant='secondary'>Lumen Swift</Badge>
+          <Badge variant='secondary'>Claude Haiku</Badge>
           <span className='flex-1' />
           <ContextRing
             budget={controls.budget}

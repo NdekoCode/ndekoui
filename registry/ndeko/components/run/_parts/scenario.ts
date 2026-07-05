@@ -7,7 +7,7 @@ export const PLANNER: RunAgent = {
   name: 'Planner',
   series: 1,
   status: 'idle',
-  model: 'Lumen Max',
+  model: 'Claude Opus',
   role: 'Lead',
 };
 
@@ -16,7 +16,7 @@ export const RESEARCHER: RunAgent = {
   name: 'Researcher',
   series: 2,
   status: 'idle',
-  model: 'Lumen',
+  model: 'Claude Sonnet',
   parentId: 'planner',
 };
 
@@ -25,7 +25,7 @@ export const WRITER: RunAgent = {
   name: 'Writer',
   series: 3,
   status: 'idle',
-  model: 'Lumen Swift',
+  model: 'Claude Haiku',
   parentId: 'planner',
 };
 

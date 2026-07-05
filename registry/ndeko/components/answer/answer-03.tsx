@@ -550,7 +550,7 @@ function textOf(version: Version) {
 
 function markdownOf(version: Version) {
   const body = textOf(version);
-  return `**Lumen**\n\n${body}`;
+  return `**Claude**\n\n${body}`;
 }
 
 function readTimesOf(sentences: string[]) {
@@ -747,10 +747,10 @@ export default function Answer03() {
         </p>
       </div>
       <div className='flex items-start gap-2.5'>
-        <LabTile lab='lumen' className='mt-0.5' />
+        <LabTile lab='anthropic' className='mt-0.5' />
         <div className='flex min-w-0 flex-1 flex-col gap-2'>
           <p className='text-muted-foreground flex items-center gap-1.5 text-xs'>
-            <span className='text-foreground font-medium'>Lumen</span>
+            <span className='text-foreground font-medium'>Claude</span>
             <span aria-hidden='true'>·</span>
             <WordRoll text={versionWords} />
           </p>

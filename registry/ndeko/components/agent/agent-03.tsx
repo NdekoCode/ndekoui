@@ -682,7 +682,7 @@ const PAGE_READER: RunAgent = {
   name: 'Page reader',
   series: 2,
   status: 'running',
-  model: 'Lumen Swift',
+  model: 'Claude Haiku',
   parentId: RESEARCHER.id,
 };
 

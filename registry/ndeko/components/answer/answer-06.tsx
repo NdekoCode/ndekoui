@@ -586,7 +586,7 @@ function ChatColumn({
         const isOpen = turn.versionId === versionId;
         return (
           <li key={turn.id} className='flex items-start gap-2'>
-            <LabTile lab='lumen' size='sm' className='mt-1' />
+            <LabTile lab='anthropic' size='sm' className='mt-1' />
             <div className='flex min-w-0 flex-col gap-1.5'>
               <p className='text-[13px] leading-relaxed'>{turn.text}</p>
               {version && (

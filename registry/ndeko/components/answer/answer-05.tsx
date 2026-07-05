@@ -645,9 +645,9 @@ const PROMPT =
   'Write a two-sentence note telling customers about the new pallet fee.';
 
 const LUMEN: ArenaModel = {
-  id: 'lumen',
-  name: 'Lumen',
-  lab: 'lumen',
+  id: 'claude-sonnet',
+  name: 'Claude Sonnet',
+  lab: 'anthropic',
   firstTokenMs: 450,
   wordMs: 75,
   pricePerMillion: 15,
@@ -656,9 +656,9 @@ const LUMEN: ArenaModel = {
 };
 
 const QUARRY: ArenaModel = {
-  id: 'quarry-large',
-  name: 'Quarry Large',
-  lab: 'quarry',
+  id: 'gpt',
+  name: 'GPT',
+  lab: 'openai',
   firstTokenMs: 1100,
   wordMs: 45,
   pricePerMillion: 24,
@@ -667,9 +667,9 @@ const QUARRY: ArenaModel = {
 };
 
 const HALDEN: ArenaModel = {
-  id: 'halden-vision',
-  name: 'Halden Vision',
-  lab: 'halden',
+  id: 'gemini-pro',
+  name: 'Gemini Pro',
+  lab: 'google',
   firstTokenMs: 300,
   wordMs: 110,
   pricePerMillion: 6,

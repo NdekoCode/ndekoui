@@ -698,7 +698,7 @@ const ACTION: HealthAction = {
 const RESEARCHER_AGENT: Pick<RunAgent, 'name' | 'series' | 'model'> = {
   name: 'Researcher',
   series: 2,
-  model: 'Lumen',
+  model: 'Claude Sonnet',
 };
 
 const THINK_MS = 1100;

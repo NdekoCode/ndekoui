@@ -1515,7 +1515,7 @@ export default function Answer01() {
           >
             <QuestionBubble question={turn.question} />
             <div className='flex items-start gap-2.5'>
-              <LabTile lab='lumen' className='mt-1' />
+              <LabTile lab='anthropic' className='mt-1' />
               <div className='flex min-w-0 flex-1 flex-col gap-2'>
                 <AnswerSteps
                   plan={snapshot.plan}
