@@ -52,8 +52,8 @@ Block groups added: `agent-chat`, `agent-ops`, `agent-review`, `workflows`, `ai-
 | B3    | `prompt-01..10`, `voice-01..03`                                                                                                     | written     |
 | B4    | `answer-01..06`, `review-04..11`                                                                                                    | written     |
 | B5    | `chart-01..16`                                                                                                                      | todo        |
-| B6    | blocks `agent-chat-01..04`, `agent-review-01..05`                                                                                   | todo        |
-| B7    | blocks `agent-ops-01..09`, `workflows-01..02`, `ai-data-01..03`, `onboarding-01..03`, `maps-01..02`                                 | todo        |
+| B6    | blocks `agent-chat-01..04`, `agent-review-01..05`                                                                                   | done        |
+| B7    | blocks `agent-ops-01..09` (done), `workflows-01..02`, `ai-data-01..03`, `onboarding-01..03`, `maps-01..02`                          | in progress |
 | B8    | `illustration-01..12`, `effect-01..04`, `text-effect-01..04`                                                                        | todo        |
 | B9    | `background-01..12`, `loading-01..03`, additions to existing categories                                                             | todo        |
 | B10   | blocks settings, auth, legal, error pages, page headers, blog, help center, search, docs                                            | todo        |
