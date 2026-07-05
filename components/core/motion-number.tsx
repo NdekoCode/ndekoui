@@ -4,13 +4,9 @@ import {
   AnimatePresence,
   motion,
   useReducedMotion,
-  useSpring,
-  useTransform,
-  type MotionValue,
-  type SpringOptions,
   type Transition,
 } from 'motion/react';
-import { useEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 
 type Trend = 1 | -1;
 
@@ -31,11 +27,23 @@ type Slot = DigitSlot | SymbolSlot;
 
 const DIGIT_COUNT = 10;
 
-const HALF_WHEEL = DIGIT_COUNT / 2;
-
 const WHEEL = Array.from({ length: DIGIT_COUNT }, (_, digit) => digit);
 
-const ROLL_SPRING: SpringOptions = { stiffness: 170, damping: 28, mass: 1 };
+/**
+ * Each digit is one strip of three wheels that the browser slides with a transition, so a value
+ * that changes many times a second costs no script between two changes. The middle wheel is home.
+ */
+const WHEEL_COPIES = 3;
+
+const CELL_COUNT = DIGIT_COUNT * WHEEL_COPIES;
+
+const LAST_CELL = CELL_COUNT - 1;
+
+const CELLS = Array.from({ length: CELL_COUNT }, (_, cell) => cell);
+
+const STRIPS = new WeakMap<string[], string>();
+
+const CELL_PERCENT = 100 / CELL_COUNT;
 
 const SLIDE: Transition = { type: 'spring', bounce: 0, duration: 0.5 };
 
@@ -51,18 +59,13 @@ function wrapDigit(position: number) {
   return positiveRemainder % DIGIT_COUNT;
 }
 
-/** Distance of a glyph from the visible window, in slot heights: positive sits below, negative above. */
-function offsetOf(digit: number, position: number) {
-  const distance = wrapDigit(digit - position);
-  if (distance > HALF_WHEEL) {
-    return distance - DIGIT_COUNT;
-  }
-  return distance;
+function homeCellOf(digit: number) {
+  return DIGIT_COUNT + digit;
 }
 
-function translateOf(offset: number) {
-  const percent = offset * 100;
-  return `translateY(${percent}%)`;
+function translateOfCell(cell: number) {
+  const percent = cell * CELL_PERCENT;
+  return `translateY(-${percent}%)`;
 }
 
 function stepsBetween(from: number, to: number, trend: Trend) {
@@ -80,13 +83,88 @@ function trendBetween(previous: number, next: number): Trend {
   return 1;
 }
 
+/** Where the strip is drawn right now, in cells, read from the running transition. */
+function visualCellOf(strip: HTMLElement) {
+  const cellHeight = strip.offsetHeight / CELL_COUNT;
+  if (cellHeight === 0) {
+    return 0;
+  }
+  const computed = getComputedStyle(strip);
+  const matrix = new DOMMatrixReadOnly(computed.transform);
+  return -matrix.m42 / cellHeight;
+}
+
+/** The three wheels as lines of one text, so a digit costs two elements whatever its value. */
+function stripTextOf(glyphs: string[]) {
+  const cached = STRIPS.get(glyphs);
+  if (cached) {
+    return cached;
+  }
+  const lines = CELLS.map((cell) => glyphs[cell % DIGIT_COUNT]);
+  const text = lines.join('\n');
+  STRIPS.set(glyphs, text);
+  return text;
+}
+
+function wrapIntoStrip(cell: number) {
+  let wrapped = cell;
+  while (wrapped < 0) {
+    wrapped += DIGIT_COUNT;
+  }
+  while (wrapped > LAST_CELL) {
+    wrapped -= DIGIT_COUNT;
+  }
+  return wrapped;
+}
+
+/** Moves the strip without a transition. The three wheels are identical, so a jump of whole wheels is invisible. */
+function placeStrip(strip: HTMLElement, cell: number) {
+  strip.style.transition = 'none';
+  strip.style.transform = translateOfCell(cell);
+  strip.getBoundingClientRect();
+  strip.style.transition = '';
+}
+
+const FORMATTERS = new Map<string, Intl.NumberFormat>();
+
+const GLYPHS = new Map<string, string[]>();
+
+function localeKeyOf(locale: Intl.LocalesArgument) {
+  if (Array.isArray(locale)) {
+    return locale.map(String).join(',');
+  }
+  return String(locale);
+}
+
+function formatterOf(
+  locale: Intl.LocalesArgument,
+  format: Intl.NumberFormatOptions | undefined
+) {
+  const localeKey = localeKeyOf(locale);
+  const formatKey = JSON.stringify(format ?? {});
+  const key = `${localeKey} ${formatKey}`;
+  const cached = FORMATTERS.get(key);
+  if (cached) {
+    return cached;
+  }
+  const formatter = new Intl.NumberFormat(locale, format);
+  FORMATTERS.set(key, formatter);
+  return formatter;
+}
+
 function glyphsOf(formatter: Intl.NumberFormat) {
   const { numberingSystem } = formatter.resolvedOptions();
+  const cached = GLYPHS.get(numberingSystem);
+  if (cached) {
+    return cached;
+  }
   const digitFormatter = new Intl.NumberFormat('en-US', {
     numberingSystem,
     useGrouping: false,
   });
-  return WHEEL.map((digit) => digitFormatter.format(digit));
+  const glyphs = WHEEL.map((digit) => digitFormatter.format(digit));
+  GLYPHS.set(numberingSystem, glyphs);
+  return glyphs;
 }
 
 function countIntegerDigits(parts: Intl.NumberFormatPart[]) {
@@ -165,6 +243,14 @@ function slotsOf(parts: Intl.NumberFormatPart[], glyphs: string[]) {
   return slots;
 }
 
+/** The slots only change place when one appears or leaves, so their layout is measured then and not on every value. */
+function structureOf(slots: Slot[], prefix?: string, suffix?: string) {
+  const keys = slots.map((slot) => slot.key);
+  const hasPrefix = Boolean(prefix);
+  const hasSuffix = Boolean(suffix);
+  return `${hasPrefix} ${keys.join(' ')} ${hasSuffix}`;
+}
+
 function slotMotionOf(shouldReduceMotion: boolean | null) {
   if (shouldReduceMotion) {
     return {
@@ -182,30 +268,6 @@ function slotMotionOf(shouldReduceMotion: boolean | null) {
   };
 }
 
-function WheelGlyph({
-  position,
-  digit,
-  glyph,
-}: {
-  position: MotionValue<number>;
-  digit: number;
-  glyph: string;
-}) {
-  const transform = useTransform(position, (latest) => {
-    const offset = offsetOf(digit, latest);
-    return translateOf(offset);
-  });
-
-  return (
-    <motion.span
-      className='absolute inset-0 flex justify-center'
-      style={{ transform }}
-    >
-      {glyph}
-    </motion.span>
-  );
-}
-
 function DigitWheel({
   digit,
   glyph,
@@ -219,34 +281,67 @@ function DigitWheel({
   trend: Trend;
   shouldReduceMotion: boolean | null;
 }) {
-  const position = useSpring(digit, ROLL_SPRING);
-  const targetRef = useRef(digit);
+  const stripRef = useRef<HTMLSpanElement>(null);
+  const targetRef = useRef(homeCellOf(digit));
+  const [restingTransform] = useState(() => {
+    const home = homeCellOf(digit);
+    return translateOfCell(home);
+  });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    const strip = stripRef.current;
+    if (!strip) {
+      return;
+    }
     const restingDigit = wrapDigit(targetRef.current);
     if (restingDigit === digit) {
       return;
     }
-    const steps = stepsBetween(restingDigit, digit, trend);
-    targetRef.current += steps;
+    const home = homeCellOf(digit);
     if (shouldReduceMotion) {
-      position.jump(targetRef.current);
+      targetRef.current = home;
+      placeStrip(strip, home);
       return;
     }
-    position.set(targetRef.current);
-  }, [digit, trend, shouldReduceMotion, position]);
+    const steps = stepsBetween(restingDigit, digit, trend);
+    let next = targetRef.current + steps;
+    const isPastStrip = next < 0 || next > LAST_CELL;
+    if (isPastStrip) {
+      const shift = home - next;
+      const visual = visualCellOf(strip);
+      placeStrip(strip, wrapIntoStrip(visual + shift));
+      next = home;
+    }
+    targetRef.current = next;
+    strip.style.transform = translateOfCell(next);
+  }, [digit, trend, shouldReduceMotion]);
+
+  function settle(event: React.TransitionEvent<HTMLSpanElement>) {
+    const strip = event.currentTarget;
+    const isOwnRoll = event.target === strip;
+    if (!isOwnRoll) {
+      return;
+    }
+    const restingDigit = wrapDigit(targetRef.current);
+    const home = homeCellOf(restingDigit);
+    if (home === targetRef.current) {
+      return;
+    }
+    targetRef.current = home;
+    placeStrip(strip, home);
+  }
 
   return (
     <>
       <span className='invisible'>{glyph}</span>
-      {WHEEL.map((wheelDigit) => (
-        <WheelGlyph
-          key={wheelDigit}
-          position={position}
-          digit={wheelDigit}
-          glyph={glyphs[wheelDigit]}
-        />
-      ))}
+      <span
+        ref={stripRef}
+        onTransitionEnd={settle}
+        style={{ transform: restingTransform }}
+        className='absolute inset-x-0 top-0 text-center whitespace-pre transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none'
+      >
+        {stripTextOf(glyphs)}
+      </span>
     </>
   );
 }
@@ -278,10 +373,11 @@ export function MotionNumber({
     setTrend(trendBetween(previousValue, value));
   }
 
-  const formatter = new Intl.NumberFormat(locale, format);
+  const formatter = formatterOf(locale, format);
   const glyphs = glyphsOf(formatter);
   const parts = formatter.formatToParts(value);
   const slots = slotsOf(parts, glyphs);
+  const structure = structureOf(slots, prefix, suffix);
   const formattedValue = formatter.format(value);
   const spokenValue = [prefix, formattedValue, suffix].join('');
   const slotMotion = slotMotionOf(shouldReduceMotion);
@@ -299,7 +395,11 @@ export function MotionNumber({
         className='relative inline-flex items-baseline whitespace-pre'
       >
         {prefix && (
-          <motion.span layout='position' transition={slotMotion.transition}>
+          <motion.span
+            layout='position'
+            layoutDependency={structure}
+            transition={slotMotion.transition}
+          >
             {prefix}
           </motion.span>
         )}
@@ -307,7 +407,12 @@ export function MotionNumber({
           {slots.map((slot) => {
             if (slot.kind === 'symbol') {
               return (
-                <motion.span key={slot.key} layout='position' {...slotMotion}>
+                <motion.span
+                  key={slot.key}
+                  layout='position'
+                  layoutDependency={structure}
+                  {...slotMotion}
+                >
                   {slot.text}
                 </motion.span>
               );
@@ -316,6 +421,7 @@ export function MotionNumber({
               <motion.span
                 key={slot.key}
                 layout='position'
+                layoutDependency={structure}
                 className='relative inline-flex overflow-y-clip'
                 {...slotMotion}
               >
@@ -331,7 +437,11 @@ export function MotionNumber({
           })}
         </AnimatePresence>
         {suffix && (
-          <motion.span layout='position' transition={slotMotion.transition}>
+          <motion.span
+            layout='position'
+            layoutDependency={structure}
+            transition={slotMotion.transition}
+          >
             {suffix}
           </motion.span>
         )}
