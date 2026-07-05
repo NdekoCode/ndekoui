@@ -994,7 +994,7 @@ const PREPARED: PreparedRewrite[] = [
         'We would like a credit for the October order',
       ],
       friendlier: [
-        'I hope you are well! We would love to ask whether a credit for the October order is possible',
+        'I hope you are well. We would love to ask whether a credit for the October order is possible',
         'Hope all is well. Would a credit for the October order be possible',
       ],
       direct: [
@@ -1170,7 +1170,7 @@ async function demoRewrite(request: RewriteRequest, signal: AbortSignal) {
 }
 
 const LETTER =
-  'Hi Dana, I just wanted to reach out because we were wondering if it might be possible to get a credit for the October order, since a few of the lines seem to have been billed above the price we agreed on. Please let us know at your earliest convenience.';
+  'Hi Dana,\n\nI just wanted to reach out because we were wondering if it might be possible to get a credit for the October order, since a few of the lines seem to have been billed above the price we agreed on. Please let us know at your earliest convenience.';
 
 const [OPENING, REASON, CLOSING] = PREPARED;
 
