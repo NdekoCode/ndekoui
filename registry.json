@@ -2319,6 +2319,27 @@
       ]
     },
     {
+      "name": "brand-tile",
+      "type": "registry:ui",
+      "title": "Brand Tile",
+      "description": "The mark of a known product on a key cap tile, so marks of every shape sit in the same square.",
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/ui/brand-tile.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitives",
+        "ai"
+      ]
+    },
+    {
       "name": "letter-tile",
       "type": "registry:ui",
       "title": "Letter Tile",
@@ -4342,6 +4363,28 @@
       ]
     },
     {
+      "name": "use-session",
+      "type": "registry:hook",
+      "title": "Use session",
+      "description": "The use-session hook used by ndekoui components.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/hooks/use-session.ts",
+          "type": "registry:hook"
+        }
+      ],
+      "categories": [
+        "hooks"
+      ]
+    },
+    {
       "name": "use-slider-with-input",
       "type": "registry:hook",
       "title": "Use slider with input",
@@ -6132,6 +6175,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/agent-run.json",
         "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/call-status.json",
         "https://ui.ndekocode.dev/r/chat-message.json",
@@ -6190,11 +6235,11 @@
       "description": "Marks that tint their sentence and raise their source, whose passage unfolds with the shared words marked, under a line that counts how much of the answer is backed.",
       "dependencies": [],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/agent-run.json",
         "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
         "https://ui.ndekocode.dev/r/hatch.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/theme.json",
@@ -6236,14 +6281,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/agent-run.json",
         "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-message.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/level-bars.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/morph-button.json",
@@ -6300,6 +6345,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/agent-run.json",
         "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/call-status.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
@@ -6357,6 +6404,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/agent-run.json",
         "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/chip.json",
@@ -6421,13 +6470,13 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/agent-run.json",
         "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/copy-button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/morph-button.json",
         "https://ui.ndekocode.dev/r/switch.json",
@@ -19284,6 +19333,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -19297,6 +19347,11 @@
           "path": "registry/ndeko/components/prompt/_parts/clock.tsx",
           "type": "registry:component",
           "target": "components/prompt/_parts/clock.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/demonstration.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/demonstration.ts"
         },
         {
           "path": "registry/ndeko/components/prompt/_parts/use-autosize.ts",
@@ -19324,14 +19379,15 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/agent-run.json",
         "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/level-bars.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/media-clock.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
@@ -19341,6 +19397,7 @@
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -19354,6 +19411,11 @@
           "path": "registry/ndeko/components/prompt/_parts/clock.tsx",
           "type": "registry:component",
           "target": "components/prompt/_parts/clock.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/demonstration.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/demonstration.ts"
         },
         {
           "path": "registry/ndeko/components/prompt/_parts/lab-tile.tsx",
@@ -19386,25 +19448,29 @@
       "type": "registry:component",
       "title": "Model picker",
       "description": "Models grouped by lab with context, speed, price and skills, searched and picked from the keyboard, with a compare view that widens the panel.",
-      "dependencies": [],
+      "dependencies": [
+        "motion"
+      ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/agent-run.json",
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/dialog.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
-        "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/popover.json",
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/segments.json",
-        "https://ui.ndekocode.dev/r/selected-mark.json",
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -19412,6 +19478,16 @@
           "path": "registry/ndeko/components/prompt/prompt-03.tsx",
           "type": "registry:component",
           "target": "components/prompt/prompt-03.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/demonstration.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/demonstration.ts"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/drawn-check.tsx",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/drawn-check.tsx"
         },
         {
           "path": "registry/ndeko/components/prompt/_parts/lab-tile.tsx",
@@ -19448,18 +19524,19 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
-        "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/popover.json",
-        "https://ui.ndekocode.dev/r/selected-mark.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -19467,6 +19544,16 @@
           "path": "registry/ndeko/components/prompt/prompt-04.tsx",
           "type": "registry:component",
           "target": "components/prompt/prompt-04.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/demonstration.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/demonstration.ts"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/drawn-check.tsx",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/drawn-check.tsx"
         },
         {
           "path": "registry/ndeko/components/prompt/_parts/lab-tile.tsx",
@@ -19495,7 +19582,6 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/live-region.json",
-        "https://ui.ndekocode.dev/r/settle.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
@@ -19535,6 +19621,7 @@
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -19543,6 +19630,11 @@
           "path": "registry/ndeko/components/prompt/prompt-06.tsx",
           "type": "registry:component",
           "target": "components/prompt/prompt-06.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/demonstration.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/demonstration.ts"
         },
         {
           "path": "registry/ndeko/components/prompt/_parts/use-autosize.ts",
@@ -19577,6 +19669,7 @@
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -19585,6 +19678,11 @@
           "path": "registry/ndeko/components/prompt/prompt-07.tsx",
           "type": "registry:component",
           "target": "components/prompt/prompt-07.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/demonstration.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/demonstration.ts"
         },
         {
           "path": "registry/ndeko/components/prompt/_parts/marked.tsx",
@@ -19620,6 +19718,8 @@
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -19627,6 +19727,11 @@
           "path": "registry/ndeko/components/prompt/prompt-08.tsx",
           "type": "registry:component",
           "target": "components/prompt/prompt-08.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/demonstration.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/demonstration.ts"
         },
         {
           "path": "registry/ndeko/components/prompt/_parts/use-autosize.ts",
@@ -19665,13 +19770,21 @@
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-agent-run.json"
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/prompt/prompt-09.tsx",
           "type": "registry:component",
           "target": "components/prompt/prompt-09.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/demonstration.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/demonstration.ts"
         },
         {
           "path": "registry/ndeko/components/prompt/_parts/use-autosize.ts",
@@ -19705,6 +19818,8 @@
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -19712,6 +19827,11 @@
           "path": "registry/ndeko/components/prompt/prompt-10.tsx",
           "type": "registry:component",
           "target": "components/prompt/prompt-10.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/demonstration.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/demonstration.ts"
         },
         {
           "path": "registry/ndeko/components/prompt/_parts/marked.tsx",
@@ -20438,6 +20558,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/agent-run.json",
         "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/icons.json",
@@ -20567,6 +20689,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/call-status.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
@@ -26874,12 +26997,20 @@
         "https://ui.ndekocode.dev/r/segments.json",
         "https://ui.ndekocode.dev/r/speech-envelope.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/voice/voice-01.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/voice/voice-01.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/voice/_parts/demonstration.ts",
+          "type": "registry:component",
+          "target": "components/voice/_parts/demonstration.ts"
         }
       ],
       "categories": [
@@ -26899,17 +27030,27 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/media-clock.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/speech-envelope.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/voice/voice-02.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/voice/voice-02.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/voice/_parts/demonstration.ts",
+          "type": "registry:component",
+          "target": "components/voice/_parts/demonstration.ts"
         }
       ],
       "categories": [
@@ -26931,25 +27072,538 @@
         "https://ui.ndekocode.dev/r/chat-loader.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/level-bars.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/media-clock.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/voice/voice-03.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/voice/voice-03.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/voice/_parts/demonstration.ts",
+          "type": "registry:component",
+          "target": "components/voice/_parts/demonstration.ts"
         }
       ],
       "categories": [
         "components",
         "voice"
+      ]
+    },
+    {
+      "name": "agent-chat-01",
+      "type": "registry:block",
+      "title": "Agent chat with its run",
+      "description": "A conversation that thinks, reads its sources and streams, with the plan checking itself off beside it: when the agent needs a yes, the field you were typing in becomes the request and turns back once you answer.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/call-status.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/sample-avatars.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/agent-chat/agent-chat-01/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-chat-01/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-chat/agent-chat-01/composer.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-chat-01/composer.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-chat/agent-chat-01/run-panel.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-chat-01/run-panel.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-chat/agent-chat-01/session.ts",
+          "type": "registry:component",
+          "target": "components/blocks/agent-chat-01/session.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-chat/agent-chat-01/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/agent-chat-01/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "agent-chat"
+      ]
+    },
+    {
+      "name": "agent-chat-02",
+      "type": "registry:block",
+      "title": "Chat with an artifact",
+      "description": "A chat beside the code an agent wrote, in panels you resize: the revision lands in place and only its new lines light up, with versions, a Changes view, Copy and Apply, and a sheet you drag down on phones.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/copy-button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/agent-chat/agent-chat-02/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-chat-02/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-chat/agent-chat-02/artifact-panel.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-chat-02/artifact-panel.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-chat/agent-chat-02/split.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-chat-02/split.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-chat/agent-chat-02/session.ts",
+          "type": "registry:component",
+          "target": "components/blocks/agent-chat-02/session.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-chat/agent-chat-02/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/agent-chat-02/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "agent-chat"
+      ]
+    },
+    {
+      "name": "agent-chat-03",
+      "type": "registry:block",
+      "title": "Agent canvas",
+      "description": "Someone says what should happen, the assistant checks off its work in the chat and three cards type their own fields on a canvas, one after the other, until Run it becomes Live.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/letter-tile.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/agent-chat/agent-chat-03/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-chat-03/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-chat/agent-chat-03/cards.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-chat-03/cards.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-chat/agent-chat-03/session.ts",
+          "type": "registry:component",
+          "target": "components/blocks/agent-chat-03/session.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-chat/agent-chat-03/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/agent-chat-03/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "agent-chat"
+      ]
+    },
+    {
+      "name": "agent-chat-04",
+      "type": "registry:block",
+      "title": "Voice mode",
+      "description": "A voice call whose disc breathes with whoever speaks while the page beside it fills in: notes as they are said, to-dos with an owner and a date, and the ones the assistant does tick themselves, with Undo.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/copy-button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/media-clock.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/sample-avatars.json",
+        "https://ui.ndekocode.dev/r/speech-envelope.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/agent-chat/agent-chat-04/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-chat-04/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-chat/agent-chat-04/call-panel.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-chat-04/call-panel.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-chat/agent-chat-04/notes-page.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-chat-04/notes-page.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-chat/agent-chat-04/session.ts",
+          "type": "registry:component",
+          "target": "components/blocks/agent-chat-04/session.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-chat/agent-chat-04/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/agent-chat-04/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "agent-chat"
+      ]
+    },
+    {
+      "name": "agent-review-01",
+      "type": "registry:block",
+      "title": "Task to merge",
+      "description": "A task laid out like an issue: the status chip rolls from Planned to Merged while the activity grows, one approval starts the work, a failed check is re-run and Merge becomes Merging, then Merged.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/call-status.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/sample-avatars.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-session.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/agent-review/agent-review-01/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-review-01/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-review/agent-review-01/timeline.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-review-01/timeline.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-review/agent-review-01/checks.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-review-01/checks.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-review/agent-review-01/session.ts",
+          "type": "registry:component",
+          "target": "components/blocks/agent-review-01/session.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-review/agent-review-01/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/agent-review-01/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "agent-review"
+      ]
+    },
+    {
+      "name": "agent-review-02",
+      "type": "registry:block",
+      "title": "Code review with agent replies",
+      "description": "A file diff where a comment on a line gets a reply with a suggested change: Apply suggestion becomes Applied in a commit, the new lines light up in the file and the thread folds once resolved.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/sample-avatars.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/agent-review/agent-review-02/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-review-02/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-review/agent-review-02/thread.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-review-02/thread.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-review/agent-review-02/session.ts",
+          "type": "registry:component",
+          "target": "components/blocks/agent-review-02/session.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-review/agent-review-02/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/agent-review-02/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "agent-review"
+      ]
+    },
+    {
+      "name": "agent-review-03",
+      "type": "registry:block",
+      "title": "Document extract",
+      "description": "A purchase order beside the typed fields read from it: values stream in with a confidence, a thread draws from a value to its box on the page, doubtful values wait for a confirm or an edit and Accept all becomes Saved.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/json-view.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/agent-review/agent-review-03/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-review-03/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-review/agent-review-03/document.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-review-03/document.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-review/agent-review-03/fields.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-review-03/fields.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-review/agent-review-03/session.ts",
+          "type": "registry:component",
+          "target": "components/blocks/agent-review-03/session.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-review/agent-review-03/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/agent-review-03/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "agent-review"
+      ]
+    },
+    {
+      "name": "agent-review-04",
+      "type": "registry:block",
+      "title": "Computer use session",
+      "description": "An agent working in a browser drawn on the page: its named pointer glides from one control to the next, every action is a frame you can scrub back to, you can pause or take over, and the payment waits for your yes.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/letter-tile.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/sample-avatars.json",
+        "https://ui.ndekocode.dev/r/status-orb.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/agent-review/agent-review-04/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-review-04/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-review/agent-review-04/browser.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-review-04/browser.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-review/agent-review-04/session.ts",
+          "type": "registry:component",
+          "target": "components/blocks/agent-review-04/session.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-review/agent-review-04/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/agent-review-04/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "agent-review"
+      ]
+    },
+    {
+      "name": "agent-review-05",
+      "type": "registry:block",
+      "title": "Agents in a document",
+      "description": "Two agents edit a brief like teammates: a named pointer glides to a paragraph and its suggestion types itself in as a tracked change, a margin comment arrives after a typing mark, and a table lists every change.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/agent-review/agent-review-05/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-review-05/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-review/agent-review-05/doc-parts.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/agent-review-05/doc-parts.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-review/agent-review-05/session.ts",
+          "type": "registry:component",
+          "target": "components/blocks/agent-review-05/session.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/agent-review/agent-review-05/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/agent-review-05/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "agent-review"
       ]
     },
     {

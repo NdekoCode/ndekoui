@@ -3,6 +3,129 @@ import type { BundleGroup } from '@/app/blocks/_shared/types';
 
 export const groups: BundleGroup[] = [
   {
+    slug: 'agent-chat',
+    name: 'Agent chat',
+    entries: [
+      {
+        name: 'agent-chat-01',
+        title: 'Agent chat with its run',
+        description:
+          'A conversation that thinks, reads its sources and streams, with the plan checking itself off beside it: when the agent needs a yes, the field you were typing in becomes the request and turns back once you answer.',
+        files: [
+          'index.tsx',
+          'composer.tsx',
+          'run-panel.tsx',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 720,
+        group: 'agent-chat',
+      },
+      {
+        name: 'agent-chat-02',
+        title: 'Chat with an artifact',
+        description:
+          'A chat beside the code an agent wrote, in panels you resize: the revision lands in place and only its new lines light up, with versions, a Changes view, Copy and Apply, and a sheet you drag down on phones.',
+        files: [
+          'index.tsx',
+          'artifact-panel.tsx',
+          'split.tsx',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 720,
+        group: 'agent-chat',
+      },
+      {
+        name: 'agent-chat-03',
+        title: 'Agent canvas',
+        description:
+          'Someone says what should happen, the assistant checks off its work in the chat and three cards type their own fields on a canvas, one after the other, until Run it becomes Live.',
+        files: ['index.tsx', 'cards.tsx', 'session.ts', 'data.ts'],
+        previewHeight: 760,
+        group: 'agent-chat',
+      },
+      {
+        name: 'agent-chat-04',
+        title: 'Voice mode',
+        description:
+          'A voice call whose disc breathes with whoever speaks while the page beside it fills in: notes as they are said, to-dos with an owner and a date, and the ones the assistant does tick themselves, with Undo.',
+        files: [
+          'index.tsx',
+          'call-panel.tsx',
+          'notes-page.tsx',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 720,
+        group: 'agent-chat',
+      },
+    ],
+  },
+  {
+    slug: 'agent-review',
+    name: 'Agent review',
+    entries: [
+      {
+        name: 'agent-review-01',
+        title: 'Task to merge',
+        description:
+          'A task laid out like an issue: the status chip rolls from Planned to Merged while the activity grows, one approval starts the work, a failed check is re-run and Merge becomes Merging, then Merged.',
+        files: [
+          'index.tsx',
+          'timeline.tsx',
+          'checks.tsx',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 860,
+        group: 'agent-review',
+      },
+      {
+        name: 'agent-review-02',
+        title: 'Code review with agent replies',
+        description:
+          'A file diff where a comment on a line gets a reply with a suggested change: Apply suggestion becomes Applied in a commit, the new lines light up in the file and the thread folds once resolved.',
+        files: ['index.tsx', 'thread.tsx', 'session.ts', 'data.ts'],
+        previewHeight: 860,
+        group: 'agent-review',
+      },
+      {
+        name: 'agent-review-03',
+        title: 'Document extract',
+        description:
+          'A purchase order beside the typed fields read from it: values stream in with a confidence, a thread draws from a value to its box on the page, doubtful values wait for a confirm or an edit and Accept all becomes Saved.',
+        files: [
+          'index.tsx',
+          'document.tsx',
+          'fields.tsx',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 780,
+        group: 'agent-review',
+      },
+      {
+        name: 'agent-review-04',
+        title: 'Computer use session',
+        description:
+          'An agent working in a browser drawn on the page: its named pointer glides from one control to the next, every action is a frame you can scrub back to, you can pause or take over, and the payment waits for your yes.',
+        files: ['index.tsx', 'browser.tsx', 'session.ts', 'data.ts'],
+        previewHeight: 760,
+        group: 'agent-review',
+      },
+      {
+        name: 'agent-review-05',
+        title: 'Agents in a document',
+        description:
+          'Two agents edit a brief like teammates: a named pointer glides to a paragraph and its suggestion types itself in as a tracked change, a margin comment arrives after a typing mark, and a table lists every change.',
+        files: ['index.tsx', 'doc-parts.tsx', 'session.ts', 'data.ts'],
+        previewHeight: 760,
+        group: 'agent-review',
+      },
+    ],
+  },
+  {
     slug: 'app-shells',
     name: 'App shells',
     entries: [
@@ -283,7 +406,7 @@ export const groups: BundleGroup[] = [
   },
   {
     slug: 'ctas',
-    name: 'Ctas',
+    name: 'Calls to action',
     entries: [
       {
         name: 'ctas-01',
@@ -420,7 +543,7 @@ export const groups: BundleGroup[] = [
   },
   {
     slug: 'faqs',
-    name: 'Faqs',
+    name: 'FAQ',
     entries: [
       {
         name: 'faqs-01',
