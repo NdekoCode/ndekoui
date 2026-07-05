@@ -1,7 +1,9 @@
 'use client';
 
 import {
+  createContext,
   useCallback,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -75,16 +77,21 @@ function idleSubscription() {
   return () => {};
 }
 
-/** The current time, refreshed every `intervalMs` while `isActive`; it holds still otherwise. */
+/** Off screen, every clock under a closed gate holds still, so nothing re-renders where no one looks. */
+export const ClockGateContext = createContext(true);
+
+/** The current time, refreshed every `intervalMs` while `isActive` and the nearest gate is open; it holds still otherwise. */
 export function useNow(intervalMs = 1000, isActive = true) {
+  const isGateOpen = useContext(ClockGateContext);
+  const isTicking = isActive && isGateOpen;
   const subscribe = useCallback(
     (listener: () => void) => {
-      if (!isActive) {
+      if (!isTicking) {
         return idleSubscription();
       }
       return subscribeToClock(intervalMs, listener);
     },
-    [intervalMs, isActive]
+    [intervalMs, isTicking]
   );
   const getSnapshot = useCallback(() => clockOf(intervalMs).now, [intervalMs]);
   return useSyncExternalStore(subscribe, getSnapshot, serverNow);

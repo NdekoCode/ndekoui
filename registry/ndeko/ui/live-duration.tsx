@@ -1,13 +1,8 @@
 'use client';
 
-import { createContext, useContext } from 'react';
-
-import { useNow } from '@/registry/ndeko/hooks/use-agent-run';
+import { ClockGateContext, useNow } from '@/registry/ndeko/hooks/use-agent-run';
 import { elapsedOf, formatDuration } from '@/registry/ndeko/lib/agent-run';
 import { cn } from '@/registry/ndeko/lib/utils';
-
-/** Off screen, every live clock under it holds still, so nothing re-renders where no one looks. */
-const ClockGateContext = createContext(true);
 
 type ClockGateProps = {
   isActive: boolean;
@@ -23,9 +18,7 @@ export function ClockGate({ isActive, children }: ClockGateProps) {
 }
 
 export function useLiveNow(intervalMs: number, isRunning: boolean) {
-  const isOpen = useContext(ClockGateContext);
-  const isTicking = isRunning && isOpen;
-  return useNow(intervalMs, isTicking);
+  return useNow(intervalMs, isRunning);
 }
 
 type Timed = { startedAt?: number; endedAt?: number };
