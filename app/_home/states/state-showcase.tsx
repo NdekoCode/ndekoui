@@ -6,6 +6,7 @@ import {
   type Compaction,
   type ContextBudget,
 } from '@/registry/ndeko/components/run/_parts/context';
+import { AgentRoster } from '@/registry/ndeko/components/agent/agent-10';
 import { ToolCallGroup } from '@/registry/ndeko/components/run/run-01';
 import { ContextWindowBar } from '@/registry/ndeko/components/run/run-05';
 import {
@@ -17,7 +18,12 @@ import {
   PermissionRequestCard,
   type PermissionEntry,
 } from '@/registry/ndeko/components/review/review-02';
-import type { CallStatus, ToolCall } from '@/registry/ndeko/lib/agent-run';
+import type {
+  AgentStatus,
+  CallStatus,
+  RunAgent,
+  ToolCall,
+} from '@/registry/ndeko/lib/agent-run';
 import { MorphButton, type MorphState } from '@/registry/ndeko/ui/morph-button';
 import type { Segment } from '@/registry/ndeko/ui/segments';
 
@@ -215,6 +221,48 @@ const SAVE_LABELS: Record<MorphState, string> = {
   done: 'Saved',
 };
 
+const AGENT_STATES: Segment<AgentStatus>[] = [
+  { value: 'idle', label: 'Idle' },
+  { value: 'running', label: 'Running' },
+  { value: 'waiting', label: 'Waiting' },
+  { value: 'failed', label: 'Failed' },
+  { value: 'done', label: 'Done' },
+];
+
+const RESEARCHER_TASKS: Record<AgentStatus, string> = {
+  idle: 'Waits for the plan',
+  running: 'Reading 14 price lists',
+  waiting: 'Asks to open the shared drive',
+  failed: 'The drive refused the token',
+  done: 'Found 14 vendors with prices',
+};
+
+function crewIn(state: AgentStatus): RunAgent[] {
+  return [
+    {
+      id: 'planner',
+      name: 'Planner',
+      series: 1,
+      status: 'running',
+      task: 'Tracking the review',
+    },
+    {
+      id: 'researcher',
+      name: 'Researcher',
+      series: 2,
+      status: state,
+      task: RESEARCHER_TASKS[state],
+    },
+    {
+      id: 'writer',
+      name: 'Writer',
+      series: 3,
+      status: 'idle',
+      task: 'Waits for the findings',
+    },
+  ];
+}
+
 export function StateShowcase() {
   return (
     <div className='grid gap-4 md:grid-cols-2 xl:grid-cols-3'>
@@ -263,6 +311,14 @@ export function StateShowcase() {
             result={permissionResultIn(state)}
           />
         )}
+      </StateTile>
+      <StateTile
+        title='Agent status'
+        name='agent-10'
+        href='/components/agent#agent-10'
+        states={AGENT_STATES}
+      >
+        {(state) => <AgentRoster title='Review crew' agents={crewIn(state)} />}
       </StateTile>
       <StateTile
         title='Morph button'
