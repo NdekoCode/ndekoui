@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { usePrefersReducedMotion } from '../use-prefers-reduced-motion';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 /** A tab put in the background stops the frames; on its return the replay resumes, it does not jump. */
 const LONGEST_FRAME_MS = 100;

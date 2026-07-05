@@ -1,10 +1,10 @@
 'use client';
 
-import { useReducedMotion } from 'motion/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useDocumentVisible } from '@/registry/ndeko/hooks/use-agent-run';
 import { useAutoplay } from '@/registry/ndeko/hooks/use-autoplay';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 export type SessionStep<State, Action> = {
   /** Milliseconds after the previous step. */
@@ -140,7 +140,7 @@ export function useSession<State, Action>({
 }: SessionConfig<State, Action>) {
   const autoplay = useAutoplay([]);
   const isVisible = useDocumentVisible();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [engine, setEngine] = useState<Engine<State>>({
     state: initial,
     cursor: 0,

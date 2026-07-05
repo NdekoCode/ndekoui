@@ -1,9 +1,10 @@
 'use client';
 
-import { useInView, useReducedMotion } from 'motion/react';
+import { useInView } from 'motion/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useDocumentVisible } from '@/registry/ndeko/hooks/use-agent-run';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 export type AutoplayStep = {
   /** Milliseconds after the previous step. */
@@ -42,7 +43,7 @@ export function useAutoplay<Element extends HTMLElement = HTMLDivElement>(
   const ref = useRef<Element>(null);
   const isInView = useInView(ref, { amount: 0.3 });
   const isVisible = useDocumentVisible();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [isTakenOver, setIsTakenOver] = useState(false);
   const [round, setRound] = useState(0);
   const latest = useRef<Latest>({ steps, onReset });

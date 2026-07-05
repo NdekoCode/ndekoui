@@ -19,8 +19,9 @@ function readOnServer() {
 }
 
 /**
- * The reduced motion preference, read so the first client render matches the server. Use it when
- * the preference changes what is rendered, where motion's own hook would differ during hydration.
+ * The reduced motion preference, read so the first client render matches the server and so a change
+ * of the setting is followed. Use it wherever the preference changes what is rendered: a hook that
+ * reads the setting during the first render makes the page fail to hydrate for the people who set it.
  */
 export function usePrefersReducedMotion() {
   return useSyncExternalStore(

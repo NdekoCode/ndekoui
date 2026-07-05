@@ -8,8 +8,7 @@ import {
 } from 'motion/react';
 import { useRef } from 'react';
 
-import { usePrefersReducedMotion } from './use-prefers-reduced-motion';
-
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CodeIcon,
   CommandIcon,
