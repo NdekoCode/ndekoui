@@ -1,11 +1,14 @@
 'use client';
 
 import { motion, useReducedMotion } from 'motion/react';
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useImperativeHandle, useRef, useState } from 'react';
 
+import { typingSteps, useAutoplay } from '@/registry/ndeko/hooks/use-autoplay';
+import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Kbd, KbdGroup } from '@/registry/ndeko/ui/kbd';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
+import { Settle, SettleItem } from '@/registry/ndeko/ui/settle';
 
 import { useAutosize } from './_parts/use-autosize';
 
@@ -93,7 +96,58 @@ export type GhostTextareaProps = Omit<
   /** Enter never adds a line, for a field of one line such as code or a title. */
   singleLine?: boolean;
   maxHeight?: number;
+  /** Shows the suggestion without focus, for a demonstration or a preview nobody types in. */
+  showsUnfocused?: boolean;
+  onSuggestionAccept?: (kind: AcceptKind) => void;
+  onSuggestionDismiss?: () => void;
+  /** Accept or dismiss from a button, for screens with no Tab key. */
+  handleRef?: React.Ref<GhostTextareaHandle>;
 };
+
+export type AcceptKind = 'all' | 'word';
+
+export type GhostTextareaHandle = {
+  accept: () => void;
+  acceptWord: () => void;
+  dismiss: () => void;
+  /** Asks for a suggestion for the text as it is now, after a change made from outside the field. */
+  suggest: () => void;
+};
+
+type Landed = {
+  from: number;
+  to: number;
+  id: number;
+};
+
+/** The text just accepted lights for a moment behind its letters, then the tint leaves. */
+function MirrorText({
+  value,
+  landed,
+}: {
+  value: string;
+  landed: Landed | null;
+}) {
+  if (!landed) {
+    return <span>{value}</span>;
+  }
+  const before = value.slice(0, landed.from);
+  const part = value.slice(landed.from, landed.to);
+  const after = value.slice(landed.to);
+
+  return (
+    <>
+      <span>{before}</span>
+      <span
+        key={landed.id}
+        className='bg-primary/0 starting:bg-primary/20 rounded-[3px] transition-colors duration-700 ease-out'
+      >
+        {part}
+      </span>
+      <span>{after}</span>
+    </>
+  );
+}
 
 export function GhostTextarea({
   value,
@@ -103,6 +157,10 @@ export function GhostTextarea({
   monospace = false,
   singleLine = false,
   maxHeight = 240,
+  showsUnfocused = false,
+  onSuggestionAccept,
+  onSuggestionDismiss,
+  handleRef,
   className,
   onKeyDown,
   onFocus,
@@ -115,14 +173,16 @@ export function GhostTextarea({
   const [isWaiting, setIsWaiting] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [announcement, setAnnouncement] = useState('');
+  const [landed, setLanded] = useState<Landed | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const mirrorRef = useRef<HTMLDivElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const request = useRef<AbortController | null>(null);
   const hintId = useId();
   const hasSuggestion = suggestion !== '';
-  const showsSuggestion = hasSuggestion && isFocused;
-  const showsWaiting = isWaiting && isFocused;
+  const isShowing = isFocused || showsUnfocused;
+  const showsSuggestion = hasSuggestion && isShowing;
+  const showsWaiting = isWaiting && isShowing;
   const hint = hintOf(suggestion);
   useAutosize(textareaRef, value, maxHeight);
 
@@ -134,6 +194,13 @@ export function GhostTextarea({
       request.current?.abort();
     };
   }, []);
+
+  useImperativeHandle(handleRef, () => ({
+    accept: acceptAll,
+    acceptWord,
+    dismiss,
+    suggest: suggestNow,
+  }));
 
   function cancelPending() {
     if (timer.current) {
@@ -191,6 +258,7 @@ export function GhostTextarea({
     const typed = appendedPart(value, next);
     const isTyping = typed !== null && typed !== '';
     const keepsSuggestion = isTyping && suggestion.startsWith(typed);
+    setLanded(null);
     onValueChange(next);
     if (keepsSuggestion) {
       const rest = suggestion.slice(typed.length);
@@ -207,6 +275,7 @@ export function GhostTextarea({
   function accept(part: string) {
     const next = `${value}${part}`;
     const rest = suggestion.slice(part.length);
+    setLanded({ from: value.length, to: next.length, id: Date.now() });
     onValueChange(next);
     setSuggestion(rest);
     setAnnouncement(ACCEPTED_MESSAGE);
@@ -223,10 +292,33 @@ export function GhostTextarea({
     }
   }
 
+  function acceptAll() {
+    if (!hasSuggestion) {
+      return;
+    }
+    accept(suggestion);
+    onSuggestionAccept?.('all');
+  }
+
+  function acceptWord() {
+    if (!hasSuggestion) {
+      return;
+    }
+    accept(firstWordOf(suggestion));
+    onSuggestionAccept?.('word');
+  }
+
+  function suggestNow() {
+    setLanded(null);
+    setSuggestion('');
+    askAfterPause(value);
+  }
+
   function dismiss() {
     cancelPending();
     setSuggestion('');
     setAnnouncement('Suggestion dismissed');
+    onSuggestionDismiss?.();
   }
 
   function handleKeys(event: React.KeyboardEvent<HTMLTextAreaElement>) {
@@ -246,14 +338,14 @@ export function GhostTextarea({
     const isTab = event.key === 'Tab' && !event.shiftKey;
     if (isTab) {
       event.preventDefault();
-      accept(suggestion);
+      acceptAll();
       return;
     }
     const hasWordModifier = event.ctrlKey || event.metaKey;
     const isWordKey = event.key === 'ArrowRight' && hasWordModifier;
     if (isWordKey) {
       event.preventDefault();
-      accept(firstWordOf(suggestion));
+      acceptWord();
       return;
     }
     if (event.key === 'Escape') {
@@ -310,7 +402,7 @@ export function GhostTextarea({
           monospace && 'font-mono'
         )}
       >
-        <span>{value}</span>
+        <MirrorText value={value} landed={landed} />
         {showsSuggestion && (
           <span className='text-muted-foreground/60'>{suggestion}</span>
         )}
@@ -452,22 +544,45 @@ async function suggestCode(text: string, signal: AbortSignal) {
   return line?.slice(text.length) ?? '';
 }
 
-function KeyHints() {
+type HintKey = 'tab' | 'word' | 'escape';
+
+const KEY_PRESS_MS = 220;
+
+function keyClassOf(isPressed: boolean) {
+  if (isPressed) {
+    return 'scale-90 bg-primary/15 text-primary-ink';
+  }
+  return '';
+}
+
+function hintKeyOf(kind: AcceptKind): HintKey {
+  if (kind === 'word') {
+    return 'word';
+  }
+  return 'tab';
+}
+
+function KeyHints({ pressed }: { pressed: HintKey | null }) {
+  const tabClass = keyClassOf(pressed === 'tab');
+  const wordClass = keyClassOf(pressed === 'word');
+  const escapeClass = keyClassOf(pressed === 'escape');
+  const keyMotion = 'transition-[scale,background-color,color] duration-150';
+
   return (
     <p className='text-muted-foreground flex flex-wrap items-center gap-x-3 gap-y-1 text-xs'>
       <span className='inline-flex items-center gap-1'>
-        <Kbd>Tab</Kbd> accepts
+        <Kbd className={cn(keyMotion, tabClass)}>Tab</Kbd> accepts
       </span>
       <span className='inline-flex items-center gap-1'>
         <KbdGroup aria-hidden='true'>
-          <Kbd>Ctrl</Kbd>
-          <Kbd>→</Kbd>
+          <Kbd className={cn(keyMotion, wordClass)}>Ctrl</Kbd>
+          <Kbd className={cn(keyMotion, wordClass)}>→</Kbd>
         </KbdGroup>
         <span className='sr-only'>Control or Command with Right</span>
         one word
       </span>
       <span className='inline-flex items-center gap-1'>
-        <Kbd>Esc</Kbd> dismisses
+        <Kbd className={cn(keyMotion, escapeClass)}>Esc</Kbd> dismisses
       </span>
     </p>
   );
@@ -475,45 +590,106 @@ function KeyHints() {
 
 const EMAIL_START = 'Hi Maren,\n\nThanks for sending the revised';
 
+const EMAIL_TYPED = ' quote';
+
 const CODE_START = 'const paidOrders = orders.';
+
+const CODE_TYPED = 'fil';
+
+/** Long enough for the pause after typing and for the suggestion to come back. */
+const SUGGESTION_WAIT_MS = 1500;
 
 export default function Prompt05() {
   const [email, setEmail] = useState(EMAIL_START);
   const [code, setCode] = useState(CODE_START);
+  const [pressed, setPressed] = useState<HintKey | null>(null);
+  const emailHandle = useRef<GhostTextareaHandle>(null);
+  const codeHandle = useRef<GhostTextareaHandle>(null);
+  const { schedule } = useTimeouts();
   const emailId = useId();
   const codeId = useId();
 
+  function pressHint(key: HintKey) {
+    setPressed(key);
+    schedule(() => setPressed(null), KEY_PRESS_MS);
+  }
+
+  function typeEmail(typed: string) {
+    setEmail(`${EMAIL_START}${typed}`);
+  }
+
+  function typeCode(typed: string) {
+    setCode(`${CODE_START}${typed}`);
+  }
+
+  function resetFields() {
+    setEmail(EMAIL_START);
+    setCode(CODE_START);
+  }
+
+  const steps = [
+    ...typingSteps(EMAIL_TYPED, typeEmail, {
+      startAfter: 900,
+      characterMs: 70,
+    }),
+    { after: 80, run: () => emailHandle.current?.suggest() },
+    { after: SUGGESTION_WAIT_MS, run: () => emailHandle.current?.acceptWord() },
+    { after: 520, run: () => emailHandle.current?.acceptWord() },
+    { after: 700, run: () => emailHandle.current?.accept() },
+    { after: SUGGESTION_WAIT_MS, run: () => emailHandle.current?.accept() },
+    { after: 300, run: () => emailHandle.current?.dismiss() },
+    ...typingSteps(CODE_TYPED, typeCode, { startAfter: 700, characterMs: 90 }),
+    { after: 80, run: () => codeHandle.current?.suggest() },
+    { after: SUGGESTION_WAIT_MS, run: () => codeHandle.current?.accept() },
+  ];
+  const { ref, isInView, isAutoplaying } = useAutoplay(steps, {
+    loopAfter: 2600,
+    onReset: resetFields,
+  });
+
   return (
-    <div className='flex w-full max-w-[32rem] flex-col gap-5'>
-      <div className='flex flex-col gap-1.5'>
-        <label htmlFor={emailId} className='text-[13px] font-medium'>
-          Reply to Maren
-        </label>
-        <GhostTextarea
-          id={emailId}
-          value={email}
-          onValueChange={setEmail}
-          suggest={suggestEmail}
-          rows={5}
-          placeholder='Write your reply'
-        />
-      </div>
-      <div className='flex flex-col gap-1.5'>
-        <label htmlFor={codeId} className='text-[13px] font-medium'>
-          orders.ts, line 18
-        </label>
-        <GhostTextarea
-          id={codeId}
-          value={code}
-          onValueChange={setCode}
-          suggest={suggestCode}
-          monospace
-          singleLine
-          rows={1}
-          placeholder='Type a line of code'
-        />
-      </div>
-      <KeyHints />
+    <div ref={ref} className='w-full max-w-[32rem]'>
+      <Settle isShown={isInView} className='flex flex-col gap-5'>
+        <SettleItem className='flex flex-col gap-1.5'>
+          <label htmlFor={emailId} className='text-[13px] font-medium'>
+            Reply to Maren
+          </label>
+          <GhostTextarea
+            id={emailId}
+            value={email}
+            onValueChange={setEmail}
+            suggest={suggestEmail}
+            rows={5}
+            placeholder='Write your reply'
+            showsUnfocused={isAutoplaying}
+            handleRef={emailHandle}
+            onSuggestionAccept={(kind) => pressHint(hintKeyOf(kind))}
+            onSuggestionDismiss={() => pressHint('escape')}
+          />
+        </SettleItem>
+        <SettleItem className='flex flex-col gap-1.5'>
+          <label htmlFor={codeId} className='text-[13px] font-medium'>
+            orders.ts, line 18
+          </label>
+          <GhostTextarea
+            id={codeId}
+            value={code}
+            onValueChange={setCode}
+            suggest={suggestCode}
+            monospace
+            singleLine
+            rows={1}
+            placeholder='Type a line of code'
+            showsUnfocused={isAutoplaying}
+            handleRef={codeHandle}
+            onSuggestionAccept={(kind) => pressHint(hintKeyOf(kind))}
+            onSuggestionDismiss={() => pressHint('escape')}
+          />
+        </SettleItem>
+        <SettleItem>
+          <KeyHints pressed={pressed} />
+        </SettleItem>
+      </Settle>
     </div>
   );
 }
