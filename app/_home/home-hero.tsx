@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { CSSProperties, ReactNode } from 'react';
 
+import { PauseOffscreen } from '@/app/_site/pause-offscreen';
 import { REPOSITORY_URL } from '@/app/_site/repository';
 import { CLIENTS } from '@/app/mcp/_components/clients';
 import { ShadcnMark } from '@/app/mcp/_components/client-marks';
@@ -103,14 +104,14 @@ function StarCount({ starCount }: { starCount: number | null }) {
 /** Behind the header and the hero: the brand glow and the tiles. */
 export function HeroBackdrop() {
   return (
-    <div
+    <PauseOffscreen
       aria-hidden='true'
       className='pointer-events-none absolute inset-x-0 top-0 -z-10 h-[64rem] mask-b-from-60%'
     >
       <div className={cn('absolute inset-0', LIGHT_GLOW)} />
       <div className={cn('absolute inset-0', DARK_GLOW)} />
       <TileField className='top-24' />
-    </div>
+    </PauseOffscreen>
   );
 }
 

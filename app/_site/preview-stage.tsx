@@ -9,6 +9,9 @@ import {
 } from 'react';
 
 import { cn } from '@/registry/ndeko/lib/utils';
+import { ClockGate } from '@/registry/ndeko/ui/live-duration';
+
+import { offscreenAttributeOf, useOffscreenPause } from './use-offscreen-pause';
 
 type PreviewStageProps = {
   className?: string;
@@ -46,6 +49,7 @@ export function PreviewStage({ className, children }: PreviewStageProps) {
   const contentRef = useRef<HTMLDivElement>(null);
   const [topOffset, setTopOffset] = useState<number | null>(null);
   const isAnchored = topOffset !== null;
+  const isInView = useOffscreenPause(stageRef);
 
   useLayoutEffect(() => {
     if (isAnchored) {
@@ -80,6 +84,7 @@ export function PreviewStage({ className, children }: PreviewStageProps) {
   return (
     <div
       ref={stageRef}
+      data-offscreen={offscreenAttributeOf(isInView)}
       className={cn(
         'relative flex min-w-0 flex-col overflow-x-auto',
         stageAlignmentOf(isAnchored),
@@ -91,7 +96,7 @@ export function PreviewStage({ className, children }: PreviewStageProps) {
         style={contentStyleOf(topOffset)}
         className='flex w-full justify-center-safe'
       >
-        {children}
+        <ClockGate isActive={isInView}>{children}</ClockGate>
       </div>
     </div>
   );

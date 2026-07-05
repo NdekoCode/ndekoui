@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { JsonLd } from '@/app/_site/json-ld';
+import { PauseOffscreen } from '@/app/_site/pause-offscreen';
 import { fetchStarCount } from '@/app/_site/repository';
 import { pageMetadataOf } from '@/app/_site/seo';
 import { SiteFooter } from '@/app/_site/site-footer';
@@ -96,7 +97,9 @@ export default async function HomePage() {
         <SiteHeader isWide />
         <main className={PAGE_RHYTHM}>
           <HomeHero componentTotal={componentTotal} starCount={starCount}>
-            <HeroShowcase />
+            <PauseOffscreen>
+              <HeroShowcase />
+            </PauseOffscreen>
           </HomeHero>
           <div className={SECTION}>
             <Statement
@@ -105,8 +108,12 @@ export default async function HomePage() {
               templateTotal={templateTotal}
             />
           </div>
-          <AiKitSection className={`${SECTION} ${SECTION_STACK}`} />
-          <StatesSection className={`${SECTION} ${SECTION_STACK}`} />
+          <PauseOffscreen>
+            <AiKitSection className={`${SECTION} ${SECTION_STACK}`} />
+          </PauseOffscreen>
+          <PauseOffscreen>
+            <StatesSection className={`${SECTION} ${SECTION_STACK}`} />
+          </PauseOffscreen>
           <section
             aria-labelledby='primitives-title'
             className={`${SECTION} ${SECTION_STACK}`}
@@ -121,7 +128,9 @@ export default async function HomePage() {
               action={<LinkButton href='/kit'>See every primitive</LinkButton>}
             />
             <Reveal isLarge>
-              <PrimitivesShowcase />
+              <PauseOffscreen>
+                <PrimitivesShowcase />
+              </PauseOffscreen>
             </Reveal>
           </section>
           <section
@@ -137,14 +146,18 @@ export default async function HomePage() {
               description='A replay of the whole path in Claude Code: the ndekoui server finds the component, the shadcn CLI installs it, and it shows up on the page. The search results, the command and the files it writes are the real ones.'
             />
             <Reveal isLarge>
-              <ReplaySection />
+              <PauseOffscreen>
+                <ReplaySection />
+              </PauseOffscreen>
             </Reveal>
           </section>
           <section
             aria-labelledby='editor-title'
             className='dark bg-background text-foreground flex flex-col gap-12 overflow-hidden py-16 lg:gap-16 lg:py-24'
           >
-            <EditorMarquee />
+            <PauseOffscreen>
+              <EditorMarquee />
+            </PauseOffscreen>
             <div className={`${SECTION} ${SECTION_STACK}`}>
               <SectionHeading
                 id='editor-title'
@@ -162,7 +175,9 @@ export default async function HomePage() {
           <div className={SECTION}>
             <HomeFaq />
           </div>
-          <ClosingBand starCount={starCount} />
+          <PauseOffscreen>
+            <ClosingBand starCount={starCount} />
+          </PauseOffscreen>
         </main>
         <SiteFooter />
         <JsonLd data={homeStructuredDataOf(HOME_DESCRIPTION)} />

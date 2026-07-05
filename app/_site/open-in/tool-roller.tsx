@@ -1,7 +1,12 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { useSyncExternalStore, type ComponentType } from 'react';
+import {
+  AnimatePresence,
+  motion,
+  useInView,
+  useReducedMotion,
+} from 'motion/react';
+import { useRef, useSyncExternalStore, type ComponentType } from 'react';
 
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 
@@ -38,7 +43,7 @@ const LEAVE_TIMING = { duration: 0.2, ease: [0.4, 0, 1, 1] } as const;
 
 /*
  * One clock for every roller on the page, so the buttons turn together instead of each at its own
- * moment. It only runs while a roller is mounted and skips its turns while the tab is hidden.
+ * moment. It skips its turns while the tab is hidden, and a roller off screen does not listen to it.
  */
 let currentIndex = 0;
 let timer: number | undefined;
@@ -104,8 +109,10 @@ function ToolLabel({ tool }: { tool: Tool }) {
  * narrow tile keeps the mark alone.
  */
 export function ToolRoller() {
+  const rollerRef = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(rollerRef);
   const prefersReducedMotion = useReducedMotion();
-  const isRolling = !prefersReducedMotion;
+  const isRolling = isInView && !prefersReducedMotion;
   const index = useSyncExternalStore(
     subscriptionOf(isRolling),
     currentIndexOf,
@@ -114,20 +121,22 @@ export function ToolRoller() {
   const tool = TOOLS[index];
 
   return (
-    <AnimatedSize axis='width' as='span' aria-hidden='true'>
-      <span className='inline-grid overflow-hidden'>
-        <AnimatePresence initial={false}>
-          <motion.span
-            key={tool.id}
-            className='col-start-1 row-start-1 flex items-center gap-1.5'
-            initial={ENTER}
-            animate={{ ...SHOWN, transition: ENTER_TIMING }}
-            exit={{ ...LEAVE, transition: LEAVE_TIMING }}
-          >
-            <ToolLabel tool={tool} />
-          </motion.span>
-        </AnimatePresence>
-      </span>
-    </AnimatedSize>
+    <span ref={rollerRef} className='inline-flex'>
+      <AnimatedSize axis='width' as='span' aria-hidden='true'>
+        <span className='inline-grid overflow-hidden'>
+          <AnimatePresence initial={false}>
+            <motion.span
+              key={tool.id}
+              className='col-start-1 row-start-1 flex items-center gap-1.5'
+              initial={ENTER}
+              animate={{ ...SHOWN, transition: ENTER_TIMING }}
+              exit={{ ...LEAVE, transition: LEAVE_TIMING }}
+            >
+              <ToolLabel tool={tool} />
+            </motion.span>
+          </AnimatePresence>
+        </span>
+      </AnimatedSize>
+    </span>
   );
 }

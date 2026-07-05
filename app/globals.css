@@ -219,3 +219,10 @@ html[data-vt='theme']::view-transition-group(root) {
     @apply bg-background text-foreground;
   }
 }
+
+/* A region off screen holds its looping animations: with observers on the page, every frame of a running loop costs a frame of main-thread work, seen or not. */
+[data-offscreen] *,
+[data-offscreen] *::before,
+[data-offscreen] *::after {
+  animation-play-state: paused !important;
+}
