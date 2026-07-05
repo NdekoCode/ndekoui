@@ -1,8 +1,10 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { pressedSolidOf } from '@/registry/ndeko/lib/demonstration';
 import {
   EASE_OUT_STRONG,
   rowPresenceOf,
@@ -19,13 +21,6 @@ const DRAW = { duration: 0.5, ease: EASE_OUT_STRONG, delay: 0.12 };
 
 const SETTLE = { duration: 0.3, ease: EASE_OUT_STRONG };
 
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
-  }
-  return undefined;
-}
-
 function strokeStartOf(shouldReduceMotion: boolean | null) {
   if (shouldReduceMotion) {
     return { pathLength: 1 };
@@ -41,7 +36,7 @@ function markStartOf(shouldReduceMotion: boolean | null) {
 }
 
 function CalmMark() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
     <motion.span
@@ -123,7 +118,7 @@ type NeedsYouProps = {
 };
 
 export function NeedsYou({ pending, pressed, onDecide }: NeedsYouProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const isEmpty = pending.length === 0;
 

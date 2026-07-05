@@ -6,7 +6,6 @@ import {
   motion,
   useMotionValue,
   useMotionValueEvent,
-  useReducedMotion,
   useTransform,
 } from 'motion/react';
 import { useEffect, useId, useImperativeHandle, useRef, useState } from 'react';
@@ -17,6 +16,8 @@ import {
   useAutoplay,
   type AutoplayStep,
 } from '@/registry/ndeko/hooks/use-autoplay';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { hold, spokenUnless } from '@/registry/ndeko/lib/demonstration';
 import { ChevronDownIcon } from '@/registry/ndeko/lib/icons';
 import { springOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -30,7 +31,6 @@ import {
   PopoverTrigger,
 } from '@/registry/ndeko/ui/popover';
 
-import { hold, spokenUnless } from './_parts/demonstration';
 import { DrawnCheck } from './_parts/drawn-check';
 import { LabTile } from './_parts/lab-tile';
 import type { LabId } from './_parts/labs';
@@ -224,7 +224,7 @@ function EffortTrack({
   valueText,
   handleRef,
 }: EffortTrackProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const index = EFFORTS.indexOf(value);
   const share = useMotionValue(shareOfIndex(index));
   const knobX = useTransform(share, knobOffsetOf);
@@ -490,7 +490,7 @@ function ModelRows({
 }: ModelRowsProps) {
   const highlightId = useId();
   const groupRef = useRef<HTMLDivElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const spring = springOf(shouldReduceMotion);
   const pickedIndex = models.findIndex((model) => model.id === modelId);
 

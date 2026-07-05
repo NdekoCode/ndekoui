@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useAnimate,
-  useReducedMotion,
-} from 'motion/react';
+import { AnimatePresence, motion, useAnimate } from 'motion/react';
 import { useContext, useEffect, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
@@ -19,6 +14,7 @@ import {
   useAutoplay,
   type AutoplayStep,
 } from '@/registry/ndeko/hooks/use-autoplay';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import {
   createRunStore,
@@ -29,6 +25,14 @@ import {
   type RunEvent,
   type RunSnapshot,
 } from '@/registry/ndeko/lib/agent-run';
+import {
+  hold,
+  PRESS_LEAD_MS,
+  pressedQuietOf,
+  pressedSolidOf,
+  spokenUnless,
+  usePress,
+} from '@/registry/ndeko/lib/demonstration';
 import {
   ArrowUpIcon,
   BookOpenIcon,
@@ -69,14 +73,6 @@ import {
 } from '@/registry/ndeko/ui/tooltip';
 
 import { ClockSince } from './_parts/clock';
-import {
-  hold,
-  PRESS_LEAD_MS,
-  pressedQuietOf,
-  pressedSolidOf,
-  spokenUnless,
-  usePress,
-} from './_parts/demonstration';
 import { LevelBars } from '@/registry/ndeko/ui/level-bars';
 import {
   caretToEnd,
@@ -259,7 +255,7 @@ function StatusLine({
   isRetryPressed: boolean;
 }) {
   const [scope, animate] = useAnimate<HTMLDivElement>();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const kind = line.kind;
   const lastKind = useRef(kind);
   const text = lineTextOf(line);
@@ -684,7 +680,7 @@ function FileChips({
   files: TrayFile[];
   onRemove: (id: string) => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const hasFiles = files.length > 0;
   const fileIds = files.map((file) => file.id);
   const order = fileIds.join(' ');

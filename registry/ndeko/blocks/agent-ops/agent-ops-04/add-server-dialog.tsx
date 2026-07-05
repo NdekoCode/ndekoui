@@ -2,6 +2,7 @@
 
 import { useId } from 'react';
 
+import { pressedSolidOf } from '@/registry/ndeko/lib/demonstration';
 import { CheckIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
@@ -63,13 +64,6 @@ function panelOf(isOpen: boolean) {
     return 'scale-100 opacity-100';
   }
   return 'scale-95 opacity-0 duration-150';
-}
-
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
-  }
-  return undefined;
 }
 
 function pressedQuietOf(isPressed: boolean) {

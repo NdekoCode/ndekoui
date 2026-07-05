@@ -1,10 +1,15 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
+import {
+  pressedSolidOf,
+  spokenUnless,
+} from '@/registry/ndeko/lib/demonstration';
 import { FileIcon, PlusIcon } from '@/registry/ndeko/lib/icons';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -71,20 +76,6 @@ function conversationsOf(count: number) {
     return '1 open conversation';
   }
   return `${count} open conversations`;
-}
-
-function spokenUnless(isDemonstrating: boolean, message: string) {
-  if (isDemonstrating) {
-    return '';
-  }
-  return message;
-}
-
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
-  }
-  return undefined;
 }
 
 function plusClassOf(isPressed: boolean) {
@@ -233,7 +224,7 @@ export default function AgentReview02() {
     restart,
   } = useSession(SESSION);
   const { schedule } = useTimeouts();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const hasGuard = hasGuardOf(state);
   const fileLines = fileLinesOf(hasGuard);

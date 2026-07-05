@@ -1,9 +1,10 @@
 'use client';
 
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 import { useEffect, useId, useImperativeHandle, useRef, useState } from 'react';
 
 import { typingSteps, useAutoplay } from '@/registry/ndeko/hooks/use-autoplay';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Kbd, KbdGroup } from '@/registry/ndeko/ui/kbd';
@@ -61,7 +62,7 @@ function hintOf(suggestion: string) {
 }
 
 function WaitingDot() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const pulse = pulseOf(shouldReduceMotion);
 
   return (

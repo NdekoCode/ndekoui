@@ -1,8 +1,9 @@
 'use client';
 
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { seriesColorOf } from '@/registry/ndeko/lib/agent-run';
 import { springOf } from '@/registry/ndeko/lib/motion-presets';
 import { Badge } from '@/registry/ndeko/ui/badge';
@@ -52,7 +53,7 @@ type StackedBarProps = {
 
 /** The segments only measure themselves again when the period changes. */
 function StackedBar({ entries, total, period }: StackedBarProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const spring = springOf(shouldReduceMotion);
 
   return (

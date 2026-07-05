@@ -1,13 +1,15 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   pendingApprovalsOf,
   type RunSnapshot,
 } from '@/registry/ndeko/lib/agent-run';
 import { useSession } from '@/registry/ndeko/hooks/use-session';
+import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
 import { FeatherIcon, ListChecksIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -97,13 +99,6 @@ function announcementOf(phase: Phase) {
     return 'The assistant asks to send an email. Allow or deny it.';
   }
   return closingLineOf(phase) ?? '';
-}
-
-function spokenUnless(isDemonstrating: boolean, message: string) {
-  if (isDemonstrating) {
-    return '';
-  }
-  return message;
 }
 
 function useRevealedCount(total: number, isStreaming: boolean) {
@@ -326,7 +321,7 @@ export function AgentChat({
 }: AgentChatProps) {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const [pendingApproval] = pendingApprovalsOf(run);
   const approval = pendingApproval ?? null;

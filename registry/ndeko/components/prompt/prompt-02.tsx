@@ -1,7 +1,7 @@
 'use client';
 
 import { Menu as MenuPrimitive } from '@base-ui/react/menu';
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useContext, useEffect, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
@@ -11,7 +11,16 @@ import {
   useAutoplay,
   type AutoplayStep,
 } from '@/registry/ndeko/hooks/use-autoplay';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
+import {
+  hold,
+  PRESS_LEAD_MS,
+  pressedQuietOf,
+  pressedSolidOf,
+  spokenUnless,
+  usePress,
+} from '@/registry/ndeko/lib/demonstration';
 import {
   ArrowUpIcon,
   CalendarIcon,
@@ -57,14 +66,6 @@ import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { Textarea } from '@/registry/ndeko/ui/textarea';
 
 import { ClockSince } from './_parts/clock';
-import {
-  hold,
-  PRESS_LEAD_MS,
-  pressedQuietOf,
-  pressedSolidOf,
-  spokenUnless,
-  usePress,
-} from './_parts/demonstration';
 import { LabTile } from './_parts/lab-tile';
 import { MODELS, modelOf } from './_parts/labs';
 import { LevelBars } from '@/registry/ndeko/ui/level-bars';
@@ -503,7 +504,7 @@ type UploadRingProps = {
 };
 
 function UploadRing({ isDone, className }: UploadRingProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const transition = ringTransitionOf(shouldReduceMotion);
 
   return (
@@ -915,7 +916,7 @@ export default function Prompt02() {
   const dragDepth = useRef(0);
   const idCounter = useRef(0);
   const sentDraft = useRef('');
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const noticePresence = fadePresence();
   const stripPresence = risePresenceOf(shouldReduceMotion);
   const layoutSpring = springOf(shouldReduceMotion);

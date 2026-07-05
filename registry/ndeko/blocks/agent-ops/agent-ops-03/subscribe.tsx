@@ -1,8 +1,10 @@
 'use client';
 
-import { useAnimate, useReducedMotion } from 'motion/react';
+import { useAnimate } from 'motion/react';
 import { useId } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { pressedSolidOf } from '@/registry/ndeko/lib/demonstration';
 import { BellIcon, CheckIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Fold } from '@/registry/ndeko/ui/chat-motion';
@@ -27,13 +29,6 @@ const LABELS: Record<MorphState, string> = {
 const NUDGE = { x: [0, -4, 4, 0] };
 
 const NUDGE_TIMING = { duration: 0.28 };
-
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
-  }
-  return undefined;
-}
 
 function describedByOf(isInvalid: boolean, errorId: string) {
   if (isInvalid) {
@@ -61,7 +56,7 @@ export function Subscribe({
 }: SubscribeProps) {
   const fieldId = useId();
   const errorId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [fieldRef, animate] = useAnimate<HTMLDivElement>();
   const isInvalid = subscription === 'invalid';
   const isDone = subscription === 'done';

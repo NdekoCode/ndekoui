@@ -2,6 +2,7 @@
 
 import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
+import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
@@ -41,13 +42,6 @@ function detailVisibilityOf(isDetailOpen: boolean) {
     return 'block';
   }
   return 'hidden';
-}
-
-function spokenUnless(isDemonstrating: boolean, message: string) {
-  if (isDemonstrating) {
-    return '';
-  }
-  return message;
 }
 
 export default function AgentOps06() {

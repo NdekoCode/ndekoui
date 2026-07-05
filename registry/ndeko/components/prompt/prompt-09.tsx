@@ -6,7 +6,6 @@ import {
   Reorder,
   useAnimate,
   useDragControls,
-  useReducedMotion,
 } from 'motion/react';
 import {
   useEffect,
@@ -23,6 +22,8 @@ import {
   useAutoplay,
   type AutoplayStep,
 } from '@/registry/ndeko/hooks/use-autoplay';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -52,7 +53,6 @@ import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
 import { Textarea } from '@/registry/ndeko/ui/textarea';
 
-import { spokenUnless } from './_parts/demonstration';
 import { isOwnKey, isSendKey, useAutosize } from './_parts/use-autosize';
 import { nounOf, wordsOf } from './_parts/words';
 
@@ -122,7 +122,7 @@ function QueuedCard({
   const [draft, setDraft] = useState(item.text);
   const controls = useDragControls();
   const textButtonRef = useRef<HTMLButtonElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const isFirst = index === 0;
   const isLast = index === count - 1;
   const placeWord = placeWordOf(index);
@@ -482,7 +482,7 @@ function keyGlyphOf(isAnswering: boolean, hasText: boolean) {
 
 function UserBubble({ message }: { message: Message }) {
   const [scope, animate] = useAnimate<HTMLDivElement>();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const hasLanded = useRef(false);
 
   function settle() {
@@ -617,7 +617,7 @@ export default function Prompt09() {
   const idCounter = useRef(0);
   const layoutGroupId = useId();
   const isVisible = useDocumentVisible();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const layoutSpring = springOf(shouldReduceMotion);
   const streaming = messages.find((item) => item.status === 'streaming');
   const isAnswering = streaming !== undefined;

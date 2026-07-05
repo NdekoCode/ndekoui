@@ -1,9 +1,10 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll } from '@/components/core/word-roll';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ArrowLeftIcon,
   CheckIcon,
@@ -372,7 +373,7 @@ export function EndpointDetail({
   onBack,
   onRetry,
 }: EndpointDetailProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const health = healthOf(state, endpoint.id);
   const hours = hoursOf(state, endpoint);

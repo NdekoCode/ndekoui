@@ -1,6 +1,6 @@
 'use client';
 
-import { useInView, useReducedMotion } from 'motion/react';
+import { useInView } from 'motion/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { WordRoll } from '@/components/core/word-roll';
@@ -8,6 +8,8 @@ import {
   useAutoplay,
   type AutoplayStep,
 } from '@/registry/ndeko/hooks/use-autoplay';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
 import {
   CircleAlertIcon,
   LoaderIcon,
@@ -22,8 +24,6 @@ import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { Segments, type Segment } from '@/registry/ndeko/ui/segments';
 
 import { speechLevelAt } from '@/registry/ndeko/lib/speech-envelope';
-
-import { spokenUnless } from './_parts/demonstration';
 
 export type VoiceState = 'idle' | 'listening' | 'thinking' | 'speaking';
 
@@ -451,7 +451,7 @@ export function VoiceOrb({
   const inputRef = useRef(inputLevel);
   const outputRef = useRef(outputLevel);
   const isInView = useInView(canvasRef, { amount: 0.2 });
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     stateRef.current = state;

@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from 'react';
 
+import { pressedSolidOf } from '@/registry/ndeko/lib/demonstration';
 import { ArrowUpIcon, BotIcon, CheckIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -10,13 +11,6 @@ import { Input } from '@/registry/ndeko/ui/input';
 import type { ChatTurn } from './session';
 
 const WORD_MS = 48;
-
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
-  }
-  return undefined;
-}
 
 function useRevealedCount(total: number, isActive: boolean) {
   const [count, setCount] = useState(0);

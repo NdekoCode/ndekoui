@@ -1,12 +1,19 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useImperativeHandle, useRef, useState } from 'react';
 
 import {
   useAutoplay,
   type AutoplayStep,
 } from '@/registry/ndeko/hooks/use-autoplay';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import {
+  hold,
+  keyDelayOf,
+  prefixesOf,
+  spokenUnless,
+} from '@/registry/ndeko/lib/demonstration';
 import {
   EllipsisIcon,
   PencilIcon,
@@ -30,12 +37,6 @@ import {
 import { Input } from '@/registry/ndeko/ui/input';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 
-import {
-  hold,
-  keyDelayOf,
-  prefixesOf,
-  spokenUnless,
-} from './_parts/demonstration';
 import { Marked, includesQuery } from './_parts/marked';
 import { countOf } from './_parts/words';
 
@@ -291,7 +292,7 @@ function ConversationRow({
   onDelete,
   onPinChange,
 }: ConversationRowProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const spring = springOf(shouldReduceMotion);
   const pinPop = popOf(shouldReduceMotion);
   const tabIndex = tabIndexOf(isTabStop);
@@ -538,7 +539,7 @@ export function ConversationList({
   const listRef = useRef<HTMLUListElement>(null);
   const searchId = useId();
   const highlightId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const spring = springOf(shouldReduceMotion);
   const rowTransition = { ...rowPresence.transition, layout: spring };

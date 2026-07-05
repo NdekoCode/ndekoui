@@ -1,11 +1,14 @@
 'use client';
 
-import { useReducedMotion } from 'motion/react';
-
 import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll } from '@/components/core/word-roll';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
+import {
+  pressedSolidOf,
+  spokenUnless,
+} from '@/registry/ndeko/lib/demonstration';
 import { BotIcon, RocketIcon } from '@/registry/ndeko/lib/icons';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -79,20 +82,6 @@ function viewClassOf(isShown: boolean) {
   return 'hidden';
 }
 
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
-  }
-  return undefined;
-}
-
-function spokenUnless(isDemonstrating: boolean, message: string) {
-  if (isDemonstrating) {
-    return '';
-  }
-  return message;
-}
-
 export default function AgentOps07() {
   const {
     ref,
@@ -105,7 +94,7 @@ export default function AgentOps07() {
     restart,
   } = useSession(SESSION);
   const { schedule } = useTimeouts();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const changeCount = changesOf(state).length;
   const draftLine = draftLineOf(changeCount);
   const publishLine = publishLineOf(state, draftLine);

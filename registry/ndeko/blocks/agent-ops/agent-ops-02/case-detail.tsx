@@ -1,6 +1,7 @@
 'use client';
 
 import { formatCost, formatTokens } from '@/registry/ndeko/lib/agent-run';
+import { pressedSolidOf } from '@/registry/ndeko/lib/demonstration';
 import { CheckIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Badge } from '@/registry/ndeko/ui/badge';
@@ -9,13 +10,6 @@ import { Button } from '@/registry/ndeko/ui/button';
 import { CELL_WORD, StatusCell } from './cells';
 import { TARGETS, type EvalCase, type Output, type Target } from './data';
 import type { CellStatus, Verdict } from './session';
-
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
-  }
-  return undefined;
-}
 
 function hasResult(status: CellStatus) {
   const isPass = status === 'pass';

@@ -1,6 +1,7 @@
 'use client';
 
 import { useSession } from '@/registry/ndeko/hooks/use-session';
+import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
 import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
@@ -45,13 +46,6 @@ function waitingLineOf(waiting: number) {
     return '1 request waits on you';
   }
   return `${waiting} requests wait on you`;
-}
-
-function spokenUnless(isDemonstrating: boolean, message: string) {
-  if (isDemonstrating) {
-    return '';
-  }
-  return message;
 }
 
 export default function AgentOps01() {

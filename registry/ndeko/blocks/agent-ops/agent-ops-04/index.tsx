@@ -1,10 +1,15 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
+import {
+  pressedSolidOf,
+  spokenUnless,
+} from '@/registry/ndeko/lib/demonstration';
 import { PlusIcon } from '@/registry/ndeko/lib/icons';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { Badge } from '@/registry/ndeko/ui/badge';
@@ -85,20 +90,6 @@ function reachLineOf(reach: Reach, total: number) {
   return `${reach.connected} of ${servers} connected, ${tools} on, ${reach.askFirst} ask first`;
 }
 
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
-  }
-  return undefined;
-}
-
-function spokenUnless(isDemonstrating: boolean, message: string) {
-  if (isDemonstrating) {
-    return '';
-  }
-  return message;
-}
-
 type ReachFigureProps = {
   label: string;
   value: number;
@@ -136,7 +127,7 @@ export default function AgentOps04() {
     restart,
   } = useSession(SESSION);
   const { schedule } = useTimeouts();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const reach = reachOf(state);
   const serverCount = state.servers.length;

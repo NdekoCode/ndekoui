@@ -1,9 +1,11 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { seriesColorOf } from '@/registry/ndeko/lib/agent-run';
+import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
 import { PauseIcon, PlayIcon, StopIcon } from '@/registry/ndeko/lib/icons';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -102,13 +104,6 @@ function controlVariantOf(control: Actor) {
   return 'outline';
 }
 
-function spokenUnless(isDemonstrating: boolean, message: string) {
-  if (isDemonstrating) {
-    return '';
-  }
-  return message;
-}
-
 function pressedOf(isPressed: boolean) {
   if (isPressed) {
     return 'scale-[0.94]';
@@ -158,7 +153,7 @@ type ActionLogProps = {
 };
 
 function ActionLog({ frames, shownId, onView }: ActionLogProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
 
   return (
@@ -203,7 +198,7 @@ export default function AgentReview04() {
     isFinished,
     restart,
   } = useSession(SESSION);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const live = liveFrameOf(state);
   const shown = shownFrameOf(state);

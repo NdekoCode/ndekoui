@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CheckIcon,
   FileTextIcon,
@@ -177,7 +178,7 @@ export function Configure({
   onAddFile,
 }: ConfigureProps) {
   const instructionsId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const count = state.instructions.length;
   const countText = COUNT_FORMAT.format(count);

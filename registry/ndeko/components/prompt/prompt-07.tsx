@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useImperativeHandle, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
@@ -9,7 +9,17 @@ import {
   useAutoplay,
   type AutoplayStep,
 } from '@/registry/ndeko/hooks/use-autoplay';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
+import {
+  hold,
+  keyDelayOf,
+  prefixesOf,
+  PRESS_LEAD_MS,
+  pressedSolidOf,
+  spokenUnless,
+  usePress,
+} from '@/registry/ndeko/lib/demonstration';
 import { FileTextIcon, SearchIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { springOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -27,15 +37,6 @@ import {
   SelectValue,
 } from '@/registry/ndeko/ui/select';
 
-import {
-  hold,
-  keyDelayOf,
-  prefixesOf,
-  PRESS_LEAD_MS,
-  pressedSolidOf,
-  spokenUnless,
-  usePress,
-} from './_parts/demonstration';
 import { includesQuery, Marked } from './_parts/marked';
 import { countOf } from './_parts/words';
 
@@ -543,7 +544,7 @@ function TemplateList({
   const listRef = useRef<HTMLUListElement>(null);
   const highlightId = useId();
   const searchId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const spring = springOf(shouldReduceMotion);
   const matching = templates.filter((template) =>
     includesQuery(searchTextOf(template), query)

@@ -2,6 +2,7 @@
 
 import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
+import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
 import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
@@ -64,13 +65,6 @@ function demoReadingOf(isDemonstrating: boolean, reading: Reading | null) {
     return reading;
   }
   return null;
-}
-
-function spokenUnless(isDemonstrating: boolean, message: string) {
-  if (isDemonstrating) {
-    return '';
-  }
-  return message;
 }
 
 export default function AgentOps03() {

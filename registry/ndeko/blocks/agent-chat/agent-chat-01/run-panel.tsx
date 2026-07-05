@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import type {
   PlanStep,
   RunSnapshot,
@@ -55,7 +56,7 @@ function strokeStartOf(shouldReduceMotion: boolean | null) {
 
 /** The check of a finished step draws itself when the step finishes. */
 function DrawnCheck() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
     <span className='chip-3d inline-flex size-[18px] items-center justify-center rounded-full [--chip:var(--primary)]'>
@@ -177,7 +178,7 @@ type RunPanelProps = {
 };
 
 export function RunPanel({ run, brands = {}, className }: RunPanelProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const hasStarted = run.status !== 'idle';
   const hasCalls = run.calls.length > 0;

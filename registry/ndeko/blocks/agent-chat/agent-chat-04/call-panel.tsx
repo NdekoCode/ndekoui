@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   AudioLinesIcon,
   MicIcon,
@@ -98,7 +99,7 @@ export function VoiceDisc({ mode, isActive }: VoiceDiscProps) {
   const haloRef = useRef<HTMLSpanElement>(null);
   const outerRef = useRef<HTMLSpanElement>(null);
   const intensityRef = useRef(MODE_INTENSITY[mode]);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     intensityRef.current = MODE_INTENSITY[mode];
@@ -210,7 +211,7 @@ function lineToneOf(isLatest: boolean) {
 }
 
 function Transcript({ lines }: { lines: TranscriptLine[] }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const recent = lines.slice(-3);
   const latest = recent.at(-1);

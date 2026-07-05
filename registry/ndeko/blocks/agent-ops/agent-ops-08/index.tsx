@@ -11,12 +11,14 @@ import {
   type DragEndEvent,
   type DragStartEvent,
 } from '@dnd-kit/core';
-import { LayoutGroup, useReducedMotion } from 'motion/react';
+import { LayoutGroup } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import { formatCost } from '@/registry/ndeko/lib/agent-run';
+import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { ClockGate } from '@/registry/ndeko/ui/live-duration';
@@ -87,13 +89,6 @@ function dropAnimationOf(shouldReduceMotion: boolean | null) {
   return undefined;
 }
 
-function spokenUnless(isDemonstrating: boolean, message: string) {
-  if (isDemonstrating) {
-    return '';
-  }
-  return message;
-}
-
 export default function AgentOps08() {
   const {
     ref,
@@ -106,7 +101,7 @@ export default function AgentOps08() {
     restart,
   } = useSession(SESSION);
   const { schedule } = useTimeouts();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const groupId = useId();
   const dndId = useId();
   const [draggedId, setDraggedId] = useState<string | null>(null);

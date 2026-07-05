@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { formatCost, seriesColorOf } from '@/registry/ndeko/lib/agent-run';
 import { CheckIcon, MousePointerIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
@@ -209,7 +210,7 @@ type MarginCommentProps = {
 };
 
 function MarginComment({ status, onResolve }: MarginCommentProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const agent = AGENTS[COMMENT.author];
   const isShown = status === 'typing' || status === 'posted';

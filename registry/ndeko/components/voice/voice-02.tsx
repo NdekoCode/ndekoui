@@ -1,6 +1,5 @@
 'use client';
 
-import { useReducedMotion } from 'motion/react';
 import {
   useContext,
   useEffect,
@@ -16,6 +15,15 @@ import {
   useAutoplay,
   type AutoplayStep,
 } from '@/registry/ndeko/hooks/use-autoplay';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import {
+  hold,
+  PRESS_LEAD_MS,
+  pressedQuietOf,
+  pressedSolidOf,
+  spokenUnless,
+  usePress,
+} from '@/registry/ndeko/lib/demonstration';
 import { PauseIcon, PlayIcon, RotateCcwIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -25,15 +33,6 @@ import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 
 import { formatClock, spokenClockOf } from '@/registry/ndeko/lib/media-clock';
 import { noiseAt } from '@/registry/ndeko/lib/speech-envelope';
-
-import {
-  hold,
-  PRESS_LEAD_MS,
-  pressedQuietOf,
-  pressedSolidOf,
-  spokenUnless,
-  usePress,
-} from './_parts/demonstration';
 
 export type TimedWord = {
   text: string;
@@ -188,7 +187,7 @@ type TranscriptProps = {
 function Transcript({ handleRef, words, startIndex, onSeek }: TranscriptProps) {
   const [wordIndex, setWordIndex] = useState(startIndex);
   const containerRef = useRef<HTMLDivElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   useImperativeHandle(handleRef, () => ({ show: setWordIndex }));
 

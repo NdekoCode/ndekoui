@@ -4,6 +4,10 @@ import { useRef, useState } from 'react';
 
 import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
+import {
+  pressedSolidOf,
+  spokenUnless,
+} from '@/registry/ndeko/lib/demonstration';
 import { ArrowUpIcon, CodeIcon, FeatherIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -56,20 +60,6 @@ function announcementOf(stage: Stage) {
     return 'The second version is ready. Changes shows what moved.';
   }
   return '';
-}
-
-function spokenUnless(isDemonstrating: boolean, message: string) {
-  if (isDemonstrating) {
-    return '';
-  }
-  return message;
-}
-
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
-  }
-  return undefined;
 }
 
 function isSendKey(event: React.KeyboardEvent<HTMLTextAreaElement>) {

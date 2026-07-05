@@ -1,8 +1,10 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { pressedSolidOf } from '@/registry/ndeko/lib/demonstration';
 import { CheckIcon, PlusIcon } from '@/registry/ndeko/lib/icons';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -61,13 +63,6 @@ function rowToneOf(isSelected: boolean) {
 function pressedQuietOf(isPressed: boolean) {
   if (isPressed) {
     return 'scale-[0.985] bg-foreground/[0.07]';
-  }
-  return undefined;
-}
-
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
   }
   return undefined;
 }
@@ -304,7 +299,7 @@ export function EndpointList({
   onOpenForm,
   onCloseForm,
 }: EndpointListProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const form = state.form;
   const isFormOpen = form.phase !== 'closed';

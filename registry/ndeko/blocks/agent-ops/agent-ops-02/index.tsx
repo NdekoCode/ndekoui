@@ -1,6 +1,10 @@
 'use client';
 
 import { useSession } from '@/registry/ndeko/hooks/use-session';
+import {
+  pressedSolidOf,
+  spokenUnless,
+} from '@/registry/ndeko/lib/demonstration';
 import { PlayIcon, RocketIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
@@ -126,20 +130,6 @@ function shipVariantOf(isReady: boolean) {
     return 'default';
   }
   return 'outline';
-}
-
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
-  }
-  return undefined;
-}
-
-function spokenUnless(isDemonstrating: boolean, message: string) {
-  if (isDemonstrating) {
-    return '';
-  }
-  return message;
 }
 
 function Legend() {

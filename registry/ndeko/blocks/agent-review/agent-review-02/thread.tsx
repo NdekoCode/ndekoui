@@ -1,8 +1,10 @@
 'use client';
 
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { seriesColorOf } from '@/registry/ndeko/lib/agent-run';
+import { pressedSolidOf } from '@/registry/ndeko/lib/demonstration';
 import { ChevronDownIcon, CircleCheckIcon } from '@/registry/ndeko/lib/icons';
 import { EASE_OUT_STRONG } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -54,7 +56,7 @@ function strokeStartOf(shouldReduceMotion: boolean | null) {
 }
 
 function DrawnCheck() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
     <span className='chip-3d inline-flex size-[18px] items-center justify-center rounded-full [--chip:var(--success)]'>
@@ -107,13 +109,6 @@ function morphStateOf(apply: ApplyStatus): MorphState {
     return 'busy';
   }
   return 'idle';
-}
-
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
-  }
-  return undefined;
 }
 
 function pressedQuietOf(isPressed: boolean) {

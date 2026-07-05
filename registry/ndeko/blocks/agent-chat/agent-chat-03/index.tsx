@@ -1,9 +1,14 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
+import {
+  pressedSolidOf,
+  spokenUnless,
+} from '@/registry/ndeko/lib/demonstration';
 import {
   ArrowUpIcon,
   FeatherIcon,
@@ -69,7 +74,7 @@ function strokeStartOf(shouldReduceMotion: boolean | null) {
 }
 
 function DrawnCheck() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
     <span className='chip-3d inline-flex size-[18px] items-center justify-center rounded-full [--chip:var(--primary)]'>
@@ -138,20 +143,6 @@ function closingLineOf(cardsReady: number, live: LiveStatus) {
   return null;
 }
 
-function spokenUnless(isDemonstrating: boolean, message: string) {
-  if (isDemonstrating) {
-    return '';
-  }
-  return message;
-}
-
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
-  }
-  return undefined;
-}
-
 function isSendKey(event: React.KeyboardEvent<HTMLTextAreaElement>) {
   const isPlainEnter = event.key === 'Enter' && !event.shiftKey;
   return isPlainEnter && !event.nativeEvent.isComposing;
@@ -180,7 +171,7 @@ export default function AgentChat03() {
     restart,
   } = useSession(SESSION);
   const { schedule } = useTimeouts();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const hasAsked = state.ask !== null;
   const visibleChecks = CHECK_LABELS.filter(

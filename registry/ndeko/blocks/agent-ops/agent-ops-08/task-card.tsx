@@ -3,6 +3,7 @@
 import { useId, useRef, useState } from 'react';
 
 import { formatCost, seriesColorOf } from '@/registry/ndeko/lib/agent-run';
+import { pressedSolidOf } from '@/registry/ndeko/lib/demonstration';
 import { CheckIcon, EllipsisIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -21,13 +22,6 @@ import type { Task } from './session';
 
 export const CARD_SURFACE =
   'bg-card hairline-ring ring-border rounded-lg shadow-[0_1px_2px_rgb(0_0_0/0.04)] dark:bg-foreground/[0.04]';
-
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
-  }
-  return undefined;
-}
 
 type GemStyle = React.CSSProperties & { '--gem': string };
 

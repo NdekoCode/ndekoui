@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import {
   useId,
   useImperativeHandle,
@@ -15,6 +15,16 @@ import {
   useAutoplay,
   type AutoplayStep,
 } from '@/registry/ndeko/hooks/use-autoplay';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import {
+  hold,
+  keyDelayOf,
+  prefixesOf,
+  PRESS_LEAD_MS,
+  pressedQuietOf,
+  spokenUnless,
+  usePress,
+} from '@/registry/ndeko/lib/demonstration';
 import {
   CalendarIcon,
   CircleCheckIcon,
@@ -34,15 +44,6 @@ import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 
-import {
-  hold,
-  keyDelayOf,
-  prefixesOf,
-  PRESS_LEAD_MS,
-  pressedQuietOf,
-  spokenUnless,
-  usePress,
-} from './_parts/demonstration';
 import { useAutosize } from './_parts/use-autosize';
 import { nounOf } from './_parts/words';
 
@@ -533,7 +534,7 @@ export function AskFilter({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const mirrorRef = useRef<HTMLDivElement>(null);
   const fieldId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const spring = springOf(shouldReduceMotion);
   const chipTransition = { ...fadePresence().transition, layout: spring };

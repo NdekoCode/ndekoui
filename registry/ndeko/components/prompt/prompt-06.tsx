@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import {
   useEffect,
   useId,
@@ -14,7 +14,17 @@ import {
   useAutoplay,
   type AutoplayStep,
 } from '@/registry/ndeko/hooks/use-autoplay';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
+import {
+  hiddenIf,
+  hold,
+  PRESS_LEAD_MS,
+  pressedQuietOf,
+  pressedSolidOf,
+  spokenUnless,
+  usePress,
+} from '@/registry/ndeko/lib/demonstration';
 import {
   ArrowUpIcon,
   CheckIcon,
@@ -30,15 +40,6 @@ import { TextLoader } from '@/registry/ndeko/ui/chat-loader';
 import { Input } from '@/registry/ndeko/ui/input';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 
-import {
-  hiddenIf,
-  hold,
-  PRESS_LEAD_MS,
-  pressedQuietOf,
-  pressedSolidOf,
-  spokenUnless,
-  usePress,
-} from './_parts/demonstration';
 import { isOwnKey, useAutosize } from './_parts/use-autosize';
 
 export type RewriteRequest = {
@@ -294,7 +295,7 @@ function arrivalDelaysOf(parts: DiffPart[]) {
 }
 
 function TrackedChange({ parts, isAccepting, phraseRef }: TrackedChangeProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const delays = arrivalDelaysOf(parts);
   const arrival = arrivalOf(shouldReduceMotion);
   const removedOpacity = removedOpacityOf(isAccepting);
@@ -475,7 +476,7 @@ export function RewriteInPlace({
   const acceptRef = useRef<HTMLButtonElement>(null);
   const request = useRef<AbortController | null>(null);
   const hintId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const barPresence = barPresenceOf(shouldReduceMotion, isDemonstrated);
   const canMoveFocus = !isDemonstrated;
   const isReviewing = mode === 'review';

@@ -4,6 +4,10 @@ import { useLayoutEffect, useRef } from 'react';
 
 import { WordRoll } from '@/components/core/word-roll';
 import { useSession } from '@/registry/ndeko/hooks/use-session';
+import {
+  pressedSolidOf,
+  spokenUnless,
+} from '@/registry/ndeko/lib/demonstration';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -93,20 +97,6 @@ function pendingPhraseOf(count: number) {
     return '1 suggestion to decide';
   }
   return `${count} suggestions to decide`;
-}
-
-function spokenUnless(isDemonstrating: boolean, message: string) {
-  if (isDemonstrating) {
-    return '';
-  }
-  return message;
-}
-
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
-  }
-  return undefined;
 }
 
 function pointersHiddenOf(view: DocView) {

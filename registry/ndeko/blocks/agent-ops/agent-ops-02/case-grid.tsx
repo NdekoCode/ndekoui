@@ -1,7 +1,8 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Badge } from '@/registry/ndeko/ui/badge';
@@ -131,7 +132,7 @@ function CaseRow({
   onOpen,
   renderDetail,
 }: CaseRowProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const candidate = candidateStatusOf(state, entry.id);
   const mark = rowMarkOf(state, entry, candidate);
@@ -202,7 +203,7 @@ export function CaseGrid({
   onShowAll,
   renderDetail,
 }: CaseGridProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const isEmpty = cases.length === 0;
 

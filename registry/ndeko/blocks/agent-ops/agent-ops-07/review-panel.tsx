@@ -1,8 +1,10 @@
 'use client';
 
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 import { useId } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { pressedSolidOf } from '@/registry/ndeko/lib/demonstration';
 import {
   CircleCheckIcon,
   CircleXIcon,
@@ -71,13 +73,6 @@ function panelOf(isOpen: boolean) {
     return 'scale-100 opacity-100';
   }
   return 'scale-95 opacity-0 duration-150';
-}
-
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
-  }
-  return undefined;
 }
 
 function idleLabelOf(publish: PublishStatus, version: number) {
@@ -152,7 +147,7 @@ function SampleRow({ sample, status }: SampleRowProps) {
 }
 
 function LiveMark() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
     <motion.span

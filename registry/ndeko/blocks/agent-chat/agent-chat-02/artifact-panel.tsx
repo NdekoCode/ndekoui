@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
+import { pressedSolidOf } from '@/registry/ndeko/lib/demonstration';
 import { CodeIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
@@ -71,13 +72,6 @@ function versionOf(value: 'v1' | 'v2'): Version {
     return 2;
   }
   return 1;
-}
-
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
-  }
-  return undefined;
 }
 
 function useRevealedCount(total: number, isStreaming: boolean) {

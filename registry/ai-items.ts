@@ -16,6 +16,17 @@ export const aiFoundationItems: RegistryItemDefinition[] = [
     categories: ['foundations'],
   },
   {
+    name: 'demonstration',
+    type: 'registry:lib',
+    title: 'Demonstration',
+    description:
+      'What a piece needs to show itself: a press that reads from across the page, typed text key by key, and a status that stays silent until a person takes over.',
+    files: [
+      { path: 'registry/ndeko/lib/demonstration.ts', type: 'registry:lib' },
+    ],
+    categories: ['foundations'],
+  },
+  {
     name: 'hatch',
     type: 'registry:lib',
     title: 'Hatch',

@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import {
   useContext,
   useEffect,
@@ -16,7 +16,17 @@ import {
   useAutoplay,
   type AutoplayStep,
 } from '@/registry/ndeko/hooks/use-autoplay';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
+import {
+  hiddenIf,
+  hold,
+  PRESS_LEAD_MS,
+  pressedQuietOf,
+  pressedSolidOf,
+  spokenUnless,
+  usePress,
+} from '@/registry/ndeko/lib/demonstration';
 import {
   CheckIcon,
   CircleAlertIcon,
@@ -37,16 +47,6 @@ import { Textarea } from '@/registry/ndeko/ui/textarea';
 
 import { formatClock } from '@/registry/ndeko/lib/media-clock';
 import { LevelBars } from '@/registry/ndeko/ui/level-bars';
-
-import {
-  hiddenIf,
-  hold,
-  PRESS_LEAD_MS,
-  pressedQuietOf,
-  pressedSolidOf,
-  spokenUnless,
-  usePress,
-} from './_parts/demonstration';
 
 export type DictationTake = {
   /** How long the person spoke, in milliseconds. */
@@ -217,7 +217,7 @@ export function DictationField({
   const lastTake = useRef<DictationTake | null>(null);
   const request = useRef<AbortController | null>(null);
   const fieldId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const presence = risePresenceOf(shouldReduceMotion);
   const keyLook = keyLookOf(phase);
   const isRecording = phase === 'recording';

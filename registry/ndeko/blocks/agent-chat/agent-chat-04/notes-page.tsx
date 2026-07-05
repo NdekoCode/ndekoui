@@ -1,7 +1,8 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CalendarIcon, FeatherIcon } from '@/registry/ndeko/lib/icons';
 import {
   EASE_OUT_STRONG,
@@ -40,7 +41,7 @@ function strokeStartOf(shouldReduceMotion: boolean | null) {
 
 /** The tick of a finished to-do draws itself, whoever finished it. */
 function DrawnCheck() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
     <span className='chip-3d inline-flex size-[18px] items-center justify-center rounded-full [--chip:var(--primary)]'>
@@ -183,7 +184,7 @@ export function NotesPage({
   onToggleTodo,
   onShare,
 }: NotesPageProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const risePresence = risePresenceOf(shouldReduceMotion);
   const modeWord = modeWordOf(isEnded);

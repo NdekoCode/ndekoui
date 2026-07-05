@@ -1,8 +1,10 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { pressedSolidOf } from '@/registry/ndeko/lib/demonstration';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Badge } from '@/registry/ndeko/ui/badge';
@@ -45,13 +47,6 @@ function rowToneOf(isActive: boolean) {
     return 'bg-primary/10';
   }
   return 'hover:bg-foreground/[0.04]';
-}
-
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
-  }
-  return undefined;
 }
 
 type FlaggedBodyProps = {
@@ -154,7 +149,7 @@ export function FieldList({
   onConfirm,
   onEdit,
 }: FieldListProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const fields = FIELDS.slice(0, shown);
 

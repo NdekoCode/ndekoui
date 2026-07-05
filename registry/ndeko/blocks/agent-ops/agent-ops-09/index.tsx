@@ -12,11 +12,16 @@ import {
   type DragOverEvent,
   type DragStartEvent,
 } from '@dnd-kit/core';
-import { LayoutGroup, useReducedMotion } from 'motion/react';
+import { LayoutGroup } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
+import {
+  pressedSolidOf,
+  spokenUnless,
+} from '@/registry/ndeko/lib/demonstration';
 import {
   CheckIcon,
   DownloadIcon,
@@ -170,20 +175,6 @@ function pressedQuietOf(isPressed: boolean) {
   return undefined;
 }
 
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
-  }
-  return undefined;
-}
-
-function spokenUnless(isDemonstrating: boolean, message: string) {
-  if (isDemonstrating) {
-    return '';
-  }
-  return message;
-}
-
 const ASK_FAILED_LINE =
   'No field in that question. Name a figure and a field, like cost by model per day.';
 
@@ -213,7 +204,7 @@ export default function AgentOps09() {
     restart,
   } = useSession(SESSION);
   const { schedule } = useTimeouts();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const travel = springOf(shouldReduceMotion);
   const groupId = useId();
   const dndId = useId();

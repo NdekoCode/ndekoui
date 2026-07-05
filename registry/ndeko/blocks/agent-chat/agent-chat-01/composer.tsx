@@ -1,8 +1,10 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import type { ApprovalRequest } from '@/registry/ndeko/lib/agent-run';
+import { pressedSolidOf } from '@/registry/ndeko/lib/demonstration';
 import { ArrowUpIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
@@ -34,13 +36,6 @@ function morphOf(shouldReduceMotion: boolean | null) {
     return MORPH_FADE;
   }
   return MORPH;
-}
-
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
-  }
-  return undefined;
 }
 
 function isSendKey(event: React.KeyboardEvent<HTMLTextAreaElement>) {
@@ -184,7 +179,7 @@ export function Composer({
   onDecide,
   ...field
 }: ComposerProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const morph = morphOf(shouldReduceMotion);
 
   return (

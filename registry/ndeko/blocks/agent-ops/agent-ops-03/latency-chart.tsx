@@ -1,8 +1,9 @@
 'use client';
 
-import { motion, useReducedMotion, type Transition } from 'motion/react';
+import { motion, type Transition } from 'motion/react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { seriesColorOf, type SeriesSlot } from '@/registry/ndeko/lib/agent-run';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Badge } from '@/registry/ndeko/ui/badge';
@@ -121,7 +122,7 @@ type LatencyChartProps = {
 };
 
 export function LatencyChart({ service }: LatencyChartProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const move = moveOf(shouldReduceMotion);
   const hourCount = service.p50.length;
   const lastHour = hourCount - 1;

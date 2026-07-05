@@ -1,14 +1,10 @@
 'use client';
 
 import { useDraggable, useDroppable } from '@dnd-kit/core';
-import {
-  LayoutGroup,
-  motion,
-  useReducedMotion,
-  type Transition,
-} from 'motion/react';
+import { LayoutGroup, motion, type Transition } from 'motion/react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { springOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
 
@@ -118,7 +114,7 @@ export function BoardLane({
   onSendBack,
   onMove,
 }: BoardLaneProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const travel = springOf(shouldReduceMotion);
   const { setNodeRef, isOver } = useDroppable({ id: lane.id });
   const count = tasks.length;

@@ -1,7 +1,8 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { Chip } from '@/registry/ndeko/ui/chip';
 
@@ -66,7 +67,7 @@ type IncidentCardProps = {
 };
 
 function IncidentCard({ incident, updatesOut }: IncidentCardProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const service = serviceOf(incident.serviceId);
   const shown = incident.updates.slice(0, updatesOut);
@@ -106,7 +107,7 @@ type IncidentsProps = {
 };
 
 export function Incidents({ liveUpdatesOut }: IncidentsProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const hasLive = liveUpdatesOut > 0;
 

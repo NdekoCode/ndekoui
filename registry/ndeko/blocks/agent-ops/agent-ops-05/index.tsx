@@ -3,6 +3,7 @@
 import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import { seriesColorOf } from '@/registry/ndeko/lib/agent-run';
+import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
 import { CheckIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
@@ -105,13 +106,6 @@ function statusToneOf(connection: Connection) {
     return 'text-muted-foreground';
   }
   return 'text-foreground';
-}
-
-function spokenUnless(isDemonstrating: boolean, message: string) {
-  if (isDemonstrating) {
-    return '';
-  }
-  return message;
 }
 
 export default function AgentOps05() {

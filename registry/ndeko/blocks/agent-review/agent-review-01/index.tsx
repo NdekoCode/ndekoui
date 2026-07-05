@@ -2,6 +2,10 @@
 
 import { WordRoll } from '@/components/core/word-roll';
 import { useSession } from '@/registry/ndeko/hooks/use-session';
+import {
+  pressedSolidOf,
+  spokenUnless,
+} from '@/registry/ndeko/lib/demonstration';
 import { GitBranchIcon, GitMergeIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
@@ -77,20 +81,6 @@ function branchWordOf(isDeleted: boolean) {
     return 'Deleted';
   }
   return 'Open';
-}
-
-function spokenUnless(isDemonstrating: boolean, message: string) {
-  if (isDemonstrating) {
-    return '';
-  }
-  return message;
-}
-
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
-  }
-  return undefined;
 }
 
 function StatusChip({ status }: { status: IssueStatus }) {

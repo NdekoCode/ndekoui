@@ -1,8 +1,10 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { seriesColorOf } from '@/registry/ndeko/lib/agent-run';
+import { pressedSolidOf } from '@/registry/ndeko/lib/demonstration';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import {
   Avatar,
@@ -59,13 +61,6 @@ function actorNameOf(actor: Activity['actor']) {
     return CODER.name;
   }
   return REVIEWER.name;
-}
-
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
-  }
-  return undefined;
 }
 
 type PlanBodyProps = {
@@ -179,7 +174,7 @@ type TimelineProps = PlanBodyProps & {
 };
 
 export function Timeline({ events, plan, pressed, onDecide }: TimelineProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const lastId = events.at(-1);
 

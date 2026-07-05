@@ -4,6 +4,10 @@ import { useLayoutEffect, useRef, useState } from 'react';
 
 import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
+import {
+  pressedSolidOf,
+  spokenUnless,
+} from '@/registry/ndeko/lib/demonstration';
 import { FileTextIcon } from '@/registry/ndeko/lib/icons';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
 import { ClockGate } from '@/registry/ndeko/ui/live-duration';
@@ -97,20 +101,6 @@ function activeOf(
     return pointed;
   }
   return null;
-}
-
-function spokenUnless(isDemonstrating: boolean, message: string) {
-  if (isDemonstrating) {
-    return '';
-  }
-  return message;
-}
-
-function pressedSolidOf(isPressed: boolean) {
-  if (isPressed) {
-    return 'scale-[0.94] bg-primary/85';
-  }
-  return undefined;
 }
 
 function middleOf(box: DOMRect) {

@@ -2,6 +2,7 @@
 
 import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
+import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
 import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
@@ -35,13 +36,6 @@ function announcementOf(status: CallStatus, latestTodo: string | undefined) {
     return `To-do added: ${latestTodo}`;
   }
   return '';
-}
-
-function spokenUnless(isDemonstrating: boolean, message: string) {
-  if (isDemonstrating) {
-    return '';
-  }
-  return message;
 }
 
 export default function AgentChat04() {

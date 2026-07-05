@@ -1,7 +1,8 @@
 'use client';
 
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { EASE_OUT_STRONG } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
 
@@ -38,7 +39,7 @@ type DrawnCheckProps = {
  * `AnimatePresence initial={false}` the mark of the row selected on mount is simply there.
  */
 export function DrawnCheck({ label, className }: DrawnCheckProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const hasLabel = Boolean(label);
 
   return (

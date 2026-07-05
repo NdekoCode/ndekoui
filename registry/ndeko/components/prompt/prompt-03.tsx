@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import {
   useId,
   useImperativeHandle,
@@ -14,6 +14,13 @@ import {
   useAutoplay,
   type AutoplayStep,
 } from '@/registry/ndeko/hooks/use-autoplay';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import {
+  hold,
+  keyDelayOf,
+  prefixesOf,
+  spokenUnless,
+} from '@/registry/ndeko/lib/demonstration';
 import {
   CheckIcon,
   ChevronsUpDownIcon,
@@ -45,12 +52,6 @@ import {
 import { Segments, type Segment } from '@/registry/ndeko/ui/segments';
 import { Switch } from '@/registry/ndeko/ui/switch';
 
-import {
-  hold,
-  keyDelayOf,
-  prefixesOf,
-  spokenUnless,
-} from './_parts/demonstration';
 import { DrawnCheck } from './_parts/drawn-check';
 import { LabTile } from './_parts/lab-tile';
 import {
@@ -635,7 +636,7 @@ function ModelGroupRows({
 }: ModelGroupRowsProps) {
   const headingId = `${baseId}-lab-${group.lab.id}`;
   const highlightId = `${baseId}-highlight`;
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const travel = highlightTravelOf(shouldReduceMotion);
 
   return (
@@ -739,7 +740,7 @@ export function ModelPicker({
   const [isInlineOpen, setIsInlineOpen] = useState(true);
   const searchRef = useRef<HTMLInputElement>(null);
   const panelId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const inlinePresence = rowPresenceOf(shouldReduceMotion);
   const isWide = useSyncExternalStore(
     subscribeToWidth,
