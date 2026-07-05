@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-prefers-reduced-motion",
+  "title": "Use prefers reduced motion",
+  "description": "The use-prefers-reduced-motion hook used by ndekoui components.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ndeko/hooks/use-prefers-reduced-motion.ts",
+      "content": "'use client';\n\nimport { useSyncExternalStore } from 'react';\n\nconst REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';\n\nfunction subscribeToPreference(onChange: () => void) {\n  const media = window.matchMedia(REDUCED_MOTION_QUERY);\n  media.addEventListener('change', onChange);\n  return () => media.removeEventListener('change', onChange);\n}\n\nfunction readPreference() {\n  return window.matchMedia(REDUCED_MOTION_QUERY).matches;\n}\n\nfunction readOnServer() {\n  return false;\n}\n\n/**\n * The reduced motion preference, read so the first client render matches the server and so a change\n * of the setting is followed. Use it wherever the preference changes what is rendered: a hook that\n * reads the setting during the first render makes the page fail to hydrate for the people who set it.\n */\nexport function usePrefersReducedMotion() {\n  return useSyncExternalStore(\n    subscribeToPreference,\n    readPreference,\n    readOnServer\n  );\n}\n",
+      "type": "registry:hook"
+    }
+  ],
+  "categories": [
+    "hooks"
+  ],
+  "type": "registry:hook"
+}

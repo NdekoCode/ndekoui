@@ -3,13 +3,12 @@
   "name": "footers-03",
   "title": "Footer with a wordmark",
   "description": "Three lists of links beside the brand and a contact address, a back to top button whose arrow travels on hover, and the product name set across the full width at the bottom.",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": [],
   "registryDependencies": [
     "https://ui.ndekocode.dev/r/button.json",
     "https://ui.ndekocode.dev/r/icons.json",
     "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
     "https://ui.ndekocode.dev/r/utils.json"
   ],
   "files": [
@@ -21,7 +20,7 @@
     },
     {
       "path": "registry/ndeko/blocks/footers/footers-03/back-to-top.tsx",
-      "content": "'use client';\n\nimport { useReducedMotion } from 'motion/react';\n\nimport { ArrowRightIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst TRAVEL = '-rotate-90 transition-[translate] ease-(--ease-out-strong)';\n\nconst LEAVING_ARROW =\n  'duration-200 group-hover/button:-translate-y-full group-hover/button:duration-150';\n\nconst ARRIVING_ARROW =\n  'absolute inset-0 translate-y-full duration-150 group-hover/button:translate-y-0 group-hover/button:duration-200';\n\nfunction scrollBehaviorOf(shouldReduceMotion: boolean | null): ScrollBehavior {\n  if (shouldReduceMotion) {\n    return 'auto';\n  }\n  return 'smooth';\n}\n\nexport function BackToTop() {\n  const shouldReduceMotion = useReducedMotion();\n\n  function scrollToTop() {\n    const behavior = scrollBehaviorOf(shouldReduceMotion);\n    window.scrollTo({ top: 0, behavior });\n  }\n\n  return (\n    <Button\n      variant='ghost'\n      size='sm'\n      className='text-muted-foreground'\n      onClick={scrollToTop}\n    >\n      Back to top\n      <span\n        aria-hidden='true'\n        className='relative flex size-3.5 overflow-hidden'\n      >\n        <ArrowRightIcon className={cn(TRAVEL, LEAVING_ARROW, 'size-3.5')} />\n        <ArrowRightIcon className={cn(TRAVEL, ARRIVING_ARROW, 'size-3.5')} />\n      </span>\n    </Button>\n  );\n}\n",
+      "content": "'use client';\n\nimport { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';\nimport { ArrowRightIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst TRAVEL = '-rotate-90 transition-[translate] ease-(--ease-out-strong)';\n\nconst LEAVING_ARROW =\n  'duration-200 group-hover/button:-translate-y-full group-hover/button:duration-150';\n\nconst ARRIVING_ARROW =\n  'absolute inset-0 translate-y-full duration-150 group-hover/button:translate-y-0 group-hover/button:duration-200';\n\nfunction scrollBehaviorOf(shouldReduceMotion: boolean | null): ScrollBehavior {\n  if (shouldReduceMotion) {\n    return 'auto';\n  }\n  return 'smooth';\n}\n\nexport function BackToTop() {\n  const shouldReduceMotion = usePrefersReducedMotion();\n\n  function scrollToTop() {\n    const behavior = scrollBehaviorOf(shouldReduceMotion);\n    window.scrollTo({ top: 0, behavior });\n  }\n\n  return (\n    <Button\n      variant='ghost'\n      size='sm'\n      className='text-muted-foreground'\n      onClick={scrollToTop}\n    >\n      Back to top\n      <span\n        aria-hidden='true'\n        className='relative flex size-3.5 overflow-hidden'\n      >\n        <ArrowRightIcon className={cn(TRAVEL, LEAVING_ARROW, 'size-3.5')} />\n        <ArrowRightIcon className={cn(TRAVEL, ARRIVING_ARROW, 'size-3.5')} />\n      </span>\n    </Button>\n  );\n}\n",
       "type": "registry:component",
       "target": "components/blocks/footers-03/back-to-top.tsx"
     },

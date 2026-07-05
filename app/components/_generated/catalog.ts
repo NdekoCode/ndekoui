@@ -3833,7 +3833,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Approval prompt',
         description:
-          'Requests stacked under a waiting count, the first open with its preview, where Approve turns into a one-line trace with Undo and the next request slides up.',
+          'Requests stacked under a waiting count, the first open with its preview, where the Approve key becomes its result, a one-line trace with Undo, and the next request slides up.',
         category: 'review',
       },
       {
@@ -3841,7 +3841,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Permission request',
         description:
-          'An agent asks to run an exact command with its risk and a once, session or always scope, and the card resizes into what was allowed.',
+          'An agent asks to run an exact command with its risk, and the choice of how long it lasts (once, this session or always) unfolds a warning before the card resizes into what was allowed.',
         category: 'review',
       },
       {
@@ -3849,7 +3849,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Autonomy dial',
         description:
-          'A dial with stops for how much an agent may do alone, then each tool on its own switch that follows the default or asks to confirm.',
+          'A dial that catches on its stops for how much an agent may do alone, then each tool on its own switch that follows the default or asks to confirm.',
         category: 'review',
       },
       {
@@ -3927,7 +3927,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Tool calls',
         description:
-          "A turn's tool calls under one line that sums them up, each call folding open for its arguments and result, a failed one retried in place.",
+          "A turn's tool calls under one line that sums them up, each call folding open for its arguments and result: a result line slides in under a call as its mark turns into a check, and a failed call is retried in place.",
         category: 'run',
       },
       {
@@ -3935,7 +3935,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Run in sentences',
         description:
-          'One bar of where the time went and a sentence per step on its own track, where a step waiting on you lifts out with Approve.',
+          'One bar of where the time went and a sentence per step on its own track: the sentence rewrites itself word by word when a step ends, and a step waiting on you lifts out with Approve.',
         category: 'run',
       },
       {
@@ -3943,7 +3943,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Trace waterfall',
         description:
-          'Every call of a run on one live time axis, nested by agent, with filters, search, a drag to zoom and the critical path.',
+          'Every call of a run on one time axis, nested by agent, where the bars grow behind a playhead that travels, with filters, search, a drag to zoom and the critical path.',
         category: 'run',
       },
       {
@@ -3951,7 +3951,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Context window bar',
         description:
-          'How full a model context is, its parts on one bar that resizes with a spring, with removable files and Compact near the limit.',
+          'How full a model context is, its parts on one bar with removable files: near the limit, Compact spreads a summary over the old turns and the bar folds.',
         category: 'run',
       },
       {
@@ -3959,7 +3959,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Context cells',
         description:
-          'The context as a field of cells, one per thousand tokens, filling in order as turns arrive and lighting up by part.',
+          'The context as a field of cells, one per thousand tokens, filling in order as turns arrive and lighting up part by part.',
         category: 'run',
       },
       {
@@ -3967,7 +3967,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Agent terminal',
         description:
-          "An agent's shell where output streams in and folds when long, a risky command waits for Run or Skip, and any command runs again.",
+          "An agent's shell where output streams in and folds when long: a risky command waits, then runs when it is approved, and any command runs again.",
         category: 'run',
       },
       {
@@ -3975,7 +3975,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Context ring',
         description:
-          'A ring for a composer corner that fills as messages are sent, turns to warning above 85% and opens the breakdown.',
+          'A ring for a composer corner that closes toward the limit as messages are sent, turns to warning above 85% and opens the breakdown.',
         category: 'run',
       },
       {
@@ -3983,7 +3983,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Context treemap',
         description:
-          'What fills a context as a treemap whose tiles glide as sizes change, the old turns folding into one summary tile.',
+          'What fills a context as a treemap whose tiles regroup as sizes change, the old turns flying into one summary tile.',
         category: 'run',
       },
       {
@@ -3991,7 +3991,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Usage by model',
         description:
-          'Spend against a plan stacked by model or by agent, with rolling figures, a limit tick that travels, daily bars and a notice above 80%.',
+          'Spend against a plan stacked by model or by agent: the bar of the month fills to its limit with rolling figures, a limit tick that travels, daily bars and a notice above 80%.',
         category: 'run',
       },
       {
@@ -3999,7 +3999,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Agent health',
         description:
-          "One agent's health: a gauge, five signals whose lines morph between periods, a summary written word by word and one action to apply.",
+          "One agent's health: a gauge and five signals whose marks change in a wave between periods, a summary written a few words at a time and one action to apply.",
         category: 'run',
       },
     ],

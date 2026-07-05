@@ -8,12 +8,13 @@
   ],
   "registryDependencies": [
     "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
     "https://ui.ndekocode.dev/r/utils.json"
   ],
   "files": [
     {
       "path": "components/core/animated-number.tsx",
-      "content": "'use client';\nimport { cn } from '@/lib/utils';\nimport {\n  motion,\n  SpringOptions,\n  useReducedMotion,\n  useSpring,\n  useTransform,\n} from 'motion/react';\nimport { motionElementOf } from './motion-elements';\nimport { useEffect } from 'react';\n\nexport type AnimatedNumberProps = {\n  value: number;\n  className?: string;\n  springOptions?: SpringOptions;\n  as?: React.ElementType;\n};\n\nexport function AnimatedNumber({\n  value,\n  className,\n  springOptions,\n  as = 'span',\n}: AnimatedNumberProps) {\n  const MotionComponent = motionElementOf(as) as typeof motion.span;\n  const prefersReducedMotion = useReducedMotion();\n\n  const spring = useSpring(value, springOptions);\n  const display = useTransform(spring, (current) =>\n    Math.round(current).toLocaleString()\n  );\n\n  useEffect(() => {\n    if (prefersReducedMotion) {\n      spring.jump(value);\n      return;\n    }\n    spring.set(value);\n  }, [spring, value, prefersReducedMotion]);\n\n  return (\n    <MotionComponent className={cn('tabular-nums', className)}>\n      {display}\n    </MotionComponent>\n  );\n}\n",
+      "content": "'use client';\nimport { cn } from '@/lib/utils';\nimport { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';\nimport { motion, SpringOptions, useSpring, useTransform } from 'motion/react';\nimport { motionElementOf } from './motion-elements';\nimport { useEffect } from 'react';\n\nexport type AnimatedNumberProps = {\n  value: number;\n  className?: string;\n  springOptions?: SpringOptions;\n  as?: React.ElementType;\n};\n\nexport function AnimatedNumber({\n  value,\n  className,\n  springOptions,\n  as = 'span',\n}: AnimatedNumberProps) {\n  const MotionComponent = motionElementOf(as) as typeof motion.span;\n  const prefersReducedMotion = usePrefersReducedMotion();\n\n  const spring = useSpring(value, springOptions);\n  const display = useTransform(spring, (current) =>\n    Math.round(current).toLocaleString()\n  );\n\n  useEffect(() => {\n    if (prefersReducedMotion) {\n      spring.jump(value);\n      return;\n    }\n    spring.set(value);\n  }, [spring, value, prefersReducedMotion]);\n\n  return (\n    <MotionComponent className={cn('tabular-nums', className)}>\n      {display}\n    </MotionComponent>\n  );\n}\n",
       "type": "registry:component",
       "target": "components/core/animated-number.tsx"
     },

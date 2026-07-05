@@ -408,6 +408,24 @@
       ]
     },
     {
+      "name": "demonstration",
+      "type": "registry:lib",
+      "title": "Demonstration",
+      "description": "What a piece needs to show itself: a press that reads from across the page, typed text key by key, and a status that stays silent until a person takes over.",
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/use-timeouts.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/lib/demonstration.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "categories": [
+        "foundations"
+      ]
+    },
+    {
       "name": "hatch",
       "type": "registry:lib",
       "title": "Hatch",
@@ -912,7 +930,8 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/utils.json"
+        "https://ui.ndekocode.dev/r/utils.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -1127,7 +1146,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/utils.json",
-        "https://ui.ndekocode.dev/r/toggle.json"
+        "https://ui.ndekocode.dev/r/toggle.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -1625,7 +1645,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/utils.json",
-        "https://ui.ndekocode.dev/r/animated-size.json"
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -1649,7 +1670,8 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/utils.json"
+        "https://ui.ndekocode.dev/r/utils.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -1775,7 +1797,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/utils.json",
-        "https://ui.ndekocode.dev/r/spinner.json"
+        "https://ui.ndekocode.dev/r/spinner.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -1890,7 +1913,8 @@
         "https://ui.ndekocode.dev/r/utils.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/chat-container.json"
+        "https://ui.ndekocode.dev/r/chat-container.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -1914,7 +1938,8 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/utils.json"
+        "https://ui.ndekocode.dev/r/utils.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -2120,7 +2145,8 @@
         "https://ui.ndekocode.dev/r/utils.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/animated-size.json"
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -2258,7 +2284,8 @@
         "https://ui.ndekocode.dev/r/utils.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/motion-presets.json"
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -2282,7 +2309,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/utils.json",
-        "https://ui.ndekocode.dev/r/speech-envelope.json"
+        "https://ui.ndekocode.dev/r/speech-envelope.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -2305,7 +2333,8 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/utils.json"
+        "https://ui.ndekocode.dev/r/utils.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -2457,6 +2486,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -2480,6 +2510,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -2502,7 +2533,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -2530,6 +2562,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -2558,6 +2591,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -2582,6 +2616,7 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -2605,6 +2640,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -2629,6 +2665,7 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -2656,6 +2693,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -2678,7 +2716,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -2707,6 +2746,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -2730,6 +2770,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -2753,6 +2794,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -2781,6 +2823,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -2804,6 +2847,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -2826,7 +2870,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -2848,7 +2893,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -2876,6 +2922,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -2904,6 +2951,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -2933,6 +2981,7 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -2957,6 +3006,7 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -2980,6 +3030,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3003,6 +3054,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3021,11 +3073,10 @@
       "type": "registry:component",
       "title": "Text 3d flip",
       "description": "Letters that turn over like small blocks, one after another, when the link or button they sit in is hovered or focused.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3049,6 +3100,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3073,6 +3125,7 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3096,6 +3149,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3115,11 +3169,11 @@
       "title": "Globe",
       "description": "A WebGL globe in the theme colours that turns on its own, follows a drag with momentum and glides to a chosen city.",
       "dependencies": [
-        "cobe",
-        "motion"
+        "cobe"
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3190,6 +3244,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3208,11 +3263,10 @@
       "type": "registry:component",
       "title": "Border beam",
       "description": "A beam in the primary colour that travels around the border of a card, its tail fading behind it and bending round the corners.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3231,11 +3285,10 @@
       "type": "registry:component",
       "title": "Shine border",
       "description": "A slanted glint that sweeps across the border of a card, on a slow loop or once on hover and keyboard focus.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3259,6 +3312,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3325,7 +3379,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -3349,6 +3404,7 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3376,6 +3432,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3403,6 +3460,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3426,6 +3484,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3449,6 +3508,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3472,7 +3532,8 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -3501,6 +3562,7 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3528,6 +3590,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3551,6 +3614,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3574,7 +3638,8 @@
         "react-use-measure"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -3597,6 +3662,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3620,6 +3686,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3642,7 +3709,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -3665,6 +3733,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3690,6 +3759,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3708,12 +3778,11 @@
       "type": "registry:component",
       "title": "Directional drawer",
       "description": "A drawer from any side that follows the drag, closes on a flick and resists being pulled the wrong way.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3764,6 +3833,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3787,6 +3857,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3811,6 +3882,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3839,6 +3911,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3868,6 +3941,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3891,6 +3965,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3935,6 +4010,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3958,6 +4034,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3981,6 +4058,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -3999,11 +4077,10 @@
       "type": "registry:component",
       "title": "Smooth scroll",
       "description": "An opt-in wrapper that eases mouse wheel scrolling and leaves every other way of scrolling native.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -4023,11 +4100,11 @@
       "title": "Image tabs",
       "description": "Tabs that change an image in place while the indicator travels to the chosen tab.",
       "dependencies": [
-        "@base-ui/react",
-        "motion"
+        "@base-ui/react"
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -4072,6 +4149,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -4090,11 +4168,10 @@
       "type": "registry:component",
       "title": "Image trail",
       "description": "Images that land along the pointer path, then fade and shrink away.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -4121,6 +4198,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -4144,6 +4222,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -4169,6 +4248,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -4192,6 +4272,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -4215,6 +4296,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -4277,7 +4359,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/use-agent-run.json"
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -4346,6 +4429,23 @@
       ]
     },
     {
+      "name": "use-kept-height",
+      "type": "registry:hook",
+      "title": "Use kept height",
+      "description": "The use-kept-height hook used by ndekoui components.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ndeko/hooks/use-kept-height.ts",
+          "type": "registry:hook"
+        }
+      ],
+      "categories": [
+        "hooks"
+      ]
+    },
+    {
       "name": "use-pagination",
       "type": "registry:hook",
       "title": "Use pagination",
@@ -4363,16 +4463,32 @@
       ]
     },
     {
+      "name": "use-prefers-reduced-motion",
+      "type": "registry:hook",
+      "title": "Use prefers reduced motion",
+      "description": "The use-prefers-reduced-motion hook used by ndekoui components.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ndeko/hooks/use-prefers-reduced-motion.ts",
+          "type": "registry:hook"
+        }
+      ],
+      "categories": [
+        "hooks"
+      ]
+    },
+    {
       "name": "use-session",
       "type": "registry:hook",
       "title": "Use session",
       "description": "The use-session hook used by ndekoui components.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/use-agent-run.json",
-        "https://ui.ndekocode.dev/r/use-autoplay.json"
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -4907,6 +5023,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -4967,6 +5084,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -5026,6 +5144,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -5085,6 +5204,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -5134,6 +5254,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -5194,6 +5315,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -5252,6 +5374,7 @@
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -5312,6 +5435,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -5375,6 +5499,7 @@
         "https://ui.ndekocode.dev/r/tooltip.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -5427,6 +5552,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -5488,6 +5614,7 @@
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -5540,6 +5667,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -5621,6 +5749,7 @@
         "https://ui.ndekocode.dev/r/toggle-group.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -5701,6 +5830,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -5777,6 +5907,7 @@
         "https://ui.ndekocode.dev/r/toggle-group.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -5830,6 +5961,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -5871,6 +6003,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -6193,6 +6326,7 @@
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -6299,6 +6433,7 @@
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -6359,6 +6494,7 @@
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -6422,6 +6558,7 @@
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -6482,6 +6619,7 @@
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle-group.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -6533,6 +6671,7 @@
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -6600,6 +6739,7 @@
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle-group.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -6670,6 +6810,7 @@
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle-group.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -6760,6 +6901,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -6822,6 +6964,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -6876,6 +7019,7 @@
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -7663,7 +7807,8 @@
         "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -7688,7 +7833,8 @@
         "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -7808,6 +7954,7 @@
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -7833,7 +7980,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -7858,7 +8006,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -7883,7 +8032,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -7908,7 +8058,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -7933,7 +8084,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -7981,7 +8133,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -8471,7 +8624,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -8718,7 +8872,8 @@
         "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -8742,7 +8897,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/toggle.json"
+        "https://ui.ndekocode.dev/r/toggle.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -8813,7 +8969,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -8838,7 +8995,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/tooltip.json"
+        "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -8948,7 +9106,8 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/toggle-group.json"
+        "https://ui.ndekocode.dev/r/toggle-group.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -9062,7 +9221,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -9265,7 +9425,8 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -9314,7 +9475,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-file-upload.json"
+        "https://ui.ndekocode.dev/r/use-file-upload.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -9340,7 +9502,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-file-upload.json"
+        "https://ui.ndekocode.dev/r/use-file-upload.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -9477,6 +9640,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -9502,6 +9666,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -9527,7 +9692,8 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -9552,7 +9718,8 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -9599,7 +9766,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -9624,7 +9792,8 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -9745,6 +9914,7 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/calendar.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -9778,6 +9948,7 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/calendar.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -9811,6 +9982,7 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/calendar.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -9844,6 +10016,7 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/calendar.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -9877,6 +10050,7 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/calendar.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -9910,6 +10084,7 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/calendar.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -9943,6 +10118,7 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/calendar.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -9977,6 +10153,7 @@
         "https://ui.ndekocode.dev/r/calendar.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -10011,6 +10188,7 @@
         "https://ui.ndekocode.dev/r/calendar.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -10044,6 +10222,7 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/calendar.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -10078,6 +10257,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/calendar.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -10112,6 +10292,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/calendar.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -10148,6 +10329,7 @@
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/label.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -10184,6 +10366,7 @@
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/label.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -10221,6 +10404,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/scroll-area.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -10256,6 +10440,7 @@
         "https://ui.ndekocode.dev/r/calendar.json",
         "https://ui.ndekocode.dev/r/scroll-area.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -10290,6 +10475,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/calendar.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -10324,6 +10510,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/calendar.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -10357,6 +10544,7 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/calendar.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -10390,6 +10578,7 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/calendar.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -10423,6 +10612,7 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/calendar.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -10527,6 +10717,7 @@
         "https://ui.ndekocode.dev/r/popover.json",
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -10569,6 +10760,7 @@
         "https://ui.ndekocode.dev/r/popover.json",
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -11026,7 +11218,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -11056,6 +11249,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -11116,6 +11310,7 @@
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -11171,6 +11366,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -11228,6 +11424,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -11283,6 +11480,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -11339,6 +11537,7 @@
         "https://ui.ndekocode.dev/r/sample-scenes.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -11393,6 +11592,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -11448,6 +11648,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -11638,7 +11839,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/dialog.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -11691,7 +11893,8 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/recipes.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -11718,7 +11921,8 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/textarea.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -11746,7 +11950,8 @@
         "https://ui.ndekocode.dev/r/label.json",
         "https://ui.ndekocode.dev/r/radio-group.json",
         "https://ui.ndekocode.dev/r/textarea.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -11772,7 +11977,8 @@
         "https://ui.ndekocode.dev/r/dialog.json",
         "https://ui.ndekocode.dev/r/otp-field.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -11853,7 +12059,8 @@
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/label.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/tooltip.json"
+        "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -11990,7 +12197,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/dialog.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -12369,7 +12577,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -12409,6 +12618,7 @@
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -12590,6 +12800,7 @@
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -12771,6 +12982,7 @@
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -12952,6 +13164,7 @@
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -13133,6 +13346,7 @@
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -13314,6 +13528,7 @@
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -13495,6 +13710,7 @@
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -13662,7 +13878,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-file-upload.json"
+        "https://ui.ndekocode.dev/r/use-file-upload.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -13780,7 +13997,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-file-upload.json"
+        "https://ui.ndekocode.dev/r/use-file-upload.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -13805,7 +14023,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-file-upload.json"
+        "https://ui.ndekocode.dev/r/use-file-upload.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -13830,7 +14049,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-file-upload.json"
+        "https://ui.ndekocode.dev/r/use-file-upload.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -13855,7 +14075,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-file-upload.json"
+        "https://ui.ndekocode.dev/r/use-file-upload.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -13880,7 +14101,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-file-upload.json"
+        "https://ui.ndekocode.dev/r/use-file-upload.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -13931,7 +14153,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-file-upload.json"
+        "https://ui.ndekocode.dev/r/use-file-upload.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -13957,7 +14180,8 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/progress.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-file-upload.json"
+        "https://ui.ndekocode.dev/r/use-file-upload.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -13985,7 +14209,8 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/slider.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-file-upload.json"
+        "https://ui.ndekocode.dev/r/use-file-upload.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -14013,7 +14238,8 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/slider.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-file-upload.json"
+        "https://ui.ndekocode.dev/r/use-file-upload.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -14163,7 +14389,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/cropper.json",
         "https://ui.ndekocode.dev/r/slider.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -14764,7 +14991,8 @@
         "https://ui.ndekocode.dev/r/field.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -14789,7 +15017,8 @@
         "https://ui.ndekocode.dev/r/field.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -14860,7 +15089,8 @@
         "https://ui.ndekocode.dev/r/field.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -14879,14 +15109,14 @@
       "title": "Number input with steppers",
       "description": "Minus and plus segments around a number.",
       "dependencies": [
-        "@base-ui/react",
-        "motion"
+        "@base-ui/react"
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/field.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -14906,14 +15136,14 @@
       "title": "Number input with chevrons",
       "description": "A euro amount with stacked up and down steppers.",
       "dependencies": [
-        "@base-ui/react",
-        "motion"
+        "@base-ui/react"
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/field.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -15030,7 +15260,8 @@
         "https://ui.ndekocode.dev/r/field.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-character-limit.json"
+        "https://ui.ndekocode.dev/r/use-character-limit.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -15055,7 +15286,8 @@
         "https://ui.ndekocode.dev/r/field.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-character-limit.json"
+        "https://ui.ndekocode.dev/r/use-character-limit.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -15353,6 +15585,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -15454,6 +15687,7 @@
         "https://ui.ndekocode.dev/r/label.json",
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -15480,6 +15714,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -15528,7 +15763,8 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/tooltip.json"
+        "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -15627,7 +15863,8 @@
         "https://ui.ndekocode.dev/r/field.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -15652,7 +15889,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/combobox.json",
         "https://ui.ndekocode.dev/r/label.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -15678,6 +15916,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -15705,6 +15944,7 @@
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -15731,6 +15971,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -15756,6 +15997,7 @@
         "https://ui.ndekocode.dev/r/field.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -15783,6 +16025,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -15817,6 +16060,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -15895,6 +16139,7 @@
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -15967,6 +16212,7 @@
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -16032,6 +16278,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -16099,6 +16346,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -16166,6 +16414,7 @@
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle-group.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -16228,6 +16477,7 @@
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -16296,6 +16546,7 @@
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -16359,6 +16610,7 @@
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle-group.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -16424,6 +16676,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle-group.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -16499,6 +16752,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/selected-mark.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -16555,6 +16809,7 @@
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -16601,6 +16856,7 @@
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -16655,6 +16911,7 @@
         "https://ui.ndekocode.dev/r/dialog.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -16705,6 +16962,7 @@
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -16755,6 +17013,7 @@
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -16800,6 +17059,7 @@
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -16851,6 +17111,7 @@
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -16909,6 +17170,7 @@
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -16979,6 +17241,7 @@
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -17053,6 +17316,7 @@
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -17112,6 +17376,7 @@
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -17180,6 +17445,7 @@
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -17242,6 +17508,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -17288,6 +17555,7 @@
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -17345,6 +17613,7 @@
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -17406,6 +17675,7 @@
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -17474,6 +17744,7 @@
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -17539,6 +17810,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -17582,6 +17854,7 @@
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -17634,6 +17907,7 @@
         "https://ui.ndekocode.dev/r/label.json",
         "https://ui.ndekocode.dev/r/popover.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -17678,6 +17952,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -17750,6 +18025,7 @@
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -17791,7 +18067,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -17822,7 +18099,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -17853,7 +18131,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -17884,7 +18163,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -17916,7 +18196,8 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -17948,7 +18229,8 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -17980,7 +18262,8 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -18012,7 +18295,8 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -18043,7 +18327,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -18074,7 +18359,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -18105,7 +18391,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -18136,7 +18423,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -18167,7 +18455,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -18198,7 +18487,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -18228,7 +18518,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -18259,7 +18550,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -18291,7 +18583,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/recipes.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -18322,7 +18615,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -18452,6 +18746,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -18502,6 +18797,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -18558,6 +18854,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -18603,6 +18900,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -18641,6 +18939,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -18692,7 +18991,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -18717,7 +19017,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -18750,6 +19051,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -18902,7 +19204,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/pagination.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-pagination.json"
+        "https://ui.ndekocode.dev/r/use-pagination.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -18927,7 +19230,8 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/pagination.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-pagination.json"
+        "https://ui.ndekocode.dev/r/use-pagination.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -18954,6 +19258,7 @@
         "https://ui.ndekocode.dev/r/pagination.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-pagination.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -18981,7 +19286,8 @@
         "https://ui.ndekocode.dev/r/pagination.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-pagination.json"
+        "https://ui.ndekocode.dev/r/use-pagination.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -19056,7 +19362,8 @@
         "https://ui.ndekocode.dev/r/label.json",
         "https://ui.ndekocode.dev/r/pagination.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-pagination.json"
+        "https://ui.ndekocode.dev/r/use-pagination.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -19108,7 +19415,8 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/popover.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -19136,7 +19444,8 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/popover.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -19184,7 +19493,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/popover.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -19211,7 +19521,8 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/popover.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -19238,7 +19549,8 @@
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/popover.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/tooltip.json"
+        "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -19264,7 +19576,8 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/popover.json",
         "https://ui.ndekocode.dev/r/textarea.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -19293,6 +19606,7 @@
         "https://ui.ndekocode.dev/r/popover.json",
         "https://ui.ndekocode.dev/r/recipes.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -19319,6 +19633,7 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/level-bars.json",
@@ -19334,6 +19649,7 @@
         "https://ui.ndekocode.dev/r/tooltip.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -19347,11 +19663,6 @@
           "path": "registry/ndeko/components/prompt/_parts/clock.tsx",
           "type": "registry:component",
           "target": "components/prompt/_parts/clock.tsx"
-        },
-        {
-          "path": "registry/ndeko/components/prompt/_parts/demonstration.ts",
-          "type": "registry:component",
-          "target": "components/prompt/_parts/demonstration.ts"
         },
         {
           "path": "registry/ndeko/components/prompt/_parts/use-autosize.ts",
@@ -19384,6 +19695,7 @@
         "https://ui.ndekocode.dev/r/brand-tile.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/level-bars.json",
@@ -19398,6 +19710,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -19411,11 +19724,6 @@
           "path": "registry/ndeko/components/prompt/_parts/clock.tsx",
           "type": "registry:component",
           "target": "components/prompt/_parts/clock.tsx"
-        },
-        {
-          "path": "registry/ndeko/components/prompt/_parts/demonstration.ts",
-          "type": "registry:component",
-          "target": "components/prompt/_parts/demonstration.ts"
         },
         {
           "path": "registry/ndeko/components/prompt/_parts/lab-tile.tsx",
@@ -19458,6 +19766,7 @@
         "https://ui.ndekocode.dev/r/brand-tile.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/dialog.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
@@ -19470,7 +19779,7 @@
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
-        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -19478,11 +19787,6 @@
           "path": "registry/ndeko/components/prompt/prompt-03.tsx",
           "type": "registry:component",
           "target": "components/prompt/prompt-03.tsx"
-        },
-        {
-          "path": "registry/ndeko/components/prompt/_parts/demonstration.ts",
-          "type": "registry:component",
-          "target": "components/prompt/_parts/demonstration.ts"
         },
         {
           "path": "registry/ndeko/components/prompt/_parts/drawn-check.tsx",
@@ -19527,6 +19831,7 @@
         "https://ui.ndekocode.dev/r/brand-logos.json",
         "https://ui.ndekocode.dev/r/brand-tile.json",
         "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/live-region.json",
@@ -19536,7 +19841,7 @@
         "https://ui.ndekocode.dev/r/popover.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
-        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -19544,11 +19849,6 @@
           "path": "registry/ndeko/components/prompt/prompt-04.tsx",
           "type": "registry:component",
           "target": "components/prompt/prompt-04.tsx"
-        },
-        {
-          "path": "registry/ndeko/components/prompt/_parts/demonstration.ts",
-          "type": "registry:component",
-          "target": "components/prompt/_parts/demonstration.ts"
         },
         {
           "path": "registry/ndeko/components/prompt/_parts/drawn-check.tsx",
@@ -19584,6 +19884,7 @@
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -19616,12 +19917,14 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-loader.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -19630,11 +19933,6 @@
           "path": "registry/ndeko/components/prompt/prompt-06.tsx",
           "type": "registry:component",
           "target": "components/prompt/prompt-06.tsx"
-        },
-        {
-          "path": "registry/ndeko/components/prompt/_parts/demonstration.ts",
-          "type": "registry:component",
-          "target": "components/prompt/_parts/demonstration.ts"
         },
         {
           "path": "registry/ndeko/components/prompt/_parts/use-autosize.ts",
@@ -19660,6 +19958,7 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/copy-button.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/live-region.json",
@@ -19670,6 +19969,7 @@
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -19678,11 +19978,6 @@
           "path": "registry/ndeko/components/prompt/prompt-07.tsx",
           "type": "registry:component",
           "target": "components/prompt/prompt-07.tsx"
-        },
-        {
-          "path": "registry/ndeko/components/prompt/_parts/demonstration.ts",
-          "type": "registry:component",
-          "target": "components/prompt/_parts/demonstration.ts"
         },
         {
           "path": "registry/ndeko/components/prompt/_parts/marked.tsx",
@@ -19712,6 +20007,7 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
@@ -19719,7 +20015,7 @@
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
-        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -19727,11 +20023,6 @@
           "path": "registry/ndeko/components/prompt/prompt-08.tsx",
           "type": "registry:component",
           "target": "components/prompt/prompt-08.tsx"
-        },
-        {
-          "path": "registry/ndeko/components/prompt/_parts/demonstration.ts",
-          "type": "registry:component",
-          "target": "components/prompt/_parts/demonstration.ts"
         },
         {
           "path": "registry/ndeko/components/prompt/_parts/use-autosize.ts",
@@ -19762,6 +20053,7 @@
         "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-region.json",
@@ -19772,7 +20064,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
-        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -19780,11 +20072,6 @@
           "path": "registry/ndeko/components/prompt/prompt-09.tsx",
           "type": "registry:component",
           "target": "components/prompt/prompt-09.tsx"
-        },
-        {
-          "path": "registry/ndeko/components/prompt/_parts/demonstration.ts",
-          "type": "registry:component",
-          "target": "components/prompt/_parts/demonstration.ts"
         },
         {
           "path": "registry/ndeko/components/prompt/_parts/use-autosize.ts",
@@ -19812,6 +20099,7 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
@@ -19819,7 +20107,7 @@
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
-        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -19827,11 +20115,6 @@
           "path": "registry/ndeko/components/prompt/prompt-10.tsx",
           "type": "registry:component",
           "target": "components/prompt/prompt-10.tsx"
-        },
-        {
-          "path": "registry/ndeko/components/prompt/_parts/demonstration.ts",
-          "type": "registry:component",
-          "target": "components/prompt/_parts/demonstration.ts"
         },
         {
           "path": "registry/ndeko/components/prompt/_parts/marked.tsx",
@@ -20282,7 +20565,8 @@
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/radio-group.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -20299,7 +20583,7 @@
       "name": "review-01",
       "type": "registry:component",
       "title": "Approval prompt",
-      "description": "Requests stacked under a waiting count, the first open with its preview, where Approve turns into a one-line trace with Undo and the next request slides up.",
+      "description": "Requests stacked under a waiting count, the first open with its preview, where the Approve key becomes its result, a one-line trace with Undo, and the next request slides up.",
       "dependencies": [
         "motion"
       ],
@@ -20308,8 +20592,10 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/morph-button.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
@@ -20318,6 +20604,9 @@
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -20336,7 +20625,7 @@
       "name": "review-02",
       "type": "registry:component",
       "title": "Permission request",
-      "description": "An agent asks to run an exact command with its risk and a once, session or always scope, and the card resizes into what was allowed.",
+      "description": "An agent asks to run an exact command with its risk, and the choice of how long it lasts (once, this session or always) unfolds a warning before the card resizes into what was allowed.",
       "dependencies": [
         "motion"
       ],
@@ -20348,12 +20637,16 @@
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/copy-button.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/segments.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -20372,7 +20665,7 @@
       "name": "review-03",
       "type": "registry:component",
       "title": "Autonomy dial",
-      "description": "A dial with stops for how much an agent may do alone, then each tool on its own switch that follows the default or asks to confirm.",
+      "description": "A dial that catches on its stops for how much an agent may do alone, then each tool on its own switch that follows the default or asks to confirm.",
       "dependencies": [
         "motion"
       ],
@@ -20382,12 +20675,17 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/checkbox.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
-        "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/segments.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -20427,6 +20725,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -20476,6 +20775,7 @@
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/segments.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -20523,6 +20823,7 @@
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle-group.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -20571,6 +20872,7 @@
         "https://ui.ndekocode.dev/r/segments.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json"
       ],
       "files": [
@@ -20613,6 +20915,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -20659,6 +20962,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -20702,6 +21006,7 @@
         "https://ui.ndekocode.dev/r/slider.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -20733,6 +21038,7 @@
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -20761,7 +21067,7 @@
       "name": "run-01",
       "type": "registry:component",
       "title": "Tool calls",
-      "description": "A turn's tool calls under one line that sums them up, each call folding open for its arguments and result, a failed one retried in place.",
+      "description": "A turn's tool calls under one line that sums them up, each call folding open for its arguments and result: a result line slides in under a call as its mark turns into a check, and a failed call is retried in place.",
       "dependencies": [
         "motion"
       ],
@@ -20772,6 +21078,7 @@
         "https://ui.ndekocode.dev/r/call-status.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/copy-button.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/json-view.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
@@ -20780,8 +21087,9 @@
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-agent-run.json",
-        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -20790,6 +21098,16 @@
           "path": "registry/ndeko/components/run/run-01.tsx",
           "type": "registry:component",
           "target": "components/run/run-01.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/collapse.tsx",
+          "type": "registry:component",
+          "target": "components/run/_parts/collapse.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/run-session.ts",
+          "type": "registry:component",
+          "target": "components/run/_parts/run-session.ts"
         },
         {
           "path": "registry/ndeko/components/run/_parts/scenario.ts",
@@ -20806,7 +21124,7 @@
       "name": "run-03",
       "type": "registry:component",
       "title": "Run in sentences",
-      "description": "One bar of where the time went and a sentence per step on its own track, where a step waiting on you lifts out with Approve.",
+      "description": "One bar of where the time went and a sentence per step on its own track: the sentence rewrites itself word by word when a step ends, and a step waiting on you lifts out with Approve.",
       "dependencies": [
         "motion"
       ],
@@ -20816,14 +21134,16 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/call-status.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-agent-run.json",
-        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -20831,6 +21151,11 @@
           "path": "registry/ndeko/components/run/run-03.tsx",
           "type": "registry:component",
           "target": "components/run/run-03.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/run-session.ts",
+          "type": "registry:component",
+          "target": "components/run/_parts/run-session.ts"
         },
         {
           "path": "registry/ndeko/components/run/_parts/scenario.ts",
@@ -20847,7 +21172,7 @@
       "name": "run-02",
       "type": "registry:component",
       "title": "Trace waterfall",
-      "description": "Every call of a run on one live time axis, nested by agent, with filters, search, a drag to zoom and the critical path.",
+      "description": "Every call of a run on one time axis, nested by agent, where the bars grow behind a playhead that travels, with filters, search, a drag to zoom and the critical path.",
       "dependencies": [
         "motion"
       ],
@@ -20867,8 +21192,9 @@
         "https://ui.ndekocode.dev/r/segments.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle.json",
-        "https://ui.ndekocode.dev/r/use-agent-run.json",
-        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -20876,6 +21202,11 @@
           "path": "registry/ndeko/components/run/run-02.tsx",
           "type": "registry:component",
           "target": "components/run/run-02.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/run-session.ts",
+          "type": "registry:component",
+          "target": "components/run/_parts/run-session.ts"
         },
         {
           "path": "registry/ndeko/components/run/_parts/scenario.ts",
@@ -20892,15 +21223,17 @@
       "name": "run-05",
       "type": "registry:component",
       "title": "Context window bar",
-      "description": "How full a model context is, its parts on one bar that resizes with a spring, with removable files and Compact near the limit.",
+      "description": "How full a model context is, its parts on one bar with removable files: near the limit, Compact spreads a summary over the old turns and the bar folds.",
       "dependencies": [
         "motion"
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/agent-run.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/hatch.json",
         "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/morph-button.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
@@ -20908,8 +21241,9 @@
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-agent-run.json",
-        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -20935,11 +21269,6 @@
           "target": "components/run/_parts/context.ts"
         },
         {
-          "path": "registry/ndeko/components/run/_parts/scenario.ts",
-          "type": "registry:component",
-          "target": "components/run/_parts/scenario.ts"
-        },
-        {
           "path": "registry/ndeko/components/run/_parts/token-count.tsx",
           "type": "registry:component",
           "target": "components/run/_parts/token-count.tsx"
@@ -20959,14 +21288,16 @@
       "name": "run-06",
       "type": "registry:component",
       "title": "Context cells",
-      "description": "The context as a field of cells, one per thousand tokens, filling in order as turns arrive and lighting up by part.",
+      "description": "The context as a field of cells, one per thousand tokens, filling in order as turns arrive and lighting up part by part.",
       "dependencies": [
         "motion"
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/hatch.json",
         "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/morph-button.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
@@ -20974,8 +21305,9 @@
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-agent-run.json",
-        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -21001,11 +21333,6 @@
           "target": "components/run/_parts/context.ts"
         },
         {
-          "path": "registry/ndeko/components/run/_parts/scenario.ts",
-          "type": "registry:component",
-          "target": "components/run/_parts/scenario.ts"
-        },
-        {
           "path": "registry/ndeko/components/run/_parts/token-count.tsx",
           "type": "registry:component",
           "target": "components/run/_parts/token-count.tsx"
@@ -21025,31 +21352,42 @@
       "name": "run-04",
       "type": "registry:component",
       "title": "Agent terminal",
-      "description": "An agent's shell where output streams in and folds when long, a risky command waits for Run or Skip, and any command runs again.",
-      "dependencies": [],
+      "description": "An agent's shell where output streams in and folds when long: a risky command waits, then runs when it is approved, and any command runs again.",
+      "dependencies": [
+        "motion"
+      ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/agent-run.json",
-        "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/copy-button.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/spinner.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-agent-run.json",
-        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/run/run-04.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/run/run-04.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/run/_parts/run-session.ts",
+          "type": "registry:component",
+          "target": "components/run/_parts/run-session.ts"
         }
       ],
       "categories": [
@@ -21061,24 +21399,29 @@
       "name": "run-07",
       "type": "registry:component",
       "title": "Context ring",
-      "description": "A ring for a composer corner that fills as messages are sent, turns to warning above 85% and opens the breakdown.",
-      "dependencies": [],
+      "description": "A ring for a composer corner that closes toward the limit as messages are sent, turns to warning above 85% and opens the breakdown.",
+      "dependencies": [
+        "motion"
+      ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/agent-run.json",
         "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/hatch.json",
         "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/morph-button.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/popover.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
-        "https://ui.ndekocode.dev/r/use-agent-run.json",
-        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -21089,14 +21432,14 @@
           "target": "components/run/run-07.tsx"
         },
         {
+          "path": "registry/ndeko/components/run/_parts/collapse.tsx",
+          "type": "registry:component",
+          "target": "components/run/_parts/collapse.tsx"
+        },
+        {
           "path": "registry/ndeko/components/run/_parts/context.ts",
           "type": "registry:component",
           "target": "components/run/_parts/context.ts"
-        },
-        {
-          "path": "registry/ndeko/components/run/_parts/scenario.ts",
-          "type": "registry:component",
-          "target": "components/run/_parts/scenario.ts"
         },
         {
           "path": "registry/ndeko/components/run/_parts/token-count.tsx",
@@ -21118,15 +21461,17 @@
       "name": "run-08",
       "type": "registry:component",
       "title": "Context treemap",
-      "description": "What fills a context as a treemap whose tiles glide as sizes change, the old turns folding into one summary tile.",
+      "description": "What fills a context as a treemap whose tiles regroup as sizes change, the old turns flying into one summary tile.",
       "dependencies": [
         "motion"
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/agent-run.json",
         "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/hatch.json",
         "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/morph-button.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
@@ -21135,8 +21480,9 @@
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/segments.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-agent-run.json",
-        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -21160,11 +21506,6 @@
           "path": "registry/ndeko/components/run/_parts/context.ts",
           "type": "registry:component",
           "target": "components/run/_parts/context.ts"
-        },
-        {
-          "path": "registry/ndeko/components/run/_parts/scenario.ts",
-          "type": "registry:component",
-          "target": "components/run/_parts/scenario.ts"
         },
         {
           "path": "registry/ndeko/components/run/_parts/token-count.tsx",
@@ -21191,20 +21532,26 @@
       "name": "run-09",
       "type": "registry:component",
       "title": "Usage by model",
-      "description": "Spend against a plan stacked by model or by agent, with rolling figures, a limit tick that travels, daily bars and a notice above 80%.",
+      "description": "Spend against a plan stacked by model or by agent: the bar of the month fills to its limit with rolling figures, a limit tick that travels, daily bars and a notice above 80%.",
       "dependencies": [
         "motion"
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/morph-button.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/segments.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -21223,7 +21570,7 @@
       "name": "run-10",
       "type": "registry:component",
       "title": "Agent health",
-      "description": "One agent's health: a gauge, five signals whose lines morph between periods, a summary written word by word and one action to apply.",
+      "description": "One agent's health: a gauge and five signals whose marks change in a wave between periods, a summary written a few words at a time and one action to apply.",
       "dependencies": [
         "motion"
       ],
@@ -21234,15 +21581,19 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/morph-button.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
-        "https://ui.ndekocode.dev/r/motion-text-shimmer.json",
         "https://ui.ndekocode.dev/r/segments.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -22279,7 +22630,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/combobox.json",
         "https://ui.ndekocode.dev/r/field.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -22303,7 +22655,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/combobox.json",
         "https://ui.ndekocode.dev/r/field.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -22583,7 +22936,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/label.json",
         "https://ui.ndekocode.dev/r/slider.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -22674,7 +23028,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/label.json",
         "https://ui.ndekocode.dev/r/slider.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -22700,7 +23055,8 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/label.json",
         "https://ui.ndekocode.dev/r/slider.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -22751,6 +23107,7 @@
         "https://ui.ndekocode.dev/r/slider.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-slider-with-input.json"
       ],
       "files": [
@@ -22800,6 +23157,7 @@
         "https://ui.ndekocode.dev/r/label.json",
         "https://ui.ndekocode.dev/r/slider.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -22825,7 +23183,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/label.json",
         "https://ui.ndekocode.dev/r/slider.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -22876,7 +23235,8 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/label.json",
         "https://ui.ndekocode.dev/r/slider.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -22902,7 +23262,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/label.json",
         "https://ui.ndekocode.dev/r/slider.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -23447,6 +23808,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -23496,6 +23858,7 @@
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -23543,6 +23906,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -23591,6 +23955,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -23639,6 +24004,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -23682,6 +24048,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -23729,6 +24096,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -23930,7 +24298,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/label.json",
         "https://ui.ndekocode.dev/r/switch.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -23977,7 +24346,8 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/label.json",
         "https://ui.ndekocode.dev/r/switch.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -24439,6 +24809,7 @@
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/table.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -24467,6 +24838,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/table.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -24496,6 +24868,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/table.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -24528,6 +24901,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/table.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -24558,6 +24932,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/table.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -24591,6 +24966,7 @@
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/table.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -24624,6 +25000,7 @@
         "https://ui.ndekocode.dev/r/table.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-pagination.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -24662,6 +25039,7 @@
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/table.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -25170,6 +25548,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -25227,6 +25606,7 @@
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -25282,6 +25662,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -25338,6 +25719,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -25401,6 +25783,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -25451,6 +25834,7 @@
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle-group.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -25494,6 +25878,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -25547,6 +25932,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle-group.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -25591,6 +25977,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/selected-mark.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -25963,6 +26350,7 @@
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-character-limit.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -26701,6 +27089,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tree.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -26729,6 +27118,7 @@
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tree.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -26784,6 +27174,7 @@
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tree.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -26865,6 +27256,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tree.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -26991,6 +27383,7 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
@@ -26998,19 +27391,13 @@
         "https://ui.ndekocode.dev/r/speech-envelope.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
-        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/voice/voice-01.tsx",
-          "type": "registry:component",
-          "target": "components/voice/voice-01.tsx"
-        },
-        {
-          "path": "registry/ndeko/components/voice/_parts/demonstration.ts",
-          "type": "registry:component",
-          "target": "components/voice/_parts/demonstration.ts"
+          "type": "registry:component"
         }
       ],
       "categories": [
@@ -27023,12 +27410,11 @@
       "type": "registry:component",
       "title": "Voice note",
       "description": "A voice reply whose dots ink in as it plays, with a speed key that steps to 2x, seeking by click, drag or arrows, and a transcript that follows word by word.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
@@ -27038,19 +27424,13 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
-        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/voice/voice-02.tsx",
-          "type": "registry:component",
-          "target": "components/voice/voice-02.tsx"
-        },
-        {
-          "path": "registry/ndeko/components/voice/_parts/demonstration.ts",
-          "type": "registry:component",
-          "target": "components/voice/_parts/demonstration.ts"
+          "type": "registry:component"
         }
       ],
       "categories": [
@@ -27071,6 +27451,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-loader.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/level-bars.json",
@@ -27082,19 +27463,14 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/voice/voice-03.tsx",
-          "type": "registry:component",
-          "target": "components/voice/voice-03.tsx"
-        },
-        {
-          "path": "registry/ndeko/components/voice/_parts/demonstration.ts",
-          "type": "registry:component",
-          "target": "components/voice/_parts/demonstration.ts"
+          "type": "registry:component"
         }
       ],
       "categories": [
@@ -27120,6 +27496,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/call-status.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
@@ -27128,6 +27505,7 @@
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -27173,6 +27551,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/copy-button.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
@@ -27230,6 +27609,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
@@ -27238,6 +27618,7 @@
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -27282,6 +27663,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/copy-button.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
@@ -27292,6 +27674,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/speech-envelope.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -27343,6 +27726,7 @@
         "https://ui.ndekocode.dev/r/brand-tile.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
@@ -27353,6 +27737,7 @@
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/segments.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -27414,6 +27799,7 @@
         "https://ui.ndekocode.dev/r/brand-tile.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
@@ -27423,6 +27809,7 @@
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/segments.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -27482,6 +27869,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
@@ -27493,6 +27881,7 @@
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -27555,6 +27944,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/label.json",
@@ -27571,6 +27961,7 @@
         "https://ui.ndekocode.dev/r/status-orb.json",
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -27622,6 +28013,7 @@
         "https://ui.ndekocode.dev/r/brand-tile.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/json-view.json",
         "https://ui.ndekocode.dev/r/letter-tile.json",
@@ -27682,6 +28074,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/copy-button.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/json-view.json",
@@ -27696,6 +28089,7 @@
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -27753,6 +28147,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/label.json",
@@ -27768,6 +28163,7 @@
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle-group.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -27823,6 +28219,7 @@
         "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
@@ -27832,6 +28229,7 @@
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -27884,6 +28282,7 @@
         "https://ui.ndekocode.dev/r/brand-tile.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
@@ -27892,6 +28291,7 @@
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -27965,6 +28365,7 @@
         "https://ui.ndekocode.dev/r/call-status.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
@@ -27975,6 +28376,7 @@
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-session.json"
       ],
       "files": [
@@ -28023,6 +28425,7 @@
         "https://ui.ndekocode.dev/r/brand-tile.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
@@ -28032,6 +28435,7 @@
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -28075,6 +28479,7 @@
         "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/json-view.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
@@ -28084,6 +28489,7 @@
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/segments.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -28135,6 +28541,7 @@
         "https://ui.ndekocode.dev/r/brand-tile.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
@@ -28145,6 +28552,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -28188,6 +28596,7 @@
         "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
@@ -28196,6 +28605,7 @@
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/segments.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -28250,6 +28660,7 @@
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -28334,6 +28745,7 @@
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -28422,6 +28834,7 @@
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -28507,7 +28920,8 @@
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/otp-field.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -28546,6 +28960,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -28591,6 +29006,7 @@
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -28636,7 +29052,8 @@
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/tabs.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -28692,6 +29109,7 @@
         "https://ui.ndekocode.dev/r/slider.json",
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -28752,6 +29170,7 @@
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -28815,6 +29234,7 @@
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -28902,6 +29322,7 @@
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -29080,7 +29501,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -29124,7 +29546,8 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -29181,6 +29604,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -29239,7 +29663,8 @@
         "https://ui.ndekocode.dev/r/chat-tool.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -29285,7 +29710,8 @@
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
         "https://ui.ndekocode.dev/r/textarea.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -29355,7 +29781,8 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/tooltip.json"
+        "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -29395,6 +29822,7 @@
         "https://ui.ndekocode.dev/r/skeleton.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -29457,6 +29885,7 @@
         "https://ui.ndekocode.dev/r/skeleton.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -29524,6 +29953,7 @@
         "https://ui.ndekocode.dev/r/skeleton.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -29576,6 +30006,7 @@
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -29624,6 +30055,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -29667,6 +30099,7 @@
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -29710,6 +30143,7 @@
         "https://ui.ndekocode.dev/r/skeleton.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -29893,6 +30327,7 @@
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -29935,6 +30370,7 @@
         "https://ui.ndekocode.dev/r/popover.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -29985,6 +30421,7 @@
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -30053,13 +30490,12 @@
       "type": "registry:block",
       "title": "Footer with a wordmark",
       "description": "Three lists of links beside the brand and a contact address, a back to top button whose arrow travels on hover, and the product name set across the full width at the bottom.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -30104,6 +30540,7 @@
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -30192,6 +30629,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/navigation-menu.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -30240,6 +30678,7 @@
         "https://ui.ndekocode.dev/r/selected-mark.json",
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -30320,6 +30759,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -30363,7 +30803,8 @@
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -30409,6 +30850,7 @@
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -30517,6 +30959,7 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -30626,6 +31069,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -30671,6 +31115,7 @@
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/label.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -30715,6 +31160,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -30761,6 +31207,7 @@
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -30888,7 +31335,8 @@
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/textarea.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -30939,7 +31387,8 @@
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/switch.json",
-        "https://ui.ndekocode.dev/r/theme.json"
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
       "files": [
         {
@@ -30988,6 +31437,7 @@
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -31047,6 +31497,7 @@
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -31150,6 +31601,7 @@
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -31254,6 +31706,7 @@
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -31329,6 +31782,7 @@
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -31400,6 +31854,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -31512,6 +31967,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -31629,6 +32085,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -31696,6 +32153,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -31763,6 +32221,7 @@
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -31813,6 +32272,7 @@
         "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle-group.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -31881,6 +32341,7 @@
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -32182,6 +32643,7 @@
         "https://ui.ndekocode.dev/r/skeleton.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -32334,6 +32796,7 @@
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -32445,6 +32908,7 @@
         "https://ui.ndekocode.dev/r/otp-field.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -32530,6 +32994,7 @@
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -32644,6 +33109,7 @@
         "https://ui.ndekocode.dev/r/status-orb.json",
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -32775,6 +33241,7 @@
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -32888,6 +33355,7 @@
         "https://ui.ndekocode.dev/r/selected-mark.json",
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -32974,6 +33442,7 @@
         "https://ui.ndekocode.dev/r/selected-mark.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -33054,6 +33523,7 @@
         "https://ui.ndekocode.dev/r/status-orb.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [

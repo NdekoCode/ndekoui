@@ -15,6 +15,7 @@
     "https://ui.ndekocode.dev/r/sample-avatars.json",
     "https://ui.ndekocode.dev/r/tabs.json",
     "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
     "https://ui.ndekocode.dev/r/utils.json"
   ],
   "files": [
@@ -38,7 +39,7 @@
     },
     {
       "path": "registry/ndeko/components/notification/_parts/unread-dot.tsx",
-      "content": "'use client';\n\nimport {\n  AnimatePresence,\n  motion,\n  useReducedMotion,\n  type Transition,\n} from 'motion/react';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\n\nconst EASE_OUT_STRONG: [number, number, number, number] = [0.23, 1, 0.32, 1];\n\nconst ARRIVE: Transition = { duration: 0.18, ease: EASE_OUT_STRONG };\n\nconst LEAVE: Transition = { duration: 0.12, ease: EASE_OUT_STRONG };\n\nfunction hiddenScaleOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return 1;\n  }\n  return 0.4;\n}\n\ntype UnreadDotProps = {\n  isUnread: boolean;\n  className?: string;\n};\n\n/** The primary dot of an unread notification. It shrinks away when the notification is read. */\nexport function UnreadDot({ isUnread, className }: UnreadDotProps) {\n  const shouldReduceMotion = useReducedMotion();\n  const hiddenScale = hiddenScaleOf(shouldReduceMotion);\n\n  return (\n    <AnimatePresence initial={false}>\n      {isUnread && (\n        <motion.span\n          key='unread'\n          aria-hidden='true'\n          initial={{ opacity: 0, scale: hiddenScale }}\n          animate={{ opacity: 1, scale: 1, transition: ARRIVE }}\n          exit={{ opacity: 0, scale: hiddenScale, transition: LEAVE }}\n          className={cn('bg-primary block size-1.5 rounded-full', className)}\n        />\n      )}\n    </AnimatePresence>\n  );\n}\n",
+      "content": "'use client';\n\nimport { AnimatePresence, motion, type Transition } from 'motion/react';\n\nimport { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';\nimport { cn } from '@/registry/ndeko/lib/utils';\n\nconst EASE_OUT_STRONG: [number, number, number, number] = [0.23, 1, 0.32, 1];\n\nconst ARRIVE: Transition = { duration: 0.18, ease: EASE_OUT_STRONG };\n\nconst LEAVE: Transition = { duration: 0.12, ease: EASE_OUT_STRONG };\n\nfunction hiddenScaleOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return 1;\n  }\n  return 0.4;\n}\n\ntype UnreadDotProps = {\n  isUnread: boolean;\n  className?: string;\n};\n\n/** The primary dot of an unread notification. It shrinks away when the notification is read. */\nexport function UnreadDot({ isUnread, className }: UnreadDotProps) {\n  const shouldReduceMotion = usePrefersReducedMotion();\n  const hiddenScale = hiddenScaleOf(shouldReduceMotion);\n\n  return (\n    <AnimatePresence initial={false}>\n      {isUnread && (\n        <motion.span\n          key='unread'\n          aria-hidden='true'\n          initial={{ opacity: 0, scale: hiddenScale }}\n          animate={{ opacity: 1, scale: 1, transition: ARRIVE }}\n          exit={{ opacity: 0, scale: hiddenScale, transition: LEAVE }}\n          className={cn('bg-primary block size-1.5 rounded-full', className)}\n        />\n      )}\n    </AnimatePresence>\n  );\n}\n",
       "type": "registry:component",
       "target": "components/notification/_parts/unread-dot.tsx"
     }

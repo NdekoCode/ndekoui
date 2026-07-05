@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-kept-height",
+  "title": "Use kept height",
+  "description": "The use-kept-height hook used by ndekoui components.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ndeko/hooks/use-kept-height.ts",
+      "content": "'use client';\n\nimport { useEffect, type RefObject } from 'react';\n\n/**\n * A piece that plays in a loop grows and shrinks as its states come and go, and what sits under it\n * on the page would move with every round. The box keeps the tallest height it reached at its\n * current width, so it can only grow, once. A change of width starts the measure again.\n */\nexport function useKeptHeight<Element extends HTMLElement>(\n  ref: RefObject<Element | null>\n) {\n  useEffect(() => {\n    const element = ref.current;\n    if (!element) {\n      return;\n    }\n    let tallest = 0;\n    let measuredWidth = element.offsetWidth;\n\n    function keep() {\n      if (!element) {\n        return;\n      }\n      const width = element.offsetWidth;\n      const hasNewWidth = width !== measuredWidth;\n      if (hasNewWidth) {\n        measuredWidth = width;\n        tallest = 0;\n        element.style.minHeight = '';\n      }\n      const height = element.offsetHeight;\n      if (height <= tallest) {\n        return;\n      }\n      tallest = height;\n      element.style.minHeight = `${height}px`;\n    }\n\n    const observer = new ResizeObserver(keep);\n    observer.observe(element);\n    return () => {\n      observer.disconnect();\n      element.style.minHeight = '';\n    };\n  }, [ref]);\n}\n",
+      "type": "registry:hook"
+    }
+  ],
+  "categories": [
+    "hooks"
+  ],
+  "type": "registry:hook"
+}

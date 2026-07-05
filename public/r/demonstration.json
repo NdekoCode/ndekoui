@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "demonstration",
+  "title": "Demonstration",
+  "description": "What a piece needs to show itself: a press that reads from across the page, typed text key by key, and a status that stays silent until a person takes over.",
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/use-timeouts.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/lib/demonstration.ts",
+      "content": "'use client';\n\nimport { useCallback, useState } from 'react';\n\nimport { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';\n\n/** How long a control stays down when a demonstration presses it. */\nconst PRESS_MS = 200;\n\n/** A finger goes down before the click lands: a step that presses a control is followed by its action this long after. */\nexport const PRESS_LEAD_MS = 130;\n\n/** A demonstration presses deeper than a finger does, so the press reads from across the page. */\nconst PRESSED_SOLID = 'scale-[0.94] bg-primary/85';\n\nconst PRESSED_QUIET =\n  'scale-[0.94] bg-foreground/[0.07] text-foreground dark:bg-foreground/[0.1]';\n\nexport function pressedSolidOf(isPressed: boolean) {\n  if (isPressed) {\n    return PRESSED_SOLID;\n  }\n  return undefined;\n}\n\nexport function pressedQuietOf(isPressed: boolean) {\n  if (isPressed) {\n    return PRESSED_QUIET;\n  }\n  return undefined;\n}\n\n/** Shows a press on one control at a time and lets go of it on its own. */\nexport function usePress<Key extends string>() {\n  const [pressed, setPressed] = useState<Key | null>(null);\n  const { schedule } = useTimeouts();\n\n  const press = useCallback(\n    (key: Key) => {\n      function release(current: Key | null) {\n        if (current === key) {\n          return null;\n        }\n        return current;\n      }\n      setPressed(key);\n      schedule(() => setPressed(release), PRESS_MS);\n    },\n    [schedule]\n  );\n\n  return { pressed, press };\n}\n\n/** What a field holds after each key of a text typed into it: h, ha, hal. */\nexport function prefixesOf(text: string) {\n  const characters = Array.from(text);\n  return characters.map((_, index) => {\n    const typed = characters.slice(0, index + 1);\n    return typed.join('');\n  });\n}\n\n/** The wait before a key of a typed text: longer before the first one. */\nexport function keyDelayOf(\n  index: number,\n  startAfter: number,\n  characterMs: number\n) {\n  if (index === 0) {\n    return startAfter;\n  }\n  return characterMs;\n}\n\n/** A step that only waits, so a round ends once the piece has finished on its own. */\nexport function hold() {}\n\n/** `aria-hidden` for a status a demonstration shows without saying it. */\nexport function hiddenIf(isDemonstrating: boolean) {\n  if (isDemonstrating) {\n    return true;\n  }\n  return undefined;\n}\n\n/** A demonstration is not read aloud: the live region speaks once a person takes over. */\nexport function spokenUnless(isDemonstrating: boolean, message: string) {\n  if (isDemonstrating) {\n    return '';\n  }\n  return message;\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "categories": [
+    "foundations"
+  ],
+  "type": "registry:lib"
+}
