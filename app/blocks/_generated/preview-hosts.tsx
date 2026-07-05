@@ -8,6 +8,7 @@ import { previewHostOf, type PreviewHostProps } from '@/app/_site/preview-host';
 
 export const previewHosts: Record<string, ComponentType<PreviewHostProps>> = {
   'agent-chat': dynamic(() => import('./agent-chat').then(previewHostOf)),
+  'agent-ops': dynamic(() => import('./agent-ops').then(previewHostOf)),
   'agent-review': dynamic(() => import('./agent-review').then(previewHostOf)),
   'app-shells': dynamic(() => import('./app-shells').then(previewHostOf)),
   auth: dynamic(() => import('./auth').then(previewHostOf)),
