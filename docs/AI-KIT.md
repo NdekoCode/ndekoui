@@ -48,8 +48,8 @@ Block groups added: `agent-chat`, `agent-ops`, `agent-review`, `workflows`, `ai-
 | ----- | ----------------------------------------------------------------------------------------------------------------------- | ------- |
 | F     | series tokens, `agent-run`, `use-agent-run`                                                                             | done    |
 | B1    | `run-01..10`, `review-01..03`                                                                                           | written |
-| B2    | `agent-01..10`                                                                                                          | todo    |
-| B3    | `prompt-01..10`, `voice-01..03`                                                                                         | todo    |
+| B2    | `agent-01..10`                                                                                                          | written |
+| B3    | `prompt-01..10`, `voice-01..03`                                                                                         | written |
 | B4    | `answer-01..06`, `review-04..11`                                                                                        | todo    |
 | B5    | `chart-01..16`                                                                                                          | todo    |
 | B6    | blocks `agent-chat-01..04`, `agent-review-01..05`                                                                       | todo    |

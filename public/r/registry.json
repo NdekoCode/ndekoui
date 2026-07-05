@@ -423,6 +423,36 @@
       ]
     },
     {
+      "name": "speech-envelope",
+      "type": "registry:lib",
+      "title": "Speech envelope",
+      "description": "A simulated voice level that rises and falls like speech, the same for the same time and seed.",
+      "files": [
+        {
+          "path": "registry/ndeko/lib/speech-envelope.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "categories": [
+        "foundations"
+      ]
+    },
+    {
+      "name": "media-clock",
+      "type": "registry:lib",
+      "title": "Media clock",
+      "description": "Recording and playback times written as 0:07 and read aloud as 7 seconds.",
+      "files": [
+        {
+          "path": "registry/ndeko/lib/media-clock.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "categories": [
+        "foundations"
+      ]
+    },
+    {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
@@ -2233,6 +2263,51 @@
       "files": [
         {
           "path": "registry/ndeko/ui/replay-button.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitives",
+        "ai"
+      ]
+    },
+    {
+      "name": "level-bars",
+      "type": "registry:ui",
+      "title": "Level Bars",
+      "description": "Bars that rise and fall with a voice while someone speaks and settle when it goes quiet.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json",
+        "https://ui.ndekocode.dev/r/speech-envelope.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/ui/level-bars.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitives",
+        "ai"
+      ]
+    },
+    {
+      "name": "letter-tile",
+      "type": "registry:ui",
+      "title": "Letter Tile",
+      "description": "A drawn initial for a model lab or a site, tinted by a series colour or left neutral.",
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json",
+        "https://ui.ndekocode.dev/r/agent-run.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/ui/letter-tile.tsx",
           "type": "registry:ui"
         }
       ],
@@ -5122,6 +5197,625 @@
       "categories": [
         "components",
         "activity"
+      ]
+    },
+    {
+      "name": "agent-01",
+      "type": "registry:component",
+      "title": "Agent plan",
+      "description": "A plan that waits for Approve plan or an inline edit, then checks its steps off live, slides in the step the agent adds, strikes the one it drops and folds into one line.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/progress.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/agent/agent-01.tsx",
+          "type": "registry:component",
+          "target": "components/agent/agent-01.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/agent-tile.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/agent-tile.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/crew.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/crew.ts"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/focus-later.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/focus-later.ts"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/relative-time.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/relative-time.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "agent"
+      ]
+    },
+    {
+      "name": "agent-02",
+      "type": "registry:component",
+      "title": "Agent lanes",
+      "description": "A lane per agent where tasks grow into a now line while time drifts left, hand-offs curve from lane to lane and an approval waits on its marker.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/hatch.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/popover.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/agent/agent-02.tsx",
+          "type": "registry:component",
+          "target": "components/agent/agent-02.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/agent-status.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/agent-status.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/agent-tile.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/agent-tile.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/crew.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/crew.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "agent"
+      ]
+    },
+    {
+      "name": "agent-03",
+      "type": "registry:component",
+      "title": "Agent graph",
+      "description": "Agents and the tools they call as a live graph whose nodes glide between tree, flow and hub layouts, with a streak of light along the edge of each call.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/call-status.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/popover.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/agent/agent-03.tsx",
+          "type": "registry:component",
+          "target": "components/agent/agent-03.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/agent-status.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/agent-status.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/agent-tile.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/agent-tile.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/crew.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/crew.ts"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/tool-tile.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/tool-tile.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "agent"
+      ]
+    },
+    {
+      "name": "agent-04",
+      "type": "registry:component",
+      "title": "Agent handoff",
+      "description": "A relay of agents where each hand-off sends a light down the rail with its note and context, lost items stay struck through and the next station can be dragged to another agent.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/dropdown-menu.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/agent/agent-04.tsx",
+          "type": "registry:component",
+          "target": "components/agent/agent-04.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/agent-tile.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/agent-tile.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/crew.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/crew.ts"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "agent"
+      ]
+    },
+    {
+      "name": "agent-05",
+      "type": "registry:component",
+      "title": "Agent tree",
+      "description": "Who started whom as a tree with live clocks and subtree costs that roll, folds that sum what they hide, and Approve or Retry right in the row.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/agent/agent-05.tsx",
+          "type": "registry:component",
+          "target": "components/agent/agent-05.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/agent-actions.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/agent-actions.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/agent-status.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/agent-status.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/agent-tile.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/agent-tile.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/cost-figure.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/cost-figure.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/crew.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/crew.ts"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/focus-later.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/focus-later.ts"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/use-agent-announcement.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/use-agent-announcement.ts"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "agent"
+      ]
+    },
+    {
+      "name": "agent-06",
+      "type": "registry:component",
+      "title": "Agent fleet",
+      "description": "Every main agent at a glance under rolling totals, with filters, a Rows and Cards switch that re-flows the list, and sub-agents that unfold with Approve and Retry.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/toggle-group.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/agent/agent-06.tsx",
+          "type": "registry:component",
+          "target": "components/agent/agent-06.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/agent-actions.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/agent-actions.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/agent-status.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/agent-status.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/agent-tile.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/agent-tile.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/cost-figure.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/cost-figure.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/crew.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/crew.ts"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/focus-later.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/focus-later.ts"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/use-agent-announcement.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/use-agent-announcement.ts"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "agent"
+      ]
+    },
+    {
+      "name": "agent-07",
+      "type": "registry:component",
+      "title": "Agent monitor",
+      "description": "One agent at work: its current step with a clock and cost, a time strip that grows, the exact command waiting for Allow or Deny, and a fold into a slim bar.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/copy-button.json",
+        "https://ui.ndekocode.dev/r/hatch.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/agent/agent-07.tsx",
+          "type": "registry:component",
+          "target": "components/agent/agent-07.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/agent-status.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/agent-status.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/agent-tile.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/agent-tile.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/cost-figure.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/cost-figure.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/crew.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/crew.ts"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/focus-later.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/focus-later.ts"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/tool-tile.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/tool-tile.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "agent"
+      ]
+    },
+    {
+      "name": "agent-08",
+      "type": "registry:component",
+      "title": "Agent memory",
+      "description": "What an agent remembers, searchable by scope, with edits in place, pins that re-sort the list, forget with Undo, forget by source and why a memory was used.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/dropdown-menu.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/popover.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/textarea.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/toggle-group.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/agent/agent-08.tsx",
+          "type": "registry:component",
+          "target": "components/agent/agent-08.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/focus-later.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/focus-later.ts"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/relative-time.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/relative-time.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "agent"
+      ]
+    },
+    {
+      "name": "agent-09",
+      "type": "registry:component",
+      "title": "Knowledge sources",
+      "description": "The sources an agent searches, with indexing progress and chunk counts that roll, a Re-sync that turns into a spinner then a check, and Retry on the one that failed.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/dropdown-menu.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/progress.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/agent/agent-09.tsx",
+          "type": "registry:component",
+          "target": "components/agent/agent-09.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/relative-time.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/relative-time.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "agent"
+      ]
+    },
+    {
+      "name": "agent-10",
+      "type": "registry:component",
+      "title": "Agent status",
+      "description": "A dot and a word per agent where running breathes, waiting blinks slowly and the word rolls on every change, above a legend of all five states.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/agent/agent-10.tsx",
+          "type": "registry:component",
+          "target": "components/agent/agent-10.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/agent-status.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/agent-status.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/agent-tile.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/agent-tile.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/crew.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/crew.ts"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/use-agent-announcement.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/use-agent-announcement.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "agent"
       ]
     },
     {
@@ -18177,6 +18871,475 @@
       ]
     },
     {
+      "name": "prompt-01",
+      "type": "registry:component",
+      "title": "Prompt with a status tray",
+      "description": "A composer on a quiet tray whose one key dictates, sends or stops, while a status line slides out from under the card and rolls through the work.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/dropdown-menu.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/level-bars.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/media-clock.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/textarea.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/tooltip.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/prompt/prompt-01.tsx",
+          "type": "registry:component",
+          "target": "components/prompt/prompt-01.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/clock.tsx",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/clock.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/use-autosize.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/use-autosize.ts"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "prompt"
+      ]
+    },
+    {
+      "name": "prompt-02",
+      "type": "registry:component",
+      "title": "Composer with modes",
+      "description": "A composer with attachments that upload behind a ring, menus for permission, model, apps and folder, dictation in a live recording strip, and Send that turns into Stop.",
+      "dependencies": [
+        "@base-ui/react",
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/dropdown-menu.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/letter-tile.json",
+        "https://ui.ndekocode.dev/r/level-bars.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/media-clock.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/recipes.json",
+        "https://ui.ndekocode.dev/r/textarea.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/prompt/prompt-02.tsx",
+          "type": "registry:component",
+          "target": "components/prompt/prompt-02.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/clock.tsx",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/clock.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/lab-tile.tsx",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/lab-tile.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/labs.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/labs.ts"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/use-autosize.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/use-autosize.ts"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "prompt"
+      ]
+    },
+    {
+      "name": "prompt-03",
+      "type": "registry:component",
+      "title": "Model picker",
+      "description": "Models grouped by lab with context, speed, price and skills, searched and picked from the keyboard, with a compare view that widens the panel.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/dialog.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/letter-tile.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/popover.json",
+        "https://ui.ndekocode.dev/r/recipes.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/selected-mark.json",
+        "https://ui.ndekocode.dev/r/switch.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/prompt/prompt-03.tsx",
+          "type": "registry:component",
+          "target": "components/prompt/prompt-03.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/lab-tile.tsx",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/lab-tile.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/labs.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/labs.ts"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/marked.tsx",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/marked.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "prompt"
+      ]
+    },
+    {
+      "name": "prompt-04",
+      "type": "registry:component",
+      "title": "Model and effort",
+      "description": "An effort slider with four stops you drag and flick, with every model’s time and cost rolling under your finger, also folded into a chip for a composer.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/letter-tile.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/popover.json",
+        "https://ui.ndekocode.dev/r/selected-mark.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/prompt/prompt-04.tsx",
+          "type": "registry:component",
+          "target": "components/prompt/prompt-04.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/lab-tile.tsx",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/lab-tile.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/labs.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/labs.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "prompt"
+      ]
+    },
+    {
+      "name": "prompt-05",
+      "type": "registry:component",
+      "title": "Ghost text",
+      "description": "A faint completion after the caret in a textarea or a line of code: Tab takes it, Ctrl or Cmd with Right takes one word and Escape dismisses it.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/prompt/prompt-05.tsx",
+          "type": "registry:component",
+          "target": "components/prompt/prompt-05.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/use-autosize.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/use-autosize.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "prompt"
+      ]
+    },
+    {
+      "name": "prompt-06",
+      "type": "registry:component",
+      "title": "Rewrite in place",
+      "description": "Select a phrase, say how it should read and watch it rewritten as a tracked change word by word, whose marks fade into the text when you accept it.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-loader.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/prompt/prompt-06.tsx",
+          "type": "registry:component",
+          "target": "components/prompt/prompt-06.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/use-autosize.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/use-autosize.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "prompt"
+      ]
+    },
+    {
+      "name": "prompt-07",
+      "type": "registry:component",
+      "title": "Prompt templates",
+      "description": "Saved prompts with blanks typed straight into the sentence, a filled count that rolls, a live preview with a token estimate, Copy and Use prompt.",
+      "dependencies": [
+        "),\n      blank(",
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/copy-button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/select.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/prompt/prompt-07.tsx",
+          "type": "registry:component",
+          "target": "components/prompt/prompt-07.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/marked.tsx",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/marked.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "prompt"
+      ]
+    },
+    {
+      "name": "prompt-08",
+      "type": "registry:component",
+      "title": "Ask filter",
+      "description": "Plain words become filter chips tied to their phrases by threads, an ambiguous week asks which one you mean, and the orders fold away as they stop matching.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/prompt/prompt-08.tsx",
+          "type": "registry:component",
+          "target": "components/prompt/prompt-08.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/use-autosize.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/use-autosize.ts"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "prompt"
+      ]
+    },
+    {
+      "name": "prompt-09",
+      "type": "registry:component",
+      "title": "Queued prompts",
+      "description": "Prompts sent while an answer streams wait as cards you edit, drag or move, then fly into the thread one by one as each answer ends.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/dropdown-menu.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/textarea.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/prompt/prompt-09.tsx",
+          "type": "registry:component",
+          "target": "components/prompt/prompt-09.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/use-autosize.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/use-autosize.ts"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "prompt"
+      ]
+    },
+    {
+      "name": "prompt-10",
+      "type": "registry:component",
+      "title": "Conversation list",
+      "description": "Chats grouped by day under the pinned ones, with a highlight that travels, rename in place, delete asked in the row, and arrows, F2 and Delete.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/dropdown-menu.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/prompt/prompt-10.tsx",
+          "type": "registry:component",
+          "target": "components/prompt/prompt-10.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/marked.tsx",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/marked.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/prompt/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/prompt/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "prompt"
+      ]
+    },
+    {
       "name": "radio-01",
       "type": "registry:component",
       "title": "Basic radio group",
@@ -24948,6 +26111,102 @@
       "categories": [
         "components",
         "tree"
+      ]
+    },
+    {
+      "name": "voice-01",
+      "type": "registry:component",
+      "title": "Voice orb",
+      "description": "A disc and a ring of fine bars drawn on a canvas: it breathes when idle, follows your voice or a simulated one, sweeps while thinking and swells while speaking.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/speech-envelope.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/voice/voice-01.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "voice"
+      ]
+    },
+    {
+      "name": "voice-02",
+      "type": "registry:component",
+      "title": "Voice note",
+      "description": "A voice reply whose dots ink in as it plays, with a speed key that steps to 2x, seeking by click, drag or arrows, and a transcript that follows word by word.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/media-clock.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/speech-envelope.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/voice/voice-02.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "voice"
+      ]
+    },
+    {
+      "name": "voice-03",
+      "type": "registry:component",
+      "title": "Dictation",
+      "description": "A field whose microphone key turns the footer into a recording strip, then transcribes the take and streams the words in at the caret.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-loader.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/level-bars.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/media-clock.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/textarea.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/voice/voice-03.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "voice"
       ]
     },
     {

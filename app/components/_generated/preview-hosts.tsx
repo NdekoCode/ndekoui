@@ -9,6 +9,7 @@ import { previewHostOf, type PreviewHostProps } from '@/app/_site/preview-host';
 export const previewHosts: Record<string, ComponentType<PreviewHostProps>> = {
   accordion: dynamic(() => import('./accordion').then(previewHostOf)),
   activity: dynamic(() => import('./activity').then(previewHostOf)),
+  agent: dynamic(() => import('./agent').then(previewHostOf)),
   alert: dynamic(() => import('./alert').then(previewHostOf)),
   aside: dynamic(() => import('./aside').then(previewHostOf)),
   avatar: dynamic(() => import('./avatar').then(previewHostOf)),
@@ -34,6 +35,7 @@ export const previewHosts: Record<string, ComponentType<PreviewHostProps>> = {
   notification: dynamic(() => import('./notification').then(previewHostOf)),
   pagination: dynamic(() => import('./pagination').then(previewHostOf)),
   popover: dynamic(() => import('./popover').then(previewHostOf)),
+  prompt: dynamic(() => import('./prompt').then(previewHostOf)),
   radio: dynamic(() => import('./radio').then(previewHostOf)),
   review: dynamic(() => import('./review').then(previewHostOf)),
   run: dynamic(() => import('./run').then(previewHostOf)),
@@ -49,4 +51,5 @@ export const previewHosts: Record<string, ComponentType<PreviewHostProps>> = {
   timeline: dynamic(() => import('./timeline').then(previewHostOf)),
   tooltip: dynamic(() => import('./tooltip').then(previewHostOf)),
   tree: dynamic(() => import('./tree').then(previewHostOf)),
+  voice: dynamic(() => import('./voice').then(previewHostOf)),
 };

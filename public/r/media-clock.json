@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "media-clock",
+  "title": "Media clock",
+  "description": "Recording and playback times written as 0:07 and read aloud as 7 seconds.",
+  "files": [
+    {
+      "path": "registry/ndeko/lib/media-clock.ts",
+      "content": "/** 0:07, 1:04, 12:30. */\nexport function formatClock(milliseconds: number) {\n  const totalSeconds = Math.floor(milliseconds / 1000);\n  const bounded = Math.max(0, totalSeconds);\n  const minutes = Math.floor(bounded / 60);\n  const seconds = bounded % 60;\n  const paddedSeconds = String(seconds).padStart(2, '0');\n  return `${minutes}:${paddedSeconds}`;\n}\n\n/** 7 seconds, 1 minute 4 seconds: the clock read aloud. */\nexport function spokenClockOf(milliseconds: number) {\n  const wholeSeconds = Math.floor(milliseconds / 1000);\n  const totalSeconds = Math.max(0, wholeSeconds);\n  const minutes = Math.floor(totalSeconds / 60);\n  const seconds = totalSeconds % 60;\n  const secondsWord = pluralOf(seconds, 'second');\n  if (minutes === 0) {\n    return `${seconds} ${secondsWord}`;\n  }\n  const minutesWord = pluralOf(minutes, 'minute');\n  return `${minutes} ${minutesWord} ${seconds} ${secondsWord}`;\n}\n\nfunction pluralOf(count: number, word: string) {\n  if (count === 1) {\n    return word;\n  }\n  return `${word}s`;\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "categories": [
+    "foundations"
+  ],
+  "type": "registry:lib"
+}

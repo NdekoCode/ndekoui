@@ -228,6 +228,92 @@ export const catalog: CatalogCategory[] = [
     ],
   },
   {
+    slug: 'agent',
+    name: 'Agent',
+    entries: [
+      {
+        name: 'agent-01',
+        source: 'ndeko',
+        title: 'Agent plan',
+        description:
+          'A plan that waits for Approve plan or an inline edit, then checks its steps off live, slides in the step the agent adds, strikes the one it drops and folds into one line.',
+        category: 'agent',
+      },
+      {
+        name: 'agent-02',
+        source: 'ndeko',
+        title: 'Agent lanes',
+        description:
+          'A lane per agent where tasks grow into a now line while time drifts left, hand-offs curve from lane to lane and an approval waits on its marker.',
+        category: 'agent',
+      },
+      {
+        name: 'agent-03',
+        source: 'ndeko',
+        title: 'Agent graph',
+        description:
+          'Agents and the tools they call as a live graph whose nodes glide between tree, flow and hub layouts, with a streak of light along the edge of each call.',
+        category: 'agent',
+      },
+      {
+        name: 'agent-04',
+        source: 'ndeko',
+        title: 'Agent handoff',
+        description:
+          'A relay of agents where each hand-off sends a light down the rail with its note and context, lost items stay struck through and the next station can be dragged to another agent.',
+        category: 'agent',
+      },
+      {
+        name: 'agent-05',
+        source: 'ndeko',
+        title: 'Agent tree',
+        description:
+          'Who started whom as a tree with live clocks and subtree costs that roll, folds that sum what they hide, and Approve or Retry right in the row.',
+        category: 'agent',
+      },
+      {
+        name: 'agent-06',
+        source: 'ndeko',
+        title: 'Agent fleet',
+        description:
+          'Every main agent at a glance under rolling totals, with filters, a Rows and Cards switch that re-flows the list, and sub-agents that unfold with Approve and Retry.',
+        category: 'agent',
+      },
+      {
+        name: 'agent-07',
+        source: 'ndeko',
+        title: 'Agent monitor',
+        description:
+          'One agent at work: its current step with a clock and cost, a time strip that grows, the exact command waiting for Allow or Deny, and a fold into a slim bar.',
+        category: 'agent',
+      },
+      {
+        name: 'agent-08',
+        source: 'ndeko',
+        title: 'Agent memory',
+        description:
+          'What an agent remembers, searchable by scope, with edits in place, pins that re-sort the list, forget with Undo, forget by source and why a memory was used.',
+        category: 'agent',
+      },
+      {
+        name: 'agent-09',
+        source: 'ndeko',
+        title: 'Knowledge sources',
+        description:
+          'The sources an agent searches, with indexing progress and chunk counts that roll, a Re-sync that turns into a spinner then a check, and Retry on the one that failed.',
+        category: 'agent',
+      },
+      {
+        name: 'agent-10',
+        source: 'ndeko',
+        title: 'Agent status',
+        description:
+          'A dot and a word per agent where running breathes, waiting blinks slowly and the word rolls on every change, above a legend of all five states.',
+        category: 'agent',
+      },
+    ],
+  },
+  {
     slug: 'alert',
     name: 'Alert',
     entries: [
@@ -3441,6 +3527,92 @@ export const catalog: CatalogCategory[] = [
     ],
   },
   {
+    slug: 'prompt',
+    name: 'Prompt',
+    entries: [
+      {
+        name: 'prompt-01',
+        source: 'ndeko',
+        title: 'Prompt with a status tray',
+        description:
+          'A composer on a quiet tray whose one key dictates, sends or stops, while a status line slides out from under the card and rolls through the work.',
+        category: 'prompt',
+      },
+      {
+        name: 'prompt-02',
+        source: 'ndeko',
+        title: 'Composer with modes',
+        description:
+          'A composer with attachments that upload behind a ring, menus for permission, model, apps and folder, dictation in a live recording strip, and Send that turns into Stop.',
+        category: 'prompt',
+      },
+      {
+        name: 'prompt-03',
+        source: 'ndeko',
+        title: 'Model picker',
+        description:
+          'Models grouped by lab with context, speed, price and skills, searched and picked from the keyboard, with a compare view that widens the panel.',
+        category: 'prompt',
+      },
+      {
+        name: 'prompt-04',
+        source: 'ndeko',
+        title: 'Model and effort',
+        description:
+          'An effort slider with four stops you drag and flick, with every model’s time and cost rolling under your finger, also folded into a chip for a composer.',
+        category: 'prompt',
+      },
+      {
+        name: 'prompt-05',
+        source: 'ndeko',
+        title: 'Ghost text',
+        description:
+          'A faint completion after the caret in a textarea or a line of code: Tab takes it, Ctrl or Cmd with Right takes one word and Escape dismisses it.',
+        category: 'prompt',
+      },
+      {
+        name: 'prompt-06',
+        source: 'ndeko',
+        title: 'Rewrite in place',
+        description:
+          'Select a phrase, say how it should read and watch it rewritten as a tracked change word by word, whose marks fade into the text when you accept it.',
+        category: 'prompt',
+      },
+      {
+        name: 'prompt-07',
+        source: 'ndeko',
+        title: 'Prompt templates',
+        description:
+          'Saved prompts with blanks typed straight into the sentence, a filled count that rolls, a live preview with a token estimate, Copy and Use prompt.',
+        category: 'prompt',
+      },
+      {
+        name: 'prompt-08',
+        source: 'ndeko',
+        title: 'Ask filter',
+        description:
+          'Plain words become filter chips tied to their phrases by threads, an ambiguous week asks which one you mean, and the orders fold away as they stop matching.',
+        category: 'prompt',
+      },
+      {
+        name: 'prompt-09',
+        source: 'ndeko',
+        title: 'Queued prompts',
+        description:
+          'Prompts sent while an answer streams wait as cards you edit, drag or move, then fly into the thread one by one as each answer ends.',
+        category: 'prompt',
+      },
+      {
+        name: 'prompt-10',
+        source: 'ndeko',
+        title: 'Conversation list',
+        description:
+          'Chats grouped by day under the pinned ones, with a highlight that travels, rename in place, delete asked in the row, and arrows, F2 and Delete.',
+        category: 'prompt',
+      },
+    ],
+  },
+  {
     slug: 'radio',
     name: 'Radio',
     entries: [
@@ -5464,6 +5636,36 @@ export const catalog: CatalogCategory[] = [
         title: 'Checkable folders',
         description: 'Checking a folder checks it and everything inside it.',
         category: 'tree',
+      },
+    ],
+  },
+  {
+    slug: 'voice',
+    name: 'Voice',
+    entries: [
+      {
+        name: 'voice-01',
+        source: 'ndeko',
+        title: 'Voice orb',
+        description:
+          'A disc and a ring of fine bars drawn on a canvas: it breathes when idle, follows your voice or a simulated one, sweeps while thinking and swells while speaking.',
+        category: 'voice',
+      },
+      {
+        name: 'voice-02',
+        source: 'ndeko',
+        title: 'Voice note',
+        description:
+          'A voice reply whose dots ink in as it plays, with a speed key that steps to 2x, seeking by click, drag or arrows, and a transcript that follows word by word.',
+        category: 'voice',
+      },
+      {
+        name: 'voice-03',
+        source: 'ndeko',
+        title: 'Dictation',
+        description:
+          'A field whose microphone key turns the footer into a recording strip, then transcribes the take and streams the words in at the caret.',
+        category: 'voice',
       },
     ],
   },

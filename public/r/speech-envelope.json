@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "speech-envelope",
+  "title": "Speech envelope",
+  "description": "A simulated voice level that rises and falls like speech, the same for the same time and seed.",
+  "files": [
+    {
+      "path": "registry/ndeko/lib/speech-envelope.ts",
+      "content": "const TAU = Math.PI * 2;\n\nconst SYLLABLE_HERTZ = 4.7;\n\nconst WORD_HERTZ = 1.4;\n\nconst PHRASE_HERTZ = 0.31;\n\nconst GRAIN_HERTZ = 11.3;\n\nfunction waveAt(seconds: number, hertz: number, offset: number) {\n  const turns = seconds * hertz;\n  const angle = turns * TAU + offset;\n  const sine = Math.sin(angle);\n  return (sine + 1) / 2;\n}\n\nfunction smoothStep(edgeStart: number, edgeEnd: number, value: number) {\n  const span = edgeEnd - edgeStart;\n  const progress = (value - edgeStart) / span;\n  const bounded = Math.min(1, Math.max(0, progress));\n  const easing = 3 - 2 * bounded;\n  return bounded * bounded * easing;\n}\n\n/** Deterministic: the same time and seed always give the same level. */\nexport function speechLevelAt(time: number, seed = 0) {\n  const seconds = time / 1000;\n  const syllables = waveAt(seconds, SYLLABLE_HERTZ, seed);\n  const words = waveAt(seconds, WORD_HERTZ, seed * 1.9);\n  const phrases = waveAt(seconds, PHRASE_HERTZ, seed * 0.7);\n  const grain = waveAt(seconds, GRAIN_HERTZ, seed * 3.1);\n  const voiced = smoothStep(0.2, 0.45, phrases);\n  const wordShape = 0.35 + words * 0.65;\n  const syllableShape = syllables * syllables;\n  const texture = 0.85 + grain * 0.15;\n  const level = syllableShape * wordShape * voiced * texture;\n  const lifted = level * 1.25;\n  return Math.min(1, lifted);\n}\n\n/** A steady pseudo-random number between 0 and 1 for an index, so drawn shapes never flicker between renders. */\nexport function noiseAt(index: number, seed = 0) {\n  const angle = index * 12.9898 + seed * 78.233;\n  const sine = Math.sin(angle) * 43758.5453;\n  return sine - Math.floor(sine);\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "categories": [
+    "foundations"
+  ],
+  "type": "registry:lib"
+}
