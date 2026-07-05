@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import type { CallStatus } from '@/registry/ndeko/lib/agent-run';
+import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
   CALL_STATUS_WORD,
@@ -203,6 +204,36 @@ export function LevelBarsDemo() {
       >
         {listenLabelOf(isListening)}
       </Button>
+    </div>
+  );
+}
+
+const MODEL_BRANDS = [
+  { brand: 'openai', name: 'ChatGPT' },
+  { brand: 'claude', name: 'Claude' },
+  { brand: 'gemini', name: 'Gemini' },
+  { brand: 'deepseek', name: 'DeepSeek' },
+  { brand: 'mistral', name: 'Mistral' },
+] as const;
+
+const PAYMENT_BRANDS = ['stripe', 'paypal', 'visa', 'mastercard'] as const;
+
+export function BrandTileDemo() {
+  return (
+    <div className='flex flex-col gap-3 text-[13px]'>
+      <ul className='flex flex-col gap-2'>
+        {MODEL_BRANDS.map((model) => (
+          <li key={model.brand} className='flex items-center gap-2'>
+            <BrandTile brand={model.brand} />
+            {model.name}
+          </li>
+        ))}
+      </ul>
+      <div className='flex items-center gap-1.5'>
+        {PAYMENT_BRANDS.map((brand) => (
+          <BrandTile key={brand} brand={brand} size='lg' title={brand} />
+        ))}
+      </div>
     </div>
   );
 }

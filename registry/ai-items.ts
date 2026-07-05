@@ -137,6 +137,12 @@ export const aiItems: RegistryItemDefinition[] = [
     { dependencies: ['motion'], categories: AI }
   ),
   primitive(
+    'brand-tile',
+    'Brand Tile',
+    'The mark of a known product on a key cap tile, so marks of every shape sit in the same square.',
+    { registryDependencies: ['brand-logos'], categories: AI }
+  ),
+  primitive(
     'letter-tile',
     'Letter Tile',
     'A drawn initial for a model lab or a site, tinted by a series colour or left neutral.',

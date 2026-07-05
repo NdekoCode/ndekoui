@@ -38,6 +38,7 @@ import {
   TimelineDemo,
 } from './_demos/data-display-demos';
 import {
+  BrandTileDemo,
   CallStatusDemo,
   CopyButtonDemo,
   JsonViewDemo,
@@ -252,6 +253,7 @@ export const KIT_GROUPS: KitGroup[] = [
       { name: 'call-status', width: 'compact', Demo: CallStatusDemo },
       { name: 'replay-button', width: 'compact', Demo: ReplayButtonDemo },
       { name: 'level-bars', width: 'compact', Demo: LevelBarsDemo },
+      { name: 'brand-tile', width: 'compact', Demo: BrandTileDemo },
       { name: 'letter-tile', width: 'compact', Demo: LetterTileDemo },
       { name: 'settle', width: 'compact', Demo: SettleDemo },
       { name: 'live-region', width: 'compact', Demo: LiveRegionDemo },
