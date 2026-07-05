@@ -14,6 +14,7 @@ import {
   collectCatalog,
   componentItemsOf,
   hookItemsOf,
+  mergedDependencies,
   writePreviewModules,
 } from './registry-catalog';
 import { motionItemsOf } from './registry-motion';
@@ -22,6 +23,8 @@ const REGISTRY_URL = 'https://ui.ndekocode.dev/r';
 const ROOT = path.join(__dirname, '..');
 const THEME_CSS = path.join(ROOT, 'registry/ndeko/styles/ndeko.css');
 const OUTPUT = path.join(ROOT, 'registry.json');
+const SOURCE_FILE = /\.tsx?$/;
+const THEME_ITEM = 'theme';
 
 type CssObject = { [key: string]: string | CssObject };
 
@@ -119,6 +122,28 @@ function itemUrl(name: string) {
   return `${REGISTRY_URL}/${name}.json`;
 }
 
+/**
+ * A hand-written item also depends on every registry file its own files import, so an import added
+ * to a primitive can never be missing from the list a project installs. The theme is left to the
+ * item: a foundation such as `utils` declares none on purpose.
+ */
+function withImportedDependencies(
+  item: RegistryItemDefinition
+): RegistryItemDefinition {
+  const filePaths = item.files.map((file) => path.join(ROOT, file.path));
+  const sourcePaths = filePaths.filter((filePath) =>
+    SOURCE_FILE.test(filePath)
+  );
+  const imported = mergedDependencies(sourcePaths).registryDependencies;
+  const declared = item.registryDependencies ?? [];
+  const known = new Set([...declared, item.name, THEME_ITEM]);
+  const missing = imported.filter((name) => !known.has(name));
+  if (missing.length === 0) {
+    return item;
+  }
+  return { ...item, registryDependencies: [...declared, ...missing] };
+}
+
 function toRegistryItem(item: RegistryItemDefinition) {
   const registryDependencies = item.registryDependencies?.map(itemUrl);
   return {
@@ -146,7 +171,7 @@ async function buildRegistry() {
   const blockItems = bundleItemsOf('blocks', blockGroups);
   const templateItems = bundleItemsOf('templates', templateGroups);
   const definitions = [
-    ...registryItems,
+    ...registryItems.map(withImportedDependencies),
     ...sampleAssetItems,
     ...motionItemsOf(),
     ...hookItems,
