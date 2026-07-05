@@ -11,6 +11,7 @@ export const previewHosts: Record<string, ComponentType<PreviewHostProps>> = {
   activity: dynamic(() => import('./activity').then(previewHostOf)),
   agent: dynamic(() => import('./agent').then(previewHostOf)),
   alert: dynamic(() => import('./alert').then(previewHostOf)),
+  answer: dynamic(() => import('./answer').then(previewHostOf)),
   aside: dynamic(() => import('./aside').then(previewHostOf)),
   avatar: dynamic(() => import('./avatar').then(previewHostOf)),
   badge: dynamic(() => import('./badge').then(previewHostOf)),

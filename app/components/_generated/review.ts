@@ -4,9 +4,25 @@ import type { ComponentType } from 'react';
 import Review01 from '@/registry/ndeko/components/review/review-01';
 import Review02 from '@/registry/ndeko/components/review/review-02';
 import Review03 from '@/registry/ndeko/components/review/review-03';
+import Review04 from '@/registry/ndeko/components/review/review-04';
+import Review05 from '@/registry/ndeko/components/review/review-05';
+import Review06 from '@/registry/ndeko/components/review/review-06';
+import Review07 from '@/registry/ndeko/components/review/review-07';
+import Review08 from '@/registry/ndeko/components/review/review-08';
+import Review09 from '@/registry/ndeko/components/review/review-09';
+import Review10 from '@/registry/ndeko/components/review/review-10';
+import Review11 from '@/registry/ndeko/components/review/review-11';
 
 export const previews: Record<string, ComponentType> = {
   'review-01': Review01,
   'review-02': Review02,
   'review-03': Review03,
+  'review-04': Review04,
+  'review-05': Review05,
+  'review-06': Review06,
+  'review-07': Review07,
+  'review-08': Review08,
+  'review-09': Review09,
+  'review-10': Review10,
+  'review-11': Review11,
 };

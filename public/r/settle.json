@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "settle",
+  "title": "Settle",
+  "description": "The parts of a piece arrive in order the first time it is seen, each sharpening and rising into place.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/settle.tsx",
+      "content": "'use client';\n\nimport { motion, useReducedMotion, type Variants } from 'motion/react';\nimport { useState } from 'react';\n\nconst GROUP: Variants = {\n  hidden: {},\n  shown: { transition: { staggerChildren: 0.06 } },\n};\n\nconst ITEM: Variants = {\n  hidden: { opacity: 0, y: 8, filter: 'blur(4px)' },\n  shown: {\n    opacity: 1,\n    y: 0,\n    filter: 'blur(0px)',\n    transition: { duration: 0.4, ease: [0.23, 1, 0.32, 1] },\n    transitionEnd: { filter: 'none' },\n  },\n};\n\nconst ITEM_FADE: Variants = {\n  hidden: { opacity: 0 },\n  shown: { opacity: 1, transition: { duration: 0.2 } },\n};\n\nfunction groupStateOf(hasShown: boolean) {\n  if (hasShown) {\n    return 'shown';\n  }\n  return 'hidden';\n}\n\nfunction itemVariantsOf(shouldReduceMotion: boolean | null) {\n  if (shouldReduceMotion) {\n    return ITEM_FADE;\n  }\n  return ITEM;\n}\n\ntype SettleProps = {\n  /** True once the piece is on screen. The entrance plays the first time and never again. */\n  isShown: boolean;\n  className?: string;\n  children: React.ReactNode;\n};\n\n/** The parts of a piece arrive in order the first time it is seen: each sharpens and rises 8px, 60ms after the one before. */\nexport function Settle({ isShown, className, children }: SettleProps) {\n  const [hasShown, setHasShown] = useState(isShown);\n  const isFirstShow = isShown && !hasShown;\n  if (isFirstShow) {\n    setHasShown(true);\n  }\n\n  return (\n    <motion.div\n      initial='hidden'\n      animate={groupStateOf(hasShown)}\n      variants={GROUP}\n      className={className}\n    >\n      {children}\n    </motion.div>\n  );\n}\n\ntype SettleItemProps = {\n  className?: string;\n  children: React.ReactNode;\n};\n\nexport function SettleItem({ className, children }: SettleItemProps) {\n  const shouldReduceMotion = useReducedMotion();\n\n  return (\n    <motion.div\n      variants={itemVariantsOf(shouldReduceMotion)}\n      className={className}\n    >\n      {children}\n    </motion.div>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives",
+    "ai"
+  ],
+  "type": "registry:ui"
+}

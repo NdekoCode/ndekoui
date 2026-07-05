@@ -406,6 +406,60 @@ export const catalog: CatalogCategory[] = [
     ],
   },
   {
+    slug: 'answer',
+    name: 'Answer',
+    entries: [
+      {
+        name: 'answer-01',
+        source: 'ndeko',
+        title: 'Answer with citations',
+        description:
+          'An answer that streams word by word under a steps line that opens, with numbered marks that preview their source and light its pill, then Copy, Regenerate, thumbs and follow-ups that fill the composer.',
+        category: 'answer',
+      },
+      {
+        name: 'answer-02',
+        source: 'ndeko',
+        title: 'Grounded answer',
+        description:
+          'Marks that tint their sentence and raise their source, whose passage unfolds with the shared words marked, under a line that counts how much of the answer is backed.',
+        category: 'answer',
+      },
+      {
+        name: 'answer-03',
+        source: 'ndeko',
+        title: 'Message actions',
+        description:
+          'The quiet bar under a reply: Copy that turns into a check, Regenerate with versions that crossfade, thumbs with a reason picker, Read aloud with a live equalizer and a menu.',
+        category: 'answer',
+      },
+      {
+        name: 'answer-04',
+        source: 'ndeko',
+        title: 'Thinking state',
+        description:
+          'Steps, sources and a timed tool call grow live while the reasoning streams under a fade, then the block folds into one line that says how long it thought.',
+        category: 'answer',
+      },
+      {
+        name: 'answer-05',
+        source: 'ndeko',
+        title: 'Model arena',
+        description:
+          'Models answer one prompt side by side with live meters, blind until you vote, when the names roll in, rounds reshuffle and a leaderboard sums them; a narrow piece swipes between tabs.',
+        category: 'answer',
+      },
+      {
+        name: 'answer-06',
+        source: 'ndeko',
+        title: 'Artifact canvas',
+        description:
+          'A chat beside the document it made, split by a handle you drag or move with the arrows, with versions that crossfade, changes marked against the last one, Copy and Apply.',
+        category: 'answer',
+      },
+    ],
+  },
+  {
     slug: 'aside',
     name: 'Side panel',
     entries: [
@@ -3795,7 +3849,71 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Autonomy dial',
         description:
-          'A detented dial for how much an agent may do alone, then each tool on its own switch that follows the default or asks to confirm.',
+          'A dial with stops for how much an agent may do alone, then each tool on its own switch that follows the default or asks to confirm.',
+        category: 'review',
+      },
+      {
+        name: 'review-04',
+        source: 'ndeko',
+        title: 'Diff review',
+        description:
+          'Hunks stream in line by line and take a verdict stamp from Keep or Reject, rejected ones fold, J, K, Y and N drive it, and unified slides apart into split.',
+        category: 'review',
+      },
+      {
+        name: 'review-05',
+        source: 'ndeko',
+        title: 'Inline diff',
+        description:
+          'Two versions compared in the browser, changed words tinted inside their lines, unchanged runs folded behind a count, and each hunk settled by Accept or Reject.',
+        category: 'review',
+      },
+      {
+        name: 'review-06',
+        source: 'ndeko',
+        title: 'Change summary',
+        description:
+          'Every file an agent changed with a status tile, a five-block bar and counts, filtered by status, each row unfolding its own diff.',
+        category: 'review',
+      },
+      {
+        name: 'review-07',
+        source: 'ndeko',
+        title: 'Branch graph',
+        description:
+          'Agent branches as coloured lanes with a live commit and a checkpoint to restore, where Merge, Rebase and Squash previews glide the dots and rows into place before Apply.',
+        category: 'review',
+      },
+      {
+        name: 'review-08',
+        source: 'ndeko',
+        title: 'Branch conflicts',
+        description:
+          'A file by agent grid of live edits where a conflict opens both approaches side by side, Use or Combine settles it, and Merge waits until none is open.',
+        category: 'review',
+      },
+      {
+        name: 'review-09',
+        source: 'ndeko',
+        title: 'Extraction review',
+        description:
+          'Fields read from a drawn invoice stream in with their confidence, a thread runs from each one to where it came from, and the unsure ones are checked first.',
+        category: 'review',
+      },
+      {
+        name: 'review-10',
+        source: 'ndeko',
+        title: 'Computer use viewer',
+        description:
+          'An agent drives a drawn booking site with a named pointer that glides and ripples, a log and a scrubber to replay its steps, Pause, Take over and an approval before it pays.',
+        category: 'review',
+      },
+      {
+        name: 'review-11',
+        source: 'ndeko',
+        title: 'Prose diff',
+        description:
+          'Suggested edits marked inside a paragraph, each accepted or rejected from a card that glides to it or with Y and N, with J and K to move, Undo and a count that rolls.',
         category: 'review',
       },
     ],

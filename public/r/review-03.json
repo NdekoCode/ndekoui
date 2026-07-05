@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "review-03",
   "title": "Autonomy dial",
-  "description": "A detented dial for how much an agent may do alone, then each tool on its own switch that follows the default or asks to confirm.",
+  "description": "A dial with stops for how much an agent may do alone, then each tool on its own switch that follows the default or asks to confirm.",
   "dependencies": [
     "motion"
   ],

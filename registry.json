@@ -2296,6 +2296,29 @@
       ]
     },
     {
+      "name": "settle",
+      "type": "registry:ui",
+      "title": "Settle",
+      "description": "The parts of a piece arrive in order the first time it is seen, each sharpening and rising into place.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/ui/settle.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitives",
+        "ai"
+      ]
+    },
+    {
       "name": "letter-tile",
       "type": "registry:ui",
       "title": "Letter Tile",
@@ -4225,6 +4248,27 @@
       ]
     },
     {
+      "name": "use-autoplay",
+      "type": "registry:hook",
+      "title": "Use autoplay",
+      "description": "The use-autoplay hook used by ndekoui components.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/use-agent-run.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/hooks/use-autoplay.ts",
+          "type": "registry:hook"
+        }
+      ],
+      "categories": [
+        "hooks"
+      ]
+    },
+    {
       "name": "use-character-limit",
       "type": "registry:hook",
       "title": "Use character limit",
@@ -6074,6 +6118,349 @@
       "categories": [
         "components",
         "alert"
+      ]
+    },
+    {
+      "name": "answer-01",
+      "type": "registry:component",
+      "title": "Answer with citations",
+      "description": "An answer that streams word by word under a steps line that opens, with numbered marks that preview their source and light its pill, then Copy, Regenerate, thumbs and follow-ups that fill the composer.",
+      "dependencies": [
+        "@base-ui/react",
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/call-status.json",
+        "https://ui.ndekocode.dev/r/chat-message.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/letter-tile.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/popover.json",
+        "https://ui.ndekocode.dev/r/recipes.json",
+        "https://ui.ndekocode.dev/r/textarea.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/answer/answer-01.tsx",
+          "type": "registry:component",
+          "target": "components/answer/answer-01.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/copy-action.tsx",
+          "type": "registry:component",
+          "target": "components/answer/_parts/copy-action.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/lab-tile.tsx",
+          "type": "registry:component",
+          "target": "components/answer/_parts/lab-tile.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/labs.ts",
+          "type": "registry:component",
+          "target": "components/answer/_parts/labs.ts"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/answer/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "answer"
+      ]
+    },
+    {
+      "name": "answer-02",
+      "type": "registry:component",
+      "title": "Grounded answer",
+      "description": "Marks that tint their sentence and raise their source, whose passage unfolds with the shared words marked, under a line that counts how much of the answer is backed.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/hatch.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/letter-tile.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/answer/answer-02.tsx",
+          "type": "registry:component",
+          "target": "components/answer/answer-02.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/lab-tile.tsx",
+          "type": "registry:component",
+          "target": "components/answer/_parts/lab-tile.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/labs.ts",
+          "type": "registry:component",
+          "target": "components/answer/_parts/labs.ts"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/answer/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "answer"
+      ]
+    },
+    {
+      "name": "answer-03",
+      "type": "registry:component",
+      "title": "Message actions",
+      "description": "The quiet bar under a reply: Copy that turns into a check, Regenerate with versions that crossfade, thumbs with a reason picker, Read aloud with a live equalizer and a menu.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-message.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/dropdown-menu.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/letter-tile.json",
+        "https://ui.ndekocode.dev/r/level-bars.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/popover.json",
+        "https://ui.ndekocode.dev/r/textarea.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/toggle.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/answer/answer-03.tsx",
+          "type": "registry:component",
+          "target": "components/answer/answer-03.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/copy-action.tsx",
+          "type": "registry:component",
+          "target": "components/answer/_parts/copy-action.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/lab-tile.tsx",
+          "type": "registry:component",
+          "target": "components/answer/_parts/lab-tile.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/labs.ts",
+          "type": "registry:component",
+          "target": "components/answer/_parts/labs.ts"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/answer/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "answer"
+      ]
+    },
+    {
+      "name": "answer-04",
+      "type": "registry:component",
+      "title": "Thinking state",
+      "description": "Steps, sources and a timed tool call grow live while the reasoning streams under a fade, then the block folds into one line that says how long it thought.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/call-status.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/letter-tile.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/answer/answer-04.tsx",
+          "type": "registry:component",
+          "target": "components/answer/answer-04.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/lab-tile.tsx",
+          "type": "registry:component",
+          "target": "components/answer/_parts/lab-tile.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/labs.ts",
+          "type": "registry:component",
+          "target": "components/answer/_parts/labs.ts"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/streamed-words.tsx",
+          "type": "registry:component",
+          "target": "components/answer/_parts/streamed-words.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/answer/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "answer"
+      ]
+    },
+    {
+      "name": "answer-05",
+      "type": "registry:component",
+      "title": "Model arena",
+      "description": "Models answer one prompt side by side with live meters, blind until you vote, when the names roll in, rounds reshuffle and a leaderboard sums them; a narrow piece swipes between tabs.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/letter-tile.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/speech-envelope.json",
+        "https://ui.ndekocode.dev/r/switch.json",
+        "https://ui.ndekocode.dev/r/tabs.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/answer/answer-05.tsx",
+          "type": "registry:component",
+          "target": "components/answer/answer-05.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/lab-tile.tsx",
+          "type": "registry:component",
+          "target": "components/answer/_parts/lab-tile.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/labs.ts",
+          "type": "registry:component",
+          "target": "components/answer/_parts/labs.ts"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/streamed-words.tsx",
+          "type": "registry:component",
+          "target": "components/answer/_parts/streamed-words.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/use-container-width.ts",
+          "type": "registry:component",
+          "target": "components/answer/_parts/use-container-width.ts"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/answer/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "answer"
+      ]
+    },
+    {
+      "name": "answer-06",
+      "type": "registry:component",
+      "title": "Artifact canvas",
+      "description": "A chat beside the document it made, split by a handle you drag or move with the arrows, with versions that crossfade, changes marked against the last one, Copy and Apply.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/copy-button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/letter-tile.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/switch.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/toggle-group.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/answer/answer-06.tsx",
+          "type": "registry:component",
+          "target": "components/answer/answer-06.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/lab-tile.tsx",
+          "type": "registry:component",
+          "target": "components/answer/_parts/lab-tile.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/labs.ts",
+          "type": "registry:component",
+          "target": "components/answer/_parts/labs.ts"
+        },
+        {
+          "path": "registry/ndeko/components/answer/_parts/use-container-width.ts",
+          "type": "registry:component",
+          "target": "components/answer/_parts/use-container-width.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "answer"
       ]
     },
     {
@@ -19108,7 +19495,10 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/settle.json",
         "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -19862,7 +20252,7 @@
       "name": "review-03",
       "type": "registry:component",
       "title": "Autonomy dial",
-      "description": "A detented dial for how much an agent may do alone, then each tool on its own switch that follows the default or asks to confirm.",
+      "description": "A dial with stops for how much an agent may do alone, then each tool on its own switch that follows the default or asks to confirm.",
       "dependencies": [
         "motion"
       ],
@@ -19884,6 +20274,359 @@
         {
           "path": "registry/ndeko/components/review/review-03.tsx",
           "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "review"
+      ]
+    },
+    {
+      "name": "review-04",
+      "type": "registry:component",
+      "title": "Diff review",
+      "description": "Hunks stream in line by line and take a verdict stamp from Keep or Reject, rejected ones fold, J, K, Y and N drive it, and unified slides apart into split.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/review/review-04.tsx",
+          "type": "registry:component",
+          "target": "components/review/review-04.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/review/_parts/keys.ts",
+          "type": "registry:component",
+          "target": "components/review/_parts/keys.ts"
+        },
+        {
+          "path": "registry/ndeko/components/review/_parts/use-container-width.ts",
+          "type": "registry:component",
+          "target": "components/review/_parts/use-container-width.ts"
+        },
+        {
+          "path": "registry/ndeko/components/review/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/review/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "review"
+      ]
+    },
+    {
+      "name": "review-05",
+      "type": "registry:component",
+      "title": "Inline diff",
+      "description": "Two versions compared in the browser, changed words tinted inside their lines, unchanged runs folded behind a count, and each hunk settled by Accept or Reject.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/review/review-05.tsx",
+          "type": "registry:component",
+          "target": "components/review/review-05.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/review/_parts/diff.ts",
+          "type": "registry:component",
+          "target": "components/review/_parts/diff.ts"
+        },
+        {
+          "path": "registry/ndeko/components/review/_parts/use-container-width.ts",
+          "type": "registry:component",
+          "target": "components/review/_parts/use-container-width.ts"
+        },
+        {
+          "path": "registry/ndeko/components/review/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/review/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "review"
+      ]
+    },
+    {
+      "name": "review-06",
+      "type": "registry:component",
+      "title": "Change summary",
+      "description": "Every file an agent changed with a status tile, a five-block bar and counts, filtered by status, each row unfolding its own diff.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/toggle-group.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/review/review-06.tsx",
+          "type": "registry:component",
+          "target": "components/review/review-06.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/review/_parts/diff.ts",
+          "type": "registry:component",
+          "target": "components/review/_parts/diff.ts"
+        },
+        {
+          "path": "registry/ndeko/components/review/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/review/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "review"
+      ]
+    },
+    {
+      "name": "review-07",
+      "type": "registry:component",
+      "title": "Branch graph",
+      "description": "Agent branches as coloured lanes with a live commit and a checkpoint to restore, where Merge, Rebase and Squash previews glide the dots and rows into place before Apply.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/letter-tile.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/review/review-07.tsx",
+          "type": "registry:component",
+          "target": "components/review/review-07.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/review/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/review/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "review"
+      ]
+    },
+    {
+      "name": "review-08",
+      "type": "registry:component",
+      "title": "Branch conflicts",
+      "description": "A file by agent grid of live edits where a conflict opens both approaches side by side, Use or Combine settles it, and Merge waits until none is open.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/letter-tile.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/review/review-08.tsx",
+          "type": "registry:component",
+          "target": "components/review/review-08.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/review/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/review/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "review"
+      ]
+    },
+    {
+      "name": "review-09",
+      "type": "registry:component",
+      "title": "Extraction review",
+      "description": "Fields read from a drawn invoice stream in with their confidence, a thread runs from each one to where it came from, and the unsure ones are checked first.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/json-view.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/tabs.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/review/review-09.tsx",
+          "type": "registry:component",
+          "target": "components/review/review-09.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/review/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/review/_parts/words.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "review"
+      ]
+    },
+    {
+      "name": "review-10",
+      "type": "registry:component",
+      "title": "Computer use viewer",
+      "description": "An agent drives a drawn booking site with a named pointer that glides and ripples, a log and a scrubber to replay its steps, Pause, Take over and an approval before it pays.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/call-status.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/letter-tile.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/media-clock.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/slider.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/review/review-10.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": [
+        "components",
+        "review"
+      ]
+    },
+    {
+      "name": "review-11",
+      "type": "registry:component",
+      "title": "Prose diff",
+      "description": "Suggested edits marked inside a paragraph, each accepted or rejected from a card that glides to it or with Y and N, with J and K to move, Undo and a count that rolls.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/letter-tile.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/review/review-11.tsx",
+          "type": "registry:component",
+          "target": "components/review/review-11.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/review/_parts/keys.ts",
+          "type": "registry:component",
+          "target": "components/review/_parts/keys.ts"
+        },
+        {
+          "path": "registry/ndeko/components/review/_parts/words.ts",
+          "type": "registry:component",
+          "target": "components/review/_parts/words.ts"
         }
       ],
       "categories": [
