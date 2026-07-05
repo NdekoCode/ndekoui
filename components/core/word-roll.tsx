@@ -276,6 +276,8 @@ type WordSlotProps = {
   variants: Variants;
   slide: Transition;
   initialSlotCount: number;
+  /** The words in order: the slots are only measured again when it changes, not on every render. */
+  layoutKey: string;
 };
 
 function WordSlot({
@@ -284,6 +286,7 @@ function WordSlot({
   variants,
   slide,
   initialSlotCount,
+  layoutKey,
 }: WordSlotProps) {
   const isAddedLater = plan.index >= initialSlotCount;
   const leadingSpace = leadingSpaceOf(plan.index);
@@ -293,6 +296,7 @@ function WordSlot({
   return (
     <motion.span
       layout='position'
+      layoutDependency={layoutKey}
       transition={slide}
       className='flex overflow-y-clip'
     >
@@ -416,6 +420,7 @@ export function WordRoll({
   const slide = slideOf(shouldReduceMotion);
   const spokenWords = items.map((item) => item.text);
   const spokenText = accessibleText ?? spokenWords.join(' ');
+  const layoutKey = keys.join('\n');
 
   return (
     <span
@@ -432,6 +437,7 @@ export function WordRoll({
               variants={variants}
               slide={slide}
               initialSlotCount={initialSlotCount}
+              layoutKey={layoutKey}
             />
           ))}
         </LayoutGroup>
