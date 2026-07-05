@@ -52,7 +52,7 @@ export function Segments<Value extends string>({
         <ToggleGroupItem
           key={segment.value}
           value={segment.value}
-          className={cn('h-6 flex-1 rounded-md px-2.5 text-xs', itemClassName)}
+          className={cn('h-6 flex-auto rounded-md px-2.5 text-xs', itemClassName)}
         >
           {segment.label}
         </ToggleGroupItem>
