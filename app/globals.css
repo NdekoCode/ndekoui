@@ -226,3 +226,12 @@ html[data-vt='theme']::view-transition-group(root) {
 [data-offscreen] *::after {
   animation-play-state: paused !important;
 }
+
+/* A still preview shows where every animation ends: an entrance lands at once and a loop does not run. */
+[data-still] *,
+[data-still] *::before,
+[data-still] *::after {
+  animation-duration: 1ms !important;
+  animation-delay: 0s !important;
+  animation-iteration-count: 1 !important;
+}
