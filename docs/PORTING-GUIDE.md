@@ -79,7 +79,7 @@ Micro-interactions are the identity of the library: a port is finished only when
 - Item added or removed from a list: `AnimatePresence` with height and opacity, 200ms; items already there on mount do not animate (`initial={false}`).
 - Label change in a button: `motion.span layout` with `{ type: 'spring', bounce: 0, duration: 0.3 }`.
 - Panels: the primitives already animate their height; do not add motion on top.
-- Always read `useReducedMotion()` and keep only the opacity change when it is true.
+- Always read `usePrefersReducedMotion()` (`hooks/use-prefers-reduced-motion`) and keep only the opacity change when it is true.
 
 ## Verification (from the repository root)
 

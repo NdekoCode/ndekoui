@@ -46,7 +46,7 @@ export const manifest: BlockManifest = [
 
 ## Motion
 
-Micro-interactions are the identity of the library and blocks are where they show the most. Use the signature table of section 7 of the design system: a card dragged across lanes keeps its velocity, a dialog or panel resizes to its new step with `AnimatedSize`, a selection indicator travels, a saved state morphs the button, rows enter and leave with height and opacity. Chat blocks follow prompt-kit's mechanisms (streaming text, a prompt that grows, reasoning that folds), redrawn on our primitives. A card dragged across lanes, a row added or removed, a panel resizing between two contents, a thumb sliding between views. Nothing animates on load or on scroll. `useReducedMotion()` everywhere JavaScript drives motion.
+Micro-interactions are the identity of the library and blocks are where they show the most. Use the signature table of section 7 of the design system: a card dragged across lanes keeps its velocity, a dialog or panel resizes to its new step with `AnimatedSize`, a selection indicator travels, a saved state morphs the button, rows enter and leave with height and opacity. Chat blocks follow prompt-kit's mechanisms (streaming text, a prompt that grows, reasoning that folds), redrawn on our primitives. A card dragged across lanes, a row added or removed, a panel resizing between two contents, a thumb sliding between views. Nothing animates on load or on scroll. `usePrefersReducedMotion()` (`hooks/use-prefers-reduced-motion`) everywhere JavaScript drives motion.
 
 ## Verification and limits
 

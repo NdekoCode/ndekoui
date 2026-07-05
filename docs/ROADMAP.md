@@ -70,7 +70,7 @@ Port checklist for every composition:
 
 1. Rebuild it on Ndeko primitives and recipes; no class string copied from the source when a primitive exists.
 2. Icons from the icon module only.
-3. Motion only where the user acts or the content changes (see the design system, section 7), with `useReducedMotion` for JavaScript motion.
+3. Motion only where the user acts or the content changes (see the design system, section 7), with `usePrefersReducedMotion` for JavaScript motion.
 4. Fictional, plausible data; labels that carry the action.
 5. Keyboard and screen reader behaviour checked: names on icon buttons, focus visible, Escape closes.
 6. Light and dark, 375px wide without horizontal scroll.
