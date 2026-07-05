@@ -8,7 +8,6 @@ import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Kbd, KbdGroup } from '@/registry/ndeko/ui/kbd';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
-import { Settle, SettleItem } from '@/registry/ndeko/ui/settle';
 
 import { useAutosize } from './_parts/use-autosize';
 
@@ -642,15 +641,15 @@ export default function Prompt05() {
     { after: 80, run: () => codeHandle.current?.suggest() },
     { after: SUGGESTION_WAIT_MS, run: () => codeHandle.current?.accept() },
   ];
-  const { ref, isInView, isAutoplaying } = useAutoplay(steps, {
+  const { ref, isAutoplaying } = useAutoplay(steps, {
     loopAfter: 2600,
     onReset: resetFields,
   });
 
   return (
     <div ref={ref} className='w-full max-w-[32rem]'>
-      <Settle isShown={isInView} className='flex flex-col gap-5'>
-        <SettleItem className='flex flex-col gap-1.5'>
+      <div className='flex flex-col gap-5'>
+        <div className='flex flex-col gap-1.5'>
           <label htmlFor={emailId} className='text-[13px] font-medium'>
             Reply to Maren
           </label>
@@ -666,8 +665,8 @@ export default function Prompt05() {
             onSuggestionAccept={(kind) => pressHint(hintKeyOf(kind))}
             onSuggestionDismiss={() => pressHint('escape')}
           />
-        </SettleItem>
-        <SettleItem className='flex flex-col gap-1.5'>
+        </div>
+        <div className='flex flex-col gap-1.5'>
           <label htmlFor={codeId} className='text-[13px] font-medium'>
             orders.ts, line 18
           </label>
@@ -685,11 +684,9 @@ export default function Prompt05() {
             onSuggestionAccept={(kind) => pressHint(hintKeyOf(kind))}
             onSuggestionDismiss={() => pressHint('escape')}
           />
-        </SettleItem>
-        <SettleItem>
-          <KeyHints pressed={pressed} />
-        </SettleItem>
-      </Settle>
+        </div>
+        <KeyHints pressed={pressed} />
+      </div>
     </div>
   );
 }

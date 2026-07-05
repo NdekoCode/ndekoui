@@ -35,7 +35,7 @@ A piece that waits for a click to show what it does reads as a picture. A piece 
 - **It plays itself.** While it is on screen, a piece demonstrates its own key interaction in a loop: it types, picks, drags, approves, the way a person would. Pieces driven by a run use `useDemoRun` with `loopAfter`; pieces driven by a person use `useAutoplay` from `hooks/use-autoplay` (steps that call the same handlers a person triggers, `typingSteps` for text). The first click or key inside the piece ends the script for good and the piece behaves normally from there. Steps never move focus and never open a layer rendered outside the piece: a menu, a picker or a popover the demo wants to show is drawn inline in the demo. Under reduced motion nothing plays and the piece rests in its most telling state.
 - **One signature moment.** Each piece has one movement a visitor remembers and its manifest description names it: a ring that fills, a stamp that lands, a thread that draws itself, digits that roll, a card that flies to its place, a key that becomes another key.
 - **Every change of state moves, and only what changed.** Press gives (scale 0.97). A label becomes the next label (`Swap`, `WordRoll`). A count rolls (`MotionNumber`). A row arrives with height and opacity, and leaves faster than it came. A check draws itself. An error nudges 4px once. A result lands with a short settle from 1.04 to 1. Text that streams arrives word by word with a soft fade. Nothing else on the piece moves at that moment.
-- **It arrives once.** The first time a piece scrolls into view its parts settle in order through `Settle` and `SettleItem` from `ui/settle` (opacity, 8px, a 4px blur, 60ms apart). Once per mount, never again on a change of state.
+- **No entrance on scroll.** A piece is there when you reach it, in its resting state, and its demonstration starts. Revealing every piece as it scrolls into view is the reflex section 13 of the design system forbids. `Settle` and `SettleItem` (`ui/settle`) are for what appears because of an action or an event inside the piece: a result that lands, a panel that opens, the rows of a list that just loaded.
 - **Hover and focus answer within 120ms** on everything a person can act on: a tint, an icon that moves 2px, a ring. Nothing moves on hover that cannot be clicked.
 
 ### Worth installing
@@ -43,6 +43,18 @@ A piece that waits for a click to show what it does reads as a picture. A piece 
 - **One element carries the piece**: a ring, a large figure (20 to 28px, tabular), a drawn plate (`gem-plate`, `chip-3d`, `keycap-3d`), a small chart. Never a card of 13px lines with nothing to look at.
 - **Our materials give the depth**: `surface-raised` for what floats, soft trays (`bg-foreground/[0.04]`) for what groups, hairline rings, series colours for who, status pairs for what happened. Dark mode is drawn, not inverted.
 - **The resting state is the best picture of the piece**, since it is what a visitor sees first and what plays under reduced motion.
+
+### Nothing that reads as generated
+
+Section 13 of `docs/DESIGN-SYSTEM.md` applies to every piece, block and template. Read your work against it before you return it, and against these signs:
+
+- A loop on something that is not live. A pulse or a ping belongs to what is really running, and to three things at most in a piece.
+- `transition-all`, a spring that bounces, a card that scales on hover, a movement of more than a few pixels on hover, anything that moves on hover and cannot be clicked.
+- Colour that means nothing: chips in several hues with no meaning, a gradient between two hues, a glow, a coloured shadow. Series colours say who, status pairs say what happened, the primary colour marks the one action.
+- Type that shouts: a weight above 600, an uppercase tracked label, italics for emphasis, negative tracking on small text. Hierarchy comes from size and from the three text roles (foreground, muted, faint).
+- Copy that fills: an exclamation mark, a full stop on a label or a short caption, a greeting as a title, hype words, a badge that says New or Pro with nothing behind it, data such as 123,456 or Lorem. Figures share one format and tabular numerals.
+- Spacing by eye: a value off the 4px step, two equal things at different sizes, icons or figures that do not sit in one column, radii that do not nest (an inner radius is the outer radius minus the padding between them).
+- Three equal cards by reflex, an icon on top of every card, a sparkle for anything about AI, an emoji as an icon.
 
 ### Free at rest
 
