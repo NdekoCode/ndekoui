@@ -1,6 +1,5 @@
 import './globals.css';
 
-import { TooltipProvider } from '@/components/ui/tooltip';
 import { ThemeProvider } from '@/components/website/theme-provider';
 
 import type { Metadata } from 'next';
@@ -37,9 +36,7 @@ export default function RootLayout({
     <html lang='en' suppressHydrationWarning>
       <body className='font-sans antialiased'>
         <ThemeProvider attribute='class' disableTransitionOnChange>
-          <TooltipProvider>
-            <div className='isolate min-h-screen'>{children}</div>
-          </TooltipProvider>
+          <div className='isolate min-h-screen'>{children}</div>
         </ThemeProvider>
         {isProduction && <Analytics />}
       </body>
