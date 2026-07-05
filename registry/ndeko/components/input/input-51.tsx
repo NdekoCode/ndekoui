@@ -6,12 +6,12 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId } from 'react';
 import { usePaymentInputs } from 'react-payment-inputs';
 import images, { type CardImages } from 'react-payment-inputs/images';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CreditCardIcon } from '@/registry/ndeko/lib/icons';
 import { CONTROL_RECIPE } from '@/registry/ndeko/lib/recipes';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -67,7 +67,7 @@ export default function Input51() {
     getCVCProps,
     getCardImageProps,
   } = usePaymentInputs();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const swapVariants = swapVariantsOf(shouldReduceMotion);
   const hasCardType = Boolean(meta.cardType);
   const cardKey = cardKeyOf(meta.cardType);

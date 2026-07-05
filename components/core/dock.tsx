@@ -9,7 +9,6 @@ import {
   type SpringOptions,
   AnimatePresence,
   MotionConfig,
-  useReducedMotion,
 } from 'motion/react';
 import {
   Children,
@@ -22,6 +21,7 @@ import {
   useState,
 } from 'react';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 const DOCK_HEIGHT = 128;
 const DEFAULT_MAGNIFICATION = 80;
@@ -82,7 +82,7 @@ export type DockProviderProps = {
 const DockContext = createContext<DocContextType | undefined>(undefined);
 
 function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   if (!prefersReducedMotion) {
     return children;
   }
@@ -139,7 +139,7 @@ function Dock({
 }: DockProps) {
   const mouseX = useMotionValue(Infinity);
   const isHovered = useMotionValue(0);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const peakWidth = peakWidthOf(disableMagnification, magnification, itemSize);
 
   const maxHeight = useMemo(() => {
@@ -203,7 +203,7 @@ function DockItem({ children, className, href, onClick }: DockItemProps) {
     spring,
     itemSize = DEFAULT_ITEM_SIZE,
   } = useDock();
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const isHovered = useMotionValue(0);
 

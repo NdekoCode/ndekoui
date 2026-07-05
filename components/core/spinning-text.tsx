@@ -1,12 +1,7 @@
 'use client';
 import { cn } from '@/lib/utils';
-import {
-  motion,
-  MotionConfig,
-  Transition,
-  useReducedMotion,
-  Variants,
-} from 'motion/react';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { motion, MotionConfig, Transition, Variants } from 'motion/react';
 import React, { CSSProperties } from 'react';
 
 export type SpinningTextProps = {
@@ -47,7 +42,7 @@ function textOf(children: string | readonly string[]) {
 }
 
 function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   if (!prefersReducedMotion) {
     return children;
   }

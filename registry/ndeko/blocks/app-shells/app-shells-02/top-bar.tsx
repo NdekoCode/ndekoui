@@ -5,9 +5,9 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ArrowLeftToLineIcon,
   ArrowRightToLineIcon,
@@ -74,7 +74,7 @@ function SidebarToggle({
   isCollapsed: boolean;
   onToggle: () => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = swapVariantsOf(shouldReduceMotion);
   const label = toggleLabelOf(isCollapsed);
   const glyphKey = String(isCollapsed);

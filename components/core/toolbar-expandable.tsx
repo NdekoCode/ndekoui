@@ -2,14 +2,10 @@
 
 import React, { useRef, useState } from 'react';
 import useMeasure from 'react-use-measure';
-import {
-  AnimatePresence,
-  motion,
-  MotionConfig,
-  useReducedMotion,
-} from 'motion/react';
+import { AnimatePresence, motion, MotionConfig } from 'motion/react';
 import { cn } from '@/lib/utils';
 import useClickOutside from '@/hooks/useClickOutside';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   FolderIcon,
   MessageCircleIcon,
@@ -51,7 +47,7 @@ function panelOpacityOf(isSelected: boolean) {
 }
 
 function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   if (!prefersReducedMotion) {
     return children;
   }

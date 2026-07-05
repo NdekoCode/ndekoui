@@ -1,7 +1,8 @@
 'use client';
 
-import { useReducedMotion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
+
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 import type { StatusId, Task } from './data';
 
@@ -27,7 +28,7 @@ function heldOnce(
 }
 
 export function useDelayedPlacement() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [held, setHeld] = useState<HeldPlacements>({});
   const timers = useRef(new Map<string, ReturnType<typeof setTimeout>>());
 

@@ -1,13 +1,9 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  type Transition,
-  useReducedMotion,
-} from 'motion/react';
+import { AnimatePresence, motion, type Transition } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
   Dialog,
@@ -93,7 +89,7 @@ function hintExitOf(shouldReduceMotion: boolean | null) {
 
 export default function Dialog07() {
   const [hasReadToEnd, setHasReadToEnd] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const hintExit = hintExitOf(shouldReduceMotion);
 
   function markReadAtEnd(event: React.UIEvent<HTMLDivElement>) {

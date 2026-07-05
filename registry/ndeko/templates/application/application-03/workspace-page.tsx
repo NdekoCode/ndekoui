@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   SettingsIcon,
   TriangleAlertIcon,
@@ -165,7 +165,7 @@ function focusField(field: WorkspaceField) {
 
 /** The workspace has no logo, so its tile carries the initial; the letter swaps as the name changes. */
 function WorkspaceTile({ name }: { name: string }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = swapVariantsOf(shouldReduceMotion);
   const initial = initialOf(name);
   const tileStyle = { '--gem': 'var(--primary)' } as React.CSSProperties;

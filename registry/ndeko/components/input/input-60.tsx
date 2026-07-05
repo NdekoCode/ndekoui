@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useId, useRef, useState, type ChangeEvent } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { EyeIcon, EyeOffIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Field, FieldLabel } from '@/registry/ndeko/ui/field';
@@ -138,7 +138,7 @@ export default function Input60() {
   const [isVisible, setIsVisible] = useState(false);
   const [morph, setMorph] = useState<Morph | null>(null);
   const [scrollOffset, setScrollOffset] = useState(0);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const swapVariants = swapVariantsOf(shouldReduceMotion);
   const visibilityGlyph = visibilityGlyphOf(isVisible);
   const characters = Array.from(password);

@@ -6,11 +6,11 @@ import {
   type MotionValue,
   type Transition,
   useMotionValue,
-  useReducedMotion,
 } from 'motion/react';
 import { useCallback, useId, useLayoutEffect, useRef, useState } from 'react';
 
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 export type SwapGridItem = {
   id: string;
@@ -162,7 +162,7 @@ export function SwapGrid({
   itemClassName,
   'aria-label': ariaLabel,
 }: SwapGridProps) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const [slots, setSlots] = useState(() => initialSlotsOf(items, defaultSlots));
   const [draggingId, setDraggingId] = useState<string | null>(null);
   const [targetSlot, setTargetSlot] = useState<number | null>(null);

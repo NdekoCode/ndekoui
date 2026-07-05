@@ -1,6 +1,7 @@
 'use client';
 import { cn } from '@/lib/utils';
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { AnimatePresence, motion } from 'motion/react';
 import {
   useEffect,
   useId,
@@ -456,7 +457,7 @@ function HomeIndicator({ toneClass }: { toneClass: string }) {
 
 function ScreenVideo({ src, alt }: { src: string; alt: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const isDecorative = alt === '';
   const showsControls = Boolean(shouldReduceMotion);
   const isHidden = isDecorative && !showsControls;

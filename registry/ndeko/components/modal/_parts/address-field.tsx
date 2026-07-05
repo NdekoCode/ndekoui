@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { XIcon } from '@/registry/ndeko/lib/icons';
 import { CONTROL_RECIPE } from '@/registry/ndeko/lib/recipes';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -42,7 +43,7 @@ function AddressChip({
   allowsLayout: boolean;
   onRemove: (email: string) => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = chipVariantsOf(shouldReduceMotion);
   const ChipGlyph = chip.look.icon;
   const hasHint = chip.look.hint.length > 0;
@@ -119,7 +120,7 @@ export function AddressField({
   const inputId = useId();
   const inputRef = useRef<HTMLInputElement>(null);
   const [draft, setDraft] = useState('');
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const allowsLayout = !shouldReduceMotion;
   const hasChips = chips.length > 0;
   const hasTrailing = Boolean(trailing);

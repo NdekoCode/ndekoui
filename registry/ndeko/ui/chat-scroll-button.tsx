@@ -4,11 +4,11 @@
 import {
   AnimatePresence,
   motion,
-  useReducedMotion,
   type MotionProps,
   type Transition,
 } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ChevronDownIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -62,7 +62,7 @@ function ScrollButton({
   ...props
 }: ScrollButtonProps) {
   const { isAtBottom, scrollToBottom } = useChatContainer();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const presence = presenceOf(shouldReduceMotion);
   const isVisible = !isAtBottom;
 

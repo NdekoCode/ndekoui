@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { WordRotate } from '@/components/core/word-rotate';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { PauseIcon, PlayIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 
@@ -43,7 +44,7 @@ function ControlIcon({ isPaused }: { isPaused: boolean }) {
 
 export function WordRotatePause() {
   const [isPaused, setIsPaused] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const hidden = hiddenIconOf(shouldReduceMotion);
 
   return (

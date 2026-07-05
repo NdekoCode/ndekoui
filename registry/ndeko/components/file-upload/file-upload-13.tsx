@@ -5,7 +5,6 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
@@ -15,6 +14,7 @@ import {
   formatBytes,
   useFileUpload,
 } from '@/registry/ndeko/hooks/use-file-upload';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CircleAlertIcon,
   FileArchiveIcon,
@@ -240,7 +240,7 @@ function isUploadingOf(fileProgress: UploadProgress | undefined) {
 }
 
 export default function FileUpload13() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const itemVariants = itemVariantsOf(shouldReduceMotion);
   const [uploadProgress, setUploadProgress] = useState<UploadProgress[]>([]);
   const cancelUploadsRef = useRef(new Map<string, () => void>());

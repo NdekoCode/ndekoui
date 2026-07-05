@@ -1,12 +1,8 @@
 'use client';
-import {
-  motion,
-  MotionConfig,
-  Transition,
-  useReducedMotion,
-} from 'motion/react';
+import { motion, MotionConfig, Transition } from 'motion/react';
 import { motionElementOf } from './motion-elements';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 export type TextShimmerWaveProps = {
   children: string;
@@ -23,7 +19,7 @@ export type TextShimmerWaveProps = {
 };
 
 function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   if (!prefersReducedMotion) {
     return children;
   }

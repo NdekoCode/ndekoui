@@ -5,11 +5,11 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { BellIcon } from '@/registry/ndeko/lib/icons';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -130,7 +130,7 @@ function markAsRead(notification: Notification) {
 
 export default function Popover02() {
   const [notifications, setNotifications] = useState(INITIAL_NOTIFICATIONS);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const popVariants = popVariantsOf(shouldReduceMotion);
   const unreadCount = notifications.filter(
     (notification) => notification.isUnread

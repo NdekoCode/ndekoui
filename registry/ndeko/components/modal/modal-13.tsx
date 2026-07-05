@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CircleCheckIcon,
   ClockIcon,
@@ -133,7 +134,7 @@ function DeleteWorkspaceContent() {
   const [isDeleted, setIsDeleted] = useState(false);
   const deletion = useTimedAction();
   const exporting = useTimedAction();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowVariants = rowVariantsOf(shouldReduceMotion);
   const fieldId = useId();
   const hintId = useId();

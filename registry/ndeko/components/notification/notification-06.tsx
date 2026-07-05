@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ArrowRightIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { FOCUS_RING } from '@/registry/ndeko/lib/recipes';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -17,7 +18,7 @@ const LINK = [
 
 export default function Notification06() {
   const [isVisible, setIsVisible] = useState(true);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const leaveVariants = surfaceCollapseOf(shouldReduceMotion);
 
   function dismiss() {

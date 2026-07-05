@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CheckIcon, CopyIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
@@ -74,7 +74,7 @@ function copyLabelOf(isCopied: boolean) {
 
 export function CommandRow({ command }: { command: string }) {
   const [copyState, setCopyState] = useState<CopyState>('idle');
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const iconVariants = iconVariantsOf(shouldReduceMotion);
   const textVariants = textVariantsOf(shouldReduceMotion);
   const isCopied = copyState === 'copied';

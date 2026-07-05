@@ -21,10 +21,10 @@ import {
   PanInfo,
   Transition,
   useMotionValue,
-  useReducedMotion,
   useTransform,
 } from 'motion/react';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ChevronDownIcon,
   ChevronLeftIcon,
@@ -106,7 +106,7 @@ const TRAVEL_TRANSITION: Transition = {
 };
 
 function ReducedMotionConfig({ children }: { children: ReactNode }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   if (!prefersReducedMotion) {
     return children;
   }
@@ -166,7 +166,7 @@ function CarouselProvider({
   const [isKeyboardFocused, setKeyboardFocused] = useState(false);
   const [isDragging, setDragging] = useState(false);
   const isPageVisible = useDocumentVisibility();
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const autoplayProgress = useMotionValue(0);
   const carouselId = useId();
 
@@ -784,7 +784,7 @@ function CarouselThumbnails({
 }: CarouselThumbnailsProps) {
   const { index, orientation } = useCarousel();
   const listRef = useRef<HTMLDivElement>(null);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     const list = listRef.current;

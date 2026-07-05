@@ -10,9 +10,9 @@ import {
   Variant,
   MotionConfig,
   MotionValue,
-  useReducedMotion,
 } from 'motion/react';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 export type CursorProps = {
   children: React.ReactNode;
@@ -29,7 +29,7 @@ export type CursorProps = {
 };
 
 function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   if (!prefersReducedMotion) {
     return children;
   }
@@ -60,7 +60,7 @@ export function Cursor({
   const cursorY = useMotionValue(0);
   const cursorRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(!attachToParent);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {

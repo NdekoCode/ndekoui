@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useId, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
   Dialog,
@@ -112,7 +112,7 @@ export default function Dialog12() {
   const [code, setCode] = useState('');
   const [status, setStatus] = useState<CodeStatus>('entry');
   const closeRef = useRef<HTMLButtonElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const markVariants = markVariantsOf(shouldReduceMotion);
   const contentVariants = contentVariantsOf(shouldReduceMotion);
   const step = stepOf(status);

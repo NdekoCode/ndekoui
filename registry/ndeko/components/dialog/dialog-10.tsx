@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CheckIcon, LoaderCircleIcon } from '@/registry/ndeko/lib/icons';
 import { FOCUS_RING } from '@/registry/ndeko/lib/recipes';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -94,7 +94,7 @@ function submitViewOf(state: SubmitState) {
 
 export default function Dialog10() {
   const [submitState, setSubmitState] = useState<SubmitState>('idle');
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const iconVariants = iconVariantsOf(shouldReduceMotion);
   const labelVariants = labelVariantsOf(shouldReduceMotion);
   const shiftTransition = shiftTransitionOf(shouldReduceMotion);

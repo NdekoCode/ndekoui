@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useId, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CheckIcon,
   CopyIcon,
@@ -192,7 +192,7 @@ export default function Dialog15() {
   const [submitState, setSubmitState] = useState<SubmitState>('idle');
   const [addedRowCount, setAddedRowCount] = useState(0);
   const lastInputRef = useRef<HTMLInputElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowVariants = rowVariantsOf(shouldReduceMotion);
   const iconVariants = iconVariantsOf(shouldReduceMotion);
   const labelVariants = labelVariantsOf(shouldReduceMotion);

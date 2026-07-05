@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ChevronRightIcon } from '@/registry/ndeko/lib/icons';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Tabs, TabsList, TabsPanel, TabsTab } from '@/registry/ndeko/ui/tabs';
@@ -78,7 +79,7 @@ function TaskHeader() {
 }
 
 export default function TaskDetail03() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [work, setWork] = useState<WorkState>(FIRST_STATE);
   const [tab, setTab] = useState<WorkTab>('subtasks');
   const doneCount = doneCountOf(work.subtasks);

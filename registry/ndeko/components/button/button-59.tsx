@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CheckIcon, UserRoundPlusIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -136,7 +136,7 @@ function FollowContent({
 export default function Button59() {
   const [isFollowing, setIsFollowing] = useState(false);
   const [origin, setOrigin] = useState<FillOrigin>(CENTRE);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const swapVariants = swapVariantsOf(shouldReduceMotion);
   const fillTransition = fillTransitionOf(isFollowing, shouldReduceMotion);
   const fillStyle = fillStyleOf(isFollowing, origin, shouldReduceMotion);

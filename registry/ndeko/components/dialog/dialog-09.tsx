@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CheckIcon,
   LoaderCircleIcon,
@@ -123,7 +123,7 @@ function AcmeMark() {
 
 export default function Dialog09() {
   const [submitState, setSubmitState] = useState<SubmitState>('idle');
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const iconVariants = iconVariantsOf(shouldReduceMotion);
   const labelVariants = labelVariantsOf(shouldReduceMotion);
   const shiftTransition = shiftTransitionOf(shouldReduceMotion);

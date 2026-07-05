@@ -1,8 +1,9 @@
 'use client';
 
-import { motion, useReducedMotion, type Transition } from 'motion/react';
+import { motion, type Transition } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CircleAlertIcon } from '@/registry/ndeko/lib/icons';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -39,7 +40,7 @@ function teamById(teamId: string) {
 }
 
 export default function Teams09() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const markId = useId();
   const [query, setQuery] = useState('');
   const [teamId, setTeamId] = useState(TEAMS[0].id);

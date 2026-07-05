@@ -3,11 +3,11 @@
 import {
   type SpringOptions,
   useMotionValueEvent,
-  useReducedMotion,
   useSpring,
 } from 'motion/react';
 import { useState, useSyncExternalStore } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   Cropper,
   CropperCropArea,
@@ -131,7 +131,7 @@ function zoomLabelOf(zoom: number) {
 
 export default function ImageCropper08() {
   const image = usePlaceholderImage();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [targetZoom, setTargetZoom] = useState(MIN_ZOOM);
   const [zoom, setZoom] = useState(MIN_ZOOM);
   const zoomSpring = useSpring(MIN_ZOOM, ZOOM_SPRING);

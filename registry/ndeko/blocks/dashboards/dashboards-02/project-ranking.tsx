@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 import { DurationFigure } from './duration-figure';
@@ -156,7 +156,7 @@ export function ProjectRanking({
   other,
   emptyLine,
 }: ProjectRankingProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowVariants = rowVariantsOf(shouldReduceMotion);
   const moveTransition = moveTransitionOf(shouldReduceMotion);
   const isEmpty = rows.length === 0;

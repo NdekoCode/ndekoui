@@ -4,13 +4,13 @@ import {
   motion,
   type MotionValue,
   type Transition,
-  useReducedMotion,
   useSpring,
   useTransform,
   useVelocity,
 } from 'motion/react';
 import { memo } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CalendarIcon } from '@/registry/ndeko/lib/icons';
 import {
   Avatar,
@@ -105,7 +105,7 @@ type DragOverlayCardProps = {
 };
 
 export function DragOverlayCard({ card, dragX }: DragOverlayCardProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const velocity = useVelocity(dragX);
   const tiltTarget = useTransform(velocity, VELOCITY_RANGE, TILT_RANGE, {
     clamp: true,

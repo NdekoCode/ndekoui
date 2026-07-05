@@ -1,9 +1,10 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CircleCheckIcon,
   SearchIcon,
@@ -126,7 +127,7 @@ function PickedStack({
   picked: Person[];
   onClear: () => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = chipVariantsOf(shouldReduceMotion);
   const allowsLayout = !shouldReduceMotion;
   const shown = picked.slice(0, STACK_LIMIT);
@@ -198,7 +199,7 @@ function DirectoryRow({
   isDisabled: boolean;
   onToggle: (personId: string) => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = rowVariantsOf(shouldReduceMotion);
 
   function toggle() {

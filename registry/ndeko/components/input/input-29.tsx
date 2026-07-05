@@ -4,9 +4,9 @@ import {
   NumberField,
   type NumberFieldRootChangeEventDetails,
 } from '@base-ui/react/number-field';
-import { useReducedMotion } from 'motion/react';
 import { useRef } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ChevronDownIcon, ChevronUpIcon } from '@/registry/ndeko/lib/icons';
 import { CONTROL_RECIPE } from '@/registry/ndeko/lib/recipes';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -75,7 +75,7 @@ function useStepSlide(initialValue: number) {
   const inputRef = useRef<HTMLInputElement>(null);
   const slideRef = useRef<Animation | null>(null);
   const previousValueRef = useRef<number | null>(initialValue);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   function slideOnStep(
     value: number | null,

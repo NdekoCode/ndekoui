@@ -1,13 +1,9 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  type Transition,
-  useReducedMotion,
-} from 'motion/react';
+import { AnimatePresence, motion, type Transition } from 'motion/react';
 import { useId, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   AtSignIcon,
   ChevronDownIcon,
@@ -220,7 +216,7 @@ function ResultRow({
   onHover: (resultId: string) => void;
   onPick: (resultId: string) => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const travel = travelOf(shouldReduceMotion);
   const isPending = result.kind === 'pending';
   const isGuest = result.kind === 'guest';
@@ -276,7 +272,7 @@ function ResultRow({
 }
 
 function MentionToken() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = chipVariantsOf(shouldReduceMotion);
 
   return (

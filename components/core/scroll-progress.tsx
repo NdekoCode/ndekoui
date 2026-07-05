@@ -4,11 +4,11 @@ import {
   motion,
   MotionValue,
   SpringOptions,
-  useReducedMotion,
   useScroll,
   useSpring,
 } from 'motion/react';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { RefObject } from 'react';
 
 export type ScrollProgressProps = {
@@ -43,7 +43,7 @@ export function ScrollProgress({
     container: containerRef,
   });
 
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const springScaleX = useSpring(scrollYProgress, {
     ...DEFAULT_SPRING_OPTIONS,

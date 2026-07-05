@@ -7,10 +7,11 @@ import {
   useMotionValue,
   useSpring,
   useTransform,
-  useReducedMotion,
   MotionStyle,
   SpringOptions,
 } from 'motion/react';
+
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 export type TiltProps = {
   children: React.ReactNode;
@@ -30,7 +31,7 @@ export function Tilt({
   springOptions,
 }: TiltProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);

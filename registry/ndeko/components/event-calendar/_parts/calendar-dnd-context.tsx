@@ -19,8 +19,10 @@ import {
   isSameDay,
   isSameMinute,
 } from 'date-fns';
-import { motion, useReducedMotion, type Transition } from 'motion/react';
+import { motion, type Transition } from 'motion/react';
 import { createContext, useContext, useId, useState } from 'react';
+
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 import { EventItem } from './event-item';
 import type { CalendarEvent, TimedView } from './types';
@@ -121,7 +123,7 @@ function overlayLayoutIdOf(
 }
 
 function DragPreview({ drag }: { drag: DragState }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const { activeEvent, activeView } = drag;
   if (!activeEvent || !activeView) {
     return null;

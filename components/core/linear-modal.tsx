@@ -1,15 +1,11 @@
 'use client';
 
 import { Dialog } from '@base-ui/react/dialog';
-import {
-  AnimatePresence,
-  motion,
-  type Transition,
-  useReducedMotion,
-} from 'motion/react';
+import { AnimatePresence, motion, type Transition } from 'motion/react';
 import { useId, useRef, useState } from 'react';
 
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { PlusIcon, XIcon, type Icon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 
@@ -295,7 +291,7 @@ export function LinearModal({
   className,
   closeLabel = 'Close',
 }: LinearModalProps) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const scope = useId();
   const [active, setActive] = useState<LinearModalFeature | null>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);

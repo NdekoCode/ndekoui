@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ChartLineIcon,
   ChevronDownIcon,
@@ -215,7 +215,7 @@ function TaskCell({
   openTasks: MemberTask[];
   actions: MemberActions;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = taskSwapOf(shouldReduceMotion);
   const task = member.task;
   let swapKey = 'no-task';
@@ -449,7 +449,7 @@ type MemberCardProps = {
 
 export function MemberCard({ member, openTasks, actions }: MemberCardProps) {
   const [isActivityOpen, setIsActivityOpen] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const panelVariants = panelPresenceOf(shouldReduceMotion);
   const panelId = useId();
   const task = member.task;

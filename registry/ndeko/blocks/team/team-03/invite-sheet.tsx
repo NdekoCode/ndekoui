@@ -5,11 +5,11 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useEffectEvent, useId, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   AlertCircleIcon,
   CheckIcon,
@@ -229,7 +229,7 @@ function SendButton({
   count: number;
   isDisabled: boolean;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const iconVariants = iconSwapOf(shouldReduceMotion);
   const labelVariants = labelSwapOf(shouldReduceMotion);
   const label = sendLabelOf(state, count);
@@ -308,7 +308,7 @@ export function InviteSheet({
   const [role, setRole] = useState<Role>('member');
   const [note, setNote] = useState('');
   const [sendState, setSendState] = useState<SendState>('idle');
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const roleTravel = travelOf(shouldReduceMotion);
   const fieldId = useId();
   const summaryId = useId();

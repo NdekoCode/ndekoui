@@ -2,9 +2,10 @@
 
 import { ToggleGroup as ToggleGroupPrimitive } from '@base-ui/react/toggle-group';
 import { type VariantProps } from 'class-variance-authority';
-import { motion, useReducedMotion, type Transition } from 'motion/react';
+import { motion, type Transition } from 'motion/react';
 import { createContext, useContext, useId } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 import {
   Toggle,
@@ -125,7 +126,7 @@ function TravellingIndicator({
   settings: TravelSettings;
   variant: ToggleVariant;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
     <motion.span

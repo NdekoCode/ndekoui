@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ChevronDownIcon } from '@/registry/ndeko/lib/icons';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -71,7 +71,7 @@ function labelVariantsOf(shouldReduceMotion: boolean | null) {
 
 export default function Button40() {
   const [method, setMethod] = useState<MergeMethod>('merge');
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const labelVariants = labelVariantsOf(shouldReduceMotion);
   const selectedLabel = MERGE_OPTIONS[method].label;
 

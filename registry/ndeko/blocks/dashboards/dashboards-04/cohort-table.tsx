@@ -1,13 +1,9 @@
 'use client';
 
-import {
-  LayoutGroup,
-  motion,
-  type Transition,
-  useReducedMotion,
-} from 'motion/react';
+import { LayoutGroup, motion, type Transition } from 'motion/react';
 import { useId, useRef } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 import {
@@ -65,7 +61,7 @@ type CohortTableProps = {
 export function CohortTable({ mode, selection, onSelect }: CohortTableProps) {
   const layoutGroupId = useId();
   const tableRef = useRef<HTMLTableElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const ringTransition = ringTransitionOf(shouldReduceMotion);
 
   function focusCell(next: Selection) {

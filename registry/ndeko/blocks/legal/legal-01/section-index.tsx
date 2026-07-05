@@ -1,8 +1,8 @@
 'use client';
 
-import { useReducedMotion } from 'motion/react';
 import { useEffect, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 import type { LegalSection } from './data';
@@ -79,7 +79,7 @@ export function SectionIndex({
   sections,
   currentId,
 }: SectionIndexProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const currentIndex = sections.findIndex(
     (section) => section.id === currentId
   );

@@ -5,13 +5,13 @@ import {
   motion,
   useMotionTemplate,
   useMotionValue,
-  useReducedMotion,
   useTransform,
   type MotionValue,
 } from 'motion/react';
 import { useEffect, useId, useRef, useState } from 'react';
 
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 export type LensPosition = { x: number; y: number };
 
@@ -106,7 +106,7 @@ export function Lens({
 }: LensProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const hintId = useId();
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const [isPointerInside, setIsPointerInside] = useState(false);
   const [isKeyboardActive, setIsKeyboardActive] = useState(false);
   const radius = size / 2;

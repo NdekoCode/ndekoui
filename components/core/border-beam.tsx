@@ -1,9 +1,9 @@
 'use client';
 
-import { useReducedMotion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 type Frame = {
   width: number;
@@ -123,7 +123,7 @@ export function BorderBeam({
   const resumeTimeRef = useRef<CSSNumberish | null>(null);
   const [frame, setFrame] = useState(EMPTY_FRAME);
   const [isOnScreen, setIsOnScreen] = useState(false);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const perimeter = perimeterOf(frame);
   const wholeCount = Math.round(count);
   const beamCount = Math.max(wholeCount, 1);

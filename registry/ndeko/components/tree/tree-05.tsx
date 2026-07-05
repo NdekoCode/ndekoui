@@ -10,9 +10,10 @@ import {
   type ItemInstance,
 } from '@headless-tree/core';
 import { AssistiveTreeDescription } from '@headless-tree/react';
-import { motion, type Transition, useReducedMotion } from 'motion/react';
+import { motion, type Transition } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { FolderIcon, FolderOpenIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
@@ -103,7 +104,7 @@ function hasChildren(item: ItemInstance<Item>) {
 
 export default function Tree05() {
   const [items, setItems] = useState(INITIAL_ITEMS);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const travel = travelOf(shouldReduceMotion);
 
   function replaceChildren(parent: ItemInstance<Item>, childIds: string[]) {

@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ArrowRightIcon, EclipseIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { FOCUS_RING } from '@/registry/ndeko/lib/recipes';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -40,7 +40,7 @@ function collapseVariantsOf(shouldReduceMotion: boolean | null) {
 
 export default function Banner05() {
   const [isVisible, setIsVisible] = useState(true);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const collapseVariants = collapseVariantsOf(shouldReduceMotion);
 
   function dismiss() {

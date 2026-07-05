@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useInView,
-  useReducedMotion,
-} from 'motion/react';
+import { AnimatePresence, motion, useInView } from 'motion/react';
 import { useId, useRef, useState } from 'react';
 
 import { WordRoll } from '@/components/core/word-roll';
@@ -13,6 +8,7 @@ import {
   useRunScript,
   type RunScriptStep,
 } from '@/registry/ndeko/hooks/use-agent-run';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   elapsedOf,
   emptyRun,
@@ -436,7 +432,7 @@ function noteOf(call: ToolCall) {
 }
 
 function FinishedSteps({ calls }: { calls: ToolCall[] }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const finished = calls.filter(isFinishedCall);
   const newestFirst = [...finished].reverse();

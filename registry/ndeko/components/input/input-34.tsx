@@ -5,11 +5,11 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId, useState, type ChangeEvent } from 'react';
 
 import { useCharacterLimit } from '@/registry/ndeko/hooks/use-character-limit';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { Field, FieldLabel } from '@/registry/ndeko/ui/field';
 import { Input } from '@/registry/ndeko/ui/input';
 
@@ -56,7 +56,7 @@ export default function Input34() {
   const { value, characterCount, handleChange, maxLength } = useCharacterLimit({
     maxLength: MAX_LENGTH,
   });
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const digitVariants = digitVariantsOf(shouldReduceMotion);
 
   function changeHeadline(event: ChangeEvent<HTMLInputElement>) {

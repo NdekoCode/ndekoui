@@ -1,12 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 import {
   Disclosure,
   DisclosureContent,
   DisclosureTrigger,
 } from '@/components/core/disclosure';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CompassIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 
@@ -44,7 +45,7 @@ function variantOf(isOpen: boolean) {
 
 export function DisclosureCard() {
   const [isOpen, setIsOpen] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const tileVariants = tileVariantsOf(shouldReduceMotion);
 
   return (

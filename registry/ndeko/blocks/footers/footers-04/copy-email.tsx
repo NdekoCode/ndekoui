@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CheckIcon, CopyIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
@@ -59,7 +59,7 @@ function tooltipLabelOf(isCopied: boolean) {
 
 export function CopyEmail({ email }: { email: string }) {
   const [isCopied, setIsCopied] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const iconVariants = iconVariantsOf(shouldReduceMotion);
   const glyph = copyGlyphOf(isCopied);
 

@@ -6,10 +6,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { Label } from '@/registry/ndeko/ui/label';
 import { Slider } from '@/registry/ndeko/ui/slider';
 
@@ -130,7 +130,7 @@ export default function Slider12() {
   const [readouts, setReadouts] = useState(() =>
     INITIAL_DISCOUNTS.map(readoutOf)
   );
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const digitVariants = digitVariantsOf(shouldReduceMotion);
   const discounts = readouts.map(valueOfReadout);
   const [lowest, highest] = readouts;

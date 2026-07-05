@@ -1,13 +1,9 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  type Transition,
-} from 'motion/react';
+import { AnimatePresence, motion, type Transition } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CheckIcon, UserIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Checkbox } from '@/registry/ndeko/ui/checkbox';
@@ -96,7 +92,7 @@ function SaveLabel({ state }: { state: SaveState }) {
 function MorphingSave() {
   const [state, setState] = useState<SaveState>('idle');
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const isBusy = state !== 'idle';
 
   useEffect(() => {

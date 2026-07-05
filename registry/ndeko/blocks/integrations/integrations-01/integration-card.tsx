@@ -6,10 +6,10 @@ import {
   type MotionProps,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { BrandLogo } from '@/registry/ndeko/lib/brand-logos';
 import {
   CheckIcon,
@@ -145,7 +145,7 @@ function ConnectButton({
   errorId,
   onConnect,
 }: ConnectButtonProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = swapVariantsOf(shouldReduceMotion);
   const label = labelOf(state);
   const glyph = glyphOf(state);
@@ -216,7 +216,7 @@ export function IntegrationCard({
 }: IntegrationCardProps) {
   const titleId = useId();
   const errorId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const swapVariants = swapVariantsOf(shouldReduceMotion);
   const heightPresence = heightPresenceOf(shouldReduceMotion);
   const category = CATEGORIES[integration.category];

@@ -10,9 +10,10 @@ import {
   type ItemInstance,
 } from '@headless-tree/core';
 import { AssistiveTreeDescription } from '@headless-tree/react';
-import { motion, type Transition, useReducedMotion } from 'motion/react';
+import { motion, type Transition } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CodeIcon,
   FileIcon,
@@ -173,7 +174,7 @@ function fileGlyphOf(extension: string | undefined) {
 
 export default function Tree11() {
   const [items, setItems] = useState(INITIAL_ITEMS);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const travel = travelOf(shouldReduceMotion);
 
   function replaceChildren(parent: ItemInstance<Item>, childIds: string[]) {

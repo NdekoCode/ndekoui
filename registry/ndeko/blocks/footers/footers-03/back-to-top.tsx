@@ -1,7 +1,6 @@
 'use client';
 
-import { useReducedMotion } from 'motion/react';
-
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ArrowRightIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -22,7 +21,7 @@ function scrollBehaviorOf(shouldReduceMotion: boolean | null): ScrollBehavior {
 }
 
 export function BackToTop() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   function scrollToTop() {
     const behavior = scrollBehaviorOf(shouldReduceMotion);

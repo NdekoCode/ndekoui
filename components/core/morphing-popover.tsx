@@ -15,11 +15,11 @@ import {
   MotionConfig,
   motion,
   Transition,
-  useReducedMotion,
   Variants,
 } from 'motion/react';
 import useClickOutside from '@/hooks/useClickOutside';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 const TRANSITION = {
   type: 'spring' as const,
@@ -56,7 +56,7 @@ function motionTriggerFor(type: React.ElementType) {
 }
 
 function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   if (!prefersReducedMotion) {
     return children;
   }

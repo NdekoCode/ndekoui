@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useId, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { LoaderCircleIcon, SendIcon } from '@/registry/ndeko/lib/icons';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -145,7 +145,7 @@ export function ContactForm() {
   const emailRef = useRef<HTMLInputElement>(null);
   const teamSizeRef = useRef<HTMLButtonElement>(null);
   const messageRef = useRef<HTMLTextAreaElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const panelVariants = panelVariantsOf(shouldReduceMotion);
   const iconVariants = iconVariantsOf(shouldReduceMotion);
   const labelTransition = labelTransitionOf(shouldReduceMotion);

@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId, useState, type ChangeEvent } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CheckIcon,
   EyeIcon,
@@ -125,7 +125,7 @@ export default function Input52() {
   const descriptionId = useId();
   const [password, setPassword] = useState('');
   const [isVisible, setIsVisible] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const swapVariants = swapVariantsOf(shouldReduceMotion);
   const visibilityGlyph = visibilityGlyphOf(isVisible);
   const checks = REQUIREMENTS.map((requirement) => ({

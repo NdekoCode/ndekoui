@@ -3,7 +3,6 @@ import {
   motion,
   type MotionValue,
   useMotionValue,
-  useReducedMotion,
   useScroll,
   useTransform,
 } from 'motion/react';
@@ -15,6 +14,7 @@ import {
   useRef,
 } from 'react';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 const FOCUS_INSET = 24;
 
@@ -125,7 +125,7 @@ export function HorizontalScroll({
   const sectionRef = useRef<HTMLElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const { distance, direction } = useTrackGeometry(viewportRef, trackRef);
 
   const { scrollYProgress } = useScroll({

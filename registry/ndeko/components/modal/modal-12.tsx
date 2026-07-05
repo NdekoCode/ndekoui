@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ArrowUpRightIcon,
   ChevronDownIcon,
@@ -238,7 +239,7 @@ function RecentRow({
   onRun: (text: string) => void;
   onRemove: (searchId: string) => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = rowVariantsOf(shouldReduceMotion);
 
   function runSearch() {
@@ -320,7 +321,7 @@ function RecentSearchesContent() {
   });
   const [recent, setRecent] = useState<RecentSearch[]>(FIRST_RECENT);
   const [nextId, setNextId] = useState(FIRST_RECENT.length + 1);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowVariants = rowVariantsOf(shouldReduceMotion);
   const typed = query.trim();
   const hasQuery = typed.length > 0;

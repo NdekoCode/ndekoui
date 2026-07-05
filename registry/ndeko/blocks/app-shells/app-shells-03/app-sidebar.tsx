@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ArrowLeftIcon } from '@/registry/ndeko/lib/icons';
 
 import { AccountMenu } from './account-menu';
@@ -126,7 +126,7 @@ export function AppSidebar({
   onCreate,
 }: AppSidebarProps) {
   const indicatorId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const modeVariants = modeVariantsOf(shouldReduceMotion);
   const direction = directionOf(mode);
   const isSettingsMode = mode === 'settings';

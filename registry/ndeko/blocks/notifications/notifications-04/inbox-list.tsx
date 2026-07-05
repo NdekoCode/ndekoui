@@ -1,13 +1,9 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  type Transition,
-} from 'motion/react';
+import { AnimatePresence, motion, type Transition } from 'motion/react';
 import { useId } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ArchiveIcon,
   CheckCheckIcon,
@@ -148,7 +144,7 @@ function InboxRow({
   onSelect,
   onArchive,
 }: RowProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
     <motion.li
@@ -243,7 +239,7 @@ function DaySection({
   onSelect,
   onArchive,
 }: DaySectionProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const headingId = useId();
 
   return (
@@ -336,7 +332,7 @@ export function InboxList({
   onArchive,
   onMarkAllRead,
 }: InboxListProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const indicatorId = useId();
   const hasUnread = unreadCount > 0;
   const isEmpty = items.length === 0;

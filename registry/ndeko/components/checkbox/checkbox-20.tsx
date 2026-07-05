@@ -6,10 +6,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { MoonIcon, SunIcon } from '@/registry/ndeko/lib/icons';
 import { buttonVariants } from '@/registry/ndeko/ui/button';
 
@@ -46,7 +46,7 @@ function themeGlyphOf(isDark: boolean) {
 export default function Checkbox20() {
   const captionId = useId();
   const [isDark, setIsDark] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const iconVariants = iconVariantsOf(shouldReduceMotion);
   const glyph = themeGlyphOf(isDark);
 

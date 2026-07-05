@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { LoaderIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 
@@ -54,7 +54,7 @@ function labelStateOf(isSaving: boolean) {
 
 export default function Button14() {
   const [isSaving, setIsSaving] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const labelVariants = labelVariantsOf(shouldReduceMotion);
   const spinnerVariants = spinnerVariantsOf(shouldReduceMotion);
 

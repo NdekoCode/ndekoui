@@ -4,12 +4,12 @@ import { format, isBefore, isSameDay } from 'date-fns';
 import {
   AnimatePresence,
   motion,
-  useReducedMotion,
   type Transition,
   type Variants,
 } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CalendarIcon, TrashIcon } from '@/registry/ndeko/lib/icons';
 import { CONTROL_RECIPE, CONTROL_SIZES } from '@/registry/ndeko/lib/recipes';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -245,7 +245,7 @@ function swapVariantsOf(shouldReduceMotion: boolean | null) {
 }
 
 function SwappingLabel({ label }: { label: string }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
     <span className='relative inline-flex'>

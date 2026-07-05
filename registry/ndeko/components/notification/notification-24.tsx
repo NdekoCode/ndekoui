@@ -1,13 +1,9 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  type Transition,
-} from 'motion/react';
+import { AnimatePresence, motion, type Transition } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   AlarmClockIcon,
   BellIcon,
@@ -201,7 +197,7 @@ type RowProps = {
 };
 
 function ActivityRow({ entry, onSnooze, onToggleMute }: RowProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const muteLabel = muteLabelOf(entry);
 
   return (
@@ -299,7 +295,7 @@ type DaySectionProps = {
 };
 
 function DaySection({ day, entries, onSnooze, onToggleMute }: DaySectionProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const headingId = useId();
 
   return (
@@ -353,7 +349,7 @@ function CaughtUp({ snoozedCount }: { snoozedCount: number }) {
 }
 
 export default function Notification24() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const titleId = useId();
   const [entries, setEntries] = useState(ENTRIES);
   const awakeEntries = entries.filter(isAwake);

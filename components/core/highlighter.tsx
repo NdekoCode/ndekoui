@@ -1,11 +1,7 @@
 'use client';
 import { cn } from '@/lib/utils';
-import {
-  motion,
-  useInView,
-  useReducedMotion,
-  type TargetAndTransition,
-} from 'motion/react';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { motion, useInView, type TargetAndTransition } from 'motion/react';
 import {
   useEffect,
   useId,
@@ -602,7 +598,7 @@ export function Highlighter({
   const rootRef = useRef<HTMLSpanElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const instanceId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const isInView = useInView(rootRef, { once: true, margin: IN_VIEW_MARGIN });
   const boxes = useLineBoxes(rootRef, svgRef);
   const isShown = show ?? isInView;

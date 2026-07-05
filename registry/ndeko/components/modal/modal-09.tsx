@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ImageIcon,
   PaperclipIcon,
@@ -139,7 +139,7 @@ function RatingScale({
   onChange: (rating: number) => void;
 }) {
   const thumbId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const thumbTransition = morphOf(shouldReduceMotion);
 
   function changeRating(value: unknown) {
@@ -193,7 +193,7 @@ function AttachSlot({
   onRemove: () => void;
 }) {
   const inputId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = chipVariantsOf(shouldReduceMotion);
 
   function pickFile(event: React.ChangeEvent<HTMLInputElement>) {
@@ -405,7 +405,7 @@ function FeedbackContent() {
   const [kind, setKind] = useState<FeedbackKind>('idea');
   const [isSent, setIsSent] = useState(false);
   const [formKey, setFormKey] = useState(0);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const stepVariants = stepVariantsOf(shouldReduceMotion);
 
   function markSent() {

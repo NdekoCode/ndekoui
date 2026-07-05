@@ -1,8 +1,9 @@
 'use client';
 
-import { motion, useReducedMotion, type Transition } from 'motion/react';
+import { motion, type Transition } from 'motion/react';
 import { useEffect, useId, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CheckIcon, LoaderIcon, PlusIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 
@@ -95,7 +96,7 @@ function useDelayedJoin(onJoined: () => void) {
 }
 
 export default function Teams01() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const nameId = useId();
   const [joinState, setJoinState] = useState<JoinState>('idle');
   const isJoined = joinState === 'joined';

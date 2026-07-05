@@ -1,10 +1,11 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   emptyRun,
   type AgentStatus as AgentState,
@@ -340,7 +341,7 @@ function FleetItem({
   onRetry,
 }: FleetItemProps) {
   const panelId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const spring = springOf(shouldReduceMotion);
   const presence = itemPresenceOf(shouldReduceMotion);
   const { agent, subAgents } = entry;
@@ -503,7 +504,7 @@ export function AgentFleet({
   const [view, setView] = useState<FleetView>(defaultView);
   const [filter, setFilter] = useState<FleetFilter>('all');
   const [openIds, setOpenIds] = useState<Record<string, boolean>>({});
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const risePresence = risePresenceOf(shouldReduceMotion);
   const entries = entriesOf(agents);
   const visibleEntries = entries.filter((entry) =>

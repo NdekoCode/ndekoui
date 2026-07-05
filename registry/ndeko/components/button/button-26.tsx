@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { MoonIcon, SunIcon } from '@/registry/ndeko/lib/icons';
 import { Toggle } from '@/registry/ndeko/ui/toggle';
 
@@ -42,7 +42,7 @@ function themeGlyphOf(isDark: boolean) {
 
 export default function Button26() {
   const [isDark, setIsDark] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const iconVariants = iconVariantsOf(shouldReduceMotion);
   const glyph = themeGlyphOf(isDark);
 

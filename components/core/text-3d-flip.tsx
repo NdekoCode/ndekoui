@@ -1,6 +1,6 @@
 'use client';
 import { cn } from '@/lib/utils';
-import { useReducedMotion } from 'motion/react';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   Fragment,
   useEffect,
@@ -353,7 +353,7 @@ export function Text3DFlip({
   flipped,
 }: Text3DFlipProps) {
   const rootRef = useRef<HTMLElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const isControlled = flipped !== undefined;
   const isActive = useAncestorActivity(rootRef, !isControlled);
   const isFlipped = flipped ?? isActive;

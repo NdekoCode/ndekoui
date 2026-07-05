@@ -6,10 +6,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { Volume2Icon, VolumeXIcon } from '@/registry/ndeko/lib/icons';
 import { Label } from '@/registry/ndeko/ui/label';
 import { Slider } from '@/registry/ndeko/ui/slider';
@@ -77,7 +77,7 @@ function readoutAfter(current: Readout, value: number, shouldSlide: boolean) {
 
 export default function Slider13() {
   const [readout, setReadout] = useState(INITIAL_READOUT);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const digitVariants = digitVariantsOf(shouldReduceMotion);
 
   function changeVolume(

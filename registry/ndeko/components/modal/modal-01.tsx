@@ -1,9 +1,10 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useId, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   AlertCircleIcon,
   CheckIcon,
@@ -354,7 +355,7 @@ function PendingList({
   onRevoke: (invitationId: string) => void;
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowVariants = rowVariantsOf(shouldReduceMotion);
   const headingId = useId();
   const hiddenCount = invitations.length - SHOWN_INVITATIONS;

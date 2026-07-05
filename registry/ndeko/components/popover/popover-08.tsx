@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CircleCheckIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
@@ -43,7 +43,7 @@ function noticeVariantsOf(shouldReduceMotion: boolean | null) {
 export default function Popover08() {
   const [message, setMessage] = useState('');
   const [isSent, setIsSent] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const noticeVariants = noticeVariantsOf(shouldReduceMotion);
   const trimmedMessage = message.trim();
   const hasMessage = trimmedMessage.length > 0;

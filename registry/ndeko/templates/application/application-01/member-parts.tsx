@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 import {
   Avatar,
@@ -171,7 +171,7 @@ export function StatusChipMenu({
   taskNumber,
   onChange,
 }: StatusChipMenuProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = swapVariantsOf(shouldReduceMotion);
   const meta = statusChipMetaOf(status);
   const StatusGlyph = meta.icon;

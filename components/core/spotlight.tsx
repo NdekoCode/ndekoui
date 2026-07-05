@@ -1,13 +1,8 @@
 'use client';
 import React, { useRef, useState, useCallback, useEffect } from 'react';
-import {
-  motion,
-  useSpring,
-  useTransform,
-  useReducedMotion,
-  SpringOptions,
-} from 'motion/react';
+import { motion, useSpring, useTransform, SpringOptions } from 'motion/react';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 export type SpotlightProps = {
   className?: string;
@@ -30,7 +25,7 @@ export function Spotlight({
   const containerRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [parentElement, setParentElement] = useState<HTMLElement | null>(null);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const mouseX = useSpring(0, springOptions);
   const mouseY = useSpring(0, springOptions);

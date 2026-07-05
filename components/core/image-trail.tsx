@@ -1,7 +1,7 @@
 'use client';
-import { useReducedMotion } from 'motion/react';
 import { useEffect, useRef, type ReactNode } from 'react';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 export type ImageTrailImage = {
   src: string;
@@ -90,7 +90,7 @@ function ImageTrail({
 }: ImageTrailProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const slotsRef = useRef<Array<HTMLDivElement | null>>([]);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const slotCount = slotCountOf(maxVisible);
 
   useEffect(() => {

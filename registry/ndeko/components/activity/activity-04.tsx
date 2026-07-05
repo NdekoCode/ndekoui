@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { PauseIcon, PlayIcon } from '@/registry/ndeko/lib/icons';
 import { Tabs, TabsList, TabsTab } from '@/registry/ndeko/ui/tabs';
 
@@ -178,7 +179,7 @@ function layoutOf(shouldReduceMotion: boolean | null) {
 }
 
 function WorkRow({ entry, longest }: { entry: WorkEntry; longest: number }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const person = personOf(entry.personId);
   const presence = presenceOf(entry.personId);
   const share = entry.minutes / longest;

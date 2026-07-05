@@ -1,10 +1,11 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll, type WordRollWord } from '@/components/core/word-roll';
 import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   emptyRun,
   type AgentStatus as AgentState,
@@ -52,7 +53,7 @@ function taskMotionOf(shouldReduceMotion: boolean | null) {
 }
 
 function TaskLine({ task }: { task: string }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const taskMotion = taskMotionOf(shouldReduceMotion);
 
   return (

@@ -8,10 +8,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CheckIcon,
   LoaderCircleIcon,
@@ -266,7 +266,7 @@ export type NavItem<Id extends string> = {
 };
 
 function UnsavedDot({ isShown }: { isShown: boolean }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = dotVariantsOf(shouldReduceMotion);
 
   return (
@@ -362,7 +362,7 @@ export function SectionPanel({
   animatesIn,
   children,
 }: SectionPanelProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = panelVariantsOf(shouldReduceMotion);
   const initial = panelInitialOf(animatesIn);
 
@@ -483,7 +483,7 @@ type SaveButtonProps = {
 
 /** The label becomes its next state and the pill resizes to it: Save changes, Saving, Saved. */
 function SaveButton({ status, onSave }: SaveButtonProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = swapVariantsOf(shouldReduceMotion);
   const label = saveLabelOf(status);
   const glyph = saveGlyphOf(status);
@@ -566,7 +566,7 @@ export function UnsavedBar({
   onDiscard,
   onSave,
 }: UnsavedBarProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = barVariantsOf(shouldReduceMotion);
   const defaultText = barMessageOf(status, changeCount);
   const text = message ?? defaultText;
@@ -631,7 +631,7 @@ export function SegmentedChoice<Value extends string>({
   disabled,
   onValueChange,
 }: SegmentedChoiceProps<Value>) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const travel = thumbTravelOf(shouldReduceMotion);
   const thumbId = useId();
 
@@ -683,7 +683,7 @@ type ErrorPresenceProps = {
 
 /** A field error that grows in under its control and folds away once the person types again. */
 export function ErrorPresence({ id, error }: ErrorPresenceProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = errorVariantsOf(shouldReduceMotion);
 
   return (

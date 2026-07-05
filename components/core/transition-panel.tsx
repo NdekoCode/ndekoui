@@ -6,9 +6,9 @@ import {
   motion,
   MotionConfig,
   MotionProps,
-  useReducedMotion,
 } from 'motion/react';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 export type TransitionPanelProps = {
   children: React.ReactNode[];
@@ -19,7 +19,7 @@ export type TransitionPanelProps = {
 } & MotionProps;
 
 function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   if (!prefersReducedMotion) {
     return children;
   }

@@ -5,11 +5,11 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useState } from 'react';
 
 import { WordRoll } from '@/components/core/word-roll';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
 
@@ -53,7 +53,7 @@ function nextCountOf(count: number) {
 export default function Changelog01() {
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [focusTargetId, setFocusTargetId] = useState<string | null>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const presenceVariants = presenceVariantsOf(shouldReduceMotion);
   const visibleReleases = RELEASES.slice(0, visibleCount);
   const hasMore = visibleCount < RELEASES.length;

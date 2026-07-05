@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { GlobeIcon, MailIcon, UserIcon } from '@/registry/ndeko/lib/icons';
 
 import {
@@ -114,7 +114,7 @@ function focusField(field: ProfileField) {
 
 /** The sample line under the time format swaps with the format it describes. */
 function TimeSample({ format }: { format: ProfileValues['timeFormat'] }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = sampleVariantsOf(shouldReduceMotion);
 
   return (

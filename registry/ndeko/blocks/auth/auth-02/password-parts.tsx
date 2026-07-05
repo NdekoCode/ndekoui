@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CheckIcon,
   CircleIcon,
@@ -116,7 +116,7 @@ function metCountLabelOf(rules: PasswordRule[]) {
 }
 
 function RuleMark({ isMet }: { isMet: boolean }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = swapVariantsOf(shouldReduceMotion);
   const markKey = String(isMet);
 
@@ -212,7 +212,7 @@ export function PasswordField({
   children,
 }: PasswordFieldProps) {
   const [isRevealed, setIsRevealed] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = swapVariantsOf(shouldReduceMotion);
   const hasError = Boolean(error);
   const inputType = inputTypeOf(isRevealed);

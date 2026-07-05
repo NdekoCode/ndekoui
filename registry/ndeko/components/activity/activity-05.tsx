@@ -1,13 +1,9 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  type MotionProps,
-} from 'motion/react';
+import { AnimatePresence, motion, type MotionProps } from 'motion/react';
 import { useEffect, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ArrowUpIcon } from '@/registry/ndeko/lib/icons';
 
 import type { ActivityChange } from './_parts/activity-model';
@@ -159,7 +155,7 @@ function updateWordOf(count: number) {
 }
 
 function LiveRow({ event }: { event: LiveEvent }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
     <motion.li
@@ -191,7 +187,7 @@ function LiveRow({ event }: { event: LiveEvent }) {
 }
 
 export default function Activity05() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [feed, setFeed] = useState<LiveEvent[]>(FIRST_EVENTS);
   const [inbox, setInbox] = useState<Inbox>({ pending: [], delivered: 0 });
   const isExhausted = inbox.delivered >= INCOMING.length;

@@ -1,6 +1,7 @@
 'use client';
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 import { InView } from '@/components/core/in-view';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CompassIcon,
   FeatherIcon,
@@ -49,7 +50,7 @@ function itemVariantsOf(shouldReduceMotion: boolean | null) {
 }
 
 export function InViewImagesGrid() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const itemVariants = itemVariantsOf(shouldReduceMotion);
 
   return (

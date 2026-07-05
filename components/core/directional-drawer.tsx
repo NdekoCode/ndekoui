@@ -1,9 +1,9 @@
 'use client';
 
-import { useReducedMotion } from 'motion/react';
 import { createContext, useContext, useRef, useState } from 'react';
 
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   Sheet,
   SheetClose,
@@ -211,7 +211,7 @@ export function DirectionalDrawerContent({
   ...props
 }: DirectionalDrawerContentProps) {
   const { close } = useDrawer();
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const session = useRef<DragSession | null>(null);
   const snapAnimation = useRef<Animation | null>(null);
   const [isDragging, setIsDragging] = useState(false);

@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 
 import { CommentField } from './_parts/comment-field';
@@ -62,7 +63,7 @@ const LATER_REPLIES: Reply[] = [
 ];
 
 function TypingDots() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   if (shouldReduceMotion) {
     return (
       <span aria-hidden='true' className='flex gap-1'>
@@ -103,7 +104,7 @@ function contentKeyOf(entry: Entry) {
 
 /** One row that holds the typing state, then becomes the comment once it is sent. */
 function EntryRow({ entry }: { entry: Entry }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const person = personOf(entry.authorId);
   const isTyping = entry.body === null;
 

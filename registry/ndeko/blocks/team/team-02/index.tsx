@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ChevronDownIcon,
   ChevronsUpDownIcon,
@@ -205,7 +205,7 @@ function withAddedTime(member: Member, minutes: number): Member {
 }
 
 function SortGlyph({ sort, columnKey }: { sort: Sort; columnKey: SortKey }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const isSorted = sort.key === columnKey;
   let transition = SORT_GLYPH_TRANSITION;
   if (shouldReduceMotion) {

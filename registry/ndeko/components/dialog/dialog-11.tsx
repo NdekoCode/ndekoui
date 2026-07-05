@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CheckIcon, LoaderCircleIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
@@ -105,7 +105,7 @@ export default function Dialog11() {
   const reasonId = `${id}-reason`;
 
   const [submitState, setSubmitState] = useState<SubmitState>('idle');
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const iconVariants = iconVariantsOf(shouldReduceMotion);
   const labelVariants = labelVariantsOf(shouldReduceMotion);
   const shiftTransition = shiftTransitionOf(shouldReduceMotion);

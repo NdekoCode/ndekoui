@@ -5,9 +5,9 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 
@@ -40,7 +40,7 @@ type MorphingLabelProps = {
 };
 
 function MorphingLabel({ value, className, children }: MorphingLabelProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const labelVariants = labelVariantsOf(shouldReduceMotion);
 
   return (

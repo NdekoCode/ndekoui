@@ -1,10 +1,11 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { emptyRun, type ToolCall } from '@/registry/ndeko/lib/agent-run';
 import {
   CheckIcon,
@@ -349,7 +350,7 @@ function MemoryRow({
   const [draft, setDraft] = useState(memory.text);
   const confirmRef = useRef<HTMLButtonElement>(null);
   const fieldId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const usedKey = memory.usedBy?.id ?? 'never';
   const sourceWord = countOf(sourceCount, 'memory', 'memories');
@@ -647,7 +648,7 @@ export function AgentMemory({
   const undoneKeys = useRef(new Set<string>());
   const searchId = useId();
   const { schedule } = useTimeouts();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const spring = springOf(shouldReduceMotion);
   const rowTransition = { ...rowPresence.transition, layout: spring };

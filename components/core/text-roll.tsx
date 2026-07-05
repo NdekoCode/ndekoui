@@ -6,8 +6,9 @@ import {
   TargetAndTransition,
   Transition,
   MotionConfig,
-  useReducedMotion,
 } from 'motion/react';
+
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 export type TextRollProps = {
   children: string;
@@ -30,7 +31,7 @@ export type TextRollProps = {
 };
 
 function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   if (!prefersReducedMotion) {
     return children;
   }

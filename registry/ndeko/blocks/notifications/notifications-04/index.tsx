@@ -1,13 +1,9 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  type Transition,
-} from 'motion/react';
+import { AnimatePresence, motion, type Transition } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ChevronRightIcon, RotateCcwIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -124,7 +120,7 @@ function useUndoTimer(onElapsed: () => void) {
 }
 
 export default function Notifications04() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [items, setItems] = useState(() => withRead(INBOX, FIRST_ID, false));
   const [filter, setFilter] = useState<InboxFilter>('all');
   const [selectedId, setSelectedId] = useState<string | null>(FIRST_ID);

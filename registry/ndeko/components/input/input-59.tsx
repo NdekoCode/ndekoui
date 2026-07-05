@@ -6,10 +6,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId, useState, type KeyboardEvent } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   Combobox,
   ComboboxChip,
@@ -56,7 +56,7 @@ export default function Input59() {
   const inputId = useId();
   const [tags, setTags] = useState(INITIAL_TAGS);
   const [draft, setDraft] = useState('');
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const chipVariants = chipVariantsOf(shouldReduceMotion);
   const isLayoutAnimated = !shouldReduceMotion;
 

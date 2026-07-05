@@ -1,8 +1,9 @@
 'use client';
 
-import { motion, useReducedMotion, type Transition } from 'motion/react';
+import { motion, type Transition } from 'motion/react';
 import { useEffect, useRef, useState, type Ref } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ArrowLeftIcon,
   CheckIcon,
@@ -245,7 +246,7 @@ function BackFace({ onFlip, flipButtonRef }: FaceProps) {
 }
 
 export default function Teams07() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [isFlipped, setIsFlipped] = useState(false);
   const frontButtonRef = useRef<HTMLButtonElement>(null);
   const backButtonRef = useRef<HTMLButtonElement>(null);

@@ -1,11 +1,7 @@
 'use client';
 import { cn } from '@/lib/utils';
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  type Transition,
-} from 'motion/react';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { AnimatePresence, motion, type Transition } from 'motion/react';
 import { useLayoutEffect, useRef, useState } from 'react';
 
 type Trend = 1 | -1;
@@ -363,7 +359,7 @@ export function MotionNumber({
   suffix,
   className,
 }: MotionNumberProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [previousValue, setPreviousValue] = useState(value);
   const [trend, setTrend] = useState<Trend>(1);
 

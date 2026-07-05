@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 
 import { useFileUpload } from '@/registry/ndeko/hooks/use-file-upload';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CircleUserRoundIcon } from '@/registry/ndeko/lib/icons';
 import {
   Avatar,
@@ -77,7 +77,7 @@ export default function Button51() {
     useFileUpload({
       accept: 'image/*',
     });
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const labelVariants = labelVariantsOf(shouldReduceMotion);
   const rowVariants = rowVariantsOf(shouldReduceMotion);
 

@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { LoaderCircleIcon } from '@/registry/ndeko/lib/icons';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -101,7 +101,7 @@ export function WaitlistForm() {
   const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
   const [status, setStatus] = useState<Status>('idle');
   const inputRef = useRef<HTMLInputElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const panelVariants = panelVariantsOf(shouldReduceMotion);
   const spinnerVariants = spinnerVariantsOf(shouldReduceMotion);
   const labelTransition = labelTransitionOf(shouldReduceMotion);

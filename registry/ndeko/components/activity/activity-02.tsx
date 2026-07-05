@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
 
@@ -90,7 +91,7 @@ function FilterChip({
 }
 
 function FeedRow({ event }: { event: ActivityEvent }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
     <motion.li
@@ -119,7 +120,7 @@ function FeedRow({ event }: { event: ActivityEvent }) {
 }
 
 function DayGroup({ day }: { day: ActivityDay }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
     <motion.li
@@ -142,7 +143,7 @@ function DayGroup({ day }: { day: ActivityDay }) {
 
 export default function Activity02() {
   const [active, setActive] = useState<FilterId[]>(ALL_FILTERS);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const shown = TASK_HISTORY.filter((event) =>
     active.includes(filterOf(event))
   );

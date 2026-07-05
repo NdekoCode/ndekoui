@@ -5,9 +5,10 @@ import {
   motion,
   useMotionValue,
   useSpring,
-  useReducedMotion,
   type SpringOptions,
 } from 'motion/react';
+
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 const SPRING_CONFIG = { stiffness: 26.7, damping: 4.1, mass: 0.2 };
 
@@ -28,7 +29,7 @@ export function Magnetic({
 }: MagneticProps) {
   const [isHovered, setIsHovered] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const isGlobal = actionArea === 'global';
   const isAttracting = isGlobal || isHovered;
   const canMove = !prefersReducedMotion;

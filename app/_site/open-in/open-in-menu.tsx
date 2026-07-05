@@ -1,10 +1,11 @@
 'use client';
 
 import { Menu as MenuPrimitive } from '@base-ui/react/menu';
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useState, type ReactNode } from 'react';
 
 import { installCommandOf } from '@/lib/site';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CheckIcon,
   ChevronDownIcon,
@@ -118,7 +119,7 @@ function CopyItem({
   icon,
   onCopy,
 }: CopyItemProps) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const swap = swapStatesOf(prefersReducedMotion);
   const stateKey = String(isCopied);
 

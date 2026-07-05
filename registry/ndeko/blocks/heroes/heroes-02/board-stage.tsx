@@ -6,10 +6,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { LayoutGridIcon, ZapIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import {
@@ -167,7 +167,7 @@ function BoardHeader() {
 }
 
 function RuleCard({ hasRuleRun }: { hasRuleRun: boolean }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const status = ruleStatusOf(hasRuleRun);
   const swapVariants = swapVariantsOf(shouldReduceMotion);
 
@@ -199,7 +199,7 @@ function RuleCard({ hasRuleRun }: { hasRuleRun: boolean }) {
 
 export function BoardStage() {
   const [movingLaneIndex, setMovingLaneIndex] = useState(0);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const cardTransition = cardTransitionOf(shouldReduceMotion);
   const hasRuleRun = movingLaneIndex === DONE_LANE_INDEX;
 

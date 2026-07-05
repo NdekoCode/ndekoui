@@ -1,13 +1,9 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  type Transition,
-} from 'motion/react';
+import { AnimatePresence, motion, type Transition } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   BellIcon,
   CheckIcon,
@@ -87,7 +83,7 @@ function InboxEmpty() {
 }
 
 export default function Notifications01() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [items, setItems] = useState<InboxItem[]>(INBOX);
   const unreadCount = items.filter((item) => item.isUnread).length;
   const hasUnread = unreadCount > 0;

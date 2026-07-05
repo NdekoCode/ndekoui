@@ -1,12 +1,8 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  type Transition,
-} from 'motion/react';
+import { AnimatePresence, motion, type Transition } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 import {
   Avatar,
@@ -50,7 +46,7 @@ export function AvatarStack({
   extraCount = 0,
   className,
 }: AvatarStackProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const hiddenScale = hiddenScaleOf(shouldReduceMotion);
   const hiddenWidth = hiddenWidthOf(shouldReduceMotion);
   const shown = members.slice(0, limit);

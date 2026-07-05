@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useTheme } from 'next-themes';
 import type { MouseEvent } from 'react';
 
@@ -11,6 +11,7 @@ import {
   transitionTheme,
   type ThemeName,
 } from '@/lib/theme-transition';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { MoonIcon, SunIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 
@@ -60,7 +61,7 @@ function ThemeGlyph({ theme }: { theme: ThemeName }) {
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
   const isClient = useIsClient();
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   if (!isClient) {
     return <span aria-hidden='true' className='size-7' />;

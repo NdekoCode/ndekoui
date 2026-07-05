@@ -24,11 +24,11 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { createContext, useContext, useId, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ChevronDownIcon,
   ChevronFirstIcon,
@@ -584,7 +584,7 @@ function rangeOf(pagination: PaginationState, rowCount: number) {
 }
 
 function SortGlyph({ direction }: { direction: false | SortDirection }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = glyphVariantsOf(shouldReduceMotion);
   const glyph = sortGlyphOf(direction);
 
@@ -663,7 +663,7 @@ function presenceVariantsOf(shouldReduceMotion: boolean | null) {
 function NameFilter({ column }: { column: Column<Account> | undefined }) {
   const id = useId();
   const inputRef = useRef<HTMLInputElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = presenceVariantsOf(shouldReduceMotion);
   if (!column) {
     return null;
@@ -869,7 +869,7 @@ export default function Table20() {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [pagination, setPagination] =
     useState<PaginationState>(INITIAL_PAGINATION);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const presenceVariants = presenceVariantsOf(shouldReduceMotion);
 
   function deleteAccount(id: string) {

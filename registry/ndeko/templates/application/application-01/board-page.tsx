@@ -20,7 +20,7 @@ import {
   type UniqueIdentifier,
 } from '@dnd-kit/core';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
-import { useMotionValue, useReducedMotion } from 'motion/react';
+import { useMotionValue } from 'motion/react';
 import {
   useCallback,
   useEffect,
@@ -30,6 +30,7 @@ import {
   useState,
 } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { PlusIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 
@@ -115,7 +116,7 @@ export function BoardPage({
   const lastOverIdRef = useRef<UniqueIdentifier | null>(null);
   const movedLaneRef = useRef(false);
   const dragX = useMotionValue(0);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const dndContextId = useId();
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 4 } }),

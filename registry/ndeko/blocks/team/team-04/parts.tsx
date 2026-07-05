@@ -3,12 +3,12 @@
 import {
   AnimatePresence,
   motion,
-  useReducedMotion,
   type Transition,
   type Variants,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   BookmarkIcon,
   CheckIcon,
@@ -230,7 +230,7 @@ export function SlidingFigure({
   format: (value: number) => string;
   className?: string;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [shown, setShown] = useState<Shown>({ value, direction: 1 });
   const text = format(value);
 

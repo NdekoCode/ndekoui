@@ -3,11 +3,13 @@ import { ReactNode, useRef, useState } from 'react';
 import {
   MotionConfig,
   useInView,
-  useReducedMotion,
   Variant,
   Transition,
   UseInViewOptions,
 } from 'motion/react';
+
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+
 import { motionElementOf } from './motion-elements';
 
 export type InViewProps = {
@@ -28,7 +30,7 @@ const defaultVariants = {
 };
 
 function ReducedMotionConfig({ children }: { children: ReactNode }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   if (!prefersReducedMotion) {
     return children;
   }

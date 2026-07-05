@@ -5,13 +5,13 @@ import {
   type MotionValue,
   useMotionTemplate,
   useMotionValue,
-  useReducedMotion,
   useSpring,
   useTransform,
 } from 'motion/react';
 import { createContext, useContext, useRef, useState } from 'react';
 
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 export type SpotlightTint = 'neutral' | 'primary';
 
@@ -80,7 +80,7 @@ export function SpotlightCards({
   onPointerLeave,
   ...props
 }: SpotlightCardsProps) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const [isLit, setIsLit] = useState(false);
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);

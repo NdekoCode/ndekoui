@@ -7,9 +7,10 @@ import {
   syncDataLoaderFeature,
   type ItemInstance,
 } from '@headless-tree/core';
-import { motion, type Transition, useReducedMotion } from 'motion/react';
+import { motion, type Transition } from 'motion/react';
 import { useEffect, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   FileIcon,
   FolderIcon,
@@ -121,7 +122,7 @@ function sortedChildrenOf(items: Record<string, Item>, itemId: string) {
 
 export default function Tree06() {
   const [items, setItems] = useState(INITIAL_ITEMS);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const travel = travelOf(shouldReduceMotion);
 
   function renameItem(item: ItemInstance<Item>, name: string) {

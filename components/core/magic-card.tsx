@@ -6,12 +6,12 @@ import {
   type MotionValue,
   useMotionTemplate,
   useMotionValue,
-  useReducedMotion,
   useSpring,
 } from 'motion/react';
 import { useEffect, useRef } from 'react';
 
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 export type MagicCardTint = 'primary' | 'neutral';
 
@@ -122,7 +122,7 @@ export function MagicCard({
   ...props
 }: MagicCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const rawAngle = useMotionValue(0);
   const rawStrength = useMotionValue(0);
   const smoothAngle = useSpring(rawAngle, ANGLE_SPRING);

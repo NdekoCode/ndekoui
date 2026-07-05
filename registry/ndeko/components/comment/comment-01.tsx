@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ChevronDownIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
@@ -63,7 +64,7 @@ function foldLabelOf(count: number, showsReplies: boolean) {
 }
 
 function ReplyRow({ reply }: { reply: CommentItem }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   return (
     <motion.li
       {...heightPresenceOf(shouldReduceMotion)}
@@ -79,7 +80,7 @@ function ReplyRow({ reply }: { reply: CommentItem }) {
 }
 
 function ThreadView({ thread }: { thread: Thread }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const presence = heightPresenceOf(shouldReduceMotion);
   const [replies, setReplies] = useState(thread.replies);
   const [showsReplies, setShowsReplies] = useState(true);

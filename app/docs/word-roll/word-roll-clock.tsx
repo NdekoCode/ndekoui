@@ -1,7 +1,7 @@
 'use client';
-import { useReducedMotion } from 'motion/react';
 import { useEffect, useState, useSyncExternalStore } from 'react';
 import { WordRoll } from '@/components/core/word-roll';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 type Office = {
   city: string;
@@ -96,7 +96,7 @@ function ClockPlaceholder() {
 }
 
 export function WordRollClock() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const minute = useSyncExternalStore(
     subscribeToMinutes,
     currentMinute,

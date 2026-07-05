@@ -1,13 +1,9 @@
 'use client';
 
-import {
-  motion,
-  useReducedMotion,
-  type MotionProps,
-  type Transition,
-} from 'motion/react';
+import { motion, type MotionProps, type Transition } from 'motion/react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CircleDashedIcon, UserIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
@@ -93,7 +89,7 @@ export function SelectionBar({
   onAssignee,
   onClear,
 }: SelectionBarProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const sharedStatus = sharedValueOf(tasks.map((task) => task.status));
   const sharedPriority = sharedValueOf(tasks.map((task) => task.priority));
 

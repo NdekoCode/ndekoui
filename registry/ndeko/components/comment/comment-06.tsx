@@ -1,13 +1,9 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  type MotionProps,
-} from 'motion/react';
+import { AnimatePresence, motion, type MotionProps } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   FileSpreadsheetIcon,
   FileTextIcon,
@@ -205,7 +201,7 @@ function FileTile({ file }: { file: AttachedFile }) {
 }
 
 function PostedComment({ comment }: { comment: AttachedComment }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const hasFiles = comment.files.length > 0;
   return (
     <motion.li
@@ -233,7 +229,7 @@ function StagedChip({
   file: StagedFile;
   onRemove: () => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const Glyph = KIND_ICON[file.kind];
 
   return (
@@ -265,7 +261,7 @@ function StagedChip({
 }
 
 export default function Comment06() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [comments, setComments] = useState(FIRST_COMMENTS);
   const [body, setBody] = useState('');
   const [staged, setStaged] = useState<StagedFile[]>([]);

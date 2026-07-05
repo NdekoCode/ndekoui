@@ -1,8 +1,9 @@
 'use client';
 
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ArrowUpRightIcon,
   FileSpreadsheetIcon,
@@ -200,7 +201,7 @@ function DetailRow({
 
 function DayTime() {
   const [day, setDay] = useState<Day>('today');
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const transition = travelOf(shouldReduceMotion);
   const projects = TIME_BY_DAY[day];
   const total = totalOf(projects);

@@ -1,5 +1,6 @@
 'use client';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useState, createContext, useContext } from 'react';
 import {
   motion,
@@ -8,7 +9,6 @@ import {
   useMotionValue,
   useSpring,
   useTransform,
-  useReducedMotion,
 } from 'motion/react';
 
 const ImageComparisonContext = createContext<
@@ -51,7 +51,7 @@ function ImageComparison({
 }: ImageComparisonProps) {
   const [isDragging, setIsDragging] = useState(false);
   const motionValue = useMotionValue(50);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const springSliderPosition = useSpring(
     motionValue,
     springOptions ?? DEFAULT_SPRING_OPTIONS

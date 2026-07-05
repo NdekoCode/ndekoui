@@ -1,11 +1,11 @@
 'use client';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   motion,
   useAnimationFrame,
   useInView,
   useMotionValue,
-  useReducedMotion,
   useScroll,
   useSpring,
   useTransform,
@@ -159,7 +159,7 @@ export function ScrollVelocity({
 }: ScrollVelocityProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(rootRef);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const { scrollY } = useScroll({ container: containerRef });
   const scrollVelocity = useVelocity(scrollY);
   const smoothVelocity = useSpring(scrollVelocity, VELOCITY_SPRING);

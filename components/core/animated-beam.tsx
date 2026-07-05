@@ -1,9 +1,10 @@
 'use client';
 
-import { motion, useInView, useReducedMotion } from 'motion/react';
+import { motion, useInView } from 'motion/react';
 import { useEffect, useId, useState } from 'react';
 
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 type Point = { x: number; y: number };
 
@@ -186,7 +187,7 @@ export function AnimatedBeam({
   endYOffset = 0,
   className,
 }: AnimatedBeamProps) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const isInView = useInView(containerRef);
   const offsets: BeamOffsets = {
     start: { x: startXOffset, y: startYOffset },

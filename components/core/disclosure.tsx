@@ -7,10 +7,10 @@ import {
   Transition,
   Variant,
   Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { createContext, useContext, useState, useId } from 'react';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 export type DisclosureContextType = {
   open: boolean;
@@ -74,7 +74,7 @@ function useDisclosure() {
 }
 
 function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   if (!prefersReducedMotion) {
     return children;
   }

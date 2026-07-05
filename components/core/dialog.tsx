@@ -4,7 +4,6 @@ import {
   motion,
   MotionConfig,
   Transition,
-  useReducedMotion,
   Variants,
 } from 'motion/react';
 import React, {
@@ -17,6 +16,7 @@ import React, {
 import { cn } from '@/lib/utils';
 import { useId } from 'react';
 import { createPortal } from 'react-dom';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { XIcon } from '@/registry/ndeko/lib/icons';
 import { usePreventScroll } from '@/hooks/usePreventScroll';
 
@@ -52,7 +52,7 @@ const defaultTransition: Transition = {
 };
 
 function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   if (!prefersReducedMotion) {
     return children;
   }

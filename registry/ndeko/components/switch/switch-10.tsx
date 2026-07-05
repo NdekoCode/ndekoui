@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { MoonIcon, SunIcon } from '@/registry/ndeko/lib/icons';
 import { Label } from '@/registry/ndeko/ui/label';
 import { Switch } from '@/registry/ndeko/ui/switch';
@@ -44,7 +44,7 @@ function themeGlyphOf(isDark: boolean) {
 export default function Switch10() {
   const id = useId();
   const [isDark, setIsDark] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const iconVariants = iconVariantsOf(shouldReduceMotion);
   const glyph = themeGlyphOf(isDark);
 

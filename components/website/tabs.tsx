@@ -4,7 +4,8 @@ import * as React from 'react';
 import * as TabsPrimitive from '@radix-ui/react-tabs';
 
 import { cn } from '@/lib/utils';
-import { motion, Transition, useReducedMotion } from 'motion/react';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { motion, Transition } from 'motion/react';
 
 const INDICATOR_TRANSITION: Transition = {
   type: 'spring',
@@ -64,7 +65,7 @@ const TabsTrigger = React.forwardRef<
   const triggerRef = React.useRef<HTMLButtonElement>(null);
   const [isActive, setIsActive] = React.useState(false);
   const tabsId = React.useContext(TabsContext);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const setTriggerRef = React.useCallback(
     (element: HTMLButtonElement | null) => {

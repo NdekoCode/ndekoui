@@ -36,10 +36,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ChevronDownIcon,
   ChevronsUpDownIcon,
@@ -282,7 +282,7 @@ function sortGlyphOf(direction: false | SortDirection) {
 }
 
 function SortGlyph({ direction }: { direction: false | SortDirection }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = glyphVariantsOf(shouldReduceMotion);
   const glyph = sortGlyphOf(direction);
 

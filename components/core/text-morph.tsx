@@ -1,11 +1,11 @@
 'use client';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   AnimatePresence,
   motion,
   MotionConfig,
   Transition,
-  useReducedMotion,
   Variants,
 } from 'motion/react';
 import { useMemo, useId } from 'react';
@@ -20,7 +20,7 @@ export type TextMorphProps = {
 };
 
 function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   if (!prefersReducedMotion) {
     return children;
   }

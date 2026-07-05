@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useMemo, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { RefreshCwIcon } from '@/registry/ndeko/lib/icons';
 import { Input } from '@/registry/ndeko/ui/input';
 import {
@@ -151,7 +152,7 @@ function approvalLineOf(needsApproval: boolean) {
 }
 
 function QrCode({ url }: { url: string }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = swapVariantsOf(shouldReduceMotion, 'label');
   const path = useMemo(() => qrPathOf(url), [url]);
   const viewBox = `0 0 ${QR_VIEWBOX_SIZE} ${QR_VIEWBOX_SIZE}`;

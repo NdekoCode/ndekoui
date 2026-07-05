@@ -7,9 +7,10 @@ import {
   useTransform,
   motionValue,
   MotionConfig,
-  useReducedMotion,
 } from 'motion/react';
 import useMeasure from 'react-use-measure';
+
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 const TRANSITION = {
   type: 'spring' as const,
@@ -19,7 +20,7 @@ const TRANSITION = {
 };
 
 function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   if (!prefersReducedMotion) {
     return children;
   }
@@ -30,7 +31,7 @@ function Digit({ value, place }: { value: number; place: number }) {
   const valueRoundedToPlace = Math.floor(value / place) % 10;
   const initial = motionValue(valueRoundedToPlace);
   const animatedValue = useSpring(initial, TRANSITION);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (prefersReducedMotion) {

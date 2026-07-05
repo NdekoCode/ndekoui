@@ -4,11 +4,11 @@ import {
   AnimatePresence,
   LayoutGroup,
   motion,
-  useReducedMotion,
   type Transition,
 } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ArrowRightToLineIcon } from '@/registry/ndeko/lib/icons';
 
 import { RollingCount } from './_parts/motion-parts';
@@ -58,7 +58,7 @@ function NoteRow({
   line: NoteLine;
   onConvert: (isFromKeyboard: boolean) => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
     <motion.li
@@ -86,7 +86,7 @@ function NoteRow({
 }
 
 function SubtaskRow({ line }: { line: ConvertedLine }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
     <motion.li
@@ -105,7 +105,7 @@ function SubtaskRow({ line }: { line: ConvertedLine }) {
 }
 
 export default function Subtask07() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [notes, setNotes] = useState(NOTES);
   const [converted, setConverted] = useState<ConvertedLine[]>([]);
   const [announcement, setAnnouncement] = useState('');

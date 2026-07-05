@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useRef, useState, type ChangeEvent } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CircleXIcon } from '@/registry/ndeko/lib/icons';
 import { Field, FieldLabel } from '@/registry/ndeko/ui/field';
 import { Input } from '@/registry/ndeko/ui/input';
@@ -40,7 +40,7 @@ function swapVariantsOf(shouldReduceMotion: boolean | null) {
 export default function Input24() {
   const [projectName, setProjectName] = useState('Q3 launch plan');
   const inputRef = useRef<HTMLInputElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const swapVariants = swapVariantsOf(shouldReduceMotion);
   const hasValue = projectName !== '';
 

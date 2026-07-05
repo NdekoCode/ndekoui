@@ -1,10 +1,10 @@
 'use client';
 
 import createGlobe, { type COBEOptions } from 'cobe';
-import { useReducedMotion } from 'motion/react';
 import { useEffect, useId, useRef } from 'react';
 
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 export type GlobeLocation = [latitude: number, longitude: number];
 
@@ -556,7 +556,7 @@ export function Globe({
   const hostRef = useRef<HTMLDivElement>(null);
   const controllerRef = useRef<Controller | null>(null);
   const startingTiltRef = useRef(tilt);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const reducedMotion = prefersReducedMotion === true;
   const hintId = useId();
   const markerLabels = labelsOf(markers);

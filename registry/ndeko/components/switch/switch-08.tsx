@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { Label } from '@/registry/ndeko/ui/label';
 import { Switch } from '@/registry/ndeko/ui/switch';
 
@@ -43,7 +43,7 @@ function stateLabelOf(isOn: boolean) {
 export default function Switch08() {
   const id = useId();
   const [isOn, setIsOn] = useState(true);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const labelVariants = labelVariantsOf(shouldReduceMotion);
   const stateLabel = stateLabelOf(isOn);
 

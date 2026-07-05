@@ -3,7 +3,6 @@ import { Tabs as TabsPrimitive } from '@base-ui/react/tabs';
 import {
   motion,
   useMotionValue,
-  useReducedMotion,
   useSpring,
   useTransform,
   type MotionValue,
@@ -19,6 +18,7 @@ import {
   type RefObject,
 } from 'react';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ImageTabs,
   ImageTabsFrame,
@@ -157,7 +157,7 @@ function MagnifiedDocDock({
   const presenceTarget = useMotionValue(0);
   const pointer = useSpring(pointerTarget, POINTER_SPRING);
   const presence = useSpring(presenceTarget, PRESENCE_SPRING);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     const list = listRef.current;

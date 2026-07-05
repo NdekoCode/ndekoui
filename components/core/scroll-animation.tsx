@@ -4,13 +4,13 @@ import {
   type MotionValue,
   type Transition,
   useInView,
-  useReducedMotion,
   useScroll,
   useTransform,
   type Variants,
 } from 'motion/react';
 import { type ReactNode, type RefObject, useRef } from 'react';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 const EASE_OUT_STRONG = [0.23, 1, 0.32, 1] as const;
 
@@ -83,7 +83,7 @@ export function ScrollAnimation({
   containerRef,
 }: ScrollAnimationProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const isInView = useInView(ref, { root: containerRef, once: true, amount });
   const revealState = revealStateOf(isInView);
   const variants = variantsOf(preset, prefersReducedMotion);
@@ -133,7 +133,7 @@ export function ScrollParallax({
   containerRef,
 }: ScrollParallaxProps) {
   const frameRef = useRef<HTMLDivElement>(null);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const { scrollYProgress } = useScroll({
     target: frameRef,
     container: containerRef,

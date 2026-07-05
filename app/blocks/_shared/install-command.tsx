@@ -1,16 +1,12 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  type Transition,
-} from 'motion/react';
+import { AnimatePresence, motion, type Transition } from 'motion/react';
 import { useState, type ComponentType } from 'react';
 
 import { BunMark, NpmMark, PnpmMark, YarnMark } from '@/app/_site/brand-marks';
 import { CopyButton } from '@/app/_site/copy-button';
 import { REGISTRY_URL } from '@/lib/site';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ChevronDownIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -120,7 +116,7 @@ type RunnerLabelProps = {
 
 /** The runner rolls to its new words and the label eases to their width, so the rest of the command slides instead of jumping. */
 function RunnerLabel({ runner, isAnswering }: RunnerLabelProps) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const [content, setContent] = useState<HTMLSpanElement | null>(null);
   const contentWidth = useElementWidth(content);
   const roll = rollOf(isAnswering, prefersReducedMotion);

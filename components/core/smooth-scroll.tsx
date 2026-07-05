@@ -1,7 +1,7 @@
 'use client';
-import { useReducedMotion } from 'motion/react';
 import { type ReactNode, type RefObject, useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 const DEFAULT_LERP = 0.12;
 const MIN_LERP = 0.01;
@@ -259,7 +259,7 @@ export function useSmoothScroll({
   lerp = DEFAULT_LERP,
   enabled = true,
 }: UseSmoothScrollOptions = {}) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (!enabled) {

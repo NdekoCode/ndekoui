@@ -1,10 +1,11 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll } from '@/components/core/word-roll';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import {
   ChevronLeftIcon,
@@ -272,7 +273,7 @@ export function MessageActionBar({
   onCopied,
 }: MessageActionBarProps) {
   const [isReasonOpen, setIsReasonOpen] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const isUp = feedback === 'up';
   const isDown = feedback === 'down';
   const isReading = readState === 'reading';
@@ -629,7 +630,7 @@ export default function Answer03() {
   const [notice, setNotice] = useState('');
   const regenerateTimers = useTimeouts();
   const readTimers = useTimeouts();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const bodyMotion = bodyMotionOf(shouldReduceMotion);
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const version = versions[versionIndex];

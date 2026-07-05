@@ -3,12 +3,12 @@
 import {
   AnimatePresence,
   motion,
-  useReducedMotion,
   type Transition,
   type Variants,
 } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ChevronRightIcon,
   SettingsIcon,
@@ -159,7 +159,7 @@ function TeamHead() {
 }
 
 export default function Team04() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const membersTitleId = useId();
   const [period, setPeriod] = useState<Period>('this');
   const [selectedId, setSelectedId] = useState<string | null>(null);

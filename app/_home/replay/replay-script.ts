@@ -293,14 +293,10 @@ export const PREVIEW_ADDRESS = 'localhost:3000/dashboard';
 /** The first lines of the file as the CLI writes it, its imports rewritten to the project's aliases. */
 export const INSTALLED_FILE_HEAD = `'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  type Transition,
-} from 'motion/react';
+import { AnimatePresence, motion, type Transition } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion';
 import {
   ChevronsUpDownIcon,
   PlusIcon,

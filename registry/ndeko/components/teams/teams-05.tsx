@@ -1,13 +1,9 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  type Transition,
-} from 'motion/react';
+import { AnimatePresence, motion, type Transition } from 'motion/react';
 import { useEffect, useId, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CheckIcon,
   LoaderIcon,
@@ -118,7 +114,7 @@ function useTimer() {
 }
 
 function Seats({ invites }: { invites: Invite[] }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const seatScale = seatScaleOf(shouldReduceMotion);
   const emptyCount = emptySlotCountOf(invites.length);
   const emptySlots = Array.from({ length: emptyCount }, (_, index) => index);
@@ -169,7 +165,7 @@ function InviteChips({
   invites: Invite[];
   onRemove: (inviteId: string) => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const chipScale = seatScaleOf(shouldReduceMotion);
 
   return (
@@ -202,7 +198,7 @@ function InviteChips({
 }
 
 export default function Teams05() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const titleId = useId();
   const errorId = useId();
   const [draft, setDraft] = useState('');

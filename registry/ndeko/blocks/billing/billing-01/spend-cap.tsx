@@ -5,12 +5,12 @@ import {
   motion,
   type MotionProps,
   type Transition,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll, type WordRollWord } from '@/components/core/word-roll';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -263,7 +263,7 @@ export function SpendCapCard({ cap, spent, onCapChange }: SpendCapCardProps) {
   const [status, setStatus] = useState<SaveStatus>('idle');
   const changeButtonRef = useRef<HTMLButtonElement>(null);
   const editorRef = useRef<HTMLDivElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const heightPresence = heightPresenceOf(shouldReduceMotion);
   const shownCap = shownCapOf(isEditing, draft, cap);
   const isReached = isCapReached(shownCap, spent);

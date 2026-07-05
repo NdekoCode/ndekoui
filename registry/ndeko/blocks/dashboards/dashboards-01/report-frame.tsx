@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CheckIcon,
   DownloadIcon,
@@ -130,7 +130,7 @@ export function ReportToolbar({ title, meta, children }: ReportToolbarProps) {
 }
 
 function UpdatingNote({ isUpdating }: { isUpdating: boolean }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = noteVariantsOf(shouldReduceMotion);
 
   return (
@@ -213,7 +213,7 @@ type ExportButtonProps = {
 
 export function ExportButton({ disabled, onExport }: ExportButtonProps) {
   const [isExported, setIsExported] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = swapVariantsOf(shouldReduceMotion);
   const glyph = exportGlyphOf(isExported);
   const label = exportLabelOf(isExported);

@@ -1,7 +1,8 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { FileTextIcon, ImageIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -45,7 +46,7 @@ export function AttachmentList({
   onRemove,
   disabled = false,
 }: AttachmentListProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const presence = settlePresenceOf(shouldReduceMotion);
   const layoutTransition = layoutTransitionOf(shouldReduceMotion);
   const transition = { ...presence.transition, layout: layoutTransition };

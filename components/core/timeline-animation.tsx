@@ -3,7 +3,6 @@ import {
   motion,
   type MotionValue,
   useInView,
-  useReducedMotion,
   useScroll,
   useTransform,
   type Variants,
@@ -17,6 +16,7 @@ import {
   useRef,
 } from 'react';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 const EASE_OUT_STRONG = [0.23, 1, 0.32, 1] as const;
 const SETTLE_DURATION = 0.3;
@@ -100,7 +100,7 @@ export function TimelineAnimationItem({
   const itemRef = useRef<HTMLLIElement>(null);
   const segmentRef = useRef<HTMLSpanElement>(null);
   const { containerRef } = useContext(TimelineAnimationContext);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const isInView = useInView(itemRef, {
     root: containerRef,

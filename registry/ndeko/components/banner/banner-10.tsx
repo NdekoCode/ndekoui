@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState, useSyncExternalStore } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { TicketPercentIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import { StatusOrb } from '@/registry/ndeko/ui/status-orb';
@@ -102,7 +102,7 @@ function countdownOf(epochSecond: number) {
 
 export default function Banner10() {
   const [isVisible, setIsVisible] = useState(true);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const collapseVariants = collapseVariantsOf(shouldReduceMotion);
   const epochSecond = useSyncExternalStore(
     subscribeToClock,

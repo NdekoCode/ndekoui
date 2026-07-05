@@ -1,8 +1,9 @@
 'use client';
 
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 import { useId } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 import { AccountMenu } from './account-menu';
@@ -71,7 +72,7 @@ export function AppSidebar({
   onCreate,
 }: AppSidebarProps) {
   const indicatorId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const morph = morphOf(shouldReduceMotion);
 
   function selectItem(item: NavItem) {

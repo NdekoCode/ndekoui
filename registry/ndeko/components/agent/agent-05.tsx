@@ -1,9 +1,10 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useRef, useState } from 'react';
 
 import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   emptyRun,
   formatCost,
@@ -400,7 +401,7 @@ export function AgentTree({
   const [focusedId, setFocusedId] = useState<string | null>(null);
   const treeRef = useRef<HTMLUListElement>(null);
   const hintPrefix = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const rows = visibleRowsOf(agents, folded);
   const tabbableId = tabbableIdOf(focusedId, rows);

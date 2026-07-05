@@ -5,7 +5,6 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 
 import {
@@ -14,6 +13,7 @@ import {
   formatBytes,
   useFileUpload,
 } from '@/registry/ndeko/hooks/use-file-upload';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CircleAlertIcon,
   ImageIcon,
@@ -130,7 +130,7 @@ function Thumbnail({ file }: { file: FileWithPreview }) {
 }
 
 export default function FileUpload07() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const itemVariants = itemVariantsOf(shouldReduceMotion);
 
   const [

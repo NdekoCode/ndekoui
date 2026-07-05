@@ -3,12 +3,12 @@
 import {
   AnimatePresence,
   motion,
-  useReducedMotion,
   type MotionProps,
   type Transition,
   type Variants,
 } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 const EASE_OUT_STRONG: [number, number, number, number] = [0.23, 1, 0.32, 1];
@@ -39,7 +39,7 @@ type SwapProps = {
 };
 
 export function Swap({ swapKey, children, className }: SwapProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = swapVariantsOf(shouldReduceMotion);
 
   return (

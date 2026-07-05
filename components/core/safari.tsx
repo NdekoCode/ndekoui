@@ -1,7 +1,8 @@
 'use client';
 import { cn } from '@/lib/utils';
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef, type ComponentProps, type ReactNode } from 'react';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -178,7 +179,7 @@ function Toolbar({ url, mode }: { url: string; mode: SafariMode }) {
 
 function WindowVideo({ src, alt }: { src: string; alt: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const isDecorative = alt === '';
   const showsControls = Boolean(shouldReduceMotion);
   const isHidden = isDecorative && !showsControls;

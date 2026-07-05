@@ -1,13 +1,9 @@
 'use client';
 
-import {
-  LayoutGroup,
-  motion,
-  type Transition,
-  useReducedMotion,
-} from 'motion/react';
+import { LayoutGroup, motion, type Transition } from 'motion/react';
 import { useId } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import type { Icon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import {
@@ -187,7 +183,7 @@ function NavLinks({
   className,
 }: NavLinksProps) {
   const groupId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const transition = slideTransitionOf(shouldReduceMotion);
   const isUnderline = indicator === 'underline';
   const isIconOnly = display === 'icon';

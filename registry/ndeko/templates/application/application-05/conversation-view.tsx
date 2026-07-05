@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { FileTextIcon, MenuIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -105,7 +106,7 @@ export function ConversationView({
   const [feedback, setFeedback] = useState<FeedbackByTurn>({});
   const thinkingTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const chatRef = useRef<ChatContainerContext | null>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const isBusy = activeId !== null;
   const hasTurns = turns.length > 0;

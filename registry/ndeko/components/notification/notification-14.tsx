@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { XIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import { StatusOrb } from '@/registry/ndeko/ui/status-orb';
@@ -11,7 +12,7 @@ import { surfaceCollapseOf } from './_parts/collapse';
 
 export default function Notification14() {
   const [isVisible, setIsVisible] = useState(true);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const leaveVariants = surfaceCollapseOf(shouldReduceMotion);
 
   function dismiss() {

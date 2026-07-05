@@ -3,12 +3,12 @@
 import {
   AnimatePresence,
   motion,
-  useReducedMotion,
   type Transition,
   type Variants,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CheckIcon,
   CircleAlertIcon,
@@ -165,7 +165,7 @@ function RemovedNotice({ onUndo }: { onUndo: () => void }) {
 }
 
 export default function Teams03() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [role, setRole] = useState<Role>(MEMBER.role);
   const [isRemoved, setIsRemoved] = useState(false);
   const variants = variantsOf(shouldReduceMotion);

@@ -1,13 +1,9 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  type Transition,
-} from 'motion/react';
+import { AnimatePresence, motion, type Transition } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ArrowRightIcon,
   LoaderIcon,
@@ -109,7 +105,7 @@ type ActionsProps = {
 };
 
 function InviteActions({ state, onAccept, onDecline }: ActionsProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const morph = morphOf(shouldReduceMotion);
   const isJoining = state === 'joining';
   const acceptLabel = acceptLabelOf(state);

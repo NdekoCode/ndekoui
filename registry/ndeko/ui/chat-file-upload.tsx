@@ -6,7 +6,6 @@ import { useRender } from '@base-ui/react/use-render';
 import {
   AnimatePresence,
   motion,
-  useReducedMotion,
   type MotionProps,
   type Transition,
 } from 'motion/react';
@@ -21,6 +20,7 @@ import {
 } from 'react';
 import { createPortal } from 'react-dom';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 type FileUploadContextValue = {
@@ -251,7 +251,7 @@ type FileUploadContentProps = React.ComponentProps<'div'>;
 
 function FileUploadContent({ className, children }: FileUploadContentProps) {
   const { isDragging, disabled } = useFileUpload();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const presence = presenceOf(shouldReduceMotion);
   const isMounted = useSyncExternalStore(
     subscribeToNothing,

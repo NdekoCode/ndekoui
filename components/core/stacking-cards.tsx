@@ -2,7 +2,6 @@
 import {
   motion,
   type MotionValue,
-  useReducedMotion,
   useScroll,
   useTransform,
 } from 'motion/react';
@@ -16,6 +15,7 @@ import {
   useRef,
 } from 'react';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 const DEEPEST_SCALE = 0.9;
 const MAX_SCALE_STEP = 0.04;
@@ -124,7 +124,7 @@ export type StackingCardProps = {
 export function StackingCard({ children, className }: StackingCardProps) {
   const { progress, count, peek, frameClassName } = useStackingCards();
   const index = useContext(StackingCardIndexContext);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const lastIndex = count - 1;
   const depth = lastIndex - index;

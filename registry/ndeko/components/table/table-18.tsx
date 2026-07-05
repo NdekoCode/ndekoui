@@ -18,11 +18,11 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ChevronDownIcon,
   ChevronFirstIcon,
@@ -405,7 +405,7 @@ function rangeOf(pagination: PaginationState, rowCount: number) {
 }
 
 function SortGlyph({ direction }: { direction: false | SortDirection }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = glyphVariantsOf(shouldReduceMotion);
   const glyph = sortGlyphOf(direction);
 

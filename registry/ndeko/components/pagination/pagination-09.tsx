@@ -1,15 +1,11 @@
 'use client';
 
-import {
-  LayoutGroup,
-  motion,
-  type Transition,
-  useReducedMotion,
-} from 'motion/react';
+import { LayoutGroup, motion, type Transition } from 'motion/react';
 import { useId, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import { usePagination } from '@/registry/ndeko/hooks/use-pagination';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ChevronLeftIcon, ChevronRightIcon } from '@/registry/ndeko/lib/icons';
 import {
   Pagination,
@@ -68,7 +64,7 @@ function hrefOf(page: number) {
 export default function Pagination09() {
   const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(FIRST_PAGE);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const travelTransition = travelTransitionOf(shouldReduceMotion);
   const layoutGroupId = useId();
   const totalPages = Math.ceil(TOTAL_RESULTS / pageSize);

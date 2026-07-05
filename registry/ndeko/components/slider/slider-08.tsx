@@ -6,10 +6,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { Label } from '@/registry/ndeko/ui/label';
 import { Slider } from '@/registry/ndeko/ui/slider';
 
@@ -76,7 +76,7 @@ function readoutAfter(current: Readout, value: number, shouldSlide: boolean) {
 
 export default function Slider08() {
   const [readout, setReadout] = useState(INITIAL_READOUT);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const digitVariants = digitVariantsOf(shouldReduceMotion);
 
   function changeContrast(

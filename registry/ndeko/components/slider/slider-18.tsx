@@ -6,10 +6,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState, type ReactNode } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { Label } from '@/registry/ndeko/ui/label';
 import { SliderThumbValue } from '@/registry/ndeko/ui/slider';
 
@@ -118,7 +118,7 @@ function RatingFace({ rating }: { rating: number }) {
 
 export default function Slider18() {
   const [rating, setRating] = useState(INITIAL_RATING);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const faceVariants = faceVariantsOf(shouldReduceMotion);
 
   return (

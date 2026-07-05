@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { BellIcon } from '@/registry/ndeko/lib/icons';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -56,7 +56,7 @@ function badgeTextOf(unreadCount: number) {
 
 export default function Button25() {
   const [unreadCount, setUnreadCount] = useState(INITIAL_UNREAD_COUNT);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const badgeVariants = badgeVariantsOf(shouldReduceMotion);
   const hasUnread = unreadCount > 0;
 

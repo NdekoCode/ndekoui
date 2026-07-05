@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ArrowUpRightIcon,
   RotateCcwIcon,
@@ -98,7 +99,7 @@ function ToneNotice({
 }
 
 export default function Notification29() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [cards, setCards] = useState(CARDS);
   const isEmpty = cards.length === 0;
   const collapse = rowCollapseOf(shouldReduceMotion);

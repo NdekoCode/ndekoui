@@ -1,9 +1,10 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useSyncExternalStore } from 'react';
 
 import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   emptyRun,
   pendingApprovalsOf,
@@ -567,7 +568,7 @@ export function AgentLanes({
   className,
 }: AgentLanesProps) {
   const orientation = useOrientation();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const now = useLiveNow(1000, isLive);
   const time = endedAt ?? now;
   const origin = startedAt ?? time;

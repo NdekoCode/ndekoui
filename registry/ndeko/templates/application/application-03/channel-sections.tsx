@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 
 import type { Channel, NotificationValues, SwitchKey } from './data';
@@ -37,7 +37,7 @@ function lineVariantsOf(shouldReduceMotion: boolean | null) {
 
 /** A row line that swaps with the value it describes. */
 export function SwappingLine({ text }: { text: string }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = lineVariantsOf(shouldReduceMotion);
 
   return (

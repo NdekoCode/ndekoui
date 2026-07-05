@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { XIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import { StatusOrb } from '@/registry/ndeko/ui/status-orb';
@@ -13,7 +14,7 @@ const TEXT_ACTION = 'h-auto px-0 text-[13px] leading-5';
 
 export default function Notification10() {
   const [isVisible, setIsVisible] = useState(true);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const leaveVariants = surfaceCollapseOf(shouldReduceMotion);
 
   function dismiss() {

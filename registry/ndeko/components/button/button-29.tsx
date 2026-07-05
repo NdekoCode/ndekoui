@@ -5,11 +5,11 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   MinusIcon,
   PlusIcon,
@@ -61,7 +61,7 @@ function volumeGlyphOf(volume: number) {
 export default function Button29() {
   const labelId = useId();
   const [volume, setVolume] = useState(INITIAL_VOLUME);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const iconVariants = iconVariantsOf(shouldReduceMotion);
   const glyph = volumeGlyphOf(volume);
   const isMuted = volume === MIN_VOLUME;

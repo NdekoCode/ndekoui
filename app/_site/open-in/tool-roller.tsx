@@ -1,13 +1,9 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useInView,
-  useReducedMotion,
-} from 'motion/react';
+import { AnimatePresence, motion, useInView } from 'motion/react';
 import { useRef, useSyncExternalStore, type ComponentType } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 
 import {
@@ -111,7 +107,7 @@ function ToolLabel({ tool }: { tool: Tool }) {
 export function ToolRoller() {
   const rollerRef = useRef<HTMLSpanElement>(null);
   const isInView = useInView(rollerRef);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const isRolling = isInView && !prefersReducedMotion;
   const index = useSyncExternalStore(
     subscriptionOf(isRolling),

@@ -1,6 +1,7 @@
 'use client';
 import { cn } from '@/lib/utils';
-import { motion, Transition, useReducedMotion } from 'motion/react';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { motion, Transition } from 'motion/react';
 import { useSyncExternalStore } from 'react';
 
 export type GlowEffectProps = {
@@ -104,7 +105,7 @@ export function GlowEffect({
   scale = 1,
   duration = 5,
 }: GlowEffectProps) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const colorList = colors.join(COLOR_SEPARATOR);
 
   // Motion cannot blend var() colours inside a gradient, so token colours are read as values and read again when the theme changes.

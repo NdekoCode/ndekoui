@@ -1,8 +1,9 @@
 'use client';
 
-import { motion, type Transition, useReducedMotion } from 'motion/react';
+import { motion, type Transition } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ToggleGroup, ToggleGroupItem } from '@/registry/ndeko/ui/toggle-group';
 
 const OPTIONS = [
@@ -36,7 +37,7 @@ function indicatorTransitionOf(shouldReduceMotion: boolean | null) {
 export default function Button35() {
   const indicatorId = useId();
   const [selection, setSelection] = useState(['left']);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const indicatorTransition = indicatorTransitionOf(shouldReduceMotion);
 
   function selectOption(nextSelection: string[]) {

@@ -5,11 +5,11 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId, useState, type ChangeEvent } from 'react';
 
 import { useCharacterLimit } from '@/registry/ndeko/hooks/use-character-limit';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Label } from '@/registry/ndeko/ui/label';
 import { Textarea } from '@/registry/ndeko/ui/textarea';
@@ -93,7 +93,7 @@ export default function Textarea16() {
   const { value, characterCount, handleChange, maxLength } = useCharacterLimit({
     maxLength: MAX_LENGTH,
   });
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const digitVariants = digitVariantsOf(shouldReduceMotion);
   const remaining = maxLength - characterCount;
 

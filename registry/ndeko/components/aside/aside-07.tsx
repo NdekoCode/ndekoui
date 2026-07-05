@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { SearchIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Input } from '@/registry/ndeko/ui/input';
@@ -129,7 +130,7 @@ function Strokes({ strokes }: { strokes: string[][] }) {
 function KeyboardShortcuts() {
   const [query, setQuery] = useState('');
   const searchId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowVariants = rowVariantsOf(shouldReduceMotion);
   const normalizedQuery = normalized(query);
   const visibleGroups = GROUPS.map((group) => ({

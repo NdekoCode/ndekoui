@@ -6,12 +6,12 @@ import {
   motion,
   useInView,
   useMotionValue,
-  useReducedMotion,
   useTransform,
   type MotionValue,
   type Transition,
 } from 'motion/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CheckIcon, CopyIcon, RotateCcwIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 
@@ -232,7 +232,7 @@ function TerminalSession({
   outputDelay: number;
 }) {
   const sessionRef = useRef<HTMLDivElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const isInView = useInView(sessionRef, { once: true, amount: 0.5 });
   const [activeLine, setActiveLine] = useState(0);
   const cursor = cursorOf(shouldReduceMotion, activeLine, lines.length);
@@ -303,7 +303,7 @@ function TerminalSession({
 function CopyCommandsButton({ commands }: { commands: string }) {
   const [hasCopied, setHasCopied] = useState(false);
   const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const swap = swapMotionOf(shouldReduceMotion);
 
   useEffect(() => {
@@ -384,7 +384,7 @@ export function Terminal({
   className,
 }: TerminalProps) {
   const [run, setRun] = useState(0);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const commandLines = lines.filter((line) => line.kind === 'command');
   const commandTexts = commandLines.map((line) => line.text);
   const commands = commandTexts.join('\n');

@@ -1,7 +1,8 @@
 'use client';
 import { useRef, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { Cursor } from '@/components/core/cursor';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ImageIcon, PlusIcon } from '@/registry/ndeko/lib/icons';
 
 const EASE_OUT_STRONG = [0.23, 1, 0.32, 1] as const;
@@ -46,7 +47,7 @@ function isPointInside(rect: DOMRect, x: number, y: number) {
 export function Cursor1() {
   const [isHovering, setIsHovering] = useState(false);
   const targetRef = useRef<HTMLDivElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const pillSize = pillSizeOf(isHovering);
   const labelMotion = labelMotionOf(shouldReduceMotion);
   const pillTransition = pillTransitionOf(shouldReduceMotion);

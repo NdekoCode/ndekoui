@@ -1,9 +1,10 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useState } from 'react';
 import { toast } from 'sonner';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ArchiveIcon,
   DownloadIcon,
@@ -183,7 +184,7 @@ export function ExportTile() {
 }
 
 export function ArchiveTile() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [isArchived, setIsArchived] = useState(false);
   const presence = heightPresenceOf(shouldReduceMotion);
 

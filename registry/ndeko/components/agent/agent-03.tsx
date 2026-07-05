@@ -1,15 +1,11 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  type MotionProps,
-} from 'motion/react';
+import { AnimatePresence, motion, type MotionProps } from 'motion/react';
 import { useLayoutEffect, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   emptyRun,
   seriesColorOf,
@@ -393,7 +389,7 @@ function GraphNodeButton({
   point: Point;
   label: string;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const glide = slowSpringOf(shouldReduceMotion);
   const grow = growOf(shouldReduceMotion);
   const isAgent = node.kind === 'agent';
@@ -544,7 +540,7 @@ export function AgentGraph({
   const [layout, setLayout] = useState<GraphLayout>(defaultLayout);
   const [playedKeys, setPlayedKeys] = useState(() => initialStreakKeys(calls));
   const { setStage, size } = useStageSize();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const glide = slowSpringOf(shouldReduceMotion);
   const streak = streakOf(shouldReduceMotion);
   const nodes = nodesOf(agents, calls);

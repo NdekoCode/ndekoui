@@ -1,7 +1,8 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import type { ApprovalRequest, RunAgent } from '@/registry/ndeko/lib/agent-run';
 import { CheckIcon, RotateCcwIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -62,7 +63,7 @@ export function AgentActions({
   hasKeyHints = false,
   onDecided,
 }: AgentActionsProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const pending = pendingApprovalOf(approvals, agent.id);
   const approved = approvedApprovalOf(approvals, agent.id);

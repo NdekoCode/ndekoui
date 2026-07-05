@@ -3,11 +3,11 @@
 import {
   AnimatePresence,
   motion,
-  useReducedMotion,
   type Transition,
   type Variants,
 } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 const SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };
@@ -33,7 +33,7 @@ function swapVariantsOf(shouldReduceMotion: boolean | null) {
 
 /** A label that becomes its next value with the swap micro-interaction. */
 function SwapText({ text, className }: { text: string; className?: string }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = swapVariantsOf(shouldReduceMotion);
 
   return (

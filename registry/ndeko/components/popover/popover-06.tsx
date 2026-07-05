@@ -5,11 +5,11 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ArrowLeftIcon, ArrowRightIcon } from '@/registry/ndeko/lib/icons';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -70,7 +70,7 @@ function textVariantsOf(shouldReduceMotion: boolean | null) {
 
 export default function Popover06() {
   const [tipIndex, setTipIndex] = useState(0);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const textVariants = textVariantsOf(shouldReduceMotion);
   const tip = TIPS[tipIndex];
   const tipNumber = tipIndex + 1;

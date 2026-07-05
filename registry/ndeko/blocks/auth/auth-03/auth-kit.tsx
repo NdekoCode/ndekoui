@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { LoaderCircleIcon, type Icon } from '@/registry/ndeko/lib/icons';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -126,7 +126,7 @@ type StepSwapProps = {
 
 /** The card resizes around it while one step gives way to the next. */
 export function StepSwap({ stepKey, children }: StepSwapProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = stepVariantsOf(shouldReduceMotion);
 
   return (
@@ -202,7 +202,7 @@ type ErrorPresenceProps = {
 
 /** Rendered inside a `Field`, so the error is tied to its control. It grows in and folds away. */
 export function ErrorPresence({ error }: ErrorPresenceProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = errorVariantsOf(shouldReduceMotion);
 
   return (
@@ -237,7 +237,7 @@ export function SubmitButton({
   workingLabel,
   isWorking,
 }: SubmitButtonProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = swapVariantsOf(shouldReduceMotion);
   const shownLabel = workingLabelOf(isWorking, label, workingLabel);
 
@@ -300,7 +300,7 @@ function workingLabelOf(
 type SwapLabelProps = { text: string };
 
 export function SwapLabel({ text }: SwapLabelProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = swapVariantsOf(shouldReduceMotion);
 
   return (

@@ -19,12 +19,12 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import { usePagination } from '@/registry/ndeko/hooks/use-pagination';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ChevronDownIcon,
   ChevronLeftIcon,
@@ -421,7 +421,7 @@ function ariaCurrentOf(isCurrent: boolean) {
 }
 
 function SortGlyph({ direction }: { direction: false | SortDirection }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = glyphVariantsOf(shouldReduceMotion);
   const glyph = sortGlyphOf(direction);
 
@@ -470,7 +470,7 @@ function HeadContent({ header }: { header: Header<Account, unknown> }) {
 
 export default function Table19() {
   const layoutGroupId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const travelTransition = travelTransitionOf(shouldReduceMotion);
   const [sorting, setSorting] = useState<SortingState>([
     { id: 'name', desc: false },

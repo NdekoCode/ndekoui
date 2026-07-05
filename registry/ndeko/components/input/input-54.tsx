@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CheckIcon, CopyIcon } from '@/registry/ndeko/lib/icons';
 import { Field, FieldLabel } from '@/registry/ndeko/ui/field';
 import { Input } from '@/registry/ndeko/ui/input';
@@ -64,7 +64,7 @@ function copyLabelOf(isCopied: boolean) {
 
 export default function Input54() {
   const [isCopied, setIsCopied] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const swapVariants = swapVariantsOf(shouldReduceMotion);
   const glyph = copyGlyphOf(isCopied);
   const copyLabel = copyLabelOf(isCopied);

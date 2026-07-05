@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { TriangleAlertIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Field, FieldDescription, FieldLabel } from '@/registry/ndeko/ui/field';
@@ -67,7 +67,7 @@ function HintLine({ showsWarning }: { showsWarning: boolean }) {
 export default function Input61() {
   const [isCapsLockOn, setIsCapsLockOn] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const lineVariants = lineVariantsOf(shouldReduceMotion);
   const showsWarning = isCapsLockOn && isFocused;
   const lineKey = String(showsWarning);

@@ -1,6 +1,8 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
+
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 import type { TaskComment } from './data';
 import { heightPresenceOf } from './motion-parts';
@@ -8,7 +10,7 @@ import { CommentText, PersonAvatar } from './work-glyphs';
 import { actorNameOf, personOf, relativeTimeOf } from './work-model';
 
 function CommentRow({ comment }: { comment: TaskComment }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
     <motion.li

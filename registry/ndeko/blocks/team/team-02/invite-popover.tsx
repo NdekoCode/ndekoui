@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useEffectEvent, useId, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   AlertCircleIcon,
   CheckIcon,
@@ -302,7 +302,7 @@ function SendButton({
   count: number;
   isDisabled: boolean;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const iconVariants = iconSwapOf(shouldReduceMotion);
   const labelVariants = labelSwapOf(shouldReduceMotion);
   const label = sendLabelOf(state, count);
@@ -410,7 +410,7 @@ function AddressChip({
   allowsLayout: boolean;
   onRemove: (email: string) => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = chipVariantsOf(shouldReduceMotion);
   const look = CHIP_LOOK[entry.state];
   const ChipGlyph = look.icon;
@@ -474,7 +474,7 @@ export function InvitePopover({
   const inputRef = useRef<HTMLInputElement>(null);
   const inputId = useId();
   const summaryId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const allowsLayout = !shouldReduceMotion;
   const entries = entriesOf(addresses, takenEmails);
   const draftAddresses = splitAddresses(draft);

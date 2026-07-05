@@ -1,9 +1,10 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef } from 'react';
 
 import { WordRoll } from '@/components/core/word-roll';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 
@@ -113,7 +114,7 @@ function itemsOf(
 }
 
 function TypingDots() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   if (shouldReduceMotion) {
     return (
       <span aria-hidden='true' className='flex gap-1'>
@@ -154,7 +155,7 @@ function contentKeyOf(item: CommentItem) {
 
 /** One row that holds the typing state, then becomes the comment once it is sent. */
 function CommentEntry({ item }: { item: CommentItem }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const person = personOf(item.comment.authorId);
 
   return (
@@ -249,7 +250,7 @@ export function ConversationPane({
   onPost,
   className,
 }: ConversationPaneProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const scrollRef = useRef<HTMLDivElement>(null);
   const hasScrolled = useRef(false);
   const items = itemsOf(comments, events, typing);

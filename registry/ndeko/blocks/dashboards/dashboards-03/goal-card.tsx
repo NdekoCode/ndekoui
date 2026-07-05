@@ -1,13 +1,9 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  type Transition,
-  useReducedMotion,
-} from 'motion/react';
+import { AnimatePresence, motion, type Transition } from 'motion/react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 import type { Sprint } from './data';
@@ -111,7 +107,7 @@ type GoalCardProps = {
 };
 
 export function GoalCard({ sprint, goal }: GoalCardProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const transition = moveTransitionOf(shouldReduceMotion);
   const shareAmount = percentAmountOf(goal.share);
   const hasMarker = goal.expectedShare !== null;

@@ -1,13 +1,9 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  type Transition,
-} from 'motion/react';
+import { AnimatePresence, motion, type Transition } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ArchiveIcon,
   ArrowLeftIcon,
@@ -84,7 +80,7 @@ type ReplyThreadProps = {
 };
 
 function ReplyThread({ item, replies, onReply }: ReplyThreadProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const fieldId = useId();
   const [draft, setDraft] = useState('');
   const trimmed = draft.trim();

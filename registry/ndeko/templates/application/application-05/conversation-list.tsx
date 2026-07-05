@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   FeatherIcon,
   MessageCircleIcon,
@@ -39,7 +40,7 @@ function ConversationRow({
   indicatorId,
   onSelect,
 }: ConversationRowProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = revealVariantsOf(shouldReduceMotion);
   const ariaCurrent = ariaCurrentOf(isActive);
 

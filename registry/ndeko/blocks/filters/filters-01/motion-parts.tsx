@@ -1,10 +1,8 @@
 'use client';
 
-import {
-  type MotionProps,
-  type Transition,
-  useReducedMotion,
-} from 'motion/react';
+import { type MotionProps, type Transition } from 'motion/react';
+
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 const EASE_OUT_STRONG: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
@@ -33,7 +31,7 @@ export const FADE_PRESENCE: PresenceProps = {
 
 /** Rows that join or leave a list open and close their own height, so what follows slides. */
 export function useHeightPresence() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   if (shouldReduceMotion) {
     return FADE_PRESENCE;
   }

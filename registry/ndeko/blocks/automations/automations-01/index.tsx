@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ArrowRightIcon,
   FilterIcon,
@@ -176,7 +176,7 @@ function MatchSwitch({ value, onValueChange }: MatchSwitchProps) {
 }
 
 function ActiveLabel({ isActive }: { isActive: boolean }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = swapVariantsOf(shouldReduceMotion);
   const label = activeLabelOf(isActive);
 
@@ -208,7 +208,7 @@ export default function Automations01() {
   const addConditionRef = useRef<HTMLButtonElement>(null);
   const addActionRef = useRef<HTMLButtonElement>(null);
   const heightPresence = useHeightPresence();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const switchVariants = swapVariantsOf(shouldReduceMotion);
   const errors = errorsOf(rule);
   const shownErrors = shownErrorsOf(errors, showsErrors);

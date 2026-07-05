@@ -8,14 +8,10 @@ import {
   type Row,
   useReactTable,
 } from '@tanstack/react-table';
-import {
-  AnimatePresence,
-  motion,
-  type Variants,
-  useReducedMotion,
-} from 'motion/react';
+import { AnimatePresence, motion, type Variants } from 'motion/react';
 import { Fragment } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ChevronDownIcon, InfoIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
@@ -232,7 +228,7 @@ function noteVariantsOf(shouldReduceMotion: boolean | null) {
 }
 
 function NoteRow({ row }: { row: Row<Account> }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = noteVariantsOf(shouldReduceMotion);
   const isExpanded = row.getIsExpanded();
   const columnCount = row.getVisibleCells().length;

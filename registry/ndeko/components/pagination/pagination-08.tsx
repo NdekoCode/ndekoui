@@ -1,14 +1,10 @@
 'use client';
 
-import {
-  LayoutGroup,
-  motion,
-  type Transition,
-  useReducedMotion,
-} from 'motion/react';
+import { LayoutGroup, motion, type Transition } from 'motion/react';
 import { useId, useState } from 'react';
 
 import { usePagination } from '@/registry/ndeko/hooks/use-pagination';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -71,7 +67,7 @@ function ariaCurrentOf(isCurrent: boolean) {
 
 export default function Pagination08() {
   const layoutGroupId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const travelTransition = travelTransitionOf(shouldReduceMotion);
   const [currentPage, setCurrentPage] = useState(FIRST_PAGE);
   const { pages, showLeftEllipsis, showRightEllipsis } = usePagination({

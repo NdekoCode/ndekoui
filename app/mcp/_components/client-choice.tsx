@@ -1,6 +1,5 @@
 'use client';
 
-import { useReducedMotion } from 'motion/react';
 import {
   createContext,
   use,
@@ -9,6 +8,8 @@ import {
   useMemo,
   useState,
 } from 'react';
+
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 import {
   CLIENTS,
@@ -54,7 +55,7 @@ export function ClientChoiceProvider({
   children: React.ReactNode;
 }) {
   const [clientId, setClientId] = useState(DEFAULT_CLIENT_ID);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   const showClient = useCallback(
     (nextClientId: string) => {

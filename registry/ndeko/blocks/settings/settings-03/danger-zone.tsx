@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useId, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 import {
   AlertDialog,
@@ -117,7 +117,7 @@ function HoldButton({ label, hint, onComplete }: HoldButtonProps) {
   const [isHolding, setIsHolding] = useState(false);
   const timerRef = useRef<number | null>(null);
   const hintId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = swapVariantsOf(shouldReduceMotion);
   const fillClass = holdFillClassOf(isHolding, shouldReduceMotion);
   const shownLabel = holdLabelOf(isHolding, label);
@@ -201,7 +201,7 @@ function HoldButton({ label, hint, onComplete }: HoldButtonProps) {
 }
 
 function SwappingLine({ text }: { text: string }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = lineVariantsOf(shouldReduceMotion);
 
   return (
@@ -229,7 +229,7 @@ type SwapSlotProps = {
 };
 
 function SwapSlot({ slotKey, children }: SwapSlotProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = swapVariantsOf(shouldReduceMotion);
 
   return (

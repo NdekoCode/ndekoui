@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useState, type ChangeEvent } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   LoaderCircleIcon,
   MicIcon,
@@ -56,7 +56,7 @@ function searchGlyphOf(isSearching: boolean) {
 export default function Input27() {
   const [query, setQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const swapVariants = swapVariantsOf(shouldReduceMotion);
   const glyph = searchGlyphOf(isSearching);
 

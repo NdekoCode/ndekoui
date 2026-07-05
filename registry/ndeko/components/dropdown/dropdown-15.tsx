@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   MonitorIcon,
   MoonIcon,
@@ -69,7 +69,7 @@ function themeOptionOf(theme: Theme) {
 
 export default function Dropdown15() {
   const [theme, setTheme] = useState<Theme>('system');
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const iconVariants = iconVariantsOf(shouldReduceMotion);
   const selectedOption = themeOptionOf(theme);
 

@@ -7,10 +7,10 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { useReducedMotion } from 'motion/react';
 import { memo } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 import { BoardCardBody, CARD_SURFACE, cardLabelOf } from './board-card';
@@ -64,7 +64,7 @@ function LaneTile({ lane }: { lane: Lane }) {
 
 function SortableCard({ cardId }: { cardId: string }) {
   const card = CARDS[cardId];
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const {
     attributes,
     listeners,

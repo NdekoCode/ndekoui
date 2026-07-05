@@ -1,14 +1,10 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  type Transition,
-  useReducedMotion,
-} from 'motion/react';
+import { AnimatePresence, motion, type Transition } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { BlocksIcon, SearchIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -175,7 +171,7 @@ export default function Integrations01() {
   const [view, setView] = useState<ViewId>('all');
   const [query, setQuery] = useState('');
   const timersRef = useRef(new Map<string, number>());
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const allowsLayout = !shouldReduceMotion;
   const connectedCount = connectedCountOf(states);
   const visible = INTEGRATIONS.filter(

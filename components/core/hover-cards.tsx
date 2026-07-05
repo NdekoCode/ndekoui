@@ -5,13 +5,13 @@ import {
   type MotionValue,
   useMotionTemplate,
   useMotionValue,
-  useReducedMotion,
   useSpring,
   useTransform,
 } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 export type HoverEffect = 'zoom' | 'rise' | 'tilt' | 'trace';
 
@@ -181,7 +181,7 @@ function TiltCard({
   onPointerLeave,
   ...props
 }: EffectProps) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const pointerX = useMotionValue(0.5);
   const pointerY = useMotionValue(0.5);
   const smoothX = useSpring(pointerX, TILT_SPRING);

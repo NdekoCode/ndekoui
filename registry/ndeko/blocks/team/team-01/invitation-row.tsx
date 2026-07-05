@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useEffectEvent, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CheckIcon,
   ClockIcon,
@@ -145,7 +145,7 @@ function ResendButton({
   onResend: () => void;
 }) {
   const [state, setState] = useState<ResendState>('idle');
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const iconVariants = iconSwapOf(shouldReduceMotion);
   const labelVariants = labelSwapOf(shouldReduceMotion);
   const label = resendLabelOf(state);
@@ -204,7 +204,7 @@ function RevokeButton({
   onRevoke: () => void;
 }) {
   const [isArmed, setIsArmed] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const labelVariants = labelSwapOf(shouldReduceMotion);
 
   useEffect(() => {
@@ -270,7 +270,7 @@ export function InvitationRow({
   onResend,
   onRevoke,
 }: InvitationRowProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const labelVariants = labelSwapOf(shouldReduceMotion);
 
   function resend() {

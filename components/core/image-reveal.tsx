@@ -1,10 +1,5 @@
 'use client';
-import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-} from 'motion/react';
+import { motion, useMotionValue, useSpring } from 'motion/react';
 import {
   useRef,
   useState,
@@ -13,6 +8,7 @@ import {
   type ReactNode,
 } from 'react';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 export type ImageRevealItem = {
   id: string;
@@ -100,7 +96,7 @@ function ImageReveal({
   const listRef = useRef<HTMLUListElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const [preview, setPreview] = useState<Preview | null>(null);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const targetX = useMotionValue(0);
   const targetY = useMotionValue(0);
   const springX = useSpring(targetX, FOLLOW_SPRING);

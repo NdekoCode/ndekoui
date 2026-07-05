@@ -1,10 +1,11 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { emptyRun, type ToolCall } from '@/registry/ndeko/lib/agent-run';
 import {
   FileTextIcon,
@@ -417,7 +418,7 @@ export function KnowledgeSources({
   description,
   className,
 }: KnowledgeSourcesProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const totalChunks = totalChunksOf(sources);
   const hasChoices = addChoices.length > 0;

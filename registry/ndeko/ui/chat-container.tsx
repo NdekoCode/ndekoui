@@ -1,13 +1,13 @@
 // Adapted from prompt-kit (MIT, Copyright (c) 2025 Julien Thibeaut).
 'use client';
 
-import { useReducedMotion } from 'motion/react';
 import {
   StickToBottom,
   useStickToBottomContext,
   type StickToBottomContext,
 } from 'use-stick-to-bottom';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 type ScrollBehaviour = 'smooth' | 'instant';
@@ -32,7 +32,7 @@ function ChatContainerRoot({
   contextRef,
   ...props
 }: ChatContainerRootProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const resize = scrollBehaviourOf(shouldReduceMotion);
 
   return (

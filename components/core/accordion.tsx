@@ -6,9 +6,9 @@ import {
   Variants,
   Variant,
   MotionConfig,
-  useReducedMotion,
 } from 'motion/react';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 export type AccordionContextType = {
@@ -67,7 +67,7 @@ function AccordionProvider({
 }
 
 function ReducedMotionConfig({ children }: { children: ReactNode }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   if (!prefersReducedMotion) {
     return children;
   }

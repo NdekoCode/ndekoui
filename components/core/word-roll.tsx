@@ -4,11 +4,11 @@ import {
   AnimatePresence,
   LayoutGroup,
   motion,
-  useReducedMotion,
   type Transition,
   type Variants,
 } from 'motion/react';
 import { useState, type ReactNode } from 'react';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 
 export type WordRollDirection = 'up' | 'down';
@@ -385,7 +385,7 @@ export function WordRoll({
   accessibleText,
   className,
 }: WordRollProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const items = itemsOf(text, words);
   const keys = items.map((item) => item.key);
   const [initialSlotCount] = useState(keys.length);

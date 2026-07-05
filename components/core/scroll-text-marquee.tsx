@@ -1,11 +1,11 @@
 'use client';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   motion,
   useAnimationFrame,
   useInView,
   useMotionValue,
-  useReducedMotion,
   useScroll,
   useSpring,
   useTransform,
@@ -83,7 +83,7 @@ export function ScrollTextMarquee({
 }: ScrollTextMarqueeProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const [copyRef, { width: copyWidth }] = useMeasure();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const isInView = useInView(rootRef);
   const baseSign = signOf(direction);
   const signRef = useRef<DirectionSign>(baseSign);

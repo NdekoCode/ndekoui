@@ -3,13 +3,13 @@
 import {
   AnimatePresence,
   motion,
-  useReducedMotion,
   type MotionProps,
   type Transition,
   type Variants,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 export const EASE_OUT_STRONG: [number, number, number, number] = [
@@ -74,7 +74,7 @@ type SwapProps = {
 
 /** An icon or a short label that becomes another one in place. */
 export function Swap({ swapKey, children, className }: SwapProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
     <span className={cn('relative inline-flex', className)}>
@@ -136,7 +136,7 @@ export function RollingCount({
   format = plainNumber,
   className,
 }: RollingCountProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [previous, setPrevious] = useState(value);
   const [direction, setDirection] = useState(1);
 

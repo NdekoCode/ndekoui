@@ -5,9 +5,9 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   Combobox,
   ComboboxChip,
@@ -74,7 +74,7 @@ function chipVariantsOf(shouldReduceMotion: boolean | null) {
 }
 
 export default function Select47() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const chipVariants = chipVariantsOf(shouldReduceMotion);
   const isLayoutAnimated = !shouldReduceMotion;
 

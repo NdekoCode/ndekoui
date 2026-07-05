@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CalendarCheckIcon,
   CalendarIcon,
@@ -149,7 +150,7 @@ function AttendeeChip({
   allowsLayout: boolean;
   onRemove: (personId: string) => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = chipVariantsOf(shouldReduceMotion);
   const firstName = firstNameOf(person);
 
@@ -233,7 +234,7 @@ function ScheduleContent() {
   const [slotId, setSlotId] = useState(SLOTS[0].id);
   const [duration, setDuration] = useState<Duration>('30');
   const { state, run } = useTimedAction();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const allowsLayout = !shouldReduceMotion;
   const titleId = useId();
   const attendeesId = useId();

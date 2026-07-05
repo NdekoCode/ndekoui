@@ -5,9 +5,9 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { MenuIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import {
   Accordion,
@@ -67,7 +67,7 @@ function toggleLabelOf(isOpen: boolean) {
 }
 
 export function MobileMenuTrigger({ isOpen }: { isOpen: boolean }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const iconVariants = iconVariantsOf(shouldReduceMotion);
   const glyph = toggleGlyphOf(isOpen);
 

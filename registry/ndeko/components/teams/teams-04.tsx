@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { MailIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -66,7 +67,7 @@ function MemberRow({
   onRoleChange,
   onRemove,
 }: MemberRowProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   function changeRole(role: Role) {
     onRoleChange(member.id, role);
@@ -115,7 +116,7 @@ function InvitationRow({
   invitation: Invitation;
   onRevoke: (invitationId: string) => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
     <motion.li

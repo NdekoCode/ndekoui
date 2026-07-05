@@ -6,11 +6,11 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { POPUP_TRANSITION } from '@/registry/ndeko/lib/recipes';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
@@ -101,7 +101,7 @@ function sideOf(stepIndex: number) {
 export default function Popover09() {
   const [stepIndex, setStepIndex] = useState(0);
   const [anchorTile, setAnchorTile] = useState<HTMLDivElement | null>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const textVariants = textVariantsOf(shouldReduceMotion);
   const step = TOUR_STEPS[stepIndex];
   const stepNumber = stepIndex + 1;

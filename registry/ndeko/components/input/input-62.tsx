@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState, type ChangeEvent } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CheckIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Field, FieldDescription, FieldLabel } from '@/registry/ndeko/ui/field';
@@ -81,7 +81,7 @@ function announcementOf(state: MatchState) {
 export default function Input62() {
   const [password, setPassword] = useState('');
   const [confirmation, setConfirmation] = useState('');
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const swapVariants = swapVariantsOf(shouldReduceMotion);
   const state = matchStateOf(password, confirmation);
   const message = MESSAGES[state];

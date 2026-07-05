@@ -1,6 +1,5 @@
 'use client';
 import { Tabs as TabsPrimitive } from '@base-ui/react/tabs';
-import { useReducedMotion } from 'motion/react';
 import {
   Children,
   createContext,
@@ -12,6 +11,7 @@ import {
   type ReactNode,
 } from 'react';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 export type ImageTabsOrientation = 'horizontal' | 'vertical';
 
@@ -262,7 +262,7 @@ function ImageTabsFrame({
   className,
   transition = 'fade',
 }: ImageTabsFrameProps) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const values = valuesOf(children);
   const activeTransition = transitionOf(transition, prefersReducedMotion);
 

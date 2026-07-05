@@ -1,6 +1,9 @@
 'use client';
 import { Fragment, useEffect, useEffectEvent, useRef, useState } from 'react';
-import { motion, MotionProps, useInView, useReducedMotion } from 'motion/react';
+import { motion, MotionProps, useInView } from 'motion/react';
+
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+
 import { motionElementOf } from './motion-elements';
 
 export type TextScrambleProps = {
@@ -156,7 +159,7 @@ export function TextScramble({
   const [settledText, setSettledText] = useState(children);
   const isAnimatingRef = useRef(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const isInView = useInView(rootRef, { once: true });
   const isWaitingForView = startOnView && !isInView;
   const shouldStart = trigger && !isWaitingForView;

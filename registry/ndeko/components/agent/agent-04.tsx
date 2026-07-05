@@ -5,7 +5,6 @@ import {
   motion,
   useDragControls,
   useInView,
-  useReducedMotion,
   type MotionProps,
   type PanInfo,
 } from 'motion/react';
@@ -16,6 +15,7 @@ import {
   useRunScript,
   type RunScriptStep,
 } from '@/registry/ndeko/hooks/use-agent-run';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   emptyRun,
   seriesColorOf,
@@ -289,7 +289,7 @@ function NextStation({
   const [isDragging, setIsDragging] = useState(false);
   const [overId, setOverId] = useState<string | null>(null);
   const dragControls = useDragControls();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const options = [station.agent, ...candidates];
 
   function pickUp(event: React.PointerEvent<HTMLDivElement>) {
@@ -498,7 +498,7 @@ export function AgentHandoff({
   onInteractionChange,
   className,
 }: AgentHandoffProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const light = lightOf(shouldReduceMotion);
   const hasStarted = startedAt !== undefined;

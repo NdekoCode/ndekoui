@@ -25,7 +25,6 @@ import {
   motion,
   type Transition,
   useMotionValue,
-  useReducedMotion,
 } from 'motion/react';
 import {
   useCallback,
@@ -36,6 +35,7 @@ import {
   useState,
 } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { EllipsisIcon, EyeOffIcon, PlusIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
@@ -253,7 +253,7 @@ export default function Boards02() {
   const movedLaneRef = useRef(false);
   const nextNumberRef = useRef(highestNumberOf(TASKS) + 1);
   const dragX = useMotionValue(0);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const laneTravel = laneTravelOf(shouldReduceMotion);
   const dndContextId = useId();
   const sensors = useSensors(

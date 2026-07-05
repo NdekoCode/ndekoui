@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ArrowRightIcon,
   ArrowUpRightIcon,
@@ -174,7 +175,7 @@ function MemberRow({ member }: { member: ProjectMember }) {
 
 function ProjectMembers() {
   const [isExpanded, setIsExpanded] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowVariants = rowVariantsOf(shouldReduceMotion);
   const firstMembers = MEMBERS.slice(0, SHOWN_MEMBERS);
   const otherMembers = MEMBERS.slice(SHOWN_MEMBERS);

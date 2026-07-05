@@ -1,12 +1,8 @@
 'use client';
 
-import {
-  motion,
-  useReducedMotion,
-  type MotionProps,
-  type Transition,
-} from 'motion/react';
+import { motion, type MotionProps, type Transition } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ArchiveIcon, CheckIcon, MailIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import {
@@ -107,7 +103,7 @@ export function InboxRow({
   onToggleRead,
   onArchive,
 }: InboxRowProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const sender = senderOf(item);
   const key = `${TEAM_KEY}-${item.taskNumber}`;
   const readLabel = readToggleLabelOf(item);

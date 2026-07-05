@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useInView,
-  useReducedMotion,
-  type PanInfo,
-} from 'motion/react';
+import { AnimatePresence, motion, useInView, type PanInfo } from 'motion/react';
 import { useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
@@ -15,6 +9,7 @@ import {
   useRunScript,
   type RunScriptStep,
 } from '@/registry/ndeko/hooks/use-agent-run';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   emptyRun,
   formatDuration,
@@ -454,7 +449,7 @@ type LeaderboardProps = {
 };
 
 export function Leaderboard({ models, standings, rounds }: LeaderboardProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rows = standingRowsOf(models, standings);
   const hasRounds = rounds > 0;
   const layoutTransition = layoutTransitionOf(shouldReduceMotion);
@@ -553,7 +548,7 @@ function ArenaTabs({
   activeId,
   onActiveChange,
 }: ArenaTabsProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const activeIndex = models.findIndex((model) => model.id === activeId);
 
   function swipe(
@@ -882,7 +877,7 @@ export default function Answer05() {
   const [frame, setFrame] = useState<HTMLDivElement | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(rootRef, { amount: 0.3 });
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const width = useContainerWidth(frame, 720);
   const { snapshot, restart } = useRunScript(ROUND_SCRIPTS[count], {

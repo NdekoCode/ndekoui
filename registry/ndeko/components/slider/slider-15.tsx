@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId, type KeyboardEvent } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useSliderWithInput } from '@/registry/ndeko/hooks/use-slider-with-input';
 import { RotateCcwIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -49,7 +49,7 @@ function resetVariantsOf(shouldReduceMotion: boolean | null) {
 
 export default function Slider15() {
   const inputId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const resetVariants = resetVariantsOf(shouldReduceMotion);
   const {
     sliderValue,

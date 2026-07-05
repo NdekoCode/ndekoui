@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { SearchIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -158,7 +158,7 @@ export default function Team01() {
   const [invitations, setInvitations] = useState<Invitation[]>(INVITATIONS);
   const [openTasks, setOpenTasks] = useState<MemberTask[]>(OPEN_TASKS);
   const [query, setQuery] = useState('');
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const itemVariants = itemVariantsOf(shouldReduceMotion);
 
   const normalizedQuery = query.trim().toLowerCase();

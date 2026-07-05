@@ -1,12 +1,13 @@
 'use client';
 
 import { Menu as MenuPrimitive } from '@base-ui/react/menu';
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { NdekoUILLogo } from '@/components/website/icons/ndekoui-logo';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { GithubIcon, MenuIcon, StarIcon } from '@/registry/ndeko/lib/icons';
 import { MENU_ITEM } from '@/registry/ndeko/lib/recipes';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -112,7 +113,7 @@ function SectionMenu({ pathname }: { pathname: string }) {
 
 function SectionNavigation({ pathname }: { pathname: string }) {
   const [hoveredHref, setHoveredHref] = useState<string | null>(null);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const travel = travelOf(prefersReducedMotion);
 
   function clearHover() {

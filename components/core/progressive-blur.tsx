@@ -1,11 +1,7 @@
 'use client';
 import { cn } from '@/lib/utils';
-import {
-  HTMLMotionProps,
-  motion,
-  MotionConfig,
-  useReducedMotion,
-} from 'motion/react';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { HTMLMotionProps, motion, MotionConfig } from 'motion/react';
 
 export const GRADIENT_ANGLES = {
   top: 0,
@@ -15,7 +11,7 @@ export const GRADIENT_ANGLES = {
 };
 
 function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   if (!prefersReducedMotion) {
     return children;
   }

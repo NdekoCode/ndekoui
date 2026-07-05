@@ -1,12 +1,7 @@
 'use client';
 import { cn } from '@/lib/utils';
-import {
-  motion,
-  SpringOptions,
-  useReducedMotion,
-  useSpring,
-  useTransform,
-} from 'motion/react';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { motion, SpringOptions, useSpring, useTransform } from 'motion/react';
 import { motionElementOf } from './motion-elements';
 import { useEffect } from 'react';
 
@@ -24,7 +19,7 @@ export function AnimatedNumber({
   as = 'span',
 }: AnimatedNumberProps) {
   const MotionComponent = motionElementOf(as) as typeof motion.span;
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const spring = useSpring(value, springOptions);
   const display = useTransform(spring, (current) =>

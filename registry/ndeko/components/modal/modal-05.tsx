@@ -1,8 +1,9 @@
 'use client';
 
-import { motion, useReducedMotion, type Transition } from 'motion/react';
+import { motion, type Transition } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   GlobeIcon,
   LayersIcon,
@@ -106,7 +107,7 @@ function AccessRow({
   isPicked: boolean;
   tintId: string;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const OptionGlyph = option.icon;
 
   return (

@@ -1,9 +1,10 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useRef } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CircleDashedIcon,
   ClockIcon,
@@ -99,7 +100,7 @@ function ChangeEntry({ item }: { item: FeedChange }) {
 }
 
 function FeedEntry({ item, isFresh }: { item: FeedItem; isFresh: boolean }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const presence = heightPresenceOf(shouldReduceMotion);
   const entryRef = useRef<HTMLLIElement>(null);
 
@@ -137,7 +138,7 @@ function DayGroupBlock({
   items: FeedItem[];
   freshItemId: string | null;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const presence = heightPresenceOf(shouldReduceMotion);
 
   return (

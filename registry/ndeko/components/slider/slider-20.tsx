@@ -6,10 +6,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { MinusIcon, PlusIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Label } from '@/registry/ndeko/ui/label';
@@ -92,7 +92,7 @@ function steppedReadout(current: Readout, step: number) {
 
 export default function Slider20() {
   const [readout, setReadout] = useState(INITIAL_READOUT);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const digitVariants = digitVariantsOf(shouldReduceMotion);
   const isAtMin = readout.value === MIN_CREDITS;
   const isAtMax = readout.value === MAX_CREDITS;

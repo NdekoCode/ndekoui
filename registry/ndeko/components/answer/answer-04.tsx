@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useInView,
-  useReducedMotion,
-} from 'motion/react';
+import { AnimatePresence, motion, useInView } from 'motion/react';
 import { useId, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
@@ -14,6 +9,7 @@ import {
   useRunScript,
   type RunScriptStep,
 } from '@/registry/ndeko/hooks/use-agent-run';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   elapsedOf,
   emptyRun,
@@ -131,7 +127,7 @@ type SearchRowProps = {
 };
 
 function SearchRow({ calls, sites }: SearchRowProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const tileMotion = tileMotionOf(shouldReduceMotion);
   const count = calls.length;
   const noun = nounOf(count, 'source');
@@ -301,7 +297,7 @@ export function ThinkingBlock({
   const [openChoice, setOpenChoice] = useState<boolean | null>(null);
   const [wasThinking, setWasThinking] = useState(isThinking);
   const panelId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const buttonMotion = buttonMotionOf(shouldReduceMotion);
   const reasoningWords = wordsOf(reasoning);
   const headline = thoughtWordsOf(run);

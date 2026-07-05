@@ -1,9 +1,10 @@
 'use client';
 
-import { motion, useInView, useReducedMotion } from 'motion/react';
+import { motion, useInView } from 'motion/react';
 import Link from 'next/link';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { PauseIcon, PlayIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -45,7 +46,7 @@ export function StateTile<Value extends string>({
 }: StateTileProps<Value>) {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { amount: 0.5 });
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [index, setIndex] = useState(0);
   const [enteredAt, setEnteredAt] = useState(0);
   const [isPinned, setIsPinned] = useState(false);

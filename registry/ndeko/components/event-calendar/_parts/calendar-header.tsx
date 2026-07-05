@@ -3,11 +3,11 @@
 import {
   AnimatePresence,
   motion,
-  useReducedMotion,
   type Transition,
   type Variants,
 } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ChevronLeftIcon, ChevronRightIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -62,7 +62,7 @@ type PeriodHeadingProps = {
 
 /** The period on screen. Only the heading answers previous and next, with a short nudge. */
 function PeriodHeading({ view, date, direction }: PeriodHeadingProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const title = periodTitleOf(date, view);
   const caption = periodCaptionOf(date, view);
   const titleKey = `${view}-${periodKeyOf(date, view)}`;

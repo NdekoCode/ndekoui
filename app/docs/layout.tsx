@@ -7,7 +7,8 @@ import React, { useEffect, useRef } from 'react';
 import { TableOfContents } from '@/components/website/table-of-contents';
 import { SiteHeader } from '@/app/_site/site-header';
 import { SYSTEM_FONT_CLASS } from '@/lib/site';
-import { motion, useReducedMotion, type Transition } from 'motion/react';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { motion, type Transition } from 'motion/react';
 import { NAVIGATION } from './navigation';
 
 const INDICATOR_SPRING: Transition = {
@@ -38,7 +39,7 @@ function activeRefOf(
 function NavigationDesktop() {
   const pathname = usePathname();
   const activeRef = useRef<HTMLLIElement | null>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (activeRef.current) {

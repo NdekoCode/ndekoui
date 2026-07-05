@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import {
   CheckIcon,
@@ -269,7 +270,7 @@ export function ArtifactPanel({
   id,
   className,
 }: ArtifactPanelProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const contentMotion = contentMotionOf(shouldReduceMotion);
   const index = versions.findIndex((version) => version.id === versionId);
   const version = versions[index] ?? versions[0];

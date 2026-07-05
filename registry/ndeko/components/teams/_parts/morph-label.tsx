@@ -3,11 +3,11 @@
 import {
   AnimatePresence,
   motion,
-  useReducedMotion,
   type Transition,
   type Variants,
 } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 
@@ -43,7 +43,7 @@ type MorphLabelProps = {
 
 /** A label that becomes another: the text crossfades through a light blur while its width follows. */
 export function MorphLabel({ value, className, children }: MorphLabelProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
     <AnimatedSize as='span' axis='width' contentClassName='relative flex'>

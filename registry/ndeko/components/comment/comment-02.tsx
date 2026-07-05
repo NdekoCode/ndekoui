@@ -1,13 +1,9 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  type MotionProps,
-} from 'motion/react';
+import { AnimatePresence, motion, type MotionProps } from 'motion/react';
 import { useId, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { AtSignIcon } from '@/registry/ndeko/lib/icons';
 import { MENU_ITEM } from '@/registry/ndeko/lib/recipes';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -193,7 +189,7 @@ function SuggestionList({
   onPick: (person: Person) => void;
   onHighlight: (index: number) => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   return (
     <motion.div
       id={listId}
@@ -229,7 +225,7 @@ function SuggestionList({
 }
 
 function PostedComment({ comment }: { comment: CommentItem }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   return (
     <motion.li
       {...heightPresenceOf(shouldReduceMotion)}

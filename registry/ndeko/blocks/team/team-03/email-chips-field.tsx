@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useRef } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { XIcon, type Icon } from '@/registry/ndeko/lib/icons';
 import { CONTROL_RECIPE } from '@/registry/ndeko/lib/recipes';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -76,7 +76,7 @@ export function EmailChipsField({
   lookOf = neutralLook,
 }: EmailChipsFieldProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const chipVariants = chipVariantsOf(shouldReduceMotion);
   const hasDraft = draft.trim().length > 0;
   const lastEmail = emails.at(-1);

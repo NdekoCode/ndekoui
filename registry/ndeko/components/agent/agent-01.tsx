@@ -1,10 +1,11 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   emptyRun,
   formatDuration,
@@ -276,7 +277,7 @@ function StepContent({
   isOpen,
   highlightId,
 }: StepContentProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const spring = springOf(shouldReduceMotion);
   const isRunning = step.status === 'running';
@@ -419,7 +420,7 @@ type StepListProps = {
 
 function StepList({ steps, changes, agent }: StepListProps) {
   const [toggled, setToggled] = useState<Record<string, boolean>>({});
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const highlightId = useId();
 
@@ -520,7 +521,7 @@ function PlanEditor({ steps, onCancel, onSave }: PlanEditorProps) {
   const [showsErrors, setShowsErrors] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const errorId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const spring = springOf(shouldReduceMotion);
   const rowTransition = { ...rowPresence.transition, layout: spring };

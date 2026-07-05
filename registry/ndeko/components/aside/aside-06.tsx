@@ -1,8 +1,9 @@
 'use client';
 
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ArchiveIcon,
   ChartLineIcon,
@@ -135,7 +136,7 @@ function WorkspaceTile({ workspace }: { workspace: Workspace }) {
 }
 
 function ActiveIndicator({ layoutId }: { layoutId: string }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const transition = travelOf(shouldReduceMotion);
 
   return (

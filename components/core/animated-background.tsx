@@ -1,11 +1,11 @@
 'use client';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   AnimatePresence,
   MotionConfig,
   Transition,
   motion,
-  useReducedMotion,
 } from 'motion/react';
 import {
   Children,
@@ -35,7 +35,7 @@ type AnimatedBackgroundChild = ReactElement<
 >;
 
 function ReducedMotionConfig({ children }: { children: ReactNode }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   if (!prefersReducedMotion) {
     return children;
   }

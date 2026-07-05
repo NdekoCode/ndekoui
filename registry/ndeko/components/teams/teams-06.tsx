@@ -3,12 +3,12 @@
 import {
   AnimatePresence,
   motion,
-  useReducedMotion,
   type Transition,
   type Variants,
 } from 'motion/react';
 import { useEffect, useId, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ArchiveIcon,
   ArchiveRestoreIcon,
@@ -189,7 +189,7 @@ function NameField({
   savedName: string;
   onSave: (name: string) => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const inputId = useId();
   const [draft, setDraft] = useState(savedName);
   const [saveState, setSaveState] = useState<SaveState>('idle');
@@ -303,7 +303,7 @@ function VisibilityField({
   visibility: Visibility;
   onChange: (visibility: Visibility) => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const labelId = useId();
 
   return (
@@ -376,7 +376,7 @@ function ApprovalField({
 }
 
 function ArchiveField() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [holdState, setHoldState] = useState<HoldState>('idle');
   const { schedule, cancel } = useTimer();
   const isFilled = holdState === 'holding';

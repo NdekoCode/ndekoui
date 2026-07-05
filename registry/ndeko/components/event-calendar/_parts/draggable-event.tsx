@@ -1,8 +1,10 @@
 'use client';
 
 import { useDraggable } from '@dnd-kit/core';
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 import { useState } from 'react';
+
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 import { DROP_SPRING, useCalendarDnd } from './calendar-dnd-context';
 import { EventItem } from './event-item';
@@ -35,7 +37,7 @@ export function DraggableEvent({
   isLastDay = true,
 }: DraggableEventProps) {
   const { activeId, droppedEventId, clearDroppedEvent } = useCalendarDnd();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [measuredHeight, setMeasuredHeight] = useState<number | null>(null);
   const draggableId = `${event.id}-${view}`;
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({

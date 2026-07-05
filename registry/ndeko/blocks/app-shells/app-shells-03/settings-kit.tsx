@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CheckIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import {
@@ -149,7 +149,7 @@ export function SettingsRow({
 }
 
 function EditLabel({ isSaved }: { isSaved: boolean }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = swapVariantsOf(shouldReduceMotion);
   const labelKey = String(isSaved);
 
@@ -200,7 +200,7 @@ export function InlineTextRow({
   const [draft, setDraft] = useState(value);
   const [error, setError] = useState<string | null>(null);
   const [isSaved, setIsSaved] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const viewVariants = viewVariantsOf(shouldReduceMotion);
   const errorId = useId();
   const hasError = Boolean(error);

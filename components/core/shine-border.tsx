@@ -1,9 +1,9 @@
 'use client';
 
-import { useReducedMotion } from 'motion/react';
 import { useEffect, useRef } from 'react';
 
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 export type ShineTrigger = 'loop' | 'hover';
 
@@ -78,7 +78,7 @@ export function ShineBorder({
 }: ShineBorderProps) {
   const frameRef = useRef<HTMLSpanElement>(null);
   const bandRef = useRef<HTMLSpanElement>(null);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const sweepMs = duration * 1000;
   const restMs = interval * 1000;
 

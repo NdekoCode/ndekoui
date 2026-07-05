@@ -47,7 +47,7 @@ Install pieces with the shadcn CLI and compose them; do not restyle them. Every 
 ## Motion (section 7)
 - Every change of state has its micro-interaction: press (\`active:scale-[0.97]\`, 160ms), swap of an icon or label (opacity, scale 0.6, blur 2px, 150ms), resize through \`AnimatedSize\`, an indicator that travels to the new choice, presence (height and opacity, 200ms in, faster out).
 - \`--ease-out-strong\` for entering and responding, exits faster than entrances, never \`ease-in\`. Nothing appears from \`scale(0)\`: popups start at 95%, tooltips at 97%.
-- Animate transform and opacity only. Read \`useReducedMotion()\` and keep only the fade.
+- Animate transform and opacity only. Read the reduced motion setting with \`usePrefersReducedMotion()\` (the \`use-prefers-reduced-motion\` hook of the registry) and keep only the fade.
 - No motion on actions repeated from the keyboard, on hover of something that cannot be clicked, or on page load inside an application. Ambient motion (marquee, float) stays on marketing pages.
 
 ## Content and copy (sections 9, 10 and 13)

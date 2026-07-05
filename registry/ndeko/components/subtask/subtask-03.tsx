@@ -1,13 +1,9 @@
 'use client';
 
-import {
-  Reorder,
-  useDragControls,
-  useReducedMotion,
-  type Transition,
-} from 'motion/react';
+import { Reorder, useDragControls, type Transition } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ChevronDownIcon,
   ChevronUpIcon,
@@ -80,7 +76,7 @@ function ReorderRow({
   onMove,
   registerControl,
 }: RowProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const controls = useDragControls();
   const [isDragging, setIsDragging] = useState(false);
   const isFirst = index === 0;

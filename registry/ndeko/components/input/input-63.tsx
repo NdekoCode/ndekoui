@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId, useState, type ChangeEvent } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Field, FieldLabel } from '@/registry/ndeko/ui/field';
 import { Input } from '@/registry/ndeko/ui/input';
@@ -106,7 +106,7 @@ export default function Input63() {
   const labelId = useId();
   const [password, setPassword] = useState('');
   const [direction, setDirection] = useState(1);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const labelVariants = labelVariantsOf(shouldReduceMotion);
   const level = levelOf(password);
   const current = LEVELS[level];

@@ -4,11 +4,11 @@ import {
   AnimatePresence,
   motion,
   useInView,
-  useReducedMotion,
   type Transition,
   type Variants,
 } from 'motion/react';
 import { useEffect, useEffectEvent, useRef, useState } from 'react';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 
 export type WordRotateDirection = 'up' | 'down';
@@ -133,7 +133,7 @@ export function WordRotate({
   className,
 }: WordRotateProps) {
   const rootRef = useRef<HTMLSpanElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const isInView = useInView(rootRef);
   const isDocumentVisible = useDocumentVisible();
   const [index, setIndex] = useState(0);

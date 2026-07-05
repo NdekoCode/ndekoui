@@ -1,12 +1,7 @@
 'use client';
 
 import { PreviewCard as PreviewCardPrimitive } from '@base-ui/react/preview-card';
-import {
-  AnimatePresence,
-  motion,
-  useInView,
-  useReducedMotion,
-} from 'motion/react';
+import { AnimatePresence, motion, useInView } from 'motion/react';
 import { useId, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
@@ -15,6 +10,7 @@ import {
   useRunScript,
   type RunScriptStep,
 } from '@/registry/ndeko/hooks/use-agent-run';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import {
   elapsedOf,
@@ -314,7 +310,7 @@ function SourcePills({
   litNumber,
   onLight,
 }: SourcePillsProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const pillMotion = pillMotionOf(shouldReduceMotion);
 
   return (
@@ -678,7 +674,7 @@ export function AnswerSteps({
 }: AnswerStepsProps) {
   const [isOpen, setIsOpen] = useState(false);
   const panelId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const span = searchSpanOf(plan);
   const words = summaryWordsOf(stage, found.length, span);
@@ -1381,7 +1377,7 @@ export default function Answer01() {
   const [turnCount, setTurnCount] = useState(1);
   const rootRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(rootRef, { amount: 0.3 });
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const { schedule, clearAll } = useTimeouts();
   const isActive = isInView && !isStopped;

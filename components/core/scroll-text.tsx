@@ -1,8 +1,8 @@
 'use client';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   motion,
-  useReducedMotion,
   useScroll,
   useTransform,
   type MotionValue,
@@ -148,7 +148,7 @@ export function ScrollText({
   className,
 }: ScrollTextProps) {
   const ref = useRef<HTMLParagraphElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     container: containerRef,

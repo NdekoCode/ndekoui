@@ -1,9 +1,10 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   AlertCircleIcon,
   CheckIcon,
@@ -178,7 +179,7 @@ function SeatMeter({
   isShort: boolean;
   onAddSeats: () => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const cellVariants = chipVariantsOf(shouldReduceMotion);
   const allowsLayout = !shouldReduceMotion;
   const labelId = useId();
@@ -268,7 +269,7 @@ function InviteWithSeats() {
     'sami.k@lattice.example',
   ]);
   const action = useTimedAction();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowVariants = rowVariantsOf(shouldReduceMotion);
   const used = OTHER_MEMBERS + recent.length;
   const freeSeats = Math.max(0, capacity - used);

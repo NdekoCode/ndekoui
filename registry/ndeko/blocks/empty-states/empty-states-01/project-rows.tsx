@@ -1,8 +1,9 @@
 'use client';
 
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { FolderIcon, TrashIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Input } from '@/registry/ndeko/ui/input';
@@ -29,7 +30,7 @@ export function ProjectRow({
   project: Project;
   onDelete: (projectId: string) => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
     <motion.li
@@ -63,7 +64,7 @@ export function DraftProjectRow({
   onCreate: (name: string) => void;
   onCancel: () => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const inputRef = useRef<HTMLInputElement>(null);
   const [name, setName] = useState('');
   const trimmed = name.trim();

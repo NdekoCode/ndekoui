@@ -1,7 +1,8 @@
 'use client';
 
-import { motion, type Transition, useReducedMotion } from 'motion/react';
+import { motion, type Transition } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   Avatar,
   AvatarFallback,
@@ -32,7 +33,7 @@ function travelOf(shouldReduceMotion: boolean | null) {
 
 /** The one highlight of the active row. It travels from the old row to the new one. */
 export function ActiveRowIndicator({ layoutId }: { layoutId: string }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
     <motion.span

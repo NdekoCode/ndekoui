@@ -1,9 +1,10 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { LayersIcon, SearchIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -139,7 +140,7 @@ function InviteToProject() {
   const [members, setMembers] = useState<ProjectMember[]>(INITIAL_MEMBERS);
   const [query, setQuery] = useState('');
   const [defaultAccess, setDefaultAccess] = useState<AccessLevel>('edit');
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowVariants = rowVariantsOf(shouldReduceMotion);
   const headingId = useId();
   const memberIds = members.map((member) => member.personId);

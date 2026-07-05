@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { XIcon } from '@/registry/ndeko/lib/icons';
 import { Chip } from '@/registry/ndeko/ui/chip';
 import { Field, FieldLabel } from '@/registry/ndeko/ui/field';
@@ -47,7 +47,7 @@ export default function Input58() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [tags, setTags] = useState(INITIAL_TAGS);
   const [draft, setDraft] = useState('');
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const tagVariants = tagVariantsOf(shouldReduceMotion);
 
   function changeDraft(event: ChangeEvent<HTMLInputElement>) {

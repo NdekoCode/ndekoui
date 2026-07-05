@@ -1,6 +1,7 @@
 'use client';
 import { cn } from '@/lib/utils';
-import { motion, Transition, useReducedMotion } from 'motion/react';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { motion, Transition } from 'motion/react';
 
 export type BorderTrailProps = {
   className?: string;
@@ -52,7 +53,7 @@ export function BorderTrail({
   onAnimationComplete,
   style,
 }: BorderTrailProps) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   return (
     <div className='pointer-events-none absolute inset-0 rounded-[inherit] border border-transparent [mask-image:linear-gradient(transparent,transparent),linear-gradient(black,black)] [mask-composite:intersect] [mask-clip:padding-box,border-box]'>

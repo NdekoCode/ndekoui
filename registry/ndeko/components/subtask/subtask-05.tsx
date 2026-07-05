@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ChevronRightIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Checkbox } from '@/registry/ndeko/ui/checkbox';
@@ -97,7 +98,7 @@ function PhaseBlock({
   phase: Phase;
   onChange: (phase: Phase) => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [isOpen, setIsOpen] = useState(true);
   const stepsId = useId();
   const doneCount = doneCountOf(phase.steps);

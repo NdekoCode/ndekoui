@@ -1,7 +1,8 @@
 'use client';
 import React, { useRef, useState } from 'react';
-import { motion, MotionConfig, useReducedMotion } from 'motion/react';
+import { motion, MotionConfig } from 'motion/react';
 import useClickOutside from '@/hooks/useClickOutside';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ArrowLeftIcon,
   SearchIcon,
@@ -19,7 +20,7 @@ const OPEN_WIDTH = '300px';
 const CLOSED_WIDTH = '98px';
 
 function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   if (!prefersReducedMotion) {
     return children;
   }

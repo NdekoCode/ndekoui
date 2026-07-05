@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ArrowRightIcon,
   CheckIcon,
@@ -142,7 +143,7 @@ function EarlierRow({ update }: { update: EarlierUpdate }) {
 }
 
 export default function Notification27() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const earlierId = useId();
   const [isUnread, setIsUnread] = useState(true);
   const [isEarlierOpen, setIsEarlierOpen] = useState(false);

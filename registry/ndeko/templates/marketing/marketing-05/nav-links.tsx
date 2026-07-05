@@ -1,12 +1,9 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  type Transition,
-  useReducedMotion,
-} from 'motion/react';
+import { AnimatePresence, motion, type Transition } from 'motion/react';
 import { useState } from 'react';
+
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 import { type NavLink } from './data';
 
@@ -42,7 +39,7 @@ type NavLinksProps = {
 
 export function NavLinks({ links, currentId }: NavLinksProps) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const highlightTransition = highlightTransitionOf(shouldReduceMotion);
 
   function clearHover() {

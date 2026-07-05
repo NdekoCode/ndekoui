@@ -16,10 +16,10 @@ import {
   MotionConfig,
   Transition,
   Variant,
-  useReducedMotion,
 } from 'motion/react';
 import { createPortal } from 'react-dom';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { XIcon } from '@/registry/ndeko/lib/icons';
 import useClickOutside from '@/hooks/useClickOutside';
 
@@ -44,7 +44,7 @@ function useMorphingDialog() {
 }
 
 function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   if (!prefersReducedMotion) {
     return children;
   }

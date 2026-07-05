@@ -1,9 +1,10 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useId, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CalendarIcon,
   CircleDashedIcon,
@@ -201,7 +202,7 @@ function Assignees({
   assigneeIds: string[];
   onToggle: (personId: string) => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = chipVariantsOf(shouldReduceMotion);
   const allowsLayout = !shouldReduceMotion;
   const assignees = peopleByIds(assigneeIds);
@@ -366,7 +367,7 @@ function TaskDetails() {
   const [subIssues, setSubIssues] = useState(SUB_ISSUES);
   const [comments, setComments] = useState(COMMENTS);
   const [draft, setDraft] = useState('');
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowVariants = rowVariantsOf(shouldReduceMotion);
   const commentFieldId = useId();
   const doneCount = subIssues.filter((issue) => issue.isDone).length;

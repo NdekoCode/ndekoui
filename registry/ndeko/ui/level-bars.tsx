@@ -1,8 +1,8 @@
 'use client';
 
-import { useReducedMotion } from 'motion/react';
 import { useEffect, useRef } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 import { speechLevelAt } from '@/registry/ndeko/lib/speech-envelope';
@@ -62,7 +62,7 @@ export function LevelBars({
   const containerRef = useRef<HTMLSpanElement>(null);
   const intensityRef = useRef(intensity);
   const levelRef = useRef(level);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const indexes = Array.from({ length: count }, (_, index) => index);
 
   useEffect(() => {

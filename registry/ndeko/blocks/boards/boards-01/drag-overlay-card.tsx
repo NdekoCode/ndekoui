@@ -4,11 +4,12 @@ import {
   motion,
   type MotionValue,
   type Transition,
-  useReducedMotion,
   useSpring,
   useTransform,
   useVelocity,
 } from 'motion/react';
+
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 import { TaskCardBody } from './card-parts';
 import type { Task } from './data';
@@ -44,7 +45,7 @@ type OverlayCardProps = {
 
 /** The card under the pointer: it leans with the speed of the drag and settles on a spring when the pointer slows. */
 export function OverlayCard({ task, dragX }: OverlayCardProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const velocity = useVelocity(dragX);
   const tiltTarget = useTransform(velocity, VELOCITY_RANGE, TILT_RANGE, {
     clamp: true,

@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useEffect, useEffectEvent, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CheckIcon,
   ClockIcon,
@@ -175,7 +175,7 @@ function ResendButton({
   onResend: () => void;
 }) {
   const [state, setState] = useState<ResendState>('idle');
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = iconSwapOf(shouldReduceMotion);
   const isSending = state === 'sending';
   const deliver = useEffectEvent(onResend);
@@ -229,7 +229,7 @@ function RevokeButton({
   onRevoke: () => void;
 }) {
   const [isArmed, setIsArmed] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = labelSwapOf(shouldReduceMotion);
   const swapKey = String(isArmed);
 
@@ -293,7 +293,7 @@ function InvitationRow({
   onResend: (invitationId: string) => void;
   onRevoke: (invitationId: string) => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const lineVariants = labelSwapOf(shouldReduceMotion);
   const roleLabel = ROLE_LABEL[invitation.role];
   const line = `${roleLabel} · Invited by ${invitation.invitedBy} · ${invitation.sentLabel}`;
@@ -349,7 +349,7 @@ export function InvitationList({
   onResend,
   onRevoke,
 }: InvitationListProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowVariants = rowVariantsOf(shouldReduceMotion);
 
   return (

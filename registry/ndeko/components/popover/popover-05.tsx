@@ -5,11 +5,11 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
@@ -66,7 +66,7 @@ function nextLabelOf(isLastTip: boolean) {
 
 export default function Popover05() {
   const [tipIndex, setTipIndex] = useState(0);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const textVariants = textVariantsOf(shouldReduceMotion);
   const tip = TIPS[tipIndex];
   const tipNumber = tipIndex + 1;

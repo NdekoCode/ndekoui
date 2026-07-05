@@ -5,11 +5,11 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll } from '@/components/core/word-roll';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { XIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 
@@ -48,7 +48,7 @@ type FilterPillProps = {
 
 /** Floats over the board while filters hide tasks, so the board itself never moves. */
 export function FilterPill({ hiddenCount, onClear }: FilterPillProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = pillVariantsOf(shouldReduceMotion);
   const isVisible = hiddenCount > 0;
   const hiddenLabel = hiddenLabelOf(hiddenCount);

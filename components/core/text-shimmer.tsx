@@ -1,8 +1,9 @@
 'use client';
 import React, { useMemo } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 import { motionElementOf } from './motion-elements';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 export type TextShimmerProps = {
   children: string;
@@ -31,7 +32,7 @@ function TextShimmerComponent({
   spread = 2,
 }: TextShimmerProps) {
   const MotionComponent = motionElementOf(Component) as typeof motion.p;
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const dynamicSpread = useMemo(() => {
     return children.length * spread;

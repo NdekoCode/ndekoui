@@ -6,7 +6,6 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState, type ChangeEvent, type ComponentProps } from 'react';
 import PhoneInput, {
@@ -16,6 +15,7 @@ import PhoneInput, {
 } from 'react-phone-number-input';
 import flags from 'react-phone-number-input/flags';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ChevronDownIcon, PhoneIcon } from '@/registry/ndeko/lib/icons';
 import { CONTROL_RECIPE } from '@/registry/ndeko/lib/recipes';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -98,7 +98,7 @@ function CountrySelect({
   options,
 }: CountrySelectProps) {
   const countries = options.filter(hasCountry);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const swapVariants = swapVariantsOf(shouldReduceMotion);
   const flagKey = String(value);
 

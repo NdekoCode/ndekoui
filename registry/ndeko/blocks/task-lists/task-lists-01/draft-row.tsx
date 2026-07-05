@@ -1,8 +1,9 @@
 'use client';
 
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Kbd } from '@/registry/ndeko/ui/kbd';
 
@@ -25,7 +26,7 @@ type DraftRowProps = {
 };
 
 export function DraftRow({ status, onCreate, onCancel }: DraftRowProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const presence = heightPresenceOf(shouldReduceMotion);
   const inputRef = useRef<HTMLInputElement>(null);
   const [title, setTitle] = useState('');

@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  type Transition,
-} from 'motion/react';
+import { AnimatePresence, motion, type Transition } from 'motion/react';
 import { useId } from 'react';
 
 import {
@@ -13,6 +8,7 @@ import {
   type CalendarEvent,
   type EventColor,
 } from '@/registry/ndeko/components/event-calendar/_parts';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { PlusIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Checkbox } from '@/registry/ndeko/ui/checkbox';
@@ -65,7 +61,7 @@ function CalendarList({
   onShowAll,
 }: CalendarListProps) {
   const headingId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const hasHidden = hiddenColors.length > 0;
   let exitTransition = FADE_OUT;
   if (shouldReduceMotion) {

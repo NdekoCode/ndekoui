@@ -1,8 +1,10 @@
 'use client';
 import { ReactNode } from 'react';
-import { motion, MotionConfig, useReducedMotion, Variants } from 'motion/react';
+import { motion, MotionConfig, Variants } from 'motion/react';
 import { motionElementOf } from './motion-elements';
 import React from 'react';
+
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 export type PresetType =
   | 'fade'
@@ -102,7 +104,7 @@ const addDefaultVariants = (variants: Variants) => ({
 });
 
 function ReducedMotionConfig({ children }: { children: ReactNode }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   if (!prefersReducedMotion) {
     return children;
   }

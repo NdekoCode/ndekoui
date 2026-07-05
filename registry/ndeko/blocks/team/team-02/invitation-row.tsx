@@ -5,9 +5,9 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ClockIcon,
   EllipsisIcon,
@@ -78,7 +78,7 @@ function PendingAvatar({ email }: { email: string }) {
 
 /** When the invitation is sent again, the sent line becomes the new one in place. */
 function SentLabel({ label }: { label: string }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = labelSwapOf(shouldReduceMotion);
 
   return (
@@ -106,7 +106,7 @@ export function InvitationRow({
   onResend,
   onRevoke,
 }: InvitationRowProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
 
   function resend() {

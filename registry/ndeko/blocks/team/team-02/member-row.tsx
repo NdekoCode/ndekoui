@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ChartLineIcon,
   ChevronDownIcon,
@@ -218,7 +218,7 @@ function TaskCell({
   openTasks: MemberTask[];
   actions: MemberActions;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const variants = taskSwapOf(shouldReduceMotion);
   const task = member.task;
   let swapKey = 'no-task';
@@ -519,7 +519,7 @@ function PhoneTaskLine({ member }: { member: Member }) {
 /** One member as a row of the table surface, on the columns of the card view. */
 export function MemberRow({ member, openTasks, actions }: MemberRowProps) {
   const [isActivityOpen, setIsActivityOpen] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const panelVariants = panelPresenceOf(shouldReduceMotion);
   const rowLayout = rowLayoutOf(shouldReduceMotion);
   const rowPresence = rowPresenceOf(shouldReduceMotion);

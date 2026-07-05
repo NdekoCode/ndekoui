@@ -6,10 +6,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 
 import { DEFAULT_FEATURE_ID, FEATURES, type FeatureId, SECTION } from './data';
@@ -53,7 +53,7 @@ function panelIdOf(id: FeatureId) {
 
 export default function Features03() {
   const [activeId, setActiveId] = useState<FeatureId>(DEFAULT_FEATURE_ID);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const crossfadeVariants = crossfadeVariantsOf(shouldReduceMotion);
 
   function pickFeature(value: unknown) {

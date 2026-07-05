@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { FeatherIcon, RotateCcwIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import { TextLoader } from '@/registry/ndeko/ui/chat-loader';
@@ -89,7 +90,7 @@ export function ReasoningReply() {
   const [step, setStep] = useState<RunStep>(finishedStep);
   const [reasoningSource, setReasoningSource] = useState('');
   const timers = useRef(new Set<ReturnType<typeof setTimeout>>());
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const isRunning = step < finishedStep;
   const isFinished = !isRunning;

@@ -3,7 +3,6 @@
 import { differenceInCalendarDays } from 'date-fns';
 import {
   motion,
-  useReducedMotion,
   type TargetAndTransition,
   type Transition,
 } from 'motion/react';
@@ -15,6 +14,7 @@ import {
   type MonthProps,
 } from 'react-day-picker';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Calendar } from '@/registry/ndeko/ui/calendar';
@@ -90,7 +90,7 @@ function SlidingMonth({
 }: MonthProps) {
   const time = calendarMonth.date.getTime();
   const [shown, setShown] = useState<ShownMonth>({ time, direction: 0 });
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   if (shown.time !== time) {
     const direction = Math.sign(time - shown.time);

@@ -1,13 +1,9 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  type Transition,
-} from 'motion/react';
+import { AnimatePresence, motion, type Transition } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ChevronsUpDownIcon,
   PlusIcon,
@@ -129,7 +125,7 @@ function withNewest(toasts: StackToast[], toast: StackToast) {
 }
 
 export default function Notification28() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [toasts, setToasts] = useState(INITIAL_TOASTS);
   const [nextId, setNextId] = useState(4);
   const [isHovered, setIsHovered] = useState(false);

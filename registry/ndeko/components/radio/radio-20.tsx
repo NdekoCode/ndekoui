@@ -1,8 +1,9 @@
 'use client';
 
-import { motion, type Transition, useReducedMotion } from 'motion/react';
+import { motion, type Transition } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { RadioGroup, RadioGroupItem } from '@/registry/ndeko/ui/radio-group';
 
 type BillingPeriod = {
@@ -50,7 +51,7 @@ function savingToneOf(isSelected: boolean) {
 export default function Radio20() {
   const indicatorId = useId();
   const [period, setPeriod] = useState('yearly');
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const indicatorTransition = indicatorTransitionOf(shouldReduceMotion);
 
   return (

@@ -3,12 +3,12 @@
 import {
   AnimatePresence,
   motion,
-  useReducedMotion,
   type Transition,
   type Variants,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 const SHIFT_PX = 8;
@@ -58,7 +58,7 @@ type SlidingCountProps = {
 
 /** A figure the person just changed: it slides in the direction of the change. */
 export function SlidingCount({ value, format, className }: SlidingCountProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [shown, setShown] = useState<Shown>({ value, direction: 1 });
   const text = format(value);
 

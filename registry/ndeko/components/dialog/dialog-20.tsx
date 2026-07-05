@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ArrowRightIcon,
   FolderIcon,
@@ -118,7 +118,7 @@ function travelTransitionOf(shouldReduceMotion: boolean | null) {
 export default function Dialog20() {
   const indicatorId = useId();
   const [stepIndex, setStepIndex] = useState(0);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const glyphVariants = glyphVariantsOf(shouldReduceMotion);
   const textVariants = textVariantsOf(shouldReduceMotion);
   const travelTransition = travelTransitionOf(shouldReduceMotion);

@@ -1,8 +1,9 @@
 'use client';
 
-import { motion, useReducedMotion, type Transition } from 'motion/react';
+import { motion, type Transition } from 'motion/react';
 import { useLayoutEffect, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 type SizeAxis = 'height' | 'width' | 'both';
@@ -73,7 +74,7 @@ function AnimatedSize({
 }: AnimatedSizeProps) {
   const [content, setContent] = useState<HTMLElement | null>(null);
   const size = useMeasuredSize(content);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const isWidthAnimated = axis !== 'height';
   const outerClassName = cn('-m-1 overflow-hidden', className);
   const innerClassName = cn(

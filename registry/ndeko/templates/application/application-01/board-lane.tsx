@@ -7,15 +7,11 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import {
-  motion,
-  type Transition,
-  type Variants,
-  useReducedMotion,
-} from 'motion/react';
+import { motion, type Transition, type Variants } from 'motion/react';
 import { memo, useEffect, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { PlusIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -118,7 +114,7 @@ function SortableTaskCard({
   task: BoardCard;
   isNew: boolean;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const cardVariants = cardVariantsOf(shouldReduceMotion);
   const {
     attributes,

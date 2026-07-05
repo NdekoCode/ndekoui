@@ -1,5 +1,5 @@
 'use client';
-import { motion, useInView, useReducedMotion } from 'motion/react';
+import { motion, useInView } from 'motion/react';
 import {
   Children,
   createContext,
@@ -13,6 +13,7 @@ import {
   type ReactNode,
 } from 'react';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 export type MasonryGridLayout = 'columns' | 'balanced';
 
@@ -217,24 +218,17 @@ function RevealCell({
   );
 }
 
-function wantsReveal(
-  revealOnView: boolean,
-  prefersReducedMotion: boolean | null,
-  hasBeenSeen: boolean
-) {
-  const isMotionAllowed = !prefersReducedMotion;
-  const isFirstEntry = !hasBeenSeen;
-  return revealOnView && isMotionAllowed && isFirstEntry;
-}
-
-/** The choice is made once per mount, so marking the cell as seen does not swap it mid-entrance. */
+/**
+ * Whether the cell was new is read once per mount, so marking it as seen does not swap it
+ * mid-entrance. The motion preference stays live: it is only known after the page hydrates.
+ */
 function MasonryCell(props: MasonryCellProps) {
   const { revealOnView, seenKeys } = useMasonry();
-  const prefersReducedMotion = useReducedMotion();
-  const hasBeenSeen = seenKeys.has(props.cellKey);
-  const [shouldReveal] = useState(() =>
-    wantsReveal(revealOnView, prefersReducedMotion, hasBeenSeen)
-  );
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [isFirstEntry] = useState(() => !seenKeys.has(props.cellKey));
+  const isMotionAllowed = !prefersReducedMotion;
+  const wantsReveal = revealOnView && isMotionAllowed;
+  const shouldReveal = wantsReveal && isFirstEntry;
 
   if (shouldReveal) {
     return <RevealCell {...props} />;

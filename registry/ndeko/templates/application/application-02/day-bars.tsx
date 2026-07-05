@@ -1,7 +1,8 @@
 'use client';
 
-import { motion, type Transition, useReducedMotion } from 'motion/react';
+import { motion, type Transition } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 import {
@@ -106,7 +107,7 @@ type DayBarsProps = {
 
 /** Hours per day as rounded bars. Bars move to their new height when the data changes, never on mount. */
 export function DayBars({ title, bars, emptyState }: DayBarsProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const transition = moveTransitionOf(shouldReduceMotion);
   const count = bars.length;
   const scaleHours = scaleHoursOf(bars);

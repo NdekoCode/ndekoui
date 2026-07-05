@@ -4,11 +4,11 @@ import {
   AnimatePresence,
   LayoutGroup,
   motion,
-  useReducedMotion,
   type MotionProps,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CircleCheckIcon,
   SmileIcon,
@@ -153,7 +153,7 @@ function ReactionChip({
   reaction: Reaction;
   onToggle: () => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const kind = kindOf(reaction.id);
   const Glyph = kind.icon;
   const isMine = reaction.peopleIds.includes(CURRENT_USER_ID);
@@ -253,7 +253,7 @@ function ReactionPicker({
 }
 
 export default function Comment03() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const [reactions, setReactions] = useState(FIRST_REACTIONS);
 
   function toggle(id: ReactionId) {

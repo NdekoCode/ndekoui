@@ -1,7 +1,9 @@
 'use client';
 
-import { motion, useReducedMotion, type Transition } from 'motion/react';
+import { motion, type Transition } from 'motion/react';
 import { useId } from 'react';
+
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 import type { Member, Period } from './data';
 import {
@@ -63,7 +65,7 @@ function MemberRow({
   indicatorId,
   onToggle,
 }: MemberRowProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const minutes = member.minutes[period];
   const share = shareOf(minutes);
   const barStyle = { transform: `scaleX(${share})` };

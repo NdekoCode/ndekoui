@@ -1,7 +1,9 @@
 'use client';
 
-import { motion, useReducedMotion, type Variants } from 'motion/react';
+import { motion, type Variants } from 'motion/react';
 import { useState } from 'react';
+
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 
 const GROUP: Variants = {
   hidden: {},
@@ -71,7 +73,7 @@ type SettleItemProps = {
 };
 
 export function SettleItem({ className, children }: SettleItemProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
     <motion.div

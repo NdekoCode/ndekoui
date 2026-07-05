@@ -1,8 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useId, useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CircleAlertIcon,
   CircleCheckIcon,
@@ -147,7 +148,7 @@ function Composer02() {
   const idCounter = useRef(0);
   const timers = useRef(new Set<ReturnType<typeof setTimeout>>());
   const textareaId = useId();
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const presence = risePresenceOf(shouldReduceMotion);
   const isIdle = phase === 'idle';
   const isWorking = !isIdle;

@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Label } from '@/registry/ndeko/ui/label';
 import { Slider } from '@/registry/ndeko/ui/slider';
@@ -96,7 +96,7 @@ function AmazingFace({ className }: FaceProps) {
 
 export default function Slider17() {
   const [rating, setRating] = useState(INITIAL_RATING);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const labelVariants = labelVariantsOf(shouldReduceMotion);
   const ratingLabel = ratingLabelOf(rating);
 

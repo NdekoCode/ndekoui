@@ -1,7 +1,8 @@
 'use client';
 
-import { motion, type Transition, useReducedMotion } from 'motion/react';
+import { motion, type Transition } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 import {
@@ -111,7 +112,7 @@ export function TrendChart({
   points,
   formatValue,
 }: TrendChartProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const transition = moveTransitionOf(shouldReduceMotion);
   const count = points.length;
   const lastIndex = count - 1;

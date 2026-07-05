@@ -1,8 +1,9 @@
 // Adapted from prompt-kit (MIT, Copyright (c) 2025 Julien Thibeaut).
 'use client';
 
-import { motion, useReducedMotion, type Transition } from 'motion/react';
+import { motion, type Transition } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Spinner } from '@/registry/ndeko/ui/spinner';
 
@@ -109,7 +110,7 @@ function pulseKeyframesOf(shouldReduceMotion: boolean | null) {
 }
 
 function PulseDotLoader({ size = 'md', className, label }: LoaderPartProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const keyframes = pulseKeyframesOf(shouldReduceMotion);
 
   return (
@@ -142,7 +143,7 @@ function barKeyframesOf(shouldReduceMotion: boolean | null) {
 }
 
 function BarsLoader({ size = 'md', className, label }: LoaderPartProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const keyframes = barKeyframesOf(shouldReduceMotion);
 
   return (
@@ -186,7 +187,7 @@ function TextLoader({
   size = 'md',
   className,
 }: TextLoaderProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const classNames = cn(
     'text-muted-foreground inline-block font-medium',
     TEXT_SIZE[size],

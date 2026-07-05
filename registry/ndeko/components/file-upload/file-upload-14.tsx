@@ -3,12 +3,12 @@
 import {
   type SpringOptions,
   useMotionValueEvent,
-  useReducedMotion,
   useSpring,
 } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
 import { useFileUpload } from '@/registry/ndeko/hooks/use-file-upload';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   ArrowLeftIcon,
   CircleUserRoundIcon,
@@ -133,7 +133,7 @@ export default function FileUpload14() {
   const [targetZoom, setTargetZoom] = useState(MIN_ZOOM);
   const [zoom, setZoom] = useState(MIN_ZOOM);
   const applyButtonRef = useRef<HTMLButtonElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const zoomSpring = useSpring(MIN_ZOOM, ZOOM_SPRING);
 
   useMotionValueEvent(zoomSpring, 'change', setZoom);

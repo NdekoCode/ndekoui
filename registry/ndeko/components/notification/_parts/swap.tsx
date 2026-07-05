@@ -3,11 +3,11 @@
 import {
   AnimatePresence,
   motion,
-  useReducedMotion,
   type Transition,
   type Variants,
 } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 const SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };
@@ -40,7 +40,7 @@ type SwapProps = {
 
 /** An icon that becomes another: the old one shrinks out of focus while the new one settles. */
 export function Swap({ swapKey, className, children }: SwapProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
     <AnimatePresence mode='popLayout' initial={false}>

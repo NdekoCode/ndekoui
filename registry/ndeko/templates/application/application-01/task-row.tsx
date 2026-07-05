@@ -1,7 +1,8 @@
 'use client';
 
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 import type { PriorityId, StatusId, Task } from './data';
@@ -71,7 +72,7 @@ export function TaskRow({
   onAssigneesChange,
   onOpen,
 }: TaskRowProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const presence = heightPresenceOf(shouldReduceMotion);
   const isDone = task.status === 'done';
   const tracker = trackerOf(task);

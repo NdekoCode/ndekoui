@@ -5,10 +5,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useId, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { EyeIcon, EyeOffIcon } from '@/registry/ndeko/lib/icons';
 import { Field, FieldLabel } from '@/registry/ndeko/ui/field';
 import { Input } from '@/registry/ndeko/ui/input';
@@ -54,7 +54,7 @@ function visibilityGlyphOf(isVisible: boolean) {
 export default function Input23() {
   const inputId = useId();
   const [isVisible, setIsVisible] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const swapVariants = swapVariantsOf(shouldReduceMotion);
   const glyph = visibilityGlyphOf(isVisible);
 

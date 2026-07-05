@@ -6,10 +6,10 @@ import {
   motion,
   type Transition,
   type Variants,
-  useReducedMotion,
 } from 'motion/react';
 import { useRef, useState } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import {
   Select,
@@ -143,7 +143,7 @@ function DocumentBody({ legalDocument }: { legalDocument: LegalDocument }) {
 export default function Legal01() {
   const [documentId, setDocumentId] = useState(DOCUMENTS[0].id);
   const articleRef = useRef<HTMLElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
   const crossfadeVariants = crossfadeVariantsOf(shouldReduceMotion);
   const legalDocument = documentOf(documentId);
   const currentSectionId = useCurrentSection(
