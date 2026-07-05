@@ -591,7 +591,7 @@ function ModelPanel({
           )}
         </div>
         <p className='text-muted-foreground px-3 pt-1 pb-3 text-[11px]'>
-          Speed and price: estimate for this demo
+          Context, speed and price are illustrative
         </p>
       </div>
       <LiveRegion message={spokenUnless(isDemonstrated, results)} />
@@ -838,9 +838,9 @@ const SURFACES: Segment<SurfaceChoice>[] = [
   { value: 'dialog', label: 'Dialog' },
 ];
 
-const START_MODEL = 'lumen';
+const START_MODEL = 'claude-sonnet';
 
-const DEMO_SEARCH = 'hal';
+const DEMO_SEARCH = 'gem';
 
 function asOf(choice: SurfaceChoice) {
   if (choice === 'auto') {
@@ -852,7 +852,7 @@ function asOf(choice: SurfaceChoice) {
 function summaryOf(model: ModelOption) {
   const lab = labOf(model.lab);
   const context = contextLabelOf(model.contextTokens);
-  return `${lab.name} lab, ${context} context`;
+  return `By ${lab.name}, ${context} context`;
 }
 
 export default function Prompt03() {

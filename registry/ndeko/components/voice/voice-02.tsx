@@ -755,10 +755,10 @@ export default function Voice02() {
       <ClockGate isActive={isInView}>
         <div className='bg-card hairline-ring ring-border rounded-xl p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
           <p className='text-muted-foreground mb-3 text-xs'>
-            Voice reply from Lumen
+            Voice reply from the assistant
           </p>
           <VoiceNote
-            label='Voice reply from Lumen'
+            label='Voice reply from the assistant'
             duration={NOTE_DURATION}
             levels={NOTE_LEVELS}
             transcript={NOTE_WORDS}

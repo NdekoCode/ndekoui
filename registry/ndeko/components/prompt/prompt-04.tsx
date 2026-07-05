@@ -657,7 +657,7 @@ export function EffortControl({
         position={position}
       />
       <p className='text-muted-foreground text-[11px]'>
-        Time and cost per answer: estimate for this demo
+        Time and cost per answer are illustrative
       </p>
     </div>
   );
@@ -702,36 +702,36 @@ export function EffortChip(props: EffortControlProps) {
 
 const MODELS: EffortModel[] = [
   {
-    id: 'lumen-swift',
-    name: 'Lumen Swift',
-    lab: 'lumen',
+    id: 'claude-haiku',
+    name: 'Claude Haiku',
+    lab: 'anthropic',
     seconds: [1.2, 6.4],
     cost: [0.001, 0.006],
   },
   {
-    id: 'lumen',
-    name: 'Lumen',
-    lab: 'lumen',
+    id: 'claude-sonnet',
+    name: 'Claude Sonnet',
+    lab: 'anthropic',
     seconds: [2.4, 18],
     cost: [0.004, 0.038],
   },
   {
-    id: 'lumen-max',
-    name: 'Lumen Max',
-    lab: 'lumen',
+    id: 'claude-opus',
+    name: 'Claude Opus',
+    lab: 'anthropic',
     seconds: [5.5, 52],
     cost: [0.019, 0.24],
   },
   {
-    id: 'quarry-large',
-    name: 'Quarry Large',
-    lab: 'quarry',
+    id: 'gemini-pro',
+    name: 'Gemini Pro',
+    lab: 'google',
     seconds: [4.1, 37],
     cost: [0.011, 0.12],
   },
 ];
 
-const START_MODEL = 'lumen';
+const START_MODEL = 'claude-sonnet';
 
 const START_EFFORT: Effort = 'high';
 
@@ -754,7 +754,7 @@ export default function Prompt04() {
     { after: 620, run: () => control.current?.moveTo('high') },
     { after: 620, run: () => control.current?.moveTo('max') },
     { after: 1200, run: () => control.current?.moveTo('high') },
-    { after: 1200, run: () => setModelId('lumen-max') },
+    { after: 1200, run: () => setModelId('claude-opus') },
     { after: 1500, run: () => setModelId(START_MODEL) },
     { after: 500, run: hold },
   ];

@@ -153,7 +153,7 @@ export function PermissionModeMenu({
       <DropdownMenuContent side='top' align='start' className='w-64'>
         <DropdownMenuGroup>
           <DropdownMenuGroupLabel>
-            Before Lumen changes files
+            Before the agent changes files
           </DropdownMenuGroupLabel>
           <DropdownMenuRadioGroup value={value} onValueChange={change}>
             {MODES.map((mode) => {
@@ -183,14 +183,14 @@ export function PermissionModeMenu({
   );
 }
 
-const LUMEN_MODELS = MODELS.filter((model) => model.lab === 'lumen');
+const FAMILY_MODELS = MODELS.filter((model) => model.lab === 'anthropic');
 
-const LUMEN_IDS = LUMEN_MODELS.map((model) => model.id);
+const FAMILY_IDS = FAMILY_MODELS.map((model) => model.id);
 
-const LUMEN_LABELS = LUMEN_MODELS.map((model) => model.name);
+const FAMILY_LABELS = FAMILY_MODELS.map((model) => model.name);
 
-function isLumenModel(value: unknown): value is string {
-  return LUMEN_IDS.some((id) => id === value);
+function isFamilyModel(value: unknown): value is string {
+  return FAMILY_IDS.some((id) => id === value);
 }
 
 type ModelMenuProps = {
@@ -203,7 +203,7 @@ export function ModelMenu({ value, onValueChange, disabled }: ModelMenuProps) {
   const model = modelOf(value);
 
   function change(next: unknown) {
-    if (isLumenModel(next)) {
+    if (isFamilyModel(next)) {
       onValueChange(next);
     }
   }
@@ -223,14 +223,14 @@ export function ModelMenu({ value, onValueChange, disabled }: ModelMenuProps) {
         }
       >
         <LabTile lab={model.lab} size='sm' />
-        <WordRoll text={model.name} labels={LUMEN_LABELS} />
+        <WordRoll text={model.name} labels={FAMILY_LABELS} />
         <ChevronDownIcon className='size-3.5 opacity-60' />
       </DropdownMenuTrigger>
       <DropdownMenuContent side='top' align='start' className='w-64'>
         <DropdownMenuGroup>
           <DropdownMenuGroupLabel>Model</DropdownMenuGroupLabel>
           <DropdownMenuRadioGroup value={value} onValueChange={change}>
-            {LUMEN_MODELS.map((option) => (
+            {FAMILY_MODELS.map((option) => (
               <DropdownMenuRadioItem
                 key={option.id}
                 value={option.id}
@@ -806,7 +806,7 @@ const TRANSCRIPT = 'Keep the old settings page live until the launch';
 
 const SEED_DRAFT = 'Plan the billing move with the roadmap attached.';
 
-const SEED_NOTICE: Notice = { tone: 'done', text: 'Lumen answered' };
+const SEED_NOTICE: Notice = { tone: 'done', text: 'Answered' };
 
 /** What a picked, pasted or dropped file brings; a demonstration attaches one without a file behind it. */
 type Incoming = {
@@ -898,7 +898,7 @@ export default function Prompt02() {
   const [attachments, setAttachments] =
     useState<ComposerAttachment[]>(SEED_ATTACHMENTS);
   const [mode, setMode] = useState<PermissionMode>('ask');
-  const [modelId, setModelId] = useState('lumen');
+  const [modelId, setModelId] = useState('claude-sonnet');
   const [apps, setApps] = useState<AppId[]>(['calendar', 'tracker']);
   const [folder, setFolder] = useState(FOLDERS[0]);
   const [phase, setPhase] = useState<Phase>('idle');
@@ -1171,7 +1171,7 @@ export default function Prompt02() {
     setAttachments(SEED_ATTACHMENTS);
     setDraft(SEED_DRAFT);
     setMode('ask');
-    setModelId('lumen');
+    setModelId('claude-sonnet');
     setPhase('idle');
     setNotice(SEED_NOTICE);
   }
@@ -1183,7 +1183,7 @@ export default function Prompt02() {
     { after: PRESS_LEAD_MS, run: () => attach([DEMO_FILE]) },
     { after: UPLOAD_MS + CHECK_HOLD_MS + 500, run: () => setMode('accept') },
     { after: 1300, run: () => setMode('ask') },
-    { after: 900, run: () => setModelId('lumen-max') },
+    { after: 900, run: () => setModelId('claude-opus') },
     { after: 1100, run: () => press('mic') },
     { after: PRESS_LEAD_MS, run: startRecording },
     { after: 2400, run: () => press('done') },
@@ -1248,7 +1248,7 @@ export default function Prompt02() {
               onPaste={pasteFiles}
               readOnly={isRecording}
               aria-label='Prompt'
-              placeholder='Ask Lumen to plan, edit or explain. Paste or drop files'
+              placeholder='Ask to plan, edit or explain. Paste or drop files'
               className='max-h-none min-h-10 border-0 bg-transparent px-2 py-1.5 shadow-none ring-0 focus-visible:ring-0 dark:bg-transparent'
             />
             <input

@@ -504,7 +504,7 @@ const READ_MS = 1100;
 
 const WRITE_MS = 1700;
 
-const WRITE_FAILURE = 'Lumen stopped responding';
+const WRITE_FAILURE = 'The model stopped responding';
 
 const ANSWERED_HOLD_MS = 1800;
 
@@ -1065,7 +1065,7 @@ export default function Prompt01() {
               onKeyDown={handleFieldKeys}
               readOnly={isListening}
               aria-label='Prompt'
-              placeholder='Ask Lumen about this project'
+              placeholder='Ask about this project'
               className='max-h-none min-h-10 border-0 bg-transparent px-2 py-1.5 shadow-none ring-0 focus-visible:ring-0 dark:bg-transparent'
             />
             <div className='flex items-center gap-1.5 px-0.5 pb-0.5'>

@@ -1,12 +1,11 @@
-import type { SeriesSlot } from '@/registry/ndeko/lib/agent-run';
+import type { BrandSlug } from '@/registry/ndeko/lib/brand-logos';
 
-export type LabId = 'lumen' | 'quarry' | 'halden';
+export type LabId = 'anthropic' | 'openai' | 'google' | 'deepseek';
 
 export type Lab = {
   id: LabId;
   name: string;
-  initial: string;
-  series: SeriesSlot;
+  brand: BrandSlug;
 };
 
 export type Capability = 'vision' | 'tools' | 'reasoning' | 'long-context';
@@ -17,7 +16,7 @@ export type ModelOption = {
   id: string;
   name: string;
   lab: LabId;
-  /** How many tokens the model reads at once. */
+  /** How many tokens the model reads at once. Illustrative in the demos. */
   contextTokens: number;
   /** 1 is the slowest, 3 the fastest. */
   speed: Tier;
@@ -28,26 +27,28 @@ export type ModelOption = {
 };
 
 export const LABS: Lab[] = [
-  { id: 'lumen', name: 'Lumen', initial: 'L', series: 1 },
-  { id: 'quarry', name: 'Quarry', initial: 'Q', series: 2 },
-  { id: 'halden', name: 'Halden', initial: 'H', series: 3 },
+  { id: 'anthropic', name: 'Anthropic', brand: 'claude' },
+  { id: 'openai', name: 'OpenAI', brand: 'openai' },
+  { id: 'google', name: 'Google', brand: 'gemini' },
+  { id: 'deepseek', name: 'DeepSeek', brand: 'deepseek' },
 ];
 
+/** Families without a version number; context, speed and price are coarse tiers for the demos, not facts about a model. */
 export const MODELS: ModelOption[] = [
   {
-    id: 'lumen-swift',
-    name: 'Lumen Swift',
-    lab: 'lumen',
-    contextTokens: 128_000,
+    id: 'claude-haiku',
+    name: 'Claude Haiku',
+    lab: 'anthropic',
+    contextTokens: 200_000,
     speed: 3,
     price: 1,
     capabilities: ['tools'],
     hint: 'Quick replies and small edits',
   },
   {
-    id: 'lumen',
-    name: 'Lumen',
-    lab: 'lumen',
+    id: 'claude-sonnet',
+    name: 'Claude Sonnet',
+    lab: 'anthropic',
     contextTokens: 200_000,
     speed: 2,
     price: 2,
@@ -55,9 +56,9 @@ export const MODELS: ModelOption[] = [
     hint: 'Everyday work across long files',
   },
   {
-    id: 'lumen-max',
-    name: 'Lumen Max',
-    lab: 'lumen',
+    id: 'claude-opus',
+    name: 'Claude Opus',
+    lab: 'anthropic',
     contextTokens: 200_000,
     speed: 1,
     price: 3,
@@ -65,34 +66,34 @@ export const MODELS: ModelOption[] = [
     hint: 'Hard problems that need a plan',
   },
   {
-    id: 'quarry-mini',
-    name: 'Quarry Mini',
-    lab: 'quarry',
-    contextTokens: 64_000,
+    id: 'gpt-mini',
+    name: 'GPT mini',
+    lab: 'openai',
+    contextTokens: 128_000,
     speed: 3,
     price: 1,
     capabilities: ['tools'],
     hint: 'Cheap bulk tasks',
   },
   {
-    id: 'quarry-large',
-    name: 'Quarry Large',
-    lab: 'quarry',
+    id: 'gemini-pro',
+    name: 'Gemini Pro',
+    lab: 'google',
     contextTokens: 1_000_000,
     speed: 1,
     price: 3,
-    capabilities: ['tools', 'reasoning', 'long-context'],
+    capabilities: ['vision', 'tools', 'reasoning', 'long-context'],
     hint: 'Whole repositories at once',
   },
   {
-    id: 'halden-vision',
-    name: 'Halden Vision',
-    lab: 'halden',
-    contextTokens: 32_000,
+    id: 'deepseek',
+    name: 'DeepSeek',
+    lab: 'deepseek',
+    contextTokens: 64_000,
     speed: 2,
-    price: 2,
-    capabilities: ['vision'],
-    hint: 'Screenshots, scans and charts',
+    price: 1,
+    capabilities: ['tools', 'reasoning'],
+    hint: 'Reasoning on a budget',
   },
 ];
 

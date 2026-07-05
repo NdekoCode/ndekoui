@@ -901,7 +901,7 @@ function placeholderOf(isAnswering: boolean) {
   if (isAnswering) {
     return 'Type the next prompt, it waits in the queue';
   }
-  return 'Message Lumen';
+  return 'Message';
 }
 
 function hintOf(isAnswering: boolean) {

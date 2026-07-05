@@ -307,7 +307,7 @@ const TRAY_KEY: Record<TrayState, TrayKeyMode> = {
 
 const DICTATED_PROMPT = 'Which invoices are above the list price';
 
-const TRAY_PLACEHOLDER = 'Ask Lumen about this project';
+const TRAY_PLACEHOLDER = 'Ask about this project';
 
 const ANSWERED_AFTER_MS = 4_600;
 
@@ -403,23 +403,23 @@ const EFFORT_STATES: Segment<Effort>[] = [
 
 const EFFORT_MODELS: EffortModel[] = [
   {
-    id: 'lumen-swift',
-    name: 'Lumen Swift',
-    lab: 'lumen',
+    id: 'claude-haiku',
+    name: 'Claude Haiku',
+    lab: 'anthropic',
     seconds: [1.2, 6.4],
     cost: [0.001, 0.006],
   },
   {
-    id: 'lumen',
-    name: 'Lumen',
-    lab: 'lumen',
+    id: 'claude-sonnet',
+    name: 'Claude Sonnet',
+    lab: 'anthropic',
     seconds: [2.4, 18],
     cost: [0.004, 0.038],
   },
   {
-    id: 'quarry-large',
-    name: 'Quarry Large',
-    lab: 'quarry',
+    id: 'gemini-pro',
+    name: 'Gemini Pro',
+    lab: 'google',
     seconds: [4.1, 37],
     cost: [0.011, 0.12],
   },
@@ -515,7 +515,7 @@ export function StateShowcase() {
         {(state) => (
           <EffortControl
             models={EFFORT_MODELS}
-            modelId='lumen'
+            modelId='claude-sonnet'
             onModelChange={ignoreChange}
             effort={state}
             onEffortChange={ignoreChange}

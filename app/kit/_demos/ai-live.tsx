@@ -239,9 +239,9 @@ export function BrandTileDemo() {
 }
 
 const LAB_TILES = [
-  { name: 'Lumen', initial: 'L', series: 1 },
-  { name: 'Quarry', initial: 'Q', series: 2 },
-  { name: 'Halden', initial: 'H', series: 3 },
+  { name: 'Brightmoor Supply', initial: 'B', series: 1 },
+  { name: 'Northwind Cafe', initial: 'N', series: 2 },
+  { name: 'Cedar Lane Books', initial: 'C', series: 3 },
 ] as const;
 
 export function LetterTileDemo() {
@@ -254,8 +254,8 @@ export function LetterTileDemo() {
         </li>
       ))}
       <li className='text-muted-foreground flex items-center gap-2'>
-        <LetterTile initial='D' />
-        docs.halden.example, neutral beside agents
+        <LetterTile initial='H' />
+        help.brightmoor.example, neutral beside agents
       </li>
     </ul>
   );
