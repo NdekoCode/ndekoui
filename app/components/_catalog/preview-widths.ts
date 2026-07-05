@@ -35,12 +35,15 @@ const CATEGORY_WIDTHS: Record<string, PreviewWidth> = {
   teams: 'wide',
   'text-effect': 'wide',
   timeline: 'wide',
+  voice: 'wide',
 };
 
 const ENTRY_WIDTHS: Record<string, PreviewWidth> = {
   'agent-02': 'full',
   'agent-03': 'full',
   'agent-06': 'full',
+  'prompt-07': 'full',
+  'prompt-08': 'full',
   'run-02': 'full',
   'run-04': 'full',
   'activity-03': 'compact',
