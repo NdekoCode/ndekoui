@@ -7,6 +7,16 @@ import {
   type ContextBudget,
 } from '@/registry/ndeko/components/run/_parts/context';
 import { AgentRoster } from '@/registry/ndeko/components/agent/agent-10';
+import {
+  StatusTray,
+  TrayKey,
+  type TrayKeyMode,
+} from '@/registry/ndeko/components/prompt/prompt-01';
+import {
+  EffortControl,
+  type Effort,
+  type EffortModel,
+} from '@/registry/ndeko/components/prompt/prompt-04';
 import { ToolCallGroup } from '@/registry/ndeko/components/run/run-01';
 import { ContextWindowBar } from '@/registry/ndeko/components/run/run-05';
 import {
@@ -18,12 +28,19 @@ import {
   PermissionRequestCard,
   type PermissionEntry,
 } from '@/registry/ndeko/components/review/review-02';
-import type {
-  AgentStatus,
-  CallStatus,
-  RunAgent,
-  ToolCall,
+import {
+  VoiceOrb,
+  type VoiceState,
+} from '@/registry/ndeko/components/voice/voice-01';
+import {
+  emptyRun,
+  type AgentStatus,
+  type CallStatus,
+  type RunAgent,
+  type RunSnapshot,
+  type ToolCall,
 } from '@/registry/ndeko/lib/agent-run';
+import { cn } from '@/registry/ndeko/lib/utils';
 import { MorphButton, type MorphState } from '@/registry/ndeko/ui/morph-button';
 import type { Segment } from '@/registry/ndeko/ui/segments';
 
@@ -263,6 +280,153 @@ function crewIn(state: AgentStatus): RunAgent[] {
   ];
 }
 
+const VOICE_STATES: Segment<VoiceState>[] = [
+  { value: 'idle', label: 'Idle' },
+  { value: 'listening', label: 'Listening' },
+  { value: 'thinking', label: 'Thinking' },
+  { value: 'speaking', label: 'Speaking' },
+];
+
+type TrayState = 'idle' | 'listening' | 'working' | 'answered' | 'failed';
+
+const TRAY_STATES: Segment<TrayState>[] = [
+  { value: 'idle', label: 'Idle' },
+  { value: 'listening', label: 'Listening' },
+  { value: 'working', label: 'Working' },
+  { value: 'answered', label: 'Done' },
+  { value: 'failed', label: 'Failed' },
+];
+
+const TRAY_KEY: Record<TrayState, TrayKeyMode> = {
+  idle: 'mic',
+  listening: 'stop-listening',
+  working: 'stop',
+  answered: 'mic',
+  failed: 'mic',
+};
+
+const DICTATED_PROMPT = 'Which invoices are above the list price';
+
+const TRAY_PLACEHOLDER = 'Ask Lumen about this project';
+
+const ANSWERED_AFTER_MS = 4_600;
+
+const TRAY_RUN = emptyRun({ id: 'state-tray', title: 'Q3 overcharges' });
+
+function trayRunIn(state: TrayState, enteredAt: number): RunSnapshot {
+  if (state === 'working') {
+    return {
+      ...TRAY_RUN,
+      status: 'running',
+      startedAt: enteredAt,
+      plan: [{ id: 'files', title: 'Reading 2 files', status: 'running' }],
+    };
+  }
+  if (state === 'answered') {
+    return {
+      ...TRAY_RUN,
+      status: 'done',
+      startedAt: enteredAt - ANSWERED_AFTER_MS,
+      endedAt: enteredAt,
+    };
+  }
+  if (state === 'failed') {
+    return {
+      ...TRAY_RUN,
+      status: 'failed',
+      plan: [
+        {
+          id: 'docs',
+          title: 'Searching the docs',
+          status: 'failed',
+          detail: 'The docs search timed out',
+        },
+      ],
+    };
+  }
+  return TRAY_RUN;
+}
+
+function listeningSinceIn(state: TrayState, enteredAt: number) {
+  if (state === 'listening') {
+    return enteredAt;
+  }
+  return null;
+}
+
+function fieldTextIn(state: TrayState) {
+  if (state === 'listening') {
+    return DICTATED_PROMPT;
+  }
+  return TRAY_PLACEHOLDER;
+}
+
+function fieldToneIn(state: TrayState) {
+  if (state === 'listening') {
+    return 'text-foreground';
+  }
+  return 'text-muted-foreground';
+}
+
+function ignorePress() {}
+
+function TrayPicture({
+  state,
+  enteredAt,
+}: {
+  state: TrayState;
+  enteredAt: number;
+}) {
+  return (
+    <StatusTray
+      run={trayRunIn(state, enteredAt)}
+      listeningSince={listeningSinceIn(state, enteredAt)}
+    >
+      <div className='bg-card hairline-ring ring-foreground/12 dark:ring-foreground/15 flex flex-col gap-1 rounded-[calc(var(--radius-2xl)-0.25rem)] p-1.5 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
+        <p className={cn('px-2 py-1.5 text-sm', fieldToneIn(state))}>
+          {fieldTextIn(state)}
+        </p>
+        <div className='flex justify-end px-0.5 pb-0.5'>
+          <TrayKey mode={TRAY_KEY[state]} onPress={ignorePress} />
+        </div>
+      </div>
+    </StatusTray>
+  );
+}
+
+const EFFORT_STATES: Segment<Effort>[] = [
+  { value: 'low', label: 'Low' },
+  { value: 'medium', label: 'Medium' },
+  { value: 'high', label: 'High' },
+  { value: 'max', label: 'Max' },
+];
+
+const EFFORT_MODELS: EffortModel[] = [
+  {
+    id: 'lumen-swift',
+    name: 'Lumen Swift',
+    lab: 'lumen',
+    seconds: [1.2, 6.4],
+    cost: [0.001, 0.006],
+  },
+  {
+    id: 'lumen',
+    name: 'Lumen',
+    lab: 'lumen',
+    seconds: [2.4, 18],
+    cost: [0.004, 0.038],
+  },
+  {
+    id: 'quarry-large',
+    name: 'Quarry Large',
+    lab: 'quarry',
+    seconds: [4.1, 37],
+    cost: [0.011, 0.12],
+  },
+];
+
+function ignoreChange() {}
+
 export function StateShowcase() {
   return (
     <div className='grid gap-4 md:grid-cols-2 xl:grid-cols-3'>
@@ -284,6 +448,28 @@ export function StateShowcase() {
       >
         {(state, enteredAt) => (
           <ApprovalPrompt entries={[approvalEntryIn(state, enteredAt)]} />
+        )}
+      </StateTile>
+      <StateTile
+        title='Voice orb'
+        name='voice-01'
+        href='/components/voice#voice-01'
+        states={VOICE_STATES}
+      >
+        {(state) => (
+          <div className='flex justify-center'>
+            <VoiceOrb state={state} size={168} />
+          </div>
+        )}
+      </StateTile>
+      <StateTile
+        title='Prompt status'
+        name='prompt-01'
+        href='/components/prompt#prompt-01'
+        states={TRAY_STATES}
+      >
+        {(state, enteredAt) => (
+          <TrayPicture state={state} enteredAt={enteredAt} />
         )}
       </StateTile>
       <StateTile
@@ -321,10 +507,28 @@ export function StateShowcase() {
         {(state) => <AgentRoster title='Review crew' agents={crewIn(state)} />}
       </StateTile>
       <StateTile
+        title='Model and effort'
+        name='prompt-04'
+        href='/components/prompt#prompt-04'
+        states={EFFORT_STATES}
+      >
+        {(state) => (
+          <EffortControl
+            models={EFFORT_MODELS}
+            modelId='lumen'
+            onModelChange={ignoreChange}
+            effort={state}
+            onEffortChange={ignoreChange}
+            className='bg-card hairline-ring ring-border rounded-xl p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
+          />
+        )}
+      </StateTile>
+      <StateTile
         title='Morph button'
         name='morph-button'
         href='/kit'
         states={SAVE_STATES}
+        className='md:col-span-2 xl:col-span-1'
       >
         {(state) => (
           <div className='flex justify-center'>

@@ -95,8 +95,8 @@ export function StateTile<Value extends string>({
           {name}
         </span>
       </header>
-      <div className='flex min-h-72 items-center justify-center px-1 py-2'>
-        <div className='w-full max-w-sm'>
+      <div className='flex min-h-72 flex-1 items-center justify-center px-1 py-2'>
+        <div inert className='w-full max-w-sm'>
           {children(state.value, enteredAt)}
         </div>
       </div>
@@ -107,6 +107,7 @@ export function StateTile<Value extends string>({
           onValueChange={pick}
           label={`States of ${title}`}
           className='min-w-0 flex-1'
+          itemClassName='flex-auto px-1 sm:flex-1 sm:px-2.5'
         />
         {canAutoplay && (
           <Button
