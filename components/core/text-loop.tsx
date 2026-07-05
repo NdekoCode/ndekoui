@@ -1,5 +1,6 @@
 'use client';
 import { cn } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   motion,
   AnimatePresence,
@@ -7,9 +8,8 @@ import {
   Variants,
   AnimatePresenceProps,
   MotionConfig,
-  useReducedMotion,
 } from 'motion/react';
-import { useState, useEffect, Children } from 'react';
+import { useState, useEffect, useRef, Children } from 'react';
 
 export type TextLoopProps = {
   children: React.ReactNode[];
@@ -23,7 +23,7 @@ export type TextLoopProps = {
 };
 
 function ReducedMotionConfig({ children }: { children: React.ReactNode }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   if (!prefersReducedMotion) {
     return children;
   }
@@ -41,18 +41,19 @@ export function TextLoop({
   mode = 'popLayout',
 }: TextLoopProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const latestIndex = useRef(0);
   const items = Children.toArray(children);
 
   useEffect(() => {
     if (!trigger) return;
 
     const intervalMs = interval * 1000;
+    // The parent is told from the timer, never from inside a state update: a parent that sets its own state there would be updated while this component renders.
     const timer = setInterval(() => {
-      setCurrentIndex((current) => {
-        const next = (current + 1) % items.length;
-        onIndexChange?.(next);
-        return next;
-      });
+      const next = (latestIndex.current + 1) % items.length;
+      latestIndex.current = next;
+      setCurrentIndex(next);
+      onIndexChange?.(next);
     }, intervalMs);
     return () => clearInterval(timer);
   }, [items.length, interval, onIndexChange, trigger]);
@@ -65,10 +66,13 @@ export function TextLoop({
 
   return (
     <ReducedMotionConfig>
-      <div className={cn('relative inline-block whitespace-nowrap', className)}>
+      <span
+        className={cn('relative inline-block whitespace-nowrap', className)}
+      >
         <AnimatePresence mode={mode} initial={false}>
-          <motion.div
+          <motion.span
             key={currentIndex}
+            className='inline-block'
             initial='initial'
             animate='animate'
             exit='exit'
@@ -76,9 +80,9 @@ export function TextLoop({
             variants={variants || motionVariants}
           >
             {items[currentIndex]}
-          </motion.div>
+          </motion.span>
         </AnimatePresence>
-      </div>
+      </span>
     </ReducedMotionConfig>
   );
 }
