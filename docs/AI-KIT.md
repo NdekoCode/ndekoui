@@ -44,19 +44,21 @@ Block groups added: `agent-chat`, `agent-ops`, `agent-review`, `workflows`, `ai-
 
 ## Progress
 
-| Batch | Content                                                                                                                 | Status  |
-| ----- | ----------------------------------------------------------------------------------------------------------------------- | ------- |
-| F     | series tokens, `agent-run`, `use-agent-run`                                                                             | done    |
-| B1    | `run-01..10`, `review-01..03`                                                                                           | written |
-| B2    | `agent-01..10`                                                                                                          | written |
-| B3    | `prompt-01..10`, `voice-01..03`                                                                                         | written |
-| B4    | `answer-01..06`, `review-04..11`                                                                                        | todo    |
-| B5    | `chart-01..16`                                                                                                          | todo    |
-| B6    | blocks `agent-chat-01..04`, `agent-review-01..05`                                                                       | todo    |
-| B7    | blocks `agent-ops-01..09`, `workflows-01..02`, `ai-data-01..03`, `onboarding-01..03`, `maps-01..02`                     | todo    |
-| B8    | `illustration-01..12`, `effect-01..04`, `text-effect-01..04`                                                            | todo    |
-| B9    | `background-01..12`, `loading-01..03`, additions to existing categories                                                 | todo    |
-| B10   | blocks settings, auth, legal, error pages, page headers, blog, help center, search, docs                                | todo    |
-| B11   | blocks testimonials, stats, team sections, pricing, heroes, faqs, features, ctas, integrations, changelog, empty states | todo    |
-| B12   | templates `application-06..09`, `marketing-06..07`                                                                      | todo    |
-| S     | site: AI family in the catalogue, thumbnails, home sections for AI and for states                                       | todo    |
+| Batch | Content                                                                                                                             | Status      |
+| ----- | ----------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| F     | series tokens, `agent-run`, `use-agent-run`                                                                                         | done        |
+| B1    | `run-01..10`, `review-01..03`                                                                                                       | written     |
+| B2    | `agent-01..10`                                                                                                                      | written     |
+| B3    | `prompt-01..10`, `voice-01..03`                                                                                                     | written     |
+| B4    | `answer-01..06`, `review-04..11`                                                                                                    | written     |
+| B5    | `chart-01..16`                                                                                                                      | todo        |
+| B6    | blocks `agent-chat-01..04`, `agent-review-01..05`                                                                                   | todo        |
+| B7    | blocks `agent-ops-01..09`, `workflows-01..02`, `ai-data-01..03`, `onboarding-01..03`, `maps-01..02`                                 | todo        |
+| B8    | `illustration-01..12`, `effect-01..04`, `text-effect-01..04`                                                                        | todo        |
+| B9    | `background-01..12`, `loading-01..03`, additions to existing categories                                                             | todo        |
+| B10   | blocks settings, auth, legal, error pages, page headers, blog, help center, search, docs                                            | todo        |
+| B11   | blocks testimonials, stats, team sections, pricing, heroes, faqs, features, ctas, integrations, changelog, empty states             | todo        |
+| B12   | templates `application-06..09`, `marketing-06..07`                                                                                  | todo        |
+| B13   | `prompt-11..13`, `review-12..17`, `run-11..14`, `agent-11..13`, `answer-07..08`, `voice-04..05`, `loading-01..04`                   | todo        |
+| U     | every written piece brought to the bar of `AI-KIT-GUIDE.md`: it plays itself, it has one signature moment, it costs nothing at rest | in progress |
+| S     | site: AI family in the catalogue, thumbnails, home sections for AI and for states                                                   | todo        |
