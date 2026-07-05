@@ -96,7 +96,7 @@ The brand marks in `registry/ndeko/lib/brand-logos.tsx`, the v0, Cursor and Clau
 
 ## LobeHub Icons
 
-The OpenAI (ChatGPT), Codex and Kiro marks in `app/_site/brand-marks.tsx`, and the OpenAI, xAI, Grok, Cohere, Groq, Qwen and GitHub Copilot marks in `registry/ndeko/lib/brand-logos.tsx`, are SVG paths from `@lobehub/icons-static-svg` 1.102.0 (<https://github.com/lobehub/lobe-icons>), declared MIT by its author, LobeHub. The Kiro ghost is cut out of the Kiro app icon of that set. Every mark is a trademark of its owner, shown only to name the tool, and no brand endorses ndekoui.
+The OpenAI (ChatGPT), Codex and Kiro marks in `app/_site/brand-marks.tsx`, and the OpenAI, xAI, Grok, Cohere, Groq, Qwen, GitHub Copilot and Codex marks in `registry/ndeko/lib/brand-logos.tsx`, are SVG paths from `@lobehub/icons-static-svg` 1.102.0 (<https://github.com/lobehub/lobe-icons>), declared MIT by its author, LobeHub. The Kiro ghost is cut out of the Kiro app icon of that set. Every mark is a trademark of its owner, shown only to name the tool, and no brand endorses ndekoui.
 
 ```text
 MIT License
