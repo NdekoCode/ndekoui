@@ -1,5 +1,6 @@
-import { FIELDS, FLAGGED_IDS, type FieldId, type PageNumber } from './data';
 import type { SessionStep } from '@/registry/ndeko/hooks/use-session';
+
+import { FIELDS, FLAGGED_IDS, type FieldId, type PageNumber } from './data';
 
 export type ExtractTab = 'fields' | 'json' | 'schema';
 

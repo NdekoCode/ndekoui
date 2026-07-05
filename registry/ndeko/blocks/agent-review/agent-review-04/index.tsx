@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
+import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { seriesColorOf } from '@/registry/ndeko/lib/agent-run';
 import { PauseIcon, PlayIcon, StopIcon } from '@/registry/ndeko/lib/icons';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
@@ -34,7 +35,6 @@ import {
   type ComputerState,
   type Frame,
 } from './session';
-import { useSession } from '@/registry/ndeko/hooks/use-session';
 
 const SESSION = {
   reducer,

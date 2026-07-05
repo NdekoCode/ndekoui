@@ -3,6 +3,7 @@
 import { useLayoutEffect, useRef } from 'react';
 
 import { WordRoll } from '@/components/core/word-roll';
+import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -40,7 +41,6 @@ import {
   type DocState,
   type DocView,
 } from './session';
-import { useSession } from '@/registry/ndeko/hooks/use-session';
 
 const SESSION = {
   reducer,

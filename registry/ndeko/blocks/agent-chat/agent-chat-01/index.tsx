@@ -7,6 +7,7 @@ import {
   pendingApprovalsOf,
   type RunSnapshot,
 } from '@/registry/ndeko/lib/agent-run';
+import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { FeatherIcon, ListChecksIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -46,7 +47,6 @@ import {
   type Decision,
   type Phase,
 } from './session';
-import { useSession } from '@/registry/ndeko/hooks/use-session';
 
 const ANSWER_WORDS = ANSWER.split(' ');
 

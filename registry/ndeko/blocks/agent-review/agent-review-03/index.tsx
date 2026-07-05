@@ -2,6 +2,8 @@
 
 import { useLayoutEffect, useRef, useState } from 'react';
 
+import { useSession } from '@/registry/ndeko/hooks/use-session';
+import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import { FileTextIcon } from '@/registry/ndeko/lib/icons';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
 import { ClockGate } from '@/registry/ndeko/ui/live-duration';
@@ -33,8 +35,6 @@ import {
   type ExtractState,
   type ExtractTab,
 } from './session';
-import { useSession } from '@/registry/ndeko/hooks/use-session';
-import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 
 const SESSION = {
   reducer,

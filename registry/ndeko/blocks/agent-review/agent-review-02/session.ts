@@ -1,10 +1,11 @@
+import type { SessionStep } from '@/registry/ndeko/hooks/use-session';
+
 import {
   DEMO_COMMENT,
   OLD_COMMENT,
   OLD_THREAD_LINE,
   TARGET_LINE,
 } from './data';
-import type { SessionStep } from '@/registry/ndeko/hooks/use-session';
 
 export type ReplyStatus = 'typing' | 'suggestion' | 'note';
 

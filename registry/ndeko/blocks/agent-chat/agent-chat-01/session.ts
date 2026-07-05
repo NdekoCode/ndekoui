@@ -1,3 +1,4 @@
+import type { SessionStep } from '@/registry/ndeko/hooks/use-session';
 import {
   emptyRun,
   reduceRun,
@@ -6,7 +7,6 @@ import {
 } from '@/registry/ndeko/lib/agent-run';
 
 import { PLAN, PROMPT, SEND_APPROVAL } from './data';
-import type { SessionStep } from '@/registry/ndeko/hooks/use-session';
 
 export type Phase =
   | 'idle'

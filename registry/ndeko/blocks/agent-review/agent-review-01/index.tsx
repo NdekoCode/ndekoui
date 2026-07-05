@@ -1,6 +1,7 @@
 'use client';
 
 import { WordRoll } from '@/components/core/word-roll';
+import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { GitBranchIcon, GitMergeIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
@@ -24,7 +25,6 @@ import {
   type PlanStatus,
 } from './session';
 import { CoderTile, Timeline } from './timeline';
-import { useSession } from '@/registry/ndeko/hooks/use-session';
 
 const SESSION = {
   reducer,

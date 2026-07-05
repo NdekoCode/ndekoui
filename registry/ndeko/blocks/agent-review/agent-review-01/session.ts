@@ -1,7 +1,7 @@
+import type { SessionStep } from '@/registry/ndeko/hooks/use-session';
 import type { CallStatus } from '@/registry/ndeko/lib/agent-run';
 
 import type { CheckId } from './data';
-import type { SessionStep } from '@/registry/ndeko/hooks/use-session';
 
 export type IssueStatus = 'planned' | 'progress' | 'review' | 'merged';
 

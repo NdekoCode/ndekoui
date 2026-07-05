@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import { FileIcon, PlusIcon } from '@/registry/ndeko/lib/icons';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
@@ -34,7 +35,6 @@ import {
   type ReviewState,
 } from './session';
 import { ReviewThread } from './thread';
-import { useSession } from '@/registry/ndeko/hooks/use-session';
 
 const SESSION = {
   reducer,

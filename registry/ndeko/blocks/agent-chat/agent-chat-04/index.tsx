@@ -1,5 +1,6 @@
 'use client';
 
+import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
@@ -17,7 +18,6 @@ import {
   SHARE_MS,
   type CallStatus,
 } from './session';
-import { useSession } from '@/registry/ndeko/hooks/use-session';
 
 const SESSION = {
   reducer,

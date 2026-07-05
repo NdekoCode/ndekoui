@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
+import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import {
   ArrowUpIcon,
@@ -41,7 +42,6 @@ import {
   type CheckStatus,
   type LiveStatus,
 } from './session';
-import { useSession } from '@/registry/ndeko/hooks/use-session';
 
 const SESSION = {
   reducer,

@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react';
 
+import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import { ArrowUpIcon, CodeIcon, FeatherIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -25,7 +26,6 @@ import {
   type Version,
 } from './session';
 import { BottomSheet, DEFAULT_SPLIT, ResizeHandle } from './split';
-import { useSession } from '@/registry/ndeko/hooks/use-session';
 
 const SESSION = {
   reducer,

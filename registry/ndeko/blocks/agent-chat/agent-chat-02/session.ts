@@ -1,5 +1,6 @@
-import { FIRST_PROMPT, SECOND_PROMPT } from './data';
 import type { SessionStep } from '@/registry/ndeko/hooks/use-session';
+
+import { FIRST_PROMPT, SECOND_PROMPT } from './data';
 
 /** 0 nothing asked, 1 writing the first version, 2 first version ready, 3 revising, 4 second version ready. */
 export type Stage = 0 | 1 | 2 | 3 | 4;

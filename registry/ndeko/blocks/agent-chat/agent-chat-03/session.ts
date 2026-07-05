@@ -1,5 +1,6 @@
-import { FIELD_TEXT, PROMPT, type FieldId } from './data';
 import type { SessionStep } from '@/registry/ndeko/hooks/use-session';
+
+import { FIELD_TEXT, PROMPT, type FieldId } from './data';
 
 export type CheckStatus = 'upcoming' | 'running' | 'done';
 

@@ -1,3 +1,5 @@
+import type { SessionStep } from '@/registry/ndeko/hooks/use-session';
+
 import {
   AGENT_MOVES,
   PAY_MOVE,
@@ -5,7 +7,6 @@ import {
   type Period,
   type PointerTarget,
 } from './data';
-import type { SessionStep } from '@/registry/ndeko/hooks/use-session';
 
 export type Actor = 'agent' | 'person';
 

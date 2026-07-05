@@ -1,10 +1,11 @@
+import type { SessionStep } from '@/registry/ndeko/hooks/use-session';
+
 import {
   CHANGE_ORDER,
   type AgentId,
   type ChangeId,
   type ParagraphId,
 } from './data';
-import type { SessionStep } from '@/registry/ndeko/hooks/use-session';
 
 export type DocView = 'doc' | 'table';
 
