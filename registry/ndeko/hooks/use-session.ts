@@ -259,13 +259,22 @@ export function useSession<State, Action>({
   const restart = useCallback(() => {
     pending.current = null;
     setPressed(null);
+    // Under reduced motion nothing would play from the first state, so a replay keeps the resting one.
+    if (shouldReduceMotion) {
+      setEngine((current) => ({
+        state: resting,
+        cursor: restingCursor,
+        round: current.round + 1,
+      }));
+      return;
+    }
     setEngine((current) => ({
       state: initial,
       cursor: 0,
       round: current.round + 1,
     }));
     restartAutoplay();
-  }, [initial, restartAutoplay]);
+  }, [initial, resting, restingCursor, shouldReduceMotion, restartAutoplay]);
 
   return {
     ref: autoplay.ref,
