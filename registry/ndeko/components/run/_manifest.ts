@@ -71,4 +71,11 @@ export const manifest: ComponentManifest = [
     description:
       "One agent's health: a gauge and five signals whose marks change in a wave between periods, a summary written a few words at a time and one action to apply.",
   },
+  {
+    name: 'run-11',
+    source: 'ndeko',
+    title: 'Error and retry',
+    description:
+      'A failed step in plain words, with a ring that empties toward the next automatic retry, Retry now and Stop retrying, the raw error behind a fold with Copy, and a card that folds into one line once a try goes through.',
+  },
 ];
