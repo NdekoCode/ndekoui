@@ -4,9 +4,11 @@ import type { ComponentType } from 'react';
 import Auth01 from '@/registry/ndeko/blocks/auth/auth-01/index';
 import Auth02 from '@/registry/ndeko/blocks/auth/auth-02/index';
 import Auth03 from '@/registry/ndeko/blocks/auth/auth-03/index';
+import Auth04 from '@/registry/ndeko/blocks/auth/auth-04/index';
 
 export const previews: Record<string, ComponentType> = {
   'auth-01': Auth01,
   'auth-02': Auth02,
   'auth-03': Auth03,
+  'auth-04': Auth04,
 };

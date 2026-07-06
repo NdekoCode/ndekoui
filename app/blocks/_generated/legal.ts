@@ -2,7 +2,9 @@
 import type { ComponentType } from 'react';
 
 import Legal01 from '@/registry/ndeko/blocks/legal/legal-01/index';
+import Legal02 from '@/registry/ndeko/blocks/legal/legal-02/index';
 
 export const previews: Record<string, ComponentType> = {
   'legal-01': Legal01,
+  'legal-02': Legal02,
 };

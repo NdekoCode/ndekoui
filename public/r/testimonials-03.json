@@ -1,0 +1,47 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "testimonials-03",
+  "title": "One large quote",
+  "description": "One sample quote set large on the featured card, with the person, their role and their company: the phrase it praises is a button whose chevron turns as the feature it speaks of unfolds under the quote.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/avatar.json",
+    "https://ui.ndekocode.dev/r/badge.json",
+    "https://ui.ndekocode.dev/r/chat-motion.json",
+    "https://ui.ndekocode.dev/r/company-mark.json",
+    "https://ui.ndekocode.dev/r/demonstration.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/live-region.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/use-autoplay.json",
+    "https://ui.ndekocode.dev/r/use-kept-height.json",
+    "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+    "https://ui.ndekocode.dev/r/utils.json",
+    "https://ui.ndekocode.dev/r/wash.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/blocks/testimonials/testimonials-03/index.tsx",
+      "content": "'use client';\n\nimport { useId, useState } from 'react';\n\nimport { useAutoplay } from '@/registry/ndeko/hooks/use-autoplay';\nimport { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';\nimport { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';\nimport {\n  PRESS_LEAD_MS,\n  pressedQuietOf,\n  usePress,\n} from '@/registry/ndeko/lib/demonstration';\nimport { ChevronDownIcon, QuoteIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Avatar } from '@/registry/ndeko/ui/avatar';\nimport { Badge } from '@/registry/ndeko/ui/badge';\nimport { CompanyMark } from '@/registry/ndeko/ui/company-mark';\nimport { LiveRegion } from '@/registry/ndeko/ui/live-region';\nimport { Wash } from '@/registry/ndeko/ui/wash';\n\nimport { FEATURE, QUOTE, SECTION } from './data';\nimport { FeatureNote } from './feature-note';\n\n/** `rest` is closed while the demonstration plays and open under reduced motion, where nothing plays. */\ntype NoteState = 'rest' | 'open' | 'closed';\n\nconst OPEN_AFTER_MS = 2400;\n\nconst READ_MS = 4600;\n\nconst LOOP_AFTER_MS = 2800;\n\nfunction isNoteOpen(state: NoteState, shouldReduceMotion: boolean) {\n  if (state === 'rest') {\n    return shouldReduceMotion;\n  }\n  return state === 'open';\n}\n\nfunction toggledOf(isOpen: boolean): NoteState {\n  if (isOpen) {\n    return 'closed';\n  }\n  return 'open';\n}\n\nfunction spokenOf(state: NoteState) {\n  if (state === 'open') {\n    return `${FEATURE.name} opened under the quote`;\n  }\n  return `${FEATURE.name} closed`;\n}\n\nfunction phraseToneOf(isOpen: boolean) {\n  if (isOpen) {\n    return 'bg-primary/10';\n  }\n  return 'hover:bg-primary/[0.06]';\n}\n\nfunction chevronTurnOf(isOpen: boolean) {\n  if (isOpen) {\n    return 'rotate-180';\n  }\n  return 'rotate-0';\n}\n\nexport default function Testimonials03() {\n  const [noteState, setNoteState] = useState<NoteState>('rest');\n  const [message, setMessage] = useState('');\n  const { pressed, press } = usePress<'phrase'>();\n  const noteId = useId();\n  const shouldReduceMotion = usePrefersReducedMotion();\n  const isOpen = isNoteOpen(noteState, shouldReduceMotion);\n  const { person } = QUOTE;\n\n  const steps = [\n    { after: OPEN_AFTER_MS, run: () => press('phrase') },\n    { after: PRESS_LEAD_MS, run: () => setNoteState('open') },\n    { after: READ_MS, run: () => press('phrase') },\n    { after: PRESS_LEAD_MS, run: () => setNoteState('closed') },\n  ];\n  const { ref } = useAutoplay<HTMLElement>(steps, {\n    loopAfter: LOOP_AFTER_MS,\n    onReset: () => setNoteState('rest'),\n  });\n  useKeptHeight(ref);\n\n  function toggleNote() {\n    const next = toggledOf(isOpen);\n    setNoteState(next);\n    setMessage(spokenOf(next));\n  }\n\n  return (\n    <section ref={ref} className='@container min-h-[42rem]'>\n      <div className='mx-auto max-w-5xl px-4 py-16 @2xl:px-6 @2xl:py-24 @5xl:px-8'>\n        <figure className='bg-card hairline-ring ring-border dark:bg-foreground/[0.04] relative isolate flex flex-col rounded-2xl p-6 shadow-[0_1px_2px_rgb(0_0_0/0.04)] @2xl:p-10 @4xl:p-14'>\n          <Wash />\n          <div className='mb-8 flex flex-wrap items-center justify-between gap-3'>\n            <p className='text-primary-ink flex items-center gap-1.5 text-[13px] font-medium'>\n              <QuoteIcon className='size-4' />\n              {SECTION.label}\n            </p>\n            <Badge variant='secondary'>Sample quote</Badge>\n          </div>\n          <blockquote className='text-2xl leading-snug font-medium text-pretty @3xl:text-[2.5rem] @3xl:leading-[1.2]'>\n            <p>\n              {QUOTE.before}\n              <button\n                type='button'\n                aria-expanded={isOpen}\n                aria-controls={noteId}\n                onClick={toggleNote}\n                className={cn(\n                  'text-primary-ink decoration-primary/35 focus-visible:ring-ring/25 -mx-1 cursor-pointer rounded-md px-1 text-start underline decoration-2 underline-offset-[0.18em] transition-[background-color,color,scale] duration-150 ease-(--ease-out-strong) outline-none focus-visible:ring-[3px]',\n                  phraseToneOf(isOpen),\n                  pressedQuietOf(pressed === 'phrase')\n                )}\n              >\n                {QUOTE.phrase}\n                <ChevronDownIcon\n                  className={cn(\n                    'ms-1 inline size-[0.6em] align-[-0.02em] transition-[rotate] duration-200 ease-(--ease-out-strong)',\n                    chevronTurnOf(isOpen)\n                  )}\n                />\n              </button>\n              {QUOTE.after}\n            </p>\n          </blockquote>\n          <FeatureNote id={noteId} isOpen={isOpen} />\n          <figcaption className='mt-10 flex flex-wrap items-center gap-x-4 gap-y-3'>\n            <Avatar seed={person.name} className='size-12' />\n            <span className='flex min-w-0 flex-col'>\n              <span className='text-base font-medium'>{person.name}</span>\n              <span className='text-muted-foreground text-sm'>\n                {person.role}\n              </span>\n            </span>\n            <span className='text-muted-foreground flex items-center gap-2 text-sm @xl:ms-auto'>\n              <CompanyMark seed={person.company} size='lg' />\n              {person.company}\n            </span>\n          </figcaption>\n        </figure>\n      </div>\n      <LiveRegion message={message} />\n    </section>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/testimonials-03/index.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/testimonials/testimonials-03/feature-note.tsx",
+      "content": "import { ArrowRightIcon, CalendarCheckIcon } from '@/registry/ndeko/lib/icons';\nimport { Fold } from '@/registry/ndeko/ui/chat-motion';\n\nimport { FEATURE } from './data';\n\ntype FeatureNoteProps = {\n  id: string;\n  isOpen: boolean;\n};\n\nexport function FeatureNote({ id, isOpen }: FeatureNoteProps) {\n  return (\n    <Fold open={isOpen} id={id}>\n      <div className='pt-6'>\n        <div className='bg-foreground/[0.04] flex items-start gap-3 rounded-xl p-4'>\n          <span className='keycap-3d text-primary-ink flex size-9 shrink-0 items-center justify-center rounded-lg'>\n            <CalendarCheckIcon />\n          </span>\n          <div className='flex min-w-0 flex-col items-start gap-1'>\n            <p className='text-sm font-medium'>{FEATURE.name}</p>\n            <p className='text-muted-foreground text-[13px] leading-5 text-pretty'>\n              {FEATURE.text}\n            </p>\n            <a\n              href={FEATURE.href}\n              className='text-primary-ink focus-visible:ring-ring/25 -mx-1 mt-1 inline-flex items-center gap-1 rounded-sm px-1 text-[13px] font-medium underline-offset-4 outline-none hover:underline focus-visible:ring-[3px]'\n            >\n              {FEATURE.linkLabel}\n              <ArrowRightIcon className='size-3.5' />\n            </a>\n          </div>\n        </div>\n      </div>\n    </Fold>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/testimonials-03/feature-note.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/testimonials/testimonials-03/data.ts",
+      "content": "export const SECTION = {\n  label: 'Customer story',\n};\n\n/** An invented person and company. The quote is a sample written for this block. */\nexport const QUOTE = {\n  before:\n    'Monday mornings used to go on rebuilding the same report by hand. Now ',\n  phrase: 'the numbers are waiting before standup',\n  after: ', and the hour goes into talking about them.',\n  person: {\n    name: 'Yusuf Demir',\n    role: 'Head of Finance',\n    company: 'Brightwater Ferries',\n  },\n};\n\nexport const FEATURE = {\n  name: 'Monday digest',\n  text: 'Ledgerline posts last week’s revenue, refunds and cash to your team channel at 8:00 every Monday, with one line on what moved and why.',\n  linkLabel: 'See how the digest works',\n  href: '#',\n};\n",
+      "type": "registry:component",
+      "target": "components/blocks/testimonials-03/data.ts"
+    }
+  ],
+  "categories": [
+    "blocks",
+    "testimonials"
+  ],
+  "type": "registry:block"
+}

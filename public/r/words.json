@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "words",
+  "title": "Words",
+  "description": "Counted nouns such as 1 file and 3 files, the words of a phrase, the space before a word, and a word added to a text typed so far.",
+  "files": [
+    {
+      "path": "registry/ndeko/lib/words.ts",
+      "content": "export function nounOf(count: number, singular: string, plural?: string) {\n  if (count === 1) {\n    return singular;\n  }\n  return plural ?? `${singular}s`;\n}\n\nexport function countOf(count: number, singular: string, plural?: string) {\n  const noun = nounOf(count, singular, plural);\n  return `${count} ${noun}`;\n}\n\nexport function wordsOf(phrase: string) {\n  const trimmed = phrase.trim();\n  if (trimmed === '') {\n    return [];\n  }\n  return trimmed.split(/\\s+/);\n}\n\nexport function leadingSpaceOf(index: number) {\n  if (index === 0) {\n    return '';\n  }\n  return ' ';\n}\n\nfunction needsSpaceBefore(text: string) {\n  if (text === '') {\n    return false;\n  }\n  const endsWithSpace = /\\s$/.test(text);\n  return !endsWithSpace;\n}\n\nexport function appendWord(text: string, word: string) {\n  if (needsSpaceBefore(text)) {\n    return `${text} ${word}`;\n  }\n  return `${text}${word}`;\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "categories": [
+    "foundations"
+  ],
+  "type": "registry:lib"
+}

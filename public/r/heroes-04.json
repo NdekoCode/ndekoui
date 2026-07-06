@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "heroes-04",
+  "title": "Statement hero",
+  "description": "An oversized statement above a row of the three facts it rests on: as the raised card travels from fact to fact, the part of the statement that fact backs takes the brand ink.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/demonstration.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/toggle-group.json",
+    "https://ui.ndekocode.dev/r/use-autoplay.json",
+    "https://ui.ndekocode.dev/r/utils.json",
+    "https://ui.ndekocode.dev/r/wash.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/blocks/heroes/heroes-04/index.tsx",
+      "content": "'use client';\n\nimport { Fragment, useState } from 'react';\n\nimport {\n  type AutoplayStep,\n  useAutoplay,\n} from '@/registry/ndeko/hooks/use-autoplay';\nimport { PRESS_LEAD_MS, usePress } from '@/registry/ndeko/lib/demonstration';\nimport { ArrowRightIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport { Wash } from '@/registry/ndeko/ui/wash';\n\nimport { type FactId, FIRST_FACT, HERO, PHRASES } from './data';\nimport { FactPicker } from './fact-picker';\n\n/** The display rule of the home page: tight tracking on the display title and on nothing else. */\nconst STATEMENT =\n  'text-[2.5rem] leading-[1.05] font-semibold tracking-[-0.03em] text-balance @2xl:text-6xl @5xl:text-7xl @5xl:leading-[1.02]';\n\n/** The demonstration walks the facts in this order and ends where the hero began. */\nconst DEMO_ORDER: FactId[] = ['hourly', 'restore', 'laptops'];\n\nconst PICK_EVERY_MS = 2600;\n\nfunction litOf(isLit: boolean) {\n  if (isLit) {\n    return '';\n  }\n  return undefined;\n}\n\nexport default function Heroes04() {\n  const [picked, setPicked] = useState<FactId>(FIRST_FACT);\n  const { pressed, press } = usePress<FactId>();\n\n  function startOver() {\n    setPicked(FIRST_FACT);\n  }\n\n  const steps: AutoplayStep[] = DEMO_ORDER.flatMap((fact) => [\n    { after: PICK_EVERY_MS, run: () => press(fact) },\n    { after: PRESS_LEAD_MS, run: () => setPicked(fact) },\n  ]);\n  const { ref } = useAutoplay(steps, { loopAfter: 0, onReset: startOver });\n\n  return (\n    <section className='@container'>\n      <div ref={ref} className='relative isolate'>\n        <Wash className='h-[30rem]' />\n        <div className='mx-auto flex max-w-6xl flex-col gap-12 px-4 py-16 @2xl:gap-14 @2xl:px-6 @2xl:py-24'>\n          <div className='flex flex-col items-start gap-6'>\n            <p className='text-primary-ink text-sm font-medium'>\n              {HERO.eyebrow}\n            </p>\n            <h1 className={cn(STATEMENT, 'max-w-5xl')}>\n              {PHRASES.map((phrase, index) => (\n                <Fragment key={phrase.fact}>\n                  {index > 0 && ' '}\n                  <span\n                    data-lit={litOf(phrase.fact === picked)}\n                    className='data-lit:text-primary-ink transition-colors duration-300'\n                  >\n                    {phrase.text}\n                  </span>\n                </Fragment>\n              ))}\n            </h1>\n            <p className='text-muted-foreground max-w-2xl text-base text-pretty @2xl:text-lg'>\n              {HERO.lead}\n            </p>\n            <div className='flex flex-wrap gap-2 pt-1'>\n              <Button size='lg' nativeButton={false} render={<a href='#' />}>\n                {HERO.primaryAction}\n                <ArrowRightIcon />\n              </Button>\n              <Button\n                size='lg'\n                variant='outline'\n                nativeButton={false}\n                render={<a href='#' />}\n              >\n                {HERO.secondaryAction}\n              </Button>\n            </div>\n          </div>\n          <FactPicker picked={picked} pressed={pressed} onPick={setPicked} />\n        </div>\n      </div>\n    </section>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/heroes-04/index.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/heroes/heroes-04/fact-picker.tsx",
+      "content": "'use client';\n\nimport { pressedQuietOf } from '@/registry/ndeko/lib/demonstration';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { ToggleGroup, ToggleGroupItem } from '@/registry/ndeko/ui/toggle-group';\n\nimport { type FactId, FACTS, HERO } from './data';\n\n/** The picked fact sits on a card that travels from one fact to the next. */\nconst PICKED_CARD =\n  'bg-card hairline-ring ring-border shadow-[0_1px_2px_rgb(0_0_0/0.04)] dark:bg-foreground/[0.06]';\n\nconst FACT_ITEM =\n  'bg-foreground/[0.03] h-auto flex-col items-start justify-start gap-1 rounded-xl px-4 py-3.5 text-start whitespace-normal';\n\nfunction isFactId(value: unknown): value is FactId {\n  return FACTS.some((fact) => fact.id === value);\n}\n\ntype FactPickerProps = {\n  picked: FactId;\n  /** The fact the demonstration is pressing, for the look of a press. */\n  pressed: FactId | null;\n  onPick: (fact: FactId) => void;\n};\n\n/** The facts row: three short facts, one picked at a time, each backing one part of the statement. */\nexport function FactPicker({ picked, pressed, onPick }: FactPickerProps) {\n  const pickedValues = [picked];\n\n  /** Pressing the picked fact again keeps it: a statement always has one fact behind it. */\n  function change(values: unknown[]) {\n    const [next] = values;\n    if (isFactId(next)) {\n      onPick(next);\n    }\n  }\n\n  return (\n    <ToggleGroup\n      aria-label={HERO.factsLabel}\n      value={pickedValues}\n      onValueChange={change}\n      travel\n      indicatorClassName={PICKED_CARD}\n      className='grid w-full items-stretch gap-2 @3xl:grid-cols-3'\n    >\n      {FACTS.map((fact) => (\n        <ToggleGroupItem\n          key={fact.id}\n          value={fact.id}\n          className={cn(FACT_ITEM, pressedQuietOf(pressed === fact.id))}\n        >\n          <span className='text-foreground text-sm font-medium'>\n            {fact.title}\n          </span>\n          <span className='text-muted-foreground text-[13px] font-normal text-pretty'>\n            {fact.detail}\n          </span>\n        </ToggleGroupItem>\n      ))}\n    </ToggleGroup>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/heroes-04/fact-picker.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/heroes/heroes-04/data.ts",
+      "content": "export type FactId = 'laptops' | 'hourly' | 'restore';\n\nexport type Phrase = {\n  /** The fact that backs this part of the statement. */\n  fact: FactId;\n  text: string;\n};\n\nexport type Fact = {\n  id: FactId;\n  title: string;\n  detail: string;\n};\n\nexport const HERO = {\n  eyebrow: 'Laptop backups for teams of five to five hundred',\n  lead: 'Keelbox copies what changed on each laptop to storage only your team can read, and puts any file back from the menu bar.',\n  primaryAction: 'Start a 30-day trial',\n  secondaryAction: 'See how a restore works',\n  factsLabel: 'What the statement rests on',\n};\n\nexport const PHRASES: Phrase[] = [\n  { fact: 'laptops', text: 'Every laptop,' },\n  { fact: 'hourly', text: 'every hour,' },\n  { fact: 'restore', text: 'back in one click.' },\n];\n\nexport const FACTS: Fact[] = [\n  {\n    id: 'laptops',\n    title: 'Mac, Windows and Linux',\n    detail:\n      'One small agent per laptop, installed from a link you send to the team',\n  },\n  {\n    id: 'hourly',\n    title: 'Every hour, in the background',\n    detail:\n      'Only the parts of files that changed travel, so most backups end in under a minute',\n  },\n  {\n    id: 'restore',\n    title: 'Restore from the menu bar',\n    detail:\n      'Pick a file, a folder or a whole laptop, and any day of the last year to bring it back from',\n  },\n];\n\nexport const FIRST_FACT: FactId = 'laptops';\n",
+      "type": "registry:component",
+      "target": "components/blocks/heroes-04/data.ts"
+    }
+  ],
+  "categories": [
+    "blocks",
+    "heroes"
+  ],
+  "type": "registry:block"
+}

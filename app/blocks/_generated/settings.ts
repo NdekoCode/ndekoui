@@ -4,9 +4,17 @@ import type { ComponentType } from 'react';
 import Settings01 from '@/registry/ndeko/blocks/settings/settings-01/index';
 import Settings02 from '@/registry/ndeko/blocks/settings/settings-02/index';
 import Settings03 from '@/registry/ndeko/blocks/settings/settings-03/index';
+import Settings04 from '@/registry/ndeko/blocks/settings/settings-04/index';
+import Settings05 from '@/registry/ndeko/blocks/settings/settings-05/index';
+import Settings06 from '@/registry/ndeko/blocks/settings/settings-06/index';
+import Settings07 from '@/registry/ndeko/blocks/settings/settings-07/index';
 
 export const previews: Record<string, ComponentType> = {
   'settings-01': Settings01,
   'settings-02': Settings02,
   'settings-03': Settings03,
+  'settings-04': Settings04,
+  'settings-05': Settings05,
+  'settings-06': Settings06,
+  'settings-07': Settings07,
 };

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-is-narrow",
+  "title": "Use is narrow",
+  "description": "The use-is-narrow hook used by ndekoui components.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ndeko/hooks/use-is-narrow.ts",
+      "content": "'use client';\n\nimport { useEffect, useState, type RefObject } from 'react';\n\nfunction pixelsOf(rem: number) {\n  const rootStyle = getComputedStyle(document.documentElement);\n  const rootFontSize = parseFloat(rootStyle.fontSize);\n  return rem * rootFontSize;\n}\n\n/**\n * The layout folds with container variants in CSS. This tells the code the same thing, for what CSS\n * cannot do: mount one copy of a panel and make the page behind an open sheet inert.\n */\nexport function useIsNarrow(\n  ref: RefObject<HTMLElement | null>,\n  breakpointRem: number\n) {\n  const [isNarrow, setIsNarrow] = useState(false);\n\n  useEffect(() => {\n    const element = ref.current;\n    if (!element) {\n      return;\n    }\n    const observer = new ResizeObserver(([entry]) => {\n      const breakpoint = pixelsOf(breakpointRem);\n      const isBelow = entry.contentRect.width < breakpoint;\n      setIsNarrow(isBelow);\n    });\n    observer.observe(element);\n    return () => observer.disconnect();\n  }, [ref, breakpointRem]);\n\n  return isNarrow;\n}\n",
+      "type": "registry:hook"
+    }
+  ],
+  "categories": [
+    "hooks"
+  ],
+  "type": "registry:hook"
+}

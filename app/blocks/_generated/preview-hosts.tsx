@@ -37,8 +37,11 @@ export const previewHosts: Record<string, ComponentType<PreviewHostProps>> = {
   onboarding: dynamic(() => import('./onboarding').then(previewHostOf)),
   pricing: dynamic(() => import('./pricing').then(previewHostOf)),
   settings: dynamic(() => import('./settings').then(previewHostOf)),
+  stats: dynamic(() => import('./stats').then(previewHostOf)),
   'task-detail': dynamic(() => import('./task-detail').then(previewHostOf)),
   'task-lists': dynamic(() => import('./task-lists').then(previewHostOf)),
   team: dynamic(() => import('./team').then(previewHostOf)),
+  'team-sections': dynamic(() => import('./team-sections').then(previewHostOf)),
+  testimonials: dynamic(() => import('./testimonials').then(previewHostOf)),
   workflows: dynamic(() => import('./workflows').then(previewHostOf)),
 };

@@ -3,8 +3,16 @@ import type { ComponentType } from 'react';
 
 import Pricing01 from '@/registry/ndeko/blocks/pricing/pricing-01/index';
 import Pricing02 from '@/registry/ndeko/blocks/pricing/pricing-02/index';
+import Pricing03 from '@/registry/ndeko/blocks/pricing/pricing-03/index';
+import Pricing04 from '@/registry/ndeko/blocks/pricing/pricing-04/index';
+import Pricing05 from '@/registry/ndeko/blocks/pricing/pricing-05/index';
+import Pricing06 from '@/registry/ndeko/blocks/pricing/pricing-06/index';
 
 export const previews: Record<string, ComponentType> = {
   'pricing-01': Pricing01,
   'pricing-02': Pricing02,
+  'pricing-03': Pricing03,
+  'pricing-04': Pricing04,
+  'pricing-05': Pricing05,
+  'pricing-06': Pricing06,
 };

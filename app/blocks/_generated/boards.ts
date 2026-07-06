@@ -3,8 +3,10 @@ import type { ComponentType } from 'react';
 
 import Boards01 from '@/registry/ndeko/blocks/boards/boards-01/index';
 import Boards02 from '@/registry/ndeko/blocks/boards/boards-02/index';
+import Boards03 from '@/registry/ndeko/blocks/boards/boards-03/index';
 
 export const previews: Record<string, ComponentType> = {
   'boards-01': Boards01,
   'boards-02': Boards02,
+  'boards-03': Boards03,
 };

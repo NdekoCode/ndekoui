@@ -4,9 +4,15 @@ import type { ComponentType } from 'react';
 import Heroes01 from '@/registry/ndeko/blocks/heroes/heroes-01/index';
 import Heroes02 from '@/registry/ndeko/blocks/heroes/heroes-02/index';
 import Heroes03 from '@/registry/ndeko/blocks/heroes/heroes-03/index';
+import Heroes04 from '@/registry/ndeko/blocks/heroes/heroes-04/index';
+import Heroes05 from '@/registry/ndeko/blocks/heroes/heroes-05/index';
+import Heroes06 from '@/registry/ndeko/blocks/heroes/heroes-06/index';
 
 export const previews: Record<string, ComponentType> = {
   'heroes-01': Heroes01,
   'heroes-02': Heroes02,
   'heroes-03': Heroes03,
+  'heroes-04': Heroes04,
+  'heroes-05': Heroes05,
+  'heroes-06': Heroes06,
 };
