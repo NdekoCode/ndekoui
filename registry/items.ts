@@ -55,6 +55,25 @@ export const foundationItems: RegistryItemDefinition[] = [
     categories: ['foundations'],
   },
   {
+    name: 'seeded',
+    type: 'registry:lib',
+    title: 'Seeded',
+    description:
+      'A number drawn from a text, the same on the server and in the browser, and a pick from a list by its bits.',
+    files: [{ path: 'registry/ndeko/lib/seeded.ts', type: 'registry:lib' }],
+    categories: ['foundations'],
+  },
+  {
+    name: 'mesh',
+    type: 'registry:lib',
+    title: 'Mesh',
+    description:
+      'The gradient that stands for a name with no picture: a hue and a light drawn from the name, or a colour that already means something.',
+    files: [{ path: 'registry/ndeko/lib/mesh.ts', type: 'registry:lib' }],
+    registryDependencies: ['theme'],
+    categories: ['foundations'],
+  },
+  {
     name: 'brand-logos',
     type: 'registry:lib',
     title: 'Brand logos',
@@ -102,10 +121,20 @@ export const primitiveItems: RegistryItemDefinition[] = [
   primitive(
     'avatar',
     'Avatar',
-    'A picture with a fallback, opaque in stacks.',
+    'A picture, or a gradient drawn from a name for someone without one, opaque in stacks.',
     {
       dependencies: [BASE_UI],
     }
+  ),
+  primitive(
+    'mesh-tile',
+    'Mesh Tile',
+    'The picture of an agent, a team or a project with no logo: a gradient drawn from its name, in its own colour when it has one.'
+  ),
+  primitive(
+    'company-mark',
+    'Company Mark',
+    'The mark of a company with no logo to show: a shape and a colour drawn from its name, in the square a real logo would fill.'
   ),
   primitive('checkbox', 'Checkbox', 'A checkbox whose mark scales in.', {
     dependencies: [BASE_UI],

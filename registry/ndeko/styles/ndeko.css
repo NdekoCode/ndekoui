@@ -276,7 +276,8 @@
 
 /*
  * Materials. Each one says something: a chip is an assigned value, a key cap is a key or an icon tile,
- * a gem is a kind (an issue type, an entity), a raised surface floats above the page.
+ * a gem is a kind (an issue type, an entity), a mesh is the picture of someone or something that has
+ * none, a raised surface floats above the page.
  */
 
 /* An assigned label in the hue of `--chip`: a tint deepening downwards, a hairline of the hue, a lower edge, a one-pixel drop. */
@@ -351,6 +352,32 @@
       inset 0 0 0 var(--hairline) rgb(255 255 255 / 22%),
       inset 0 1px 0 rgb(255 255 255 / 16%);
   }
+}
+
+/*
+ * A generated picture in the hue of `--mesh`, for an identity with no photo and no logo: a person, an agent, a team.
+ * The hue itself, a warm light on one side, a violet shade on the other and a rosy rim, placed by `--mesh-key`,
+ * `--mesh-shade` and `--mesh-rim`. It stands for someone or something, so no card, button or background wears it.
+ */
+@utility mesh-fill {
+  --mesh-body: var(--mesh, var(--primary));
+  background-color: var(--mesh-body);
+  background-image:
+    radial-gradient(
+      circle at var(--mesh-key, 23% 23%),
+      color-mix(in oklch, var(--mesh-body) 22%, oklch(0.98 0.05 95)),
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at var(--mesh-shade, 83% 83%),
+      color-mix(in oklch, var(--mesh-body) 52%, oklch(0.58 0.19 292)),
+      transparent 66%
+    ),
+    radial-gradient(
+      circle at var(--mesh-rim, 88% 18%),
+      color-mix(in oklch, var(--mesh-body) 48%, oklch(0.82 0.14 18)),
+      transparent 50%
+    );
 }
 
 /* A floating layer: menus, popovers, selects, dialogs. A hairline and a soft two-step shadow. */
