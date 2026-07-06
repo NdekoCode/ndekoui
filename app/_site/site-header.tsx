@@ -27,6 +27,7 @@ const NAVIGATION = [
   { href: '/components', label: 'Components' },
   { href: '/blocks', label: 'Blocks' },
   { href: '/templates', label: 'Templates' },
+  { href: '/themes', label: 'Themes' },
   { href: '/docs', label: 'Motion' },
   { href: '/mcp/connect', label: 'MCP' },
 ];
@@ -167,7 +168,7 @@ function GithubStarLink() {
       size='sm'
       nativeButton={false}
       aria-label='Star ndekoui on GitHub'
-      className='hidden rounded-full sm:inline-flex'
+      className='hidden rounded-full lg:inline-flex'
       render={<a href={REPOSITORY_URL} />}
     >
       <GithubIcon />

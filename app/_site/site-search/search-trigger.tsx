@@ -27,7 +27,7 @@ export function SearchField({
       aria-keyshortcuts={KEY_SHORTCUTS}
       className={cn(
         CONTROL_RECIPE,
-        'text-muted-foreground hover:text-foreground me-1 hidden h-8 w-56 cursor-pointer items-center gap-2 ps-2.5 pe-1.5 text-left lg:flex'
+        'text-muted-foreground hover:text-foreground me-1 hidden h-8 cursor-pointer items-center gap-2 ps-2.5 pe-1.5 text-left lg:flex lg:w-44 xl:w-56'
       )}
     >
       <SearchIcon className='size-4 shrink-0' />
