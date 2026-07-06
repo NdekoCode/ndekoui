@@ -8,13 +8,10 @@ import { pressedSolidOf } from '@/registry/ndeko/lib/demonstration';
 import { ChevronDownIcon, CircleCheckIcon } from '@/registry/ndeko/lib/icons';
 import { EASE_OUT_STRONG } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Fold, Swap } from '@/registry/ndeko/ui/chat-motion';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 import { MorphButton, type MorphState } from '@/registry/ndeko/ui/morph-button';
 
 import {
@@ -78,18 +75,10 @@ function DrawnCheck() {
 }
 
 function CoderTile() {
-  const gemStyle = {
-    '--gem': seriesColorOf(CODER.series),
-  } as React.CSSProperties;
+  const color = seriesColorOf(CODER.series);
 
   return (
-    <span
-      aria-hidden='true'
-      style={gemStyle}
-      className='gem-plate inline-flex size-6 shrink-0 items-center justify-center rounded-md text-[10px] font-semibold select-none'
-    >
-      {CODER.initial}
-    </span>
+    <MeshTile seed={CODER.name} color={color} className='size-6 rounded-md' />
   );
 }
 
@@ -232,12 +221,7 @@ export function ReviewThread({
       <Fold open={isOpen}>
         <div className='flex flex-col gap-3 p-3'>
           <div className='flex gap-2.5'>
-            <Avatar className='size-6'>
-              <AvatarImage src={REVIEWER.avatar} alt='' />
-              <AvatarFallback className='text-[9px]'>
-                {REVIEWER.initials}
-              </AvatarFallback>
-            </Avatar>
+            <Avatar className='size-6' seed={REVIEWER.name} />
             <div className='flex min-w-0 flex-col'>
               <span className='text-xs leading-6 font-medium'>
                 {REVIEWER.name}

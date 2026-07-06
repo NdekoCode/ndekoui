@@ -6,14 +6,11 @@ import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-redu
 import { seriesColorOf } from '@/registry/ndeko/lib/agent-run';
 import { pressedSolidOf } from '@/registry/ndeko/lib/demonstration';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Fold } from '@/registry/ndeko/ui/chat-motion';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 
 import {
   ACTIVITY,
@@ -27,18 +24,10 @@ import {
 import type { PlanDecision, PlanStatus } from './session';
 
 export function CoderTile() {
-  const gemStyle = {
-    '--gem': seriesColorOf(CODER.series),
-  } as React.CSSProperties;
+  const color = seriesColorOf(CODER.series);
 
   return (
-    <span
-      aria-hidden='true'
-      style={gemStyle}
-      className='gem-plate inline-flex size-6 shrink-0 items-center justify-center rounded-md text-[10px] font-semibold select-none'
-    >
-      {CODER.initial}
-    </span>
+    <MeshTile seed={CODER.name} color={color} className='size-6 rounded-md' />
   );
 }
 
@@ -46,14 +35,7 @@ function ActorMark({ actor }: { actor: Activity['actor'] }) {
   if (actor === 'coder') {
     return <CoderTile />;
   }
-  return (
-    <Avatar className='size-6'>
-      <AvatarImage src={REVIEWER.avatar} alt='' />
-      <AvatarFallback className='text-[9px]'>
-        {REVIEWER.initials}
-      </AvatarFallback>
-    </Avatar>
-  );
+  return <Avatar className='size-6' seed={REVIEWER.name} />;
 }
 
 function actorNameOf(actor: Activity['actor']) {

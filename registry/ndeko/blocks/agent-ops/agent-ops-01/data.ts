@@ -72,40 +72,35 @@ export type AgentId =
 export type Agent = {
   id: AgentId;
   name: string;
-  initials: string;
   model: ModelId;
   parentId?: AgentId;
 };
 
 export const AGENTS: Agent[] = [
-  { id: 'planner', name: 'Planner', initials: 'P', model: 'gemini-pro' },
+  { id: 'planner', name: 'Planner', model: 'gemini-pro' },
   {
     id: 'researcher',
     name: 'Researcher',
-    initials: 'R',
     model: 'claude-sonnet',
   },
   {
     id: 'rate-reader',
     name: 'Rate reader',
-    initials: 'RR',
     model: 'claude-haiku',
     parentId: 'researcher',
   },
-  { id: 'writer', name: 'Writer', initials: 'W', model: 'gpt-mini' },
-  { id: 'reviewer', name: 'Reviewer', initials: 'RV', model: 'claude-sonnet' },
-  { id: 'coder', name: 'Coder', initials: 'C', model: 'claude-sonnet' },
+  { id: 'writer', name: 'Writer', model: 'gpt-mini' },
+  { id: 'reviewer', name: 'Reviewer', model: 'claude-sonnet' },
+  { id: 'coder', name: 'Coder', model: 'claude-sonnet' },
   {
     id: 'test-runner',
     name: 'Test runner',
-    initials: 'TR',
     model: 'claude-haiku',
     parentId: 'coder',
   },
   {
     id: 'log-reader',
     name: 'Log reader',
-    initials: 'LR',
     model: 'claude-haiku',
     parentId: 'coder',
   },

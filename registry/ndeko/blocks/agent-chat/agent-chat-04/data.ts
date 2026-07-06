@@ -54,27 +54,14 @@ export const NOTES: Note[] = [
 
 export type Owner = {
   name: string;
-  initials: string;
-  avatar: string | null;
+  isAssistant: boolean;
 };
 
-const MAREN: Owner = {
-  name: 'Maren Holt',
-  initials: 'MH',
-  avatar: '/avatars/avatar-05.svg',
-};
+const MAREN: Owner = { name: 'Maren Holt', isAssistant: false };
 
-const JONAS: Owner = {
-  name: 'Jonas Weber',
-  initials: 'JW',
-  avatar: '/avatars/avatar-03.svg',
-};
+const JONAS: Owner = { name: 'Jonas Weber', isAssistant: false };
 
-export const ASSISTANT: Owner = {
-  name: 'Assistant',
-  initials: 'A',
-  avatar: null,
-};
+export const ASSISTANT: Owner = { name: 'Assistant', isAssistant: true };
 
 export type Todo = {
   id: string;

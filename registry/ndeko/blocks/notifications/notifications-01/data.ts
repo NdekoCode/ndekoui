@@ -5,8 +5,6 @@ export type NotificationKind = 'mention' | 'comment' | 'assigned' | 'status';
 export type Person = {
   id: string;
   name: string;
-  initials: string;
-  avatar?: string;
 };
 
 export type InboxItem = {
@@ -37,26 +35,18 @@ export const PEOPLE: Person[] = [
   {
     id: 'leo',
     name: 'Léo Martin',
-    initials: 'LM',
-    avatar: '/avatars/avatar-04.svg',
   },
   {
     id: 'sana',
     name: 'Sana Iqbal',
-    initials: 'SI',
-    avatar: '/avatars/avatar-05.svg',
   },
   {
     id: 'tomas',
     name: 'Tomás Rivera',
-    initials: 'TR',
-    avatar: '/avatars/avatar-06.svg',
   },
   {
     id: 'mei',
     name: 'Mei Lin',
-    initials: 'ML',
-    avatar: '/avatars/avatar-07.svg',
   },
 ];
 

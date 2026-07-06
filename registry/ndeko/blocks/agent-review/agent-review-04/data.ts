@@ -4,18 +4,15 @@ export const TASK = 'Renew tallis.example for one year';
 
 export const OPERATOR = {
   name: 'Operator',
-  initial: 'O',
   series: 2 as SeriesSlot,
 };
 
 export const PERSON = {
   name: 'Lena Brandt',
-  initials: 'LB',
-  avatar: '/avatars/avatar-04.svg',
 };
 
 /** An invented registrar: it has no mark, so it wears a drawn initial. */
-export const SITE = { name: 'Northgate Domains', initial: 'N' };
+export const SITE = { name: 'Northgate Domains' };
 
 export type PageId = 'blank' | 'list' | 'domain' | 'renew' | 'done';
 

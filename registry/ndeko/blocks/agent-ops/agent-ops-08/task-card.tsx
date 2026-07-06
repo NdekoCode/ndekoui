@@ -16,14 +16,13 @@ import {
 } from '@/registry/ndeko/ui/dropdown-menu';
 import { Input } from '@/registry/ndeko/ui/input';
 import { LiveDuration } from '@/registry/ndeko/ui/live-duration';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 
 import { AGENTS, LANES, type AgentId, type LaneId } from './data';
 import type { Task } from './session';
 
 export const CARD_SURFACE =
   'bg-card hairline-ring ring-border rounded-lg shadow-[0_1px_2px_rgb(0_0_0/0.04)] dark:bg-foreground/[0.04]';
-
-type GemStyle = React.CSSProperties & { '--gem': string };
 
 function sentBackLineOf(note: string | undefined) {
   const hasText = note !== undefined && note !== '';
@@ -35,17 +34,11 @@ function sentBackLineOf(note: string | undefined) {
 
 function AgentChip({ agentId }: { agentId: AgentId }) {
   const agent = AGENTS[agentId];
-  const gemStyle: GemStyle = { '--gem': seriesColorOf(agent.series) };
+  const color = seriesColorOf(agent.series);
 
   return (
     <span className='flex min-w-0 items-center gap-1.5 text-xs font-medium'>
-      <span
-        aria-hidden='true'
-        style={gemStyle}
-        className='gem-plate inline-flex size-5 shrink-0 items-center justify-center rounded-[5px] text-[10px] font-semibold select-none'
-      >
-        {agent.initial}
-      </span>
+      <MeshTile seed={agent.name} color={color} />
       <span className='truncate'>{agent.name}</span>
     </span>
   );

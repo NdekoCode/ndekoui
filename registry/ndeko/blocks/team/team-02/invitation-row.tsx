@@ -11,6 +11,7 @@ import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-redu
 import {
   ClockIcon,
   EllipsisIcon,
+  MailIcon,
   SendIcon,
   TrashIcon,
 } from '@/registry/ndeko/lib/icons';
@@ -49,23 +50,18 @@ function labelSwapOf(shouldReduceMotion: boolean | null) {
   return LABEL_SWAP;
 }
 
-function initialOf(email: string) {
-  const first = email.charAt(0);
-  return first.toUpperCase();
-}
-
 type InvitationRowProps = {
   invitation: Invitation;
   onResend: (invitationId: string) => void;
   onRevoke: (invitationId: string) => void;
 };
 
-/** Someone invited who has not joined: an empty dashed slot with the first letter of the address and a clock. */
-function PendingAvatar({ email }: { email: string }) {
+/** Someone invited who has not joined: an empty dashed slot with an envelope and a clock. */
+function PendingAvatar() {
   return (
     <span aria-hidden='true' className='relative inline-flex shrink-0'>
-      <span className='hairline-border border-foreground/25 text-muted-foreground flex size-9 items-center justify-center rounded-full border-dashed text-[13px] font-medium'>
-        {initialOf(email)}
+      <span className='hairline-border border-foreground/25 text-muted-foreground flex size-9 items-center justify-center rounded-full border-dashed'>
+        <MailIcon className='size-4' />
       </span>
       <span className='bg-card absolute -right-0.5 -bottom-0.5 flex rounded-full p-px'>
         <span className='chip-3d flex size-4 items-center justify-center rounded-full [--chip:var(--warning)]'>
@@ -134,7 +130,7 @@ export function InvitationRow({
           'flex min-w-0 items-center gap-3 px-4 py-3'
         )}
       >
-        <PendingAvatar email={invitation.email} />
+        <PendingAvatar />
         <div className='flex min-w-0 flex-col gap-0.5'>
           <p className='truncate text-[13px] font-medium'>{invitation.email}</p>
           <p className='text-muted-foreground truncate text-xs'>

@@ -24,8 +24,6 @@ export type Week = {
 export type Member = {
   id: MemberId;
   name: string;
-  initials: string;
-  avatar?: string;
 };
 
 export type Project = { id: ProjectId; name: string };
@@ -94,28 +92,20 @@ export const MEMBERS: Member[] = [
   {
     id: 'amara',
     name: 'Amara Okafor',
-    initials: 'AO',
-    avatar: '/avatars/avatar-03.svg',
   },
   {
     id: 'lucas',
     name: 'Lucas Moreau',
-    initials: 'LM',
-    avatar: '/avatars/avatar-04.svg',
   },
   {
     id: 'priya',
     name: 'Priya Raman',
-    initials: 'PR',
-    avatar: '/avatars/avatar-05.svg',
   },
   {
     id: 'mateo',
     name: 'Mateo Silva',
-    initials: 'MS',
-    avatar: '/avatars/avatar-06.svg',
   },
-  { id: 'jonas', name: 'Jonas Weber', initials: 'JW' },
+  { id: 'jonas', name: 'Jonas Weber' },
 ];
 
 export const PROJECTS: Project[] = [

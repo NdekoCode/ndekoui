@@ -21,11 +21,7 @@ import {
   DropdownMenuTrigger,
 } from '@/registry/ndeko/ui/dropdown-menu';
 import { Kbd } from '@/registry/ndeko/ui/kbd';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 
 import {
   activeFilterCountOf,
@@ -94,12 +90,7 @@ function assigneeOptionsOf(tasks: Task[]): FilterOption[] {
       value: person.id,
       label: person.name,
       count,
-      glyph: (
-        <Avatar className='size-4 text-[8px]'>
-          {person.avatar && <AvatarImage src={person.avatar} alt='' />}
-          <AvatarFallback>{person.initials}</AvatarFallback>
-        </Avatar>
-      ),
+      glyph: <Avatar className='size-4' seed={person.name} />,
     };
   });
 }

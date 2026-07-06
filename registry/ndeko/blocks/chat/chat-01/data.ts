@@ -1,7 +1,5 @@
 export type Person = {
   name: string;
-  initials: string;
-  avatar: string;
 };
 
 export type ReplyStatus = 'thinking' | 'streaming' | 'done' | 'stopped';
@@ -25,8 +23,6 @@ export type Feedback = 'helpful' | 'not-helpful';
 
 export const reader: Person = {
   name: 'Amara Diallo',
-  initials: 'AD',
-  avatar: '/avatars/avatar-05.svg',
 };
 
 export const page = {

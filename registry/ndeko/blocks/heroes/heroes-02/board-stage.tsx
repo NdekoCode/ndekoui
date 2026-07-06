@@ -12,11 +12,7 @@ import { useEffect, useState } from 'react';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { LayoutGridIcon, ZapIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Kbd } from '@/registry/ndeko/ui/kbd';
 import { Switch } from '@/registry/ndeko/ui/switch';
@@ -65,12 +61,6 @@ function cardTransitionOf(shouldReduceMotion: boolean | null) {
   return CARD_SPRING;
 }
 
-function initialsOf(name: string) {
-  const words = name.split(' ');
-  const letters = words.map((word) => word.charAt(0));
-  return letters.join('');
-}
-
 function swapVariantsOf(shouldReduceMotion: boolean | null) {
   if (shouldReduceMotion) {
     return FADE_VARIANTS;
@@ -100,12 +90,12 @@ function PersonAvatar({
   className?: string;
 }) {
   return (
-    <Avatar className={className}>
-      <AvatarImage src={person.image} alt={person.name} />
-      <AvatarFallback className='text-[10px]'>
-        {initialsOf(person.name)}
-      </AvatarFallback>
-    </Avatar>
+    <Avatar
+      className={className}
+      seed={person.name}
+      role='img'
+      aria-label={person.name}
+    />
   );
 }
 

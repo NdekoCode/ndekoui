@@ -4,21 +4,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/registry/ndeko/ui/accordion';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 
 import { CONTACT, QUESTIONS, SECTION } from './data';
 
 const FIRST_QUESTION_ID = QUESTIONS[0].id;
-
-function initialsOf(name: string) {
-  const words = name.split(' ');
-  const letters = words.map((word) => word.charAt(0));
-  return letters.join('');
-}
 
 export default function Faqs02() {
   return (
@@ -47,10 +37,12 @@ export default function Faqs02() {
           </Accordion>
         </div>
         <div className='flex flex-col items-center gap-3 text-center sm:flex-row sm:text-left'>
-          <Avatar className='size-8'>
-            <AvatarImage src={CONTACT.person.image} alt={CONTACT.person.name} />
-            <AvatarFallback>{initialsOf(CONTACT.person.name)}</AvatarFallback>
-          </Avatar>
+          <Avatar
+            className='size-8'
+            seed={CONTACT.person.name}
+            role='img'
+            aria-label={CONTACT.person.name}
+          />
           <p className='text-muted-foreground text-[13px] text-pretty'>
             {CONTACT.lead}{' '}
             <a

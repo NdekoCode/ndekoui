@@ -5,13 +5,12 @@ export type AgentId = 'writer' | 'reviewer';
 export type DocAgent = {
   id: AgentId;
   name: string;
-  initial: string;
   series: SeriesSlot;
 };
 
 export const AGENTS: Record<AgentId, DocAgent> = {
-  writer: { id: 'writer', name: 'Writer', initial: 'W', series: 3 },
-  reviewer: { id: 'reviewer', name: 'Reviewer', initial: 'R', series: 4 },
+  writer: { id: 'writer', name: 'Writer', series: 3 },
+  reviewer: { id: 'reviewer', name: 'Reviewer', series: 4 },
 };
 
 export const AGENT_ORDER: AgentId[] = ['writer', 'reviewer'];

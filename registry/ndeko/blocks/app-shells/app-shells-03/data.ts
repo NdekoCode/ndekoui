@@ -38,11 +38,14 @@ export type PageId = AppPageId | SettingsPageId;
 export type Entity = {
   id: string;
   name: string;
-  initials: string;
   color: string;
 };
 
-export type Workspace = Entity & { memberCount: number };
+export type Workspace = {
+  id: string;
+  name: string;
+  memberCount: number;
+};
 
 export type NavItem = {
   id: PageId;
@@ -60,9 +63,7 @@ export type NavGroup = {
 export type Person = {
   id: string;
   name: string;
-  initials: string;
   role: string;
-  avatar?: string;
 };
 
 export type Project = {
@@ -100,22 +101,16 @@ export const WORKSPACES: Workspace[] = [
   {
     id: 'lattice',
     name: 'Lattice Studio',
-    initials: 'LS',
-    color: 'var(--primary)',
     memberCount: 6,
   },
   {
     id: 'quarry',
     name: 'Quarry Works',
-    initials: 'QW',
-    color: 'var(--success)',
     memberCount: 21,
   },
   {
     id: 'moonridge',
     name: 'Moonridge',
-    initials: 'MR',
-    color: 'var(--warning)',
     memberCount: 1,
   },
 ];
@@ -123,7 +118,6 @@ export const WORKSPACES: Workspace[] = [
 export const PRODUCT_TEAM: Entity = {
   id: 'product',
   name: 'Product',
-  initials: 'P',
   color: 'var(--info)',
 };
 
@@ -133,42 +127,31 @@ export const PEOPLE: Person[] = [
   {
     id: 'amara',
     name: 'Amara Okafor',
-    initials: 'AO',
     role: 'Product designer',
-    avatar: '/avatars/avatar-03.svg',
   },
   {
     id: 'lucas',
     name: 'Lucas Moreau',
-    initials: 'LM',
     role: 'Engineering lead',
-    avatar: '/avatars/avatar-04.svg',
   },
   {
     id: 'priya',
     name: 'Priya Raman',
-    initials: 'PR',
     role: 'Frontend engineer',
-    avatar: '/avatars/avatar-05.svg',
   },
   {
     id: 'mateo',
     name: 'Mateo Silva',
-    initials: 'MS',
     role: 'Backend engineer',
-    avatar: '/avatars/avatar-06.svg',
   },
   {
     id: 'hana',
     name: 'Hana Kobayashi',
-    initials: 'HK',
     role: 'Product manager',
-    avatar: '/avatars/avatar-07.svg',
   },
   {
     id: 'jonas',
     name: 'Jonas Weber',
-    initials: 'JW',
     role: 'QA engineer',
   },
 ];

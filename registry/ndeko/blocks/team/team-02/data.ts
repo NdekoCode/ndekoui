@@ -41,8 +41,6 @@ export type ActivityEntry = {
 export type Member = {
   id: string;
   name: string;
-  initials: string;
-  avatar?: string;
   title: string;
   role: Role;
   presence: Presence;
@@ -119,8 +117,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'amara',
     name: 'Amara Okafor',
-    initials: 'AO',
-    avatar: '/avatars/avatar-03.svg',
     title: 'Product designer',
     role: 'manager',
     presence: 'tracking',
@@ -157,8 +153,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'lucas',
     name: 'Lucas Moreau',
-    initials: 'LM',
-    avatar: '/avatars/avatar-04.svg',
     title: 'Engineering lead',
     role: 'manager',
     presence: 'tracking',
@@ -189,8 +183,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'priya',
     name: 'Priya Raman',
-    initials: 'PR',
-    avatar: '/avatars/avatar-05.svg',
     title: 'Frontend engineer',
     role: 'member',
     presence: 'online',
@@ -221,8 +213,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'mateo',
     name: 'Mateo Silva',
-    initials: 'MS',
-    avatar: '/avatars/avatar-06.svg',
     title: 'Backend engineer',
     role: 'member',
     presence: 'away',
@@ -247,8 +237,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'hana',
     name: 'Hana Kobayashi',
-    initials: 'HK',
-    avatar: '/avatars/avatar-07.svg',
     title: 'Product manager',
     role: 'member',
     presence: 'tracking',
@@ -273,7 +261,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'jonas',
     name: 'Jonas Weber',
-    initials: 'JW',
     title: 'QA engineer',
     role: 'member',
     presence: 'offline',
@@ -285,7 +272,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'zola',
     name: 'Zola Mbeki',
-    initials: 'ZM',
     title: 'Content designer',
     role: 'viewer',
     presence: 'online',

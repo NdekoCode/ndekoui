@@ -13,7 +13,6 @@ import { GlobeIcon, MailIcon, UserIcon } from '@/registry/ndeko/lib/icons';
 
 import {
   BIO_MAX_LENGTH,
-  INITIALS,
   INITIAL_PROFILE,
   LANGUAGES,
   PROFILE_HOST,
@@ -269,7 +268,7 @@ export default function Settings01() {
           >
             <PhotoRow
               photo={draft.photo}
-              initials={INITIALS}
+              seed={INITIAL_PROFILE.username}
               error={photoError}
               onPhotoChange={changePhoto}
               onError={setPhotoError}

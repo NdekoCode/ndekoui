@@ -13,11 +13,7 @@ import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
 import { FeatherIcon, ListChecksIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
@@ -201,10 +197,12 @@ function PersonMessage({ text }: { text: string }) {
       <p className='bg-foreground/[0.06] max-w-[85%] rounded-2xl rounded-ee-md px-3.5 py-2 text-sm leading-relaxed'>
         {text}
       </p>
-      <Avatar className='hidden size-7 @md:inline-flex'>
-        <AvatarImage src={person.avatar} alt={person.name} />
-        <AvatarFallback>{person.initials}</AvatarFallback>
-      </Avatar>
+      <Avatar
+        className='hidden size-7 @md:inline-flex'
+        seed={person.name}
+        role='img'
+        aria-label={person.name}
+      />
     </div>
   );
 }

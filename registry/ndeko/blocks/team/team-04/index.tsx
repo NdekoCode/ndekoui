@@ -16,11 +16,7 @@ import {
   XIcon,
 } from '@/registry/ndeko/lib/icons';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Button } from '@/registry/ndeko/ui/button';
 import { ToggleGroup, ToggleGroupItem } from '@/registry/ndeko/ui/toggle-group';
 
@@ -118,7 +114,7 @@ function TeamHead() {
   return (
     <div className='flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between'>
       <div className='flex min-w-0 items-start gap-3'>
-        <TeamTile initials={TEAM.initials} color={TEAM.color} />
+        <TeamTile name={TEAM.name} color={TEAM.color} />
         <div className='min-w-0'>
           <h1 className='text-lg font-semibold'>{TEAM.name}</h1>
           <p className='text-muted-foreground text-[13px] text-balance'>
@@ -131,11 +127,9 @@ function TeamHead() {
           {faces.map((member) => (
             <Avatar
               key={member.id}
-              className='ring-background -ms-1.5 size-7 text-[10px] ring-2'
-            >
-              {member.avatar && <AvatarImage src={member.avatar} alt='' />}
-              <AvatarFallback>{member.initials}</AvatarFallback>
-            </Avatar>
+              className='ring-background -ms-1.5 size-7 ring-2'
+              seed={member.name}
+            />
           ))}
           <span className='bg-muted text-muted-foreground ring-background -ms-1.5 inline-flex h-7 min-w-7 items-center justify-center rounded-full px-1 text-[10px] font-medium tabular-nums ring-2'>
             +{restCount}

@@ -6,11 +6,7 @@ import { useState } from 'react';
 import { MotionNumber } from '@/components/core/motion-number';
 import { ListFilterIcon, SearchIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
@@ -106,10 +102,7 @@ function toggledRoles(roleIds: RoleId[], roleId: RoleId, isIncluded: boolean) {
 function MemberRow({ member }: { member: Member }) {
   return (
     <li className='flex h-14 items-center gap-3 px-3'>
-      <Avatar className='size-8'>
-        {member.avatar && <AvatarImage src={member.avatar} alt='' />}
-        <AvatarFallback>{member.initials}</AvatarFallback>
-      </Avatar>
+      <Avatar className='size-8' seed={member.name} />
       <div className='min-w-0 flex-1'>
         <p className='truncate text-[13px] font-medium'>{member.name}</p>
         <p className='text-muted-foreground truncate text-xs'>{member.email}</p>

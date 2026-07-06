@@ -5,11 +5,8 @@ import { motion, type Transition } from 'motion/react';
 import { MotionNumber } from '@/components/core/motion-number';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 
 import {
   Tooltip,
@@ -68,11 +65,12 @@ export function ActiveRowIndicator({ layoutId }: { layoutId: string }) {
 }
 
 const TILE_SIZE = {
-  xs: 'size-4 rounded-[4px] text-[9px]',
-  sm: 'size-5 rounded-[5px] text-[10px]',
-  md: 'size-6 rounded-md text-[11px]',
+  xs: 'size-4 rounded-[4px]',
+  sm: 'size-5 rounded-[5px]',
+  md: 'size-6 rounded-md',
 } as const;
 
+/** The picture of a team: a gradient drawn from its name, in its colour. */
 export function EntityTile({
   entity,
   size = 'md',
@@ -82,20 +80,12 @@ export function EntityTile({
   size?: keyof typeof TILE_SIZE;
   className?: string;
 }) {
-  const tileStyle = { '--gem': entity.color } as React.CSSProperties;
-
   return (
-    <span
-      aria-hidden='true'
-      style={tileStyle}
-      className={cn(
-        'gem-plate inline-flex shrink-0 items-center justify-center font-semibold',
-        TILE_SIZE[size],
-        className
-      )}
-    >
-      {entity.initials}
-    </span>
+    <MeshTile
+      seed={entity.name}
+      color={entity.color}
+      className={cn(TILE_SIZE[size], className)}
+    />
   );
 }
 
@@ -106,12 +96,7 @@ export function PersonAvatar({
   person: Person;
   className?: string;
 }) {
-  return (
-    <Avatar className={className}>
-      {person.avatar && <AvatarImage src={person.avatar} alt='' />}
-      <AvatarFallback>{person.initials}</AvatarFallback>
-    </Avatar>
-  );
+  return <Avatar className={className} seed={person.name} />;
 }
 
 export function ariaCurrentOf(isActive: boolean) {

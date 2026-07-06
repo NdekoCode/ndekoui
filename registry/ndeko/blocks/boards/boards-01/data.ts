@@ -24,8 +24,6 @@ export type LabelId = 'design' | 'web' | 'mobile' | 'api' | 'research';
 export type Person = {
   id: string;
   name: string;
-  initials: string;
-  avatar?: string;
 };
 
 export type Task = {
@@ -97,34 +95,24 @@ export const PEOPLE: Person[] = [
   {
     id: 'amara',
     name: 'Amara Okafor',
-    initials: 'AO',
-    avatar: '/avatars/avatar-03.svg',
   },
   {
     id: 'lucas',
     name: 'Lucas Moreau',
-    initials: 'LM',
-    avatar: '/avatars/avatar-04.svg',
   },
   {
     id: 'priya',
     name: 'Priya Raman',
-    initials: 'PR',
-    avatar: '/avatars/avatar-05.svg',
   },
   {
     id: 'mateo',
     name: 'Mateo Silva',
-    initials: 'MS',
-    avatar: '/avatars/avatar-06.svg',
   },
   {
     id: 'hana',
     name: 'Hana Kobayashi',
-    initials: 'HK',
-    avatar: '/avatars/avatar-07.svg',
   },
-  { id: 'jonas', name: 'Jonas Weber', initials: 'JW' },
+  { id: 'jonas', name: 'Jonas Weber' },
 ];
 
 export const TEAM_NAME = 'Product';

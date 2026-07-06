@@ -9,6 +9,7 @@ import { CheckIcon, MousePointerIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 
 import {
   AGENTS,
@@ -42,14 +43,10 @@ function insertStyleOf(agent: DocAgent): React.CSSProperties {
 }
 
 export function AgentTile({ agent }: { agent: DocAgent }) {
+  const color = seriesColorOf(agent.series);
+
   return (
-    <span
-      aria-hidden='true'
-      style={gemStyleOf(agent)}
-      className='gem-plate inline-flex size-6 shrink-0 items-center justify-center rounded-md text-[10px] font-semibold select-none'
-    >
-      {agent.initial}
-    </span>
+    <MeshTile seed={agent.name} color={color} className='size-6 rounded-md' />
   );
 }
 

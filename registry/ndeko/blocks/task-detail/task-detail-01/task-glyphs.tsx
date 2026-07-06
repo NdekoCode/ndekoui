@@ -6,11 +6,7 @@ import {
   type Icon,
 } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 
 import type { IssueTypeId, Person, PriorityId, StatusId } from './data';
 import { issueTypeOf, statusOf } from './detail-model';
@@ -240,10 +236,7 @@ export function PersonAvatar({
   className?: string;
 }) {
   return (
-    <Avatar className={cn('size-5 text-[9px]', className)}>
-      {person.avatar && <AvatarImage src={person.avatar} alt='' />}
-      <AvatarFallback>{person.initials}</AvatarFallback>
-    </Avatar>
+    <Avatar className={cn('size-5 text-[9px]', className)} seed={person.name} />
   );
 }
 

@@ -26,12 +26,7 @@ export function UserMessage({ turn }: { turn: UserTurn }) {
       <MessageContent className='max-w-[85%] sm:max-w-[75%]'>
         {turn.text}
       </MessageContent>
-      <MessageAvatar
-        src={reader.avatar}
-        alt={reader.name}
-        fallback={reader.initials}
-        className='hidden sm:inline-flex'
-      />
+      <MessageAvatar alt={reader.name} className='hidden sm:inline-flex' />
     </Message>
   );
 }

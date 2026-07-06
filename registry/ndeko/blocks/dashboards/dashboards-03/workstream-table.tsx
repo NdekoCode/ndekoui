@@ -10,11 +10,7 @@ import {
 import { MotionNumber } from '@/components/core/motion-number';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Chip } from '@/registry/ndeko/ui/chip';
 
 import { HEALTH_META, type Lead } from './data';
@@ -124,10 +120,7 @@ function ProgressCell({ share, transition }: ProgressCellProps) {
 function LeadCell({ lead }: { lead: Lead }) {
   return (
     <div role='cell' className={cn(WIDE_CELL, 'min-w-0 items-center gap-2')}>
-      <Avatar className='size-6 text-[10px]'>
-        {lead.avatar && <AvatarImage src={lead.avatar} alt='' />}
-        <AvatarFallback>{lead.initials}</AvatarFallback>
-      </Avatar>
+      <Avatar className='size-6' seed={lead.name} />
       <span className='truncate text-[13px]'>{firstNameOf(lead)}</span>
     </div>
   );

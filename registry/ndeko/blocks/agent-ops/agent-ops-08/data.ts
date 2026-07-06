@@ -7,16 +7,15 @@ export type AgentId =
 
 export type Agent = {
   name: string;
-  initial: string;
   series: SeriesSlot;
 };
 
 export const AGENTS: Record<AgentId, Agent> = {
-  planner: { name: 'Planner', initial: 'P', series: 1 },
-  researcher: { name: 'Researcher', initial: 'R', series: 2 },
-  writer: { name: 'Writer', initial: 'W', series: 3 },
-  reviewer: { name: 'Reviewer', initial: 'R', series: 4 },
-  coder: { name: 'Coder', initial: 'C', series: 5 },
+  planner: { name: 'Planner', series: 1 },
+  researcher: { name: 'Researcher', series: 2 },
+  writer: { name: 'Writer', series: 3 },
+  reviewer: { name: 'Reviewer', series: 4 },
+  coder: { name: 'Coder', series: 5 },
 };
 
 export type LaneId = 'running' | 'review' | 'done';

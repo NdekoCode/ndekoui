@@ -15,8 +15,6 @@ export type MemberTask = {
 export type Member = {
   id: string;
   name: string;
-  initials: string;
-  avatar?: string;
   title: string;
   role: Role;
   presence: Presence;
@@ -45,7 +43,6 @@ export const WORKSPACE_NAME = 'Fernhall';
 
 export const TEAM = {
   name: 'Atlas Redesign',
-  initials: 'AR',
   color: 'var(--info)',
   description:
     'Redraws the booking flow and the onboarding for the spring release.',
@@ -65,8 +62,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'amara',
     name: 'Amara Okafor',
-    initials: 'AO',
-    avatar: '/avatars/avatar-03.svg',
     title: 'Product designer',
     role: 'manager',
     presence: 'tracking',
@@ -80,8 +75,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'leo',
     name: 'Léo Martin',
-    initials: 'LM',
-    avatar: '/avatars/avatar-04.svg',
     title: 'Frontend engineer',
     role: 'member',
     presence: 'online',
@@ -95,8 +88,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'sana',
     name: 'Sana Iqbal',
-    initials: 'SI',
-    avatar: '/avatars/avatar-05.svg',
     title: 'Backend engineer',
     role: 'member',
     presence: 'tracking',
@@ -110,8 +101,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'tomas',
     name: 'Tomás Rivera',
-    initials: 'TR',
-    avatar: '/avatars/avatar-06.svg',
     title: 'QA engineer',
     role: 'member',
     presence: 'away',
@@ -121,8 +110,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'mei',
     name: 'Mei Lin',
-    initials: 'ML',
-    avatar: '/avatars/avatar-07.svg',
     title: 'Content designer',
     role: 'viewer',
     presence: 'offline',

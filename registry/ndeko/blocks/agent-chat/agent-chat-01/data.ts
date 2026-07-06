@@ -8,8 +8,6 @@ export const CONVERSATION_TITLE = 'Renewals at risk';
 
 export const person = {
   name: 'Lena Brandt',
-  initials: 'LB',
-  avatar: '/avatars/avatar-04.svg',
 };
 
 export type Source = {

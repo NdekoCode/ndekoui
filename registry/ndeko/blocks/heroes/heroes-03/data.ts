@@ -7,7 +7,7 @@ export const HERO = {
 };
 
 export const ISSUE = {
-  author: { name: 'Ama Mensah', image: '/avatars/avatar-07.svg' },
+  author: { name: 'Ama Mensah' },
   publication: 'Notes from the reading room',
   number: 'Issue 48',
   subject: 'Three books about rivers, and one about leaving',

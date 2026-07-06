@@ -246,7 +246,6 @@ function added(state: McpState): McpState {
     id: `${ADDED_SERVER_ID}-${count}`,
     name,
     transport: state.dialog.transport,
-    initial: name.charAt(0).toUpperCase(),
     address: state.dialog.address.trim(),
     tools: FOUND_TOOLS,
   };

@@ -5,6 +5,7 @@ import {
   PlusIcon,
   SettingsIcon,
 } from '@/registry/ndeko/lib/icons';
+import { CompanyMark } from '@/registry/ndeko/ui/company-mark';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,7 +19,6 @@ import {
 import { Kbd } from '@/registry/ndeko/ui/kbd';
 
 import type { Workspace } from './data';
-import { EntityTile } from './sidebar-parts';
 
 const TRIGGER = [
   'flex h-9 min-w-0 flex-1 items-center gap-2 rounded-md px-1.5 text-left outline-none',
@@ -62,7 +62,7 @@ export function WorkspaceSwitcher({
           />
         }
       >
-        <EntityTile entity={current} />
+        <CompanyMark seed={current.name} className='size-6 rounded-md' />
         <span className='min-w-0 flex-1 truncate text-[13px] font-semibold'>
           {current.name}
         </span>
@@ -81,7 +81,7 @@ export function WorkspaceSwitcher({
               closeOnClick
               className='h-9'
             >
-              <EntityTile entity={workspace} size='sm' />
+              <CompanyMark seed={workspace.name} />
               <span className='min-w-0 flex-1 truncate'>{workspace.name}</span>
               <Kbd aria-hidden='true'>{workspace.memberCount}</Kbd>
               <span className='sr-only'>

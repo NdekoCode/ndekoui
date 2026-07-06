@@ -3,11 +3,9 @@ export type Role = 'manager' | 'member' | 'viewer';
 export type Member = {
   id: string;
   name: string;
-  initials: string;
   email: string;
   title: string;
   role: Role;
-  avatar?: string;
 };
 
 export type Invitation = {
@@ -50,52 +48,41 @@ export const MEMBERS: Member[] = [
   {
     id: 'amara',
     name: 'Amara Okafor',
-    initials: 'AO',
     email: 'amara@lattice.example',
     title: 'Product designer',
     role: 'manager',
-    avatar: '/avatars/avatar-03.svg',
   },
   {
     id: 'lucas',
     name: 'Lucas Moreau',
-    initials: 'LM',
     email: 'lucas@lattice.example',
     title: 'Engineering lead',
     role: 'manager',
-    avatar: '/avatars/avatar-04.svg',
   },
   {
     id: 'priya',
     name: 'Priya Raman',
-    initials: 'PR',
     email: 'priya@lattice.example',
     title: 'Frontend engineer',
     role: 'member',
-    avatar: '/avatars/avatar-05.svg',
   },
   {
     id: 'mateo',
     name: 'Mateo Silva',
-    initials: 'MS',
     email: 'mateo@lattice.example',
     title: 'Backend engineer',
     role: 'member',
-    avatar: '/avatars/avatar-06.svg',
   },
   {
     id: 'hana',
     name: 'Hana Kobayashi',
-    initials: 'HK',
     email: 'hana@lattice.example',
     title: 'Product manager',
     role: 'member',
-    avatar: '/avatars/avatar-07.svg',
   },
   {
     id: 'jonas',
     name: 'Jonas Weber',
-    initials: 'JW',
     email: 'jonas@lattice.example',
     title: 'QA engineer',
     role: 'viewer',

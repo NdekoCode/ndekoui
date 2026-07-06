@@ -10,7 +10,7 @@ import {
   rowPresenceOf,
 } from '@/registry/ndeko/lib/motion-presets';
 import { Button } from '@/registry/ndeko/ui/button';
-import { LetterTile } from '@/registry/ndeko/ui/letter-tile';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 
 import { agentOf, APPROVALS, type ApprovalId } from './data';
 import type { Decision } from './session';
@@ -77,7 +77,7 @@ function RequestRow({ approvalId, pressed, onDecide }: RequestRowProps) {
   return (
     <div className='flex flex-col gap-2.5 px-3 py-2.5 @xl:flex-row @xl:items-center @xl:gap-4'>
       <div className='flex min-w-0 flex-1 items-start gap-3'>
-        <LetterTile initial={agent.initials} size='lg' />
+        <MeshTile seed={agent.name} size='lg' />
         <div className='flex min-w-0 flex-col gap-0.5'>
           <p className='text-[13px] leading-5 font-medium text-pretty'>
             {approval.title}

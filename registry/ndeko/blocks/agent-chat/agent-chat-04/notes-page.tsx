@@ -10,11 +10,7 @@ import {
   rowPresenceOf,
 } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Fold, Swap } from '@/registry/ndeko/ui/chat-motion';
 import { CopyButton } from '@/registry/ndeko/ui/copy-button';
 import { MorphButton, type MorphState } from '@/registry/ndeko/ui/morph-button';
@@ -63,7 +59,7 @@ function DrawnCheck() {
 }
 
 function OwnerMark({ owner }: { owner: Owner }) {
-  if (owner.avatar === null) {
+  if (owner.isAssistant) {
     return (
       <span
         aria-hidden='true'
@@ -73,12 +69,7 @@ function OwnerMark({ owner }: { owner: Owner }) {
       </span>
     );
   }
-  return (
-    <Avatar className='size-4'>
-      <AvatarImage src={owner.avatar} alt='' />
-      <AvatarFallback className='text-[8px]'>{owner.initials}</AvatarFallback>
-    </Avatar>
-  );
+  return <Avatar className='size-4' seed={owner.name} />;
 }
 
 const PILL =

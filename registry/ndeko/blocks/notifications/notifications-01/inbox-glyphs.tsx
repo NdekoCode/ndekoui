@@ -10,11 +10,7 @@ import {
   type Icon,
 } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 
 import type { IssueTypeId, NotificationKind, Person } from './data';
 
@@ -82,10 +78,7 @@ export function SenderAvatar({
 
   return (
     <span className='relative inline-flex shrink-0'>
-      <Avatar className='size-7 text-[10px]'>
-        {person.avatar && <AvatarImage src={person.avatar} alt='' />}
-        <AvatarFallback>{person.initials}</AvatarFallback>
-      </Avatar>
+      <Avatar className='size-7' seed={person.name} />
       <span
         aria-hidden='true'
         className='bg-popover absolute -end-1.5 -bottom-1.5 inline-flex rounded-full p-0.5'

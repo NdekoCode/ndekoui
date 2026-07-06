@@ -57,7 +57,7 @@ export const ISSUE_LABELS = [
 ];
 
 /** An invented workspace: it has no mark, so it wears a drawn initial. */
-export const WORKSPACE = { name: 'Harbour chat', initial: 'H' };
+export const WORKSPACE = { name: 'Harbour chat' };
 
 export function typedLengthOf(card: CardId) {
   let total = 0;

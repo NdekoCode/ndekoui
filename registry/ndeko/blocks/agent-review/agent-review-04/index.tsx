@@ -9,17 +9,14 @@ import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
 import { PauseIcon, PlayIcon, StopIcon } from '@/registry/ndeko/lib/icons';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
 import { ClockGate, LiveDuration } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
 
 import { BrowserFrame } from './browser';
@@ -119,18 +116,14 @@ function rowToneOf(isShown: boolean) {
 }
 
 function OperatorTile() {
-  const gemStyle = {
-    '--gem': seriesColorOf(OPERATOR.series),
-  } as React.CSSProperties;
+  const color = seriesColorOf(OPERATOR.series);
 
   return (
-    <span
-      aria-hidden='true'
-      style={gemStyle}
-      className='gem-plate inline-flex size-6 shrink-0 items-center justify-center rounded-md text-[10px] font-semibold select-none'
-    >
-      {OPERATOR.initial}
-    </span>
+    <MeshTile
+      seed={OPERATOR.name}
+      color={color}
+      className='size-6 rounded-md'
+    />
   );
 }
 
@@ -138,12 +131,7 @@ function ActorMark({ actor }: { actor: Actor }) {
   if (actor === 'agent') {
     return <OperatorTile />;
   }
-  return (
-    <Avatar className='size-6'>
-      <AvatarImage src={PERSON.avatar} alt='' />
-      <AvatarFallback className='text-[9px]'>{PERSON.initials}</AvatarFallback>
-    </Avatar>
-  );
+  return <Avatar className='size-6' seed={PERSON.name} />;
 }
 
 type ActionLogProps = {

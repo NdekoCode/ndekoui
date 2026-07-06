@@ -22,7 +22,7 @@ export type ProfileValues = {
 export type ProfileField = keyof ProfileValues;
 
 export const INITIAL_PROFILE: ProfileValues = {
-  photo: '/avatars/avatar-03.svg',
+  photo: '',
   name: 'Amara Okafor',
   username: 'amara',
   title: 'Product designer',
@@ -35,8 +35,6 @@ export const INITIAL_PROFILE: ProfileValues = {
   weekStart: 'monday',
   timeFormat: '24h',
 };
-
-export const INITIALS = 'AO';
 
 export const PROFILE_HOST = 'tidewell.example/';
 

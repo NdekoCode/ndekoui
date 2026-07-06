@@ -11,7 +11,7 @@ import {
 } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Badge } from '@/registry/ndeko/ui/badge';
-import { LetterTile } from '@/registry/ndeko/ui/letter-tile';
+import { CompanyMark } from '@/registry/ndeko/ui/company-mark';
 import { StatusOrb } from '@/registry/ndeko/ui/status-orb';
 
 import {
@@ -256,7 +256,7 @@ export function BrowserFrame({
   return (
     <div className='bg-card hairline-ring ring-border dark:bg-foreground/[0.03] overflow-hidden rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
       <div className='bg-foreground/[0.03] flex h-10 items-center gap-2 px-3'>
-        <LetterTile initial={SITE.initial} />
+        <CompanyMark seed={SITE.name} />
         <div className='bg-card dark:bg-foreground/[0.05] flex h-6 min-w-0 flex-1 items-center gap-1.5 rounded-full px-2.5 text-xs'>
           <LockIcon className='text-muted-foreground size-3 shrink-0' />
           <span className='truncate'>{PAGE_URL[frame.page]}</span>

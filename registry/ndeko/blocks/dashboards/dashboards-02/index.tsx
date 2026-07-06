@@ -1,11 +1,7 @@
 'use client';
 
 import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
   Select,
@@ -100,12 +96,7 @@ function firstNameOf(member: Member | null) {
 }
 
 function MemberFace({ member }: { member: Member }) {
-  return (
-    <Avatar className='size-5 text-[9px]'>
-      {member.avatar && <AvatarImage src={member.avatar} alt='' />}
-      <AvatarFallback>{member.initials}</AvatarFallback>
-    </Avatar>
-  );
+  return <Avatar className='size-5' seed={member.name} />;
 }
 
 function WeekSkeleton() {

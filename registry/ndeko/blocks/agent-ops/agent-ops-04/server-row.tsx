@@ -11,7 +11,7 @@ import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Fold, Swap } from '@/registry/ndeko/ui/chat-motion';
 import { Chip } from '@/registry/ndeko/ui/chip';
-import { LetterTile } from '@/registry/ndeko/ui/letter-tile';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 import { MorphButton, type MorphState } from '@/registry/ndeko/ui/morph-button';
 import { StatusOrb, type StatusOrbTone } from '@/registry/ndeko/ui/status-orb';
 import { Switch } from '@/registry/ndeko/ui/switch';
@@ -135,7 +135,7 @@ function ServerTile({ server }: { server: Server }) {
   if (server.brand) {
     return <BrandTile brand={server.brand} size='lg' />;
   }
-  return <LetterTile initial={server.initial} size='lg' />;
+  return <MeshTile seed={server.name} size='lg' />;
 }
 
 type ToolRowProps = {

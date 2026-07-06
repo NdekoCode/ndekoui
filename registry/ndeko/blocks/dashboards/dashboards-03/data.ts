@@ -7,8 +7,6 @@ export type LeadId = 'amara' | 'lucas' | 'priya' | 'mateo' | 'hana';
 export type Lead = {
   id: LeadId;
   name: string;
-  initials: string;
-  avatar?: string;
 };
 
 export type WorkstreamFigures = {
@@ -54,28 +52,20 @@ export const LEADS: Lead[] = [
   {
     id: 'amara',
     name: 'Amara Okafor',
-    initials: 'AO',
-    avatar: '/avatars/avatar-03.svg',
   },
   {
     id: 'lucas',
     name: 'Lucas Moreau',
-    initials: 'LM',
-    avatar: '/avatars/avatar-04.svg',
   },
   {
     id: 'priya',
     name: 'Priya Raman',
-    initials: 'PR',
-    avatar: '/avatars/avatar-05.svg',
   },
   {
     id: 'mateo',
     name: 'Mateo Silva',
-    initials: 'MS',
-    avatar: '/avatars/avatar-06.svg',
   },
-  { id: 'hana', name: 'Hana Kobayashi', initials: 'HK' },
+  { id: 'hana', name: 'Hana Kobayashi' },
 ];
 
 export const WORKSTREAMS: Workstream[] = [

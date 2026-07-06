@@ -2,11 +2,7 @@ import { memo } from 'react';
 
 import { ClockIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Chip } from '@/registry/ndeko/ui/chip';
 
@@ -84,11 +80,9 @@ function AssigneeStack({ assigneeIds }: { assigneeIds: string[] }) {
       {shown.map((person) => (
         <Avatar
           key={person.id}
-          className='ring-card -ml-1 size-5 text-[9px] ring-2 first:ml-0'
-        >
-          {person.avatar && <AvatarImage src={person.avatar} alt='' />}
-          <AvatarFallback>{person.initials}</AvatarFallback>
-        </Avatar>
+          className='ring-card -ml-1 size-5 ring-2 first:ml-0'
+          seed={person.name}
+        />
       ))}
       {hasHidden && (
         <span className='bg-muted text-muted-foreground ring-card -ml-1 inline-flex size-5 items-center justify-center rounded-full text-[9px] font-medium ring-2'>

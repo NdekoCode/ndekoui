@@ -21,9 +21,8 @@ export type Server = {
   id: string;
   name: string;
   transport: Transport;
-  /** The mark of a known product. A server of your own gets its initial on a tile. */
+  /** The mark of a known product. A server of your own gets a picture drawn from its name. */
   brand?: BrandSlug;
-  initial: string;
   /** Shown for a server of your own: its address or the command that starts it. */
   address?: string;
   tools: Tool[];
@@ -36,7 +35,6 @@ export const SERVERS: Server[] = [
     name: 'GitHub',
     transport: 'remote',
     brand: 'github',
-    initial: 'G',
     tools: [
       {
         name: 'search_code',
@@ -75,7 +73,6 @@ export const SERVERS: Server[] = [
     name: 'Linear',
     transport: 'remote',
     brand: 'linear',
-    initial: 'L',
     tools: [
       {
         name: 'list_issues',
@@ -100,7 +97,6 @@ export const SERVERS: Server[] = [
     name: 'Notion',
     transport: 'remote',
     brand: 'notion',
-    initial: 'N',
     tools: [
       { name: 'search', summary: 'Search the workspace', access: 'read' },
       { name: 'get_page', summary: 'Read a page', access: 'read' },
@@ -121,7 +117,6 @@ export const SERVERS: Server[] = [
     name: 'Orders database',
     transport: 'local',
     brand: 'postgresql',
-    initial: 'O',
     address: 'node ./mcp/orders-db.js',
     tools: [
       {

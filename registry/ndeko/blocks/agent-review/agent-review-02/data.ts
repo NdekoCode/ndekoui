@@ -6,12 +6,10 @@ export const PULL_REQUEST = {
   commit: 'a1b2c3d',
 };
 
-export const CODER = { name: 'Coder', initial: 'C', series: 5 as SeriesSlot };
+export const CODER = { name: 'Coder', series: 5 as SeriesSlot };
 
 export const REVIEWER = {
   name: 'Lena Brandt',
-  initials: 'LB',
-  avatar: '/avatars/avatar-04.svg',
 };
 
 export type LineKind = 'same' | 'added' | 'removed';

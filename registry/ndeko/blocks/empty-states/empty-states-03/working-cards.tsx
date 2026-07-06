@@ -4,11 +4,7 @@ import { useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Checkbox } from '@/registry/ndeko/ui/checkbox';
 
 import { DashboardCard } from './dashboard-card';
@@ -32,10 +28,10 @@ export function PersonAvatar({
   className?: string;
 }) {
   return (
-    <Avatar className={cn('size-6 text-[10px]', className)}>
-      {person.avatar && <AvatarImage src={person.avatar} alt='' />}
-      <AvatarFallback>{person.initials}</AvatarFallback>
-    </Avatar>
+    <Avatar
+      className={cn('size-6 text-[10px]', className)}
+      seed={person.name}
+    />
   );
 }
 

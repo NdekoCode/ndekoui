@@ -7,11 +7,7 @@ import { MailIcon, UserRoundPlusIcon } from '@/registry/ndeko/lib/icons';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 
 import {
   CURRENT_USER_NAME,
@@ -190,10 +186,7 @@ export default function Team03() {
                 key={member.id}
                 className='flex min-h-14 items-center gap-3 px-3 py-2.5'
               >
-                <Avatar>
-                  {member.avatar && <AvatarImage src={member.avatar} alt='' />}
-                  <AvatarFallback>{member.initials}</AvatarFallback>
-                </Avatar>
+                <Avatar seed={member.name} />
                 <div className='flex min-w-0 flex-1 flex-col gap-0.5'>
                   <p className='truncate text-[13px] font-medium'>
                     {member.name}

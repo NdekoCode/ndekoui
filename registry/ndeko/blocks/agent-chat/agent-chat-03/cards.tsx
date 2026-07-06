@@ -7,7 +7,7 @@ import { Badge } from '@/registry/ndeko/ui/badge';
 import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
 import { Chip } from '@/registry/ndeko/ui/chip';
-import { LetterTile } from '@/registry/ndeko/ui/letter-tile';
+import { CompanyMark } from '@/registry/ndeko/ui/company-mark';
 
 import {
   CARD_FIELDS,
@@ -151,7 +151,7 @@ function CardMark({ card }: { card: CardId }) {
     return <BrandTile brand='linear' size='lg' />;
   }
   if (card === 'post') {
-    return <LetterTile initial={WORKSPACE.initial} size='lg' />;
+    return <CompanyMark seed={WORKSPACE.name} size='lg' />;
   }
   return (
     <span

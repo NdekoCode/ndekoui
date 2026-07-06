@@ -11,8 +11,6 @@ export type InboxFilter = 'all' | 'unread' | 'mentions';
 export type Person = {
   id: string;
   name: string;
-  initials: string;
-  avatar?: string;
 };
 
 export type TaskRef = {
@@ -56,39 +54,29 @@ export const WORKSPACE_NAME = 'Fernhall';
 export const YOU: Person = {
   id: 'you',
   name: 'Amara Okafor',
-  initials: 'AO',
-  avatar: '/avatars/avatar-03.svg',
 };
 
 const LEO: Person = {
   id: 'leo',
   name: 'Léo Martin',
-  initials: 'LM',
-  avatar: '/avatars/avatar-04.svg',
 };
 
 const SANA: Person = {
   id: 'sana',
   name: 'Sana Iqbal',
-  initials: 'SI',
-  avatar: '/avatars/avatar-05.svg',
 };
 
 const TOMAS: Person = {
   id: 'tomas',
   name: 'Tomás Rivera',
-  initials: 'TR',
-  avatar: '/avatars/avatar-06.svg',
 };
 
 const MEI: Person = {
   id: 'mei',
   name: 'Mei Lin',
-  initials: 'ML',
-  avatar: '/avatars/avatar-07.svg',
 };
 
-const JONAS: Person = { id: 'jonas', name: 'Jonas Weber', initials: 'JW' };
+const JONAS: Person = { id: 'jonas', name: 'Jonas Weber' };
 
 export const DAY_LABELS: Record<DayGroup, string> = {
   today: 'Today',

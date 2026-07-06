@@ -19,11 +19,8 @@ import {
   type Icon,
 } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 
 import type { IssueType, Member, Presence, Role } from './data';
 
@@ -65,27 +62,20 @@ export function formatMinutes(minutes: number) {
 }
 
 export function TeamTile({
-  initials,
+  name,
   color,
   className,
 }: {
-  initials: string;
+  name: string;
   color: string;
   className?: string;
 }) {
-  const gemStyle = { '--gem': color } as React.CSSProperties;
-
   return (
-    <span
-      aria-hidden='true'
-      style={gemStyle}
-      className={cn(
-        'gem-plate inline-flex size-10 shrink-0 items-center justify-center rounded-xl text-sm font-semibold',
-        className
-      )}
-    >
-      {initials}
-    </span>
+    <MeshTile
+      seed={name}
+      color={color}
+      className={cn('size-10 rounded-xl', className)}
+    />
   );
 }
 
@@ -114,10 +104,10 @@ export function MemberAvatar({
   className?: string;
 }) {
   return (
-    <Avatar className={cn('size-7 text-[10px]', className)}>
-      {member.avatar && <AvatarImage src={member.avatar} alt='' />}
-      <AvatarFallback>{member.initials}</AvatarFallback>
-    </Avatar>
+    <Avatar
+      className={cn('size-7 text-[10px]', className)}
+      seed={member.name}
+    />
   );
 }
 

@@ -33,8 +33,6 @@ export type CitedSource = {
 
 export const asker = {
   name: 'Jonas Weber',
-  initials: 'JW',
-  avatar: '/avatars/avatar-03.svg',
 };
 
 export const question =

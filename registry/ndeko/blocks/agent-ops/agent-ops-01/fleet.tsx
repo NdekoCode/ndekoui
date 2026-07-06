@@ -13,8 +13,8 @@ import { cn } from '@/registry/ndeko/lib/utils';
 import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Fold } from '@/registry/ndeko/ui/chat-motion';
-import { LetterTile } from '@/registry/ndeko/ui/letter-tile';
 import { LiveDuration } from '@/registry/ndeko/ui/live-duration';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 
 import {
   MAIN_AGENTS,
@@ -197,7 +197,7 @@ type SubAgentRowProps = {
 function SubAgentRow({ agent, live }: SubAgentRowProps) {
   return (
     <li className='bg-foreground/[0.03] dark:bg-foreground/[0.05] flex items-start gap-2.5 rounded-lg px-2.5 py-2'>
-      <LetterTile initial={agent.initials} className='mt-px' />
+      <MeshTile seed={agent.name} className='mt-px' />
       <div className='flex min-w-0 flex-1 flex-col'>
         <p className='flex flex-wrap items-center gap-x-2'>
           <span className='text-[13px] leading-5 font-medium'>
@@ -237,7 +237,7 @@ function FleetRow({
   return (
     <li className='flex flex-col px-2 py-2'>
       <div className='flex items-start gap-3'>
-        <LetterTile initial={agent.initials} size='lg' />
+        <MeshTile seed={agent.name} size='lg' />
         <div className='flex min-w-0 flex-1 flex-col gap-0.5'>
           <p className='flex flex-wrap items-center gap-x-2.5'>
             <span className='text-[13px] leading-5 font-medium'>

@@ -13,6 +13,7 @@ import {
   CheckIcon,
   ClockIcon,
   LoaderCircleIcon,
+  MailIcon,
   SendIcon,
   TrashIcon,
 } from '@/registry/ndeko/lib/icons';
@@ -76,11 +77,6 @@ function resendLabelOf(state: ResendState) {
   return 'Resend';
 }
 
-function initialOf(email: string) {
-  const first = email.charAt(0);
-  return first.toUpperCase();
-}
-
 function Swap({
   swapKey,
   variants,
@@ -111,12 +107,12 @@ function Swap({
   );
 }
 
-/** Someone invited who has not joined: an empty dashed slot with the first letter of the address and a clock. */
-function PendingAvatar({ email }: { email: string }) {
+/** Someone invited who has not joined: an empty dashed slot with an envelope and a clock. */
+function PendingAvatar() {
   return (
     <span aria-hidden='true' className='relative inline-flex shrink-0'>
-      <span className='hairline-border border-foreground/25 text-muted-foreground flex size-9 items-center justify-center rounded-full border-dashed text-[13px] font-medium'>
-        {initialOf(email)}
+      <span className='hairline-border border-foreground/25 text-muted-foreground flex size-9 items-center justify-center rounded-full border-dashed'>
+        <MailIcon className='size-4' />
       </span>
       <span className='bg-card absolute -right-0.5 -bottom-0.5 flex rounded-full p-px'>
         <span className='chip-3d flex size-4 items-center justify-center rounded-full [--chip:var(--warning)]'>
@@ -290,7 +286,7 @@ export function InvitationRow({
       )}
     >
       <div className='col-span-3 flex min-w-0 items-center gap-3 px-4 py-3 xl:col-span-1'>
-        <PendingAvatar email={invitation.email} />
+        <PendingAvatar />
         <div className='flex min-w-0 flex-col gap-0.5'>
           <p className='truncate text-[13px] font-medium'>{invitation.email}</p>
           <p className='text-muted-foreground truncate text-xs'>

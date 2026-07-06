@@ -138,12 +138,7 @@ function Reply03() {
           <MessageContent className='max-w-[85%] sm:max-w-[75%]'>
             {question}
           </MessageContent>
-          <MessageAvatar
-            src={asker.avatar}
-            alt={asker.name}
-            fallback={asker.initials}
-            className='hidden sm:inline-flex'
-          />
+          <MessageAvatar alt={asker.name} className='hidden sm:inline-flex' />
         </Message>
 
         <Message>

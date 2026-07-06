@@ -43,7 +43,7 @@ export const QUESTIONS: Question[] = [
 ];
 
 export const CONTACT = {
-  person: { name: 'Lucia Ferro', image: '/avatars/avatar-05.svg' },
+  person: { name: 'Lucia Ferro' },
   lead: 'Still wondering about something?',
   linkLabel: 'Write to hello@fernpost.example',
   href: 'mailto:hello@fernpost.example',
