@@ -92,4 +92,11 @@ export const manifest: ComponentManifest = [
     description:
       'The page a coding agent is building, beside the chat: Reload runs a thin progress line across the frame, the frame morphs between Desktop and Mobile width, and a console drawer opens to the last lines as hot updates arrive.',
   },
+  {
+    name: 'run-14',
+    source: 'ndeko',
+    title: 'Background tasks',
+    description:
+      'A queue of long jobs with a bar and the time left on each, Cancel and Retry on a failed one, finished jobs that check themselves and leave, and a ring in the header that closes as the queue empties.',
+  },
 ];
