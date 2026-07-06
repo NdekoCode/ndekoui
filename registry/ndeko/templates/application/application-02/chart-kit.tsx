@@ -142,12 +142,17 @@ const BUBBLE_ALIGN: Record<BubbleAlign, string> = {
   end: '-translate-x-[calc(100%-0.75rem)]',
 };
 
+/** A point in the first or last third of the plot keeps its bubble inside the plot on a phone. */
+const START_SHARE = 1 / 3;
+const END_SHARE = 2 / 3;
+
 export function bubbleAlignOf(index: number, count: number): BubbleAlign {
-  if (index === 0) {
+  const lastIndex = Math.max(count - 1, 1);
+  const share = index / lastIndex;
+  if (share < START_SHARE) {
     return 'start';
   }
-  const isLast = index === count - 1;
-  if (isLast) {
+  if (share > END_SHARE) {
     return 'end';
   }
   return 'center';
@@ -174,12 +179,12 @@ export function ChartBubble({
   return (
     <div
       aria-hidden='true'
-      className='pointer-events-none absolute z-10'
+      className='pointer-events-none absolute z-10 w-0'
       style={position}
     >
       <div
         className={cn(
-          'surface-raised flex -translate-y-full flex-col gap-0.5 rounded-lg px-2.5 py-1.5 text-xs whitespace-nowrap',
+          'surface-raised flex w-max -translate-y-full flex-col gap-0.5 rounded-lg px-2.5 py-1.5 text-xs whitespace-nowrap',
           'origin-bottom transition-[opacity,scale] duration-[125ms] ease-(--ease-out-strong)',
           BUBBLE_ALIGN[align],
           !isVisible && 'scale-[0.97] opacity-0'
