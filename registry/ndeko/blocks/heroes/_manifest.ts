@@ -93,4 +93,12 @@ export const manifest: BlockManifest = [
     ],
     previewHeight: 640,
   },
+  {
+    name: 'heroes-11',
+    title: 'Typographic hero',
+    description:
+      'A hero that is mostly its headline, set large: the words land one after another, with small icon tiles standing between some of them, and the lead and two actions follow.',
+    files: ['index.tsx', 'headline.tsx', 'data.ts'],
+    previewHeight: 720,
+  },
 ];
