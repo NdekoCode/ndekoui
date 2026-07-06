@@ -45,7 +45,8 @@ A surface nested in another keeps the corners concentric: its radius is the oute
 - **Materials**, each with one meaning:
   - `chip-3d` (with `--chip`): an assigned value, a label.
   - `keycap-3d`: a key, an icon tile in a list row.
-  - `gem-plate` (with `--gem`): a kind, such as an issue type or a workspace without a logo, holding a white glyph.
+  - `gem-plate` (with `--gem`): a kind, such as an issue type, holding a white glyph.
+  - `mesh-fill` (with `--mesh`): the picture of someone or something that has none: a person (`Avatar` with a `seed`), an agent, a team or a project (`MeshTile`). It is the only gradient of the system and it always stands for an identity. A company without a logo wears `CompanyMark`, a known product its real mark.
   - `surface-raised`: a floating layer (menu, popover, select, dialog).
   - `surface-brand`: the one lifted object of a block (a timer card, a featured plan).
 - Relief stays on labels. The state of a control (pressed, selected, checked) stays flat.

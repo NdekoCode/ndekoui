@@ -40,7 +40,7 @@ export const manifest: BlockManifest = [
 ## Data and states
 
 - Fictional people and companies, plausible numbers, every count with a singular branch. A figure that could pass for a real statistic is labelled "Illustrative".
-- Avatars: `/avatars/avatar-03.svg` to `/avatars/avatar-07.svg` in the `Avatar` primitive, initials as fallback.
+- Avatars: `<Avatar seed={person.name} />` draws a gradient from the name, with no initials and no sample picture. An invented company or workspace wears `CompanyMark`, a team or an agent `MeshTile`, a known product `BrandTile`.
 - A block that shows a list also shows what the list looks like empty when the user can reach that state (a filter that matches nothing, a search without results), with the way back.
 - Interactions work locally with React state: picking a value applies it, a menu action changes the row, drag and drop moves the card. Nothing calls a network.
 
