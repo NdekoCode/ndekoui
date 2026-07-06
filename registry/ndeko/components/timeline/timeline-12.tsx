@@ -1,4 +1,3 @@
-import { cn } from '@/registry/ndeko/lib/utils';
 import {
   Timeline,
   TimelineContent,
@@ -10,60 +9,91 @@ import {
   TimelineTitle,
 } from '@/registry/ndeko/ui/timeline';
 
-const ITEMS = [
+import { ByWidth } from './_parts/by-width';
+import { dayLabelOf } from './_parts/dates';
+import { currentStepOf, stepStateOf, StepStateNote } from './_parts/step-state';
+
+type Stage = {
+  day: string;
+  title: string;
+  note: string;
+};
+
+type OpeningPlanProps = {
+  orientation: 'horizontal' | 'vertical';
+};
+
+const CLINIC_OPENING: Stage[] = [
   {
-    id: 1,
-    date: 'Mar 15, 2024',
-    title: 'Project kickoff',
-    description: 'Initial team meeting.',
+    day: '2026-08-31',
+    title: 'Lease signed',
+    note: 'Ground floor, Mill Street',
   },
-  {
-    id: 2,
-    date: 'Mar 22, 2024',
-    title: 'Design phase',
-    description: 'Completed wireframes.',
-  },
-  {
-    id: 3,
-    date: 'Apr 5, 2024',
-    title: 'Development sprint',
-    description: 'Backend development.',
-  },
-  {
-    id: 4,
-    date: 'Apr 19, 2024',
-    title: 'Testing and deployment',
-    description: 'Performance optimization.',
-  },
+  { day: '2026-09-28', title: 'Fit-out', note: 'Six rooms and a small lab' },
+  { day: '2026-10-26', title: 'Team trained', note: 'Front desk and nurses' },
+  { day: '2026-11-23', title: 'First patients', note: 'Booking opens online' },
 ];
 
-const DOT = [
-  'border-foreground/15 scale-75 transition-[background-color,border-color,scale] duration-200 ease-out-strong',
-  'group-data-completed/timeline-item:border-primary group-data-completed/timeline-item:bg-primary group-data-completed/timeline-item:scale-100 group-data-completed/timeline-item:duration-300',
+const DONE_COUNT = 3;
+
+/* Along the line the date takes the first row: the rail and its dots run under it, and the title starts under the rail. */
+const ROW = [
+  'group-data-[orientation=horizontal]/timeline:mt-0',
+  'group-data-[orientation=vertical]/timeline:not-last:pb-6',
 ].join(' ');
 
-const BELOW_THE_DATE = 'group-data-[orientation=horizontal]/timeline:top-8';
+const UNDER_THE_DATE = 'group-data-[orientation=horizontal]/timeline:top-8';
+
+const DATE_ABOVE_THE_RAIL =
+  'group-data-[orientation=horizontal]/timeline:mb-10';
+
+function OpeningPlan({ orientation }: OpeningPlanProps) {
+  return (
+    <Timeline
+      defaultValue={DONE_COUNT}
+      orientation={orientation}
+      role='list'
+      aria-label='Juniper Health clinic opening'
+    >
+      {CLINIC_OPENING.map((stage, index) => {
+        const step = index + 1;
+        const state = stepStateOf(step, DONE_COUNT);
+
+        return (
+          <TimelineItem
+            key={stage.day}
+            step={step}
+            role='listitem'
+            aria-current={currentStepOf(state)}
+            className={ROW}
+          >
+            <TimelineHeader>
+              <TimelineIndicator className={UNDER_THE_DATE} />
+              <TimelineSeparator className={UNDER_THE_DATE} />
+              <TimelineDate
+                dateTime={stage.day}
+                className={DATE_ABOVE_THE_RAIL}
+              >
+                {dayLabelOf(stage.day)}
+              </TimelineDate>
+              <TimelineTitle>
+                {stage.title}
+                <StepStateNote state={state} />
+              </TimelineTitle>
+            </TimelineHeader>
+            <TimelineContent>{stage.note}</TimelineContent>
+          </TimelineItem>
+        );
+      })}
+    </Timeline>
+  );
+}
 
 export default function Timeline12() {
   return (
-    <Timeline defaultValue={3} orientation='horizontal'>
-      {ITEMS.map((item) => (
-        <TimelineItem
-          key={item.id}
-          step={item.id}
-          className='group-data-[orientation=horizontal]/timeline:mt-0'
-        >
-          <TimelineHeader>
-            <TimelineSeparator
-              className={cn('bg-foreground/10', BELOW_THE_DATE)}
-            />
-            <TimelineDate className='mb-10'>{item.date}</TimelineDate>
-            <TimelineTitle>{item.title}</TimelineTitle>
-            <TimelineIndicator className={cn(DOT, BELOW_THE_DATE)} />
-          </TimelineHeader>
-          <TimelineContent>{item.description}</TimelineContent>
-        </TimelineItem>
-      ))}
-    </Timeline>
+    <ByWidth
+      narrow={<OpeningPlan orientation='vertical' />}
+      wide={<OpeningPlan orientation='horizontal' />}
+    />
   );
 }

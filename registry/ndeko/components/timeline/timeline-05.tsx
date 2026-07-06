@@ -1,4 +1,10 @@
-import { CheckIcon } from '@/registry/ndeko/lib/icons';
+'use client';
+
+import { useState } from 'react';
+
+import { WordRoll } from '@/components/core/word-roll';
+import { Button } from '@/registry/ndeko/ui/button';
+import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import {
   Timeline,
   TimelineContent,
@@ -10,71 +16,149 @@ import {
   TimelineTitle,
 } from '@/registry/ndeko/ui/timeline';
 
-const ITEMS = [
+import { dayLabelOf } from './_parts/dates';
+import { MARKER, MARKER_RAIL, MARKER_ROW } from './_parts/markers';
+import { currentStepOf, stepStateOf, StepStateNote } from './_parts/step-state';
+
+type OnboardingStep = {
+  day: string;
+  title: string;
+  detail: string;
+};
+
+const FIRST_WEEK: OnboardingStep[] = [
   {
-    id: 1,
-    date: 'Mar 15, 2024',
-    title: 'Project kickoff',
-    description:
-      'Initial team meeting and project scope definition. Established key milestones and resource allocation.',
+    day: '2026-11-09',
+    title: 'Laptop and accounts',
+    detail: 'Collect your laptop and sign in to mail, chat and the tracker.',
   },
   {
-    id: 2,
-    date: 'Mar 22, 2024',
-    title: 'Design phase',
-    description:
-      'Completed wireframes and user interface mockups. Stakeholder review and feedback incorporated.',
+    day: '2026-11-10',
+    title: 'Ship a small fix',
+    detail: 'Pick a starter issue and take it through review with your buddy.',
   },
   {
-    id: 3,
-    date: 'Apr 5, 2024',
-    title: 'Development sprint',
-    description:
-      'Backend API implementation and frontend component development in progress.',
+    day: '2026-11-12',
+    title: 'Sit in on a client call',
+    detail: 'Join the Oatfield weekly and write up the notes.',
   },
   {
-    id: 4,
-    date: 'Apr 19, 2024',
-    title: 'Testing and deployment',
-    description:
-      'Quality assurance testing, performance optimization and production deployment preparation.',
+    day: '2026-11-13',
+    title: 'First week review',
+    detail:
+      'Thirty minutes with your lead on what worked and what was missing.',
   },
 ];
 
+const DONE_AT_START = 2;
+
 const CIRCLE = [
-  'border-foreground/15 flex size-6 scale-80 items-center justify-center transition-[background-color,border-color,color,scale] duration-200 ease-out-strong',
-  'group-data-completed/timeline-item:border-primary group-data-completed/timeline-item:bg-primary group-data-completed/timeline-item:text-primary-foreground group-data-completed/timeline-item:scale-100 group-data-completed/timeline-item:duration-300',
-  'group-data-[orientation=vertical]/timeline:-left-7',
+  MARKER,
+  'text-primary-foreground scale-90 group-aria-[current=step]/timeline-item:border-foreground/40',
+  'group-data-completed/timeline-item:bg-primary group-data-completed/timeline-item:scale-100',
 ].join(' ');
 
-const CHECK = [
-  'size-3.5 scale-60 opacity-0 blur-[2px] transition-[opacity,scale,filter] duration-150 ease-out-strong',
-  'group-data-completed/timeline-item:scale-100 group-data-completed/timeline-item:opacity-100 group-data-completed/timeline-item:blur-none',
+/* The stroke is one dash as long as the path: sliding it into place draws the check, and it leaves faster than it came. */
+const CHECK_STROKE = [
+  'opacity-0 transition-[stroke-dashoffset,opacity] duration-150 ease-(--ease-out-strong) [stroke-dasharray:1] [stroke-dashoffset:1]',
+  'group-data-completed/timeline-item:opacity-100 group-data-completed/timeline-item:delay-100 group-data-completed/timeline-item:duration-300 group-data-completed/timeline-item:[stroke-dashoffset:0]',
 ].join(' ');
 
-const LINE =
-  'bg-foreground/10 group-data-[orientation=vertical]/timeline:-left-7 group-data-[orientation=vertical]/timeline:h-[calc(100%-1.5rem-0.25rem)] group-data-[orientation=vertical]/timeline:translate-y-6.5';
+function DrawnCheck() {
+  return (
+    <svg viewBox='0 0 12 12' aria-hidden='true' className='size-3.5'>
+      <path
+        d='M2.75 6.25 5 8.5l4.25-4.75'
+        pathLength={1}
+        fill='none'
+        stroke='currentColor'
+        strokeWidth='1.75'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        className={CHECK_STROKE}
+      />
+    </svg>
+  );
+}
+
+function progressLabelOf(doneCount: number) {
+  return `${doneCount} of ${FIRST_WEEK.length} steps done`;
+}
+
+function actionLabelOf(isComplete: boolean) {
+  if (isComplete) {
+    return 'Start over';
+  }
+  return 'Mark next step done';
+}
 
 export default function Timeline05() {
+  const [doneCount, setDoneCount] = useState(DONE_AT_START);
+  const [notice, setNotice] = useState('');
+  const isComplete = doneCount === FIRST_WEEK.length;
+  const progressLabel = progressLabelOf(doneCount);
+  const actionLabel = actionLabelOf(isComplete);
+
+  function advance() {
+    if (isComplete) {
+      setDoneCount(0);
+      setNotice('Checklist cleared');
+      return;
+    }
+    const finished = FIRST_WEEK[doneCount];
+    const nextCount = doneCount + 1;
+    const nextProgress = progressLabelOf(nextCount);
+    setDoneCount(nextCount);
+    setNotice(`${finished.title} done. ${nextProgress}`);
+  }
+
   return (
-    <Timeline defaultValue={3}>
-      {ITEMS.map((item) => (
-        <TimelineItem
-          key={item.id}
-          step={item.id}
-          className='group-data-[orientation=vertical]/timeline:ms-10'
-        >
-          <TimelineHeader>
-            <TimelineSeparator className={LINE} />
-            <TimelineDate>{item.date}</TimelineDate>
-            <TimelineTitle>{item.title}</TimelineTitle>
-            <TimelineIndicator className={CIRCLE}>
-              <CheckIcon strokeWidth={2.5} className={CHECK} />
-            </TimelineIndicator>
-          </TimelineHeader>
-          <TimelineContent>{item.description}</TimelineContent>
-        </TimelineItem>
-      ))}
-    </Timeline>
+    <div className='relative flex w-full max-w-md flex-col gap-4'>
+      <Timeline
+        value={doneCount}
+        role='list'
+        aria-label='Your first week at Mossline'
+        className='[--marker:1.5rem]'
+      >
+        {FIRST_WEEK.map((onboardingStep, index) => {
+          const step = index + 1;
+          const state = stepStateOf(step, doneCount);
+
+          return (
+            <TimelineItem
+              key={onboardingStep.title}
+              step={step}
+              role='listitem'
+              aria-current={currentStepOf(state)}
+              className={MARKER_ROW}
+            >
+              <TimelineHeader>
+                <TimelineIndicator className={CIRCLE}>
+                  <DrawnCheck />
+                </TimelineIndicator>
+                <TimelineSeparator className={MARKER_RAIL} />
+                <TimelineDate dateTime={onboardingStep.day} className='mt-1'>
+                  {dayLabelOf(onboardingStep.day)}
+                </TimelineDate>
+                <TimelineTitle>
+                  {onboardingStep.title}
+                  <StepStateNote state={state} />
+                </TimelineTitle>
+              </TimelineHeader>
+              <TimelineContent>{onboardingStep.detail}</TimelineContent>
+            </TimelineItem>
+          );
+        })}
+      </Timeline>
+      <div className='flex flex-wrap items-center justify-between gap-x-3 gap-y-2'>
+        <p className='text-muted-foreground text-xs tabular-nums'>
+          <WordRoll text={progressLabel} value={doneCount} />
+        </p>
+        <Button type='button' variant='outline' size='sm' onClick={advance}>
+          <WordRoll text={actionLabel} />
+        </Button>
+      </div>
+      <LiveRegion message={notice} />
+    </div>
   );
 }

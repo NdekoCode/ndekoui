@@ -1,7 +1,6 @@
 import {
   Timeline,
   TimelineContent,
-  TimelineDate,
   TimelineHeader,
   TimelineIndicator,
   TimelineItem,
@@ -9,66 +8,73 @@ import {
   TimelineTitle,
 } from '@/registry/ndeko/ui/timeline';
 
-type Event = {
-  id: number;
-  date?: string;
+import { AgoTime } from './_parts/ago-time';
+import { currentStepOf, stepStateOf, StepStateNote } from './_parts/step-state';
+
+type ReviewStep = {
   title: string;
-  description: string;
+  detail: string;
+  at?: string;
 };
 
-const ITEMS: Event[] = [
+const REVIEW: ReviewStep[] = [
   {
-    id: 1,
-    date: '15 minutes ago',
-    title: 'Pull request submitted',
-    description:
-      'Submitted PR #342 with the new feature. Waiting for a code review from the team leads.',
+    title: 'Pull request opened',
+    detail: 'Mira opened #418, which keeps cart totals in whole cents.',
+    at: '2026-11-12T14:18:00',
   },
   {
-    id: 2,
-    date: '10 minutes ago',
-    title: 'CI pipeline started',
-    description:
-      'Automated tests and build started. Running unit tests and code quality checks.',
+    title: 'Checks finished',
+    detail: 'Type check, lint and 212 tests ran on the first push.',
+    at: '2026-11-12T14:25:00',
   },
   {
-    id: 3,
-    date: '5 minutes ago',
-    title: 'Code review feedback',
-    description:
-      'Received comments on the PR. Minor changes needed in error handling and documentation.',
+    title: 'Changes requested',
+    detail: 'Idris asked for a rounding test on carts that mix two currencies.',
+    at: '2026-11-12T14:42:00',
   },
   {
-    id: 4,
-    title: 'Changes pushed',
-    description:
-      'Implemented the requested changes and pushed them to the feature branch. Awaiting final approval.',
+    title: 'Fix pushed',
+    detail:
+      'One commit adds the rounding test. The pull request waits for a second look.',
   },
 ];
 
-const DOT = [
-  'border-foreground/15 scale-75 transition-[background-color,border-color,scale] duration-200 ease-out-strong',
-  'group-data-completed/timeline-item:border-primary group-data-completed/timeline-item:bg-primary group-data-completed/timeline-item:scale-100 group-data-completed/timeline-item:duration-300',
-].join(' ');
+const DONE_COUNT = 3;
 
 export default function Timeline04() {
   return (
-    <Timeline defaultValue={3}>
-      {ITEMS.map((item) => (
-        <TimelineItem key={item.id} step={item.id}>
-          <TimelineHeader>
-            <TimelineSeparator className='bg-foreground/10' />
-            <TimelineTitle className='-mt-0.5'>{item.title}</TimelineTitle>
-            <TimelineIndicator className={DOT} />
-          </TimelineHeader>
-          <TimelineContent>
-            {item.description}
-            {item.date && (
-              <TimelineDate className='mt-2 mb-0'>{item.date}</TimelineDate>
-            )}
-          </TimelineContent>
-        </TimelineItem>
-      ))}
+    <Timeline
+      defaultValue={DONE_COUNT}
+      role='list'
+      aria-label='Review of pull request 418'
+    >
+      {REVIEW.map((reviewStep, index) => {
+        const step = index + 1;
+        const state = stepStateOf(step, DONE_COUNT);
+
+        return (
+          <TimelineItem
+            key={reviewStep.title}
+            step={step}
+            role='listitem'
+            aria-current={currentStepOf(state)}
+          >
+            <TimelineHeader>
+              <TimelineIndicator />
+              <TimelineSeparator />
+              <TimelineTitle className='-mt-0.5'>
+                {reviewStep.title}
+                <StepStateNote state={state} />
+              </TimelineTitle>
+            </TimelineHeader>
+            <TimelineContent>
+              {reviewStep.detail}
+              {reviewStep.at && <AgoTime at={reviewStep.at} className='mt-2' />}
+            </TimelineContent>
+          </TimelineItem>
+        );
+      })}
     </Timeline>
   );
 }

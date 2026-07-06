@@ -9,56 +9,77 @@ import {
   TimelineTitle,
 } from '@/registry/ndeko/ui/timeline';
 
-const ITEMS = [
+import { dayLabelOf } from './_parts/dates';
+import { currentStepOf, stepStateOf, StepStateNote } from './_parts/step-state';
+
+type ClaimStep = {
+  day: string;
+  title: string;
+  detail: string;
+};
+
+const CLAIM: ClaimStep[] = [
   {
-    id: 1,
-    date: 'Mar 15, 2024',
-    title: 'Project kickoff',
-    description:
-      'Initial team meeting and project scope definition. Established key milestones and resource allocation.',
+    day: '2026-10-28',
+    title: 'Claim opened',
+    detail:
+      'Pinecrest reported two crushed cartons on delivery CF-48213 and sent six photos.',
   },
   {
-    id: 2,
-    date: 'Mar 22, 2024',
-    title: 'Design phase',
-    description:
-      'Completed wireframes and user interface mockups. Stakeholder review and feedback incorporated.',
+    day: '2026-10-30',
+    title: 'Carrier statement',
+    detail:
+      'The driver and the depot scan both show the pallet leaving Leeds intact.',
   },
   {
-    id: 3,
-    date: 'Apr 5, 2024',
-    title: 'Development sprint',
-    description:
-      'Backend API implementation and frontend component development in progress.',
+    day: '2026-11-04',
+    title: 'Damage assessed',
+    detail:
+      'An assessor valued the loss at 412.60 EUR, inside the cover of the shipment.',
   },
   {
-    id: 4,
-    date: 'Apr 19, 2024',
-    title: 'Testing and deployment',
-    description:
-      'Quality assurance testing, performance optimization and production deployment preparation.',
+    day: '2026-11-13',
+    title: 'Payout',
+    detail:
+      'The amount is paid to the account on file once Pinecrest signs the settlement.',
   },
 ];
 
-const DOT = [
-  'border-foreground/15 scale-75 transition-[background-color,border-color,scale] duration-200 ease-out-strong',
-  'group-data-completed/timeline-item:border-primary group-data-completed/timeline-item:bg-primary group-data-completed/timeline-item:scale-100 group-data-completed/timeline-item:duration-300',
-].join(' ');
+const DONE_COUNT = 3;
 
 export default function Timeline03() {
   return (
-    <Timeline defaultValue={3}>
-      {ITEMS.map((item) => (
-        <TimelineItem key={item.id} step={item.id}>
-          <TimelineHeader>
-            <TimelineSeparator className='bg-foreground/10' />
-            <TimelineDate>{item.date}</TimelineDate>
-            <TimelineTitle>{item.title}</TimelineTitle>
-            <TimelineIndicator className={DOT} />
-          </TimelineHeader>
-          <TimelineContent>{item.description}</TimelineContent>
-        </TimelineItem>
-      ))}
+    <Timeline
+      defaultValue={DONE_COUNT}
+      role='list'
+      aria-label='Calder Freight claim CF-48213'
+    >
+      {CLAIM.map((claimStep, index) => {
+        const step = index + 1;
+        const state = stepStateOf(step, DONE_COUNT);
+
+        return (
+          <TimelineItem
+            key={claimStep.day}
+            step={step}
+            role='listitem'
+            aria-current={currentStepOf(state)}
+          >
+            <TimelineHeader>
+              <TimelineIndicator />
+              <TimelineSeparator />
+              <TimelineDate dateTime={claimStep.day}>
+                {dayLabelOf(claimStep.day)}
+              </TimelineDate>
+              <TimelineTitle>
+                {claimStep.title}
+                <StepStateNote state={state} />
+              </TimelineTitle>
+            </TimelineHeader>
+            <TimelineContent>{claimStep.detail}</TimelineContent>
+          </TimelineItem>
+        );
+      })}
     </Timeline>
   );
 }

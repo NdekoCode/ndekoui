@@ -1,12 +1,7 @@
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import {
   Timeline,
   TimelineContent,
-  TimelineDate,
   TimelineHeader,
   TimelineIndicator,
   TimelineItem,
@@ -14,83 +9,86 @@ import {
   TimelineTitle,
 } from '@/registry/ndeko/ui/timeline';
 
-const ITEMS = [
+import { AgoTime } from './_parts/ago-time';
+import { MARKER, MARKER_RAIL, MARKER_ROW } from './_parts/markers';
+
+type Remark = {
+  author: string;
+  action: string;
+  text: string;
+  at: string;
+};
+
+const REVIEW_THREAD: Remark[] = [
   {
-    id: 1,
-    date: '15 minutes ago',
-    name: 'Hannah Kandell',
-    initials: 'HK',
-    action: 'opened a new issue',
-    description:
-      'The date picker from the component library opens behind the dialog.',
-    image: '/avatars/avatar-03.svg',
+    author: 'Noor Rahimi',
+    action: 'shared round two',
+    text: 'Three label options for the cocoa tin. Option B keeps the oat stalk from the old pack.',
+    at: '2026-11-12T11:55:00',
   },
   {
-    id: 2,
-    date: '10 minutes ago',
-    name: 'Chris Tompson',
-    initials: 'CT',
-    action: 'commented on the issue',
-    description:
-      'Same here on Safari and Chrome. It looks like the popover sits under the dialog layer.',
-    image: '/avatars/avatar-04.svg',
+    author: 'Tobias Lindqvist',
+    action: 'left a note',
+    text: 'B reads best from the shelf. The weight line gets hard to read under 40 mm though.',
+    at: '2026-11-12T13:10:00',
   },
   {
-    id: 3,
-    date: '5 minutes ago',
-    name: 'Emma Davis',
-    initials: 'ED',
-    action: 'assigned you to the issue',
-    description: 'Can you take a look before the Friday release?',
-    image: '/avatars/avatar-05.svg',
+    author: 'Wanjiru Kamau',
+    action: 'asked you to check it',
+    text: 'Can you look at the clear zone around the barcode before Thursday?',
+    at: '2026-11-12T14:15:00',
   },
   {
-    id: 4,
-    date: '2 minutes ago',
-    name: 'Alex Morgan',
-    initials: 'AM',
-    action: 'closed the issue',
-    description: 'Fixed in the latest build. Please review the changes.',
-    image: '/avatars/avatar-06.svg',
+    author: 'Idris Okoye',
+    action: 'approved option B',
+    text: 'Approved with the larger weight line. It goes to the printer tonight.',
+    at: '2026-11-12T14:50:00',
   },
 ];
 
-const LINE =
-  'bg-foreground/10 group-data-[orientation=vertical]/timeline:-left-7 group-data-[orientation=vertical]/timeline:h-[calc(100%-1.5rem-0.25rem)] group-data-[orientation=vertical]/timeline:translate-y-6.5';
+const ROW = [
+  MARKER_ROW,
+  'group-data-[orientation=vertical]/timeline:not-last:pb-8',
+].join(' ');
 
-const COMMENT_CARD =
-  'bg-card text-foreground hairline-ring ring-border mt-2 rounded-xl px-4 py-3 shadow-[0_1px_2px_rgb(0_0_0/0.04)]';
+const PORTRAIT_FRAME = [MARKER, 'border-none bg-transparent'].join(' ');
 
 export default function Timeline07() {
   return (
-    <Timeline className='w-full max-w-md'>
-      {ITEMS.map((item) => (
-        <TimelineItem
-          key={item.id}
-          step={item.id}
-          className='group-data-[orientation=vertical]/timeline:ms-10 group-data-[orientation=vertical]/timeline:not-last:pb-8'
-        >
-          <TimelineHeader>
-            <TimelineSeparator className={LINE} />
-            <TimelineTitle className='mt-0.5'>
-              {item.name}{' '}
-              <span className='text-muted-foreground font-normal'>
-                {item.action}
-              </span>
-            </TimelineTitle>
-            <TimelineIndicator className='flex size-6 items-center justify-center border-none bg-transparent group-data-[orientation=vertical]/timeline:-left-7'>
-              <Avatar className='size-6 text-[10px]'>
-                <AvatarImage src={item.image} alt={item.name} />
-                <AvatarFallback>{item.initials}</AvatarFallback>
-              </Avatar>
-            </TimelineIndicator>
-          </TimelineHeader>
-          <TimelineContent className={COMMENT_CARD}>
-            {item.description}
-            <TimelineDate className='mt-1 mb-0'>{item.date}</TimelineDate>
-          </TimelineContent>
-        </TimelineItem>
-      ))}
+    <Timeline
+      role='list'
+      aria-label='Review of the Oatfield label'
+      className='w-full max-w-md [--marker:1.5rem]'
+    >
+      {REVIEW_THREAD.map((remark, index) => {
+        const step = index + 1;
+
+        return (
+          <TimelineItem
+            key={remark.at}
+            step={step}
+            role='listitem'
+            className={ROW}
+          >
+            <TimelineHeader>
+              <TimelineIndicator className={PORTRAIT_FRAME}>
+                <Avatar seed={remark.author} className='size-(--marker)' />
+              </TimelineIndicator>
+              <TimelineSeparator className={MARKER_RAIL} />
+              <TimelineTitle className='mt-0.5'>
+                {remark.author}{' '}
+                <span className='text-muted-foreground font-normal'>
+                  {remark.action}
+                </span>
+              </TimelineTitle>
+            </TimelineHeader>
+            <TimelineContent className='bg-foreground/[0.04] text-foreground mt-2 rounded-xl px-3 py-2.5'>
+              {remark.text}
+              <AgoTime at={remark.at} className='mt-1' />
+            </TimelineContent>
+          </TimelineItem>
+        );
+      })}
     </Timeline>
   );
 }

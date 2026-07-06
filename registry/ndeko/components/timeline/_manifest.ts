@@ -9,39 +9,45 @@ export const manifest: ComponentManifest = [
   },
   {
     name: 'timeline-02',
-    source: 'comp-531',
+    source: 'ndeko',
     title: 'Dates on the side',
-    description: 'Dates move to a column on the left when there is room.',
+    description:
+      'Dates sit above each title and move to a column on the left when the piece is wide enough.',
   },
   {
     name: 'timeline-03',
-    source: 'comp-532',
+    source: 'ndeko',
     title: 'Timeline with dates',
-    description: 'A date above each title and description.',
+    description:
+      'A date above each title and description, and each step says whether it is done, in progress or to come.',
   },
   {
     name: 'timeline-04',
-    source: 'comp-533',
+    source: 'ndeko',
     title: 'Pull request timeline',
-    description: 'Review steps with the time under each description.',
+    description:
+      'Review steps with how long ago each one happened under its description, and the exact time on hover.',
   },
   {
     name: 'timeline-05',
-    source: 'comp-534',
+    source: 'ndeko',
     title: 'Checked timeline',
-    description: 'Done milestones carry a check in a filled circle.',
+    description:
+      'Marking the next step done draws its check in a filled circle, fills the line to it and rolls the count.',
   },
   {
     name: 'timeline-06',
-    source: 'comp-535',
+    source: 'ndeko',
     title: 'Timeline with icons',
-    description: 'Each event has its own icon, filled once it is done.',
+    description:
+      'Each event has its own icon in a circle that fills once the event is done.',
   },
   {
     name: 'timeline-07',
-    source: 'comp-536',
+    source: 'ndeko',
     title: 'Comment timeline',
-    description: 'Avatars on the line and each comment in a card.',
+    description:
+      'Avatars on the line and each comment in a soft bubble with its time.',
   },
   {
     name: 'timeline-08',
@@ -51,9 +57,10 @@ export const manifest: ComponentManifest = [
   },
   {
     name: 'timeline-09',
-    source: 'comp-538',
+    source: 'ndeko',
     title: 'Event log',
-    description: 'System events with their date and time in one card.',
+    description:
+      'System events in one card, each with a status dot and its date and time.',
   },
   {
     name: 'timeline-10',
@@ -63,14 +70,16 @@ export const manifest: ComponentManifest = [
   },
   {
     name: 'timeline-11',
-    source: 'comp-540',
+    source: 'ndeko',
     title: 'Horizontal timeline',
-    description: 'Milestones along a horizontal line.',
+    description:
+      'Milestones along a horizontal line that stacks into a vertical list when the piece gets narrow.',
   },
   {
     name: 'timeline-12',
-    source: 'comp-541',
+    source: 'ndeko',
     title: 'Horizontal timeline, dates above',
-    description: 'Dates above the line, titles and descriptions below it.',
+    description:
+      'Dates above the line, titles and descriptions below it, stacking into a vertical list when the piece gets narrow.',
   },
 ];
