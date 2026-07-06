@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  useEffect,
   useLayoutEffect,
   useRef,
   useState,
@@ -15,6 +16,10 @@ import { offscreenAttributeOf, useOffscreenPause } from './use-offscreen-pause';
 
 type PreviewStageProps = {
   className?: string;
+  /** A stage whose height follows the window centres again when the window changes its height. */
+  recentresOnHeight?: boolean;
+  /** For this long after it appears, the stage centres its content again each time the content changes size. */
+  settleMs?: number;
   children: ReactNode;
 };
 
@@ -44,7 +49,12 @@ function stageAlignmentOf(isAnchored: boolean) {
  * extends downwards instead of re-centring, so nothing above the change moves. The anchor is only
  * recomputed when the stage width changes, because the layout of the whole row changes with it.
  */
-export function PreviewStage({ className, children }: PreviewStageProps) {
+export function PreviewStage({
+  className,
+  recentresOnHeight = false,
+  settleMs = 0,
+  children,
+}: PreviewStageProps) {
   const stageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [topOffset, setTopOffset] = useState<number | null>(null);
@@ -69,17 +79,37 @@ export function PreviewStage({ className, children }: PreviewStageProps) {
       return;
     }
     let lastWidth = stage.clientWidth;
+    let lastHeight = stage.clientHeight;
     const observer = new ResizeObserver(() => {
       const width = stage.clientWidth;
-      if (width === lastWidth) {
+      const height = stage.clientHeight;
+      const hasWidthChanged = width !== lastWidth;
+      const hasHeightChanged = recentresOnHeight && height !== lastHeight;
+      lastWidth = width;
+      lastHeight = height;
+      if (!hasWidthChanged && !hasHeightChanged) {
         return;
       }
-      lastWidth = width;
       setTopOffset(null);
     });
     observer.observe(stage);
     return () => observer.disconnect();
-  }, []);
+  }, [recentresOnHeight]);
+
+  useEffect(() => {
+    const content = contentRef.current;
+    const isSettling = settleMs > 0;
+    if (!content || !isSettling) {
+      return;
+    }
+    const observer = new ResizeObserver(() => setTopOffset(null));
+    observer.observe(content);
+    const timer = window.setTimeout(() => observer.disconnect(), settleMs);
+    return () => {
+      window.clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, [settleMs]);
 
   return (
     <div
