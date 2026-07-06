@@ -1,0 +1,107 @@
+'use client';
+
+import { useState } from 'react';
+
+import { useAutoplay } from '@/registry/ndeko/hooks/use-autoplay';
+import { PRESS_LEAD_MS, usePress } from '@/registry/ndeko/lib/demonstration';
+import { TrendingUpIcon } from '@/registry/ndeko/lib/icons';
+import { Badge } from '@/registry/ndeko/ui/badge';
+import { LiveRegion } from '@/registry/ndeko/ui/live-region';
+
+import { ANCHORS } from './data';
+import { FeaturedResult } from './featured-result';
+import { SectionFrame, SectionHeader } from './section-frame';
+import { CUSTOMERS, SECTION } from './testimonials-data';
+import { WallCard } from './wall-card';
+
+/** Long enough to read a featured quote once it has written itself in. */
+const FEATURE_MS = 6200;
+
+function indexAfter(index: number) {
+  const next = index + 1;
+  return next % CUSTOMERS.length;
+}
+
+/** The next customer after each one, so a round ends on the first customer and the loop shows no seam. */
+const ROTATION = CUSTOMERS.map((_, index) => indexAfter(index));
+
+function spokenFeatureOf(index: number) {
+  const { company, result } = CUSTOMERS[index];
+  return `Featured: ${company}, ${result.percent}% ${result.label}`;
+}
+
+export function Testimonials() {
+  const [featuredIndex, setFeaturedIndex] = useState(0);
+  const [hasChanged, setHasChanged] = useState(false);
+  const [isReading, setIsReading] = useState(false);
+  const [message, setMessage] = useState('');
+  const { pressed, press } = usePress<string>();
+  const featured = CUSTOMERS[featuredIndex];
+
+  function feature(index: number) {
+    setFeaturedIndex(index);
+    setHasChanged(true);
+  }
+
+  const steps = ROTATION.flatMap((index) => [
+    { after: FEATURE_MS, run: () => press(CUSTOMERS[index].id) },
+    { after: PRESS_LEAD_MS, run: () => feature(index) },
+  ]);
+  const { ref } = useAutoplay<HTMLElement>(steps, {
+    loopAfter: 0,
+    isEnabled: !isReading,
+  });
+
+  function featureByPerson(customerId: string) {
+    const index = CUSTOMERS.findIndex((customer) => customer.id === customerId);
+    feature(index);
+    setMessage(spokenFeatureOf(index));
+  }
+
+  /** The featured quote does not change under the pointer of someone reading it. */
+  function holdWhileReading(event: React.PointerEvent<HTMLDivElement>) {
+    if (event.pointerType === 'mouse') {
+      setIsReading(true);
+    }
+  }
+
+  function stopReading() {
+    setIsReading(false);
+  }
+
+  return (
+    <SectionFrame id={ANCHORS.customers} ref={ref}>
+      <SectionHeader
+        icon={TrendingUpIcon}
+        label={SECTION.label}
+        title={SECTION.title}
+        lead={SECTION.lead}
+      >
+        <Badge variant='secondary'>Sample quotes</Badge>
+        <Badge variant='secondary'>Illustrative figures</Badge>
+      </SectionHeader>
+      <div className='flex flex-col gap-4'>
+        <div onPointerEnter={holdWhileReading} onPointerLeave={stopReading}>
+          <FeaturedResult
+            customer={featured}
+            position={featuredIndex}
+            isStreamed={hasChanged}
+          />
+        </div>
+        <ul className='grid gap-3 @xl:grid-cols-2 @4xl:grid-cols-3'>
+          {CUSTOMERS.map((customer, index) => (
+            <li key={customer.id}>
+              <WallCard
+                customer={customer}
+                isFeatured={index === featuredIndex}
+                isPressed={pressed === customer.id}
+                onFeature={featureByPerson}
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
+      <LiveRegion message={message} />
+    </SectionFrame>
+  );
+}
