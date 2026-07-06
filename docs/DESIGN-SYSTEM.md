@@ -30,6 +30,10 @@ Rules:
 - State greys come from foreground alpha, never from named greys, so one hover works on the page and on a card: `2.5 / 3 / 4 / 5 / 6 / 10 / 15 / 20` percent.
 - Series colours (indigo, orange, violet, lime, pink) name an entity: an agent, a model, a chart series. They are taken in order through `seriesColorOf` and never by rank, so a filter never repaints what stays. The set passes the colour-blind and contrast checks of the dataviz method in both themes and stays clear of the status hues. Text never wears them; a dot, a lane, a line or a chip does.
 
+### Themes
+
+Nine themes recolour the library through the tokens above: Indigo (the default, exactly as `ndeko.css` ships it), Ocean, Lagoon, Forest, Ember, Rose, Plum, Graphite and Sand. Each is a `registry:theme` item named `theme-<name>` that sets the identity tokens for light and dark (`--primary`, `--primary-foreground`, `--primary-ink`, `--ring`, `--sidebar-primary`, `--sidebar-ring` and the chart colours) and, for Graphite and Sand, the neutral surfaces too. Status colours never change. The pairs a person reads are measured for each theme: brand text on the page and on a card, and the text on the primary fill, need 4.5:1; the focus ring, and the white switch thumb and radio dot that the primitives draw on the fill, need 3:1. The `/themes` page shows each theme on live components, and its generator writes one from a hue, a neutral family (zinc, slate or stone) and a radius, moving a lightness only as far as a pair needs and saying so. The colour logic is in `lib/theme-colours.ts`, `lib/theme-neutrals.ts` and `lib/theme-generator.ts`, and the nine themes are in `lib/themes.ts`: change a colour there and the page, the generator checks and the registry items follow.
+
 ## 2. Radius
 
 `--radius` is `0.625rem`. `rounded-sm` 6px for chips, `rounded-md` 8px for menu rows, ghost buttons and fields, `rounded-lg` 10px for tooltips and tiles, `rounded-xl` 14px for cards, popovers and menus, `rounded-2xl` 18px for dialogs and sheets. `rounded-3xl` is not part of the scale. Buttons are pills (`rounded-full`), except ghost and link buttons, which keep the row radius.

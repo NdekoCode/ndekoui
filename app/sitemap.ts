@@ -11,6 +11,7 @@ const STATIC_PATHS = [
   '/components',
   '/blocks',
   '/templates',
+  '/themes',
   '/mcp/connect',
 ];
 
