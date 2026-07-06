@@ -78,4 +78,11 @@ export const manifest: ComponentManifest = [
     description:
       'A failed step in plain words, with a ring that empties toward the next automatic retry, Retry now and Stop retrying, the raw error behind a fold with Copy, and a card that folds into one line once a try goes through.',
   },
+  {
+    name: 'run-12',
+    source: 'ndeko',
+    title: 'Cost tracker',
+    description:
+      'Tokens in and out, the cache share and the cost as plain ticking figures while a step streams, whose totals roll once as each step lands, above a per-step table with the model of each step and a small bar.',
+  },
 ];
