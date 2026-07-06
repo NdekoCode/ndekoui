@@ -33,4 +33,19 @@ export const manifest: BlockManifest = [
     ],
     previewHeight: 1040,
   },
+  {
+    name: 'ai-product-03',
+    title: 'Leads an agent enriches',
+    description:
+      'A leads table with sorting, search, status and owner filters, selection and pages, while an agent works down it: a row lights, a cell shimmers as its value is fetched, then the value settles into place and the count of enriched leads rolls.',
+    files: [
+      'index.tsx',
+      'leads-table.tsx',
+      'toolbar.tsx',
+      'cell-states.tsx',
+      'session.ts',
+      'data.ts',
+    ],
+    previewHeight: 780,
+  },
 ];
