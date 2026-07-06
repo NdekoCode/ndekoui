@@ -32,6 +32,7 @@ export const previewHosts: Record<string, ComponentType<PreviewHostProps>> = {
   integrations: dynamic(() => import('./integrations').then(previewHostOf)),
   legal: dynamic(() => import('./legal').then(previewHostOf)),
   'logo-clouds': dynamic(() => import('./logo-clouds').then(previewHostOf)),
+  maps: dynamic(() => import('./maps').then(previewHostOf)),
   notifications: dynamic(() => import('./notifications').then(previewHostOf)),
   onboarding: dynamic(() => import('./onboarding').then(previewHostOf)),
   pricing: dynamic(() => import('./pricing').then(previewHostOf)),
@@ -39,4 +40,5 @@ export const previewHosts: Record<string, ComponentType<PreviewHostProps>> = {
   'task-detail': dynamic(() => import('./task-detail').then(previewHostOf)),
   'task-lists': dynamic(() => import('./task-lists').then(previewHostOf)),
   team: dynamic(() => import('./team').then(previewHostOf)),
+  workflows: dynamic(() => import('./workflows').then(previewHostOf)),
 };

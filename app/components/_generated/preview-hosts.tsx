@@ -23,6 +23,7 @@ export const previewHosts: Record<string, ComponentType<PreviewHostProps>> = {
     import('./calendar-date-picker').then(previewHostOf)
   ),
   card: dynamic(() => import('./card').then(previewHostOf)),
+  chart: dynamic(() => import('./chart').then(previewHostOf)),
   checkbox: dynamic(() => import('./checkbox').then(previewHostOf)),
   comment: dynamic(() => import('./comment').then(previewHostOf)),
   dialog: dynamic(() => import('./dialog').then(previewHostOf)),

@@ -12415,6 +12415,1502 @@
       ]
     },
     {
+      "name": "chart-01",
+      "type": "registry:component",
+      "title": "Line chart",
+      "description": "One to three lines with a legend that takes a series off, a period switch and a readout on hover or the arrow keys, where the lines glide into the next period under a crosshair that walks them.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/chart/chart-01.tsx",
+          "type": "registry:component",
+          "target": "components/chart/chart-01.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/axis.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/axis.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/chart-card.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/chart-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/data-table.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/data-table.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/format.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/format.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/legend.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/legend.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/morph-path.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/morph-path.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/path.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/path.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/plot.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/plot.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/random.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/random.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/readout.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/readout.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/scale.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/scale.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/series-color.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/series-color.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-chart-demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-chart-demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-plot-width.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-plot-width.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-reading.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-reading.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "chart"
+      ]
+    },
+    {
+      "name": "chart-02",
+      "type": "registry:component",
+      "title": "Bar chart",
+      "description": "Bars side by side or stacked from a zero baseline, lying down when the room is narrow, with a readout on each bar, where every bar slides to its place when the arrangement changes.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/chart/chart-02.tsx",
+          "type": "registry:component",
+          "target": "components/chart/chart-02.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/axis.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/axis.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/chart-card.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/chart-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/corners.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/corners.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/data-table.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/data-table.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/format.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/format.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/legend.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/legend.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/path.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/path.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/plot.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/plot.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/readout.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/readout.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/scale.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/scale.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/series-color.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/series-color.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-chart-demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-chart-demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-plot-width.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-plot-width.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-reading.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-reading.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "chart"
+      ]
+    },
+    {
+      "name": "chart-03",
+      "type": "registry:component",
+      "title": "Area chart and sparklines",
+      "description": "Four stat tiles, each with a sparkline, an end dot and its change in words, over an area chart that glides into the curve of the tile you pick.",
+      "dependencies": [
+        "@base-ui/react",
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/chart/chart-03.tsx",
+          "type": "registry:component",
+          "target": "components/chart/chart-03.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/axis.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/axis.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/chart-card.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/chart-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/data-table.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/data-table.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/format.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/format.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/morph-path.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/morph-path.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/path.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/path.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/plot.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/plot.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/readout.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/readout.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/scale.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/scale.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-chart-demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-chart-demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-plot-width.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-plot-width.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-reading.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-reading.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "chart"
+      ]
+    },
+    {
+      "name": "chart-04",
+      "type": "registry:component",
+      "title": "Baseline chart",
+      "description": "A daily metric against any day you click: the level line glides there, the curve prints in the primary colour above it and in red below, and the sentence on top reads again from that day.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/chart/chart-04.tsx",
+          "type": "registry:component",
+          "target": "components/chart/chart-04.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/axis.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/axis.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/chart-card.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/chart-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/data-table.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/data-table.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/format.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/format.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/morph-path.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/morph-path.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/path.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/path.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/plot.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/plot.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/readout.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/readout.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/scale.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/scale.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-chart-demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-chart-demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-plot-width.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-plot-width.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-reading.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-reading.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-svg-id.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-svg-id.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "chart"
+      ]
+    },
+    {
+      "name": "chart-05",
+      "type": "registry:component",
+      "title": "Outlook chart",
+      "description": "What happened as a solid line and what might happen as a band that thins as it runs out, with a confidence switch that widens and narrows the band and a readout that gives the likely range in words.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/chart/chart-05.tsx",
+          "type": "registry:component",
+          "target": "components/chart/chart-05.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/axis.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/axis.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/chart-card.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/chart-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/data-table.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/data-table.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/format.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/format.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/morph-path.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/morph-path.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/path.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/path.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/plot.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/plot.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/readout.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/readout.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/scale.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/scale.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/today-mark.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/today-mark.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-chart-demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-chart-demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-plot-width.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-plot-width.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-reading.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-reading.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-svg-id.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-svg-id.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "chart"
+      ]
+    },
+    {
+      "name": "chart-06",
+      "type": "registry:component",
+      "title": "Goal numerals",
+      "description": "Four goals as soft bars under large percentages and a month scrubber that moves them all as one, where a bar that reaches its goal gives a little, then breaks through in amber with the words Over goal.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/chart/chart-06.tsx",
+          "type": "registry:component",
+          "target": "components/chart/chart-06.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/chart-card.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/chart-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/data-table.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/data-table.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/scale.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/scale.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-chart-demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-chart-demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-step-drag.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-step-drag.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "chart"
+      ]
+    },
+    {
+      "name": "chart-07",
+      "type": "registry:component",
+      "title": "Metric explainer",
+      "description": "A figure with its change in words, a reading of why it moved that streams in when asked, and its drivers as bars around zero, where pointing at a driver lights its share of the total.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/skeleton.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/chart/chart-07.tsx",
+          "type": "registry:component",
+          "target": "components/chart/chart-07.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/chart-card.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/chart-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/data-table.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/data-table.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/format.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/format.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/scale.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/scale.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/streamed-words.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/streamed-words.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-chart-demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-chart-demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-word-stream.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-word-stream.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "chart"
+      ]
+    },
+    {
+      "name": "chart-08",
+      "type": "registry:component",
+      "title": "Shift",
+      "description": "Where visitors come from as a list, as bars or as change, where switching view makes every icon, figure and bar glide to its new place instead of being drawn again.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/chart/chart-08.tsx",
+          "type": "registry:component",
+          "target": "components/chart/chart-08.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/chart-card.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/chart-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/corners.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/corners.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/data-table.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/data-table.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/format.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/format.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/scale.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/scale.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-chart-demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-chart-demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-word-stream.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-word-stream.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/wrapping-roll.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/wrapping-roll.tsx"
+        }
+      ],
+      "categories": [
+        "components",
+        "chart"
+      ]
+    },
+    {
+      "name": "chart-09",
+      "type": "registry:component",
+      "title": "Uptime bar",
+      "description": "One bar per day for a service, up, degraded, down or without data, with its uptime, a readout that glides along the days on hover or the arrow keys, and Enter to keep the details of a day open; the bars thin out from ninety days to thirty as the piece narrows.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/chart/chart-09.tsx",
+          "type": "registry:component",
+          "target": "components/chart/chart-09.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/axis.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/axis.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/chart-card.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/chart-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/data-table.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/data-table.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/format.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/format.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/path.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/path.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/plot.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/plot.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/readout.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/readout.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/scale.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/scale.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-chart-demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-chart-demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-plot-width.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-plot-width.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-reading.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-reading.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "chart"
+      ]
+    },
+    {
+      "name": "chart-10",
+      "type": "registry:component",
+      "title": "Dot histogram",
+      "description": "A distribution stacked from dots with a target pin you drag, flick or move with the arrow keys, where the pin catches on each column and the dots past it turn red one column after the other while the sentence on top counts them.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/chart/chart-10.tsx",
+          "type": "registry:component",
+          "target": "components/chart/chart-10.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/axis.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/axis.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/chart-card.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/chart-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/data-table.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/data-table.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/format.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/format.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/path.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/path.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/plot.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/plot.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/scale.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/scale.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-chart-demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-chart-demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-plot-width.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-plot-width.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-step-drag.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-step-drag.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "chart"
+      ]
+    },
+    {
+      "name": "chart-11",
+      "type": "registry:component",
+      "title": "Lasso scatter",
+      "description": "Every request a dot, coloured by model: a lasso drawn round a cluster fades the rest and the headline counts what it holds, its average and the model most of it belongs to; a model button selects the same way from the keyboard.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/chart/chart-11.tsx",
+          "type": "registry:component",
+          "target": "components/chart/chart-11.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/axis.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/axis.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/chart-card.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/chart-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/data-table.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/data-table.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/format.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/format.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/path.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/path.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/plot.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/plot.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/random.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/random.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/readout.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/readout.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/scale.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/scale.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-chart-demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-chart-demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-plot-width.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-plot-width.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-reading.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-reading.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "chart"
+      ]
+    },
+    {
+      "name": "chart-12",
+      "type": "registry:component",
+      "title": "Matchup",
+      "description": "Two contenders compared on six criteria as one shape made of petals, each as long as the lead and in the colour of whoever leads there, with a sentence that names the leads and petals that reshape when a contender changes.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/select.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/chart/chart-12.tsx",
+          "type": "registry:component",
+          "target": "components/chart/chart-12.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/axis.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/axis.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/chart-card.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/chart-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/morph-path.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/morph-path.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/path.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/path.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/plot.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/plot.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/scale.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/scale.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-chart-demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-chart-demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-reading.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-reading.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-word-stream.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-word-stream.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/wrapping-roll.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/wrapping-roll.tsx"
+        }
+      ],
+      "categories": [
+        "components",
+        "chart"
+      ]
+    },
+    {
+      "name": "chart-13",
+      "type": "registry:component",
+      "title": "Flow funnel",
+      "description": "A funnel drawn as one smooth shape whose edges you pull, by hand or with the arrow keys, to try a better rate: everything downstream swells with it, the headline counts the customers gained, and the edge catches on the real rate on the way back.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/chart/chart-13.tsx",
+          "type": "registry:component",
+          "target": "components/chart/chart-13.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/axis.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/axis.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/chart-card.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/chart-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/data-table.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/data-table.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/format.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/format.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/morph-path.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/morph-path.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/path.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/path.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/plot.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/plot.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/scale.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/scale.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-chart-demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-chart-demo.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "chart"
+      ]
+    },
+    {
+      "name": "chart-14",
+      "type": "registry:component",
+      "title": "Bridge",
+      "description": "A waterfall from last month to this month that you pour by dragging across it or with the arrow keys: each floating bar fills as the pour reaches it and the running total rolls step by step.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/chart/chart-14.tsx",
+          "type": "registry:component",
+          "target": "components/chart/chart-14.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/axis.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/axis.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/chart-card.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/chart-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/data-table.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/data-table.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/format.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/format.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/path.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/path.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/plot.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/plot.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/scale.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/scale.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-chart-demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-chart-demo.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "chart"
+      ]
+    },
+    {
+      "name": "chart-15",
+      "type": "registry:component",
+      "title": "Ask your data",
+      "description": "A question typed or picked from suggestions gets a one-line answer that streams over a chart where only the series it talks about is in colour, and a follow-up reshapes the same chart, its lines gliding into the new series, while past questions stay as chips to go back to.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/chart/chart-15.tsx",
+          "type": "registry:component",
+          "target": "components/chart/chart-15.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/axis.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/axis.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/chart-card.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/chart-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/chip-button.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/chip-button.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/data-table.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/data-table.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/format.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/format.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/legend.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/legend.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/morph-path.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/morph-path.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/path.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/path.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/plot.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/plot.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/question-form.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/question-form.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/readout.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/readout.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/scale.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/scale.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/streamed-words.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/streamed-words.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-chart-demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-chart-demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-reading.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-reading.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-word-stream.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-word-stream.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "chart"
+      ]
+    },
+    {
+      "name": "chart-16",
+      "type": "registry:component",
+      "title": "Forecast what-if",
+      "description": "Cash runway against the plan with a what-if typed in plain words that bends the forecast away from the plan as the runway rolls, where switching to Range fans the line out into a swarm of likely futures and the runway mark parts into a range.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/chart/chart-16.tsx",
+          "type": "registry:component",
+          "target": "components/chart/chart-16.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/axis.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/axis.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/chart-card.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/chart-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/chip-button.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/chip-button.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/data-table.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/data-table.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/format.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/format.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/legend.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/legend.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/morph-path.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/morph-path.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/path.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/path.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/plot.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/plot.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/question-form.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/question-form.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/random.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/random.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/readout.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/readout.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/scale.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/scale.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/today-mark.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/today-mark.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-chart-demo.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-chart-demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-plot-width.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-plot-width.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-reading.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-reading.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/use-word-stream.ts",
+          "type": "registry:component",
+          "target": "components/chart/_parts/use-word-stream.ts"
+        },
+        {
+          "path": "registry/ndeko/components/chart/_parts/wrapping-roll.tsx",
+          "type": "registry:component",
+          "target": "components/chart/_parts/wrapping-roll.tsx"
+        }
+      ],
+      "categories": [
+        "components",
+        "chart"
+      ]
+    },
+    {
       "name": "checkbox-01",
       "type": "registry:component",
       "title": "Basic checkbox",
@@ -33857,6 +35353,119 @@
       ]
     },
     {
+      "name": "maps-01",
+      "type": "registry:block",
+      "title": "Agent activity globe",
+      "description": "A dotted globe beside the live runs, tokens and spend of four regions: each hand-off turns the globe to show both regions and draws its arc between them while the counts roll in the list, and picking a region turns the globe back to it.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
+        "https://ui.ndekocode.dev/r/motion-globe.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/maps/maps-01/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/maps-01/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/maps/maps-01/globe-stage.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/maps-01/globe-stage.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/maps/maps-01/region-list.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/maps-01/region-list.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/maps/maps-01/geo.ts",
+          "type": "registry:component",
+          "target": "components/blocks/maps-01/geo.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/maps/maps-01/session.ts",
+          "type": "registry:component",
+          "target": "components/blocks/maps-01/session.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/maps/maps-01/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/maps-01/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "maps"
+      ]
+    },
+    {
+      "name": "maps-02",
+      "type": "registry:block",
+      "title": "Map of live runs",
+      "description": "A dotted world map of six regions joined by routes: each run handed off travels its route as a light in the colour of its agent and lands with a ring while the count rolls, and every region is a button whose bubble says how many runs it holds now.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
+        "https://ui.ndekocode.dev/r/motion-dotted-map.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/maps/maps-02/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/maps-02/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/maps/maps-02/map-stage.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/maps-02/map-stage.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/maps/maps-02/projection.ts",
+          "type": "registry:component",
+          "target": "components/blocks/maps-02/projection.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/maps/maps-02/session.ts",
+          "type": "registry:component",
+          "target": "components/blocks/maps-02/session.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/maps/maps-02/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/maps-02/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "maps"
+      ]
+    },
+    {
       "name": "notifications-01",
       "type": "registry:block",
       "title": "Inbox from a bell",
@@ -35332,6 +36941,210 @@
       "categories": [
         "blocks",
         "team"
+      ]
+    },
+    {
+      "name": "workflows-01",
+      "type": "registry:block",
+      "title": "Workflow builder",
+      "description": "A canvas where steps are connected by hand: a wire follows the pointer out of a port and lands on the steps that can take it, the warning marks clear as it lands, and Publish refuses with a count until the last problem is fixed in the inspector.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/dropdown-menu.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/select.json",
+        "https://ui.ndekocode.dev/r/textarea.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-01/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-01/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-01/canvas.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-01/canvas.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-01/step-card.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-01/step-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-01/step-tile.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-01/step-tile.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-01/wires.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-01/wires.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-01/inspector.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-01/inspector.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-01/side-panel.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-01/side-panel.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-01/zoom-control.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-01/zoom-control.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-01/use-pan-zoom.ts",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-01/use-pan-zoom.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-01/use-width-band.ts",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-01/use-width-band.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-01/layout.ts",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-01/layout.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-01/graph.ts",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-01/graph.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-01/session.ts",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-01/session.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-01/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-01/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "workflows"
+      ]
+    },
+    {
+      "name": "workflows-02",
+      "type": "registry:block",
+      "title": "Node graph editor",
+      "description": "A pipeline of typed nodes with their settings inside: a wire between two ports of different types is refused with a shake of its end and the reason, Run lights the nodes in order as their ring closes, one fails with Retry, and the next run serves what did not change from cache.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/dropdown-menu.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/select.json",
+        "https://ui.ndekocode.dev/r/slider.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-02/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-02/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-02/canvas.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-02/canvas.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-02/node-card.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-02/node-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-02/wires.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-02/wires.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-02/zoom-control.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-02/zoom-control.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-02/use-pan-zoom.ts",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-02/use-pan-zoom.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-02/use-is-phone.ts",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-02/use-is-phone.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-02/layout.ts",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-02/layout.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-02/pipeline.ts",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-02/pipeline.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-02/session.ts",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-02/session.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/workflows/workflows-02/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/workflows-02/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "workflows"
       ]
     },
     {

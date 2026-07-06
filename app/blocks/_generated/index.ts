@@ -1042,6 +1042,43 @@ export const groups: BundleGroup[] = [
     ],
   },
   {
+    slug: 'maps',
+    name: 'Maps',
+    entries: [
+      {
+        name: 'maps-01',
+        title: 'Agent activity globe',
+        description:
+          'A dotted globe beside the live runs, tokens and spend of four regions: each hand-off turns the globe to show both regions and draws its arc between them while the counts roll in the list, and picking a region turns the globe back to it.',
+        files: [
+          'index.tsx',
+          'globe-stage.tsx',
+          'region-list.tsx',
+          'geo.ts',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 640,
+        group: 'maps',
+      },
+      {
+        name: 'maps-02',
+        title: 'Map of live runs',
+        description:
+          'A dotted world map of six regions joined by routes: each run handed off travels its route as a light in the colour of its agent and lands with a ring while the count rolls, and every region is a button whose bubble says how many runs it holds now.',
+        files: [
+          'index.tsx',
+          'map-stage.tsx',
+          'projection.ts',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 600,
+        group: 'maps',
+      },
+    ],
+  },
+  {
     slug: 'notifications',
     name: 'Notifications',
     entries: [
@@ -1441,6 +1478,57 @@ export const groups: BundleGroup[] = [
         ],
         previewHeight: 820,
         group: 'team',
+      },
+    ],
+  },
+  {
+    slug: 'workflows',
+    name: 'Workflows',
+    entries: [
+      {
+        name: 'workflows-01',
+        title: 'Workflow builder',
+        description:
+          'A canvas where steps are connected by hand: a wire follows the pointer out of a port and lands on the steps that can take it, the warning marks clear as it lands, and Publish refuses with a count until the last problem is fixed in the inspector.',
+        files: [
+          'index.tsx',
+          'canvas.tsx',
+          'step-card.tsx',
+          'step-tile.tsx',
+          'wires.tsx',
+          'inspector.tsx',
+          'side-panel.tsx',
+          'zoom-control.tsx',
+          'use-pan-zoom.ts',
+          'use-width-band.ts',
+          'layout.ts',
+          'graph.ts',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 760,
+        group: 'workflows',
+      },
+      {
+        name: 'workflows-02',
+        title: 'Node graph editor',
+        description:
+          'A pipeline of typed nodes with their settings inside: a wire between two ports of different types is refused with a shake of its end and the reason, Run lights the nodes in order as their ring closes, one fails with Retry, and the next run serves what did not change from cache.',
+        files: [
+          'index.tsx',
+          'canvas.tsx',
+          'node-card.tsx',
+          'wires.tsx',
+          'zoom-control.tsx',
+          'use-pan-zoom.ts',
+          'use-is-phone.ts',
+          'layout.ts',
+          'pipeline.ts',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 720,
+        group: 'workflows',
       },
     ],
   },
