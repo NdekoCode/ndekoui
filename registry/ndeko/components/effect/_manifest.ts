@@ -29,4 +29,11 @@ export const manifest: ComponentManifest = [
     description:
       'The pill above a headline, where a light runs once round its edge from the side the pointer comes from as it gets within reach, then rests, and the arrow of the tag that says what a press does nudges forward.',
   },
+  {
+    name: 'effect-05',
+    source: 'ndeko',
+    title: 'Flap clock',
+    description:
+      'The local time or a countdown on split flaps: a figure that changes folds over its hinge in perspective, the old upper half falling forward and the new lower half landing, and a switch between the two folds every card at once.',
+  },
 ];
