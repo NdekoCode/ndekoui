@@ -87,4 +87,11 @@ export const manifest: ComponentManifest = [
     description:
       'A drawn code whose cells fall like grains into a small badge once it is scanned, the badge filling with the success tint and reading Scanned as the last ones land, then the cells growing back from the top left corner; the cells only fade under reduced motion.',
   },
+  {
+    name: 'badge-15',
+    source: 'ndeko',
+    title: 'Price pill',
+    description:
+      'A pill whose price rolls figure by figure to a new amount while its width follows the figures, with the billing period under it where only the word that changed rolls.',
+  },
 ];
