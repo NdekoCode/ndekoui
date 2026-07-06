@@ -55,4 +55,12 @@ export const manifest: BlockManifest = [
     ],
     previewHeight: 640,
   },
+  {
+    name: 'heroes-07',
+    title: 'Hero with a chat box',
+    description:
+      'A hero for an AI product whose prompt box types its own questions into the empty field, one after another, while app tiles orbit it on two dashed circles and stay upright as they turn.',
+    files: ['index.tsx', 'prompt-box.tsx', 'orbit.tsx', 'data.ts'],
+    previewHeight: 920,
+  },
 ];
