@@ -15,4 +15,11 @@ export const manifest: ComponentManifest = [
     description:
       'A thinking status as five rounded bars that swell one after the other, a small wave that breathes, with a compact variant without the label; when the work is done the bars settle into a check.',
   },
+  {
+    name: 'loading-03',
+    source: 'ndeko',
+    title: 'Thinking spark',
+    description:
+      'A thinking status with a small diamond that snaps a quarter turn on a light spring while the point reaching the top glints by lengthening, beside a label a soft light passes over.',
+  },
 ];
