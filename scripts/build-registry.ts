@@ -18,6 +18,7 @@ import {
   mergedDependencies,
   writePreviewModules,
 } from './registry-catalog';
+import { collectDocsPages, writeDocsModules } from './registry-docs';
 import { motionItemsOf } from './registry-motion';
 
 const REGISTRY_URL = 'https://ui.ndekocode.dev/r';
@@ -169,6 +170,7 @@ async function buildRegistry() {
   const templateGroups = await collectBundles('templates');
   writeBundleModules('blocks', blockGroups);
   writeBundleModules('templates', templateGroups);
+  writeDocsModules(collectDocsPages());
   const blockItems = bundleItemsOf('blocks', blockGroups);
   const templateItems = bundleItemsOf('templates', templateGroups);
   const definitions = [
