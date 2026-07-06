@@ -8,4 +8,11 @@ export const manifest: ComponentManifest = [
     description:
       'A thinking status whose eight dots push out from their ring in turn, so a bulge travels round it, beside a label a soft light passes over; when the work is done the ring draws itself closed round a check.',
   },
+  {
+    name: 'loading-02',
+    source: 'ndeko',
+    title: 'Thinking wave',
+    description:
+      'A thinking status as five rounded bars that swell one after the other, a small wave that breathes, with a compact variant without the label; when the work is done the bars settle into a check.',
+  },
 ];
