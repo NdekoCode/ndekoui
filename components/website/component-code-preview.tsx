@@ -3,6 +3,7 @@ import CodePreview from './code-preview';
 import CodeRenderer from './code-renderer';
 import ComponentPreview from './component-preview';
 import { extractCodeFromFilePath } from '@/lib/code';
+import { DocsFullPageButton } from '@/app/docs/docs-full-page-button';
 
 type ComponentCodePreview = {
   component: React.ReactElement;
@@ -26,6 +27,9 @@ export default function ComponentCodePreview({
           <TabsTrigger value='preview'>Preview</TabsTrigger>
           <TabsTrigger value='code'>Code</TabsTrigger>
         </TabsList>
+        <div className='absolute top-1.5 right-0'>
+          <DocsFullPageButton filePath={filePath} />
+        </div>
         <TabsContent
           value='preview'
           className='bg-card hairline-ring ring-border shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
