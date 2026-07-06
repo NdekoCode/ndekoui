@@ -78,4 +78,11 @@ export const manifest: ComponentManifest = [
     description:
       'Suggested edits marked inside a paragraph, each accepted or rejected from a card that glides to it or with Y and N, with J and K to move, Undo and a count that rolls.',
   },
+  {
+    name: 'review-12',
+    source: 'ndeko',
+    title: 'Agent question',
+    description:
+      'The agent stops to ask with the reason why, choices you pick with the number keys or answer in your own words, and the card folds into one line that says what you answered, with Change.',
+  },
 ];
