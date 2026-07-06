@@ -1,11 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import type { ReactNode } from 'react';
 
 import { PreviewStage } from '@/app/_site/preview-stage';
 import { ThemeToggle } from '@/app/_site/theme-toggle';
 import { InstallCommand } from '@/app/blocks/_shared/install-command';
-import { ComponentPreview } from '@/app/components/_catalog/component-preview';
 import type { PreviewWidth } from '@/app/components/_catalog/preview-widths';
 import { NdekoUILLogo } from '@/components/website/icons/ndekoui-logo';
 import { ArrowLeftIcon } from '@/registry/ndeko/lib/icons';
@@ -29,27 +29,28 @@ const CONTENT_WIDTH: Record<PreviewWidth, string> = {
   full: 'max-w-5xl',
 };
 
-type ComponentPresentationProps = {
+type ItemPresentationProps = {
   title: string;
   itemName: string;
-  categorySlug: string;
-  categoryName: string;
+  /** What the link back to the catalogue is called, such as the category of a component. */
+  backLabel: string;
   backHref: string;
   width: PreviewWidth;
+  children: ReactNode;
 };
 
 /**
- * One component alone on a page, centred in the window between the mark and the name of the
- * library above it and its install command below, so a recording of the tab carries the brand.
+ * One item alone on a page, centred in the window between the mark and the name of the library
+ * above it and its install command below, so a recording of the tab carries the brand.
  */
-export function ComponentPresentation({
+export function ItemPresentation({
   title,
   itemName,
-  categorySlug,
-  categoryName,
+  backLabel,
   backHref,
   width,
-}: ComponentPresentationProps) {
+  children,
+}: ItemPresentationProps) {
   const maxWidthClass = CONTENT_WIDTH[width];
   const contentClassName = cn('flex w-full justify-center', maxWidthClass);
 
@@ -73,20 +74,18 @@ export function ComponentPresentation({
             size='sm'
             nativeButton={false}
             className='text-muted-foreground'
-            aria-label={`Back to ${categoryName}`}
+            aria-label={`Back to ${backLabel}`}
             render={<Link href={backHref} />}
           >
             <ArrowLeftIcon />
-            <span className='hidden sm:inline'>{categoryName}</span>
+            <span className='hidden sm:inline'>{backLabel}</span>
           </Button>
           <ThemeToggle />
         </div>
       </header>
       <main className='flex min-h-0 flex-1 px-3 sm:px-6'>
         <PreviewStage className={STAGE} recentresOnHeight settleMs={SETTLE_MS}>
-          <div className={contentClassName}>
-            <ComponentPreview category={categorySlug} name={itemName} />
-          </div>
+          <div className={contentClassName}>{children}</div>
         </PreviewStage>
       </main>
       <footer className={BAR}>

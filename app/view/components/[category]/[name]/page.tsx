@@ -2,9 +2,10 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { catalogAnchorPathOf } from '@/app/components/_catalog/component-paths';
+import { ComponentPreview } from '@/app/components/_catalog/component-preview';
 import { previewWidthOf } from '@/app/components/_catalog/preview-widths';
 import { catalog } from '@/app/components/_generated/catalog';
-import { ComponentPresentation } from '@/app/view/_present/component-presentation';
+import { ItemPresentation } from '@/app/view/_present/item-presentation';
 
 type ComponentViewPageProps = {
   params: Promise<{ category: string; name: string }>;
@@ -53,13 +54,14 @@ export default async function ComponentViewPage({
   const backHref = catalogAnchorPathOf(category.slug, entry.name);
 
   return (
-    <ComponentPresentation
+    <ItemPresentation
       title={entry.title}
       itemName={entry.name}
-      categorySlug={category.slug}
-      categoryName={category.name}
+      backLabel={category.name}
       backHref={backHref}
       width={width}
-    />
+    >
+      <ComponentPreview category={category.slug} name={entry.name} />
+    </ItemPresentation>
   );
 }
