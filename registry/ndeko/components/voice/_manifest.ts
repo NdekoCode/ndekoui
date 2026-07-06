@@ -22,4 +22,11 @@ export const manifest: ComponentManifest = [
     description:
       'A field whose microphone key turns the footer into a recording strip, then transcribes the take and streams the words in at the caret.',
   },
+  {
+    name: 'voice-04',
+    source: 'ndeko',
+    title: 'Particle orb',
+    description:
+      'A sphere of a few hundred particles that turns slowly and surges outward with the voice, then falls back on springs: it breathes when idle, tightens and spins while thinking, pulses while speaking, and one key starts and ends the call.',
+  },
 ];
