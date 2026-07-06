@@ -1,7 +1,14 @@
 'use client';
 
 import { useInView } from 'motion/react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import { useDocumentVisible } from '@/registry/ndeko/hooks/use-agent-run';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
@@ -19,6 +26,12 @@ export type AutoplayOptions = {
   onReset?: () => void;
   isEnabled?: boolean;
 };
+
+/**
+ * A page that shows several pieces at once can let them play in turn: under a closed gate a piece
+ * holds its place, as it does off screen, and takes up again where it stopped once the gate opens.
+ */
+export const AutoplayGateContext = createContext(true);
 
 type Pending = {
   remaining: number;
@@ -45,6 +58,7 @@ export function useAutoplay<Element extends HTMLElement = HTMLDivElement>(
   const isInView = useInView(ref, { amount: 0.3 });
   const isVisible = useDocumentVisible();
   const shouldReduceMotion = usePrefersReducedMotion();
+  const isGateOpen = useContext(AutoplayGateContext);
   const [isTakenOver, setIsTakenOver] = useState(false);
   const [round, setRound] = useState(0);
   const latest = useRef<Latest>({ steps, onReset });
@@ -52,7 +66,8 @@ export function useAutoplay<Element extends HTMLElement = HTMLDivElement>(
   const pending = useRef<Pending | null>(null);
   const isAutoplaying = isEnabled && !isTakenOver && !shouldReduceMotion;
   const isOnScreen = isInView && isVisible;
-  const shouldPlay = isAutoplaying && isOnScreen;
+  const isItsTurn = isOnScreen && isGateOpen;
+  const shouldPlay = isAutoplaying && isItsTurn;
 
   useEffect(() => {
     latest.current = { steps, onReset };
