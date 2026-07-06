@@ -17,4 +17,18 @@ export const manifest: BlockManifest = [
     files: ['index.tsx', 'command-row.tsx', 'data.ts'],
     previewHeight: 460,
   },
+  {
+    name: 'ctas-03',
+    title: 'Call to action with a queue',
+    description:
+      'A closing band with an email field that checks, sends and confirms, beside a queue of conversations whose marks swap into drawn checks and whose rows dim into Done while the block is on screen.',
+    files: [
+      'index.tsx',
+      'email-form.tsx',
+      'queue-card.tsx',
+      'session.ts',
+      'data.ts',
+    ],
+    previewHeight: 560,
+  },
 ];
