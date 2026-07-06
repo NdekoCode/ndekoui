@@ -35,4 +35,19 @@ export const manifest: BlockManifest = [
     ],
     previewHeight: 720,
   },
+  {
+    name: 'boards-03',
+    title: 'Board with limits and swimlanes',
+    description:
+      'Columns that count against their limits, where a column past its limit tints its header and rolls its count to Over by 1; cards move with the pointer, touch or the keyboard, gather into one lane per person and glide back onto the board, and a quick add at the foot of a column takes Enter and leaves on Escape.',
+    files: [
+      'index.tsx',
+      'board-grid.tsx',
+      'task-card.tsx',
+      'board-dnd.ts',
+      'session.ts',
+      'data.ts',
+    ],
+    previewHeight: 720,
+  },
 ];

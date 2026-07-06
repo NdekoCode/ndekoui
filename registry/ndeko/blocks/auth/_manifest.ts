@@ -25,4 +25,18 @@ export const manifest: BlockManifest = [
     files: ['index.tsx', 'password-parts.tsx', 'auth-kit.tsx', 'data.ts'],
     previewHeight: 680,
   },
+  {
+    name: 'auth-04',
+    title: 'Sign in and pick a workspace',
+    description:
+      'Google or GitHub in one press, or an email and a six-digit code, then the workspaces with their members and a dashed row that creates one; the card resizes from step to step, and the mark of the workspace picked travels to the middle as it turns into Opening Brightmoor, then lands on a check.',
+    files: [
+      'index.tsx',
+      'steps.tsx',
+      'auth-frame.tsx',
+      'session.ts',
+      'data.ts',
+    ],
+    previewHeight: 720,
+  },
 ];

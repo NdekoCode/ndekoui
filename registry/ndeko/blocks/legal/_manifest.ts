@@ -9,4 +9,19 @@ export const manifest: BlockManifest = [
     files: ['index.tsx', 'section-index.tsx', 'legal-model.ts', 'data.ts'],
     previewHeight: 900,
   },
+  {
+    name: 'legal-02',
+    title: 'Cookie choices',
+    description:
+      'A consent banner that never covers the page, where Reject all weighs as much as Accept all and Customize opens a dialog of switches with Necessary locked on and its reason; a saved choice calls back, and the banner fades out leaving a small Cookie settings link behind to reopen it.',
+    files: [
+      'index.tsx',
+      'consent-banner.tsx',
+      'preferences-dialog.tsx',
+      'site-page.tsx',
+      'session.ts',
+      'data.ts',
+    ],
+    previewHeight: 640,
+  },
 ];
