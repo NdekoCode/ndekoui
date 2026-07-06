@@ -68,6 +68,15 @@ export const aiFoundationItems: RegistryItemDefinition[] = [
     ],
     categories: ['foundations'],
   },
+  {
+    name: 'words',
+    type: 'registry:lib',
+    title: 'Words',
+    description:
+      'Counted nouns such as 1 file and 3 files, the words of a phrase, the space before a word, and a word added to a text typed so far.',
+    files: [{ path: 'registry/ndeko/lib/words.ts', type: 'registry:lib' }],
+    categories: ['foundations'],
+  },
 ];
 
 export const aiItems: RegistryItemDefinition[] = [
@@ -169,5 +178,23 @@ export const aiItems: RegistryItemDefinition[] = [
     'Letter Tile',
     'A letter on a tile for a lettered choice or a product whose mark cannot be shown, tinted by a series colour or left neutral.',
     { registryDependencies: ['agent-run'], categories: AI }
+  ),
+  primitive(
+    'streamed-text',
+    'Streamed Text',
+    'Text that arrives word by word with a soft fade: a word that waits keeps its place without ink, so nothing under the paragraph moves, and only the text re-renders.',
+    { categories: AI }
+  ),
+  primitive(
+    'drawn-check',
+    'Drawn Check',
+    'A check on a small chip that draws its stroke when it lands, after a short pop, and leaves faster than it came; reduced motion shows it drawn.',
+    { dependencies: ['motion'], categories: AI }
+  ),
+  primitive(
+    'inline-sheet',
+    'Inline Sheet',
+    'A sheet from the bottom or the start, or a centred dialog, drawn inside its container instead of over the page: a backdrop and Escape close it, and a bottom sheet can be pulled down by its grip.',
+    { categories: AI }
   ),
 ];
