@@ -11,7 +11,7 @@ const WORDMARKS: Wordmark[] = [
   { name: 'Oakbridge', mark: 'size-4 rounded-[4px] bg-current' },
   { name: 'Sundial', mark: 'size-4 rounded-full hairline-ring ring-current' },
   { name: 'Kestrel', mark: 'size-3.5 rotate-45 rounded-[3px] bg-current' },
-  { name: 'Copperleaf', mark: 'h-4 w-2.5 rounded-full bg-current' },
+  { name: 'Fernwick', mark: 'h-4 w-2.5 rounded-full bg-current' },
   { name: 'Pinecrest', mark: 'h-4 w-1.5 rounded-full bg-current' },
   { name: 'Marrow & Co', mark: 'size-4 rounded-sm hairline-ring ring-current' },
 ];
