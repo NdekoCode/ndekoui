@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "build:registry": "tsx scripts/registry-build.ts",
-    "registry:build": "node --import tsx scripts/build-registry.ts && prettier --write app/components/_generated && shadcn build",
+    "registry:build": "node --import tsx scripts/build-registry.ts && prettier --write app/components/_generated app/blocks/_generated app/templates/_generated && shadcn build",
     "indexnow": "node --import tsx scripts/indexnow.ts"
   },
   "dependencies": {
