@@ -71,4 +71,11 @@ export const manifest: ComponentManifest = [
     description:
       'Chats grouped by day under the pinned ones, with a highlight that travels, rename in place, delete asked in the row, and arrows, F2 and Delete.',
   },
+  {
+    name: 'prompt-11',
+    source: 'ndeko',
+    title: 'Prompt deck',
+    description:
+      'Suggested prompts as a stack of cards: the front one is dragged or sent away with Left and Right and the next lifts into place, and pressing a card types its prompt into the composer.',
+  },
 ];
