@@ -11,7 +11,7 @@ import {
   MenuIcon,
 } from '@/registry/ndeko/lib/icons';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
-import { Avatar, AvatarFallback } from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Button } from '@/registry/ndeko/ui/button';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
 
@@ -20,18 +20,14 @@ import type { OpenTicket, RefundStatus, TicketLive } from './session';
 import { PriorityBars, StatusBadge } from './ticket-list';
 import { useFollowBottom } from './use-follow-bottom';
 
-function InitialsAvatar({ initials }: { initials: string }) {
-  return (
-    <Avatar className='size-7 shrink-0'>
-      <AvatarFallback className='text-[10px]'>{initials}</AvatarFallback>
-    </Avatar>
-  );
+function PersonAvatar({ name }: { name: string }) {
+  return <Avatar className='size-7 shrink-0' seed={name} />;
 }
 
 function CustomerBubble({ ticket }: { ticket: Ticket }) {
   return (
     <div className='flex items-end gap-2 pb-4'>
-      <InitialsAvatar initials={ticket.customer.initials} />
+      <PersonAvatar name={ticket.customer.name} />
       <div className='flex max-w-[85%] flex-col gap-1.5'>
         <p className='bg-foreground/[0.06] rounded-2xl rounded-es-md px-3.5 py-2 text-sm leading-relaxed'>
           {ticket.message}
@@ -53,7 +49,7 @@ function ReplyBubble({ text }: { text: string }) {
       <p className='bg-card hairline-ring ring-border dark:bg-foreground/[0.04] max-w-[85%] rounded-2xl rounded-ee-md px-3.5 py-2 text-sm leading-relaxed whitespace-pre-line shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
         {text}
       </p>
-      <InitialsAvatar initials={ME.initials} />
+      <PersonAvatar name={ME.name} />
     </div>
   );
 }

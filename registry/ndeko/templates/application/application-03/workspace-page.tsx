@@ -1,32 +1,27 @@
 'use client';
 
-import {
-  AnimatePresence,
-  motion,
-  type Transition,
-  type Variants,
-} from 'motion/react';
 import { useId, useState } from 'react';
 
-import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   SettingsIcon,
   TriangleAlertIcon,
   UsersIcon,
 } from '@/registry/ndeko/lib/icons';
+import { CompanyMark } from '@/registry/ndeko/ui/company-mark';
 
 import { DangerZone } from './danger-zone';
 import {
-  WORKSPACE_FIELD_SECTION,
   INVITE_POLICIES,
-  ROLE_OPTIONS,
-  WORKSPACE_FACTS,
-  WORKSPACE_SECTION_KEYS,
-  TIME_ZONES,
-  WORKSPACE_HOST,
   type Role,
-  type WorkspaceSectionId,
+  ROLE_OPTIONS,
+  TIME_ZONES,
+  WORKSPACE_FACTS,
+  WORKSPACE_FIELD_SECTION,
+  WORKSPACE_HOST,
+  WORKSPACE_ID,
+  WORKSPACE_SECTION_KEYS,
   type WorkspaceField,
+  type WorkspaceSectionId,
   type WorkspaceValues,
 } from './data';
 import { RoleChoice } from './role-choice';
@@ -59,27 +54,6 @@ const FIELD_ORDER: WorkspaceField[] = ['name', 'slug', 'allowedDomain'];
 const SLUG_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
 const DOMAIN_PATTERN = /^[a-z0-9-]+(\.[a-z0-9-]+)+$/;
-
-const SWAP_TRANSITION: Transition = { duration: 0.15, ease: [0.2, 0, 0, 1] };
-
-const SWAP_VARIANTS: Variants = {
-  enter: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },
-  visible: { opacity: 1, scale: 1, filter: 'blur(0px)' },
-  exit: { opacity: 0, scale: 0.6, filter: 'blur(2px)' },
-};
-
-const FADE_VARIANTS: Variants = {
-  enter: { opacity: 0 },
-  visible: { opacity: 1 },
-  exit: { opacity: 0 },
-};
-
-function swapVariantsOf(shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return FADE_VARIANTS;
-  }
-  return SWAP_VARIANTS;
-}
 
 function errorsOf(values: WorkspaceValues): WorkspaceErrors {
   const errors: WorkspaceErrors = {};
@@ -130,15 +104,6 @@ function fixMessageOf(errors: WorkspaceErrors) {
   return `Fix ${count} fields to save`;
 }
 
-function initialOf(name: string) {
-  const trimmed = name.trim();
-  if (trimmed.length === 0) {
-    return '?';
-  }
-  const [firstCharacter] = Array.from(trimmed);
-  return firstCharacter.toUpperCase();
-}
-
 function slugLineOf(slug: string) {
   const address = `${WORKSPACE_HOST}${slug}`;
   return `${address}, old links redirect for 30 days`;
@@ -163,33 +128,9 @@ function focusField(field: WorkspaceField) {
   });
 }
 
-/** The workspace has no logo, so its tile carries the initial; the letter swaps as the name changes. */
-function WorkspaceTile({ name }: { name: string }) {
-  const shouldReduceMotion = usePrefersReducedMotion();
-  const variants = swapVariantsOf(shouldReduceMotion);
-  const initial = initialOf(name);
-  const tileStyle = { '--gem': 'var(--primary)' } as React.CSSProperties;
-
-  return (
-    <span
-      aria-hidden='true'
-      style={tileStyle}
-      className='gem-plate flex size-10 shrink-0 items-center justify-center rounded-lg text-base font-semibold'
-    >
-      <AnimatePresence mode='popLayout' initial={false}>
-        <motion.span
-          key={initial}
-          variants={variants}
-          initial='enter'
-          animate='visible'
-          exit='exit'
-          transition={SWAP_TRANSITION}
-        >
-          {initial}
-        </motion.span>
-      </AnimatePresence>
-    </span>
-  );
+/** The workspace has no logo of its own yet, so it wears a mark drawn from its id: renaming it keeps the mark. */
+function WorkspaceTile() {
+  return <CompanyMark seed={WORKSPACE_ID} className='size-10 rounded-lg' />;
 }
 
 type WorkspacePageProps = {
@@ -318,7 +259,7 @@ export function WorkspacePage({ values, onSaved }: WorkspacePageProps) {
               label='Workspace tile'
               line='No logo yet, so the tile shows the first letter of the name'
             >
-              <WorkspaceTile name={draft.name} />
+              <WorkspaceTile />
             </SettingsRow>
             <TextRow
               inputId={fieldIdOf('name')}

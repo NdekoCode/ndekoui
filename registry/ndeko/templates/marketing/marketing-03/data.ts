@@ -135,7 +135,7 @@ export const QUESTIONS: Question[] = [
 ];
 
 export const CONTACT = {
-  person: { name: 'Dev Raman', image: '/avatars/avatar-06.svg' },
+  person: { name: 'Dev Raman' },
   lead: 'Still wondering about something?',
   linkLabel: 'Write to billing@tallyfold.example',
   href: 'mailto:billing@tallyfold.example',

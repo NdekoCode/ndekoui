@@ -1,10 +1,11 @@
 'use client';
 
 import { WordRoll } from '@/components/core/word-roll';
+import { seriesColorOf } from '@/registry/ndeko/lib/agent-run';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
-import { LetterTile } from '@/registry/ndeko/ui/letter-tile';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 
 import { CopilotSteps } from './copilot-steps';
 import { CustomerCard } from './customer-card';
@@ -109,7 +110,11 @@ export function CopilotPanel({
   return (
     <div className={cn('flex min-h-0 flex-col gap-3', className)}>
       <header className='flex shrink-0 items-start gap-2.5 px-1'>
-        <LetterTile initial={WRITER.initial} series={WRITER.series} size='lg' />
+        <MeshTile
+          seed={WRITER.name}
+          color={seriesColorOf(WRITER.series)}
+          size='lg'
+        />
         <div className='flex min-w-0 flex-1 flex-col leading-tight'>
           <div className='flex items-center gap-2'>
             <h2 className='min-w-0 flex-1 truncate text-sm font-medium'>

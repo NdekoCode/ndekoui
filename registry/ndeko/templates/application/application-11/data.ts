@@ -3,17 +3,16 @@ import type { BrandSlug } from '@/registry/ndeko/lib/brand-logos';
 
 import { wordsOf } from './words';
 
-export const BRAND = { name: 'Oatfield', initial: 'O', desk: 'Support' };
+export const BRAND = { name: 'Oatfield', desk: 'Support' };
 
-export const ME = { name: 'Noor Haddad', initials: 'NH' };
+export const ME = { name: 'Noor Haddad' };
 
 export type Agent = {
   name: string;
-  initial: string;
   series: SeriesSlot;
 };
 
-export const WRITER: Agent = { name: 'Writer', initial: 'W', series: 3 };
+export const WRITER: Agent = { name: 'Writer', series: 3 };
 
 export type Model = {
   name: string;
@@ -28,7 +27,6 @@ export type Priority = 'high' | 'normal' | 'low';
 
 export type Customer = {
   name: string;
-  initials: string;
   email: string;
   plan: string;
   orders: string;
@@ -60,7 +58,6 @@ export const TICKETS: Ticket[] = [
     isUnread: true,
     customer: {
       name: 'Ines Marchetti',
-      initials: 'IM',
       email: 'ines@marchetti.example',
       plan: 'Monthly, 2 bags',
       orders: '14 since March 2023',
@@ -79,7 +76,6 @@ export const TICKETS: Ticket[] = [
     isUnread: true,
     customer: {
       name: 'Tomas Brandt',
-      initials: 'TB',
       email: 'tomas@brandt.example',
       plan: 'Every two weeks, 1 bag',
       orders: '6 since January',
@@ -97,7 +93,6 @@ export const TICKETS: Ticket[] = [
     isUnread: false,
     customer: {
       name: 'Aiko Tanaka',
-      initials: 'AT',
       email: 'aiko@tanaka.example',
       plan: 'Monthly, 2 bags',
       orders: '9 since last June',
@@ -115,7 +110,6 @@ export const TICKETS: Ticket[] = [
     isUnread: false,
     customer: {
       name: 'Samuel Okoye',
-      initials: 'SO',
       email: 'samuel@okoye.example',
       plan: 'Monthly, 1 bag',
       orders: '22 since 2022',
@@ -133,7 +127,6 @@ export const TICKETS: Ticket[] = [
     isUnread: false,
     customer: {
       name: 'Clara Jensen',
-      initials: 'CJ',
       email: 'clara@jensen.example',
       plan: 'One order',
       orders: '1 this month',

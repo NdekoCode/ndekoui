@@ -13,17 +13,17 @@ import { GlobeIcon, MailIcon, UserIcon } from '@/registry/ndeko/lib/icons';
 
 import {
   BIO_MAX_LENGTH,
-  INITIALS,
+  INITIAL_PROFILE,
   LANGUAGES,
   PROFILE_HOST,
   PROFILE_SECTION_KEYS,
-  TIME_FORMATS,
+  type ProfileField,
+  type ProfileSectionId,
+  type ProfileValues,
   TIME_FORMAT_SAMPLE,
+  TIME_FORMATS,
   TIME_ZONES,
   WEEK_STARTS,
-  type ProfileField,
-  type ProfileValues,
-  type ProfileSectionId,
 } from './data';
 import { BioRow, PhotoRow } from './profile-fields';
 import {
@@ -281,7 +281,7 @@ export function ProfilePage({
           >
             <PhotoRow
               photo={draft.photo}
-              initials={INITIALS}
+              seed={INITIAL_PROFILE.username}
               error={photoError}
               onPhotoChange={changePhoto}
               onError={setPhotoError}

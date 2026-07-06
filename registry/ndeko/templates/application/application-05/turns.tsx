@@ -36,12 +36,7 @@ export function UserMessage({ turn }: { turn: UserTurn }) {
         )}
         {hasText && <MessageContent>{turn.text}</MessageContent>}
       </div>
-      <MessageAvatar
-        src={reader.avatar}
-        alt={reader.name}
-        fallback={reader.initials}
-        className='hidden sm:inline-flex'
-      />
+      <MessageAvatar alt={reader.name} className='hidden sm:inline-flex' />
     </Message>
   );
 }

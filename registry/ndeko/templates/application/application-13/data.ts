@@ -1,21 +1,20 @@
 import type { SeriesSlot } from '@/registry/ndeko/lib/agent-run';
 import type { BrandSlug } from '@/registry/ndeko/lib/brand-logos';
 
-export const BRAND = { name: 'Wrenfield', initial: 'W' };
+export const BRAND = { name: 'Wrenfield' };
 
 export type AgentId = 'planner' | 'researcher' | 'writer' | 'coder';
 
 export type Agent = {
   name: string;
-  initial: string;
   series: SeriesSlot;
 };
 
 export const AGENTS: Record<AgentId, Agent> = {
-  planner: { name: 'Planner', initial: 'P', series: 1 },
-  researcher: { name: 'Researcher', initial: 'R', series: 2 },
-  writer: { name: 'Writer', initial: 'W', series: 3 },
-  coder: { name: 'Coder', initial: 'C', series: 5 },
+  planner: { name: 'Planner', series: 1 },
+  researcher: { name: 'Researcher', series: 2 },
+  writer: { name: 'Writer', series: 3 },
+  coder: { name: 'Coder', series: 5 },
 };
 
 /** A new session goes to the planner, which hands the work to the others. */

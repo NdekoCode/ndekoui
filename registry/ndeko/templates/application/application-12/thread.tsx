@@ -1,6 +1,7 @@
 'use client';
 
-import { LetterTile } from '@/registry/ndeko/ui/letter-tile';
+import { seriesColorOf } from '@/registry/ndeko/lib/agent-run';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 
 import { ANSWER, CODER, FOLLOW_UP_REPLY, type PanelTab } from './data';
 import { PullRequest } from './pull-request';
@@ -15,7 +16,9 @@ import { useFollowBottom } from './use-follow-bottom';
 import { WorkSteps } from './work-steps';
 
 function CoderTile() {
-  return <LetterTile initial={CODER.initial} series={CODER.series} size='lg' />;
+  const color = seriesColorOf(CODER.series);
+
+  return <MeshTile seed={CODER.name} color={color} size='lg' />;
 }
 
 function PersonBubble({ text }: { text: string }) {

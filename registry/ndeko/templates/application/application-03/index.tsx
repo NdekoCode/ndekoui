@@ -12,7 +12,6 @@ import {
   INITIAL_WORKSPACE,
   PEOPLE,
   SETTINGS_GROUPS,
-  WORKSPACE_COLOR,
   WORKSPACE_FACTS,
   WORKSPACE_ID,
   type NavItem,
@@ -33,21 +32,12 @@ const NAV_ITEMS = SETTINGS_GROUPS.flatMap((group) => group.items);
 
 const SETTINGS_ANCESTOR = 'Settings';
 
-const MAX_INITIALS = 2;
-
 function navItemOf(pageId: PageId): NavItem {
   const item = NAV_ITEMS.find((candidate) => candidate.id === pageId);
   if (item) {
     return item;
   }
   return NAV_ITEMS[0];
-}
-
-function initialsOf(name: string) {
-  const words = name.trim().split(/\s+/);
-  const firstLetters = words.map((word) => word.charAt(0));
-  const initials = firstLetters.slice(0, MAX_INITIALS).join('');
-  return initials.toUpperCase();
 }
 
 function personOf(personId: string) {
@@ -63,7 +53,6 @@ function accountOf(profile: ProfileValues): Person {
   return {
     ...person,
     name: profile.name,
-    initials: initialsOf(profile.name),
     role: profile.title,
     avatar: profile.photo,
   };
@@ -73,8 +62,6 @@ function workspaceOf(values: WorkspaceValues): Workspace {
   return {
     id: WORKSPACE_ID,
     name: values.name,
-    initials: initialsOf(values.name),
-    color: WORKSPACE_COLOR,
     memberCount: WORKSPACE_FACTS.members,
   };
 }

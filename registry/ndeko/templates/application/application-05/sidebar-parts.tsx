@@ -3,11 +3,7 @@
 import { motion, type Transition } from 'motion/react';
 
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 
 import type { Person } from './data';
 
@@ -52,12 +48,7 @@ export function PersonAvatar({
   person: Person;
   className?: string;
 }) {
-  return (
-    <Avatar className={className}>
-      {person.avatar && <AvatarImage src={person.avatar} alt='' />}
-      <AvatarFallback>{person.initials}</AvatarFallback>
-    </Avatar>
-  );
+  return <Avatar className={className} seed={person.name} />;
 }
 
 export function ariaCurrentOf(isActive: boolean) {

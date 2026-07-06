@@ -1,9 +1,7 @@
 export type Person = {
   id: string;
   name: string;
-  initials: string;
   role: string;
-  avatar?: string;
 };
 
 export type ReplyStatus = 'thinking' | 'streaming' | 'done' | 'stopped';
@@ -90,9 +88,7 @@ export const PRODUCT_NAME = 'Quillstone';
 export const reader: Person = {
   id: 'amara',
   name: 'Amara Diallo',
-  initials: 'AD',
   role: 'People team',
-  avatar: '/avatars/avatar-05.svg',
 };
 
 export const models: Model[] = [

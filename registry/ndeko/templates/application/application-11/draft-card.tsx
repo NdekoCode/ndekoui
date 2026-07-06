@@ -2,12 +2,13 @@
 
 import { Fragment } from 'react';
 
+import { seriesColorOf } from '@/registry/ndeko/lib/agent-run';
 import { pressedSolidOf } from '@/registry/ndeko/lib/demonstration';
 import { BookOpenIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
-import { LetterTile } from '@/registry/ndeko/ui/letter-tile';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 
 import { ARTICLES, DRAFT_TOKENS, WRITER, type Article } from './data';
 import { DRAFT_WORD_MS } from './session';
@@ -94,7 +95,7 @@ export function DraftCard({
       className='bg-foreground/[0.04] flex flex-col gap-2.5 rounded-lg p-3'
     >
       <header className='flex items-center gap-2'>
-        <LetterTile initial={WRITER.initial} series={WRITER.series} />
+        <MeshTile seed={WRITER.name} color={seriesColorOf(WRITER.series)} />
         <h2 className='min-w-0 flex-1 truncate text-[13px] font-medium'>
           Draft from the copilot
         </h2>

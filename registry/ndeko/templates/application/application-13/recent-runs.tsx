@@ -10,13 +10,14 @@ import {
   elapsedOf,
   formatCost,
   formatDuration,
+  seriesColorOf,
 } from '@/registry/ndeko/lib/agent-run';
 import { pressedSolidOf } from '@/registry/ndeko/lib/demonstration';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
-import { LetterTile } from '@/registry/ndeko/ui/letter-tile';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 
 import { AGENTS, type RunStatus } from './data';
 import type { Decision, Run } from './session';
@@ -111,7 +112,11 @@ function RunRow({ run, isAllowPressed, onDecide }: RunRowProps) {
       tabIndex={-1}
       className='flex items-start gap-3 px-3 py-2.5 outline-none'
     >
-      <LetterTile initial={agent.initial} series={agent.series} size='lg' />
+      <MeshTile
+        seed={agent.name}
+        color={seriesColorOf(agent.series)}
+        size='lg'
+      />
       <div className='flex min-w-0 flex-1 flex-col gap-0.5'>
         <p className='flex items-baseline gap-3'>
           <span className='min-w-0 flex-1 truncate text-[13px] font-medium'>

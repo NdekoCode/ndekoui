@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback } from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 
 import { CUSTOMER_FIELDS, type Customer } from './data';
 
@@ -15,9 +15,7 @@ export function CustomerCard({ customer, lookedUpFields }: CustomerCardProps) {
       className='bg-card hairline-ring ring-border dark:bg-foreground/[0.04] flex flex-col gap-3 rounded-xl p-3 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
     >
       <div className='flex items-center gap-2.5'>
-        <Avatar>
-          <AvatarFallback>{customer.initials}</AvatarFallback>
-        </Avatar>
+        <Avatar seed={customer.name} />
         <div className='flex min-w-0 flex-col leading-tight'>
           <h3 className='truncate text-[13px] font-medium'>{customer.name}</h3>
           <span className='text-muted-foreground truncate text-xs'>

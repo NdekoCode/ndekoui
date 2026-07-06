@@ -3,11 +3,7 @@
 import { useEffect, useId, useRef } from 'react';
 
 import { ImageUpIcon } from '@/registry/ndeko/lib/icons';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar, AvatarImage } from '@/registry/ndeko/ui/avatar';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Textarea } from '@/registry/ndeko/ui/textarea';
 
@@ -30,7 +26,8 @@ function photoProblemOf(file: File) {
 
 type PhotoRowProps = {
   photo: string;
-  initials: string;
+  /** What the gradient is drawn from while there is no photo: something that stays the same, such as the username. */
+  seed: string;
   error: string | null;
   onPhotoChange: (photo: string) => void;
   onError: (error: string | null) => void;
@@ -39,7 +36,7 @@ type PhotoRowProps = {
 /** The picked image stays in the browser as an object URL; nothing is uploaded. */
 export function PhotoRow({
   photo,
-  initials,
+  seed,
   error,
   onPhotoChange,
   onError,
@@ -89,9 +86,8 @@ export function PhotoRow({
       line='PNG, JPEG or WebP under 2 MB, shown on your tasks and comments'
     >
       <div className='flex items-center gap-3'>
-        <Avatar className='size-11 text-sm'>
+        <Avatar className='size-11' seed={seed}>
           {hasPhoto && <AvatarImage src={photo} alt='' />}
-          <AvatarFallback>{initials}</AvatarFallback>
         </Avatar>
         <Button
           variant='outline'

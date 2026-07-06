@@ -26,9 +26,7 @@ export type Size = 'S' | 'M' | 'L' | 'XL';
 export type Person = {
   id: string;
   name: string;
-  initials: string;
   role: string;
-  avatar?: string;
 };
 
 export type Label = {
@@ -128,11 +126,14 @@ export type PageId = 'inbox' | 'my-tasks' | 'board' | 'team';
 export type Entity = {
   id: string;
   name: string;
-  initials: string;
   color: string;
 };
 
-export type Workspace = Entity & { memberCount: number };
+export type Workspace = {
+  id: string;
+  name: string;
+  memberCount: number;
+};
 
 export type NavItem = {
   id: PageId;
@@ -184,8 +185,6 @@ export type ActivityEntry = {
 export type Member = {
   id: string;
   name: string;
-  initials: string;
-  avatar?: string;
   title: string;
   role: Role;
   presence: Presence;
@@ -218,8 +217,6 @@ export const WORKSPACES: Workspace[] = [
   {
     id: 'mossline',
     name: WORKSPACE_NAME,
-    initials: 'M',
-    color: 'var(--primary)',
     memberCount: 5,
   },
 ];
@@ -227,7 +224,6 @@ export const WORKSPACES: Workspace[] = [
 export const WEB_TEAM: Entity = {
   id: 'web',
   name: TEAM_NAME,
-  initials: 'W',
   color: 'var(--info)',
 };
 
@@ -253,37 +249,27 @@ export const PEOPLE: Person[] = [
   {
     id: 'amara',
     name: 'Amara Okafor',
-    initials: 'AO',
     role: 'Product designer',
-    avatar: '/avatars/avatar-03.svg',
   },
   {
     id: 'leo',
     name: 'Léo Martin',
-    initials: 'LM',
     role: 'Frontend engineer',
-    avatar: '/avatars/avatar-04.svg',
   },
   {
     id: 'sana',
     name: 'Sana Iqbal',
-    initials: 'SI',
     role: 'Backend engineer',
-    avatar: '/avatars/avatar-05.svg',
   },
   {
     id: 'tomas',
     name: 'Tomás Rivera',
-    initials: 'TR',
     role: 'Mobile engineer',
-    avatar: '/avatars/avatar-06.svg',
   },
   {
     id: 'mei',
     name: 'Mei Lin',
-    initials: 'ML',
     role: 'Product manager',
-    avatar: '/avatars/avatar-07.svg',
   },
 ];
 
@@ -1168,8 +1154,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'amara',
     name: 'Amara Okafor',
-    initials: 'AO',
-    avatar: '/avatars/avatar-03.svg',
     title: 'Product designer',
     role: 'manager',
     presence: 'tracking',
@@ -1200,8 +1184,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'leo',
     name: 'Léo Martin',
-    initials: 'LM',
-    avatar: '/avatars/avatar-04.svg',
     title: 'Frontend engineer',
     role: 'member',
     presence: 'tracking',
@@ -1232,8 +1214,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'sana',
     name: 'Sana Iqbal',
-    initials: 'SI',
-    avatar: '/avatars/avatar-05.svg',
     title: 'Backend engineer',
     role: 'member',
     presence: 'online',
@@ -1264,8 +1244,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'tomas',
     name: 'Tomás Rivera',
-    initials: 'TR',
-    avatar: '/avatars/avatar-06.svg',
     title: 'Mobile engineer',
     role: 'member',
     presence: 'tracking',
@@ -1290,8 +1268,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'mei',
     name: 'Mei Lin',
-    initials: 'ML',
-    avatar: '/avatars/avatar-07.svg',
     title: 'Product manager',
     role: 'manager',
     presence: 'away',

@@ -3,14 +3,9 @@
 import { motion, type Transition } from 'motion/react';
 
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
-import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar, AvatarImage } from '@/registry/ndeko/ui/avatar';
 
-import type { Entity, NavItem, Person } from './data';
+import type { NavItem, Person } from './data';
 
 export const NAV_ROW = [
   'relative flex h-7 w-full min-w-0 items-center gap-2 rounded-md px-2 text-left text-[13px] font-medium text-foreground outline-none',
@@ -46,38 +41,6 @@ export function ActiveRowIndicator({ layoutId }: { layoutId: string }) {
   );
 }
 
-const TILE_SIZE = {
-  xs: 'size-4 rounded-[4px] text-[9px]',
-  sm: 'size-5 rounded-[5px] text-[10px]',
-  md: 'size-6 rounded-md text-[11px]',
-} as const;
-
-export function EntityTile({
-  entity,
-  size = 'md',
-  className,
-}: {
-  entity: Entity;
-  size?: keyof typeof TILE_SIZE;
-  className?: string;
-}) {
-  const tileStyle = { '--gem': entity.color } as React.CSSProperties;
-
-  return (
-    <span
-      aria-hidden='true'
-      style={tileStyle}
-      className={cn(
-        'gem-plate inline-flex shrink-0 items-center justify-center font-semibold',
-        TILE_SIZE[size],
-        className
-      )}
-    >
-      {entity.initials}
-    </span>
-  );
-}
-
 export function PersonAvatar({
   person,
   className,
@@ -86,9 +49,8 @@ export function PersonAvatar({
   className?: string;
 }) {
   return (
-    <Avatar className={className}>
+    <Avatar className={className} seed={person.id}>
       {person.avatar && <AvatarImage src={person.avatar} alt='' />}
-      <AvatarFallback>{person.initials}</AvatarFallback>
     </Avatar>
   );
 }

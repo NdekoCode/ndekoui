@@ -10,6 +10,7 @@ import { springOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
+import { CompanyMark } from '@/registry/ndeko/ui/company-mark';
 
 import {
   BRAND,
@@ -205,12 +206,7 @@ export function TicketList({
   return (
     <div className='flex min-h-0 w-full flex-col gap-3'>
       <div className='flex h-9 shrink-0 items-center gap-2 px-1.5'>
-        <span
-          aria-hidden='true'
-          className='gem-plate inline-flex size-6 shrink-0 items-center justify-center rounded-md text-[11px] font-semibold select-none [--gem:var(--primary)]'
-        >
-          {BRAND.initial}
-        </span>
+        <CompanyMark seed={BRAND.name} className='size-6 rounded-md' />
         <span className='text-[13px] font-semibold'>{BRAND.name}</span>
         <span className='text-muted-foreground text-xs'>{BRAND.desk}</span>
       </div>

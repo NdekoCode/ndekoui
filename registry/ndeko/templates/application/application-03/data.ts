@@ -13,11 +13,14 @@ export type PageId = 'profile' | 'notifications' | 'workspace';
 export type Entity = {
   id: string;
   name: string;
-  initials: string;
   color: string;
 };
 
-export type Workspace = Entity & { memberCount: number };
+export type Workspace = {
+  id: string;
+  name: string;
+  memberCount: number;
+};
 
 export type NavItem = {
   id: PageId;
@@ -35,14 +38,12 @@ export type NavGroup = {
 export type Person = {
   id: string;
   name: string;
-  initials: string;
   role: string;
+  /** The uploaded profile photo, when there is one. */
   avatar?: string;
 };
 
 export const WORKSPACE_ID = 'lattice';
-
-export const WORKSPACE_COLOR = 'var(--primary)';
 
 export const CURRENT_USER_ID = 'amara';
 
@@ -50,42 +51,31 @@ export const PEOPLE: Person[] = [
   {
     id: 'amara',
     name: 'Amara Okafor',
-    initials: 'AO',
     role: 'Product designer',
-    avatar: '/avatars/avatar-03.svg',
   },
   {
     id: 'lucas',
     name: 'Lucas Moreau',
-    initials: 'LM',
     role: 'Engineering lead',
-    avatar: '/avatars/avatar-04.svg',
   },
   {
     id: 'priya',
     name: 'Priya Raman',
-    initials: 'PR',
     role: 'Frontend engineer',
-    avatar: '/avatars/avatar-05.svg',
   },
   {
     id: 'mateo',
     name: 'Mateo Silva',
-    initials: 'MS',
     role: 'Backend engineer',
-    avatar: '/avatars/avatar-06.svg',
   },
   {
     id: 'hana',
     name: 'Hana Kobayashi',
-    initials: 'HK',
     role: 'Product manager',
-    avatar: '/avatars/avatar-07.svg',
   },
   {
     id: 'jonas',
     name: 'Jonas Weber',
-    initials: 'JW',
     role: 'QA engineer',
   },
 ];
@@ -130,7 +120,7 @@ export type ProfileValues = {
 export type ProfileField = keyof ProfileValues;
 
 export const INITIAL_PROFILE: ProfileValues = {
-  photo: '/avatars/avatar-03.svg',
+  photo: '',
   name: 'Amara Okafor',
   username: 'amara',
   title: 'Product designer',
@@ -143,8 +133,6 @@ export const INITIAL_PROFILE: ProfileValues = {
   weekStart: 'monday',
   timeFormat: '24h',
 };
-
-export const INITIALS = 'AO';
 
 export const PROFILE_HOST = 'lattice.example/';
 

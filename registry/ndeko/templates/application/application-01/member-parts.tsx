@@ -10,11 +10,7 @@ import {
 import { MotionNumber } from '@/components/core/motion-number';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -137,10 +133,7 @@ export function PresenceAvatar({
 
   return (
     <span className={cn('relative inline-flex shrink-0', className)}>
-      <Avatar className='size-9'>
-        {member.avatar && <AvatarImage src={member.avatar} alt='' />}
-        <AvatarFallback>{member.initials}</AvatarFallback>
-      </Avatar>
+      <Avatar className='size-9' seed={member.name} />
       <span className='bg-card absolute -right-0.5 -bottom-0.5 flex rounded-full p-px'>
         <span
           style={badgeStyle}

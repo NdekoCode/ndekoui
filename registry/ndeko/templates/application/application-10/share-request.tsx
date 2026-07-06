@@ -11,11 +11,7 @@ import {
   fadePresence,
 } from '@/registry/ndeko/lib/motion-presets';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
@@ -74,12 +70,7 @@ function DrawnCheck() {
 function Receiver({ person }: { person: Person }) {
   return (
     <li className='flex items-center gap-2.5'>
-      <Avatar className='size-6'>
-        <AvatarImage src={person.avatar} alt='' />
-        <AvatarFallback className='text-[9px]'>
-          {person.initials}
-        </AvatarFallback>
-      </Avatar>
+      <Avatar className='size-6' seed={person.name} />
       <span className='min-w-0 flex-1 truncate text-[13px] font-medium'>
         {person.name}
       </span>

@@ -1,6 +1,7 @@
 'use client';
 
-import { LetterTile } from '@/registry/ndeko/ui/letter-tile';
+import { seriesColorOf } from '@/registry/ndeko/lib/agent-run';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 
 import { ActivityTimeline } from './activity-timeline';
 import { CitedAnswer } from './cited-answer';
@@ -10,13 +11,9 @@ import { ShareRequest } from './share-request';
 import { useFollowBottom } from './use-follow-bottom';
 
 function ResearcherTile() {
-  return (
-    <LetterTile
-      initial={RESEARCHER.initial}
-      series={RESEARCHER.series}
-      size='lg'
-    />
-  );
+  const color = seriesColorOf(RESEARCHER.series);
+
+  return <MeshTile seed={RESEARCHER.name} color={color} size='lg' />;
 }
 
 function PersonBubble({ text }: { text: string }) {

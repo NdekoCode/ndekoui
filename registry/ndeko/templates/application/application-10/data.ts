@@ -3,17 +3,15 @@ import type { BrandSlug } from '@/registry/ndeko/lib/brand-logos';
 
 import { wordsOf } from './words';
 
-export const WORKSPACE = { name: 'Corvale', initial: 'C', space: 'Growth' };
+export const WORKSPACE = { name: 'Corvale', space: 'Growth' };
 
 export type Agent = {
   name: string;
-  initial: string;
   series: SeriesSlot;
 };
 
 export const RESEARCHER: Agent = {
   name: 'Researcher',
-  initial: 'R',
   series: 2,
 };
 
@@ -213,8 +211,6 @@ export type Person = {
   id: string;
   name: string;
   role: string;
-  initials: string;
-  avatar: string;
 };
 
 export const RECEIVERS: Person[] = [
@@ -222,22 +218,16 @@ export const RECEIVERS: Person[] = [
     id: 'mara',
     name: 'Mara Lindqvist',
     role: 'Head of growth',
-    initials: 'ML',
-    avatar: '/avatars/avatar-03.svg',
   },
   {
     id: 'jonas',
     name: 'Jonas Weber',
     role: 'Onboarding lead',
-    initials: 'JW',
-    avatar: '/avatars/avatar-04.svg',
   },
   {
     id: 'imani',
     name: 'Imani Okoro',
     role: 'Lifecycle marketing',
-    initials: 'IO',
-    avatar: '/avatars/avatar-06.svg',
   },
 ];
 

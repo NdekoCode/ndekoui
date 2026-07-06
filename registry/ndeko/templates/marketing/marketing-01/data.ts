@@ -114,7 +114,6 @@ export const FEATURED_GUIDE = {
 
 export type Person = {
   name: string;
-  image: string;
 };
 
 export type WeekDay = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri';
@@ -146,10 +145,10 @@ export type Lane = {
   icon: Icon;
 };
 
-const AMA: Person = { name: 'Ama Mensah', image: '/avatars/avatar-03.svg' };
-const JONAS: Person = { name: 'Jonas Berg', image: '/avatars/avatar-04.svg' };
-const LUCIA: Person = { name: 'Lucia Ferro', image: '/avatars/avatar-05.svg' };
-const DEV: Person = { name: 'Dev Raman', image: '/avatars/avatar-06.svg' };
+const AMA: Person = { name: 'Ama Mensah' };
+const JONAS: Person = { name: 'Jonas Berg' };
+const LUCIA: Person = { name: 'Lucia Ferro' };
+const DEV: Person = { name: 'Dev Raman' };
 
 export const PEOPLE: Person[] = [AMA, JONAS, LUCIA, DEV];
 

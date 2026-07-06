@@ -6,6 +6,7 @@ import { cn } from '@/registry/ndeko/lib/utils';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
 import { Button } from '@/registry/ndeko/ui/button';
+import { CompanyMark } from '@/registry/ndeko/ui/company-mark';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
 
 import { MODEL, WORKSPACE } from './data';
@@ -72,12 +73,7 @@ export function AppHeader({
   return (
     <header className='flex shrink-0 flex-wrap items-center gap-x-3 gap-y-2 px-4 py-2.5'>
       <div className='flex min-w-40 flex-1 items-center gap-2.5'>
-        <span
-          aria-hidden='true'
-          className='gem-plate inline-flex size-7 shrink-0 items-center justify-center rounded-lg text-xs font-semibold select-none [--gem:var(--primary)]'
-        >
-          {WORKSPACE.initial}
-        </span>
+        <CompanyMark seed={WORKSPACE.name} size='lg' />
         <div className='flex min-w-0 flex-col leading-tight'>
           <h1 className='truncate text-sm font-medium'>
             {WORKSPACE.name}

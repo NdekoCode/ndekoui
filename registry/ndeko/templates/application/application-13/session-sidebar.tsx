@@ -6,6 +6,7 @@ import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-redu
 import { HistoryIcon, PlusIcon } from '@/registry/ndeko/lib/icons';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { Button } from '@/registry/ndeko/ui/button';
+import { CompanyMark } from '@/registry/ndeko/ui/company-mark';
 
 import { BRAND, DAYS, type PastSession } from './data';
 
@@ -55,12 +56,7 @@ export function SessionSidebar({
     <div className='flex min-h-0 w-full flex-col gap-3'>
       <div className='flex flex-col gap-2'>
         <div className='flex h-9 items-center gap-2 px-1.5'>
-          <span
-            aria-hidden='true'
-            className='gem-plate inline-flex size-6 shrink-0 items-center justify-center rounded-md text-[11px] font-semibold select-none [--gem:var(--primary)]'
-          >
-            {BRAND.initial}
-          </span>
+          <CompanyMark seed={BRAND.name} className='size-6 rounded-md' />
           <span className='text-[13px] font-semibold'>{BRAND.name}</span>
         </div>
         <Button

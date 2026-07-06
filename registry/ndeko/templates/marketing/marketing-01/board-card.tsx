@@ -12,11 +12,7 @@ import { memo } from 'react';
 
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CalendarIcon } from '@/registry/ndeko/lib/icons';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Badge } from '@/registry/ndeko/ui/badge';
 
 import { type BoardCard, DAY_NAMES, type Person } from './data';
@@ -33,12 +29,6 @@ const TILT_SPRING = { stiffness: 380, damping: 26, mass: 0.6 };
 const LIFT: Transition = { type: 'spring', bounce: 0, duration: 0.25 };
 
 const INSTANT: Transition = { duration: 0 };
-
-function initialsOf(name: string) {
-  const words = name.split(' ');
-  const letters = words.map((word) => word.charAt(0));
-  return letters.join('');
-}
 
 function liftOf(shouldReduceMotion: boolean | null) {
   if (shouldReduceMotion) {
@@ -67,10 +57,12 @@ export function PersonAvatar({
   className?: string;
 }) {
   return (
-    <Avatar className={className}>
-      <AvatarImage src={person.image} alt={person.name} />
-      <AvatarFallback>{initialsOf(person.name)}</AvatarFallback>
-    </Avatar>
+    <Avatar
+      className={className}
+      seed={person.name}
+      role='img'
+      aria-label={person.name}
+    />
   );
 }
 

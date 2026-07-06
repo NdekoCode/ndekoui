@@ -10,11 +10,14 @@ export type PageId = 'overview' | 'weekly-report' | 'project-health';
 export type Entity = {
   id: string;
   name: string;
-  initials: string;
   color: string;
 };
 
-export type Workspace = Entity & { memberCount: number };
+export type Workspace = {
+  id: string;
+  name: string;
+  memberCount: number;
+};
 
 export type NavItem = {
   id: PageId;
@@ -32,17 +35,13 @@ export type NavGroup = {
 export type Person = {
   id: string;
   name: string;
-  initials: string;
   role: string;
-  avatar?: string;
 };
 
 export const WORKSPACES: Workspace[] = [
   {
     id: 'tidewell',
     name: 'Tidewell Studio',
-    initials: 'TS',
-    color: 'var(--primary)',
     memberCount: 14,
   },
 ];
@@ -50,7 +49,6 @@ export const WORKSPACES: Workspace[] = [
 export const PRODUCT_TEAM: Entity = {
   id: 'product',
   name: 'Product team',
-  initials: 'P',
   color: 'var(--info)',
 };
 
@@ -60,42 +58,31 @@ export const PEOPLE: Person[] = [
   {
     id: 'amara',
     name: 'Amara Okafor',
-    initials: 'AO',
     role: 'Product designer',
-    avatar: '/avatars/avatar-03.svg',
   },
   {
     id: 'lucas',
     name: 'Lucas Moreau',
-    initials: 'LM',
     role: 'Engineering lead',
-    avatar: '/avatars/avatar-04.svg',
   },
   {
     id: 'priya',
     name: 'Priya Raman',
-    initials: 'PR',
     role: 'Frontend engineer',
-    avatar: '/avatars/avatar-05.svg',
   },
   {
     id: 'mateo',
     name: 'Mateo Silva',
-    initials: 'MS',
     role: 'Backend engineer',
-    avatar: '/avatars/avatar-06.svg',
   },
   {
     id: 'hana',
     name: 'Hana Kobayashi',
-    initials: 'HK',
     role: 'Product manager',
-    avatar: '/avatars/avatar-07.svg',
   },
   {
     id: 'jonas',
     name: 'Jonas Weber',
-    initials: 'JW',
     role: 'QA engineer',
   },
 ];
@@ -356,8 +343,6 @@ export type Week = {
 export type Member = {
   id: MemberId;
   name: string;
-  initials: string;
-  avatar?: string;
 };
 
 export type Project = { id: ProjectId; name: string };
@@ -426,28 +411,20 @@ export const MEMBERS: Member[] = [
   {
     id: 'amara',
     name: 'Amara Okafor',
-    initials: 'AO',
-    avatar: '/avatars/avatar-03.svg',
   },
   {
     id: 'lucas',
     name: 'Lucas Moreau',
-    initials: 'LM',
-    avatar: '/avatars/avatar-04.svg',
   },
   {
     id: 'priya',
     name: 'Priya Raman',
-    initials: 'PR',
-    avatar: '/avatars/avatar-05.svg',
   },
   {
     id: 'mateo',
     name: 'Mateo Silva',
-    initials: 'MS',
-    avatar: '/avatars/avatar-06.svg',
   },
-  { id: 'jonas', name: 'Jonas Weber', initials: 'JW' },
+  { id: 'jonas', name: 'Jonas Weber' },
 ];
 
 export const PROJECTS: Project[] = [
@@ -595,8 +572,6 @@ export type LeadId = 'amara' | 'lucas' | 'priya' | 'mateo' | 'hana';
 export type Lead = {
   id: LeadId;
   name: string;
-  initials: string;
-  avatar?: string;
 };
 
 export type WorkstreamFigures = {
@@ -642,32 +617,22 @@ export const LEADS: Lead[] = [
   {
     id: 'amara',
     name: 'Amara Okafor',
-    initials: 'AO',
-    avatar: '/avatars/avatar-03.svg',
   },
   {
     id: 'lucas',
     name: 'Lucas Moreau',
-    initials: 'LM',
-    avatar: '/avatars/avatar-04.svg',
   },
   {
     id: 'priya',
     name: 'Priya Raman',
-    initials: 'PR',
-    avatar: '/avatars/avatar-05.svg',
   },
   {
     id: 'mateo',
     name: 'Mateo Silva',
-    initials: 'MS',
-    avatar: '/avatars/avatar-06.svg',
   },
   {
     id: 'hana',
     name: 'Hana Kobayashi',
-    initials: 'HK',
-    avatar: '/avatars/avatar-07.svg',
   },
 ];
 

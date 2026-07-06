@@ -3,7 +3,6 @@ import type { BrandSlug } from '@/registry/ndeko/lib/brand-logos';
 
 export const REPOSITORY = {
   owner: 'Kettlebrook',
-  initial: 'K',
   name: 'storefront',
   branch: 'fix/discount-applied-twice',
   base: 'main',
@@ -11,11 +10,10 @@ export const REPOSITORY = {
 
 export type Agent = {
   name: string;
-  initial: string;
   series: SeriesSlot;
 };
 
-export const CODER: Agent = { name: 'Coder', initial: 'C', series: 5 };
+export const CODER: Agent = { name: 'Coder', series: 5 };
 
 export type Model = {
   name: string;
