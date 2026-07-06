@@ -16,4 +16,21 @@ export const manifest: BlockManifest = [
     ],
     previewHeight: 820,
   },
+  {
+    name: 'ai-product-02',
+    title: 'Home for an AI app',
+    description:
+      'The start page of a signed-in AI product: counts roll in once, a question box answers its suggestions, quick actions sit in tiles, and the agents that need you arrive row by row, each with one action that checks itself off, beside cards for spend and finished tasks.',
+    files: [
+      'index.tsx',
+      'figures.tsx',
+      'ask-bar.tsx',
+      'quick-actions.tsx',
+      'needs-you.tsx',
+      'trend-cards.tsx',
+      'session.ts',
+      'data.ts',
+    ],
+    previewHeight: 1040,
+  },
 ];
