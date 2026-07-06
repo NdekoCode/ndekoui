@@ -50,4 +50,11 @@ export const manifest: ComponentManifest = [
     description:
       'A note line that travels into the sub-task list and takes a task number when you convert it',
   },
+  {
+    name: 'subtask-08',
+    source: 'ndeko',
+    title: 'Live list',
+    description:
+      'A checklist a team writes in at once: new items arrive in their group with the name of who added them, ticked ones settle into Done, and the card keeps its height.',
+  },
 ];
