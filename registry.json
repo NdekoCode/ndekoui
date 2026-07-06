@@ -33356,6 +33356,255 @@
       ]
     },
     {
+      "name": "application-12",
+      "type": "registry:block",
+      "title": "Coding agent",
+      "description": "A Kettlebrook coding agent: a task in the thread, the files it reads with their marks, a failing test whose output streams in the Tests tab, the fix written hunk by hunk in Diff, then the same output turning from failing to passing while the count rolls to 7 of 7, the checkout page before and after in Preview and a pull request that waits for Allow or Deny, over a footer with the branch, the tokens and the cost. Plug your agent into onSend, onApprove and onDeny.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/call-status.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/letter-tile.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/run-session.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/spinner.json",
+        "https://ui.ndekocode.dev/r/tabs.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/templates/application/application-12/index.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-12/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-12/app-header.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-12/app-header.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-12/thread.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-12/thread.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-12/work-steps.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-12/work-steps.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-12/pull-request.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-12/pull-request.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-12/composer.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-12/composer.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-12/work-panel.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-12/work-panel.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-12/diff-view.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-12/diff-view.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-12/tests-view.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-12/tests-view.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-12/preview-view.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-12/preview-view.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-12/panel-sheet.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-12/panel-sheet.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-12/status-footer.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-12/status-footer.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-12/drawn-check.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-12/drawn-check.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-12/stream.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-12/stream.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-12/use-follow-bottom.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-12/use-follow-bottom.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-12/use-is-narrow.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-12/use-is-narrow.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-12/words.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-12/words.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-12/session.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-12/session.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-12/data.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-12/data.ts"
+        }
+      ],
+      "categories": [
+        "templates",
+        "application"
+      ]
+    },
+    {
+      "name": "application-13",
+      "type": "registry:block",
+      "title": "Agent start screen",
+      "description": "A Wrenfield start screen for an agent app: recent sessions down the side, one prompt box with attachments, a model key and a mode key, suggested tasks that fill the prompt when picked and the latest runs with their state, where a run that waits is allowed or denied in place. Behind it a field of mono glyphs shows in a soft lens that follows the pointer, and a press on empty space sends a ripple through it. Plug your agent into onSend, onApprove and onDeny.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/dropdown-menu.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/letter-tile.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/run-session.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/templates/application/application-13/index.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-13/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-13/session-sidebar.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-13/session-sidebar.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-13/prompt-box.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-13/prompt-box.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-13/prompt-keys.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-13/prompt-keys.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-13/suggestions.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-13/suggestions.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-13/recent-runs.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-13/recent-runs.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-13/glyph-field.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-13/glyph-field.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-13/glyph-engine.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-13/glyph-engine.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-13/glyph-paint.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-13/glyph-paint.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-13/inline-sheet.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-13/inline-sheet.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-13/use-is-narrow.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-13/use-is-narrow.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-13/words.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-13/words.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-13/session.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-13/session.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-13/data.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-13/data.ts"
+        }
+      ],
+      "categories": [
+        "templates",
+        "application"
+      ]
+    },
+    {
       "name": "marketing-01",
       "type": "registry:block",
       "title": "Planning board landing page",
