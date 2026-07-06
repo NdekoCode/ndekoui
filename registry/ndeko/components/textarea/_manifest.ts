@@ -118,4 +118,11 @@ export const manifest: ComponentManifest = [
     title: 'Auto-growing textarea',
     description: 'A field that starts at one line and grows up to five.',
   },
+  {
+    name: 'textarea-20',
+    source: 'ndeko',
+    title: 'Rewind',
+    description:
+      'A textarea that records versions as you write: drag the scrubber back and the words you deleted later return in colour, then keep that version or press Escape to return to now.',
+  },
 ];
