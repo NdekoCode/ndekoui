@@ -530,14 +530,15 @@ export const catalog: CatalogCategory[] = [
         source: 'comp-390',
         title: 'Avatar',
         description:
-          'A round photo that shows initials while it loads or if it fails.',
+          'A round avatar: a gradient drawn from the name, covered by the photo when there is one.',
         category: 'avatar',
       },
       {
         name: 'avatar-02',
         source: 'comp-391',
         title: 'Initials avatar',
-        description: 'Initials on the muted fill for someone without a photo.',
+        description:
+          'Initials on the muted fill, for a product that prefers letters to the gradient.',
         category: 'avatar',
       },
       {
@@ -552,21 +553,21 @@ export const catalog: CatalogCategory[] = [
         name: 'avatar-04',
         source: 'comp-393',
         title: 'Square avatar',
-        description: 'A photo avatar with rounded corners.',
+        description: 'An avatar with rounded corners.',
         category: 'avatar',
       },
       {
         name: 'avatar-05',
         source: 'comp-394',
         title: 'Online avatar',
-        description: 'A photo avatar with a success dot for someone online.',
+        description: 'An avatar with a success dot for someone online.',
         category: 'avatar',
       },
       {
         name: 'avatar-06',
         source: 'comp-395',
         title: 'Offline avatar',
-        description: 'A photo avatar with a grey dot for someone offline.',
+        description: 'An avatar with a grey dot for someone offline.',
         category: 'avatar',
       },
       {
@@ -581,14 +582,14 @@ export const catalog: CatalogCategory[] = [
         name: 'avatar-08',
         source: 'comp-397',
         title: 'Verified avatar',
-        description: 'A photo avatar with a verified seal on its top corner.',
+        description: 'An avatar with a verified seal on its top corner.',
         category: 'avatar',
       },
       {
         name: 'avatar-09',
         source: 'comp-398',
         title: 'Avatar with count',
-        description: 'A photo avatar with an unread count.',
+        description: 'An avatar with an unread count.',
         category: 'avatar',
       },
       {
@@ -5469,44 +5470,50 @@ export const catalog: CatalogCategory[] = [
       },
       {
         name: 'timeline-02',
-        source: 'comp-531',
+        source: 'ndeko',
         title: 'Dates on the side',
-        description: 'Dates move to a column on the left when there is room.',
+        description:
+          'Dates sit above each title and move to a column on the left when the piece is wide enough.',
         category: 'timeline',
       },
       {
         name: 'timeline-03',
-        source: 'comp-532',
+        source: 'ndeko',
         title: 'Timeline with dates',
-        description: 'A date above each title and description.',
+        description:
+          'A date above each title and description, and each step says whether it is done, in progress or to come.',
         category: 'timeline',
       },
       {
         name: 'timeline-04',
-        source: 'comp-533',
+        source: 'ndeko',
         title: 'Pull request timeline',
-        description: 'Review steps with the time under each description.',
+        description:
+          'Review steps with how long ago each one happened under its description, and the exact time on hover.',
         category: 'timeline',
       },
       {
         name: 'timeline-05',
-        source: 'comp-534',
+        source: 'ndeko',
         title: 'Checked timeline',
-        description: 'Done milestones carry a check in a filled circle.',
+        description:
+          'Marking the next step done draws its check in a filled circle, fills the line to it and rolls the count.',
         category: 'timeline',
       },
       {
         name: 'timeline-06',
-        source: 'comp-535',
+        source: 'ndeko',
         title: 'Timeline with icons',
-        description: 'Each event has its own icon, filled once it is done.',
+        description:
+          'Each event has its own icon in a circle that fills once the event is done.',
         category: 'timeline',
       },
       {
         name: 'timeline-07',
-        source: 'comp-536',
+        source: 'ndeko',
         title: 'Comment timeline',
-        description: 'Avatars on the line and each comment in a card.',
+        description:
+          'Avatars on the line and each comment in a soft bubble with its time.',
         category: 'timeline',
       },
       {
@@ -5518,9 +5525,10 @@ export const catalog: CatalogCategory[] = [
       },
       {
         name: 'timeline-09',
-        source: 'comp-538',
+        source: 'ndeko',
         title: 'Event log',
-        description: 'System events with their date and time in one card.',
+        description:
+          'System events in one card, each with a status dot and its date and time.',
         category: 'timeline',
       },
       {
@@ -5532,16 +5540,18 @@ export const catalog: CatalogCategory[] = [
       },
       {
         name: 'timeline-11',
-        source: 'comp-540',
+        source: 'ndeko',
         title: 'Horizontal timeline',
-        description: 'Milestones along a horizontal line.',
+        description:
+          'Milestones along a horizontal line that stacks into a vertical list when the piece gets narrow.',
         category: 'timeline',
       },
       {
         name: 'timeline-12',
-        source: 'comp-541',
+        source: 'ndeko',
         title: 'Horizontal timeline, dates above',
-        description: 'Dates above the line, titles and descriptions below it.',
+        description:
+          'Dates above the line, titles and descriptions below it, stacking into a vertical list when the piece gets narrow.',
         category: 'timeline',
       },
     ],
@@ -5645,53 +5655,58 @@ export const catalog: CatalogCategory[] = [
     entries: [
       {
         name: 'tree-01',
-        source: 'comp-565',
+        source: 'ndeko',
         title: 'Basic tree',
         description:
-          'Teams in folders that open with the arrow keys or a click.',
+          'Help topics in folders that open with a click or the arrow keys, their rows arriving with height and opacity.',
         category: 'tree',
       },
       {
         name: 'tree-02',
-        source: 'comp-566',
+        source: 'ndeko',
         title: 'Tree with guide lines',
-        description: 'Vertical lines show which folder each row belongs to.',
+        description:
+          'Vertical lines show which aisle each rack belongs to, and grow with the rows as a folder opens.',
         category: 'tree',
       },
       {
         name: 'tree-03',
-        source: 'comp-567',
+        source: 'ndeko',
         title: 'Tree with icons',
-        description: 'Folder and file icons, the folder opening with its row.',
+        description:
+          'Folders and files with icons, the folder icon opening with its row.',
         category: 'tree',
       },
       {
         name: 'tree-04',
-        source: 'comp-568',
+        source: 'ndeko',
         title: 'Chevron on the right',
-        description: 'Icons lead each row and the chevron sits at the end.',
+        description:
+          'A book icon leads each shelf and opens with it, while the chevron sits at the end of the row.',
         category: 'tree',
       },
       {
         name: 'tree-05',
-        source: 'comp-569',
+        source: 'ndeko',
         title: 'Drag and drop tree',
-        description: 'Select several rows and drag them to a new place.',
+        description:
+          'Select several rows and drag them, or press Ctrl Shift D: they glide to their new place and the move is spoken.',
         category: 'tree',
       },
       {
         name: 'tree-06',
-        source: 'comp-570',
+        source: 'ndeko',
         title: 'Renamable tree',
         description:
-          'Press F2 to rename the focused row; it moves to its new place.',
+          'Press F2 or Rename to edit the focused row in place, then it glides to its new place in the alphabet.',
         category: 'tree',
       },
       {
         name: 'tree-07',
-        source: 'comp-571',
+        source: 'ndeko',
         title: 'Searchable tree',
-        description: 'Typing opens every folder and highlights the matches.',
+        description:
+          'Typing opens every folder, highlights the matches and counts them; clearing the field brings back the folders you had open.',
         category: 'tree',
       },
       {
@@ -5703,25 +5718,26 @@ export const catalog: CatalogCategory[] = [
       },
       {
         name: 'tree-09',
-        source: 'comp-573',
+        source: 'ndeko',
         title: 'Double-click to open',
         description:
-          'A click selects a row and a double click opens its folder.',
+          'A click selects a folder and a double click or Enter opens it, while the highlight glides to the selected row.',
         category: 'tree',
       },
       {
         name: 'tree-10',
-        source: 'comp-574',
+        source: 'ndeko',
         title: 'Expand and collapse all',
         description:
-          'Two buttons open or close every folder, with child counts.',
+          'Two buttons open or close every folder, with the number of children at the end of each row.',
         category: 'tree',
       },
       {
         name: 'tree-11',
-        source: 'comp-575',
+        source: 'ndeko',
         title: 'File explorer',
-        description: 'Project files by type, sorted again after a drop.',
+        description:
+          'A repository with an icon per file type, sorted again when a file is dropped on a folder.',
         category: 'tree',
       },
       {
@@ -5734,25 +5750,26 @@ export const catalog: CatalogCategory[] = [
       },
       {
         name: 'tree-13',
-        source: 'comp-597',
+        source: 'ndeko',
         title: 'Checkboxes on the right',
         description:
-          'A checkbox at the end of each row, folders following their items.',
+          'A checkbox at the end of each row, folders following their items, and a count that rolls as boxes change.',
         category: 'tree',
       },
       {
         name: 'tree-14',
-        source: 'comp-598',
+        source: 'ndeko',
         title: 'Checkboxes on the left',
         description:
-          'A checkbox before each row, folders following their items.',
+          'A checkbox before each row, folders following their items, with Select all and Clear under the tree.',
         category: 'tree',
       },
       {
         name: 'tree-15',
-        source: 'comp-599',
+        source: 'ndeko',
         title: 'Checkable folders',
-        description: 'Checking a folder checks it and everything inside it.',
+        description:
+          'Checking a folder checks it and everything inside it, and the number of documents rolls to the new total.',
         category: 'tree',
       },
     ],

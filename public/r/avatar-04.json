@@ -2,17 +2,16 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "avatar-04",
   "title": "Square avatar",
-  "description": "A photo avatar with rounded corners.",
+  "description": "An avatar with rounded corners.",
   "dependencies": [],
   "registryDependencies": [
     "https://ui.ndekocode.dev/r/avatar.json",
-    "https://ui.ndekocode.dev/r/sample-avatars.json",
     "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {
       "path": "registry/ndeko/components/avatar/avatar-04.tsx",
-      "content": "import {\n  Avatar,\n  AvatarFallback,\n  AvatarImage,\n} from '@/registry/ndeko/ui/avatar';\n\nexport default function Avatar04() {\n  return (\n    <Avatar className='rounded-md'>\n      <AvatarImage src='/avatars/avatar-07.svg' alt='Kelly King' />\n      <AvatarFallback>KK</AvatarFallback>\n    </Avatar>\n  );\n}\n",
+      "content": "import { Avatar } from '@/registry/ndeko/ui/avatar';\n\nexport default function Avatar04() {\n  return (\n    <Avatar\n      className='rounded-md'\n      seed='Kelly King'\n      role='img'\n      aria-label='Kelly King'\n    />\n  );\n}\n",
       "type": "registry:component"
     }
   ],

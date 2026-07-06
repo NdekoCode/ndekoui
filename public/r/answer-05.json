@@ -64,7 +64,7 @@
     },
     {
       "path": "registry/ndeko/components/answer/_parts/words.ts",
-      "content": "export function nounOf(count: number, singular: string, plural?: string) {\n  if (count === 1) {\n    return singular;\n  }\n  return plural ?? `${singular}s`;\n}\n\nexport function countOf(count: number, singular: string, plural?: string) {\n  const noun = nounOf(count, singular, plural);\n  return `${count} ${noun}`;\n}\n\nexport function wordsOf(phrase: string) {\n  const trimmed = phrase.trim();\n  if (trimmed === '') {\n    return [];\n  }\n  return trimmed.split(/\\s+/);\n}\n\n/** The initial of a site, drawn on a tile: \"harbourline-freight.example\" gives H. */\nexport function siteInitialOf(site: string) {\n  const first = site.charAt(0);\n  return first.toUpperCase();\n}\n",
+      "content": "export function nounOf(count: number, singular: string, plural?: string) {\n  if (count === 1) {\n    return singular;\n  }\n  return plural ?? `${singular}s`;\n}\n\nexport function countOf(count: number, singular: string, plural?: string) {\n  const noun = nounOf(count, singular, plural);\n  return `${count} ${noun}`;\n}\n\nexport function wordsOf(phrase: string) {\n  const trimmed = phrase.trim();\n  if (trimmed === '') {\n    return [];\n  }\n  return trimmed.split(/\\s+/);\n}\n",
       "type": "registry:component",
       "target": "components/answer/_parts/words.ts"
     }

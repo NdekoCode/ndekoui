@@ -2,17 +2,16 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "avatar-06",
   "title": "Offline avatar",
-  "description": "A photo avatar with a grey dot for someone offline.",
+  "description": "An avatar with a grey dot for someone offline.",
   "dependencies": [],
   "registryDependencies": [
     "https://ui.ndekocode.dev/r/avatar.json",
-    "https://ui.ndekocode.dev/r/sample-avatars.json",
     "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {
       "path": "registry/ndeko/components/avatar/avatar-06.tsx",
-      "content": "import {\n  Avatar,\n  AvatarFallback,\n  AvatarImage,\n} from '@/registry/ndeko/ui/avatar';\n\nexport default function Avatar06() {\n  return (\n    <div className='relative inline-flex'>\n      <Avatar>\n        <AvatarImage src='/avatars/avatar-07.svg' alt='Kelly King' />\n        <AvatarFallback>KK</AvatarFallback>\n      </Avatar>\n      <span className='border-card bg-muted-foreground absolute -end-0.5 -bottom-0.5 size-3 rounded-full border-2'>\n        <span className='sr-only'>Offline</span>\n      </span>\n    </div>\n  );\n}\n",
+      "content": "import { Avatar } from '@/registry/ndeko/ui/avatar';\n\nexport default function Avatar06() {\n  return (\n    <div className='relative inline-flex'>\n      <Avatar seed='Kelly King' role='img' aria-label='Kelly King' />\n      <span className='border-card bg-muted-foreground absolute -end-0.5 -bottom-0.5 size-3 rounded-full border-2'>\n        <span className='sr-only'>Offline</span>\n      </span>\n    </div>\n  );\n}\n",
       "type": "registry:component"
     }
   ],

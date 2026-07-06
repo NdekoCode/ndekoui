@@ -2,17 +2,39 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "timeline-04",
   "title": "Pull request timeline",
-  "description": "Review steps with the time under each description.",
-  "dependencies": [],
+  "description": "Review steps with how long ago each one happened under its description, and the exact time on hover.",
+  "dependencies": [
+    "date-fns"
+  ],
   "registryDependencies": [
     "https://ui.ndekocode.dev/r/theme.json",
-    "https://ui.ndekocode.dev/r/timeline.json"
+    "https://ui.ndekocode.dev/r/timeline.json",
+    "https://ui.ndekocode.dev/r/utils.json"
   ],
   "files": [
     {
       "path": "registry/ndeko/components/timeline/timeline-04.tsx",
-      "content": "import {\n  Timeline,\n  TimelineContent,\n  TimelineDate,\n  TimelineHeader,\n  TimelineIndicator,\n  TimelineItem,\n  TimelineSeparator,\n  TimelineTitle,\n} from '@/registry/ndeko/ui/timeline';\n\ntype Event = {\n  id: number;\n  date?: string;\n  title: string;\n  description: string;\n};\n\nconst ITEMS: Event[] = [\n  {\n    id: 1,\n    date: '15 minutes ago',\n    title: 'Pull request submitted',\n    description:\n      'Submitted PR #342 with the new feature. Waiting for a code review from the team leads.',\n  },\n  {\n    id: 2,\n    date: '10 minutes ago',\n    title: 'CI pipeline started',\n    description:\n      'Automated tests and build started. Running unit tests and code quality checks.',\n  },\n  {\n    id: 3,\n    date: '5 minutes ago',\n    title: 'Code review feedback',\n    description:\n      'Received comments on the PR. Minor changes needed in error handling and documentation.',\n  },\n  {\n    id: 4,\n    title: 'Changes pushed',\n    description:\n      'Implemented the requested changes and pushed them to the feature branch. Awaiting final approval.',\n  },\n];\n\nconst DOT = [\n  'border-foreground/15 scale-75 transition-[background-color,border-color,scale] duration-200 ease-out-strong',\n  'group-data-completed/timeline-item:border-primary group-data-completed/timeline-item:bg-primary group-data-completed/timeline-item:scale-100 group-data-completed/timeline-item:duration-300',\n].join(' ');\n\nexport default function Timeline04() {\n  return (\n    <Timeline defaultValue={3}>\n      {ITEMS.map((item) => (\n        <TimelineItem key={item.id} step={item.id}>\n          <TimelineHeader>\n            <TimelineSeparator className='bg-foreground/10' />\n            <TimelineTitle className='-mt-0.5'>{item.title}</TimelineTitle>\n            <TimelineIndicator className={DOT} />\n          </TimelineHeader>\n          <TimelineContent>\n            {item.description}\n            {item.date && (\n              <TimelineDate className='mt-2 mb-0'>{item.date}</TimelineDate>\n            )}\n          </TimelineContent>\n        </TimelineItem>\n      ))}\n    </Timeline>\n  );\n}\n",
-      "type": "registry:component"
+      "content": "import {\n  Timeline,\n  TimelineContent,\n  TimelineHeader,\n  TimelineIndicator,\n  TimelineItem,\n  TimelineSeparator,\n  TimelineTitle,\n} from '@/registry/ndeko/ui/timeline';\n\nimport { AgoTime } from './_parts/ago-time';\nimport { currentStepOf, stepStateOf, StepStateNote } from './_parts/step-state';\n\ntype ReviewStep = {\n  title: string;\n  detail: string;\n  at?: string;\n};\n\nconst REVIEW: ReviewStep[] = [\n  {\n    title: 'Pull request opened',\n    detail: 'Mira opened #418, which keeps cart totals in whole cents.',\n    at: '2026-11-12T14:18:00',\n  },\n  {\n    title: 'Checks finished',\n    detail: 'Type check, lint and 212 tests ran on the first push.',\n    at: '2026-11-12T14:25:00',\n  },\n  {\n    title: 'Changes requested',\n    detail: 'Idris asked for a rounding test on carts that mix two currencies.',\n    at: '2026-11-12T14:42:00',\n  },\n  {\n    title: 'Fix pushed',\n    detail:\n      'One commit adds the rounding test. The pull request waits for a second look.',\n  },\n];\n\nconst DONE_COUNT = 3;\n\nexport default function Timeline04() {\n  return (\n    <Timeline\n      defaultValue={DONE_COUNT}\n      role='list'\n      aria-label='Review of pull request 418'\n    >\n      {REVIEW.map((reviewStep, index) => {\n        const step = index + 1;\n        const state = stepStateOf(step, DONE_COUNT);\n\n        return (\n          <TimelineItem\n            key={reviewStep.title}\n            step={step}\n            role='listitem'\n            aria-current={currentStepOf(state)}\n          >\n            <TimelineHeader>\n              <TimelineIndicator />\n              <TimelineSeparator />\n              <TimelineTitle className='-mt-0.5'>\n                {reviewStep.title}\n                <StepStateNote state={state} />\n              </TimelineTitle>\n            </TimelineHeader>\n            <TimelineContent>\n              {reviewStep.detail}\n              {reviewStep.at && <AgoTime at={reviewStep.at} className='mt-2' />}\n            </TimelineContent>\n          </TimelineItem>\n        );\n      })}\n    </Timeline>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/timeline/timeline-04.tsx"
+    },
+    {
+      "path": "registry/ndeko/components/timeline/_parts/ago-time.tsx",
+      "content": "import { cn } from '@/registry/ndeko/lib/utils';\nimport { TimelineDate } from '@/registry/ndeko/ui/timeline';\n\nimport { agoLabelOf, stampLabelOf } from './dates';\n\ntype AgoTimeProps = {\n  at: string;\n  className?: string;\n};\n\nexport function AgoTime({ at, className }: AgoTimeProps) {\n  return (\n    <TimelineDate\n      dateTime={at}\n      title={stampLabelOf(at)}\n      className={cn('mb-0', className)}\n    >\n      {agoLabelOf(at)}\n    </TimelineDate>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/timeline/_parts/ago-time.tsx"
+    },
+    {
+      "path": "registry/ndeko/components/timeline/_parts/dates.ts",
+      "content": "import { differenceInMinutes, format, parseISO } from 'date-fns';\n\n/* Every time is read against one fixed moment and written without a time zone, so the server and the browser print the same labels. */\nconst NOW = '2026-11-12T15:00:00';\n\nconst MINUTES_PER_HOUR = 60;\n\nconst MINUTES_PER_DAY = 1440;\n\nexport function dayLabelOf(isoDay: string) {\n  const day = parseISO(isoDay);\n  return format(day, 'MMM d, yyyy');\n}\n\nexport function stampLabelOf(isoTime: string) {\n  const time = parseISO(isoTime);\n  return format(time, \"MMMM d, yyyy 'at' HH:mm\");\n}\n\nfunction agoOf(count: number, unit: string) {\n  if (count === 1) {\n    return `1 ${unit} ago`;\n  }\n  return `${count} ${unit}s ago`;\n}\n\nexport function agoLabelOf(isoTime: string) {\n  const now = parseISO(NOW);\n  const time = parseISO(isoTime);\n  const minutes = differenceInMinutes(now, time);\n  if (minutes < 1) {\n    return 'Just now';\n  }\n  if (minutes < MINUTES_PER_HOUR) {\n    return agoOf(minutes, 'minute');\n  }\n  if (minutes < MINUTES_PER_DAY) {\n    const hours = Math.floor(minutes / MINUTES_PER_HOUR);\n    return agoOf(hours, 'hour');\n  }\n  const days = Math.floor(minutes / MINUTES_PER_DAY);\n  return agoOf(days, 'day');\n}\n",
+      "type": "registry:component",
+      "target": "components/timeline/_parts/dates.ts"
+    },
+    {
+      "path": "registry/ndeko/components/timeline/_parts/step-state.tsx",
+      "content": "type StepState = 'done' | 'current' | 'ahead';\n\nconst STATE_WORD: Record<StepState, string> = {\n  done: 'done',\n  current: 'in progress',\n  ahead: 'to come',\n};\n\nexport function stepStateOf(step: number, doneCount: number): StepState {\n  if (step <= doneCount) {\n    return 'done';\n  }\n  if (step === doneCount + 1) {\n    return 'current';\n  }\n  return 'ahead';\n}\n\nexport function currentStepOf(state: StepState) {\n  if (state === 'current') {\n    return 'step' as const;\n  }\n  return undefined;\n}\n\ntype StepStateNoteProps = {\n  state: StepState;\n};\n\n/* The colour of the marker says where a step stands: this says it in words for a screen reader. */\nexport function StepStateNote({ state }: StepStateNoteProps) {\n  return <span className='sr-only'>, {STATE_WORD[state]}</span>;\n}\n",
+      "type": "registry:component",
+      "target": "components/timeline/_parts/step-state.tsx"
     }
   ],
   "categories": [

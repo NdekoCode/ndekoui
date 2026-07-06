@@ -2,17 +2,16 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "avatar-01",
   "title": "Avatar",
-  "description": "A round photo that shows initials while it loads or if it fails.",
+  "description": "A round avatar: a gradient drawn from the name, covered by the photo when there is one.",
   "dependencies": [],
   "registryDependencies": [
     "https://ui.ndekocode.dev/r/avatar.json",
-    "https://ui.ndekocode.dev/r/sample-avatars.json",
     "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {
       "path": "registry/ndeko/components/avatar/avatar-01.tsx",
-      "content": "import {\n  Avatar,\n  AvatarFallback,\n  AvatarImage,\n} from '@/registry/ndeko/ui/avatar';\n\nexport default function Avatar01() {\n  return (\n    <Avatar>\n      <AvatarImage src='/avatars/avatar-07.svg' alt='Kelly King' />\n      <AvatarFallback>KK</AvatarFallback>\n    </Avatar>\n  );\n}\n",
+      "content": "import { Avatar } from '@/registry/ndeko/ui/avatar';\n\nexport default function Avatar01() {\n  return <Avatar seed='Kelly King' role='img' aria-label='Kelly King' />;\n}\n",
       "type": "registry:component"
     }
   ],

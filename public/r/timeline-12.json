@@ -2,18 +2,38 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "timeline-12",
   "title": "Horizontal timeline, dates above",
-  "description": "Dates above the line, titles and descriptions below it.",
-  "dependencies": [],
+  "description": "Dates above the line, titles and descriptions below it, stacking into a vertical list when the piece gets narrow.",
+  "dependencies": [
+    "date-fns"
+  ],
   "registryDependencies": [
     "https://ui.ndekocode.dev/r/theme.json",
-    "https://ui.ndekocode.dev/r/timeline.json",
-    "https://ui.ndekocode.dev/r/utils.json"
+    "https://ui.ndekocode.dev/r/timeline.json"
   ],
   "files": [
     {
       "path": "registry/ndeko/components/timeline/timeline-12.tsx",
-      "content": "import { cn } from '@/registry/ndeko/lib/utils';\nimport {\n  Timeline,\n  TimelineContent,\n  TimelineDate,\n  TimelineHeader,\n  TimelineIndicator,\n  TimelineItem,\n  TimelineSeparator,\n  TimelineTitle,\n} from '@/registry/ndeko/ui/timeline';\n\nconst ITEMS = [\n  {\n    id: 1,\n    date: 'Mar 15, 2024',\n    title: 'Project kickoff',\n    description: 'Initial team meeting.',\n  },\n  {\n    id: 2,\n    date: 'Mar 22, 2024',\n    title: 'Design phase',\n    description: 'Completed wireframes.',\n  },\n  {\n    id: 3,\n    date: 'Apr 5, 2024',\n    title: 'Development sprint',\n    description: 'Backend development.',\n  },\n  {\n    id: 4,\n    date: 'Apr 19, 2024',\n    title: 'Testing and deployment',\n    description: 'Performance optimization.',\n  },\n];\n\nconst DOT = [\n  'border-foreground/15 scale-75 transition-[background-color,border-color,scale] duration-200 ease-out-strong',\n  'group-data-completed/timeline-item:border-primary group-data-completed/timeline-item:bg-primary group-data-completed/timeline-item:scale-100 group-data-completed/timeline-item:duration-300',\n].join(' ');\n\nconst BELOW_THE_DATE = 'group-data-[orientation=horizontal]/timeline:top-8';\n\nexport default function Timeline12() {\n  return (\n    <Timeline defaultValue={3} orientation='horizontal'>\n      {ITEMS.map((item) => (\n        <TimelineItem\n          key={item.id}\n          step={item.id}\n          className='group-data-[orientation=horizontal]/timeline:mt-0'\n        >\n          <TimelineHeader>\n            <TimelineSeparator\n              className={cn('bg-foreground/10', BELOW_THE_DATE)}\n            />\n            <TimelineDate className='mb-10'>{item.date}</TimelineDate>\n            <TimelineTitle>{item.title}</TimelineTitle>\n            <TimelineIndicator className={cn(DOT, BELOW_THE_DATE)} />\n          </TimelineHeader>\n          <TimelineContent>{item.description}</TimelineContent>\n        </TimelineItem>\n      ))}\n    </Timeline>\n  );\n}\n",
-      "type": "registry:component"
+      "content": "import {\n  Timeline,\n  TimelineContent,\n  TimelineDate,\n  TimelineHeader,\n  TimelineIndicator,\n  TimelineItem,\n  TimelineSeparator,\n  TimelineTitle,\n} from '@/registry/ndeko/ui/timeline';\n\nimport { ByWidth } from './_parts/by-width';\nimport { dayLabelOf } from './_parts/dates';\nimport { currentStepOf, stepStateOf, StepStateNote } from './_parts/step-state';\n\ntype Stage = {\n  day: string;\n  title: string;\n  note: string;\n};\n\ntype OpeningPlanProps = {\n  orientation: 'horizontal' | 'vertical';\n};\n\nconst CLINIC_OPENING: Stage[] = [\n  {\n    day: '2026-08-31',\n    title: 'Lease signed',\n    note: 'Ground floor, Mill Street',\n  },\n  { day: '2026-09-28', title: 'Fit-out', note: 'Six rooms and a small lab' },\n  { day: '2026-10-26', title: 'Team trained', note: 'Front desk and nurses' },\n  { day: '2026-11-23', title: 'First patients', note: 'Booking opens online' },\n];\n\nconst DONE_COUNT = 3;\n\n/* Along the line the date takes the first row: the rail and its dots run under it, and the title starts under the rail. */\nconst ROW = [\n  'group-data-[orientation=horizontal]/timeline:mt-0',\n  'group-data-[orientation=vertical]/timeline:not-last:pb-6',\n].join(' ');\n\nconst UNDER_THE_DATE = 'group-data-[orientation=horizontal]/timeline:top-8';\n\nconst DATE_ABOVE_THE_RAIL =\n  'group-data-[orientation=horizontal]/timeline:mb-10';\n\nfunction OpeningPlan({ orientation }: OpeningPlanProps) {\n  return (\n    <Timeline\n      defaultValue={DONE_COUNT}\n      orientation={orientation}\n      role='list'\n      aria-label='Juniper Health clinic opening'\n    >\n      {CLINIC_OPENING.map((stage, index) => {\n        const step = index + 1;\n        const state = stepStateOf(step, DONE_COUNT);\n\n        return (\n          <TimelineItem\n            key={stage.day}\n            step={step}\n            role='listitem'\n            aria-current={currentStepOf(state)}\n            className={ROW}\n          >\n            <TimelineHeader>\n              <TimelineIndicator className={UNDER_THE_DATE} />\n              <TimelineSeparator className={UNDER_THE_DATE} />\n              <TimelineDate\n                dateTime={stage.day}\n                className={DATE_ABOVE_THE_RAIL}\n              >\n                {dayLabelOf(stage.day)}\n              </TimelineDate>\n              <TimelineTitle>\n                {stage.title}\n                <StepStateNote state={state} />\n              </TimelineTitle>\n            </TimelineHeader>\n            <TimelineContent>{stage.note}</TimelineContent>\n          </TimelineItem>\n        );\n      })}\n    </Timeline>\n  );\n}\n\nexport default function Timeline12() {\n  return (\n    <ByWidth\n      narrow={<OpeningPlan orientation='vertical' />}\n      wide={<OpeningPlan orientation='horizontal' />}\n    />\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/timeline/timeline-12.tsx"
+    },
+    {
+      "path": "registry/ndeko/components/timeline/_parts/by-width.tsx",
+      "content": "type ByWidthProps = {\n  narrow: React.ReactNode;\n  wide: React.ReactNode;\n};\n\n/*\n * A timeline takes its orientation as a prop, so a piece that lies along a line draws both and its\n * own width decides which one shows: under 576px four columns do not fit, and the list stacks.\n */\nexport function ByWidth({ narrow, wide }: ByWidthProps) {\n  return (\n    <div className='@container w-full'>\n      <div className='@xl:hidden'>{narrow}</div>\n      <div className='@max-xl:hidden'>{wide}</div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/timeline/_parts/by-width.tsx"
+    },
+    {
+      "path": "registry/ndeko/components/timeline/_parts/dates.ts",
+      "content": "import { differenceInMinutes, format, parseISO } from 'date-fns';\n\n/* Every time is read against one fixed moment and written without a time zone, so the server and the browser print the same labels. */\nconst NOW = '2026-11-12T15:00:00';\n\nconst MINUTES_PER_HOUR = 60;\n\nconst MINUTES_PER_DAY = 1440;\n\nexport function dayLabelOf(isoDay: string) {\n  const day = parseISO(isoDay);\n  return format(day, 'MMM d, yyyy');\n}\n\nexport function stampLabelOf(isoTime: string) {\n  const time = parseISO(isoTime);\n  return format(time, \"MMMM d, yyyy 'at' HH:mm\");\n}\n\nfunction agoOf(count: number, unit: string) {\n  if (count === 1) {\n    return `1 ${unit} ago`;\n  }\n  return `${count} ${unit}s ago`;\n}\n\nexport function agoLabelOf(isoTime: string) {\n  const now = parseISO(NOW);\n  const time = parseISO(isoTime);\n  const minutes = differenceInMinutes(now, time);\n  if (minutes < 1) {\n    return 'Just now';\n  }\n  if (minutes < MINUTES_PER_HOUR) {\n    return agoOf(minutes, 'minute');\n  }\n  if (minutes < MINUTES_PER_DAY) {\n    const hours = Math.floor(minutes / MINUTES_PER_HOUR);\n    return agoOf(hours, 'hour');\n  }\n  const days = Math.floor(minutes / MINUTES_PER_DAY);\n  return agoOf(days, 'day');\n}\n",
+      "type": "registry:component",
+      "target": "components/timeline/_parts/dates.ts"
+    },
+    {
+      "path": "registry/ndeko/components/timeline/_parts/step-state.tsx",
+      "content": "type StepState = 'done' | 'current' | 'ahead';\n\nconst STATE_WORD: Record<StepState, string> = {\n  done: 'done',\n  current: 'in progress',\n  ahead: 'to come',\n};\n\nexport function stepStateOf(step: number, doneCount: number): StepState {\n  if (step <= doneCount) {\n    return 'done';\n  }\n  if (step === doneCount + 1) {\n    return 'current';\n  }\n  return 'ahead';\n}\n\nexport function currentStepOf(state: StepState) {\n  if (state === 'current') {\n    return 'step' as const;\n  }\n  return undefined;\n}\n\ntype StepStateNoteProps = {\n  state: StepState;\n};\n\n/* The colour of the marker says where a step stands: this says it in words for a screen reader. */\nexport function StepStateNote({ state }: StepStateNoteProps) {\n  return <span className='sr-only'>, {STATE_WORD[state]}</span>;\n}\n",
+      "type": "registry:component",
+      "target": "components/timeline/_parts/step-state.tsx"
     }
   ],
   "categories": [

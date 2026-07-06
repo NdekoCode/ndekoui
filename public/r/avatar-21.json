@@ -7,13 +7,12 @@
   "registryDependencies": [
     "https://ui.ndekocode.dev/r/avatar.json",
     "https://ui.ndekocode.dev/r/button.json",
-    "https://ui.ndekocode.dev/r/sample-avatars.json",
     "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {
       "path": "registry/ndeko/components/avatar/avatar-21.tsx",
-      "content": "import {\n  Avatar,\n  AvatarFallback,\n  AvatarImage,\n} from '@/registry/ndeko/ui/avatar';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst MEMBERS = [\n  { name: 'Jordan Hayes', initials: 'JH', image: '/avatars/avatar-03.svg' },\n  { name: 'Anna Novak', initials: 'AN', image: '/avatars/avatar-04.svg' },\n  { name: 'Lina Haddad', initials: 'LH', image: '/avatars/avatar-05.svg' },\n  { name: 'Ama Mensah', initials: 'AM', image: '/avatars/avatar-06.svg' },\n];\n\nexport default function Avatar21() {\n  return (\n    <div className='bg-muted flex items-center rounded-full p-0.5'>\n      <div className='flex -space-x-3'>\n        {MEMBERS.map((member) => (\n          <Avatar\n            key={member.name}\n            className='ring-muted size-10 text-[13px] ring-2'\n          >\n            <AvatarImage src={member.image} alt={member.name} />\n            <AvatarFallback className='bg-card'>\n              {member.initials}\n            </AvatarFallback>\n          </Avatar>\n        ))}\n      </div>\n      <Button\n        variant='ghost'\n        className='text-muted-foreground hover:text-foreground rounded-full px-3 text-xs hover:bg-transparent'\n        aria-label='Show 3 more members'\n      >\n        +3\n      </Button>\n    </div>\n  );\n}\n",
+      "content": "import { Avatar } from '@/registry/ndeko/ui/avatar';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nconst MEMBERS = [\n  { name: 'Jordan Hayes' },\n  { name: 'Anna Novak' },\n  { name: 'Lina Haddad' },\n  { name: 'Ama Mensah' },\n];\n\nexport default function Avatar21() {\n  return (\n    <div className='bg-muted flex items-center rounded-full p-0.5'>\n      <div className='flex -space-x-3'>\n        {MEMBERS.map((member) => (\n          <Avatar\n            key={member.name}\n            className='ring-muted size-10 ring-2'\n            seed={member.name}\n            role='img'\n            aria-label={member.name}\n          />\n        ))}\n      </div>\n      <Button\n        variant='ghost'\n        className='text-muted-foreground hover:text-foreground rounded-full px-3 text-xs hover:bg-transparent'\n        aria-label='Show 3 more members'\n      >\n        +3\n      </Button>\n    </div>\n  );\n}\n",
       "type": "registry:component"
     }
   ],

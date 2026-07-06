@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "mesh-tile",
+  "title": "Mesh Tile",
+  "description": "The picture of an agent, a team or a project with no logo: a gradient drawn from its name, in its own colour when it has one.",
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json",
+    "https://ui.ndekocode.dev/r/mesh.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/mesh-tile.tsx",
+      "content": "import { meshIn, meshOf } from '@/registry/ndeko/lib/mesh';\nimport { cn } from '@/registry/ndeko/lib/utils';\n\nexport type MeshTileSize = 'sm' | 'md' | 'lg';\n\nconst SIZE_CLASS: Record<MeshTileSize, string> = {\n  sm: 'size-4 rounded-[4px]',\n  md: 'size-5 rounded-[5px]',\n  lg: 'size-7 rounded-md',\n};\n\ntype MeshTileProps = {\n  /** The name the picture is drawn from. The same name gives the same picture everywhere. */\n  seed: string;\n  /** A colour that already means something, such as the series colour of an agent. Without it the hue comes from the seed. */\n  color?: string;\n  size?: MeshTileSize;\n  className?: string;\n};\n\nfunction styleOf(seed: string, color: string | undefined) {\n  if (color === undefined) {\n    return meshOf(seed);\n  }\n  return meshIn(color, seed);\n}\n\n/** The picture of an agent, a team or a project that has no logo. Its name always sits beside it. */\nexport function MeshTile({\n  seed,\n  color,\n  size = 'md',\n  className,\n}: MeshTileProps) {\n  return (\n    <span\n      aria-hidden='true'\n      style={styleOf(seed, color)}\n      className={cn(\n        'mesh-fill hairline-ring inline-block shrink-0 ring-black/10 ring-inset',\n        SIZE_CLASS[size],\n        className\n      )}\n    />\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}

@@ -2,18 +2,19 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "avatar",
   "title": "Avatar",
-  "description": "A picture with a fallback, opaque in stacks.",
+  "description": "A picture, or a gradient drawn from a name for someone without one, opaque in stacks.",
   "dependencies": [
     "@base-ui/react"
   ],
   "registryDependencies": [
     "https://ui.ndekocode.dev/r/theme.json",
-    "https://ui.ndekocode.dev/r/utils.json"
+    "https://ui.ndekocode.dev/r/utils.json",
+    "https://ui.ndekocode.dev/r/mesh.json"
   ],
   "files": [
     {
       "path": "registry/ndeko/ui/avatar.tsx",
-      "content": "'use client';\n\nimport { Avatar as AvatarPrimitive } from '@base-ui/react/avatar';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\n\ntype WithClassName<Props> = Omit<Props, 'className'> & { className?: string };\n\nfunction Avatar({\n  className,\n  ...props\n}: WithClassName<AvatarPrimitive.Root.Props>) {\n  return (\n    <AvatarPrimitive.Root\n      data-slot='avatar'\n      className={cn(\n        'bg-muted text-muted-foreground hairline-ring ring-foreground/10 relative inline-flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-full align-middle text-xs font-medium select-none',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nfunction AvatarImage({\n  className,\n  ...props\n}: WithClassName<AvatarPrimitive.Image.Props>) {\n  return (\n    <AvatarPrimitive.Image\n      data-slot='avatar-image'\n      className={cn(\n        'size-full object-cover transition-opacity duration-200 data-starting-style:opacity-0',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nfunction AvatarFallback({\n  className,\n  ...props\n}: WithClassName<AvatarPrimitive.Fallback.Props>) {\n  return (\n    <AvatarPrimitive.Fallback\n      data-slot='avatar-fallback'\n      className={cn(\n        'bg-muted flex size-full items-center justify-center',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nexport { Avatar, AvatarFallback, AvatarImage };\n",
+      "content": "'use client';\n\nimport { Avatar as AvatarPrimitive } from '@base-ui/react/avatar';\n\nimport { meshOf } from '@/registry/ndeko/lib/mesh';\nimport { cn } from '@/registry/ndeko/lib/utils';\n\ntype WithClassName<Props> = Omit<Props, 'className'> & { className?: string };\n\ntype RootStyle = AvatarPrimitive.Root.Props['style'];\n\ntype AvatarProps = WithClassName<AvatarPrimitive.Root.Props> & {\n  /** A name or an address. Someone without a picture gets a gradient drawn from it, the same every time. */\n  seed?: string;\n};\n\nfunction fillOf(seed: string | undefined) {\n  if (seed === undefined) {\n    return 'bg-muted';\n  }\n  return 'mesh-fill';\n}\n\n/** The gradient goes under the style of the caller, who can still override any property. */\nfunction styleWithMesh(seed: string | undefined, style: RootStyle): RootStyle {\n  if (seed === undefined) {\n    return style;\n  }\n  const mesh = meshOf(seed);\n  if (typeof style === 'function') {\n    return (state) => ({ ...mesh, ...style(state) });\n  }\n  return { ...mesh, ...style };\n}\n\nfunction Avatar({ className, seed, style, ...props }: AvatarProps) {\n  return (\n    <AvatarPrimitive.Root\n      data-slot='avatar'\n      style={styleWithMesh(seed, style)}\n      className={cn(\n        'text-muted-foreground hairline-ring ring-foreground/10 relative inline-flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-full align-middle text-xs font-medium select-none',\n        fillOf(seed),\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nfunction AvatarImage({\n  className,\n  ...props\n}: WithClassName<AvatarPrimitive.Image.Props>) {\n  return (\n    <AvatarPrimitive.Image\n      data-slot='avatar-image'\n      className={cn(\n        'size-full object-cover transition-opacity duration-200 data-starting-style:opacity-0',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nfunction AvatarFallback({\n  className,\n  ...props\n}: WithClassName<AvatarPrimitive.Fallback.Props>) {\n  return (\n    <AvatarPrimitive.Fallback\n      data-slot='avatar-fallback'\n      className={cn(\n        'bg-muted flex size-full items-center justify-center',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nexport { Avatar, AvatarFallback, AvatarImage };\n",
       "type": "registry:ui"
     }
   ],

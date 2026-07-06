@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "avatar-02",
   "title": "Initials avatar",
-  "description": "Initials on the muted fill for someone without a photo.",
+  "description": "Initials on the muted fill, for a product that prefers letters to the gradient.",
   "dependencies": [],
   "registryDependencies": [
     "https://ui.ndekocode.dev/r/avatar.json",

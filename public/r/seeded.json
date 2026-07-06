@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "seeded",
+  "title": "Seeded",
+  "description": "A number drawn from a text, the same on the server and in the browser, and a pick from a list by its bits.",
+  "files": [
+    {
+      "path": "registry/ndeko/lib/seeded.ts",
+      "content": "const FNV_OFFSET = 2166136261;\nconst FNV_PRIME = 16777619;\n\n/**\n * A number drawn from a text, the same on the server and in the browser, so a picture generated\n * from a name never changes between two renders.\n */\nexport function hashOf(text: string) {\n  let hash = FNV_OFFSET;\n  for (const character of text) {\n    const code = character.codePointAt(0) ?? 0;\n    hash ^= code;\n    hash = Math.imul(hash, FNV_PRIME);\n  }\n  return hash >>> 0;\n}\n\n/** One entry of a list, chosen by the bits of a hash from `shift` upwards. */\nexport function pickedFrom<Item>(\n  items: readonly Item[],\n  hash: number,\n  shift = 0\n) {\n  const bits = hash >>> shift;\n  const index = bits % items.length;\n  return items[index];\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "categories": [
+    "foundations"
+  ],
+  "type": "registry:lib"
+}

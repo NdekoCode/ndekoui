@@ -2,18 +2,17 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "avatar-09",
   "title": "Avatar with count",
-  "description": "A photo avatar with an unread count.",
+  "description": "An avatar with an unread count.",
   "dependencies": [],
   "registryDependencies": [
     "https://ui.ndekocode.dev/r/avatar.json",
     "https://ui.ndekocode.dev/r/badge.json",
-    "https://ui.ndekocode.dev/r/sample-avatars.json",
     "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {
       "path": "registry/ndeko/components/avatar/avatar-09.tsx",
-      "content": "import {\n  Avatar,\n  AvatarFallback,\n  AvatarImage,\n} from '@/registry/ndeko/ui/avatar';\nimport { Badge } from '@/registry/ndeko/ui/badge';\n\nexport default function Avatar09() {\n  return (\n    <div className='relative inline-flex'>\n      <Avatar>\n        <AvatarImage src='/avatars/avatar-07.svg' alt='Kelly King' />\n        <AvatarFallback>KK</AvatarFallback>\n      </Avatar>\n      <Badge className='bg-primary text-primary-foreground ring-card absolute -top-1.5 left-full min-w-5 -translate-x-3.5 px-1 tabular-nums ring-2'>\n        6<span className='sr-only'> unread messages</span>\n      </Badge>\n    </div>\n  );\n}\n",
+      "content": "import { Avatar } from '@/registry/ndeko/ui/avatar';\nimport { Badge } from '@/registry/ndeko/ui/badge';\n\nexport default function Avatar09() {\n  return (\n    <div className='relative inline-flex'>\n      <Avatar seed='Kelly King' role='img' aria-label='Kelly King' />\n      <Badge className='bg-primary text-primary-foreground ring-card absolute -top-1.5 left-full min-w-5 -translate-x-3.5 px-1 tabular-nums ring-2'>\n        6<span className='sr-only'> unread messages</span>\n      </Badge>\n    </div>\n  );\n}\n",
       "type": "registry:component"
     }
   ],

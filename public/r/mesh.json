@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "mesh",
+  "title": "Mesh",
+  "description": "The gradient that stands for a name with no picture: a hue and a light drawn from the name, or a colour that already means something.",
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/seeded.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/lib/mesh.ts",
+      "content": "import type { CSSProperties } from 'react';\n\nimport { hashOf, pickedFrom } from '@/registry/ndeko/lib/seeded';\n\n/** The custom properties the `mesh-fill` utility reads. */\nexport type MeshStyle = CSSProperties & {\n  '--mesh': string;\n  '--mesh-key': string;\n  '--mesh-shade': string;\n  '--mesh-rim': string;\n};\n\ntype Lights = { key: string; shade: string; rim: string };\n\n/** One arrangement of the three lights, turned twelve times around the centre. */\nconst LIGHTS: Lights[] = [\n  { key: '23% 23%', shade: '83% 83%', rim: '88% 18%' },\n  { key: '40% 13%', shade: '62% 94%', rim: '99% 41%' },\n  { key: '60% 13%', shade: '38% 94%', rim: '97% 67%' },\n  { key: '77% 23%', shade: '17% 83%', rim: '82% 88%' },\n  { key: '87% 40%', shade: '6% 62%', rim: '59% 99%' },\n  { key: '87% 60%', shade: '6% 38%', rim: '33% 97%' },\n  { key: '77% 77%', shade: '17% 17%', rim: '12% 82%' },\n  { key: '60% 87%', shade: '38% 6%', rim: '1% 59%' },\n  { key: '40% 87%', shade: '62% 6%', rim: '3% 33%' },\n  { key: '23% 77%', shade: '83% 17%', rim: '18% 12%' },\n  { key: '13% 60%', shade: '94% 38%', rim: '41% 1%' },\n  { key: '13% 40%', shade: '94% 62%', rim: '67% 3%' },\n];\n\n/**\n * Hues that stay clean under the three lights, two for each of five families (coral, amber, mint,\n * blue, violet), so a list of people never reads as one colour. Yellow-greens are left out: they\n * turn muddy under a warm light.\n */\nconst HUES = [15, 45, 70, 160, 190, 220, 250, 280, 310, 340];\n\n/** An odd multiplier: names that differ by a few letters land far apart in the list of hues. */\nconst HUE_MIX = 0x22bfb891;\nconst UINT32_RANGE = 2 ** 32;\n\n/** A name drifts a few degrees around its hue, so two names on the same hue still differ. */\nconst HUE_DRIFT = 7;\n\n/** The drift and the lights are read from different bits of the hash. */\nconst DRIFT_SHIFT = 13;\nconst LIGHTS_SHIFT = 9;\n\nfunction hueOf(hash: number) {\n  const mixed = Math.imul(hash, HUE_MIX) >>> 0;\n  const position = mixed / UINT32_RANGE;\n  const index = Math.floor(position * HUES.length);\n  const span = HUE_DRIFT * 2 + 1;\n  const drift = (hash >>> DRIFT_SHIFT) % span;\n  return HUES[index] + drift - HUE_DRIFT;\n}\n\nfunction styleOf(body: string, lights: Lights): MeshStyle {\n  return {\n    '--mesh': body,\n    '--mesh-key': lights.key,\n    '--mesh-shade': lights.shade,\n    '--mesh-rim': lights.rim,\n  };\n}\n\n/** The picture of a name: a soft hue of its own, lit from a side of its own. */\nexport function meshOf(seed: string) {\n  const hash = hashOf(seed);\n  const hue = hueOf(hash);\n  const body = `oklch(0.77 0.125 ${hue})`;\n  const lights = pickedFrom(LIGHTS, hash, LIGHTS_SHIFT);\n  return styleOf(body, lights);\n}\n\n/** The same picture in a colour that already means something: a series slot, the colour of a team. */\nexport function meshIn(color: string, seed = color) {\n  const hash = hashOf(seed);\n  const lights = pickedFrom(LIGHTS, hash, LIGHTS_SHIFT);\n  return styleOf(color, lights);\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "categories": [
+    "foundations"
+  ],
+  "type": "registry:lib"
+}

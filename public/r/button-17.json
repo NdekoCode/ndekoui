@@ -12,7 +12,7 @@
   "files": [
     {
       "path": "registry/ndeko/components/button/button-17.tsx",
-      "content": "import { Avatar, AvatarFallback } from '@/registry/ndeko/ui/avatar';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nexport default function Button17() {\n  return (\n    <Button className='ps-1'>\n      <Avatar className='size-6 text-[10px]'>\n        <AvatarFallback>LM</AvatarFallback>\n      </Avatar>\n      @lena.moss\n    </Button>\n  );\n}\n",
+      "content": "import { Avatar } from '@/registry/ndeko/ui/avatar';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nexport default function Button17() {\n  return (\n    <Button className='ps-1'>\n      <Avatar className='size-6' seed='Lena Moss' />\n      @lena.moss\n    </Button>\n  );\n}\n",
       "type": "registry:component"
     }
   ],

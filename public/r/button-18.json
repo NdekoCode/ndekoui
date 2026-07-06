@@ -13,7 +13,7 @@
   "files": [
     {
       "path": "registry/ndeko/components/button/button-18.tsx",
-      "content": "import { ChevronDownIcon } from '@/registry/ndeko/lib/icons';\nimport { Avatar, AvatarFallback } from '@/registry/ndeko/ui/avatar';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nexport default function Button18() {\n  return (\n    <Button\n      variant='ghost'\n      className='h-auto p-0 hover:bg-transparent'\n      aria-label='Open account menu'\n    >\n      <Avatar>\n        <AvatarFallback>KK</AvatarFallback>\n      </Avatar>\n      <ChevronDownIcon className='opacity-60' />\n    </Button>\n  );\n}\n",
+      "content": "import { ChevronDownIcon } from '@/registry/ndeko/lib/icons';\nimport { Avatar } from '@/registry/ndeko/ui/avatar';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nexport default function Button18() {\n  return (\n    <Button\n      variant='ghost'\n      className='h-auto p-0 hover:bg-transparent'\n      aria-label='Open account menu'\n    >\n      <Avatar seed='Keith Kennedy' />\n      <ChevronDownIcon className='opacity-60' />\n    </Button>\n  );\n}\n",
       "type": "registry:component"
     }
   ],

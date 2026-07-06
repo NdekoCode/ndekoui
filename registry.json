@@ -270,6 +270,11 @@
             "box-shadow": "inset 0 0 0 var(--hairline) rgb(255 255 255 / 22%),\n      inset 0 1px 0 rgb(255 255 255 / 16%)"
           }
         },
+        "@utility mesh-fill": {
+          "--mesh-body": "var(--mesh, var(--primary))",
+          "background-color": "var(--mesh-body)",
+          "background-image": "radial-gradient(\n      circle at var(--mesh-key, 23% 23%),\n      color-mix(in oklch, var(--mesh-body) 22%, oklch(0.98 0.05 95)),\n      transparent 60%\n    ),\n    radial-gradient(\n      circle at var(--mesh-shade, 83% 83%),\n      color-mix(in oklch, var(--mesh-body) 52%, oklch(0.58 0.19 292)),\n      transparent 66%\n    ),\n    radial-gradient(\n      circle at var(--mesh-rim, 88% 18%),\n      color-mix(in oklch, var(--mesh-body) 48%, oklch(0.82 0.14 18)),\n      transparent 50%\n    )"
+        },
         "@utility surface-raised": {
           "background-color": "var(--popover)",
           "color": "var(--popover-foreground)",
@@ -363,6 +368,40 @@
       "files": [
         {
           "path": "registry/ndeko/lib/agent-run.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "categories": [
+        "foundations"
+      ]
+    },
+    {
+      "name": "seeded",
+      "type": "registry:lib",
+      "title": "Seeded",
+      "description": "A number drawn from a text, the same on the server and in the browser, and a pick from a list by its bits.",
+      "files": [
+        {
+          "path": "registry/ndeko/lib/seeded.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "categories": [
+        "foundations"
+      ]
+    },
+    {
+      "name": "mesh",
+      "type": "registry:lib",
+      "title": "Mesh",
+      "description": "The gradient that stands for a name with no picture: a hue and a light drawn from the name, or a colour that already means something.",
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/seeded.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/lib/mesh.ts",
           "type": "registry:lib"
         }
       ],
@@ -722,17 +761,58 @@
       "name": "avatar",
       "type": "registry:ui",
       "title": "Avatar",
-      "description": "A picture with a fallback, opaque in stacks.",
+      "description": "A picture, or a gradient drawn from a name for someone without one, opaque in stacks.",
       "dependencies": [
         "@base-ui/react"
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/utils.json"
+        "https://ui.ndekocode.dev/r/utils.json",
+        "https://ui.ndekocode.dev/r/mesh.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/ui/avatar.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitives"
+      ]
+    },
+    {
+      "name": "mesh-tile",
+      "type": "registry:ui",
+      "title": "Mesh Tile",
+      "description": "The picture of an agent, a team or a project with no logo: a gradient drawn from its name, in its own colour when it has one.",
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json",
+        "https://ui.ndekocode.dev/r/mesh.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/ui/mesh-tile.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "primitives"
+      ]
+    },
+    {
+      "name": "company-mark",
+      "type": "registry:ui",
+      "title": "Company Mark",
+      "description": "The mark of a company with no logo to show: a shape and a colour drawn from its name, in the square a real logo would fill.",
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/utils.json",
+        "https://ui.ndekocode.dev/r/seeded.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/ui/company-mark.tsx",
           "type": "registry:ui"
         }
       ],
@@ -1906,7 +1986,8 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/utils.json",
-        "https://ui.ndekocode.dev/r/hover-card.json"
+        "https://ui.ndekocode.dev/r/hover-card.json",
+        "https://ui.ndekocode.dev/r/company-mark.json"
       ],
       "files": [
         {
@@ -2391,7 +2472,7 @@
       "name": "letter-tile",
       "type": "registry:ui",
       "title": "Letter Tile",
-      "description": "A drawn initial for a model lab or a site, tinted by a series colour or left neutral.",
+      "description": "A letter on a tile for a lettered choice or a product whose mark cannot be shown, tinted by a series colour or left neutral.",
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/utils.json",
@@ -2406,42 +2487,6 @@
       "categories": [
         "primitives",
         "ai"
-      ]
-    },
-    {
-      "name": "sample-avatars",
-      "type": "registry:item",
-      "title": "Sample avatars",
-      "description": "The illustrated avatars the examples use, copied into public/avatars.",
-      "files": [
-        {
-          "path": "public/avatars/avatar-03.svg",
-          "type": "registry:file",
-          "target": "public/avatars/avatar-03.svg"
-        },
-        {
-          "path": "public/avatars/avatar-04.svg",
-          "type": "registry:file",
-          "target": "public/avatars/avatar-04.svg"
-        },
-        {
-          "path": "public/avatars/avatar-05.svg",
-          "type": "registry:file",
-          "target": "public/avatars/avatar-05.svg"
-        },
-        {
-          "path": "public/avatars/avatar-06.svg",
-          "type": "registry:file",
-          "target": "public/avatars/avatar-06.svg"
-        },
-        {
-          "path": "public/avatars/avatar-07.svg",
-          "type": "registry:file",
-          "target": "public/avatars/avatar-07.svg"
-        }
-      ],
-      "categories": [
-        "foundations"
       ]
     },
     {
@@ -5040,7 +5085,6 @@
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -5101,7 +5145,6 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -5161,7 +5204,6 @@
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -5220,7 +5262,6 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -5271,7 +5312,6 @@
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -5332,7 +5372,6 @@
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -5391,7 +5430,6 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -5447,6 +5485,7 @@
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/progress.json",
@@ -5511,6 +5550,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/popover.json",
@@ -5564,6 +5604,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
@@ -5631,6 +5672,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
@@ -5683,6 +5725,7 @@
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
@@ -5764,6 +5807,7 @@
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
@@ -5848,6 +5892,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
@@ -6026,6 +6071,7 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/agent-run.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/theme.json",
@@ -6343,8 +6389,8 @@
         "https://ui.ndekocode.dev/r/call-status.json",
         "https://ui.ndekocode.dev/r/chat-message.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
@@ -6515,8 +6561,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/call-status.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
@@ -6699,7 +6745,6 @@
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
@@ -6767,7 +6812,6 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle-group.json",
@@ -6838,7 +6882,6 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/radio-group.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle-group.json",
@@ -6930,7 +6973,7 @@
         "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -6990,10 +7033,11 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -7080,11 +7124,10 @@
       "name": "avatar-01",
       "type": "registry:component",
       "title": "Avatar",
-      "description": "A round photo that shows initials while it loads or if it fails.",
+      "description": "A round avatar: a gradient drawn from the name, covered by the photo when there is one.",
       "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
       "files": [
@@ -7102,7 +7145,7 @@
       "name": "avatar-02",
       "type": "registry:component",
       "title": "Initials avatar",
-      "description": "Initials on the muted fill for someone without a photo.",
+      "description": "Initials on the muted fill, for a product that prefers letters to the gradient.",
       "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
@@ -7145,11 +7188,10 @@
       "name": "avatar-04",
       "type": "registry:component",
       "title": "Square avatar",
-      "description": "A photo avatar with rounded corners.",
+      "description": "An avatar with rounded corners.",
       "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
       "files": [
@@ -7167,11 +7209,10 @@
       "name": "avatar-05",
       "type": "registry:component",
       "title": "Online avatar",
-      "description": "A photo avatar with a success dot for someone online.",
+      "description": "An avatar with a success dot for someone online.",
       "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
       "files": [
@@ -7189,11 +7230,10 @@
       "name": "avatar-06",
       "type": "registry:component",
       "title": "Offline avatar",
-      "description": "A photo avatar with a grey dot for someone offline.",
+      "description": "An avatar with a grey dot for someone offline.",
       "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
       "files": [
@@ -7215,7 +7255,6 @@
       "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
       "files": [
@@ -7233,11 +7272,10 @@
       "name": "avatar-08",
       "type": "registry:component",
       "title": "Verified avatar",
-      "description": "A photo avatar with a verified seal on its top corner.",
+      "description": "An avatar with a verified seal on its top corner.",
       "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
       "files": [
@@ -7255,12 +7293,11 @@
       "name": "avatar-09",
       "type": "registry:component",
       "title": "Avatar with count",
-      "description": "A photo avatar with an unread count.",
+      "description": "An avatar with an unread count.",
       "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/badge.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
       "files": [
@@ -7283,7 +7320,6 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/badge.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
       "files": [
@@ -7305,7 +7341,6 @@
       "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
       "files": [
@@ -7327,7 +7362,6 @@
       "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
       "files": [
@@ -7349,7 +7383,6 @@
       "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
       "files": [
@@ -7371,7 +7404,6 @@
       "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
       "files": [
@@ -7393,7 +7425,6 @@
       "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
       "files": [
@@ -7415,7 +7446,6 @@
       "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
       "files": [
@@ -7437,7 +7467,6 @@
       "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
       "files": [
@@ -7459,7 +7488,6 @@
       "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
       "files": [
@@ -7481,7 +7509,6 @@
       "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
       "files": [
@@ -7504,7 +7531,6 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
       "files": [
@@ -7527,7 +7553,6 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
       "files": [
@@ -7550,7 +7575,6 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
       "files": [
@@ -7572,7 +7596,6 @@
       "dependencies": [],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
       "files": [
@@ -11278,7 +11301,6 @@
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -11340,7 +11362,6 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/recipes.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -11395,7 +11416,6 @@
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/popover.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -11453,7 +11473,6 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -11510,7 +11529,6 @@
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -11565,7 +11583,6 @@
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/sample-scenes.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
@@ -11622,7 +11639,6 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -11677,7 +11693,6 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -16089,7 +16104,6 @@
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/recipes.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -16169,7 +16183,6 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/recipes.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -16240,7 +16253,6 @@
         "https://ui.ndekocode.dev/r/dialog.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/theme.json",
@@ -16307,7 +16319,6 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -16375,7 +16386,6 @@
         "https://ui.ndekocode.dev/r/dialog.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/radio-group.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -16505,7 +16515,6 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/dialog.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/theme.json",
@@ -16576,7 +16585,6 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -16637,7 +16645,6 @@
         "https://ui.ndekocode.dev/r/dialog.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/radio-group.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
@@ -16705,7 +16712,6 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/radio-group.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle-group.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -16781,7 +16787,6 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/recipes.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/selected-mark.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -16886,7 +16891,6 @@
         "https://ui.ndekocode.dev/r/dialog.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -17769,6 +17773,7 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/navigation-menu.json",
@@ -17980,6 +17985,7 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/tabs.json",
@@ -18024,7 +18030,6 @@
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -18775,7 +18780,6 @@
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -18826,7 +18830,6 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -18883,7 +18886,6 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/popover.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -18929,7 +18931,7 @@
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -18969,7 +18971,6 @@
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -19080,7 +19081,6 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -20907,8 +20907,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/morph-button.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
@@ -20950,8 +20950,8 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/morph-button.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
@@ -21044,10 +21044,11 @@
         "https://ui.ndekocode.dev/r/call-status.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/media-clock.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/slider.json",
         "https://ui.ndekocode.dev/r/theme.json",
@@ -21076,11 +21077,12 @@
         "motion"
       ],
       "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
-        "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
@@ -22490,6 +22492,7 @@
       "description": "Members without a photo get a coloured plate with their initial.",
       "dependencies": [],
       "registryDependencies": [
+        "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/field.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json"
@@ -23564,7 +23567,6 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/stepper.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
@@ -23836,7 +23838,6 @@
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/checkbox.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -23886,7 +23887,6 @@
         "https://ui.ndekocode.dev/r/checkbox.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -23934,7 +23934,6 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -23983,7 +23982,6 @@
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -24032,7 +24030,6 @@
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/checkbox.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -24076,7 +24073,6 @@
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/checkbox.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -24124,7 +24120,6 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -24581,7 +24576,6 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/badge.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/table.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
@@ -25576,7 +25570,7 @@
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -25635,6 +25629,7 @@
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -25690,7 +25685,6 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -25747,7 +25741,6 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -25812,6 +25805,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -25861,6 +25855,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle-group.json",
@@ -25906,7 +25901,7 @@
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -25959,7 +25954,6 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle-group.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -26005,6 +25999,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/command.json",
         "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/selected-mark.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -26485,8 +26480,10 @@
       "name": "timeline-02",
       "type": "registry:component",
       "title": "Dates on the side",
-      "description": "Dates move to a column on the left when there is room.",
-      "dependencies": [],
+      "description": "Dates sit above each title and move to a column on the left when the piece is wide enough.",
+      "dependencies": [
+        "date-fns"
+      ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/timeline.json"
@@ -26494,7 +26491,18 @@
       "files": [
         {
           "path": "registry/ndeko/components/timeline/timeline-02.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/timeline/timeline-02.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/dates.ts",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/dates.ts"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/step-state.tsx",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/step-state.tsx"
         }
       ],
       "categories": [
@@ -26506,8 +26514,10 @@
       "name": "timeline-03",
       "type": "registry:component",
       "title": "Timeline with dates",
-      "description": "A date above each title and description.",
-      "dependencies": [],
+      "description": "A date above each title and description, and each step says whether it is done, in progress or to come.",
+      "dependencies": [
+        "date-fns"
+      ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/timeline.json"
@@ -26515,7 +26525,18 @@
       "files": [
         {
           "path": "registry/ndeko/components/timeline/timeline-03.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/timeline/timeline-03.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/dates.ts",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/dates.ts"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/step-state.tsx",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/step-state.tsx"
         }
       ],
       "categories": [
@@ -26527,16 +26548,35 @@
       "name": "timeline-04",
       "type": "registry:component",
       "title": "Pull request timeline",
-      "description": "Review steps with the time under each description.",
-      "dependencies": [],
+      "description": "Review steps with how long ago each one happened under its description, and the exact time on hover.",
+      "dependencies": [
+        "date-fns"
+      ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/timeline.json"
+        "https://ui.ndekocode.dev/r/timeline.json",
+        "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/timeline/timeline-04.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/timeline/timeline-04.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/ago-time.tsx",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/ago-time.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/dates.ts",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/dates.ts"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/step-state.tsx",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/step-state.tsx"
         }
       ],
       "categories": [
@@ -26548,17 +26588,37 @@
       "name": "timeline-05",
       "type": "registry:component",
       "title": "Checked timeline",
-      "description": "Done milestones carry a check in a filled circle.",
-      "dependencies": [],
+      "description": "Marking the next step done draws its check in a filled circle, fills the line to it and rolls the count.",
+      "dependencies": [
+        "date-fns"
+      ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/timeline.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/timeline/timeline-05.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/timeline/timeline-05.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/dates.ts",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/dates.ts"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/markers.ts",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/markers.ts"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/step-state.tsx",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/step-state.tsx"
         }
       ],
       "categories": [
@@ -26570,17 +26630,41 @@
       "name": "timeline-06",
       "type": "registry:component",
       "title": "Timeline with icons",
-      "description": "Each event has its own icon, filled once it is done.",
-      "dependencies": [],
+      "description": "Each event has its own icon in a circle that fills once the event is done.",
+      "dependencies": [
+        "date-fns"
+      ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/timeline.json"
+        "https://ui.ndekocode.dev/r/timeline.json",
+        "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/timeline/timeline-06.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/timeline/timeline-06.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/ago-time.tsx",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/ago-time.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/dates.ts",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/dates.ts"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/markers.ts",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/markers.ts"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/step-state.tsx",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/step-state.tsx"
         }
       ],
       "categories": [
@@ -26592,18 +26676,36 @@
       "name": "timeline-07",
       "type": "registry:component",
       "title": "Comment timeline",
-      "description": "Avatars on the line and each comment in a card.",
-      "dependencies": [],
+      "description": "Avatars on the line and each comment in a soft bubble with its time.",
+      "dependencies": [
+        "date-fns"
+      ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/timeline.json"
+        "https://ui.ndekocode.dev/r/timeline.json",
+        "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/timeline/timeline-07.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/timeline/timeline-07.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/ago-time.tsx",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/ago-time.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/dates.ts",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/dates.ts"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/markers.ts",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/markers.ts"
         }
       ],
       "categories": [
@@ -26636,16 +26738,25 @@
       "name": "timeline-09",
       "type": "registry:component",
       "title": "Event log",
-      "description": "System events with their date and time in one card.",
-      "dependencies": [],
+      "description": "System events in one card, each with a status dot and its date and time.",
+      "dependencies": [
+        "date-fns"
+      ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/timeline.json"
+        "https://ui.ndekocode.dev/r/timeline.json",
+        "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/timeline/timeline-09.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/timeline/timeline-09.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/dates.ts",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/dates.ts"
         }
       ],
       "categories": [
@@ -26663,7 +26774,6 @@
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/recipes.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/timeline.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -26683,8 +26793,10 @@
       "name": "timeline-11",
       "type": "registry:component",
       "title": "Horizontal timeline",
-      "description": "Milestones along a horizontal line.",
-      "dependencies": [],
+      "description": "Milestones along a horizontal line that stacks into a vertical list when the piece gets narrow.",
+      "dependencies": [
+        "date-fns"
+      ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/timeline.json"
@@ -26692,7 +26804,23 @@
       "files": [
         {
           "path": "registry/ndeko/components/timeline/timeline-11.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/timeline/timeline-11.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/by-width.tsx",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/by-width.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/dates.ts",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/dates.ts"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/step-state.tsx",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/step-state.tsx"
         }
       ],
       "categories": [
@@ -26704,17 +26832,34 @@
       "name": "timeline-12",
       "type": "registry:component",
       "title": "Horizontal timeline, dates above",
-      "description": "Dates above the line, titles and descriptions below it.",
-      "dependencies": [],
+      "description": "Dates above the line, titles and descriptions below it, stacking into a vertical list when the piece gets narrow.",
+      "dependencies": [
+        "date-fns"
+      ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/timeline.json",
-        "https://ui.ndekocode.dev/r/utils.json"
+        "https://ui.ndekocode.dev/r/timeline.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/timeline/timeline-12.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/timeline/timeline-12.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/by-width.tsx",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/by-width.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/dates.ts",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/dates.ts"
+        },
+        {
+          "path": "registry/ndeko/components/timeline/_parts/step-state.tsx",
+          "type": "registry:component",
+          "target": "components/timeline/_parts/step-state.tsx"
         }
       ],
       "categories": [
@@ -27008,19 +27153,34 @@
       "name": "tree-01",
       "type": "registry:component",
       "title": "Basic tree",
-      "description": "Teams in folders that open with the arrow keys or a click.",
+      "description": "Help topics in folders that open with a click or the arrow keys, their rows arriving with height and opacity.",
       "dependencies": [
-        "@headless-tree/core"
+        "@base-ui/react",
+        "@headless-tree/core",
+        "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/tree.json"
+        "https://ui.ndekocode.dev/r/tree.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/tree/tree-01.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/tree/tree-01.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-data.ts",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-data.ts"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-rows.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-rows.tsx"
         }
       ],
       "categories": [
@@ -27032,19 +27192,34 @@
       "name": "tree-02",
       "type": "registry:component",
       "title": "Tree with guide lines",
-      "description": "Vertical lines show which folder each row belongs to.",
+      "description": "Vertical lines show which aisle each rack belongs to, and grow with the rows as a folder opens.",
       "dependencies": [
-        "@headless-tree/core"
+        "@base-ui/react",
+        "@headless-tree/core",
+        "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/tree.json"
+        "https://ui.ndekocode.dev/r/tree.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/tree/tree-02.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/tree/tree-02.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-data.ts",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-data.ts"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-rows.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-rows.tsx"
         }
       ],
       "categories": [
@@ -27056,21 +27231,40 @@
       "name": "tree-03",
       "type": "registry:component",
       "title": "Tree with icons",
-      "description": "Folder and file icons, the folder opening with its row.",
+      "description": "Folders and files with icons, the folder icon opening with its row.",
       "dependencies": [
-        "@headless-tree/core"
+        "@base-ui/react",
+        "@headless-tree/core",
+        "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tree.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/tree/tree-03.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/tree/tree-03.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-data.ts",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-data.ts"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-glyphs.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-glyphs.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-rows.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-rows.tsx"
         }
       ],
       "categories": [
@@ -27082,21 +27276,40 @@
       "name": "tree-04",
       "type": "registry:component",
       "title": "Chevron on the right",
-      "description": "Icons lead each row and the chevron sits at the end.",
+      "description": "A book icon leads each shelf and opens with it, while the chevron sits at the end of the row.",
       "dependencies": [
-        "@headless-tree/core"
+        "@base-ui/react",
+        "@headless-tree/core",
+        "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tree.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/tree/tree-04.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/tree/tree-04.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-data.ts",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-data.ts"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-glyphs.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-glyphs.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-rows.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-rows.tsx"
         }
       ],
       "categories": [
@@ -27108,15 +27321,17 @@
       "name": "tree-05",
       "type": "registry:component",
       "title": "Drag and drop tree",
-      "description": "Select several rows and drag them to a new place.",
+      "description": "Select several rows and drag them, or press Ctrl Shift D: they glide to their new place and the move is spoken.",
       "dependencies": [
+        "@base-ui/react",
         "@headless-tree/core",
-        "@headless-tree/react",
         "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tree.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -27125,7 +27340,28 @@
       "files": [
         {
           "path": "registry/ndeko/components/tree/tree-05.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/tree/tree-05.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/drag-status.ts",
+          "type": "registry:component",
+          "target": "components/tree/_parts/drag-status.ts"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-data.ts",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-data.ts"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-glyphs.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-glyphs.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-rows.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-rows.tsx"
         }
       ],
       "categories": [
@@ -27137,15 +27373,19 @@
       "name": "tree-06",
       "type": "registry:component",
       "title": "Renamable tree",
-      "description": "Press F2 to rename the focused row; it moves to its new place.",
+      "description": "Press F2 or Rename to edit the focused row in place, then it glides to its new place in the alphabet.",
       "dependencies": [
+        "@base-ui/react",
         "@headless-tree/core",
         "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tree.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -27154,7 +27394,23 @@
       "files": [
         {
           "path": "registry/ndeko/components/tree/tree-06.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/tree/tree-06.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-data.ts",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-data.ts"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-glyphs.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-glyphs.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-rows.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-rows.tsx"
         }
       ],
       "categories": [
@@ -27166,22 +27422,43 @@
       "name": "tree-07",
       "type": "registry:component",
       "title": "Searchable tree",
-      "description": "Typing opens every folder and highlights the matches.",
+      "description": "Typing opens every folder, highlights the matches and counts them; clearing the field brings back the folders you had open.",
       "dependencies": [
-        "@headless-tree/core"
+        "@base-ui/react",
+        "@headless-tree/core",
+        "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tree.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/tree/tree-07.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/tree/tree-07.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-data.ts",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-data.ts"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-glyphs.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-glyphs.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-rows.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-rows.tsx"
         }
       ],
       "categories": [
@@ -27222,21 +27499,42 @@
       "name": "tree-09",
       "type": "registry:component",
       "title": "Double-click to open",
-      "description": "A click selects a row and a double click opens its folder.",
+      "description": "A click selects a folder and a double click or Enter opens it, while the highlight glides to the selected row.",
       "dependencies": [
-        "@headless-tree/core"
+        "@base-ui/react",
+        "@headless-tree/core",
+        "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tree.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/tree/tree-09.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/tree/tree-09.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-data.ts",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-data.ts"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-glyphs.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-glyphs.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-rows.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-rows.tsx"
         }
       ],
       "categories": [
@@ -27248,22 +27546,42 @@
       "name": "tree-10",
       "type": "registry:component",
       "title": "Expand and collapse all",
-      "description": "Two buttons open or close every folder, with child counts.",
+      "description": "Two buttons open or close every folder, with the number of children at the end of each row.",
       "dependencies": [
-        "@headless-tree/core"
+        "@base-ui/react",
+        "@headless-tree/core",
+        "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tree.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/tree/tree-10.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/tree/tree-10.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-data.ts",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-data.ts"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-glyphs.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-glyphs.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-rows.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-rows.tsx"
         }
       ],
       "categories": [
@@ -27275,15 +27593,17 @@
       "name": "tree-11",
       "type": "registry:component",
       "title": "File explorer",
-      "description": "Project files by type, sorted again after a drop.",
+      "description": "A repository with an icon per file type, sorted again when a file is dropped on a folder.",
       "dependencies": [
+        "@base-ui/react",
         "@headless-tree/core",
-        "@headless-tree/react",
         "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tree.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -27292,7 +27612,23 @@
       "files": [
         {
           "path": "registry/ndeko/components/tree/tree-11.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/tree/tree-11.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/drag-status.ts",
+          "type": "registry:component",
+          "target": "components/tree/_parts/drag-status.ts"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-data.ts",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-data.ts"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-rows.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-rows.tsx"
         }
       ],
       "categories": [
@@ -27328,20 +27664,42 @@
       "name": "tree-13",
       "type": "registry:component",
       "title": "Checkboxes on the right",
-      "description": "A checkbox at the end of each row, folders following their items.",
+      "description": "A checkbox at the end of each row, folders following their items, and a count that rolls as boxes change.",
       "dependencies": [
-        "@headless-tree/core"
+        "@base-ui/react",
+        "@headless-tree/core",
+        "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/checkbox.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/tree.json"
+        "https://ui.ndekocode.dev/r/tree.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/tree/tree-13.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/tree/tree-13.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/item-checkbox.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/item-checkbox.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-data.ts",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-data.ts"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-rows.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-rows.tsx"
         }
       ],
       "categories": [
@@ -27353,20 +27711,43 @@
       "name": "tree-14",
       "type": "registry:component",
       "title": "Checkboxes on the left",
-      "description": "A checkbox before each row, folders following their items.",
+      "description": "A checkbox before each row, folders following their items, with Select all and Clear under the tree.",
       "dependencies": [
-        "@headless-tree/core"
+        "@base-ui/react",
+        "@headless-tree/core",
+        "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/checkbox.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/tree.json"
+        "https://ui.ndekocode.dev/r/tree.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/tree/tree-14.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/tree/tree-14.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/item-checkbox.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/item-checkbox.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-data.ts",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-data.ts"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-rows.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-rows.tsx"
         }
       ],
       "categories": [
@@ -27378,22 +27759,48 @@
       "name": "tree-15",
       "type": "registry:component",
       "title": "Checkable folders",
-      "description": "Checking a folder checks it and everything inside it.",
+      "description": "Checking a folder checks it and everything inside it, and the number of documents rolls to the new total.",
       "dependencies": [
-        "@headless-tree/core"
+        "@base-ui/react",
+        "@headless-tree/core",
+        "motion"
       ],
       "registryDependencies": [
-        "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/checkbox.json",
         "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tree.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
         {
           "path": "registry/ndeko/components/tree/tree-15.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/tree/tree-15.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/item-checkbox.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/item-checkbox.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-data.ts",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-data.ts"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-glyphs.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-glyphs.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/tree/_parts/tree-rows.tsx",
+          "type": "registry:component",
+          "target": "components/tree/_parts/tree-rows.tsx"
         }
       ],
       "categories": [
@@ -27536,7 +27943,6 @@
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-session.json",
@@ -27642,9 +28048,9 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
         "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/morph-button.json",
@@ -27704,7 +28110,6 @@
         "https://ui.ndekocode.dev/r/morph-button.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/speech-envelope.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -27761,9 +28166,9 @@
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
@@ -27981,9 +28386,9 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/label.json",
-        "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/morph-button.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
@@ -28258,6 +28663,7 @@
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
@@ -28402,12 +28808,12 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/morph-button.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-session.json"
@@ -28462,11 +28868,11 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/morph-button.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-session.json",
@@ -28574,15 +28980,15 @@
         "https://ui.ndekocode.dev/r/brand-tile.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
         "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -28633,6 +29039,7 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
@@ -28684,12 +29091,13 @@
         "https://ui.ndekocode.dev/r/breadcrumb.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/command.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/recipes.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
@@ -28768,12 +29176,13 @@
         "https://ui.ndekocode.dev/r/breadcrumb.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/command.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/recipes.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
@@ -28854,14 +29263,15 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/command.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/radio-group.json",
         "https://ui.ndekocode.dev/r/recipes.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/switch.json",
@@ -29201,7 +29611,6 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -29265,7 +29674,6 @@
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -29578,7 +29986,6 @@
         "https://ui.ndekocode.dev/r/chat-scroll-button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
@@ -29695,7 +30102,6 @@
         "https://ui.ndekocode.dev/r/chat-source.json",
         "https://ui.ndekocode.dev/r/chat-tool.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
       ],
@@ -29913,7 +30319,6 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/skeleton.json",
         "https://ui.ndekocode.dev/r/tabs.json",
@@ -29982,7 +30387,6 @@
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/skeleton.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
@@ -30130,7 +30534,6 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -30172,7 +30575,6 @@
         "https://ui.ndekocode.dev/r/checkbox.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/skeleton.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
         "https://ui.ndekocode.dev/r/theme.json",
@@ -30258,7 +30660,6 @@
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/accordion.json",
         "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json"
       ],
       "files": [
@@ -30789,7 +31190,6 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -30834,7 +31234,6 @@
         "https://ui.ndekocode.dev/r/field.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json"
@@ -31099,7 +31498,6 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/popover.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -31235,7 +31633,6 @@
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
@@ -31364,7 +31761,6 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/textarea.json",
@@ -31463,6 +31859,7 @@
         "https://ui.ndekocode.dev/r/alert-dialog.json",
         "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
@@ -31524,7 +31921,6 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/textarea.json",
@@ -31629,7 +32025,6 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
@@ -31735,7 +32130,6 @@
         "https://ui.ndekocode.dev/r/checkbox.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
@@ -31811,7 +32205,6 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
@@ -31884,7 +32277,6 @@
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -31997,7 +32389,6 @@
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -32115,7 +32506,6 @@
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/popover.json",
         "https://ui.ndekocode.dev/r/recipes.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -32183,7 +32573,6 @@
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/popover.json",
         "https://ui.ndekocode.dev/r/recipes.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -32249,7 +32638,6 @@
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/radio-group.json",
         "https://ui.ndekocode.dev/r/recipes.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/textarea.json",
@@ -32302,7 +32690,7 @@
         "https://ui.ndekocode.dev/r/avatar.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle-group.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -32361,14 +32749,15 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/command.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/popover.json",
         "https://ui.ndekocode.dev/r/recipes.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/textarea.json",
@@ -32665,12 +33054,13 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chip.json",
         "https://ui.ndekocode.dev/r/command.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/recipes.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/skeleton.json",
@@ -32817,13 +33207,13 @@
         "https://ui.ndekocode.dev/r/breadcrumb.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/command.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/radio-group.json",
         "https://ui.ndekocode.dev/r/recipes.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/switch.json",
@@ -33023,7 +33413,6 @@
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/theme.json",
@@ -33130,18 +33519,18 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/call-status.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
         "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
-        "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/run-session.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/spinner.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -33249,12 +33638,13 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/call-status.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
         "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
-        "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/morph-button.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
@@ -33372,12 +33762,13 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/call-status.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
         "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
-        "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
@@ -33510,12 +33901,13 @@
         "https://ui.ndekocode.dev/r/brand-tile.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
         "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/letter-tile.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
@@ -33630,7 +34022,6 @@
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/navigation-menu.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/theme.json",
@@ -33759,7 +34150,6 @@
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/selected-mark.json",
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/status-orb.json",
@@ -33876,7 +34266,6 @@
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
-        "https://ui.ndekocode.dev/r/sample-avatars.json",
         "https://ui.ndekocode.dev/r/selected-mark.json",
         "https://ui.ndekocode.dev/r/sheet.json",
         "https://ui.ndekocode.dev/r/theme.json",

@@ -6,13 +6,12 @@
   "dependencies": [],
   "registryDependencies": [
     "https://ui.ndekocode.dev/r/avatar.json",
-    "https://ui.ndekocode.dev/r/sample-avatars.json",
     "https://ui.ndekocode.dev/r/theme.json"
   ],
   "files": [
     {
       "path": "registry/ndeko/components/avatar/avatar-23.tsx",
-      "content": "import {\n  Avatar,\n  AvatarFallback,\n  AvatarImage,\n} from '@/registry/ndeko/ui/avatar';\n\nconst MEMBERS = [\n  { name: 'Jordan Hayes', initials: 'JH', image: '/avatars/avatar-03.svg' },\n  { name: 'Anna Novak', initials: 'AN', image: '/avatars/avatar-04.svg' },\n  { name: 'Lina Haddad', initials: 'LH', image: '/avatars/avatar-05.svg' },\n  { name: 'Ama Mensah', initials: 'AM', image: '/avatars/avatar-06.svg' },\n];\n\nexport default function Avatar23() {\n  return (\n    <div className='bg-card hairline-ring ring-border flex items-center rounded-full p-1 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>\n      <div className='flex -space-x-1.5'>\n        {MEMBERS.map((member) => (\n          <Avatar\n            key={member.name}\n            className='ring-card size-5 text-[8px] ring-1'\n          >\n            <AvatarImage src={member.image} alt={member.name} />\n            <AvatarFallback>{member.initials}</AvatarFallback>\n          </Avatar>\n        ))}\n      </div>\n      <p className='text-muted-foreground px-2 text-xs'>\n        <span className='text-foreground font-medium'>Jordan, Anna</span> and 2\n        others joined this week\n      </p>\n    </div>\n  );\n}\n",
+      "content": "import { Avatar } from '@/registry/ndeko/ui/avatar';\n\nconst MEMBERS = [\n  { name: 'Jordan Hayes' },\n  { name: 'Anna Novak' },\n  { name: 'Lina Haddad' },\n  { name: 'Ama Mensah' },\n];\n\nexport default function Avatar23() {\n  return (\n    <div className='bg-card hairline-ring ring-border flex items-center rounded-full p-1 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>\n      <div className='flex -space-x-1.5'>\n        {MEMBERS.map((member) => (\n          <Avatar\n            key={member.name}\n            className='ring-card size-5 ring-1'\n            seed={member.name}\n            role='img'\n            aria-label={member.name}\n          />\n        ))}\n      </div>\n      <p className='text-muted-foreground px-2 text-xs'>\n        <span className='text-foreground font-medium'>Jordan, Anna</span> and 2\n        others joined this week\n      </p>\n    </div>\n  );\n}\n",
       "type": "registry:component"
     }
   ],

@@ -12,6 +12,7 @@
     "https://ui.ndekocode.dev/r/icons.json",
     "https://ui.ndekocode.dev/r/live-duration.json",
     "https://ui.ndekocode.dev/r/live-region.json",
+    "https://ui.ndekocode.dev/r/mesh-tile.json",
     "https://ui.ndekocode.dev/r/motion-number.json",
     "https://ui.ndekocode.dev/r/motion-presets.json",
     "https://ui.ndekocode.dev/r/motion-word-roll.json",
@@ -40,7 +41,7 @@
     },
     {
       "path": "registry/ndeko/components/agent/_parts/agent-tile.tsx",
-      "content": "import { seriesColorOf, type SeriesSlot } from '@/registry/ndeko/lib/agent-run';\nimport { cn } from '@/registry/ndeko/lib/utils';\n\nconst SIZE_CLASS = {\n  sm: 'size-5 rounded-[5px] text-[9px]',\n  md: 'size-6 rounded-md text-[10px]',\n  lg: 'size-8 rounded-lg text-xs',\n} as const;\n\nexport type AgentTileSize = keyof typeof SIZE_CLASS;\n\n/** \"Planner\" gives P, \"Price reader\" gives PR, \"Researcher 2\" gives R2. */\nexport function initialsOf(name: string) {\n  const words = name.trim().split(/\\s+/);\n  const [first = '', second] = words;\n  const firstLetter = first.charAt(0).toUpperCase();\n  if (!second) {\n    return firstLetter;\n  }\n  const secondLetter = second.charAt(0).toUpperCase();\n  return `${firstLetter}${secondLetter}`;\n}\n\ntype AgentTileProps = {\n  name: string;\n  series: SeriesSlot;\n  size?: AgentTileSize;\n  className?: string;\n};\n\n/** The name always sits beside the tile, so screen readers skip the initials. */\nexport function AgentTile({\n  name,\n  series,\n  size = 'md',\n  className,\n}: AgentTileProps) {\n  const gemStyle = { '--gem': seriesColorOf(series) } as React.CSSProperties;\n  const initials = initialsOf(name);\n\n  return (\n    <span\n      aria-hidden='true'\n      style={gemStyle}\n      className={cn(\n        'gem-plate inline-flex shrink-0 items-center justify-center font-semibold select-none',\n        SIZE_CLASS[size],\n        className\n      )}\n    >\n      {initials}\n    </span>\n  );\n}\n",
+      "content": "import { seriesColorOf, type SeriesSlot } from '@/registry/ndeko/lib/agent-run';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { MeshTile } from '@/registry/ndeko/ui/mesh-tile';\n\nconst SIZE_CLASS = {\n  sm: 'size-5 rounded-[5px]',\n  md: 'size-6 rounded-md',\n  lg: 'size-8 rounded-lg',\n} as const;\n\nexport type AgentTileSize = keyof typeof SIZE_CLASS;\n\ntype AgentTileProps = {\n  name: string;\n  series: SeriesSlot;\n  size?: AgentTileSize;\n  className?: string;\n};\n\n/** The picture of an agent: a gradient drawn from its name, in its series colour. Its name always sits beside it. */\nexport function AgentTile({\n  name,\n  series,\n  size = 'md',\n  className,\n}: AgentTileProps) {\n  const color = seriesColorOf(series);\n  const sizeClass = SIZE_CLASS[size];\n\n  return (\n    <MeshTile seed={name} color={color} className={cn(sizeClass, className)} />\n  );\n}\n",
       "type": "registry:component",
       "target": "components/agent/_parts/agent-tile.tsx"
     },
