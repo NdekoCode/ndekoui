@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import type { CSSProperties } from 'react';
 
 import { REPOSITORY_URL } from '@/app/_site/repository';
 import { MCP_PAGE_PATH } from '@/app/mcp/_shared/mcp-config';
@@ -21,10 +20,9 @@ import {
 } from './section-heading';
 import { TileField } from './tile-field';
 
-const BAND_STYLE: CSSProperties = {
-  backgroundImage:
-    'radial-gradient(60% 80% at 50% 100%, color-mix(in oklab, var(--primary) 18%, transparent), transparent 75%)',
-};
+/* The same grain wash as the hero, poured from the bottom centre of the band. */
+const BAND_WASH =
+  'grain-wash pointer-events-none absolute inset-0 -z-10 [--wash-a:50%_100%] [--wash-b:50%_100%] [--wash-fade:to_top] [--wash-strength:0.5]';
 
 const NUMBER_FORMAT = new Intl.NumberFormat('en-US');
 
@@ -45,8 +43,8 @@ export function ClosingBand({ starCount }: { starCount: number | null }) {
     <section
       aria-labelledby='closing-title'
       className='relative isolate overflow-hidden px-4 py-20 sm:py-28'
-      style={BAND_STYLE}
     >
+      <span aria-hidden='true' className={BAND_WASH} />
       <TileField className='top-6 opacity-80' />
       <div className='relative mx-auto flex max-w-2xl flex-col items-center gap-6 text-center'>
         <Reveal>

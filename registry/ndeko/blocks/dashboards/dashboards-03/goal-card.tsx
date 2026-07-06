@@ -5,6 +5,7 @@ import { AnimatePresence, motion, type Transition } from 'motion/react';
 import { MotionNumber } from '@/components/core/motion-number';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { Wash } from '@/registry/ndeko/ui/wash';
 
 import type { Sprint } from './data';
 import { percentAmountOf, type Goal, type GoalTone } from './figures';
@@ -116,8 +117,9 @@ export function GoalCard({ sprint, goal }: GoalCardProps) {
   return (
     <section
       aria-label={`Sprint ${sprint.number} goal`}
-      className='surface-brand flex flex-col gap-4 rounded-xl p-5'
+      className='surface-brand relative isolate flex flex-col gap-4 rounded-xl p-5'
     >
+      <Wash />
       <div className='flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1'>
         <p className='text-muted-foreground text-xs font-medium'>
           {`Sprint ${sprint.number} goal`}

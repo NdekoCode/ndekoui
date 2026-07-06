@@ -3,8 +3,8 @@ import type { CSSProperties, ReactNode } from 'react';
 
 import { PauseOffscreen } from '@/app/_site/pause-offscreen';
 import { REPOSITORY_URL } from '@/app/_site/repository';
-import { CLIENTS } from '@/app/mcp/_components/clients';
 import { ShadcnMark } from '@/app/mcp/_components/client-marks';
+import { CLIENTS } from '@/app/mcp/_components/clients';
 import { countLabel } from '@/lib/site';
 import {
   ArrowRightIcon,
@@ -21,11 +21,9 @@ import { TileField } from './tile-field';
 /** The manual setup entry is not a tool of its own. */
 const OTHER_CLIENT_ID = 'other';
 
-/* One wash of the primary colour behind the hero: lavender in light, a deeper indigo in dark. */
-const LIGHT_GLOW =
-  'bg-[radial-gradient(70%_55%_at_50%_0%,color-mix(in_oklab,var(--primary)_22%,transparent),transparent_72%)] dark:hidden';
-const DARK_GLOW =
-  'hidden bg-[radial-gradient(60%_50%_at_50%_0%,color-mix(in_oklab,var(--primary)_34%,transparent),transparent_70%),radial-gradient(45%_40%_at_50%_58%,color-mix(in_oklab,var(--primary)_14%,transparent),transparent_75%)] dark:block';
+/* One grain wash of the primary colour poured from the top centre of the hero. */
+const HERO_WASH =
+  'grain-wash absolute inset-x-0 top-0 h-[40rem] [--wash-a:50%_0%] [--wash-b:50%_0%] [--wash-strength:0.5]';
 
 const SETTLE_STEP_MS = 70;
 
@@ -108,8 +106,7 @@ export function HeroBackdrop() {
       aria-hidden='true'
       className='pointer-events-none absolute inset-x-0 top-0 -z-10 h-[64rem] mask-b-from-60%'
     >
-      <div className={cn('absolute inset-0', LIGHT_GLOW)} />
-      <div className={cn('absolute inset-0', DARK_GLOW)} />
+      <div className={HERO_WASH} />
       <TileField className='top-24' />
     </PauseOffscreen>
   );

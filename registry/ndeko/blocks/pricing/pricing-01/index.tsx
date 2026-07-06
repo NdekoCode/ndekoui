@@ -5,10 +5,11 @@ import { useState } from 'react';
 import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll } from '@/components/core/word-roll';
 import { cn } from '@/registry/ndeko/lib/utils';
-import { Button } from '@/registry/ndeko/ui/button';
 import { Badge } from '@/registry/ndeko/ui/badge';
+import { Button } from '@/registry/ndeko/ui/button';
 import { Chip } from '@/registry/ndeko/ui/chip';
 import { Tabs, TabsList, TabsTab } from '@/registry/ndeko/ui/tabs';
+import { Wash } from '@/registry/ndeko/ui/wash';
 
 import {
   type BillingPeriod,
@@ -89,8 +90,12 @@ function PlanCard({ plan, period }: PlanCardProps) {
 
   return (
     <article
-      className={cn('flex flex-col gap-6 rounded-xl p-6 sm:p-7', surface)}
+      className={cn(
+        'relative isolate flex flex-col gap-6 rounded-xl p-6 sm:p-7',
+        surface
+      )}
     >
+      {plan.isFeatured && <Wash />}
       <div className='flex flex-col gap-1.5'>
         <div className='flex items-center justify-between gap-3'>
           <h3 className='text-sm font-medium'>{plan.name}</h3>

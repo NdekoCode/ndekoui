@@ -6,6 +6,7 @@ import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll } from '@/components/core/word-roll';
 import { MinusIcon, PlusIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
+import { Wash } from '@/registry/ndeko/ui/wash';
 
 import { PLAN, SECTION } from './data';
 import { FeatureTable } from './feature-table';
@@ -67,7 +68,8 @@ export default function Pricing02() {
           </p>
         </div>
         <div className='grid items-start gap-10 lg:grid-cols-[22rem_minmax(0,1fr)] lg:gap-16'>
-          <article className='surface-brand flex flex-col gap-6 rounded-xl p-6 sm:p-7 lg:sticky lg:top-8'>
+          <article className='surface-brand relative isolate flex flex-col gap-6 rounded-xl p-6 sm:p-7 lg:sticky lg:top-8'>
+            <Wash />
             <div className='flex flex-col gap-1.5'>
               <h3 className='text-sm font-medium'>{PLAN.name}</h3>
               <p className='text-muted-foreground text-[13px]'>
