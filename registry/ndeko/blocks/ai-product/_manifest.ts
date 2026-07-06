@@ -48,4 +48,18 @@ export const manifest: BlockManifest = [
     ],
     previewHeight: 780,
   },
+  {
+    name: 'ai-product-04',
+    title: 'Launch perks',
+    description:
+      'Three perks of a launch offer under a live countdown: as people join, each claimed count rolls while its bar fills, and a claim turns its button into a drawn check.',
+    files: [
+      'index.tsx',
+      'perk-card.tsx',
+      'perk-marks.tsx',
+      'countdown.tsx',
+      'data.ts',
+    ],
+    previewHeight: 700,
+  },
 ];
