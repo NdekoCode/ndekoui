@@ -63,4 +63,12 @@ export const manifest: BlockManifest = [
     files: ['index.tsx', 'prompt-box.tsx', 'orbit.tsx', 'data.ts'],
     previewHeight: 920,
   },
+  {
+    name: 'heroes-08',
+    title: 'Hero on a grid',
+    description:
+      'A centred hero on a square grid where app tiles fade into its cells and out again, never two neighbours at once, around a headline that keeps the page colour.',
+    files: ['index.tsx', 'grid-layer.tsx', 'data.ts'],
+    previewHeight: 640,
+  },
 ];
