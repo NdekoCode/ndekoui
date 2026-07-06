@@ -43,4 +43,12 @@ export const manifest: BlockManifest = [
     ],
     previewHeight: 1040,
   },
+  {
+    name: 'features-05',
+    title: 'A planner that hands work to agents',
+    description:
+      'A section where one planner reads the checklist of a month-end close and hands each part to an agent: three duties with the mark of each agent beside a pulse that runs from the planner to the agents and out to the tools each one was given.',
+    files: ['index.tsx'],
+    previewHeight: 640,
+  },
 ];
