@@ -8,19 +8,13 @@ import {
 } from './components/website/tabs';
 import { InstallationCli } from './components/website/installation-cli';
 import CodeBlock from './components/website/code-block';
-
-const generateId = (text: string) => {
-  return text
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w-]+/g, '');
-};
+import { headingIdOf } from './lib/heading-id';
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     ...components,
     h1: ({ children, ...props }: React.HTMLProps<HTMLHeadingElement>) => {
-      const id = generateId(children?.toString() || '');
+      const id = headingIdOf(children?.toString() || '');
       return (
         <h1 id={id} data-heading='1' {...props}>
           {children}
@@ -28,7 +22,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       );
     },
     h2: ({ children, ...props }: React.HTMLProps<HTMLHeadingElement>) => {
-      const id = generateId(children?.toString() || '');
+      const id = headingIdOf(children?.toString() || '');
       return (
         <h2 id={id} data-heading='2' {...props}>
           {children}
@@ -36,7 +30,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       );
     },
     h3: ({ children, ...props }: React.HTMLProps<HTMLHeadingElement>) => {
-      const id = generateId(children?.toString() || '');
+      const id = headingIdOf(children?.toString() || '');
       return (
         <h3 id={id} data-heading='3' {...props}>
           {children}
@@ -44,7 +38,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       );
     },
     h4: ({ children, ...props }: React.HTMLProps<HTMLHeadingElement>) => {
-      const id = generateId(children?.toString() || '');
+      const id = headingIdOf(children?.toString() || '');
       return (
         <h4 id={id} data-heading='4' {...props}>
           {children}
@@ -53,7 +47,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     },
     Step: ({ className, children, ...props }: React.ComponentProps<'h3'>) => (
       <h3
-        id={generateId(children?.toString() || '')}
+        id={headingIdOf(children?.toString() || '')}
         className={cn('step', className)}
         data-heading='3'
         {...props}
