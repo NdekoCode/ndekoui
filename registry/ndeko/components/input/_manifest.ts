@@ -404,4 +404,11 @@ export const manifest: ComponentManifest = [
     description:
       'Each rule is a chip that turns green and swaps its circle for a check once the password meets it.',
   },
+  {
+    name: 'input-65',
+    source: 'ndeko',
+    title: 'Password with a generator',
+    description:
+      'A password field with a segmented strength meter and a live rules list, a Generate button that scrambles in a strong password, a Copy button, and a spoken strength.',
+  },
 ];
