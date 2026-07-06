@@ -36,6 +36,7 @@ export const previewHosts: Record<string, ComponentType<PreviewHostProps>> = {
   illustration: dynamic(() => import('./illustration').then(previewHostOf)),
   'image-cropper': dynamic(() => import('./image-cropper').then(previewHostOf)),
   input: dynamic(() => import('./input').then(previewHostOf)),
+  loading: dynamic(() => import('./loading').then(previewHostOf)),
   modal: dynamic(() => import('./modal').then(previewHostOf)),
   navbar: dynamic(() => import('./navbar').then(previewHostOf)),
   notification: dynamic(() => import('./notification').then(previewHostOf)),

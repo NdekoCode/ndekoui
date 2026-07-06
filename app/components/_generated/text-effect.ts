@@ -5,10 +5,14 @@ import TextEffect01 from '@/registry/ndeko/components/text-effect/text-effect-01
 import TextEffect02 from '@/registry/ndeko/components/text-effect/text-effect-02';
 import TextEffect03 from '@/registry/ndeko/components/text-effect/text-effect-03';
 import TextEffect04 from '@/registry/ndeko/components/text-effect/text-effect-04';
+import TextEffect05 from '@/registry/ndeko/components/text-effect/text-effect-05';
+import TextEffect06 from '@/registry/ndeko/components/text-effect/text-effect-06';
 
 export const previews: Record<string, ComponentType> = {
   'text-effect-01': TextEffect01,
   'text-effect-02': TextEffect02,
   'text-effect-03': TextEffect03,
   'text-effect-04': TextEffect04,
+  'text-effect-05': TextEffect05,
+  'text-effect-06': TextEffect06,
 };

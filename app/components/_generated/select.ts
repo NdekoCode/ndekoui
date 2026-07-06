@@ -52,6 +52,8 @@ import Select48 from '@/registry/ndeko/components/select/select-48';
 import Select49 from '@/registry/ndeko/components/select/select-49';
 import Select50 from '@/registry/ndeko/components/select/select-50';
 import Select51 from '@/registry/ndeko/components/select/select-51';
+import Select52 from '@/registry/ndeko/components/select/select-52';
+import Select53 from '@/registry/ndeko/components/select/select-53';
 
 export const previews: Record<string, ComponentType> = {
   'select-01': Select01,
@@ -105,4 +107,6 @@ export const previews: Record<string, ComponentType> = {
   'select-49': Select49,
   'select-50': Select50,
   'select-51': Select51,
+  'select-52': Select52,
+  'select-53': Select53,
 };

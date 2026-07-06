@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "heroes-08",
+  "title": "Hero on a grid",
+  "description": "A centred hero on a square grid where app tiles fade into its cells and out again, never two neighbours at once, around a headline that keeps the page colour.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/brand-logos.json",
+    "https://ui.ndekocode.dev/r/brand-tile.json",
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/use-autoplay.json",
+    "https://ui.ndekocode.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/blocks/heroes/heroes-08/index.tsx",
+      "content": "'use client';\n\nimport { useState } from 'react';\n\nimport {\n  type AutoplayStep,\n  useAutoplay,\n} from '@/registry/ndeko/hooks/use-autoplay';\nimport { ArrowRightIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nimport { HERO, ORDER } from './data';\nimport { GridLayer } from './grid-layer';\n\nconst SWAP_EVERY_MS = 1400;\n\nexport default function Heroes08() {\n  const [step, setStep] = useState(0);\n\n  function advance() {\n    setStep((current) => (current + 1) % ORDER.length);\n  }\n\n  function startOver() {\n    setStep(0);\n  }\n\n  const steps: AutoplayStep[] = ORDER.map(() => ({\n    after: SWAP_EVERY_MS,\n    run: advance,\n  }));\n  const { ref } = useAutoplay(steps, { loopAfter: 0, onReset: startOver });\n\n  return (\n    <section className='@container'>\n      <div ref={ref} className='relative isolate min-h-[36rem] overflow-hidden'>\n        <GridLayer step={step} />\n        <div className='relative mx-auto flex max-w-3xl flex-col items-center px-4 py-24 @2xl:py-32'>\n          <div className='bg-background flex flex-col items-center gap-6 rounded-2xl text-center shadow-[0_0_2.5rem_2rem_var(--background)]'>\n            <p className='text-primary-ink text-sm font-medium'>\n              {HERO.eyebrow}\n            </p>\n            <h1 className='text-4xl font-semibold text-balance @2xl:text-5xl'>\n              {HERO.title}\n            </h1>\n            <p className='text-muted-foreground max-w-xl text-base text-pretty'>\n              {HERO.description}\n            </p>\n            <div className='flex flex-wrap justify-center gap-2 pt-1'>\n              <Button size='lg' nativeButton={false} render={<a href='#' />}>\n                {HERO.primaryAction}\n                <ArrowRightIcon />\n              </Button>\n              <Button\n                size='lg'\n                variant='outline'\n                nativeButton={false}\n                render={<a href='#' />}\n              >\n                {HERO.secondaryAction}\n              </Button>\n            </div>\n          </div>\n        </div>\n      </div>\n    </section>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/heroes-08/index.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/heroes/heroes-08/grid-layer.tsx",
+      "content": "import type { CSSProperties } from 'react';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { BrandTile } from '@/registry/ndeko/ui/brand-tile';\n\nimport { CELLS, COLUMNS, type GridCell, LIT_COUNT, ORDER } from './data';\n\nconst LINE = 'var(--border) var(--hairline), transparent var(--hairline)';\n\nconst GRID_STYLE: CSSProperties = {\n  backgroundImage: `linear-gradient(to right, ${LINE}), linear-gradient(to bottom, ${LINE})`,\n  backgroundSize: 'var(--cell) var(--cell)',\n};\n\nconst BOARD_STYLE: CSSProperties = {\n  width: `calc(var(--cell) * ${COLUMNS})`,\n};\n\nconst LINES_FADE =\n  '[mask-image:radial-gradient(ellipse_70%_80%_at_50%_45%,black_40%,transparent_100%)]';\n\ntype CellStyle = CSSProperties & {\n  '--column': number;\n  '--row': number;\n};\n\nfunction cellStyleOf(cell: GridCell) {\n  const style: CellStyle = { '--column': cell.column, '--row': cell.row };\n  return style;\n}\n\nfunction isLitAt(step: number, cellIndex: number) {\n  const rank = ORDER.indexOf(cellIndex);\n  const count = ORDER.length;\n  const shifted = rank - step + count;\n  const distance = shifted % count;\n  return distance < LIT_COUNT;\n}\n\nfunction litOf(isLit: boolean) {\n  if (isLit) {\n    return '';\n  }\n  return undefined;\n}\n\ntype GridLayerProps = {\n  step: number;\n};\n\nexport function GridLayer({ step }: GridLayerProps) {\n  return (\n    <div\n      aria-hidden='true'\n      className='pointer-events-none absolute inset-0 overflow-hidden [--cell:4.5rem]'\n    >\n      <div\n        style={BOARD_STYLE}\n        className='absolute inset-y-0 left-1/2 -translate-x-1/2'\n      >\n        <div\n          style={GRID_STYLE}\n          className={cn('absolute inset-0', LINES_FADE)}\n        />\n        {CELLS.map((cell, index) => {\n          const isLit = isLitAt(step, index);\n          return (\n            <span\n              key={cell.name}\n              style={cellStyleOf(cell)}\n              data-lit={litOf(isLit)}\n              className='absolute top-[calc(var(--cell)*var(--row))] left-[calc(var(--cell)*var(--column))] flex size-(--cell) scale-90 items-center justify-center opacity-0 transition-[opacity,scale] duration-300 ease-(--ease-out-strong) data-lit:scale-100 data-lit:opacity-100 data-lit:duration-500 motion-reduce:transition-none'\n            >\n              <BrandTile brand={cell.brand} size='2xl' />\n            </span>\n          );\n        })}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/heroes-08/grid-layer.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/heroes/heroes-08/data.ts",
+      "content": "import type { BrandSlug } from '@/registry/ndeko/lib/brand-logos';\n\nexport type GridCell = {\n  name: string;\n  brand: BrandSlug;\n  column: number;\n  row: number;\n};\n\nexport const HERO = {\n  eyebrow: 'Integrations',\n  title: 'Bring every app your team uses into one workspace',\n  description:\n    'Connect calendars, trackers, files and payments once. Each app keeps its own rules, and a single feed shows what changed across all of them.',\n  primaryAction: 'Connect your first app',\n  secondaryAction: 'Browse the integrations',\n};\n\nexport const COLUMNS = 21;\n\nexport const CELLS: GridCell[] = [\n  { name: 'Google Calendar', brand: 'googlecalendar', column: 2, row: 1 },\n  { name: 'Gmail', brand: 'gmail', column: 4, row: 2 },\n  { name: 'Notion', brand: 'notion', column: 3, row: 4 },\n  { name: 'Google Drive', brand: 'googledrive', column: 5, row: 5 },\n  { name: 'Zoom', brand: 'zoom', column: 2, row: 6 },\n  { name: 'GitHub', brand: 'github', column: 18, row: 1 },\n  { name: 'Linear', brand: 'linear', column: 16, row: 2 },\n  { name: 'Figma', brand: 'figma', column: 17, row: 4 },\n  { name: 'Stripe', brand: 'stripe', column: 15, row: 5 },\n  { name: 'Jira', brand: 'jira', column: 18, row: 6 },\n  { name: 'Sentry', brand: 'sentry', column: 8, row: 0 },\n  { name: 'HubSpot', brand: 'hubspot', column: 12, row: 0 },\n  { name: 'Shopify', brand: 'shopify', column: 9, row: 7 },\n  { name: 'Zapier', brand: 'zapier', column: 11, row: 7 },\n];\n\n/**\n * The order in which cells light up, as indexes of `CELLS`. Any five cells in a row of this list,\n * the end of the list joining its start, are at least two cells apart, so two neighbours never\n * show a tile together, not even while one fades out and the next fades in.\n */\nexport const ORDER = [0, 5, 10, 13, 3, 8, 11, 12, 2, 7, 1, 6, 4, 9];\n\nexport const LIT_COUNT = 4;\n",
+      "type": "registry:component",
+      "target": "components/blocks/heroes-08/data.ts"
+    }
+  ],
+  "categories": [
+    "blocks",
+    "heroes"
+  ],
+  "type": "registry:block"
+}

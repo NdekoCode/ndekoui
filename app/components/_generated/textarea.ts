@@ -20,6 +20,7 @@ import Textarea16 from '@/registry/ndeko/components/textarea/textarea-16';
 import Textarea17 from '@/registry/ndeko/components/textarea/textarea-17';
 import Textarea18 from '@/registry/ndeko/components/textarea/textarea-18';
 import Textarea19 from '@/registry/ndeko/components/textarea/textarea-19';
+import Textarea20 from '@/registry/ndeko/components/textarea/textarea-20';
 
 export const previews: Record<string, ComponentType> = {
   'textarea-01': Textarea01,
@@ -41,4 +42,5 @@ export const previews: Record<string, ComponentType> = {
   'textarea-17': Textarea17,
   'textarea-18': Textarea18,
   'textarea-19': Textarea19,
+  'textarea-20': Textarea20,
 };

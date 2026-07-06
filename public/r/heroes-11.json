@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "heroes-11",
+  "title": "Typographic hero",
+  "description": "A hero that is mostly its headline, set large: the words land one after another, with small icon tiles standing between some of them, and the lead and two actions follow.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json",
+    "https://ui.ndekocode.dev/r/wash.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/blocks/heroes/heroes-11/index.tsx",
+      "content": "import { ArrowRightIcon } from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport { Wash } from '@/registry/ndeko/ui/wash';\n\nimport { HERO, TOKENS } from './data';\nimport { delayOf, Headline, LANDING } from './headline';\n\n/** The display rule of the home page: tight tracking on the display title and on nothing else. */\nconst DISPLAY =\n  'text-[2.75rem] leading-[1.04] font-semibold tracking-[-0.03em] text-balance @2xl:text-7xl @5xl:text-8xl @5xl:leading-[1.02]';\n\nexport default function Heroes11() {\n  const lastIndex = TOKENS.length;\n  const leadIndex = lastIndex + 1;\n  const actionsIndex = lastIndex + 2;\n\n  return (\n    <section className='@container'>\n      <div className='relative isolate'>\n        <Wash className='h-[30rem]' />\n        <div className='mx-auto flex max-w-6xl flex-col items-center gap-8 px-4 py-16 text-center @2xl:gap-10 @2xl:px-6 @2xl:py-28'>\n          <h1 className={cn(DISPLAY, 'max-w-5xl')}>\n            <Headline />\n          </h1>\n          <p\n            style={delayOf(leadIndex)}\n            className={cn(\n              'text-muted-foreground max-w-xl text-base text-pretty @2xl:text-lg',\n              LANDING\n            )}\n          >\n            {HERO.description}\n          </p>\n          <div\n            style={delayOf(actionsIndex)}\n            className={cn('flex flex-wrap justify-center gap-2', LANDING)}\n          >\n            <Button size='lg' nativeButton={false} render={<a href='#' />}>\n              {HERO.primaryAction}\n              <ArrowRightIcon />\n            </Button>\n            <Button\n              size='lg'\n              variant='outline'\n              nativeButton={false}\n              render={<a href='#' />}\n            >\n              {HERO.secondaryAction}\n            </Button>\n          </div>\n        </div>\n      </div>\n    </section>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/heroes-11/index.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/heroes/heroes-11/headline.tsx",
+      "content": "import { Fragment } from 'react';\n\nimport {\n  BotIcon,\n  type Icon,\n  RouteIcon,\n  ShieldCheckIcon,\n} from '@/registry/ndeko/lib/icons';\nimport { cn } from '@/registry/ndeko/lib/utils';\n\nimport { type MarkId, TOKENS } from './data';\n\nconst STAGGER_MS = 70;\n\n/**\n * What each part does once on load: it sharpens and rises 12px. The starting values come from the\n * browser's first style, so nothing runs in script, and reduced motion keeps only the fade.\n */\nexport const LANDING =\n  'transition-[opacity,translate,filter] duration-700 ease-(--ease-out-strong) starting:opacity-0 motion-safe:starting:translate-y-3 motion-safe:starting:blur-sm';\n\nexport function delayOf(index: number) {\n  return { transitionDelay: `${index * STAGGER_MS}ms` };\n}\n\nconst MARK_ICONS: Record<MarkId, Icon> = {\n  plan: RouteIcon,\n  agent: BotIcon,\n  review: ShieldCheckIcon,\n};\n\nfunction MarkTile({ mark, index }: { mark: MarkId; index: number }) {\n  const Glyph = MARK_ICONS[mark];\n\n  return (\n    <>\n      <span className='sr-only'>, </span>\n      <span\n        aria-hidden='true'\n        style={delayOf(index)}\n        className={cn(\n          'keycap-3d relative -top-[0.04em] inline-flex size-[0.72em] items-center justify-center rounded-[0.22em] align-middle',\n          LANDING\n        )}\n      >\n        <Glyph className='text-foreground/80 size-[0.42em]' />\n      </span>\n    </>\n  );\n}\n\nexport function Headline() {\n  return (\n    <>\n      {TOKENS.map((token, index) => (\n        <Fragment key={token.id}>\n          {index > 0 && ' '}\n          {token.kind === 'mark' && (\n            <MarkTile mark={token.mark} index={index} />\n          )}\n          {token.kind === 'word' && (\n            <span\n              style={delayOf(index)}\n              className={cn('inline-block', LANDING)}\n            >\n              {token.text}\n            </span>\n          )}\n        </Fragment>\n      ))}\n    </>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/heroes-11/headline.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/heroes/heroes-11/data.ts",
+      "content": "export type MarkId = 'plan' | 'agent' | 'review';\n\nexport type Token =\n  | { id: string; kind: 'word'; text: string }\n  | { id: string; kind: 'mark'; mark: MarkId };\n\nexport const HERO = {\n  description:\n    'Describe the outcome you want. Agents break it into steps, do the work in the open, and stop for your approval before anything leaves your workspace.',\n  primaryAction: 'Start a project',\n  secondaryAction: 'Watch a run',\n};\n\nexport const TOKENS: Token[] = [\n  { id: 'plan', kind: 'word', text: 'Plan' },\n  { id: 'the', kind: 'word', text: 'the' },\n  { id: 'work', kind: 'word', text: 'work' },\n  { id: 'plan-mark', kind: 'mark', mark: 'plan' },\n  { id: 'hand', kind: 'word', text: 'hand' },\n  { id: 'it', kind: 'word', text: 'it' },\n  { id: 'to', kind: 'word', text: 'to' },\n  { id: 'an', kind: 'word', text: 'an' },\n  { id: 'agent', kind: 'word', text: 'agent' },\n  { id: 'agent-mark', kind: 'mark', mark: 'agent' },\n  { id: 'review', kind: 'word', text: 'review' },\n  { id: 'what', kind: 'word', text: 'what' },\n  { id: 'ships', kind: 'word', text: 'ships' },\n];\n",
+      "type": "registry:component",
+      "target": "components/blocks/heroes-11/data.ts"
+    }
+  ],
+  "categories": [
+    "blocks",
+    "heroes"
+  ],
+  "type": "registry:block"
+}

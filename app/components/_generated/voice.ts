@@ -4,9 +4,13 @@ import type { ComponentType } from 'react';
 import Voice01 from '@/registry/ndeko/components/voice/voice-01';
 import Voice02 from '@/registry/ndeko/components/voice/voice-02';
 import Voice03 from '@/registry/ndeko/components/voice/voice-03';
+import Voice04 from '@/registry/ndeko/components/voice/voice-04';
+import Voice05 from '@/registry/ndeko/components/voice/voice-05';
 
 export const previews: Record<string, ComponentType> = {
   'voice-01': Voice01,
   'voice-02': Voice02,
   'voice-03': Voice03,
+  'voice-04': Voice04,
+  'voice-05': Voice05,
 };

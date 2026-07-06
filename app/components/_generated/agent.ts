@@ -11,6 +11,9 @@ import Agent07 from '@/registry/ndeko/components/agent/agent-07';
 import Agent08 from '@/registry/ndeko/components/agent/agent-08';
 import Agent09 from '@/registry/ndeko/components/agent/agent-09';
 import Agent10 from '@/registry/ndeko/components/agent/agent-10';
+import Agent11 from '@/registry/ndeko/components/agent/agent-11';
+import Agent12 from '@/registry/ndeko/components/agent/agent-12';
+import Agent13 from '@/registry/ndeko/components/agent/agent-13';
 
 export const previews: Record<string, ComponentType> = {
   'agent-01': Agent01,
@@ -23,4 +26,7 @@ export const previews: Record<string, ComponentType> = {
   'agent-08': Agent08,
   'agent-09': Agent09,
   'agent-10': Agent10,
+  'agent-11': Agent11,
+  'agent-12': Agent12,
+  'agent-13': Agent13,
 };

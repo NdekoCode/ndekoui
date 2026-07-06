@@ -10,6 +10,7 @@ import Popover06 from '@/registry/ndeko/components/popover/popover-06';
 import Popover07 from '@/registry/ndeko/components/popover/popover-07';
 import Popover08 from '@/registry/ndeko/components/popover/popover-08';
 import Popover09 from '@/registry/ndeko/components/popover/popover-09';
+import Popover10 from '@/registry/ndeko/components/popover/popover-10';
 
 export const previews: Record<string, ComponentType> = {
   'popover-01': Popover01,
@@ -21,4 +22,5 @@ export const previews: Record<string, ComponentType> = {
   'popover-07': Popover07,
   'popover-08': Popover08,
   'popover-09': Popover09,
+  'popover-10': Popover10,
 };

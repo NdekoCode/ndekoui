@@ -14,6 +14,9 @@ import Badge10 from '@/registry/ndeko/components/badge/badge-10';
 import Badge11 from '@/registry/ndeko/components/badge/badge-11';
 import Badge12 from '@/registry/ndeko/components/badge/badge-12';
 import Badge13 from '@/registry/ndeko/components/badge/badge-13';
+import Badge14 from '@/registry/ndeko/components/badge/badge-14';
+import Badge15 from '@/registry/ndeko/components/badge/badge-15';
+import Badge16 from '@/registry/ndeko/components/badge/badge-16';
 
 export const previews: Record<string, ComponentType> = {
   'badge-01': Badge01,
@@ -29,4 +32,7 @@ export const previews: Record<string, ComponentType> = {
   'badge-11': Badge11,
   'badge-12': Badge12,
   'badge-13': Badge13,
+  'badge-14': Badge14,
+  'badge-15': Badge15,
+  'badge-16': Badge16,
 };

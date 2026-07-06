@@ -8,6 +8,7 @@ import Subtask04 from '@/registry/ndeko/components/subtask/subtask-04';
 import Subtask05 from '@/registry/ndeko/components/subtask/subtask-05';
 import Subtask06 from '@/registry/ndeko/components/subtask/subtask-06';
 import Subtask07 from '@/registry/ndeko/components/subtask/subtask-07';
+import Subtask08 from '@/registry/ndeko/components/subtask/subtask-08';
 
 export const previews: Record<string, ComponentType> = {
   'subtask-01': Subtask01,
@@ -17,4 +18,5 @@ export const previews: Record<string, ComponentType> = {
   'subtask-05': Subtask05,
   'subtask-06': Subtask06,
   'subtask-07': Subtask07,
+  'subtask-08': Subtask08,
 };

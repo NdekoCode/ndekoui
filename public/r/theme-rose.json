@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme-rose",
+  "title": "Rose theme",
+  "description": "Crimson rose on the default surfaces. Sets the primary fill, brand text, the focus ring, the sidebar primary and the chart colours for light and dark. Every pair passes WCAG AA.",
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/theme.json"
+  ],
+  "cssVars": {
+    "light": {
+      "primary": "hsl(343 78% 47%)",
+      "primary-foreground": "hsl(0 0% 100%)",
+      "primary-ink": "hsl(343 80% 41%)",
+      "ring": "hsl(343 78% 47%)",
+      "sidebar-primary": "hsl(240 6% 10%)",
+      "sidebar-primary-foreground": "hsl(0 0% 98%)",
+      "sidebar-ring": "hsl(343 78% 47%)",
+      "chart-1": "hsl(343 78% 47%)",
+      "chart-2": "hsl(343 78% 57%)",
+      "chart-3": "hsl(343 78% 67%)",
+      "chart-4": "hsl(343 78% 78%)",
+      "chart-5": "hsl(240 5% 65%)"
+    },
+    "dark": {
+      "primary": "hsl(343 78% 47%)",
+      "primary-foreground": "hsl(0 0% 100%)",
+      "primary-ink": "hsl(343 90% 68%)",
+      "ring": "hsl(343 6% 42%)",
+      "sidebar-primary": "hsl(343 78% 47%)",
+      "sidebar-primary-foreground": "hsl(0 0% 100%)",
+      "sidebar-ring": "hsl(343 6% 42%)",
+      "chart-1": "hsl(343 78% 60%)",
+      "chart-2": "hsl(343 78% 67%)",
+      "chart-3": "hsl(343 78% 75%)",
+      "chart-4": "hsl(343 78% 83%)"
+    }
+  },
+  "categories": [
+    "foundations"
+  ],
+  "type": "registry:theme"
+}

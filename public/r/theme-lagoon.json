@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme-lagoon",
+  "title": "Lagoon theme",
+  "description": "Deep teal on the default surfaces. Sets the primary fill, brand text, the focus ring, the sidebar primary and the chart colours for light and dark. Every pair passes WCAG AA.",
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/theme.json"
+  ],
+  "cssVars": {
+    "light": {
+      "primary": "hsl(178 84% 27%)",
+      "primary-foreground": "hsl(0 0% 100%)",
+      "primary-ink": "hsl(178 85% 23%)",
+      "ring": "hsl(178 84% 27%)",
+      "sidebar-primary": "hsl(240 6% 10%)",
+      "sidebar-primary-foreground": "hsl(0 0% 98%)",
+      "sidebar-ring": "hsl(178 84% 27%)",
+      "chart-1": "hsl(178 84% 27%)",
+      "chart-2": "hsl(178 84% 41%)",
+      "chart-3": "hsl(178 84% 56%)",
+      "chart-4": "hsl(178 84% 71%)",
+      "chart-5": "hsl(240 5% 65%)"
+    },
+    "dark": {
+      "primary": "hsl(178 84% 27%)",
+      "primary-foreground": "hsl(0 0% 100%)",
+      "primary-ink": "hsl(178 70% 55%)",
+      "ring": "hsl(178 6% 42%)",
+      "sidebar-primary": "hsl(178 84% 27%)",
+      "sidebar-primary-foreground": "hsl(0 0% 100%)",
+      "sidebar-ring": "hsl(178 6% 42%)",
+      "chart-1": "hsl(178 84% 60%)",
+      "chart-2": "hsl(178 84% 67%)",
+      "chart-3": "hsl(178 84% 75%)",
+      "chart-4": "hsl(178 84% 83%)"
+    }
+  },
+  "categories": [
+    "foundations"
+  ],
+  "type": "registry:theme"
+}

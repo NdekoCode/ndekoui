@@ -7,6 +7,8 @@ import Answer03 from '@/registry/ndeko/components/answer/answer-03';
 import Answer04 from '@/registry/ndeko/components/answer/answer-04';
 import Answer05 from '@/registry/ndeko/components/answer/answer-05';
 import Answer06 from '@/registry/ndeko/components/answer/answer-06';
+import Answer07 from '@/registry/ndeko/components/answer/answer-07';
+import Answer08 from '@/registry/ndeko/components/answer/answer-08';
 
 export const previews: Record<string, ComponentType> = {
   'answer-01': Answer01,
@@ -15,4 +17,6 @@ export const previews: Record<string, ComponentType> = {
   'answer-04': Answer04,
   'answer-05': Answer05,
   'answer-06': Answer06,
+  'answer-07': Answer07,
+  'answer-08': Answer08,
 };

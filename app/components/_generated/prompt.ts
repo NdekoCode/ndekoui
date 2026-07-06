@@ -11,6 +11,9 @@ import Prompt07 from '@/registry/ndeko/components/prompt/prompt-07';
 import Prompt08 from '@/registry/ndeko/components/prompt/prompt-08';
 import Prompt09 from '@/registry/ndeko/components/prompt/prompt-09';
 import Prompt10 from '@/registry/ndeko/components/prompt/prompt-10';
+import Prompt11 from '@/registry/ndeko/components/prompt/prompt-11';
+import Prompt12 from '@/registry/ndeko/components/prompt/prompt-12';
+import Prompt13 from '@/registry/ndeko/components/prompt/prompt-13';
 
 export const previews: Record<string, ComponentType> = {
   'prompt-01': Prompt01,
@@ -23,4 +26,7 @@ export const previews: Record<string, ComponentType> = {
   'prompt-08': Prompt08,
   'prompt-09': Prompt09,
   'prompt-10': Prompt10,
+  'prompt-11': Prompt11,
+  'prompt-12': Prompt12,
+  'prompt-13': Prompt13,
 };

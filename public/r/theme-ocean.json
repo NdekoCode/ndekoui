@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme-ocean",
+  "title": "Ocean theme",
+  "description": "Azure blue on the default surfaces. Sets the primary fill, brand text, the focus ring, the sidebar primary and the chart colours for light and dark. Every pair passes WCAG AA.",
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/theme.json"
+  ],
+  "cssVars": {
+    "light": {
+      "primary": "hsl(211 92% 45%)",
+      "primary-foreground": "hsl(0 0% 100%)",
+      "primary-ink": "hsl(211 90% 38%)",
+      "ring": "hsl(211 92% 45%)",
+      "sidebar-primary": "hsl(240 6% 10%)",
+      "sidebar-primary-foreground": "hsl(0 0% 98%)",
+      "sidebar-ring": "hsl(211 92% 45%)",
+      "chart-1": "hsl(211 92% 45%)",
+      "chart-2": "hsl(211 92% 55%)",
+      "chart-3": "hsl(211 92% 66%)",
+      "chart-4": "hsl(211 92% 78%)",
+      "chart-5": "hsl(240 5% 65%)"
+    },
+    "dark": {
+      "primary": "hsl(211 92% 45%)",
+      "primary-foreground": "hsl(0 0% 100%)",
+      "primary-ink": "hsl(211 95% 68%)",
+      "ring": "hsl(211 6% 42%)",
+      "sidebar-primary": "hsl(211 92% 45%)",
+      "sidebar-primary-foreground": "hsl(0 0% 100%)",
+      "sidebar-ring": "hsl(211 6% 42%)",
+      "chart-1": "hsl(211 92% 60%)",
+      "chart-2": "hsl(211 92% 67%)",
+      "chart-3": "hsl(211 92% 75%)",
+      "chart-4": "hsl(211 92% 83%)"
+    }
+  },
+  "categories": [
+    "foundations"
+  ],
+  "type": "registry:theme"
+}

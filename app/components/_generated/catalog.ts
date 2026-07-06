@@ -311,6 +311,30 @@ export const catalog: CatalogCategory[] = [
           'A mark and a word per agent that change together: the dot of a running agent sends a ring out, and a hand, a cross or a check takes its place when the agent waits, fails or ends, above a legend of all five states.',
         category: 'agent',
       },
+      {
+        name: 'agent-11',
+        source: 'ndeko',
+        title: 'Task checklist',
+        description:
+          'The to-do list of an agent under a header that counts 2 of 5 and carries the ring of the whole: the running step shows a ring that fills with its percentage rolling, and a done step is struck through by a line that draws from left to right.',
+        category: 'agent',
+      },
+      {
+        name: 'agent-12',
+        source: 'ndeko',
+        title: 'Scheduled agent',
+        description:
+          'An agent that runs on a schedule, in words and as a cron badge, with the time to the next run, Pause that greys it out, and its last seven runs as marks, where Run now adds a new one that joins the row.',
+        category: 'agent',
+      },
+      {
+        name: 'agent-13',
+        source: 'ndeko',
+        title: 'Tool servers',
+        description:
+          'The servers that give an agent its tools, each with its status and a drawer of tools on switches with their call counts that opens under it, Reconnect running a short sign-in sequence, and a failed server that says why.',
+        category: 'agent',
+      },
     ],
   },
   {
@@ -455,6 +479,22 @@ export const catalog: CatalogCategory[] = [
         title: 'Artifact canvas',
         description:
           'A chat beside the document it made, split by a handle you drag or move with the arrows, with versions that crossfade, changes marked against the last one, Copy and Apply.',
+        category: 'answer',
+      },
+      {
+        name: 'answer-07',
+        source: 'ndeko',
+        title: 'Retrieved passages',
+        description:
+          'The passages an answer was built from, with similarity bars and the shared words marked, each on a switch: leaving one out writes the answer again word by word, and the count of passages used rolls.',
+        category: 'answer',
+      },
+      {
+        name: 'answer-08',
+        source: 'ndeko',
+        title: 'Query result',
+        description:
+          'A query an agent ran, in Result and Query tabs under a travelling indicator: rows arrive under the header with the row count and run time, the SQL is highlighted, and an error names the line it points at.',
         category: 'answer',
       },
     ],
@@ -890,6 +930,30 @@ export const catalog: CatalogCategory[] = [
         source: 'comp-425',
         title: 'Removable tag',
         description: 'A taller outline tag with a roomy remove button.',
+        category: 'badge',
+      },
+      {
+        name: 'badge-14',
+        source: 'ndeko',
+        title: 'Scan badge',
+        description:
+          'A drawn code whose cells fall like grains into a small badge once it is scanned, the badge filling with the success tint and reading Scanned as the last ones land, then the cells growing back from the top left corner; the cells only fade under reduced motion.',
+        category: 'badge',
+      },
+      {
+        name: 'badge-15',
+        source: 'ndeko',
+        title: 'Price pill',
+        description:
+          'A pill whose price rolls figure by figure to a new amount while its width follows the figures, with the billing period under it where only the word that changed rolls.',
+        category: 'badge',
+      },
+      {
+        name: 'badge-16',
+        source: 'ndeko',
+        title: 'Seal',
+        description:
+          'A round seal in one colour whose line of text circles a fixed centre label on a slow turn that holds off screen, under the pointer and under reduced motion, and that the demonstration can slow, quicken or pause.',
         category: 'badge',
       },
     ],
@@ -1536,6 +1600,22 @@ export const catalog: CatalogCategory[] = [
           'The first press turns the button destructive with a three second countdown, the second removes.',
         category: 'button',
       },
+      {
+        name: 'button-65',
+        source: 'ndeko',
+        title: 'Theme switch with a reveal',
+        description:
+          'A sun and moon toggle that reveals the other theme from the point you pressed, as a circle, a wipe or a fade.',
+        category: 'button',
+      },
+      {
+        name: 'button-66',
+        source: 'ndeko',
+        title: 'Buttons with living icons',
+        description:
+          'Secondary, outline, destructive and soft status buttons whose icon acts out its verb when the hand reaches it and when it is pressed: the arrow leaves and comes back, the bin lifts its lid, the bell swings once and the download drops.',
+        category: 'button',
+      },
     ],
   },
   {
@@ -1746,6 +1826,22 @@ export const catalog: CatalogCategory[] = [
         title: 'Popover range picker',
         description:
           'A field-like trigger that opens a range calendar in a popover.',
+        category: 'calendar-date-picker',
+      },
+      {
+        name: 'calendar-date-picker-29',
+        source: 'ndeko',
+        title: 'Typed date',
+        description:
+          'A date field that reads typed words such as "next fri 3pm" or "in 3 days", rolls the date it understood under the field, and opens a calendar from its button.',
+        category: 'calendar-date-picker',
+      },
+      {
+        name: 'calendar-date-picker-30',
+        source: 'ndeko',
+        title: 'Period picker',
+        description:
+          'A popover that reads "since sep 3" or "last 2 weeks", lists periods with their dates, steps to a two-month range calendar, and shows the previous period when you compare.',
         category: 'calendar-date-picker',
       },
     ],
@@ -2545,6 +2641,14 @@ export const catalog: CatalogCategory[] = [
           'The pill above a headline, where a light runs once round its edge from the side the pointer comes from as it gets within reach, then rests, and the arrow of the tag that says what a press does nudges forward.',
         category: 'effect',
       },
+      {
+        name: 'effect-05',
+        source: 'ndeko',
+        title: 'Flap clock',
+        description:
+          'The local time or a countdown on split flaps: a figure that changes folds over its hinge in perspective, the old upper half falling forward and the new lower half landing, and a switch between the two folds every card at once.',
+        category: 'effect',
+      },
     ],
   },
   {
@@ -2721,6 +2825,14 @@ export const catalog: CatalogCategory[] = [
         title: 'Avatar uploader with cropper',
         description:
           'Picks an image, opens a dialog to crop and zoom it, then sets it as the avatar.',
+        category: 'file-upload',
+      },
+      {
+        name: 'file-upload-15',
+        source: 'ndeko',
+        title: 'Folder that takes files',
+        description:
+          'A drawn folder whose flap tips open while files are dragged over it; dropped files fall in as sheets and a list under it shows each upload with its progress.',
         category: 'file-upload',
       },
     ],
@@ -3391,6 +3503,84 @@ export const catalog: CatalogCategory[] = [
         description:
           'Each rule is a chip that turns green and swaps its circle for a check once the password meets it.',
         category: 'input',
+      },
+      {
+        name: 'input-65',
+        source: 'ndeko',
+        title: 'Password with a generator',
+        description:
+          'A password field with a segmented strength meter and a live rules list, a Generate button that scrambles in a strong password, a Copy button, and a spoken strength.',
+        category: 'input',
+      },
+      {
+        name: 'input-66',
+        source: 'ndeko',
+        title: 'Waitlist field',
+        description:
+          'An email field that checks the address, turns its button into You are on the list and slides the new avatar into a stack while the last one tucks under a counter that rolls.',
+        category: 'input',
+      },
+    ],
+  },
+  {
+    slug: 'loading',
+    name: 'Loading',
+    entries: [
+      {
+        name: 'loading-01',
+        source: 'ndeko',
+        title: 'Thinking ring',
+        description:
+          'A thinking status whose eight dots push out from their ring in turn, so a bulge travels round it, beside a label a soft light passes over; when the work is done the ring draws itself closed round a check.',
+        category: 'loading',
+      },
+      {
+        name: 'loading-02',
+        source: 'ndeko',
+        title: 'Thinking wave',
+        description:
+          'A thinking status as five rounded bars that swell one after the other, a small wave that breathes, with a compact variant without the label; when the work is done the bars settle into a check.',
+        category: 'loading',
+      },
+      {
+        name: 'loading-03',
+        source: 'ndeko',
+        title: 'Thinking spark',
+        description:
+          'A thinking status with a small diamond that snaps a quarter turn on a light spring while the point reaching the top glints by lengthening, beside a label a soft light passes over.',
+        category: 'loading',
+      },
+      {
+        name: 'loading-04',
+        source: 'ndeko',
+        title: 'Thinking visor',
+        description:
+          'A thinking status with a small drawn helmet whose visor shows a voice meter of five bouncing bars; when the work is done the meter settles and the visor holds a check.',
+        category: 'loading',
+      },
+      {
+        name: 'loading-05',
+        source: 'ndeko',
+        title: 'One sweep for every skeleton',
+        description:
+          'Skeleton blocks that share one light passing over the whole layout in step with each other, so a page that changes shape keeps the same light.',
+        category: 'loading',
+      },
+      {
+        name: 'loading-06',
+        source: 'ndeko',
+        title: 'Skeleton presets',
+        description:
+          'Text, profile, list and media skeletons shaped like the content they stand in for, all on the shared sweep.',
+        category: 'loading',
+      },
+      {
+        name: 'loading-07',
+        source: 'ndeko',
+        title: 'Loading gate',
+        description:
+          'A gate that holds a skeleton the size of the content and crossfades into it without moving the layout, with an error state and Retry that keep the size.',
+        category: 'loading',
       },
     ],
   },
@@ -4073,6 +4263,14 @@ export const catalog: CatalogCategory[] = [
           'A popover that moves from one spot to the next with its arrow.',
         category: 'popover',
       },
+      {
+        name: 'popover-10',
+        source: 'ndeko',
+        title: 'Emoji field',
+        description:
+          'Emoji packed in a round field that keeps gliding after a fling and swells under the middle; a tapped one flies into the message where the caret is.',
+        category: 'popover',
+      },
     ],
   },
   {
@@ -4157,6 +4355,30 @@ export const catalog: CatalogCategory[] = [
         title: 'Conversation list',
         description:
           'Chats grouped by day under the pinned ones, with a highlight that travels, rename in place, delete asked in the row, and arrows, F2 and Delete.',
+        category: 'prompt',
+      },
+      {
+        name: 'prompt-11',
+        source: 'ndeko',
+        title: 'Prompt deck',
+        description:
+          'Suggested prompts as a stack of cards: the front one is dragged or sent away with Left and Right and the next lifts into place, and pressing a card types its prompt into the composer.',
+        category: 'prompt',
+      },
+      {
+        name: 'prompt-12',
+        source: 'ndeko',
+        title: 'Mention picker',
+        description:
+          'Typing @ opens files, symbols, diffs, docs and pages that filter with marks and move with the arrows and Tab, and the picked item flies into the composer as a chip while the token total rolls.',
+        category: 'prompt',
+      },
+      {
+        name: 'prompt-13',
+        source: 'ndeko',
+        title: 'Slash commands',
+        description:
+          'Typing / lists the commands an agent knows with their arguments, and the chosen command settles into a token followed by its argument, selected so that typing replaces it.',
         category: 'prompt',
       },
     ],
@@ -4411,6 +4633,54 @@ export const catalog: CatalogCategory[] = [
           'Suggested edits marked inside a paragraph, each accepted or rejected from a card that glides to it or with Y and N, with J and K to move, Undo and a count that rolls.',
         category: 'review',
       },
+      {
+        name: 'review-12',
+        source: 'ndeko',
+        title: 'Agent question',
+        description:
+          'The agent stops to ask with the reason why, choices you pick with the number keys or answer in your own words, and the card folds into one line that says what you answered, with Change.',
+        category: 'review',
+      },
+      {
+        name: 'review-13',
+        source: 'ndeko',
+        title: 'Staged action',
+        description:
+          'What the agent is about to run as fields you can correct, where a changed field marks itself as edited with Reset, and Approve becomes the result while Discard folds away with Undo.',
+        category: 'review',
+      },
+      {
+        name: 'review-14',
+        source: 'ndeko',
+        title: 'Secret request',
+        description:
+          'A masked field for a key that never enters the thread, whose prefix check answers as you type and turns right, then Save folds the card into where the key went and its last four characters.',
+        category: 'review',
+      },
+      {
+        name: 'review-15',
+        source: 'ndeko',
+        title: 'Guardrail check',
+        description:
+          'Checks that run before the agent acts, where the spans of a text mask themselves one after another, a flagged check asks Allow once or Block, and the summary line rolls.',
+        category: 'review',
+      },
+      {
+        name: 'review-16',
+        source: 'ndeko',
+        title: 'Checkpoint rewind',
+        description:
+          'A timeline of checkpoints where picking one previews the files a rewind would revert, then the Now marker glides back, what came after dims, and Redo brings it back.',
+        category: 'review',
+      },
+      {
+        name: 'review-17',
+        source: 'ndeko',
+        title: 'Connect an app',
+        description:
+          'A permission card for an agent that wants another app, with risk-labelled scopes you can switch off, and a handshake of a line, a travelling dot and two tiles that settle into Connected.',
+        category: 'review',
+      },
     ],
   },
   {
@@ -4495,6 +4765,38 @@ export const catalog: CatalogCategory[] = [
         title: 'Agent health',
         description:
           "One agent's health: a gauge and five signals whose marks change in a wave between periods, a summary written a few words at a time and one action to apply.",
+        category: 'run',
+      },
+      {
+        name: 'run-11',
+        source: 'ndeko',
+        title: 'Error and retry',
+        description:
+          'A failed step in plain words, with a ring that empties toward the next automatic retry, Retry now and Stop retrying, the raw error behind a fold with Copy, and a card that folds into one line once a try goes through.',
+        category: 'run',
+      },
+      {
+        name: 'run-12',
+        source: 'ndeko',
+        title: 'Cost tracker',
+        description:
+          'Tokens in and out, the cache share and the cost as plain ticking figures while a step streams, whose totals roll once as each step lands, above a per-step table with the model of each step and a small bar.',
+        category: 'run',
+      },
+      {
+        name: 'run-13',
+        source: 'ndeko',
+        title: 'Sandbox preview',
+        description:
+          'The page a coding agent is building, beside the chat: Reload runs a thin progress line across the frame, the frame morphs between Desktop and Mobile width, and a console drawer opens to the last lines as hot updates arrive.',
+        category: 'run',
+      },
+      {
+        name: 'run-14',
+        source: 'ndeko',
+        title: 'Background tasks',
+        description:
+          'A queue of long jobs with a bar and the time left on each, Cancel and Retry on a failed one, finished jobs that check themselves and leave, and a ring in the header that closes as the queue empties.',
         category: 'run',
       },
     ],
@@ -4880,6 +5182,22 @@ export const catalog: CatalogCategory[] = [
         title: 'Listbox with groups',
         description:
           'An always open list of options under headings and hairlines.',
+        category: 'select',
+      },
+      {
+        name: 'select-52',
+        source: 'ndeko',
+        title: 'Popup around the pointer',
+        description:
+          'A select whose list opens with the current choice under your finger: slide to another one and let go to pick it, or click to open it as usual.',
+        category: 'select',
+      },
+      {
+        name: 'select-53',
+        source: 'ndeko',
+        title: 'Settings as a sentence',
+        description:
+          'A setting written as one sentence where only the changeable words are dark: tap a word to pick another, drag a number sideways to dial it, and the line below rolls to say what it means.',
         category: 'select',
       },
     ],
@@ -5275,6 +5593,14 @@ export const catalog: CatalogCategory[] = [
         title: 'Convert a note line',
         description:
           'A note line that travels into the sub-task list and takes a task number when you convert it',
+        category: 'subtask',
+      },
+      {
+        name: 'subtask-08',
+        source: 'ndeko',
+        title: 'Live list',
+        description:
+          'A checklist a team writes in at once: new items arrive in their group with the name of who added them, ticked ones settle into Done, and the card keeps its height.',
         category: 'subtask',
       },
     ],
@@ -5841,6 +6167,22 @@ export const catalog: CatalogCategory[] = [
           'A word or an icon drawn in characters lit from the top left, where a band of light crosses it, the characters travel to their new cells when the shape changes, the pointer lights those near it and a press sends a ripple.',
         category: 'text-effect',
       },
+      {
+        name: 'text-effect-05',
+        source: 'ndeko',
+        title: 'Perspective swap',
+        description:
+          'A headline that alternates between two or three phrases, each one turning away round an axis behind the line in soft perspective as the next turns in from the other side, and holding still under the pointer.',
+        category: 'text-effect',
+      },
+      {
+        name: 'text-effect-06',
+        source: 'ndeko',
+        title: 'Rolling letters',
+        description:
+          'Letters that roll forward like small cubes one after another, a wave that runs through the word and starts again with no seam, paused off screen and still under reduced motion.',
+        category: 'text-effect',
+      },
     ],
   },
   {
@@ -5984,6 +6326,14 @@ export const catalog: CatalogCategory[] = [
         source: 'comp-77',
         title: 'Auto-growing textarea',
         description: 'A field that starts at one line and grows up to five.',
+        category: 'textarea',
+      },
+      {
+        name: 'textarea-20',
+        source: 'ndeko',
+        title: 'Rewind',
+        description:
+          'A textarea that records versions as you write: drag the scrubber back and the words you deleted later return in colour, then keep that version or press Escape to return to now.',
         category: 'textarea',
       },
     ],
@@ -6332,6 +6682,22 @@ export const catalog: CatalogCategory[] = [
         title: 'Dictation',
         description:
           'A field whose microphone key turns the footer into a recording strip, then transcribes the take and streams the words in at the caret.',
+        category: 'voice',
+      },
+      {
+        name: 'voice-04',
+        source: 'ndeko',
+        title: 'Particle orb',
+        description:
+          'A sphere of a few hundred particles that turns slowly and surges outward with the voice, then falls back on springs: it breathes when idle, tightens and spins while thinking, pulses while speaking, and one key starts and ends the call.',
+        category: 'voice',
+      },
+      {
+        name: 'voice-05',
+        source: 'ndeko',
+        title: 'Sound ring',
+        description:
+          'A ring of rounded bars in three sizes where a peak travels round the ring and turns faster with the sound, quiet when idle, sitting beside a label, inside a button or alone.',
         category: 'voice',
       },
     ],

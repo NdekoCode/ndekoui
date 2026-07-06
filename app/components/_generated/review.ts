@@ -12,6 +12,12 @@ import Review08 from '@/registry/ndeko/components/review/review-08';
 import Review09 from '@/registry/ndeko/components/review/review-09';
 import Review10 from '@/registry/ndeko/components/review/review-10';
 import Review11 from '@/registry/ndeko/components/review/review-11';
+import Review12 from '@/registry/ndeko/components/review/review-12';
+import Review13 from '@/registry/ndeko/components/review/review-13';
+import Review14 from '@/registry/ndeko/components/review/review-14';
+import Review15 from '@/registry/ndeko/components/review/review-15';
+import Review16 from '@/registry/ndeko/components/review/review-16';
+import Review17 from '@/registry/ndeko/components/review/review-17';
 
 export const previews: Record<string, ComponentType> = {
   'review-01': Review01,
@@ -25,4 +31,10 @@ export const previews: Record<string, ComponentType> = {
   'review-09': Review09,
   'review-10': Review10,
   'review-11': Review11,
+  'review-12': Review12,
+  'review-13': Review13,
+  'review-14': Review14,
+  'review-15': Review15,
+  'review-16': Review16,
+  'review-17': Review17,
 };

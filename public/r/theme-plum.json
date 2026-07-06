@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme-plum",
+  "title": "Plum theme",
+  "description": "Orchid purple on the default surfaces. Sets the primary fill, brand text, the focus ring, the sidebar primary and the chart colours for light and dark. Every pair passes WCAG AA.",
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/theme.json"
+  ],
+  "cssVars": {
+    "light": {
+      "primary": "hsl(295 52% 44%)",
+      "primary-foreground": "hsl(0 0% 100%)",
+      "primary-ink": "hsl(295 55% 35%)",
+      "ring": "hsl(295 52% 44%)",
+      "sidebar-primary": "hsl(240 6% 10%)",
+      "sidebar-primary-foreground": "hsl(0 0% 98%)",
+      "sidebar-ring": "hsl(295 52% 44%)",
+      "chart-1": "hsl(295 52% 44%)",
+      "chart-2": "hsl(295 52% 54%)",
+      "chart-3": "hsl(295 52% 65%)",
+      "chart-4": "hsl(295 52% 77%)",
+      "chart-5": "hsl(240 5% 65%)"
+    },
+    "dark": {
+      "primary": "hsl(295 52% 44%)",
+      "primary-foreground": "hsl(0 0% 100%)",
+      "primary-ink": "hsl(295 75% 70%)",
+      "ring": "hsl(295 6% 42%)",
+      "sidebar-primary": "hsl(295 52% 44%)",
+      "sidebar-primary-foreground": "hsl(0 0% 100%)",
+      "sidebar-ring": "hsl(295 6% 42%)",
+      "chart-1": "hsl(295 52% 60%)",
+      "chart-2": "hsl(295 52% 67%)",
+      "chart-3": "hsl(295 52% 75%)",
+      "chart-4": "hsl(295 52% 83%)"
+    }
+  },
+  "categories": [
+    "foundations"
+  ],
+  "type": "registry:theme"
+}

@@ -336,6 +336,112 @@ export const groups: BundleGroup[] = [
     ],
   },
   {
+    slug: 'ai-product',
+    name: 'AI product',
+    entries: [
+      {
+        name: 'ai-product-01',
+        title: 'Usage and limits',
+        description:
+          'Where a workspace stands against its plan: switch the period and the stacked bar by model empties and refills to the limit mark while the daily bars grow from the baseline, with a meter for each other limit and an upgrade line that unfolds near the limit.',
+        files: [
+          'index.tsx',
+          'usage-bar.tsx',
+          'day-chart.tsx',
+          'limit-rows.tsx',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 820,
+        group: 'ai-product',
+      },
+      {
+        name: 'ai-product-02',
+        title: 'Home for an AI app',
+        description:
+          'The start page of a signed-in AI product: counts roll in once, a question box answers its suggestions, quick actions sit in tiles, and the agents that need you arrive row by row, each with one action that checks itself off, beside cards for spend and finished tasks.',
+        files: [
+          'index.tsx',
+          'figures.tsx',
+          'ask-bar.tsx',
+          'quick-actions.tsx',
+          'needs-you.tsx',
+          'trend-cards.tsx',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 1040,
+        group: 'ai-product',
+      },
+      {
+        name: 'ai-product-03',
+        title: 'Leads an agent enriches',
+        description:
+          'A leads table with sorting, search, status and owner filters, selection and pages, while an agent works down it: a row lights, a cell shimmers as its value is fetched, then the value settles into place and the count of enriched leads rolls.',
+        files: [
+          'index.tsx',
+          'leads-table.tsx',
+          'toolbar.tsx',
+          'cell-states.tsx',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 780,
+        group: 'ai-product',
+      },
+      {
+        name: 'ai-product-04',
+        title: 'Launch perks',
+        description:
+          'Three perks of a launch offer under a live countdown: as people join, each claimed count rolls while its bar fills, and a claim turns its button into a drawn check.',
+        files: [
+          'index.tsx',
+          'perk-card.tsx',
+          'perk-marks.tsx',
+          'countdown.tsx',
+          'data.ts',
+        ],
+        previewHeight: 700,
+        group: 'ai-product',
+      },
+      {
+        name: 'ai-product-05',
+        title: 'Before and after in one bar',
+        description:
+          'One bar that shows how a week splits between busywork and judgment: the caption lights word by word and the blocks flip one after another while two percentages tick across, on its own when it enters the screen or following a progress value.',
+        files: ['index.tsx', 'work-split.tsx', 'data.ts'],
+        previewHeight: 620,
+        group: 'ai-product',
+      },
+      {
+        name: 'ai-product-06',
+        title: 'App shelf',
+        description:
+          'A row of app tiles that walks along itself: the tile in focus lifts a preview card out of itself with a Connect button while its neighbours dim, with arrows to move and Enter to connect.',
+        files: ['index.tsx', 'app-tile.tsx', 'data.ts'],
+        previewHeight: 640,
+        group: 'ai-product',
+      },
+      {
+        name: 'ai-product-07',
+        title: 'Direction picker',
+        description:
+          'Four visual directions drawn as small compositions: the one you pick grows into an editable brief with its palette, type pair and three keywords, then Generate turns into its own progress and the options arrive in order.',
+        files: [
+          'index.tsx',
+          'direction-tiles.tsx',
+          'direction-art.tsx',
+          'brief-panel.tsx',
+          'generate-bar.tsx',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 1020,
+        group: 'ai-product',
+      },
+    ],
+  },
+  {
     slug: 'app-shells',
     name: 'App shells',
     entries: [
@@ -618,6 +724,34 @@ export const groups: BundleGroup[] = [
         previewHeight: 1100,
         group: 'changelog',
       },
+      {
+        name: 'changelog-02',
+        title: 'Changelog by month',
+        description:
+          'Entries grouped under sticky month headers inside their own scroll frame, a month jump that follows the scroll, type filters with counts, details that open in place and a link to copy for every entry.',
+        files: [
+          'index.tsx',
+          'entry-row.tsx',
+          'filters.tsx',
+          'month-nav.tsx',
+          'use-month-spy.ts',
+          'groups.ts',
+          'hash.ts',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 760,
+        group: 'changelog',
+      },
+      {
+        name: 'changelog-03',
+        title: 'What’s new popover',
+        description:
+          'A What’s new button whose unread count rolls down as notes are read, opening a compact list with unread dots that clear, Mark all read and a link to each full note.',
+        files: ['index.tsx', 'news-row.tsx', 'session.ts', 'data.ts'],
+        previewHeight: 560,
+        group: 'changelog',
+      },
     ],
   },
   {
@@ -702,6 +836,21 @@ export const groups: BundleGroup[] = [
           'A card with a package manager switch, the matching install command and a copy button whose icon swaps to a check.',
         files: ['index.tsx', 'command-row.tsx', 'data.ts'],
         previewHeight: 460,
+        group: 'ctas',
+      },
+      {
+        name: 'ctas-03',
+        title: 'Call to action with a queue',
+        description:
+          'A closing band with an email field that checks, sends and confirms, beside a queue of conversations whose marks swap into drawn checks and whose rows dim into Done while the block is on screen.',
+        files: [
+          'index.tsx',
+          'email-form.tsx',
+          'queue-card.tsx',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 560,
         group: 'ctas',
       },
     ],
@@ -842,6 +991,15 @@ export const groups: BundleGroup[] = [
         previewHeight: 640,
         group: 'empty-states',
       },
+      {
+        name: 'empty-states-04',
+        title: 'Empty states with a scene',
+        description:
+          'Four calm scenes for no runs, an empty inbox, no tools and no agents, drawn with dashed slots and key caps and looping on opacity and transform while on screen, each with a title, a line and one action that morphs from idle to done.',
+        files: ['index.tsx', 'scenes.tsx', 'use-scene-loops.ts', 'data.ts'],
+        previewHeight: 640,
+        group: 'empty-states',
+      },
     ],
   },
   {
@@ -912,6 +1070,27 @@ export const groups: BundleGroup[] = [
         previewHeight: 760,
         group: 'faqs',
       },
+      {
+        name: 'faqs-03',
+        title: 'Searchable questions',
+        description:
+          'A search that ignores accents and marks its matches in place as you type, topic chips whose counts roll with the words, answers that open where they are with a link to copy, and a person to ask when nothing matches.',
+        files: [
+          'index.tsx',
+          'ask-person.tsx',
+          'collapse.tsx',
+          'hash.ts',
+          'marked-text.tsx',
+          'question-row.tsx',
+          'search-field.tsx',
+          'search.ts',
+          'session.ts',
+          'topic-chips.tsx',
+          'data.ts',
+        ],
+        previewHeight: 940,
+        group: 'faqs',
+      },
     ],
   },
   {
@@ -943,6 +1122,25 @@ export const groups: BundleGroup[] = [
           'Four views in a list whose indicator travels to the picked one, beside a preview that resizes and crossfades to show it.',
         files: ['index.tsx', 'feature-previews.tsx', 'data.ts'],
         previewHeight: 700,
+        group: 'features',
+      },
+      {
+        name: 'features-04',
+        title: 'Live features',
+        description:
+          'Five tiles of one agent run, each the working control: a prompt with a status tray, a plan that ticks, an approval that waits for you, a context ring that fills and a cost that rolls.',
+        files: [
+          'index.tsx',
+          'approval-tile.tsx',
+          'context-tile.tsx',
+          'cost-tile.tsx',
+          'plan-tile.tsx',
+          'prompt-tile.tsx',
+          'tile.tsx',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 1040,
         group: 'features',
       },
     ],
@@ -1166,6 +1364,72 @@ export const groups: BundleGroup[] = [
         previewHeight: 640,
         group: 'heroes',
       },
+      {
+        name: 'heroes-07',
+        title: 'Hero with a chat box',
+        description:
+          'A hero for an AI product whose prompt box types its own questions into the empty field, one after another, while app tiles orbit it on two dashed circles and stay upright as they turn.',
+        files: ['index.tsx', 'prompt-box.tsx', 'orbit.tsx', 'data.ts'],
+        previewHeight: 920,
+        group: 'heroes',
+      },
+      {
+        name: 'heroes-08',
+        title: 'Hero on a grid',
+        description:
+          'A centred hero on a square grid where app tiles fade into its cells and out again, never two neighbours at once, around a headline that keeps the page colour.',
+        files: ['index.tsx', 'grid-layer.tsx', 'data.ts'],
+        previewHeight: 640,
+        group: 'heroes',
+      },
+      {
+        name: 'heroes-09',
+        title: 'Hero with a word pill',
+        description:
+          'A centred hero whose headline ends in a pill that rolls to the next agent word while its colour sweeps in from the left, with the row of agent tiles above lighting the one the word belongs to.',
+        files: ['index.tsx', 'agent-row.tsx', 'word-pill.tsx', 'data.ts'],
+        previewHeight: 620,
+        group: 'heroes',
+      },
+      {
+        name: 'heroes-10',
+        title: 'Waitlist hero',
+        description:
+          'A waitlist hero with an email field that checks the address and morphs into You are on the list, above a stack of avatars where each new member slides in while the oldest tucks under a rolling counter.',
+        files: [
+          'index.tsx',
+          'email-form.tsx',
+          'avatar-stack.tsx',
+          'stack.ts',
+          'data.ts',
+        ],
+        previewHeight: 640,
+        group: 'heroes',
+      },
+      {
+        name: 'heroes-11',
+        title: 'Typographic hero',
+        description:
+          'A hero that is mostly its headline, set large: the words land one after another, with small icon tiles standing between some of them, and the lead and two actions follow.',
+        files: ['index.tsx', 'headline.tsx', 'data.ts'],
+        previewHeight: 720,
+        group: 'heroes',
+      },
+      {
+        name: 'heroes-12',
+        title: 'Hero with a drawn agent',
+        description:
+          "A hero for a creator's home page with a drawn agent whose eyes follow the pointer and blink, beside a headline whose last words type, hold, erase and give way to the next phrase.",
+        files: [
+          'index.tsx',
+          'agent-face.tsx',
+          'use-gaze.ts',
+          'typed-phrase.tsx',
+          'data.ts',
+        ],
+        previewHeight: 600,
+        group: 'heroes',
+      },
     ],
   },
   {
@@ -1197,6 +1461,22 @@ export const groups: BundleGroup[] = [
           'One card per area of tools with a short line, a tool count, a link and a cluster of round marks that float gently.',
         files: ['index.tsx', 'constellation.tsx', 'data.ts'],
         previewHeight: 720,
+        group: 'integrations',
+      },
+      {
+        name: 'integrations-04',
+        title: 'Tools under glass',
+        description:
+          'Rows of tool marks drift in grey under a clear capsule that shows each in its own colour; press one and the capsule grows into a panel to connect it, and connected tools keep their colour in the rows.',
+        files: [
+          'index.tsx',
+          'drift-rows.tsx',
+          'glass.tsx',
+          'tool-pills.tsx',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 640,
         group: 'integrations',
       },
     ],
@@ -1660,6 +1940,15 @@ export const groups: BundleGroup[] = [
           'data.ts',
         ],
         previewHeight: 740,
+        group: 'stats',
+      },
+      {
+        name: 'stats-02',
+        title: 'Results section',
+        description:
+          'A dark section with a mission line, three results that count up once with what each is compared to, and a card set at an angle whose ring closes as its score rolls.',
+        files: ['index.tsx', 'score-card.tsx', 'score-ring.tsx', 'data.ts'],
+        previewHeight: 720,
         group: 'stats',
       },
     ],

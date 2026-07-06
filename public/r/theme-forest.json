@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme-forest",
+  "title": "Forest theme",
+  "description": "Deep green on the default surfaces. Sets the primary fill, brand text, the focus ring, the sidebar primary and the chart colours for light and dark. Every pair passes WCAG AA.",
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/theme.json"
+  ],
+  "cssVars": {
+    "light": {
+      "primary": "hsl(146 64% 29%)",
+      "primary-foreground": "hsl(0 0% 100%)",
+      "primary-ink": "hsl(146 70% 24%)",
+      "ring": "hsl(146 64% 29%)",
+      "sidebar-primary": "hsl(240 6% 10%)",
+      "sidebar-primary-foreground": "hsl(0 0% 98%)",
+      "sidebar-ring": "hsl(146 64% 29%)",
+      "chart-1": "hsl(146 64% 29%)",
+      "chart-2": "hsl(146 64% 42%)",
+      "chart-3": "hsl(146 64% 57%)",
+      "chart-4": "hsl(146 64% 72%)",
+      "chart-5": "hsl(240 5% 65%)"
+    },
+    "dark": {
+      "primary": "hsl(146 64% 29%)",
+      "primary-foreground": "hsl(0 0% 100%)",
+      "primary-ink": "hsl(146 60% 56%)",
+      "ring": "hsl(146 6% 42%)",
+      "sidebar-primary": "hsl(146 64% 29%)",
+      "sidebar-primary-foreground": "hsl(0 0% 100%)",
+      "sidebar-ring": "hsl(146 6% 42%)",
+      "chart-1": "hsl(146 64% 60%)",
+      "chart-2": "hsl(146 64% 67%)",
+      "chart-3": "hsl(146 64% 75%)",
+      "chart-4": "hsl(146 64% 83%)"
+    }
+  },
+  "categories": [
+    "foundations"
+  ],
+  "type": "registry:theme"
+}

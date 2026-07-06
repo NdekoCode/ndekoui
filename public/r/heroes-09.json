@@ -1,0 +1,50 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "heroes-09",
+  "title": "Hero with a word pill",
+  "description": "A centred hero whose headline ends in a pill that rolls to the next agent word while its colour sweeps in from the left, with the row of agent tiles above lighting the one the word belongs to.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/agent-run.json",
+    "https://ui.ndekocode.dev/r/button.json",
+    "https://ui.ndekocode.dev/r/demonstration.json",
+    "https://ui.ndekocode.dev/r/icons.json",
+    "https://ui.ndekocode.dev/r/mesh-tile.json",
+    "https://ui.ndekocode.dev/r/motion-word-roll.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/toggle-group.json",
+    "https://ui.ndekocode.dev/r/use-autoplay.json",
+    "https://ui.ndekocode.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/blocks/heroes/heroes-09/index.tsx",
+      "content": "'use client';\n\nimport { useState } from 'react';\n\nimport {\n  type AutoplayStep,\n  useAutoplay,\n} from '@/registry/ndeko/hooks/use-autoplay';\nimport { PRESS_LEAD_MS, usePress } from '@/registry/ndeko/lib/demonstration';\nimport { ArrowRightIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nimport { AgentRow } from './agent-row';\nimport { type AgentId, type Change, HERO, INITIAL_CHANGE } from './data';\nimport { WordPill } from './word-pill';\n\n/** The demonstration walks the agents in this order and ends on the one the hero began with. */\nconst DEMO_ORDER: AgentId[] = [\n  'researcher',\n  'writer',\n  'reviewer',\n  'coder',\n  'planner',\n];\n\nconst PICK_EVERY_MS = 2600;\n\nfunction changedTo(current: Change, agent: AgentId): Change {\n  if (current.to === agent) {\n    return current;\n  }\n  return { id: current.id + 1, from: current.to, to: agent };\n}\n\nexport default function Heroes09() {\n  const [change, setChange] = useState<Change>(INITIAL_CHANGE);\n  const { pressed, press } = usePress<AgentId>();\n\n  function pick(agent: AgentId) {\n    setChange((current) => changedTo(current, agent));\n  }\n\n  function startOver() {\n    setChange(INITIAL_CHANGE);\n  }\n\n  const steps: AutoplayStep[] = DEMO_ORDER.flatMap((agent) => [\n    { after: PICK_EVERY_MS, run: () => press(agent) },\n    { after: PRESS_LEAD_MS, run: () => pick(agent) },\n  ]);\n  const { ref } = useAutoplay(steps, { loopAfter: 0, onReset: startOver });\n\n  return (\n    <section className='@container'>\n      <div\n        ref={ref}\n        className='mx-auto flex max-w-4xl flex-col items-center gap-8 px-4 py-16 text-center @2xl:gap-10 @2xl:px-6 @2xl:py-24'\n      >\n        <AgentRow lit={change.to} pressed={pressed} onPick={pick} />\n        <h1 className='text-4xl leading-[1.15] font-semibold text-balance @2xl:text-5xl @4xl:text-6xl'>\n          {HERO.titleStart}{' '}\n          <span className='mt-1 block'>\n            <WordPill change={change} />\n          </span>\n        </h1>\n        <p className='text-muted-foreground max-w-xl text-base text-pretty'>\n          {HERO.description}\n        </p>\n        <div className='flex flex-wrap justify-center gap-2'>\n          <Button size='lg' nativeButton={false} render={<a href='#' />}>\n            {HERO.primaryAction}\n            <ArrowRightIcon />\n          </Button>\n          <Button\n            size='lg'\n            variant='outline'\n            nativeButton={false}\n            render={<a href='#' />}\n          >\n            {HERO.secondaryAction}\n          </Button>\n        </div>\n      </div>\n    </section>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/heroes-09/index.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/heroes/heroes-09/agent-row.tsx",
+      "content": "'use client';\n\nimport { seriesColorOf } from '@/registry/ndeko/lib/agent-run';\nimport { pressedQuietOf } from '@/registry/ndeko/lib/demonstration';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { MeshTile } from '@/registry/ndeko/ui/mesh-tile';\nimport { ToggleGroup, ToggleGroupItem } from '@/registry/ndeko/ui/toggle-group';\n\nimport { AGENTS, type AgentId, HERO } from './data';\n\nconst LIT_CARD =\n  'bg-card hairline-ring ring-border shadow-[0_1px_2px_rgb(0_0_0/0.04)] dark:bg-foreground/[0.06]';\n\nconst AGENT_ITEM = 'bg-foreground/[0.04] h-9 rounded-full ps-1 pe-3';\n\nfunction isAgentId(value: unknown): value is AgentId {\n  return AGENTS.some((agent) => agent.id === value);\n}\n\ntype AgentRowProps = {\n  lit: AgentId;\n  pressed: AgentId | null;\n  onPick: (agent: AgentId) => void;\n};\n\nexport function AgentRow({ lit, pressed, onPick }: AgentRowProps) {\n  const litValues = [lit];\n\n  /** Pressing the lit agent again keeps it: the headline always has a word. */\n  function change(values: unknown[]) {\n    const [next] = values;\n    if (isAgentId(next)) {\n      onPick(next);\n    }\n  }\n\n  return (\n    <ToggleGroup\n      aria-label={HERO.agentsLabel}\n      value={litValues}\n      onValueChange={change}\n      travel\n      indicatorClassName={LIT_CARD}\n      className='flex w-full flex-wrap justify-center gap-1.5'\n    >\n      {AGENTS.map((agent) => (\n        <ToggleGroupItem\n          key={agent.id}\n          value={agent.id}\n          className={cn(AGENT_ITEM, pressedQuietOf(pressed === agent.id))}\n        >\n          <MeshTile\n            seed={agent.role}\n            color={seriesColorOf(agent.series)}\n            size='lg'\n          />\n          {agent.role}\n        </ToggleGroupItem>\n      ))}\n    </ToggleGroup>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/heroes-09/agent-row.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/heroes/heroes-09/word-pill.tsx",
+      "content": "import type { CSSProperties } from 'react';\n\nimport { WordRoll } from '@/components/core/word-roll';\nimport { seriesColorOf } from '@/registry/ndeko/lib/agent-run';\nimport { cn } from '@/registry/ndeko/lib/utils';\n\nimport { AGENTS, type AgentId, type Change } from './data';\n\ntype ChipStyle = CSSProperties & { '--chip': string };\n\nfunction agentOf(id: AgentId) {\n  const found = AGENTS.find((agent) => agent.id === id);\n  return found ?? AGENTS[0];\n}\n\nfunction chipStyleOf(id: AgentId) {\n  const agent = agentOf(id);\n  const style: ChipStyle = { '--chip': seriesColorOf(agent.series) };\n  return style;\n}\n\n/** The first colour is there from the start; only a colour that replaces another sweeps in. */\nfunction wipeClassOf(hasChanged: boolean) {\n  if (hasChanged) {\n    return 'starting:scale-x-0';\n  }\n  return undefined;\n}\n\nconst LAYER = 'chip-3d absolute inset-0 -z-10 rounded-[inherit]';\n\nconst WIPE_LAYER =\n  'origin-left transition-transform duration-500 ease-(--ease-out-strong) motion-reduce:transition-none';\n\ntype WordPillProps = {\n  change: Change;\n};\n\n/**\n * The word of the headline in a pill. A new word rolls in while the colour of its agent sweeps\n * over the old one from the left: the new layer is mounted again for each change, and it starts\n * with no width.\n */\nexport function WordPill({ change }: WordPillProps) {\n  const agent = agentOf(change.to);\n  const hasChanged = change.id > 0;\n\n  return (\n    <span className='relative isolate inline-flex overflow-hidden rounded-2xl px-3 py-0.5 @2xl:px-4'>\n      <span\n        key={`from-${change.id}`}\n        aria-hidden='true'\n        style={chipStyleOf(change.from)}\n        className={LAYER}\n      />\n      <span\n        key={`to-${change.id}`}\n        aria-hidden='true'\n        style={chipStyleOf(change.to)}\n        className={cn(LAYER, WIPE_LAYER, wipeClassOf(hasChanged))}\n      />\n      <WordRoll text={agent.role} />\n    </span>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/heroes-09/word-pill.tsx"
+    },
+    {
+      "path": "registry/ndeko/blocks/heroes/heroes-09/data.ts",
+      "content": "import type { SeriesSlot } from '@/registry/ndeko/lib/agent-run';\n\nexport type AgentId =\n  'planner' | 'researcher' | 'writer' | 'reviewer' | 'coder';\n\nexport type Agent = {\n  id: AgentId;\n  role: string;\n  series: SeriesSlot;\n};\n\n/** The word of the headline changes from one agent to another; the id counts the changes. */\nexport type Change = {\n  id: number;\n  from: AgentId;\n  to: AgentId;\n};\n\nexport const HERO = {\n  titleStart: 'Hand the next task to your',\n  description:\n    'Each agent owns one kind of work and shows its steps as it goes. You read what it made before anything leaves your workspace.',\n  primaryAction: 'Meet the agents',\n  secondaryAction: 'See a run step by step',\n  agentsLabel: 'Agents',\n};\n\nexport const AGENTS: Agent[] = [\n  { id: 'planner', role: 'Planner', series: 1 },\n  { id: 'researcher', role: 'Researcher', series: 2 },\n  { id: 'writer', role: 'Writer', series: 3 },\n  { id: 'reviewer', role: 'Reviewer', series: 4 },\n  { id: 'coder', role: 'Coder', series: 5 },\n];\n\nexport const FIRST_AGENT: AgentId = 'planner';\n\nexport const INITIAL_CHANGE: Change = {\n  id: 0,\n  from: FIRST_AGENT,\n  to: FIRST_AGENT,\n};\n",
+      "type": "registry:component",
+      "target": "components/blocks/heroes-09/data.ts"
+    }
+  ],
+  "categories": [
+    "blocks",
+    "heroes"
+  ],
+  "type": "registry:block"
+}

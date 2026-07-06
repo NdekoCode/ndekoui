@@ -7,6 +7,12 @@ import Heroes03 from '@/registry/ndeko/blocks/heroes/heroes-03/index';
 import Heroes04 from '@/registry/ndeko/blocks/heroes/heroes-04/index';
 import Heroes05 from '@/registry/ndeko/blocks/heroes/heroes-05/index';
 import Heroes06 from '@/registry/ndeko/blocks/heroes/heroes-06/index';
+import Heroes07 from '@/registry/ndeko/blocks/heroes/heroes-07/index';
+import Heroes08 from '@/registry/ndeko/blocks/heroes/heroes-08/index';
+import Heroes09 from '@/registry/ndeko/blocks/heroes/heroes-09/index';
+import Heroes10 from '@/registry/ndeko/blocks/heroes/heroes-10/index';
+import Heroes11 from '@/registry/ndeko/blocks/heroes/heroes-11/index';
+import Heroes12 from '@/registry/ndeko/blocks/heroes/heroes-12/index';
 
 export const previews: Record<string, ComponentType> = {
   'heroes-01': Heroes01,
@@ -15,4 +21,10 @@ export const previews: Record<string, ComponentType> = {
   'heroes-04': Heroes04,
   'heroes-05': Heroes05,
   'heroes-06': Heroes06,
+  'heroes-07': Heroes07,
+  'heroes-08': Heroes08,
+  'heroes-09': Heroes09,
+  'heroes-10': Heroes10,
+  'heroes-11': Heroes11,
+  'heroes-12': Heroes12,
 };

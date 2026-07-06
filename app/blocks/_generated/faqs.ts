@@ -3,8 +3,10 @@ import type { ComponentType } from 'react';
 
 import Faqs01 from '@/registry/ndeko/blocks/faqs/faqs-01/index';
 import Faqs02 from '@/registry/ndeko/blocks/faqs/faqs-02/index';
+import Faqs03 from '@/registry/ndeko/blocks/faqs/faqs-03/index';
 
 export const previews: Record<string, ComponentType> = {
   'faqs-01': Faqs01,
   'faqs-02': Faqs02,
+  'faqs-03': Faqs03,
 };

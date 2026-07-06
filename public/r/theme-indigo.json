@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme-indigo",
+  "title": "Indigo theme",
+  "description": "The default theme: indigo on cool grey surfaces. Sets the primary fill, brand text, the focus ring, the sidebar primary and the chart colours for light and dark.",
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/theme.json"
+  ],
+  "cssVars": {
+    "light": {
+      "primary": "hsl(239 84% 67%)",
+      "primary-foreground": "hsl(0 0% 100%)",
+      "primary-ink": "hsl(243 75% 59%)",
+      "ring": "hsl(239 84% 67%)",
+      "sidebar-primary": "hsl(240 6% 10%)",
+      "sidebar-primary-foreground": "hsl(0 0% 98%)",
+      "sidebar-ring": "hsl(239 84% 67%)",
+      "chart-1": "hsl(239 84% 67%)",
+      "chart-2": "hsl(234 89% 74%)",
+      "chart-3": "hsl(230 94% 82%)",
+      "chart-4": "hsl(228 96% 89%)",
+      "chart-5": "hsl(240 5% 65%)"
+    },
+    "dark": {
+      "primary": "hsl(239 84% 67%)",
+      "primary-foreground": "hsl(0 0% 100%)",
+      "primary-ink": "hsl(234 89% 74%)",
+      "ring": "hsl(0 0% 40%)",
+      "sidebar-primary": "hsl(239 84% 67%)",
+      "sidebar-primary-foreground": "hsl(0 0% 100%)",
+      "sidebar-ring": "hsl(0 0% 40%)"
+    }
+  },
+  "categories": [
+    "foundations"
+  ],
+  "type": "registry:theme"
+}

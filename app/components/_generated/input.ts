@@ -65,6 +65,8 @@ import Input61 from '@/registry/ndeko/components/input/input-61';
 import Input62 from '@/registry/ndeko/components/input/input-62';
 import Input63 from '@/registry/ndeko/components/input/input-63';
 import Input64 from '@/registry/ndeko/components/input/input-64';
+import Input65 from '@/registry/ndeko/components/input/input-65';
+import Input66 from '@/registry/ndeko/components/input/input-66';
 
 export const previews: Record<string, ComponentType> = {
   'input-01': Input01,
@@ -131,4 +133,6 @@ export const previews: Record<string, ComponentType> = {
   'input-62': Input62,
   'input-63': Input63,
   'input-64': Input64,
+  'input-65': Input65,
+  'input-66': Input66,
 };

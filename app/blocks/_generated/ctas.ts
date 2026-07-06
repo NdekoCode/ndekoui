@@ -3,8 +3,10 @@ import type { ComponentType } from 'react';
 
 import Ctas01 from '@/registry/ndeko/blocks/ctas/ctas-01/index';
 import Ctas02 from '@/registry/ndeko/blocks/ctas/ctas-02/index';
+import Ctas03 from '@/registry/ndeko/blocks/ctas/ctas-03/index';
 
 export const previews: Record<string, ComponentType> = {
   'ctas-01': Ctas01,
   'ctas-02': Ctas02,
+  'ctas-03': Ctas03,
 };

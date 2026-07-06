@@ -4,9 +4,11 @@ import type { ComponentType } from 'react';
 import EmptyStates01 from '@/registry/ndeko/blocks/empty-states/empty-states-01/index';
 import EmptyStates02 from '@/registry/ndeko/blocks/empty-states/empty-states-02/index';
 import EmptyStates03 from '@/registry/ndeko/blocks/empty-states/empty-states-03/index';
+import EmptyStates04 from '@/registry/ndeko/blocks/empty-states/empty-states-04/index';
 
 export const previews: Record<string, ComponentType> = {
   'empty-states-01': EmptyStates01,
   'empty-states-02': EmptyStates02,
   'empty-states-03': EmptyStates03,
+  'empty-states-04': EmptyStates04,
 };

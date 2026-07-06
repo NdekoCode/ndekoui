@@ -5,10 +5,12 @@ import Effect01 from '@/registry/ndeko/components/effect/effect-01';
 import Effect02 from '@/registry/ndeko/components/effect/effect-02';
 import Effect03 from '@/registry/ndeko/components/effect/effect-03';
 import Effect04 from '@/registry/ndeko/components/effect/effect-04';
+import Effect05 from '@/registry/ndeko/components/effect/effect-05';
 
 export const previews: Record<string, ComponentType> = {
   'effect-01': Effect01,
   'effect-02': Effect02,
   'effect-03': Effect03,
   'effect-04': Effect04,
+  'effect-05': Effect05,
 };

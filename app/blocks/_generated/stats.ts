@@ -2,7 +2,9 @@
 import type { ComponentType } from 'react';
 
 import Stats01 from '@/registry/ndeko/blocks/stats/stats-01/index';
+import Stats02 from '@/registry/ndeko/blocks/stats/stats-02/index';
 
 export const previews: Record<string, ComponentType> = {
   'stats-01': Stats01,
+  'stats-02': Stats02,
 };

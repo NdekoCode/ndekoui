@@ -11,6 +11,7 @@ export const previewHosts: Record<string, ComponentType<PreviewHostProps>> = {
   'agent-ops': dynamic(() => import('./agent-ops').then(previewHostOf)),
   'agent-review': dynamic(() => import('./agent-review').then(previewHostOf)),
   'ai-data': dynamic(() => import('./ai-data').then(previewHostOf)),
+  'ai-product': dynamic(() => import('./ai-product').then(previewHostOf)),
   'app-shells': dynamic(() => import('./app-shells').then(previewHostOf)),
   auth: dynamic(() => import('./auth').then(previewHostOf)),
   automations: dynamic(() => import('./automations').then(previewHostOf)),

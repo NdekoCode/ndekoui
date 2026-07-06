@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme-ember",
+  "title": "Ember theme",
+  "description": "Burnt orange on the default surfaces. Sets the primary fill, brand text, the focus ring, the sidebar primary and the chart colours for light and dark. Every pair passes WCAG AA.",
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/theme.json"
+  ],
+  "cssVars": {
+    "light": {
+      "primary": "hsl(16 88% 42%)",
+      "primary-foreground": "hsl(0 0% 100%)",
+      "primary-ink": "hsl(16 88% 36%)",
+      "ring": "hsl(16 88% 42%)",
+      "sidebar-primary": "hsl(240 6% 10%)",
+      "sidebar-primary-foreground": "hsl(0 0% 98%)",
+      "sidebar-ring": "hsl(16 88% 42%)",
+      "chart-1": "hsl(16 88% 42%)",
+      "chart-2": "hsl(16 88% 53%)",
+      "chart-3": "hsl(16 88% 64%)",
+      "chart-4": "hsl(16 88% 76%)",
+      "chart-5": "hsl(240 5% 65%)"
+    },
+    "dark": {
+      "primary": "hsl(16 88% 42%)",
+      "primary-foreground": "hsl(0 0% 100%)",
+      "primary-ink": "hsl(16 95% 62%)",
+      "ring": "hsl(16 6% 42%)",
+      "sidebar-primary": "hsl(16 88% 42%)",
+      "sidebar-primary-foreground": "hsl(0 0% 100%)",
+      "sidebar-ring": "hsl(16 6% 42%)",
+      "chart-1": "hsl(16 88% 60%)",
+      "chart-2": "hsl(16 88% 67%)",
+      "chart-3": "hsl(16 88% 75%)",
+      "chart-4": "hsl(16 88% 83%)"
+    }
+  },
+  "categories": [
+    "foundations"
+  ],
+  "type": "registry:theme"
+}

@@ -2,7 +2,11 @@
 import type { ComponentType } from 'react';
 
 import Changelog01 from '@/registry/ndeko/blocks/changelog/changelog-01/index';
+import Changelog02 from '@/registry/ndeko/blocks/changelog/changelog-02/index';
+import Changelog03 from '@/registry/ndeko/blocks/changelog/changelog-03/index';
 
 export const previews: Record<string, ComponentType> = {
   'changelog-01': Changelog01,
+  'changelog-02': Changelog02,
+  'changelog-03': Changelog03,
 };

@@ -15,6 +15,7 @@ import FileUpload11 from '@/registry/ndeko/components/file-upload/file-upload-11
 import FileUpload12 from '@/registry/ndeko/components/file-upload/file-upload-12';
 import FileUpload13 from '@/registry/ndeko/components/file-upload/file-upload-13';
 import FileUpload14 from '@/registry/ndeko/components/file-upload/file-upload-14';
+import FileUpload15 from '@/registry/ndeko/components/file-upload/file-upload-15';
 
 export const previews: Record<string, ComponentType> = {
   'file-upload-01': FileUpload01,
@@ -31,4 +32,5 @@ export const previews: Record<string, ComponentType> = {
   'file-upload-12': FileUpload12,
   'file-upload-13': FileUpload13,
   'file-upload-14': FileUpload14,
+  'file-upload-15': FileUpload15,
 };

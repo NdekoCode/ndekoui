@@ -29,6 +29,8 @@ import CalendarDatePicker25 from '@/registry/ndeko/components/calendar-date-pick
 import CalendarDatePicker26 from '@/registry/ndeko/components/calendar-date-picker/calendar-date-picker-26';
 import CalendarDatePicker27 from '@/registry/ndeko/components/calendar-date-picker/calendar-date-picker-27';
 import CalendarDatePicker28 from '@/registry/ndeko/components/calendar-date-picker/calendar-date-picker-28';
+import CalendarDatePicker29 from '@/registry/ndeko/components/calendar-date-picker/calendar-date-picker-29';
+import CalendarDatePicker30 from '@/registry/ndeko/components/calendar-date-picker/calendar-date-picker-30';
 
 export const previews: Record<string, ComponentType> = {
   'calendar-date-picker-01': CalendarDatePicker01,
@@ -59,4 +61,6 @@ export const previews: Record<string, ComponentType> = {
   'calendar-date-picker-26': CalendarDatePicker26,
   'calendar-date-picker-27': CalendarDatePicker27,
   'calendar-date-picker-28': CalendarDatePicker28,
+  'calendar-date-picker-29': CalendarDatePicker29,
+  'calendar-date-picker-30': CalendarDatePicker30,
 };

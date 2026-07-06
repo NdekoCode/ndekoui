@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge-15",
+  "title": "Price pill",
+  "description": "A pill whose price rolls figure by figure to a new amount while its width follows the figures, with the billing period under it where only the word that changed rolls.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/animated-size.json",
+    "https://ui.ndekocode.dev/r/live-region.json",
+    "https://ui.ndekocode.dev/r/motion-number.json",
+    "https://ui.ndekocode.dev/r/motion-word-roll.json",
+    "https://ui.ndekocode.dev/r/segments.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/use-autoplay.json",
+    "https://ui.ndekocode.dev/r/use-kept-height.json",
+    "https://ui.ndekocode.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/badge/badge-15.tsx",
+      "content": "'use client';\n\nimport { useState } from 'react';\n\nimport { MotionNumber } from '@/components/core/motion-number';\nimport { WordRoll } from '@/components/core/word-roll';\nimport {\n  useAutoplay,\n  type AutoplayStep,\n} from '@/registry/ndeko/hooks/use-autoplay';\nimport { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { AnimatedSize } from '@/registry/ndeko/ui/animated-size';\nimport { LiveRegion } from '@/registry/ndeko/ui/live-region';\nimport { Segments, type Segment } from '@/registry/ndeko/ui/segments';\n\nimport { useHover } from './_parts/use-hover';\n\nfunction wholeUnitsOf(currency: string): Intl.NumberFormatOptions {\n  return { style: 'currency', currency, maximumFractionDigits: 0 };\n}\n\nexport type PricePillProps = {\n  /** What the plan costs for the period, in whole units of the currency. The figures roll when it changes. */\n  amount: number;\n  /** What the amount covers, said under the pill: \"Billed monthly\". Only the words that change roll. */\n  caption: string;\n  /** An ISO 4217 code, such as USD or EUR. */\n  currency?: string;\n  locale?: Intl.LocalesArgument;\n  className?: string;\n};\n\n/**\n * A pill with a price in it and the period under it. When the amount changes each figure rolls to\n * its new value in the direction of the change while the pill grows or shrinks to the width of the\n * figures, and in the caption only the words that changed roll. Nothing runs between two changes.\n */\nexport function PricePill({\n  amount,\n  caption,\n  currency = 'USD',\n  locale = 'en-US',\n  className,\n}: PricePillProps) {\n  return (\n    <div className={cn('flex flex-col items-center gap-2', className)}>\n      <span className='bg-primary/10 text-primary-ink inline-flex h-11 items-center rounded-full px-5 text-2xl font-semibold'>\n        <AnimatedSize\n          as='span'\n          axis='width'\n          contentClassName='flex items-baseline'\n        >\n          <MotionNumber\n            value={amount}\n            locale={locale}\n            format={wholeUnitsOf(currency)}\n            className='leading-8'\n          />\n        </AnimatedSize>\n      </span>\n      <p className='text-muted-foreground flex text-xs'>\n        <WordRoll text={caption} value={amount} />\n      </p>\n    </div>\n  );\n}\n\ntype Period = 'monthly' | 'yearly';\n\nconst PERIODS: Segment<Period>[] = [\n  { value: 'monthly', label: 'Monthly' },\n  { value: 'yearly', label: 'Yearly' },\n];\n\n/** A year costs ten months, so a digit comes and goes with the change and the pill has a width to follow. */\nconst AMOUNTS: Record<Period, number> = {\n  monthly: 24,\n  yearly: 240,\n};\n\nconst CAPTIONS: Record<Period, string> = {\n  monthly: 'Billed monthly',\n  yearly: 'Billed yearly',\n};\n\nconst SPOKEN_AMOUNTS = new Intl.NumberFormat('en-US', {\n  style: 'currency',\n  currency: 'USD',\n  maximumFractionDigits: 0,\n});\n\n/** Long enough in each period for the figures to land and be read before they roll again. */\nconst MONTHLY_HOLD_MS = 1800;\n\nconst YEARLY_HOLD_MS = 3000;\n\nconst RESTART_HOLD_MS = 1500;\n\nfunction announcementOf(period: Period) {\n  const amount = SPOKEN_AMOUNTS.format(AMOUNTS[period]);\n  const caption = CAPTIONS[period].toLowerCase();\n  return `${amount}, ${caption}`;\n}\n\nexport default function Badge15() {\n  const [period, setPeriod] = useState<Period>('monthly');\n  const [announcement, setAnnouncement] = useState('');\n  const { isHovered, hoverHandlers } = useHover();\n  const steps: AutoplayStep[] = [\n    { after: MONTHLY_HOLD_MS, run: () => setPeriod('yearly') },\n    { after: YEARLY_HOLD_MS, run: () => setPeriod('monthly') },\n  ];\n  const { ref } = useAutoplay(steps, {\n    loopAfter: RESTART_HOLD_MS,\n    onReset: () => setPeriod('monthly'),\n    isEnabled: !isHovered,\n  });\n\n  useKeptHeight(ref);\n\n  function choose(next: Period) {\n    setPeriod(next);\n    setAnnouncement(announcementOf(next));\n  }\n\n  return (\n    <div\n      ref={ref}\n      className='flex w-full max-w-[22rem] flex-col items-center gap-5'\n      {...hoverHandlers}\n    >\n      <PricePill amount={AMOUNTS[period]} caption={CAPTIONS[period]} />\n      <div className='flex flex-col items-center gap-2'>\n        <Segments\n          value={period}\n          segments={PERIODS}\n          onValueChange={choose}\n          label='Billing period'\n        />\n        <p className='text-muted-foreground text-xs'>Illustrative prices</p>\n      </div>\n      <LiveRegion message={announcement} />\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/badge/badge-15.tsx"
+    },
+    {
+      "path": "registry/ndeko/components/badge/_parts/use-hover.ts",
+      "content": "'use client';\n\nimport { useState } from 'react';\n\n/** Whether a mouse or a pen rests on an element. A finger does not hover, so a touch never counts. */\nexport function useHover() {\n  const [isHovered, setIsHovered] = useState(false);\n\n  function hoverStarts(event: React.PointerEvent<HTMLElement>) {\n    if (event.pointerType !== 'touch') {\n      setIsHovered(true);\n    }\n  }\n\n  function hoverEnds() {\n    setIsHovered(false);\n  }\n\n  const hoverHandlers = {\n    onPointerEnter: hoverStarts,\n    onPointerLeave: hoverEnds,\n  };\n\n  return { isHovered, hoverHandlers };\n}\n",
+      "type": "registry:component",
+      "target": "components/badge/_parts/use-hover.ts"
+    }
+  ],
+  "categories": [
+    "components",
+    "badge"
+  ],
+  "type": "registry:component"
+}

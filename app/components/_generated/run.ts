@@ -11,6 +11,10 @@ import Run07 from '@/registry/ndeko/components/run/run-07';
 import Run08 from '@/registry/ndeko/components/run/run-08';
 import Run09 from '@/registry/ndeko/components/run/run-09';
 import Run10 from '@/registry/ndeko/components/run/run-10';
+import Run11 from '@/registry/ndeko/components/run/run-11';
+import Run12 from '@/registry/ndeko/components/run/run-12';
+import Run13 from '@/registry/ndeko/components/run/run-13';
+import Run14 from '@/registry/ndeko/components/run/run-14';
 
 export const previews: Record<string, ComponentType> = {
   'run-01': Run01,
@@ -23,4 +27,8 @@ export const previews: Record<string, ComponentType> = {
   'run-08': Run08,
   'run-09': Run09,
   'run-10': Run10,
+  'run-11': Run11,
+  'run-12': Run12,
+  'run-13': Run13,
+  'run-14': Run14,
 };
