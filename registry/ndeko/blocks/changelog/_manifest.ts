@@ -27,4 +27,12 @@ export const manifest: BlockManifest = [
     ],
     previewHeight: 760,
   },
+  {
+    name: 'changelog-03',
+    title: 'What’s new popover',
+    description:
+      'A What’s new button whose unread count rolls down as notes are read, opening a compact list with unread dots that clear, Mark all read and a link to each full note.',
+    files: ['index.tsx', 'news-row.tsx', 'session.ts', 'data.ts'],
+    previewHeight: 560,
+  },
 ];
