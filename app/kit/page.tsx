@@ -2,10 +2,9 @@ import type { Metadata } from 'next';
 
 import { pageMetadataOf } from '@/app/_site/seo';
 import { countLabel } from '@/lib/site';
-import { aiItems } from '@/registry/ai-items';
-import { chatItems } from '@/registry/chat-items';
-import { primitiveItems, type RegistryItemDefinition } from '@/registry/items';
+import type { RegistryItemDefinition } from '@/registry/items';
 
+import { KIT_ITEMS } from './kit-catalog';
 import { KitGroupSection } from './kit-group';
 import { KIT_GROUPS } from './kit-groups';
 import { ThemeSwitch } from './theme-switch';
@@ -22,8 +21,6 @@ export const metadata: Metadata = pageMetadataOf({
   ],
   path: '/kit',
 });
-
-const KIT_ITEMS = [...primitiveItems, ...chatItems, ...aiItems];
 
 function itemsByNameOf(items: RegistryItemDefinition[]) {
   const byName = new Map<string, RegistryItemDefinition>();
