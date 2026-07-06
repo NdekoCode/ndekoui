@@ -320,4 +320,11 @@ export const manifest: ComponentManifest = [
     title: 'Listbox with groups',
     description: 'An always open list of options under headings and hairlines.',
   },
+  {
+    name: 'select-52',
+    source: 'ndeko',
+    title: 'Popup around the pointer',
+    description:
+      'A select whose list opens with the current choice under your finger: slide to another one and let go to pick it, or click to open it as usual.',
+  },
 ];
