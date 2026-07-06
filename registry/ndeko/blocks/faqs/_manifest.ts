@@ -17,4 +17,24 @@ export const manifest: BlockManifest = [
     files: ['index.tsx', 'data.ts'],
     previewHeight: 760,
   },
+  {
+    name: 'faqs-03',
+    title: 'Searchable questions',
+    description:
+      'A search that ignores accents and marks its matches in place as you type, topic chips whose counts roll with the words, answers that open where they are with a link to copy, and a person to ask when nothing matches.',
+    files: [
+      'index.tsx',
+      'ask-person.tsx',
+      'collapse.tsx',
+      'hash.ts',
+      'marked-text.tsx',
+      'question-row.tsx',
+      'search-field.tsx',
+      'search.ts',
+      'session.ts',
+      'topic-chips.tsx',
+      'data.ts',
+    ],
+    previewHeight: 940,
+  },
 ];
