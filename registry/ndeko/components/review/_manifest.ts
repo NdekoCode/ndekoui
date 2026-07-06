@@ -106,4 +106,11 @@ export const manifest: ComponentManifest = [
     description:
       'Checks that run before the agent acts, where the spans of a text mask themselves one after another, a flagged check asks Allow once or Block, and the summary line rolls.',
   },
+  {
+    name: 'review-16',
+    source: 'ndeko',
+    title: 'Checkpoint rewind',
+    description:
+      'A timeline of checkpoints where picking one previews the files a rewind would revert, then the Now marker glides back, what came after dims, and Redo brings it back.',
+  },
 ];
