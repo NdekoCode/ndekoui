@@ -85,4 +85,11 @@ export const manifest: ComponentManifest = [
     description:
       'Tokens in and out, the cache share and the cost as plain ticking figures while a step streams, whose totals roll once as each step lands, above a per-step table with the model of each step and a small bar.',
   },
+  {
+    name: 'run-13',
+    source: 'ndeko',
+    title: 'Sandbox preview',
+    description:
+      'The page a coding agent is building, beside the chat: Reload runs a thin progress line across the frame, the frame morphs between Desktop and Mobile width, and a console drawer opens to the last lines as hot updates arrive.',
+  },
 ];
