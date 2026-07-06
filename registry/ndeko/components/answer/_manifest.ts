@@ -43,4 +43,11 @@ export const manifest: ComponentManifest = [
     description:
       'A chat beside the document it made, split by a handle you drag or move with the arrows, with versions that crossfade, changes marked against the last one, Copy and Apply.',
   },
+  {
+    name: 'answer-07',
+    source: 'ndeko',
+    title: 'Retrieved passages',
+    description:
+      'The passages an answer was built from, with similarity bars and the shared words marked, each on a switch: leaving one out writes the answer again word by word, and the count of passages used rolls.',
+  },
 ];
