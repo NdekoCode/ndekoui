@@ -1,11 +1,7 @@
 import { MasonryGrid } from '@/components/core/masonry-grid';
 import { CheckIcon, SunIcon } from '@/registry/ndeko/lib/icons';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 
 const CARD = 'bg-foreground/[0.04] flex flex-col gap-2 rounded-xl p-4';
 
@@ -34,23 +30,10 @@ function PhotoCard({ src, title }: { src: string; title: string }) {
   );
 }
 
-function MemberCard({
-  name,
-  initials,
-  avatar,
-  note,
-}: {
-  name: string;
-  initials: string;
-  avatar: string;
-  note: string;
-}) {
+function MemberCard({ name, note }: { name: string; note: string }) {
   return (
     <div className={cn(CARD, 'flex-row items-center gap-3')}>
-      <Avatar>
-        <AvatarImage src={avatar} alt='' />
-        <AvatarFallback>{initials}</AvatarFallback>
-      </Avatar>
+      <Avatar seed={name} />
       <span className='flex flex-col'>
         <span className='text-foreground text-[13px] font-medium'>{name}</span>
         <span className='text-muted-foreground text-xs'>{note}</span>
@@ -84,13 +67,7 @@ export function MasonryGridMixed() {
             before the light goes. The last ferry is at 20:10.
           </p>
         </div>
-        <MemberCard
-          key='ines'
-          name='Ines Laurent'
-          initials='IL'
-          avatar='/avatars/avatar-03.svg'
-          note='Joined the trip'
-        />
+        <MemberCard key='ines' name='Ines Laurent' note='Joined the trip' />
         <div key='packing' className={CARD}>
           <span className='text-foreground text-sm font-medium'>Packing</span>
           <ul className='flex flex-col gap-1.5'>
@@ -133,8 +110,6 @@ export function MasonryGridMixed() {
         <MemberCard
           key='tomas'
           name='Tomas Reyes'
-          initials='TR'
-          avatar='/avatars/avatar-05.svg'
           note='Booked the lake house'
         />
         <PhotoCard

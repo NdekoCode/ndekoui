@@ -61,8 +61,6 @@ import { Tool, type ToolPart } from '@/registry/ndeko/ui/chat-tool';
 
 const READER = {
   name: 'Lena Fischer',
-  initials: 'LF',
-  avatar: '/avatars/avatar-03.svg',
 };
 
 const ANSWER =
@@ -158,11 +156,7 @@ export function MessageDemo() {
         <MessageContent className='max-w-[80%]'>
           Can you sum up what changed in the 2.4 release?
         </MessageContent>
-        <MessageAvatar
-          src={READER.avatar}
-          alt={READER.name}
-          fallback={READER.initials}
-        />
+        <MessageAvatar alt={READER.name} />
       </Message>
       <Message>
         <MessageGlyph>

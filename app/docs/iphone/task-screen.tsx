@@ -4,11 +4,7 @@ import { useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import { cn } from '@/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Checkbox } from '@/registry/ndeko/ui/checkbox';
 
 type Task = {
@@ -88,10 +84,7 @@ export function TaskScreen() {
           </span>
           <p className='text-2xl font-semibold'>Today</p>
         </div>
-        <Avatar>
-          <AvatarImage src='/avatars/avatar-05.svg' alt='' />
-          <AvatarFallback>LM</AvatarFallback>
-        </Avatar>
+        <Avatar seed='Lucas Moreau' />
       </div>
       <div className='flex flex-col gap-2'>
         <span className='text-muted-foreground text-xs'>

@@ -57,7 +57,7 @@ const CODE_LENGTH = 4;
 const HALF_CODE_LENGTH = CODE_LENGTH / 2;
 const CODE_SLOTS = Array.from({ length: CODE_LENGTH }, (_, index) => index);
 
-const CROP_IMAGE = '/avatars/avatar-06.svg';
+const CROP_IMAGE = '/images/scenes/scene-03.svg';
 
 function codeSlotLabelOf(index: number) {
   if (index === 0) {

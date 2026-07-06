@@ -11,11 +11,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/registry/ndeko/ui/alert-dialog';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Checkbox } from '@/registry/ndeko/ui/checkbox';
 import {
@@ -86,10 +82,11 @@ export function HoverCardDemo() {
         </HoverCardTrigger>
         <HoverCardContent className='flex flex-col gap-3'>
           <div className='flex items-center gap-3'>
-            <Avatar className='size-10' aria-hidden='true'>
-              <AvatarImage src='/avatars/avatar-03.svg' alt='' />
-              <AvatarFallback>LF</AvatarFallback>
-            </Avatar>
+            <Avatar
+              className='size-10'
+              aria-hidden='true'
+              seed='Lena Fischer'
+            />
             <div className='flex flex-col gap-0.5'>
               <p className='text-sm font-medium'>Lena Fischer</p>
               <p className='text-muted-foreground text-xs'>Product designer</p>

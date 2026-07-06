@@ -4,14 +4,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/registry/ndeko/ui/accordion';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Badge, type BadgeProps } from '@/registry/ndeko/ui/badge';
 import { Chip } from '@/registry/ndeko/ui/chip';
+import { CompanyMark } from '@/registry/ndeko/ui/company-mark';
 import { Kbd, KbdGroup } from '@/registry/ndeko/ui/kbd';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 import {
   Table,
   TableBody,
@@ -37,8 +35,6 @@ type BadgeVariant = BadgeProps['variant'];
 
 type Person = {
   name: string;
-  initials: string;
-  image: string;
 };
 
 type Task = {
@@ -51,10 +47,10 @@ type Task = {
 };
 
 const TEAM: Person[] = [
-  { name: 'Lena Fischer', initials: 'LF', image: '/avatars/avatar-03.svg' },
-  { name: 'Omar Haddad', initials: 'OH', image: '/avatars/avatar-04.svg' },
-  { name: 'Priya Nair', initials: 'PN', image: '/avatars/avatar-05.svg' },
-  { name: 'Tomás Ortega', initials: 'TO', image: '/avatars/avatar-07.svg' },
+  { name: 'Lena Fischer' },
+  { name: 'Omar Haddad' },
+  { name: 'Priya Nair' },
+  { name: 'Tomás Ortega' },
 ];
 
 const LEAD = TEAM[0];
@@ -175,23 +171,82 @@ export function AvatarDemo() {
   return (
     <div className='flex flex-col items-center gap-5'>
       <div className='flex items-center gap-3'>
-        <Avatar className='size-10'>
-          <AvatarImage src={LEAD.image} alt={LEAD.name} />
-          <AvatarFallback>{LEAD.initials}</AvatarFallback>
-        </Avatar>
-        <Avatar>
-          <AvatarFallback>MC</AvatarFallback>
-        </Avatar>
-        <Avatar className='size-6 text-[10px]'>
-          <AvatarFallback>JW</AvatarFallback>
-        </Avatar>
+        <Avatar
+          className='size-10'
+          seed={LEAD.name}
+          role='img'
+          aria-label={LEAD.name}
+        />
+        <Avatar seed='Maya Chen' />
+        <Avatar className='size-6' seed='Jonas Weber' />
       </div>
       <div className='flex -space-x-2'>
         {TEAM.map((person) => (
-          <Avatar key={person.name} className='ring-card ring-2'>
-            <AvatarImage src={person.image} alt={person.name} />
-            <AvatarFallback>{person.initials}</AvatarFallback>
-          </Avatar>
+          <Avatar
+            key={person.name}
+            className='ring-card ring-2'
+            seed={person.name}
+            role='img'
+            aria-label={person.name}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+const AGENT_TILES = [
+  { name: 'Planner', color: 'var(--series-1)' },
+  { name: 'Researcher', color: 'var(--series-2)' },
+  { name: 'Writer', color: 'var(--series-3)' },
+] as const;
+
+const TEAM_TILES = ['Growth', 'Platform', 'Support', 'Billing'];
+
+export function MeshTileDemo() {
+  return (
+    <div className='flex flex-col gap-3 text-[13px]'>
+      <ul className='flex flex-col gap-2'>
+        {AGENT_TILES.map((agent) => (
+          <li key={agent.name} className='flex items-center gap-2'>
+            <MeshTile seed={agent.name} color={agent.color} />
+            {agent.name}
+          </li>
+        ))}
+      </ul>
+      <div className='flex items-center gap-1.5'>
+        {TEAM_TILES.map((team) => (
+          <MeshTile key={team} seed={team} size='lg' />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+const NAMED_COMPANIES = ['Tidewell', 'Brightmoor Supply', 'Mossline'];
+
+const OTHER_COMPANIES = [
+  'Harbor',
+  'Calder Freight',
+  'Pinecrest',
+  'Solway Books',
+  'Oatfield',
+];
+
+export function CompanyMarkDemo() {
+  return (
+    <div className='flex flex-col gap-3 text-[13px]'>
+      <ul className='flex flex-col gap-2'>
+        {NAMED_COMPANIES.map((company) => (
+          <li key={company} className='flex items-center gap-2'>
+            <CompanyMark seed={company} />
+            {company}
+          </li>
+        ))}
+      </ul>
+      <div className='flex items-center gap-1.5'>
+        {OTHER_COMPANIES.map((company) => (
+          <CompanyMark key={company} seed={company} size='lg' title={company} />
         ))}
       </div>
     </div>

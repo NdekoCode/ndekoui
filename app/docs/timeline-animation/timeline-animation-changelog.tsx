@@ -4,16 +4,12 @@ import {
   TimelineAnimation,
   TimelineAnimationItem,
 } from '@/components/core/timeline-animation';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 
 type Entry = {
   date: string;
   title: string;
-  author: { name: string; initials: string; avatar: string };
+  author: { name: string };
   changes: string[];
 };
 
@@ -23,8 +19,6 @@ const ENTRIES: Entry[] = [
     title: 'Faster sync on large notebooks',
     author: {
       name: 'Léa Martin',
-      initials: 'LM',
-      avatar: '/avatars/avatar-03.svg',
     },
     changes: [
       'Notebooks with more than 5,000 notes open in under a second',
@@ -36,8 +30,6 @@ const ENTRIES: Entry[] = [
     title: 'Templates for meeting notes',
     author: {
       name: 'Kofi Mensah',
-      initials: 'KM',
-      avatar: '/avatars/avatar-04.svg',
     },
     changes: [
       'Agenda, decisions and follow-ups in one template',
@@ -49,8 +41,6 @@ const ENTRIES: Entry[] = [
     title: 'Keyboard shortcuts you can change',
     author: {
       name: 'Ana Duarte',
-      initials: 'AD',
-      avatar: '/avatars/avatar-05.svg',
     },
     changes: [
       'Every command can take a shortcut of your choice',
@@ -63,8 +53,6 @@ const ENTRIES: Entry[] = [
     title: 'Dark mode for printed notes',
     author: {
       name: 'Tomás Reyes',
-      initials: 'TR',
-      avatar: '/avatars/avatar-06.svg',
     },
     changes: ['Exports keep light colours, whatever the theme on screen'],
   },
@@ -101,12 +89,7 @@ export function TimelineAnimationChangelog() {
               ))}
             </ul>
             <div className='mt-3 flex items-center gap-2'>
-              <Avatar className='size-5'>
-                <AvatarImage src={entry.author.avatar} alt='' />
-                <AvatarFallback className='text-[10px]'>
-                  {entry.author.initials}
-                </AvatarFallback>
-              </Avatar>
+              <Avatar className='size-5' seed={entry.author.name} />
               <span className='text-muted-foreground text-xs'>
                 {entry.author.name}
               </span>

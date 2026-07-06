@@ -10,7 +10,6 @@ export function PostCardMedia() {
         author={{
           name: 'Lea Moreau',
           handle: 'leamoreau',
-          avatar: '/avatars/avatar-04.svg',
         }}
         text='Two mornings on the same ridge, one week apart. @tomas_i guessed the second one first.'
         date='2026-09-02T06:15:00Z'

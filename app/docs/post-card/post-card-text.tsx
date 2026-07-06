@@ -10,7 +10,6 @@ export function PostCardText() {
         author={{
           name: 'Amani Diallo',
           handle: 'amani_builds',
-          avatar: '/avatars/avatar-03.svg',
           verified: true,
         }}
         text={`Shipped dark mode for the planner today. The trick was keeping every grey as a share of the text colour, so one hover works on the page and on a card.\n\nNotes in #design-systems if you want them.`}

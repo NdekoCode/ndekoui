@@ -1,11 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { MotionNumber } from '@/components/core/motion-number';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Button } from '@/registry/ndeko/ui/button';
 
 const FOLLOWERS_BEFORE = 999;
@@ -53,10 +49,7 @@ export function MotionNumberFollowers() {
 
   return (
     <div className='bg-card hairline-ring ring-border flex w-full max-w-sm items-center gap-3 rounded-xl p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
-      <Avatar className='size-10'>
-        <AvatarImage src='/avatars/avatar-05.svg' alt='' />
-        <AvatarFallback>MO</AvatarFallback>
-      </Avatar>
+      <Avatar className='size-10' seed='Mira Okafor' />
       <div className='flex min-w-0 flex-1 flex-col'>
         <span className='text-foreground truncate text-sm font-medium'>
           Mira Okafor

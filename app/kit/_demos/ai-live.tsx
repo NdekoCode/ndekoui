@@ -238,25 +238,21 @@ export function BrandTileDemo() {
   );
 }
 
-const LAB_TILES = [
-  { name: 'Brightmoor Supply', initial: 'B', series: 1 },
-  { name: 'Northwind Cafe', initial: 'N', series: 2 },
-  { name: 'Cedar Lane Books', initial: 'C', series: 3 },
+const CHOICES = [
+  { letter: 'A', text: 'Ship on Friday' },
+  { letter: 'B', text: 'Ship after the review' },
+  { letter: 'C', text: 'Hold the release' },
 ] as const;
 
 export function LetterTileDemo() {
   return (
     <ul className='flex flex-col gap-2 text-[13px]'>
-      {LAB_TILES.map((lab) => (
-        <li key={lab.name} className='flex items-center gap-2'>
-          <LetterTile initial={lab.initial} series={lab.series} />
-          {lab.name}
+      {CHOICES.map((choice) => (
+        <li key={choice.letter} className='flex items-center gap-2'>
+          <LetterTile initial={choice.letter} />
+          {choice.text}
         </li>
       ))}
-      <li className='text-muted-foreground flex items-center gap-2'>
-        <LetterTile initial='H' />
-        help.brightmoor.example, neutral beside agents
-      </li>
     </ul>
   );
 }

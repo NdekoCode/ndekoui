@@ -9,11 +9,7 @@ import {
   RepeatIcon,
   type Icon,
 } from '@/registry/ndeko/lib/icons';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar, AvatarImage } from '@/registry/ndeko/ui/avatar';
 
 export type PostAuthor = {
   name: string;
@@ -78,13 +74,6 @@ const MEDIA_LAYOUTS: Record<number, string[]> = {
 };
 
 const MAX_MEDIA = 4;
-
-function initialsOf(name: string) {
-  const words = name.trim().split(/\s+/);
-  const letters = words.map((word) => word.charAt(0));
-  const firstTwo = letters.slice(0, 2);
-  return firstTwo.join('').toUpperCase();
-}
 
 function dateOf(value: Date | string) {
   if (value instanceof Date) {
@@ -250,9 +239,8 @@ export function PostCard({
       {...props}
     >
       <header className='flex items-center gap-3'>
-        <Avatar className='size-10 text-sm'>
+        <Avatar className='size-10' seed={author.name}>
           {author.avatar && <AvatarImage src={author.avatar} alt='' />}
-          <AvatarFallback>{initialsOf(author.name)}</AvatarFallback>
         </Avatar>
         <div className='flex min-w-0 flex-col'>
           <span className='flex min-w-0 items-center gap-1'>

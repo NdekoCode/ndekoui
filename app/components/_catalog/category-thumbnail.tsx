@@ -10,6 +10,7 @@ import {
   XIcon,
 } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 
 const LINE = 'block h-1.5 rounded-full bg-foreground/10';
 const STRONG_LINE = 'block h-1.5 rounded-full bg-foreground/25';
@@ -677,17 +678,15 @@ function CommentThumb() {
 }
 
 function TeamsThumb() {
-  const gemStyle = { '--gem': 'var(--primary)' } as React.CSSProperties;
   const presenceStyle = { '--chip': 'var(--success)' } as React.CSSProperties;
   return (
     <div className='flex w-44 flex-col gap-3'>
       <div className='flex items-center gap-2'>
-        <span
-          className='gem-plate flex size-6 items-center justify-center rounded-md text-[8px] font-semibold text-white'
-          style={gemStyle}
-        >
-          DS
-        </span>
+        <MeshTile
+          seed='Design system'
+          color='var(--primary)'
+          className='size-6 rounded-md'
+        />
         <div className='flex flex-col gap-1'>
           <StrongLine className='w-16' />
           <Line className='w-10' />

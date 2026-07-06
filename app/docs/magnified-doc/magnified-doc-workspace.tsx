@@ -13,31 +13,21 @@ import {
   ImageIcon,
   InboxIcon,
 } from '@/registry/ndeko/lib/icons';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 
 const MESSAGES = [
   {
     from: 'Ines Laurent',
-    initials: 'IL',
-    avatar: '/avatars/avatar-03.svg',
     subject: 'Cabin list for the coast trip',
     time: '09:12',
   },
   {
     from: 'Tomas Reyes',
-    initials: 'TR',
-    avatar: '/avatars/avatar-05.svg',
     subject: 'Ferry times changed on Friday',
     time: '08:40',
   },
   {
     from: 'Amara Diallo',
-    initials: 'AD',
-    avatar: '/avatars/avatar-06.svg',
     subject: 'Photos from the north ridge',
     time: 'Mon',
   },
@@ -64,10 +54,7 @@ export function MagnifiedDocWorkspace() {
               <ul className='flex flex-col gap-3'>
                 {MESSAGES.map((message) => (
                   <li key={message.subject} className='flex items-center gap-3'>
-                    <Avatar>
-                      <AvatarImage src={message.avatar} alt='' />
-                      <AvatarFallback>{message.initials}</AvatarFallback>
-                    </Avatar>
+                    <Avatar seed={message.from} />
                     <span className='flex min-w-0 flex-1 flex-col'>
                       <span className='text-foreground truncate text-[13px] font-medium'>
                         {message.subject}

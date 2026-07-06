@@ -33,7 +33,9 @@ import {
   AvatarDemo,
   BadgeDemo,
   ChipDemo,
+  CompanyMarkDemo,
   KbdDemo,
+  MeshTileDemo,
   TableDemo,
   TimelineDemo,
 } from './_demos/data-display-demos';
@@ -169,6 +171,8 @@ export const KIT_GROUPS: KitGroup[] = [
     description: 'Labels, people, lists, trees and tables.',
     units: [
       { name: 'avatar', width: 'compact', Demo: AvatarDemo },
+      { name: 'mesh-tile', width: 'compact', Demo: MeshTileDemo },
+      { name: 'company-mark', width: 'compact', Demo: CompanyMarkDemo },
       { name: 'badge', width: 'compact', Demo: BadgeDemo },
       { name: 'chip', width: 'compact', Demo: ChipDemo },
       { name: 'kbd', width: 'compact', Demo: KbdDemo },
