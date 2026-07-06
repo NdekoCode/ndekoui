@@ -36,4 +36,11 @@ export const manifest: ComponentManifest = [
     description:
       'Skeleton blocks that share one light passing over the whole layout in step with each other, so a page that changes shape keeps the same light.',
   },
+  {
+    name: 'loading-06',
+    source: 'ndeko',
+    title: 'Skeleton presets',
+    description:
+      'Text, profile, list and media skeletons shaped like the content they stand in for, all on the shared sweep.',
+  },
 ];
