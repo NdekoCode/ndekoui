@@ -96,4 +96,11 @@ export const manifest: ComponentManifest = [
     description:
       'Picks an image, opens a dialog to crop and zoom it, then sets it as the avatar.',
   },
+  {
+    name: 'file-upload-15',
+    source: 'ndeko',
+    title: 'Folder that takes files',
+    description:
+      'A drawn folder whose flap tips open while files are dragged over it; dropped files fall in as sheets and a list under it shows each upload with its progress.',
+  },
 ];
