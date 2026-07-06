@@ -11,6 +11,7 @@ import {
   useTransform,
   useVelocity,
   wrap,
+  type MotionValue,
 } from 'motion/react';
 import { useRef, type RefObject } from 'react';
 import useMeasure from 'react-use-measure';
@@ -62,6 +63,56 @@ function measuredRefOf(index: number, measureRef: MeasureRef) {
   return undefined;
 }
 
+type MarqueeDriverProps = {
+  offset: MotionValue<number>;
+  boost: MotionValue<number>;
+  speed: number;
+  baseSign: DirectionSign;
+  bidirectional: boolean;
+  signRef: RefObject<DirectionSign>;
+};
+
+/**
+ * The frame loop of the animation library runs for as long as one `useAnimationFrame` is mounted,
+ * even when its callback does nothing, and each of those frames costs the whole page. So the loop
+ * lives in this leaf, which is mounted only while the text moves.
+ */
+function MarqueeDriver({
+  offset,
+  boost,
+  speed,
+  baseSign,
+  bidirectional,
+  signRef,
+}: MarqueeDriverProps) {
+  useAnimationFrame((_, delta) => {
+    const currentBoost = boost.get();
+    const isScrollingUp = currentBoost < 0;
+    const isScrollingDown = currentBoost > 0;
+    if (!bidirectional) {
+      signRef.current = baseSign;
+    }
+    const followsScrollUp = bidirectional && isScrollingUp;
+    const followsScrollDown = bidirectional && isScrollingDown;
+    if (followsScrollUp) {
+      signRef.current = oppositeOf(baseSign);
+    }
+    if (followsScrollDown) {
+      signRef.current = baseSign;
+    }
+    const seconds = delta / 1000;
+    const distanceAtRest = speed * seconds;
+    const boostSize = Math.abs(currentBoost);
+    const multiplier = 1 + boostSize;
+    const distance = distanceAtRest * multiplier;
+    const step = signRef.current * distance;
+    const nextOffset = offset.get() + step;
+    offset.set(nextOffset);
+  });
+
+  return null;
+}
+
 export type ScrollTextMarqueeProps = {
   children: React.ReactNode;
   speed?: number;
@@ -102,34 +153,7 @@ export function ScrollTextMarquee({
   );
   const copies = Array.from({ length: repeat }, (_, index) => index);
   const isStill = shouldReduceMotion || !isInView;
-
-  useAnimationFrame((_, delta) => {
-    if (isStill) {
-      return;
-    }
-    const currentBoost = boost.get();
-    const isScrollingUp = currentBoost < 0;
-    const isScrollingDown = currentBoost > 0;
-    if (!bidirectional) {
-      signRef.current = baseSign;
-    }
-    const followsScrollUp = bidirectional && isScrollingUp;
-    const followsScrollDown = bidirectional && isScrollingDown;
-    if (followsScrollUp) {
-      signRef.current = oppositeOf(baseSign);
-    }
-    if (followsScrollDown) {
-      signRef.current = baseSign;
-    }
-    const seconds = delta / 1000;
-    const distanceAtRest = speed * seconds;
-    const boostSize = Math.abs(currentBoost);
-    const multiplier = 1 + boostSize;
-    const distance = distanceAtRest * multiplier;
-    const step = signRef.current * distance;
-    const nextOffset = offset.get() + step;
-    offset.set(nextOffset);
-  });
+  const isMoving = !isStill;
 
   return (
     <div
@@ -139,6 +163,16 @@ export function ScrollTextMarquee({
         className
       )}
     >
+      {isMoving && (
+        <MarqueeDriver
+          offset={offset}
+          boost={boost}
+          speed={speed}
+          baseSign={baseSign}
+          bidirectional={bidirectional}
+          signRef={signRef}
+        />
+      )}
       <motion.div className='flex w-max' style={{ transform }}>
         {copies.map((index) => (
           <span

@@ -191,6 +191,65 @@ export function ScrollVelocity({
   );
 }
 
+type RowDriverProps = {
+  offset: MotionValue<number>;
+  copyWidth: MotionValue<number>;
+  tilt: MotionValue<number>;
+  boost: MotionValue<number>;
+  speed: number;
+  baseSign: DirectionSign;
+  signRef: RefObject<DirectionSign>;
+  reverseOnScrollUp: boolean;
+  lean: boolean;
+};
+
+/**
+ * The frame loop of the animation library runs for as long as one `useAnimationFrame` is mounted,
+ * even when its callback does nothing, and each of those frames costs the whole page. So the loop
+ * lives in this leaf, which is mounted only while the row runs.
+ */
+function RowDriver({
+  offset,
+  copyWidth,
+  tilt,
+  boost,
+  speed,
+  baseSign,
+  signRef,
+  reverseOnScrollUp,
+  lean,
+}: RowDriverProps) {
+  useAnimationFrame((_, delta) => {
+    const currentBoost = boost.get();
+    if (reverseOnScrollUp) {
+      signRef.current = signForBoost(currentBoost, baseSign, signRef.current);
+    }
+    if (!reverseOnScrollUp) {
+      signRef.current = baseSign;
+    }
+    const seconds = frameSecondsOf(delta);
+    const boostSize = Math.abs(currentBoost);
+    const multiplier = 1 + boostSize;
+    const distanceAtRest = speed * seconds;
+    const distance = distanceAtRest * multiplier;
+    const step = signRef.current * distance;
+    const width = copyWidth.get();
+    if (width <= 0) {
+      return;
+    }
+    const currentOffset = offset.get();
+    const travelled = currentOffset + step;
+    const wrapped = wrap(-width, 0, travelled);
+    offset.set(wrapped);
+    if (lean) {
+      const nextTilt = leanOf(currentBoost, signRef.current);
+      tilt.set(nextTilt);
+    }
+  });
+
+  return null;
+}
+
 export type ScrollVelocityRowProps = {
   children: ReactNode;
   speed?: number;
@@ -245,39 +304,21 @@ export function ScrollVelocityRow({
     return () => observer.disconnect();
   }, [copyWidth]);
 
-  useAnimationFrame((_, delta) => {
-    if (!isRunning) {
-      return;
-    }
-    const currentBoost = boost.get();
-    if (reverseOnScrollUp) {
-      signRef.current = signForBoost(currentBoost, baseSign, signRef.current);
-    }
-    if (!reverseOnScrollUp) {
-      signRef.current = baseSign;
-    }
-    const seconds = frameSecondsOf(delta);
-    const boostSize = Math.abs(currentBoost);
-    const multiplier = 1 + boostSize;
-    const distanceAtRest = speed * seconds;
-    const distance = distanceAtRest * multiplier;
-    const step = signRef.current * distance;
-    const width = copyWidth.get();
-    if (width <= 0) {
-      return;
-    }
-    const currentOffset = offset.get();
-    const travelled = currentOffset + step;
-    const wrapped = wrap(-width, 0, travelled);
-    offset.set(wrapped);
-    if (lean) {
-      const nextTilt = leanOf(currentBoost, signRef.current);
-      tilt.set(nextTilt);
-    }
-  });
-
   return (
     <div ref={rowRef} className={cn('flex overflow-hidden', className)}>
+      {isRunning && (
+        <RowDriver
+          offset={offset}
+          copyWidth={copyWidth}
+          tilt={tilt}
+          boost={boost}
+          speed={speed}
+          baseSign={baseSign}
+          signRef={signRef}
+          reverseOnScrollUp={reverseOnScrollUp}
+          lean={lean}
+        />
+      )}
       <motion.div
         className='flex w-max shrink-0 whitespace-nowrap'
         style={{ transform }}
