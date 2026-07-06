@@ -113,4 +113,11 @@ export const manifest: ComponentManifest = [
     description:
       'A timeline of checkpoints where picking one previews the files a rewind would revert, then the Now marker glides back, what came after dims, and Redo brings it back.',
   },
+  {
+    name: 'review-17',
+    source: 'ndeko',
+    title: 'Connect an app',
+    description:
+      'A permission card for an agent that wants another app, with risk-labelled scopes you can switch off, and a handshake of a line, a travelling dot and two tiles that settle into Connected.',
+  },
 ];
