@@ -25,4 +25,19 @@ export const manifest: BlockManifest = [
     files: ['index.tsx', 'constellation.tsx', 'data.ts'],
     previewHeight: 720,
   },
+  {
+    name: 'integrations-04',
+    title: 'Tools under glass',
+    description:
+      'Rows of tool marks drift in grey under a clear capsule that shows each in its own colour; press one and the capsule grows into a panel to connect it, and connected tools keep their colour in the rows.',
+    files: [
+      'index.tsx',
+      'drift-rows.tsx',
+      'glass.tsx',
+      'tool-pills.tsx',
+      'session.ts',
+      'data.ts',
+    ],
+    previewHeight: 640,
+  },
 ];
