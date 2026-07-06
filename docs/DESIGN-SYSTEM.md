@@ -47,6 +47,7 @@ A surface nested in another keeps the corners concentric: its radius is the oute
   - `keycap-3d`: a key, an icon tile in a list row.
   - `gem-plate` (with `--gem`): a kind, such as an issue type, holding a white glyph.
   - `mesh-fill` (with `--mesh`): the picture of someone or something that has none: a person (`Avatar` with a `seed`), an agent, a team or a project (`MeshTile`). It is the only gradient of the system and it always stands for an identity. A company without a logo wears `CompanyMark`, a known product its real mark.
+  - `grain-wash` (with `--wash`, drawn by `Wash` from `ui/wash`): ink with the grain of paper, poured from one edge of a surface and fading out. It says one of two things: this is the one featured surface of the view (a featured plan, a goal card, a closing band), or this is live right now, in the hue of its state (running, waiting on a person, done). One per view, never decoration. The grain is a small tile used as a mask, so a wash costs nothing once painted.
   - `surface-raised`: a floating layer (menu, popover, select, dialog).
   - `surface-brand`: the one lifted object of a block (a timer card, a featured plan).
 - Relief stays on labels. The state of a control (pressed, selected, checked) stays flat.
@@ -158,7 +159,7 @@ How the site is organised, and what it never does:
 
 The home page is the one marketing surface of the site, and it follows the maintainer's own reference (`templates/ndekoui` in the workspace). It is the only page allowed the following.
 
-- **One wash.** A single radial tint of the primary colour behind the hero, and the same tint under the closing band. One hue, never a second one, never behind content cards.
+- **One wash.** A single grain wash of the primary colour (`grain-wash`) behind the hero, and the same under the closing band. One hue, never a second one. Inside a page, a wash belongs to the one featured surface or to what is live right now (see the materials).
 - **Entrances.** On load, the lines of the hero sharpen and rise into place once, 70ms apart (`animate-settle`: opacity, 12px, 8px blur, 700ms, `--ease-out-strong`). On scroll, each heading, card and row does the same the first time it enters the screen (`Reveal` in `app/_home/reveal.tsx`, 600ms, 60ms between neighbours). Large surfaces (device frames, grids of live previews) fade and rise without the blur. Nothing replays, and reduced motion keeps only a fade.
 - **One type scale.** `DISPLAY_TITLE`, `SECTION_TITLE`, `SECTION_LEAD`, `CARD_TITLE`, `ROW_TITLE` and `CARD_TEXT` in `app/_home/section-heading.tsx`. A section never sets its own heading size. Display and section titles are the one place with negative tracking (-0.02em to -0.03em), because large text set at zero reads loose. A section is named by a quiet label (icon and words in the brand ink), never a pill.
 - **One rhythm.** Sections sit `gap-24 lg:gap-32` apart in a `max-w-7xl` column, and a heading sits `gap-10 lg:gap-12` above its content. A section never adds its own vertical padding, except the two full-width bands (MCP, closing). In dark mode the MCP band sits one step darker than the page, between two hairlines.
