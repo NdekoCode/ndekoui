@@ -85,4 +85,11 @@ export const manifest: ComponentManifest = [
     description:
       'Typing @ opens files, symbols, diffs, docs and pages that filter with marks and move with the arrows and Tab, and the picked item flies into the composer as a chip while the token total rolls.',
   },
+  {
+    name: 'prompt-13',
+    source: 'ndeko',
+    title: 'Slash commands',
+    description:
+      'Typing / lists the commands an agent knows with their arguments, and the chosen command settles into a token followed by its argument, selected so that typing replaces it.',
+  },
 ];
