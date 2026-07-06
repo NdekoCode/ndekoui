@@ -2,12 +2,15 @@
 
 import { useId } from 'react';
 
+import { useFollowBottom } from '@/registry/ndeko/hooks/use-follow-bottom';
 import { pressedQuietOf } from '@/registry/ndeko/lib/demonstration';
 import { ChevronDownIcon, FileTextIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { countOf } from '@/registry/ndeko/lib/words';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Fold, Swap } from '@/registry/ndeko/ui/chat-motion';
 import { Spinner } from '@/registry/ndeko/ui/spinner';
+import { StreamedText } from '@/registry/ndeko/ui/streamed-text';
 
 import {
   MEMO,
@@ -18,9 +21,6 @@ import {
 } from './data';
 import { WORD_MS, type Stage } from './session';
 import { peopleOf } from './share-request';
-import { StreamedText } from './stream';
-import { useFollowBottom } from './use-follow-bottom';
-import { countOf } from './words';
 
 type Progress = {
   sectionsStarted: number;

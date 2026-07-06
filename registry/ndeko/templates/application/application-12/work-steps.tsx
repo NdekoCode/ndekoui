@@ -8,6 +8,7 @@ import {
   FileIcon,
 } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { countOf } from '@/registry/ndeko/lib/words';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
 import { CallStatusMark } from '@/registry/ndeko/ui/call-status';
@@ -26,7 +27,6 @@ import {
 } from './data';
 import { ChangeCounts, ModifiedTile } from './diff-view';
 import type { StepRun } from './session';
-import { countOf } from './words';
 
 const SHOW_LABEL: Record<PanelTab, string> = {
   diff: 'Open the diff',

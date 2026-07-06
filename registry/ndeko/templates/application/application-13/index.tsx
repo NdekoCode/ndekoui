@@ -2,18 +2,19 @@
 
 import { useRef } from 'react';
 
+import { useIsNarrow } from '@/registry/ndeko/hooks/use-is-narrow';
 import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
 import { MenuIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
+import { InlineSheet } from '@/registry/ndeko/ui/inline-sheet';
 import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
 
 import { BRAND, type Attachment } from './data';
 import { GlyphField } from './glyph-field';
-import { InlineSheet } from './inline-sheet';
 import { PromptBox } from './prompt-box';
 import { RecentRuns } from './recent-runs';
 import {
@@ -29,7 +30,6 @@ import {
 } from './session';
 import { SessionSidebar } from './session-sidebar';
 import { Suggestions } from './suggestions';
-import { useIsNarrow } from './use-is-narrow';
 
 const SESSION = {
   reducer,
@@ -247,11 +247,12 @@ export default function Application13({
 
           <InlineSheet
             name='sessions'
-            title='Recent sessions'
+            label='Recent sessions'
             closeLabel='Close the recent sessions'
             side='start'
             isOpen={isSidebarShown}
-            hiddenFrom='@3xl:hidden'
+            className='@3xl:hidden'
+            panelClassName='bg-sidebar gap-1 p-3'
             onClose={closeSidebar}
           >
             {isNarrow && <SessionSidebar {...sidebar} />}

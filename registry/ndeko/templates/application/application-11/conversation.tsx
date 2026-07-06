@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from 'motion/react';
 
+import { useFollowBottom } from '@/registry/ndeko/hooks/use-follow-bottom';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CheckIcon,
@@ -18,7 +19,6 @@ import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
 import { ME, REFUND, type Ticket } from './data';
 import type { OpenTicket, RefundStatus, TicketLive } from './session';
 import { PriorityBars, StatusBadge } from './ticket-list';
-import { useFollowBottom } from './use-follow-bottom';
 
 function PersonAvatar({ name }: { name: string }) {
   return <Avatar className='size-7 shrink-0' seed={name} />;

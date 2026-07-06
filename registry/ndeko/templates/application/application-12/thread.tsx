@@ -1,7 +1,9 @@
 'use client';
 
+import { useFollowBottom } from '@/registry/ndeko/hooks/use-follow-bottom';
 import { seriesColorOf } from '@/registry/ndeko/lib/agent-run';
 import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
+import { StreamedText } from '@/registry/ndeko/ui/streamed-text';
 
 import { ANSWER, CODER, FOLLOW_UP_REPLY, type PanelTab } from './data';
 import { PullRequest } from './pull-request';
@@ -11,8 +13,6 @@ import {
   type CodingState,
   type Decision,
 } from './session';
-import { StreamedText } from './stream';
-import { useFollowBottom } from './use-follow-bottom';
 import { WorkSteps } from './work-steps';
 
 function CoderTile() {

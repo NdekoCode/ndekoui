@@ -13,6 +13,7 @@ import {
   type Icon,
 } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { countOf } from '@/registry/ndeko/lib/words';
 import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
 import { CallStatusMark } from '@/registry/ndeko/ui/call-status';
 import { Fold } from '@/registry/ndeko/ui/chat-motion';
@@ -20,7 +21,6 @@ import { LiveDuration } from '@/registry/ndeko/ui/live-duration';
 
 import { seedOf, type ActivityKind, type ActivitySeed } from './data';
 import type { ActivityRun } from './session';
-import { countOf } from './words';
 
 const KIND_WORD: Record<ActivityKind, string> = {
   think: 'Think',

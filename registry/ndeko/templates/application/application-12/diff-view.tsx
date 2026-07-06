@@ -1,6 +1,12 @@
 'use client';
 
+import { useFollowBottom } from '@/registry/ndeko/hooks/use-follow-bottom';
 import { cn } from '@/registry/ndeko/lib/utils';
+import {
+  inkClassOf,
+  shownCountOf,
+  useRevealedCount,
+} from '@/registry/ndeko/ui/streamed-text';
 
 import {
   changesOf,
@@ -12,8 +18,6 @@ import {
   type LineKind,
 } from './data';
 import { LINE_MS } from './session';
-import { inkClassOf, shownCountOf, useRevealedCount } from './stream';
-import { useFollowBottom } from './use-follow-bottom';
 
 const LINE_TONE: Record<LineKind, string> = {
   same: '',

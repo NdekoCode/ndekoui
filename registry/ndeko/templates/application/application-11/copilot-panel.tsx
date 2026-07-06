@@ -1,6 +1,7 @@
 'use client';
 
 import { WordRoll } from '@/components/core/word-roll';
+import { useFollowBottom } from '@/registry/ndeko/hooks/use-follow-bottom';
 import { seriesColorOf } from '@/registry/ndeko/lib/agent-run';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Badge } from '@/registry/ndeko/ui/badge';
@@ -18,7 +19,6 @@ import {
 } from './data';
 import { RefundRequest } from './refund-request';
 import type { Decision, RefundStatus, StepRun } from './session';
-import { useFollowBottom } from './use-follow-bottom';
 
 const WORKING_WORD: Record<StepId, string> = {
   read: 'Reading the ticket',

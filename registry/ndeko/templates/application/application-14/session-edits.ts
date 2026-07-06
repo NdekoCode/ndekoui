@@ -1,10 +1,11 @@
+import { countOf } from '@/registry/ndeko/lib/words';
+
 import { entryOf, seriesAfter, stepOfEntry } from './catalog';
 import { changed, copyOf, inserted, removed } from './edits';
 import { agentCountOf, placementOf, stepOf, withInside } from './flow';
 import type { InsertAt, Step, Workflow } from './model';
 import type { BuilderState, Notice } from './session';
 import { edited } from './session-history';
-import { countOf } from './words';
 
 function namedAs(step: Step, name: string | undefined): Step {
   if (name === undefined) {

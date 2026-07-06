@@ -9,9 +9,9 @@ import {
   PopoverTrigger,
 } from '@/registry/ndeko/ui/popover';
 
+import { capitalized } from './capitalized';
 import type { PaletteEntry } from './catalog';
 import { Palette } from './palette';
-import { capitalized } from './words';
 
 type InsertButtonProps = {
   /** Where the point sits, from the corner of the step it follows. */

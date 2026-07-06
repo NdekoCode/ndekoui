@@ -1,10 +1,16 @@
 'use client';
 
 import { MotionNumber } from '@/components/core/motion-number';
+import { useFollowBottom } from '@/registry/ndeko/hooks/use-follow-bottom';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
+import { DrawnCheck } from '@/registry/ndeko/ui/drawn-check';
 import { Spinner } from '@/registry/ndeko/ui/spinner';
+import {
+  shownCountOf,
+  useRevealedCount,
+} from '@/registry/ndeko/ui/streamed-text';
 
 import {
   FAILING_RUN,
@@ -13,10 +19,7 @@ import {
   type LogLine,
   type LogTone,
 } from './data';
-import { DrawnCheck } from './drawn-check';
 import { LOG_MS, type TestRun } from './session';
-import { shownCountOf, useRevealedCount } from './stream';
-import { useFollowBottom } from './use-follow-bottom';
 
 const PASSING_BEFORE_THE_FIX = TEST_COUNT - 1;
 
@@ -82,7 +85,11 @@ function ResultChip({ testRun }: { testRun: TestRun }) {
   if (testRun === 'passed') {
     return (
       <Badge variant='success'>
-        <DrawnCheck className='size-3.5 [&_svg]:size-2.5' />
+        <DrawnCheck
+          tone='success'
+          entrance='draw'
+          className='size-3.5 [&_svg]:size-2.5'
+        />
         Passing
       </Badge>
     );

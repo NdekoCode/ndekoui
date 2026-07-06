@@ -10,11 +10,13 @@ import {
   GitBranchIcon,
 } from '@/registry/ndeko/lib/icons';
 import { fadePresence } from '@/registry/ndeko/lib/motion-presets';
+import { countOf } from '@/registry/ndeko/lib/words';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
+import { DrawnCheck } from '@/registry/ndeko/ui/drawn-check';
 import { Kbd } from '@/registry/ndeko/ui/kbd';
 import { Spinner } from '@/registry/ndeko/ui/spinner';
 
@@ -28,9 +30,7 @@ import {
   type RepoFile,
 } from './data';
 import { ChangeCounts, ModifiedTile } from './diff-view';
-import { DrawnCheck } from './drawn-check';
 import type { Decision, Stage } from './session';
-import { countOf } from './words';
 
 function isChanged(file: RepoFile) {
   return HUNKS.some((hunk) => hunk.fileId === file.id);
@@ -152,7 +152,7 @@ function ResultGlyph({ stage }: { stage: Stage }) {
   if (stage === 'declined') {
     return <CircleXIcon className='text-muted-foreground size-4 shrink-0' />;
   }
-  return <DrawnCheck />;
+  return <DrawnCheck tone='success' entrance='draw' />;
 }
 
 function resultLineOf(stage: Stage) {

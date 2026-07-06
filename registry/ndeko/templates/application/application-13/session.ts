@@ -1,5 +1,6 @@
 import type { SessionStep } from '@/registry/ndeko/hooks/use-session';
 import { restingOf } from '@/registry/ndeko/lib/run-session';
+import { wordsOf } from '@/registry/ndeko/lib/words';
 
 import {
   DEMO_ATTACHMENT,
@@ -21,7 +22,6 @@ import {
   type RunSeed,
   type RunStatus,
 } from './data';
-import { wordsOf } from './words';
 
 /** A place in the field of glyphs, as a share of its width and of its height. */
 export type Point = {

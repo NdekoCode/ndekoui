@@ -2,14 +2,16 @@
 
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 
+import { useIsNarrow } from '@/registry/ndeko/hooks/use-is-narrow';
 import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
+import { InlineSheet } from '@/registry/ndeko/ui/inline-sheet';
 import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 
 import { CanvasPanel } from './canvas-panel';
+import { capitalized } from './capitalized';
 import { faceKeyOf, placementOf, structureKeyOf } from './flow';
-import { InlineSheet } from './inline-sheet';
 import { Inspector } from './inspector';
 import { layoutOf } from './layout';
 import type { Workflow } from './model';
@@ -23,11 +25,9 @@ import {
   useBuilderHandlers,
   type Backend,
 } from './use-builder-handlers';
-import { useIsNarrow } from './use-is-narrow';
 import { useKept } from './use-kept';
 import { useRunClock } from './use-run-clock';
 import { useViewport } from './use-viewport';
-import { capitalized } from './words';
 
 const SESSION = {
   reducer,
@@ -231,11 +231,12 @@ export default function Application14({
 
           <InlineSheet
             name='palette'
-            title='Add a step'
+            label='Add a step'
             closeLabel='Close the palette'
             side='start'
             isOpen={isPaletteShown}
-            hiddenFrom='@5xl/app:hidden'
+            className='@5xl/app:hidden'
+            panelClassName='bg-sidebar gap-1 p-3'
             onClose={closePalette}
           >
             {hasPaletteSheet && (
@@ -249,11 +250,12 @@ export default function Application14({
           </InlineSheet>
           <InlineSheet
             name='inspector'
-            title='Step setup'
+            label='Step setup'
             closeLabel='Close the step setup'
             side='bottom'
             isOpen={isInspectorShown}
-            hiddenFrom='@3xl/app:hidden'
+            className='@3xl/app:hidden'
+            panelClassName='bg-sidebar h-[80%] gap-1 p-3'
             onClose={leaveInspector}
           >
             {hasInspectorSheet && (

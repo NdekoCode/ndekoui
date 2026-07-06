@@ -1,3 +1,5 @@
+import { wordsOf } from '@/registry/ndeko/lib/words';
+
 import { stepOf } from './flow';
 import type { Step, Workflow } from './model';
 import {
@@ -7,7 +9,6 @@ import {
   type Sample,
   type SampleId,
 } from './samples';
-import { wordsOf } from './words';
 
 export type RunPhase = 'idle' | 'running' | 'waiting' | 'done' | 'stopped';
 

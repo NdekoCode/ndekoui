@@ -10,6 +10,7 @@ import {
 } from '@/registry/ndeko/lib/demonstration';
 import { EllipsisIcon, PlayIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { countOf } from '@/registry/ndeko/lib/words';
 import { Button } from '@/registry/ndeko/ui/button';
 import { CompanyMark } from '@/registry/ndeko/ui/company-mark';
 import {
@@ -27,7 +28,6 @@ import { countsOf } from './flow';
 import type { Workflow } from './model';
 import { NameField } from './name-field';
 import type { SaveState } from './session';
-import { countOf } from './words';
 
 const MINUTE_MS = 60_000;
 

@@ -1,7 +1,6 @@
 import type { SeriesSlot } from '@/registry/ndeko/lib/agent-run';
 import type { BrandSlug } from '@/registry/ndeko/lib/brand-logos';
-
-import { wordsOf } from './words';
+import { wordsOf } from '@/registry/ndeko/lib/words';
 
 export const WORKSPACE = { name: 'Corvale', space: 'Growth' };
 

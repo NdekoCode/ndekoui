@@ -1,5 +1,6 @@
 'use client';
 
+import { useFollowBottom } from '@/registry/ndeko/hooks/use-follow-bottom';
 import { seriesColorOf } from '@/registry/ndeko/lib/agent-run';
 import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 
@@ -8,7 +9,6 @@ import { CitedAnswer } from './cited-answer';
 import { FOLLOW_UP_REPLY, RESEARCHER } from './data';
 import { hasReached, type Decision, type ResearchState } from './session';
 import { ShareRequest } from './share-request';
-import { useFollowBottom } from './use-follow-bottom';
 
 function ResearcherTile() {
   const color = seriesColorOf(RESEARCHER.series);

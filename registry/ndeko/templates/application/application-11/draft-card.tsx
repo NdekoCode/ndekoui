@@ -6,20 +6,19 @@ import { seriesColorOf } from '@/registry/ndeko/lib/agent-run';
 import { pressedSolidOf } from '@/registry/ndeko/lib/demonstration';
 import { BookOpenIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { countOf, leadingSpaceOf } from '@/registry/ndeko/lib/words';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
 import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
-
-import { ARTICLES, DRAFT_TOKENS, WRITER, type Article } from './data';
-import { DRAFT_WORD_MS } from './session';
 import {
   inkClassOf,
-  leadingSpaceOf,
   shownCountOf,
   StreamCaret,
   useRevealedCount,
-} from './stream';
-import { countOf } from './words';
+} from '@/registry/ndeko/ui/streamed-text';
+
+import { ARTICLES, DRAFT_TOKENS, WRITER, type Article } from './data';
+import { DRAFT_WORD_MS } from './session';
 
 const MARK =
   'keycap-3d text-muted-foreground inline-flex h-4 min-w-4 items-center justify-center rounded-[4px] px-1 text-[10px] leading-none font-medium tabular-nums';

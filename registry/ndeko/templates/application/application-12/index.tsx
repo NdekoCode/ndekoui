@@ -1,8 +1,10 @@
 'use client';
 
+import { useIsNarrow } from '@/registry/ndeko/hooks/use-is-narrow';
 import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
+import { InlineSheet } from '@/registry/ndeko/ui/inline-sheet';
 import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 
@@ -15,7 +17,6 @@ import {
   TEST_COUNT,
   type PanelTab,
 } from './data';
-import { PanelSheet } from './panel-sheet';
 import {
   INITIAL,
   isOver,
@@ -32,7 +33,6 @@ import {
 } from './session';
 import { StatusFooter } from './status-footer';
 import { Thread } from './thread';
-import { useIsNarrow } from './use-is-narrow';
 import { WorkPanel } from './work-panel';
 
 const SESSION = {
@@ -140,7 +140,7 @@ export default function Application12({
 
   function openSheet() {
     act({ type: 'sheet', isOpen: true });
-    focusLater('[data-panel-sheet-grip]');
+    focusLater('[data-sheet-close="work"]');
   }
 
   function closeSheet() {
@@ -218,9 +218,19 @@ export default function Application12({
             <StatusFooter tokens={state.tokens} costUsd={state.costUsd} />
           </div>
 
-          <PanelSheet isOpen={isSheetShown} onClose={closeSheet}>
+          <InlineSheet
+            name='work'
+            label='Work of the agent'
+            closeLabel='Close the work panel'
+            side='bottom'
+            closer='grip'
+            isOpen={isSheetShown}
+            className='@3xl:hidden'
+            panelClassName='h-[80%] px-4 pb-4'
+            onClose={closeSheet}
+          >
             {isNarrow && <WorkPanel {...panel} className='flex-1' />}
-          </PanelSheet>
+          </InlineSheet>
           <LiveRegion message={message} />
         </div>
       </div>

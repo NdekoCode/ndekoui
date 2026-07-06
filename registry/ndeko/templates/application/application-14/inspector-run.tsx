@@ -3,12 +3,12 @@
 import { formatCost } from '@/registry/ndeko/lib/agent-run';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { JsonView } from '@/registry/ndeko/ui/json-view';
+import { StreamedText } from '@/registry/ndeko/ui/streamed-text';
 
+import { capitalized } from './capitalized';
 import type { Step } from './model';
 import { exchangeOf, hasRun, WORD_MS, type Run, type StepRun } from './run';
 import { StateMark, stateWordsOf } from './state-mark';
-import { StreamedText } from './stream';
-import { capitalized } from './words';
 
 const NOTE = 'text-muted-foreground text-[13px] leading-relaxed';
 

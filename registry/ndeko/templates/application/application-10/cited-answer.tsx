@@ -3,17 +3,17 @@
 import { Fragment, useState } from 'react';
 
 import { cn } from '@/registry/ndeko/lib/utils';
+import { leadingSpaceOf } from '@/registry/ndeko/lib/words';
 import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
-
-import { ANSWER_TOKENS, SOURCES, type AnswerToken, type Source } from './data';
-import { ANSWER_WORD_MS } from './session';
 import {
   inkClassOf,
-  leadingSpaceOf,
   shownCountOf,
   StreamCaret,
   useRevealedCount,
-} from './stream';
+} from '@/registry/ndeko/ui/streamed-text';
+
+import { ANSWER_TOKENS, SOURCES, type AnswerToken, type Source } from './data';
+import { ANSWER_WORD_MS } from './session';
 
 const FALLBACK_SOURCE = SOURCES[0];
 

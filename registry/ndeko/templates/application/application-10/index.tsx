@@ -1,8 +1,10 @@
 'use client';
 
+import { useIsNarrow } from '@/registry/ndeko/hooks/use-is-narrow';
 import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
+import { InlineSheet } from '@/registry/ndeko/ui/inline-sheet';
 import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 
@@ -10,7 +12,6 @@ import { AppHeader } from './app-header';
 import { Composer } from './composer';
 import { KEPT_LINE, RECEIVERS, seedOf, SHARED_LINE } from './data';
 import { MemoPanel } from './memo-panel';
-import { MemoSheet } from './memo-sheet';
 import {
   INITIAL,
   isOver,
@@ -26,7 +27,6 @@ import {
 } from './session';
 import { peopleOf } from './share-request';
 import { Thread } from './thread';
-import { useIsNarrow } from './use-is-narrow';
 
 const SESSION = {
   reducer,
@@ -143,7 +143,7 @@ export default function Application10({
 
   function openSheet() {
     act({ type: 'sheet', isOpen: true });
-    focusLater('[data-memo-sheet-grip]');
+    focusLater('[data-sheet-close="memo"]');
   }
 
   function closeSheet() {
@@ -213,7 +213,17 @@ export default function Application10({
             </div>
           </div>
 
-          <MemoSheet isOpen={isSheetShown} onClose={closeSheet}>
+          <InlineSheet
+            name='memo'
+            label='Memo'
+            closeLabel='Close the memo'
+            side='bottom'
+            closer='grip'
+            isOpen={isSheetShown}
+            className='@3xl:hidden'
+            panelClassName='h-[80%] px-4 pb-4'
+            onClose={closeSheet}
+          >
             {/* The thread is out of sight under the sheet, so the sheet says which step is running. */}
             {isNarrow && (
               <MemoPanel
@@ -222,7 +232,7 @@ export default function Application10({
                 className='flex-1'
               />
             )}
-          </MemoSheet>
+          </InlineSheet>
           <LiveRegion message={message} />
         </div>
       </div>

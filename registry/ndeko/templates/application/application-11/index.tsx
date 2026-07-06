@@ -1,15 +1,16 @@
 'use client';
 
+import { useIsNarrow } from '@/registry/ndeko/hooks/use-is-narrow';
 import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
+import { InlineSheet } from '@/registry/ndeko/ui/inline-sheet';
 import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 
 import { Conversation, ConversationHeader } from './conversation';
 import { CopilotPanel, type CopilotWork } from './copilot-panel';
 import { SCRIPTED_TICKET } from './data';
-import { InlineSheet } from './inline-sheet';
 import { RefundRequest } from './refund-request';
 import { ReplyComposer } from './reply-composer';
 import {
@@ -29,7 +30,6 @@ import {
   type RefundStatus,
 } from './session';
 import { TicketList } from './ticket-list';
-import { useIsNarrow } from './use-is-narrow';
 
 const SESSION = {
   reducer,
@@ -302,22 +302,24 @@ export default function Application11({
 
           <InlineSheet
             name='list'
-            title='Tickets'
+            label='Tickets'
             closeLabel='Close the ticket list'
             side='start'
             isOpen={isListShown}
-            hiddenFrom='@4xl:hidden'
+            className='@4xl:hidden'
+            panelClassName='bg-sidebar gap-1 p-3'
             onClose={closeList}
           >
             {isCompact && <TicketList {...list} />}
           </InlineSheet>
           <InlineSheet
             name='copilot'
-            title='Copilot'
+            label='Copilot'
             closeLabel='Close the copilot'
             side='bottom'
             isOpen={isCopilotShown}
-            hiddenFrom='@2xl:hidden'
+            className='@2xl:hidden'
+            panelClassName='bg-sidebar h-[80%] gap-1 p-3'
             onClose={closeCopilot}
           >
             {isPhone && (

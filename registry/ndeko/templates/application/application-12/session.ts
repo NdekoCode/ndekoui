@@ -1,6 +1,7 @@
 import type { SessionStep } from '@/registry/ndeko/hooks/use-session';
 import { keyDelayOf, prefixesOf } from '@/registry/ndeko/lib/demonstration';
 import { restingOf } from '@/registry/ndeko/lib/run-session';
+import { wordsOf } from '@/registry/ndeko/lib/words';
 
 import {
   ANSWER,
@@ -13,7 +14,6 @@ import {
   type PanelTab,
   type StepId,
 } from './data';
-import { wordsOf } from './words';
 
 export type Stage =
   | 'idle'
