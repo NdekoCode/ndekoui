@@ -411,4 +411,11 @@ export const manifest: ComponentManifest = [
     description:
       'A password field with a segmented strength meter and a live rules list, a Generate button that scrambles in a strong password, a Copy button, and a spoken strength.',
   },
+  {
+    name: 'input-66',
+    source: 'ndeko',
+    title: 'Waitlist field',
+    description:
+      'An email field that checks the address, turns its button into You are on the list and slides the new avatar into a stack while the last one tucks under a counter that rolls.',
+  },
 ];
