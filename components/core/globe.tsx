@@ -256,7 +256,9 @@ function createController(host: HTMLElement, tilt: number): Controller {
     glowColor: [1, 1, 1],
     arcWidth: 0.6,
     arcHeight: 0.25,
-    markerElevation: 0.02,
+    // cobe hides a marker only when it is behind the sphere and inside its outline: any
+    // elevation lets a city just past the edge float outside the disk.
+    markerElevation: 0,
     ...colors,
   });
 
