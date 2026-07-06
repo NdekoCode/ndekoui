@@ -29,4 +29,11 @@ export const manifest: ComponentManifest = [
     description:
       'A word or an icon drawn in characters lit from the top left, where a band of light crosses it, the characters travel to their new cells when the shape changes, the pointer lights those near it and a press sends a ripple.',
   },
+  {
+    name: 'text-effect-05',
+    source: 'ndeko',
+    title: 'Perspective swap',
+    description:
+      'A headline that alternates between two or three phrases, each one turning away round an axis behind the line in soft perspective as the next turns in from the other side, and holding still under the pointer.',
+  },
 ];
