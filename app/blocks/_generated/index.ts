@@ -496,6 +496,43 @@ export const groups: BundleGroup[] = [
     ],
   },
   {
+    slug: 'blog',
+    name: 'Blog',
+    entries: [
+      {
+        name: 'blog-01',
+        title: 'Blog index',
+        description:
+          'A blog index with the latest post on a washed card, topic chips with their counts, a search that can come up empty with the way back, and Load more: pick a topic and the thumb travels to it while the cards that stay glide to their new places and the others fade.',
+        files: [
+          'index.tsx',
+          'post-card.tsx',
+          'cover.tsx',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 1100,
+        group: 'blog',
+      },
+      {
+        name: 'blog-02',
+        title: 'Blog post',
+        description:
+          'A post in its own scrolling frame with Copy link, a Share menu, a quote, previous and next and related posts, and a table of contents that folds into one bar on phones: as you read, a thin line fills along the top and the marker of the contents travels to the heading you reached.',
+        files: [
+          'index.tsx',
+          'article-body.tsx',
+          'contents.tsx',
+          'post-actions.tsx',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 760,
+        group: 'blog',
+      },
+    ],
+  },
+  {
     slug: 'boards',
     name: 'Boards',
     entries: [
@@ -742,6 +779,31 @@ export const groups: BundleGroup[] = [
     ],
   },
   {
+    slug: 'docs',
+    name: 'Docs',
+    entries: [
+      {
+        name: 'docs-01',
+        title: 'Docs page',
+        description:
+          'A docs page in its own frame with a sidebar you can search, sections with their counts, a Copy page split button, installation by command or by hand, callouts, previous and next and an On this page rail that follows the reading; the sidebar becomes a sheet on phones. Pick a package manager and only the words that run the command roll to the new ones.',
+        files: [
+          'index.tsx',
+          'docs-nav.tsx',
+          'install.tsx',
+          'copy-page.tsx',
+          'on-this-page.tsx',
+          'page-text.ts',
+          'match.ts',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 760,
+        group: 'docs',
+      },
+    ],
+  },
+  {
     slug: 'empty-states',
     name: 'Empty states',
     entries: [
@@ -779,6 +841,52 @@ export const groups: BundleGroup[] = [
         ],
         previewHeight: 640,
         group: 'empty-states',
+      },
+    ],
+  },
+  {
+    slug: 'error-pages',
+    name: 'Error pages',
+    entries: [
+      {
+        name: 'error-pages-01',
+        title: 'Page not found',
+        description:
+          'A calm 404 with a search that suggests pages as you type, the typed words marked, popular pages and Go home: on the folded map above, the trail that stops at the fold draws itself on to a pin as soon as a page matches.',
+        files: [
+          'index.tsx',
+          'page-search.tsx',
+          'trail-map.tsx',
+          'session.ts',
+          'match.ts',
+          'data.ts',
+        ],
+        previewHeight: 840,
+        group: 'error-pages',
+      },
+      {
+        name: 'error-pages-02',
+        title: 'Server error',
+        description:
+          'A 500 with Try again, the status of the service and an error ID that copies with a check: Try again morphs into Retrying while the lights of the failing server run, falls back with a nudge the first time and turns them green on the second.',
+        files: ['index.tsx', 'server-stack.tsx', 'session.ts', 'data.ts'],
+        previewHeight: 760,
+        group: 'error-pages',
+      },
+      {
+        name: 'error-pages-03',
+        title: 'Maintenance',
+        description:
+          'A maintenance page with what is affected and a form that checks the address, saves it and folds into a confirmation with a drawn check: the time left counts down in large figures whose minutes roll down as each one passes, over a line that fills toward the end of the window.',
+        files: [
+          'index.tsx',
+          'maintenance-clock.tsx',
+          'notify-form.tsx',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 980,
+        group: 'error-pages',
       },
     ],
   },
@@ -956,6 +1064,36 @@ export const groups: BundleGroup[] = [
         ],
         previewHeight: 420,
         group: 'headers',
+      },
+    ],
+  },
+  {
+    slug: 'help-center',
+    name: 'Help center',
+    entries: [
+      {
+        name: 'help-center-01',
+        title: 'Help center',
+        description:
+          'A help center with a search hero, topics, popular articles and a person to write to: as you type, suggestions land under the field with your words marked, and the count on every topic rolls down to the articles that match while the topics with none step back.',
+        files: [
+          'index.tsx',
+          'help-search.tsx',
+          'session.ts',
+          'match.ts',
+          'data.ts',
+        ],
+        previewHeight: 1040,
+        group: 'help-center',
+      },
+      {
+        name: 'help-center-02',
+        title: 'Help article',
+        description:
+          'A help article with breadcrumbs, numbered steps, a note, related articles and a person to write to: answer Was this helpful and the question turns into a thank-you in the same place, after a short field for what was missing when the answer is No.',
+        files: ['index.tsx', 'feedback-card.tsx', 'session.ts', 'data.ts'],
+        previewHeight: 1180,
+        group: 'help-center',
       },
     ],
   },
@@ -1263,6 +1401,29 @@ export const groups: BundleGroup[] = [
     ],
   },
   {
+    slug: 'page-headers',
+    name: 'Page headers',
+    entries: [
+      {
+        name: 'page-headers-01',
+        title: 'Page header that condenses',
+        description:
+          'A project header with breadcrumbs, a status, people, progress and tabs whose indicator travels, where Watch, Share and Edit fold into More as the width shrinks: scroll the page under it and the header condenses into a slim bar that keeps the title, the status, Edit and the progress as its lower edge.',
+        files: [
+          'index.tsx',
+          'condensed-bar.tsx',
+          'header-actions.tsx',
+          'title-editor.tsx',
+          'panels.tsx',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 720,
+        group: 'page-headers',
+      },
+    ],
+  },
+  {
     slug: 'pricing',
     name: 'Pricing',
     entries: [
@@ -1341,6 +1502,27 @@ export const groups: BundleGroup[] = [
         ],
         previewHeight: 900,
         group: 'pricing',
+      },
+    ],
+  },
+  {
+    slug: 'search',
+    name: 'Search',
+    entries: [
+      {
+        name: 'search-01',
+        title: 'Search results',
+        description:
+          'Search over a local index with the count and the real time it took, type facets, pages of results with their breadcrumbs and matches marked, and a correction when nothing matches: each letter you type narrows the results while every facet count rolls, and the arrows walk a highlight through them for Enter to open.',
+        files: [
+          'index.tsx',
+          'results.tsx',
+          'search.ts',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 860,
+        group: 'search',
       },
     ],
   },

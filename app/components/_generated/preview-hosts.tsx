@@ -28,6 +28,7 @@ export const previewHosts: Record<string, ComponentType<PreviewHostProps>> = {
   comment: dynamic(() => import('./comment').then(previewHostOf)),
   dialog: dynamic(() => import('./dialog').then(previewHostOf)),
   dropdown: dynamic(() => import('./dropdown').then(previewHostOf)),
+  effect: dynamic(() => import('./effect').then(previewHostOf)),
   'event-calendar': dynamic(() =>
     import('./event-calendar').then(previewHostOf)
   ),
@@ -52,6 +53,7 @@ export const previewHosts: Record<string, ComponentType<PreviewHostProps>> = {
   table: dynamic(() => import('./table').then(previewHostOf)),
   tabs: dynamic(() => import('./tabs').then(previewHostOf)),
   teams: dynamic(() => import('./teams').then(previewHostOf)),
+  'text-effect': dynamic(() => import('./text-effect').then(previewHostOf)),
   textarea: dynamic(() => import('./textarea').then(previewHostOf)),
   timeline: dynamic(() => import('./timeline').then(previewHostOf)),
   tooltip: dynamic(() => import('./tooltip').then(previewHostOf)),
