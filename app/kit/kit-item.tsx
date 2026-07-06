@@ -9,6 +9,8 @@ import {
 import type { RegistryItemDefinition } from '@/registry/items';
 import { cn } from '@/registry/ndeko/lib/utils';
 
+import { kitFullPagePathOf } from './kit-paths';
+
 type KitItemProps = {
   item: RegistryItemDefinition;
   width: PreviewWidth;
@@ -22,6 +24,8 @@ const STAGE_CLASSES: Record<PreviewWidth, string> = {
 };
 
 export function KitItem({ item, width, Demo }: KitItemProps) {
+  const fullPagePath = kitFullPagePathOf(item.name);
+
   return (
     <article
       id={item.name}
@@ -35,6 +39,7 @@ export function KitItem({ item, width, Demo }: KitItemProps) {
         titleAs='h3'
         name={item.name}
         description={item.description}
+        fullPageHref={fullPagePath}
       />
       <PreviewStage
         className={cn(
