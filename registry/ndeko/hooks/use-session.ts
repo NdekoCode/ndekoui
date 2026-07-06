@@ -275,5 +275,7 @@ export function useSession<State, Action>({
     pressed,
     isFinished: step === undefined,
     restart,
+    /** Ends the demonstration for good, for a takeover the hook cannot see by itself. */
+    takeOver: autoplay.takeOver,
   };
 }

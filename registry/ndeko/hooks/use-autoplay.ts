@@ -32,9 +32,10 @@ type Latest = {
 
 /**
  * Plays a piece's own demonstration while it is on screen: each step calls a handler a person
- * would trigger. The first click or key inside the piece ends it for good, so the script never
- * fights the person. It holds its place off screen and in a hidden tab, and it does not play under
- * reduced motion. Steps must not move focus or open a layer outside the piece.
+ * would trigger. The first click or key inside the piece ends it for good, and so does the keyboard
+ * bringing focus into it, so the script never fights the person or moves what they just reached.
+ * It holds its place off screen and in a hidden tab, and it does not play under reduced motion.
+ * Steps must not move focus or open a layer outside the piece.
  */
 export function useAutoplay<Element extends HTMLElement = HTMLDivElement>(
   steps: readonly AutoplayStep[],
@@ -122,11 +123,24 @@ export function useAutoplay<Element extends HTMLElement = HTMLDivElement>(
         setIsTakenOver(true);
       }
     }
+    function takeOverOnKeyboardFocus(event: FocusEvent) {
+      const target = event.target;
+      if (!(target instanceof HTMLElement)) {
+        return;
+      }
+      const isFromPerson = event.isTrusted;
+      const isKeyboardFocus = target.matches(':focus-visible');
+      if (isFromPerson && isKeyboardFocus) {
+        setIsTakenOver(true);
+      }
+    }
     element.addEventListener('pointerdown', takeOverFrom, true);
     element.addEventListener('keydown', takeOverFrom, true);
+    element.addEventListener('focusin', takeOverOnKeyboardFocus);
     return () => {
       element.removeEventListener('pointerdown', takeOverFrom, true);
       element.removeEventListener('keydown', takeOverFrom, true);
+      element.removeEventListener('focusin', takeOverOnKeyboardFocus);
     };
   }, [isTakenOver]);
 
