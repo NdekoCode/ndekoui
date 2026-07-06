@@ -482,10 +482,10 @@ const TILES: BoardTile[] = [
   {
     id: 'moodboard',
     name: 'Moodboard',
-    action: 'View',
+    action: 'Select',
     picture: '/images/scenes/scene-06.svg',
   },
-  { id: 'brief', name: 'Launch brief', action: 'Open' },
+  { id: 'brief', name: 'Launch brief', action: 'Select' },
 ];
 
 const MODES: Segment<CursorMode>[] = [
