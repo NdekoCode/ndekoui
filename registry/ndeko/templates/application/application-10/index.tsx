@@ -129,8 +129,10 @@ export default function Application10({
     onSend?.(sendableText);
   }
 
+  /** The two buttons leave with the request, so the focus goes to what replaces them: the line that says what was decided. */
   function decide(decision: Decision) {
     act({ type: 'decided', decision });
+    focusLater('[data-request]');
     if (decision === 'denied') {
       onDeny?.();
       return;

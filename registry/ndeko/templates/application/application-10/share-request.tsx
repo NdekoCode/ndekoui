@@ -238,8 +238,10 @@ export function ShareRequest({ stage, pressed, onDecide }: ShareRequestProps) {
 
   return (
     <section
+      data-request
+      tabIndex={-1}
       aria-label='Request to share the memo'
-      className='bg-card hairline-ring ring-border dark:bg-foreground/[0.04] overflow-hidden rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04)] transition-opacity duration-300 starting:opacity-0'
+      className='bg-card hairline-ring ring-border dark:bg-foreground/[0.04] overflow-hidden rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04)] transition-opacity duration-300 outline-none starting:opacity-0'
     >
       <AnimatedSize>
         <AnimatePresence initial={false} mode='popLayout'>

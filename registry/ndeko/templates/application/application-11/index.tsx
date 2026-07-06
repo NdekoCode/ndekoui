@@ -181,9 +181,10 @@ export default function Application11({
     focusLater('[data-reply-field]');
   }
 
+  /** The two buttons leave with the request, so the focus goes to what replaces them: the line that says what was decided. */
   function decide(decision: Decision) {
     act({ type: 'refundDecided', decision });
-    focusLater('[data-reply-field]');
+    focusLater('[data-request]');
     if (decision === 'denied') {
       onDeny?.();
       return;

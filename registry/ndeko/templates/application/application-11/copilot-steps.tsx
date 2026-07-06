@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/registry/ndeko/lib/utils';
 import { CallStatusMark } from '@/registry/ndeko/ui/call-status';
 import { LiveDuration } from '@/registry/ndeko/ui/live-duration';
 
@@ -13,9 +14,27 @@ function sublineOf(step: CopilotStep, run: StepRun) {
   return step.detail;
 }
 
-function ArticleRow({ article }: { article: Article }) {
+/** A row rises in while the copilot is at that step. Coming back to the ticket shows what is already there, still. */
+function arrivalOf(isArriving: boolean) {
+  if (isArriving) {
+    return 'transition-[opacity,translate] duration-300 ease-(--ease-out-strong) starting:translate-y-1 starting:opacity-0';
+  }
+  return undefined;
+}
+
+type ArticleRowProps = {
+  article: Article;
+  isArriving: boolean;
+};
+
+function ArticleRow({ article, isArriving }: ArticleRowProps) {
   return (
-    <li className='bg-foreground/[0.04] flex items-start gap-2 rounded-md px-2 py-1.5 text-xs transition-[opacity,translate] duration-300 ease-(--ease-out-strong) starting:translate-y-1 starting:opacity-0'>
+    <li
+      className={cn(
+        'bg-foreground/[0.04] flex items-start gap-2 rounded-md px-2 py-1.5 text-xs',
+        arrivalOf(isArriving)
+      )}
+    >
       <span className='keycap-3d text-muted-foreground mt-px inline-flex h-4 min-w-4 shrink-0 items-center justify-center rounded-[4px] px-1 text-[10px] leading-none font-medium tabular-nums'>
         {article.number}
       </span>
@@ -42,7 +61,12 @@ function StepRow({ run, isLast, articlesFound }: StepRowProps) {
   const showsArticles = run.id === 'search' && articles.length > 0;
 
   return (
-    <li className='relative flex gap-2.5 pb-3 transition-opacity duration-300 last:pb-0 starting:opacity-0'>
+    <li
+      className={cn(
+        'relative flex gap-2.5 pb-3 last:pb-0',
+        arrivalOf(isRunning)
+      )}
+    >
       {!isLast && (
         <span
           aria-hidden='true'
@@ -72,7 +96,11 @@ function StepRow({ run, isLast, articlesFound }: StepRowProps) {
         {showsArticles && (
           <ul aria-label='Articles found' className='flex flex-col gap-1 pt-1'>
             {articles.map((article) => (
-              <ArticleRow key={article.number} article={article} />
+              <ArticleRow
+                key={article.number}
+                article={article}
+                isArriving={isRunning}
+              />
             ))}
           </ul>
         )}

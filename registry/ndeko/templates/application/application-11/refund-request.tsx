@@ -57,11 +57,11 @@ function DrawnCheck() {
 
 type RequestBodyProps = {
   pressed: string | null;
-  /** On a phone the request sits above the reply box, where it keeps to the amount, the reason and the answer. */
   isCompact?: boolean;
   onDecide: (decision: Decision) => void;
 };
 
+/** On a phone the request sits above the reply box, where it keeps to the amount, the reason and the answer. */
 function RequestBody({
   pressed,
   isCompact = false,
@@ -233,9 +233,11 @@ export function RefundRequest({
 
   return (
     <section
+      data-request
+      tabIndex={-1}
       aria-label='Refund request'
       className={cn(
-        'bg-card hairline-ring ring-border dark:bg-foreground/[0.04] overflow-hidden rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04)] transition-opacity duration-300 starting:opacity-0',
+        'bg-card hairline-ring ring-border dark:bg-foreground/[0.04] overflow-hidden rounded-xl shadow-[0_1px_2px_rgb(0_0_0/0.04)] transition-opacity duration-300 outline-none starting:opacity-0',
         className
       )}
     >

@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 
 const PINNED_SLACK_PX = 24;
 
-/** Keeps a scroller on its last line while its content grows, until a person scrolls away from it. */
+/** A scroller follows its last line only while a person has not scrolled away from it. */
 export function useFollowBottom() {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);

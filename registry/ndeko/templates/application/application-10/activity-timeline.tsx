@@ -134,7 +134,8 @@ export function ActivityTimeline({
   const panelId = useId();
   const span = { startedAt, endedAt };
   const elapsed = elapsedOf(span, endedAt ?? 0);
-  const headline = headlineOf(isResearching, formatDuration(elapsed));
+  const duration = formatDuration(elapsed);
+  const headline = headlineOf(isResearching, duration);
   const lastIndex = activity.length - 1;
 
   if (wasResearching !== isResearching) {

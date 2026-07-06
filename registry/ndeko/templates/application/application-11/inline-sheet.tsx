@@ -7,7 +7,7 @@ import { Button } from '@/registry/ndeko/ui/button';
 export type SheetSide = 'start' | 'bottom';
 
 const PANEL_PLACE: Record<SheetSide, string> = {
-  start: 'inset-y-2 start-2 w-[min(19rem,calc(100%-3.5rem))]',
+  start: 'inset-y-2 start-2 w-[19rem] max-w-[calc(100%-3.5rem)]',
   bottom: 'inset-x-2 bottom-2 h-[80%]',
 };
 
@@ -43,13 +43,15 @@ type InlineSheetProps = {
   closeLabel: string;
   side: SheetSide;
   isOpen: boolean;
-  /** The container variant from which the panel sits in the page and the sheet no longer exists. */
   hiddenFrom: string;
   onClose: () => void;
   children: React.ReactNode;
 };
 
-/** Drawn inside the template, so the demonstration never opens a layer over the rest of the page. */
+/**
+ * Drawn inside the template, so the demonstration never opens a layer over the rest of the page.
+ * `hiddenFrom` is the container variant from which its content sits in the page and the sheet is gone.
+ */
 export function InlineSheet({
   name,
   title,

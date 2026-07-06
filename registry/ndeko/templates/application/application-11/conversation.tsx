@@ -174,10 +174,10 @@ function EmptyConversation() {
 type MessagesProps = {
   ticket: Ticket;
   live: TicketLive;
-  /** The refund belongs to one ticket: `none` everywhere else. */
   refund: RefundStatus;
 };
 
+/** The refund belongs to one ticket: on any other, `refund` is `none` and no line about it shows. */
 function Messages({ ticket, live, refund }: MessagesProps) {
   const { scrollerRef, contentRef, updatePinned } = useFollowBottom();
   const shouldReduceMotion = usePrefersReducedMotion();

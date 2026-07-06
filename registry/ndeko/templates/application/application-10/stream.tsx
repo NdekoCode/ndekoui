@@ -7,7 +7,7 @@ import { wordsOf } from './words';
 const SHOWN_WORD =
   'relative opacity-100 transition-opacity duration-300 ease-(--ease-out-strong) starting:opacity-0';
 
-/** Counts up to `total` while it runs. The count starts again when the component mounts for a new round. */
+/** The count starts again only when the component mounts: a round that plays again has to mount it again. */
 export function useRevealedCount(
   total: number,
   isRunning: boolean,
