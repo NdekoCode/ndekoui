@@ -94,4 +94,11 @@ export const manifest: ComponentManifest = [
     description:
       'A pill whose price rolls figure by figure to a new amount while its width follows the figures, with the billing period under it where only the word that changed rolls.',
   },
+  {
+    name: 'badge-16',
+    source: 'ndeko',
+    title: 'Seal',
+    description:
+      'A round seal in one colour whose line of text circles a fixed centre label on a slow turn that holds off screen, under the pointer and under reduced motion, and that the demonstration can slow, quicken or pause.',
+  },
 ];
