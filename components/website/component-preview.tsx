@@ -2,15 +2,9 @@
 import { Fragment, useState } from 'react';
 
 import { cn } from '@/lib/utils';
-import { RefreshCwIcon } from '@/registry/ndeko/lib/icons';
-import { Button } from '@/registry/ndeko/ui/button';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/registry/ndeko/ui/tooltip';
 
 import { OpenInMenu } from '@/app/_site/open-in/open-in-menu';
+import { ReplayButton } from '@/app/_site/replay-button';
 import { motionItemNameOf } from '@/lib/site';
 
 type ComponentPreviewProps = {
@@ -76,24 +70,7 @@ export default function ComponentPreview({
           {motionItem && (
             <OpenInMenu title={motionItem.title} itemName={motionItem.name} />
           )}
-          {hasReTrigger && (
-            <Tooltip>
-              <TooltipTrigger
-                render={
-                  <Button
-                    variant='ghost'
-                    size='icon-sm'
-                    className='text-muted-foreground'
-                    aria-label='Replay the animation'
-                    onClick={replay}
-                  />
-                }
-              >
-                <RefreshCwIcon />
-              </TooltipTrigger>
-              <TooltipContent>Replay</TooltipContent>
-            </Tooltip>
-          )}
+          {hasReTrigger && <ReplayButton onReplay={replay} />}
         </div>
       </div>
       <Fragment key={replayCount}>{component}</Fragment>
