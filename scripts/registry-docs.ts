@@ -3,6 +3,7 @@ import path from 'node:path';
 
 import type { DocsExample } from '../app/docs/example-types';
 import { headingIdOf } from '../lib/heading-id';
+import { sentenceOfSlug } from '../lib/sentence-of-slug';
 
 const ROOT = path.join(__dirname, '..');
 const DOCS_DIR = path.join(ROOT, 'app/docs');
@@ -41,12 +42,6 @@ export type DocsPage = {
 
 function sortedAlphabetically(values: string[]) {
   return [...values].sort((first, second) => first.localeCompare(second));
-}
-
-function titleOfWords(slug: string) {
-  const sentence = slug.split('-').join(' ');
-  const first = sentence.charAt(0).toUpperCase();
-  return `${first}${sentence.slice(1)}`;
 }
 
 function plainTextOf(heading: string) {
@@ -147,7 +142,7 @@ function pageTitleOf(lines: string[], slug: string) {
       return plainTextOf(match[2]);
     }
   }
-  return titleOfWords(slug);
+  return sentenceOfSlug(slug);
 }
 
 function exampleOf(
@@ -178,7 +173,7 @@ function exampleOf(
     );
   }
   const example = path.basename(fullPath, '.tsx');
-  const title = plainTextOf(heading) || titleOfWords(example);
+  const title = plainTextOf(heading) || sentenceOfSlug(example);
   return {
     slug,
     example,

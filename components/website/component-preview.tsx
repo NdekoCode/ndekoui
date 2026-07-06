@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 
 import { OpenInMenu } from '@/app/_site/open-in/open-in-menu';
 import { ReplayButton } from '@/app/_site/replay-button';
+import { sentenceOfSlug } from '@/lib/sentence-of-slug';
 import { motionItemNameOf } from '@/lib/site';
 
 type ComponentPreviewProps = {
@@ -30,17 +31,11 @@ function motionSlugOf(filePath: string | undefined) {
   return slug;
 }
 
-function titleOfSlug(slug: string) {
-  const sentence = slug.split('-').join(' ');
-  const first = sentence.charAt(0).toUpperCase();
-  return `${first}${sentence.slice(1)}`;
-}
-
 function motionItemOf(slug: string | null) {
   if (!slug) {
     return null;
   }
-  return { name: motionItemNameOf(slug), title: titleOfSlug(slug) };
+  return { name: motionItemNameOf(slug), title: sentenceOfSlug(slug) };
 }
 
 export default function ComponentPreview({
