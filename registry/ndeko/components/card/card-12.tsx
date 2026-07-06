@@ -489,6 +489,12 @@ export function RouteGlobe({
 
 const CITIES: RouteCity[] = [
   {
+    id: 'kinshasa',
+    name: 'Kinshasa',
+    country: 'DR Congo',
+    location: [-4.44, 15.27],
+  },
+  {
     id: 'lisbon',
     name: 'Lisbon',
     country: 'Portugal',
@@ -516,6 +522,10 @@ const CITIES: RouteCity[] = [
 ];
 
 const ROUTES: Route[] = [
+  { id: 'kinshasa-lagos', fromId: 'kinshasa', toId: 'lagos' },
+  { id: 'kinshasa-lisbon', fromId: 'kinshasa', toId: 'lisbon' },
+  { id: 'kinshasa-dubai', fromId: 'kinshasa', toId: 'dubai' },
+  { id: 'kinshasa-sao-paulo', fromId: 'kinshasa', toId: 'sao-paulo' },
   { id: 'lisbon-new-york', fromId: 'lisbon', toId: 'new-york' },
   { id: 'lisbon-lagos', fromId: 'lisbon', toId: 'lagos' },
   { id: 'lisbon-dubai', fromId: 'lisbon', toId: 'dubai' },
@@ -524,7 +534,7 @@ const ROUTES: Route[] = [
   { id: 'new-york-sao-paulo', fromId: 'new-york', toId: 'sao-paulo' },
 ];
 
-const FIRST_CITY_ID = 'lisbon';
+const FIRST_CITY_ID = 'kinshasa';
 
 function announcementOf(cityId: string) {
   const city = CITIES.find((candidate) => candidate.id === cityId);
