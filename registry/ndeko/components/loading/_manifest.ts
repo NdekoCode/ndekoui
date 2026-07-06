@@ -29,4 +29,11 @@ export const manifest: ComponentManifest = [
     description:
       'A thinking status with a small drawn helmet whose visor shows a voice meter of five bouncing bars; when the work is done the meter settles and the visor holds a check.',
   },
+  {
+    name: 'loading-05',
+    source: 'ndeko',
+    title: 'One sweep for every skeleton',
+    description:
+      'Skeleton blocks that share one light passing over the whole layout in step with each other, so a page that changes shape keeps the same light.',
+  },
 ];
