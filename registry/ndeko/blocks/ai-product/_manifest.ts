@@ -78,4 +78,20 @@ export const manifest: BlockManifest = [
     files: ['index.tsx', 'app-tile.tsx', 'data.ts'],
     previewHeight: 640,
   },
+  {
+    name: 'ai-product-07',
+    title: 'Direction picker',
+    description:
+      'Four visual directions drawn as small compositions: the one you pick grows into an editable brief with its palette, type pair and three keywords, then Generate turns into its own progress and the options arrive in order.',
+    files: [
+      'index.tsx',
+      'direction-tiles.tsx',
+      'direction-art.tsx',
+      'brief-panel.tsx',
+      'generate-bar.tsx',
+      'session.ts',
+      'data.ts',
+    ],
+    previewHeight: 1020,
+  },
 ];
