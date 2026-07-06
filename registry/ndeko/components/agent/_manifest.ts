@@ -78,4 +78,11 @@ export const manifest: ComponentManifest = [
     description:
       'The to-do list of an agent under a header that counts 2 of 5 and carries the ring of the whole: the running step shows a ring that fills with its percentage rolling, and a done step is struck through by a line that draws from left to right.',
   },
+  {
+    name: 'agent-12',
+    source: 'ndeko',
+    title: 'Scheduled agent',
+    description:
+      'An agent that runs on a schedule, in words and as a cron badge, with the time to the next run, Pause that greys it out, and its last seven runs as marks, where Run now adds a new one that joins the row.',
+  },
 ];
