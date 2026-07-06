@@ -101,4 +101,18 @@ export const manifest: BlockManifest = [
     files: ['index.tsx', 'headline.tsx', 'data.ts'],
     previewHeight: 720,
   },
+  {
+    name: 'heroes-12',
+    title: 'Hero with a drawn agent',
+    description:
+      "A hero for a creator's home page with a drawn agent whose eyes follow the pointer and blink, beside a headline whose last words type, hold, erase and give way to the next phrase.",
+    files: [
+      'index.tsx',
+      'agent-face.tsx',
+      'use-gaze.ts',
+      'typed-phrase.tsx',
+      'data.ts',
+    ],
+    previewHeight: 600,
+  },
 ];
