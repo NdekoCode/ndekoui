@@ -1,171 +1,175 @@
 'use client';
 
 import {
-  createOnDropHandler,
   dragAndDropFeature,
   hotkeysCoreFeature,
   keyboardDragAndDropFeature,
   selectionFeature,
   syncDataLoaderFeature,
+  type DragTarget,
   type ItemInstance,
 } from '@headless-tree/core';
-import { AssistiveTreeDescription } from '@headless-tree/react';
-import { motion, type Transition } from 'motion/react';
-import { useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 
-import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
-import { FolderIcon, FolderOpenIcon } from '@/registry/ndeko/lib/icons';
-import { cn } from '@/registry/ndeko/lib/utils';
-import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
+import { Kbd, KbdGroup } from '@/registry/ndeko/ui/kbd';
+import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import {
   Tree,
   TreeDragLine,
-  TreeItem,
   TreeItemLabel,
   useTree,
 } from '@/registry/ndeko/ui/tree';
 
-type Item = {
-  name: string;
-  children?: string[];
+import {
+  dragStatusOf,
+  moveNoticeOf,
+  spokenStatusOf,
+} from './_parts/drag-status';
+import {
+  flattenBranches,
+  isFlatFolder,
+  moveNodes,
+  nameOf,
+  type Branch,
+  type FlatNode,
+} from './_parts/tree-data';
+import { FolderGlyph } from './_parts/tree-glyphs';
+import { TreeRow, TreeRows } from './_parts/tree-rows';
+
+const SITE_MENU: Branch = {
+  id: 'site-menu',
+  name: 'Mossline site menu',
+  children: [
+    {
+      id: 'product',
+      name: 'Product',
+      children: [
+        { id: 'planner', name: 'Planner' },
+        { id: 'timesheets', name: 'Timesheets' },
+        { id: 'invoicing', name: 'Invoicing' },
+      ],
+    },
+    {
+      id: 'solutions',
+      name: 'Solutions',
+      children: [
+        { id: 'for-agencies', name: 'For agencies' },
+        { id: 'for-freelancers', name: 'For freelancers' },
+      ],
+    },
+    {
+      id: 'resources',
+      name: 'Resources',
+      children: [
+        { id: 'guides', name: 'Guides' },
+        { id: 'changelog', name: 'Changelog' },
+      ],
+    },
+    { id: 'pricing', name: 'Pricing' },
+    { id: 'contact', name: 'Contact' },
+  ],
 };
 
-const INITIAL_ITEMS: Record<string, Item> = {
-  company: {
-    name: 'Company',
-    children: ['engineering', 'marketing', 'operations'],
-  },
-  engineering: {
-    name: 'Engineering',
-    children: ['frontend', 'backend', 'platform-team'],
-  },
-  frontend: { name: 'Frontend', children: ['design-system', 'web-platform'] },
-  'design-system': {
-    name: 'Design System',
-    children: ['components', 'tokens', 'guidelines'],
-  },
-  components: { name: 'Components' },
-  tokens: { name: 'Tokens' },
-  guidelines: { name: 'Guidelines' },
-  'web-platform': { name: 'Web Platform' },
-  backend: { name: 'Backend', children: ['apis', 'infrastructure'] },
-  apis: { name: 'APIs' },
-  infrastructure: { name: 'Infrastructure' },
-  'platform-team': { name: 'Platform Team' },
-  marketing: { name: 'Marketing', children: ['content', 'seo'] },
-  content: { name: 'Content' },
-  seo: { name: 'SEO' },
-  operations: { name: 'Operations', children: ['hr', 'finance'] },
-  hr: { name: 'HR' },
-  finance: { name: 'Finance' },
-};
+const MENU_AT_START = flattenBranches(SITE_MENU);
+
+const OPEN_AT_START = ['product', 'resources'];
+
+const SELECTED_AT_START = ['timesheets'];
 
 const INDENT = 20;
-const ROOT_ID = 'company';
-const EXPANDED_ITEMS = ['engineering', 'frontend', 'design-system'];
 
-const TRAVEL: Transition = { duration: 0.25, ease: [0.77, 0, 0.175, 1] };
-
-const INSTANT: Transition = { duration: 0 };
-
-function travelOf(shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return INSTANT;
-  }
-  return TRAVEL;
-}
-
-const GLYPH =
-  'text-muted-foreground col-start-1 row-start-1 size-4 transition-[opacity,scale,filter] duration-150 ease-out-strong';
-
-const SHOWN_WHEN_CLOSED =
-  'in-aria-expanded:scale-60 in-aria-expanded:opacity-0 in-aria-expanded:blur-[2px]';
-
-const SHOWN_WHEN_OPEN =
-  'scale-60 opacity-0 blur-[2px] in-aria-expanded:scale-100 in-aria-expanded:opacity-100 in-aria-expanded:blur-none';
-
-function FolderGlyph() {
-  return (
-    <span className='grid'>
-      <FolderIcon className={cn(GLYPH, SHOWN_WHEN_CLOSED)} />
-      <FolderOpenIcon className={cn(GLYPH, SHOWN_WHEN_OPEN)} />
-    </span>
-  );
-}
-
-function nameOf(item: ItemInstance<Item>) {
-  return item.getItemData().name;
-}
-
-function hasChildren(item: ItemInstance<Item>) {
-  const children = item.getItemData().children ?? [];
-  return children.length > 0;
+function idOf(row: ItemInstance<FlatNode>) {
+  return row.getId();
 }
 
 export default function Tree05() {
-  const [items, setItems] = useState(INITIAL_ITEMS);
-  const shouldReduceMotion = usePrefersReducedMotion();
-  const travel = travelOf(shouldReduceMotion);
+  const [nodes, setNodes] = useState(MENU_AT_START);
+  const [moveNotice, setMoveNotice] = useState('');
+  const hintId = useId();
 
-  function replaceChildren(parent: ItemInstance<Item>, childIds: string[]) {
-    const parentId = parent.getId();
-    setItems((current) => {
-      const updatedParent = { ...current[parentId], children: childIds };
-      return { ...current, [parentId]: updatedParent };
-    });
+  function nodeOf(nodeId: string) {
+    return nodes[nodeId];
   }
 
-  function itemOf(itemId: string) {
-    return items[itemId];
+  function childIdsOf(nodeId: string) {
+    return nodes[nodeId].childIds;
   }
 
-  function childrenOf(itemId: string) {
-    return items[itemId].children ?? [];
+  function dropRows(
+    rows: ItemInstance<FlatNode>[],
+    target: DragTarget<FlatNode>
+  ) {
+    const movedIds = rows.map(idOf);
+    const notice = moveNoticeOf(rows, target);
+    setNodes((current) => moveNodes(current, movedIds, target));
+    setMoveNotice(notice);
   }
 
-  const tree = useTree<Item>({
+  function forgetLastMove() {
+    setMoveNotice('');
+  }
+
+  const tree = useTree<FlatNode>({
     initialState: {
-      expandedItems: EXPANDED_ITEMS,
-      selectedItems: ['components'],
+      expandedItems: OPEN_AT_START,
+      selectedItems: SELECTED_AT_START,
     },
     indent: INDENT,
-    rootItemId: ROOT_ID,
+    rootItemId: SITE_MENU.id,
     getItemName: nameOf,
-    isItemFolder: hasChildren,
+    isItemFolder: isFlatFolder,
     canReorder: true,
-    onDrop: createOnDropHandler(replaceChildren),
-    dataLoader: { getItem: itemOf, getChildren: childrenOf },
+    onDrop: dropRows,
+    onStartKeyboardDrag: forgetLastMove,
+    dataLoader: { getItem: nodeOf, getChildren: childIdsOf },
     features: [
       syncDataLoaderFeature,
-      selectionFeature,
       hotkeysCoreFeature,
+      selectionFeature,
       dragAndDropFeature,
       keyboardDragAndDropFeature,
     ],
   });
+  const dragStatus = dragStatusOf(tree);
+  const status = spokenStatusOf(dragStatus, moveNotice);
+
+  /* The tree lists its rows once and keeps the list: it reads the menu again after every move. */
+  useEffect(() => {
+    tree.rebuildTree();
+  }, [nodes, tree]);
 
   return (
-    <div className='w-full'>
-      <AnimatedSize className='-ms-3' contentClassName='ps-3'>
-        <Tree aria-label='Project files' indent={INDENT} tree={tree}>
-          <AssistiveTreeDescription tree={tree} />
+    <div className='relative flex w-full flex-col gap-2'>
+      <Tree
+        aria-label={SITE_MENU.name}
+        aria-describedby={hintId}
+        indent={INDENT}
+        tree={tree}
+      >
+        <TreeRows>
           {tree.getItems().map((item) => (
-            <TreeItem
-              key={item.getId()}
-              item={item}
-              render={<motion.button layout='position' transition={travel} />}
-            >
+            <TreeRow key={item.getId()} item={item} travels>
               <TreeItemLabel>
-                <span className='flex items-center gap-2'>
-                  {item.isFolder() && <FolderGlyph />}
-                  {item.getItemName()}
-                </span>
+                {item.isFolder() && <FolderGlyph />}
+                <span className='truncate'>{item.getItemName()}</span>
               </TreeItemLabel>
-            </TreeItem>
+            </TreeRow>
           ))}
-          <TreeDragLine />
-        </Tree>
-      </AnimatedSize>
+        </TreeRows>
+        <TreeDragLine />
+      </Tree>
+      <p
+        id={hintId}
+        className='text-muted-foreground flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs'
+      >
+        Drag rows to reorder them, or press
+        <KbdGroup>
+          <Kbd>Ctrl</Kbd>
+          <Kbd>Shift</Kbd>
+          <Kbd>D</Kbd>
+        </KbdGroup>
+      </p>
+      <LiveRegion message={status} />
     </div>
   );
 }

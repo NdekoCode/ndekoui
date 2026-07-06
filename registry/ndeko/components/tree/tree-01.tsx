@@ -1,97 +1,84 @@
 'use client';
 
-import {
-  hotkeysCoreFeature,
-  syncDataLoaderFeature,
-  type ItemInstance,
-} from '@headless-tree/core';
+import { hotkeysCoreFeature, syncDataLoaderFeature } from '@headless-tree/core';
 
-import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
-import {
-  Tree,
-  TreeItem,
-  TreeItemLabel,
-  useTree,
-} from '@/registry/ndeko/ui/tree';
+import { Tree, TreeItemLabel, useTree } from '@/registry/ndeko/ui/tree';
 
-type Item = {
-  name: string;
-  children?: string[];
+import {
+  branchLoaderOf,
+  hasChildren,
+  indexBranches,
+  nameOf,
+  type Branch,
+} from './_parts/tree-data';
+import { TreeRow, TreeRows } from './_parts/tree-rows';
+
+const HELP_CENTER: Branch = {
+  id: 'help-center',
+  name: 'Harbor help center',
+  children: [
+    {
+      id: 'getting-started',
+      name: 'Getting started',
+      children: [
+        { id: 'create-account', name: 'Create your account' },
+        { id: 'invite-team', name: 'Invite your team' },
+        { id: 'import-data', name: 'Import your data' },
+      ],
+    },
+    {
+      id: 'billing',
+      name: 'Billing',
+      children: [
+        { id: 'plans', name: 'Plans and seats' },
+        {
+          id: 'invoices',
+          name: 'Invoices',
+          children: [
+            { id: 'download-invoice', name: 'Download an invoice' },
+            { id: 'billing-address', name: 'Change the billing address' },
+            { id: 'tax-number', name: 'Add a tax number' },
+          ],
+        },
+        { id: 'refunds', name: 'Refunds' },
+      ],
+    },
+    {
+      id: 'security',
+      name: 'Security',
+      children: [
+        { id: 'two-step', name: 'Two-step sign-in' },
+        { id: 'single-sign-on', name: 'Single sign-on' },
+      ],
+    },
+  ],
 };
 
-const ITEMS: Record<string, Item> = {
-  company: {
-    name: 'Company',
-    children: ['engineering', 'marketing', 'operations'],
-  },
-  engineering: {
-    name: 'Engineering',
-    children: ['frontend', 'backend', 'platform-team'],
-  },
-  frontend: { name: 'Frontend', children: ['design-system', 'web-platform'] },
-  'design-system': {
-    name: 'Design System',
-    children: ['components', 'tokens', 'guidelines'],
-  },
-  components: { name: 'Components' },
-  tokens: { name: 'Tokens' },
-  guidelines: { name: 'Guidelines' },
-  'web-platform': { name: 'Web Platform' },
-  backend: { name: 'Backend', children: ['apis', 'infrastructure'] },
-  apis: { name: 'APIs' },
-  infrastructure: { name: 'Infrastructure' },
-  'platform-team': { name: 'Platform Team' },
-  marketing: { name: 'Marketing', children: ['content', 'seo'] },
-  content: { name: 'Content' },
-  seo: { name: 'SEO' },
-  operations: { name: 'Operations', children: ['hr', 'finance'] },
-  hr: { name: 'HR' },
-  finance: { name: 'Finance' },
-};
+const TOPICS = indexBranches(HELP_CENTER);
 
-const INDENT = 20;
-const ROOT_ID = 'company';
-const EXPANDED_ITEMS = ['engineering', 'frontend', 'design-system'];
+const TOPIC_LOADER = branchLoaderOf(TOPICS);
 
-function nameOf(item: ItemInstance<Item>) {
-  return item.getItemData().name;
-}
-
-function hasChildren(item: ItemInstance<Item>) {
-  const children = item.getItemData().children ?? [];
-  return children.length > 0;
-}
-
-function itemOf(itemId: string) {
-  return ITEMS[itemId];
-}
-
-function childrenOf(itemId: string) {
-  return ITEMS[itemId].children ?? [];
-}
+const OPEN_AT_START = ['billing', 'invoices'];
 
 export default function Tree01() {
-  const tree = useTree<Item>({
-    initialState: { expandedItems: EXPANDED_ITEMS },
-    indent: INDENT,
-    rootItemId: ROOT_ID,
+  const tree = useTree<Branch>({
+    initialState: { expandedItems: OPEN_AT_START },
+    rootItemId: HELP_CENTER.id,
     getItemName: nameOf,
     isItemFolder: hasChildren,
-    dataLoader: { getItem: itemOf, getChildren: childrenOf },
+    dataLoader: TOPIC_LOADER,
     features: [syncDataLoaderFeature, hotkeysCoreFeature],
   });
 
   return (
-    <div className='w-full'>
-      <AnimatedSize>
-        <Tree aria-label='Teams' indent={INDENT} tree={tree}>
-          {tree.getItems().map((item) => (
-            <TreeItem key={item.getId()} item={item}>
-              <TreeItemLabel />
-            </TreeItem>
-          ))}
-        </Tree>
-      </AnimatedSize>
-    </div>
+    <Tree aria-label={HELP_CENTER.name} tree={tree} className='w-full'>
+      <TreeRows>
+        {tree.getItems().map((item) => (
+          <TreeRow key={item.getId()} item={item}>
+            <TreeItemLabel />
+          </TreeRow>
+        ))}
+      </TreeRows>
+    </Tree>
   );
 }

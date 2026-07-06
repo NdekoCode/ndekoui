@@ -7,156 +7,155 @@ import {
   syncDataLoaderFeature,
   type ItemInstance,
 } from '@headless-tree/core';
+import { useState } from 'react';
 
-import {
-  FolderIcon,
-  FolderOpenIcon,
-  ListCollapseIcon,
-  ListTreeIcon,
-} from '@/registry/ndeko/lib/icons';
-import { cn } from '@/registry/ndeko/lib/utils';
-import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
+import { ListCollapseIcon, ListTreeIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
+import { LiveRegion } from '@/registry/ndeko/ui/live-region';
+import { Tree, TreeItemLabel, useTree } from '@/registry/ndeko/ui/tree';
+
 import {
-  Tree,
-  TreeItem,
-  TreeItemLabel,
-  useTree,
-} from '@/registry/ndeko/ui/tree';
+  branchLoaderOf,
+  hasChildren,
+  indexBranches,
+  nameOf,
+  type Branch,
+} from './_parts/tree-data';
+import { FolderGlyph } from './_parts/tree-glyphs';
+import { TreeRow, TreeRows } from './_parts/tree-rows';
 
-type Item = {
-  name: string;
-  children?: string[];
+const CATALOGUE: Branch = {
+  id: 'catalogue',
+  name: 'Pinecrest catalogue',
+  children: [
+    {
+      id: 'camping',
+      name: 'Camping',
+      children: [
+        {
+          id: 'tents',
+          name: 'Tents',
+          children: [
+            { id: 'two-person-tents', name: 'Two-person tents' },
+            { id: 'family-tents', name: 'Family tents' },
+            { id: 'ultralight-tents', name: 'Ultralight tents' },
+          ],
+        },
+        { id: 'sleeping-bags', name: 'Sleeping bags' },
+        { id: 'stoves', name: 'Stoves' },
+      ],
+    },
+    {
+      id: 'footwear',
+      name: 'Footwear',
+      children: [
+        { id: 'trail-shoes', name: 'Trail shoes' },
+        { id: 'hiking-boots', name: 'Hiking boots' },
+      ],
+    },
+    {
+      id: 'clothing',
+      name: 'Clothing',
+      children: [
+        { id: 'rain-shells', name: 'Rain shells' },
+        { id: 'base-layers', name: 'Base layers' },
+        { id: 'socks', name: 'Socks' },
+      ],
+    },
+  ],
 };
 
-const ITEMS: Record<string, Item> = {
-  company: {
-    name: 'Company',
-    children: ['engineering', 'marketing', 'operations'],
-  },
-  engineering: {
-    name: 'Engineering',
-    children: ['frontend', 'backend', 'platform-team'],
-  },
-  frontend: { name: 'Frontend', children: ['design-system', 'web-platform'] },
-  'design-system': {
-    name: 'Design System',
-    children: ['components', 'tokens', 'guidelines'],
-  },
-  components: { name: 'Components' },
-  tokens: { name: 'Tokens' },
-  guidelines: { name: 'Guidelines' },
-  'web-platform': { name: 'Web Platform' },
-  backend: { name: 'Backend', children: ['apis', 'infrastructure'] },
-  apis: { name: 'APIs' },
-  infrastructure: { name: 'Infrastructure' },
-  'platform-team': { name: 'Platform Team' },
-  marketing: { name: 'Marketing', children: ['content', 'seo'] },
-  content: { name: 'Content' },
-  seo: { name: 'SEO' },
-  operations: { name: 'Operations', children: ['hr', 'finance'] },
-  hr: { name: 'HR' },
-  finance: { name: 'Finance' },
+const CATEGORIES = indexBranches(CATALOGUE);
+
+const CATEGORY_LOADER = branchLoaderOf(CATEGORIES);
+
+const OPEN_AT_START = ['camping', 'tents'];
+
+const SELECTED_AT_START = ['family-tents'];
+
+type CategoryRowProps = {
+  row: ItemInstance<Branch>;
 };
 
-const INDENT = 20;
-const ROOT_ID = 'company';
-const EXPANDED_ITEMS = ['engineering', 'frontend', 'design-system'];
+function CategoryRow({ row }: CategoryRowProps) {
+  const isGroup = row.isFolder();
+  const childCount = row.getChildren().length;
 
-const COUNT =
-  'keycap-3d text-muted-foreground inline-flex h-5 min-w-5 items-center justify-center rounded-[5px] px-1 text-[11px] font-medium tabular-nums';
-
-const GLYPH =
-  'text-muted-foreground col-start-1 row-start-1 size-4 transition-[opacity,scale,filter] duration-150 ease-out-strong';
-
-const SHOWN_WHEN_CLOSED =
-  'in-aria-expanded:scale-60 in-aria-expanded:opacity-0 in-aria-expanded:blur-[2px]';
-
-const SHOWN_WHEN_OPEN =
-  'scale-60 opacity-0 blur-[2px] in-aria-expanded:scale-100 in-aria-expanded:opacity-100 in-aria-expanded:blur-none';
-
-function FolderGlyph() {
   return (
-    <span className='grid'>
-      <FolderIcon className={cn(GLYPH, SHOWN_WHEN_CLOSED)} />
-      <FolderOpenIcon className={cn(GLYPH, SHOWN_WHEN_OPEN)} />
-    </span>
+    <TreeItemLabel>
+      {isGroup && <FolderGlyph />}
+      <span className='truncate'>{row.getItemName()}</span>
+      {isGroup && (
+        <span className='text-muted-foreground ms-auto ps-2 text-xs tabular-nums'>
+          {childCount}
+        </span>
+      )}
+    </TreeItemLabel>
   );
 }
 
-function nameOf(item: ItemInstance<Item>) {
-  return item.getItemData().name;
-}
-
-function hasChildren(item: ItemInstance<Item>) {
-  const children = item.getItemData().children ?? [];
-  return children.length > 0;
-}
-
-function itemOf(itemId: string) {
-  return ITEMS[itemId];
-}
-
-function childrenOf(itemId: string) {
-  return ITEMS[itemId].children ?? [];
-}
-
 export default function Tree10() {
-  const tree = useTree<Item>({
+  const [notice, setNotice] = useState('');
+
+  const tree = useTree<Branch>({
     initialState: {
-      expandedItems: EXPANDED_ITEMS,
-      selectedItems: ['components'],
+      expandedItems: OPEN_AT_START,
+      selectedItems: SELECTED_AT_START,
     },
-    indent: INDENT,
-    rootItemId: ROOT_ID,
+    rootItemId: CATALOGUE.id,
     getItemName: nameOf,
     isItemFolder: hasChildren,
-    dataLoader: { getItem: itemOf, getChildren: childrenOf },
+    dataLoader: CATEGORY_LOADER,
     features: [
       syncDataLoaderFeature,
-      selectionFeature,
       hotkeysCoreFeature,
+      selectionFeature,
       expandAllFeature,
     ],
   });
 
-  function expandAll() {
+  function openEveryCategory() {
     void tree.expandAll();
+    setNotice('Every category is open');
   }
 
-  function collapseAll() {
+  function closeEveryCategory() {
     tree.collapseAll();
+    setNotice('Every category is closed');
   }
 
   return (
-    <div className='flex w-full flex-col gap-2'>
-      <div className='flex items-center gap-2'>
-        <Button size='sm' variant='outline' onClick={expandAll}>
-          <ListTreeIcon className='-ms-1 opacity-60' />
+    <div className='relative flex w-full flex-col gap-2'>
+      <div className='flex flex-wrap items-center gap-2'>
+        <Button
+          type='button'
+          size='sm'
+          variant='outline'
+          onClick={openEveryCategory}
+        >
+          <ListTreeIcon />
           Expand all
         </Button>
-        <Button size='sm' variant='outline' onClick={collapseAll}>
-          <ListCollapseIcon className='-ms-1 opacity-60' />
+        <Button
+          type='button'
+          size='sm'
+          variant='outline'
+          onClick={closeEveryCategory}
+        >
+          <ListCollapseIcon />
           Collapse all
         </Button>
       </div>
-      <AnimatedSize>
-        <Tree aria-label='Project files' indent={INDENT} tree={tree}>
+      <Tree aria-label={CATALOGUE.name} tree={tree}>
+        <TreeRows>
           {tree.getItems().map((item) => (
-            <TreeItem key={item.getId()} item={item}>
-              <TreeItemLabel>
-                <span className='flex items-center gap-2'>
-                  {item.isFolder() && <FolderGlyph />}
-                  {item.getItemName()}
-                  {item.isFolder() && (
-                    <span className={COUNT}>{item.getChildren().length}</span>
-                  )}
-                </span>
-              </TreeItemLabel>
-            </TreeItem>
+            <TreeRow key={item.getId()} item={item}>
+              <CategoryRow row={item} />
+            </TreeRow>
           ))}
-        </Tree>
-      </AnimatedSize>
+        </TreeRows>
+      </Tree>
+      <LiveRegion message={notice} />
     </div>
   );
 }

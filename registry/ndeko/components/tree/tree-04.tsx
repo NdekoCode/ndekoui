@@ -1,138 +1,109 @@
 'use client';
 
-import {
-  hotkeysCoreFeature,
-  syncDataLoaderFeature,
-  type ItemInstance,
-} from '@headless-tree/core';
+import { hotkeysCoreFeature, syncDataLoaderFeature } from '@headless-tree/core';
 
 import {
-  FileIcon,
-  FolderIcon,
-  FolderOpenIcon,
+  BookIcon,
+  BookmarkIcon,
+  BookOpenIcon,
 } from '@/registry/ndeko/lib/icons';
-import { cn } from '@/registry/ndeko/lib/utils';
-import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
+import { Tree, TreeItemLabel, useTree } from '@/registry/ndeko/ui/tree';
+
 import {
-  Tree,
-  TreeItem,
-  TreeItemLabel,
-  useTree,
-} from '@/registry/ndeko/ui/tree';
+  branchLoaderOf,
+  hasChildren,
+  indexBranches,
+  nameOf,
+  type Branch,
+} from './_parts/tree-data';
+import { OpeningGlyph } from './_parts/tree-glyphs';
+import { TreeRow, TreeRows } from './_parts/tree-rows';
 
-type Item = {
-  name: string;
-  children?: string[];
+const BOOKSHOP: Branch = {
+  id: 'bookshop',
+  name: 'Solway Books shelves',
+  children: [
+    {
+      id: 'fiction',
+      name: 'Fiction',
+      children: [
+        {
+          id: 'crime',
+          name: 'Crime and thrillers',
+          children: [
+            { id: 'nordic-noir', name: 'Nordic noir' },
+            { id: 'cosy-mysteries', name: 'Cosy mysteries' },
+            { id: 'courtroom-drama', name: 'Courtroom drama' },
+          ],
+        },
+        { id: 'science-fiction', name: 'Science fiction' },
+        { id: 'short-stories', name: 'Short stories' },
+      ],
+    },
+    {
+      id: 'non-fiction',
+      name: 'Non-fiction',
+      children: [
+        { id: 'history', name: 'History' },
+        { id: 'travel-writing', name: 'Travel writing' },
+        { id: 'cookery', name: 'Cookery' },
+      ],
+    },
+    {
+      id: 'children',
+      name: 'Children',
+      children: [
+        { id: 'picture-books', name: 'Picture books' },
+        { id: 'first-readers', name: 'First readers' },
+      ],
+    },
+  ],
 };
 
-const ITEMS: Record<string, Item> = {
-  company: {
-    name: 'Company',
-    children: ['engineering', 'marketing', 'operations'],
-  },
-  engineering: {
-    name: 'Engineering',
-    children: ['frontend', 'backend', 'platform-team'],
-  },
-  frontend: { name: 'Frontend', children: ['design-system', 'web-platform'] },
-  'design-system': {
-    name: 'Design System',
-    children: ['components', 'tokens', 'guidelines'],
-  },
-  components: { name: 'Components' },
-  tokens: { name: 'Tokens' },
-  guidelines: { name: 'Guidelines' },
-  'web-platform': { name: 'Web Platform' },
-  backend: { name: 'Backend', children: ['apis', 'infrastructure'] },
-  apis: { name: 'APIs' },
-  infrastructure: { name: 'Infrastructure' },
-  'platform-team': { name: 'Platform Team' },
-  marketing: { name: 'Marketing', children: ['content', 'seo'] },
-  content: { name: 'Content' },
-  seo: { name: 'SEO' },
-  operations: { name: 'Operations', children: ['hr', 'finance'] },
-  hr: { name: 'HR' },
-  finance: { name: 'Finance' },
+const SHELVES = indexBranches(BOOKSHOP);
+
+const SHELF_LOADER = branchLoaderOf(SHELVES);
+
+const OPEN_AT_START = ['fiction', 'crime'];
+
+/* The label draws its chevron first: reversing the row sends it to the end, and a shelf without one starts at the edge. */
+const CHEVRON_AT_THE_END = 'flex-row-reverse not-in-data-[folder=true]:ps-2';
+
+type ShelfGlyphProps = {
+  isSection: boolean;
 };
 
-const INDENT = 20;
-const ROOT_ID = 'company';
-const EXPANDED_ITEMS = ['engineering', 'frontend', 'design-system'];
-
-const INDENT_GUIDES = [
-  'relative before:pointer-events-none before:absolute before:inset-y-0 before:-start-1 before:w-(--tree-padding)',
-  'before:bg-[repeating-linear-gradient(to_right,transparent_0,transparent_calc(var(--tree-indent)-var(--hairline)),var(--border)_calc(var(--tree-indent)-var(--hairline)),var(--border)_var(--tree-indent))]',
-].join(' ');
-
-const GLYPH =
-  'text-muted-foreground col-start-1 row-start-1 size-4 transition-[opacity,scale,filter] duration-150 ease-out-strong';
-
-const SHOWN_WHEN_CLOSED =
-  'in-aria-expanded:scale-60 in-aria-expanded:opacity-0 in-aria-expanded:blur-[2px]';
-
-const SHOWN_WHEN_OPEN =
-  'scale-60 opacity-0 blur-[2px] in-aria-expanded:scale-100 in-aria-expanded:opacity-100 in-aria-expanded:blur-none';
-
-function FolderGlyph() {
-  return (
-    <span className='grid'>
-      <FolderIcon className={cn(GLYPH, SHOWN_WHEN_CLOSED)} />
-      <FolderOpenIcon className={cn(GLYPH, SHOWN_WHEN_OPEN)} />
-    </span>
-  );
-}
-
-function ItemGlyph({ isFolder }: { isFolder: boolean }) {
-  if (isFolder) {
-    return <FolderGlyph />;
+function ShelfGlyph({ isSection }: ShelfGlyphProps) {
+  if (isSection) {
+    return <OpeningGlyph closed={BookIcon} open={BookOpenIcon} />;
   }
-  return <FileIcon className='text-muted-foreground size-4' />;
-}
-
-function nameOf(item: ItemInstance<Item>) {
-  return item.getItemData().name;
-}
-
-function hasChildren(item: ItemInstance<Item>) {
-  const children = item.getItemData().children ?? [];
-  return children.length > 0;
-}
-
-function itemOf(itemId: string) {
-  return ITEMS[itemId];
-}
-
-function childrenOf(itemId: string) {
-  return ITEMS[itemId].children ?? [];
+  return <BookmarkIcon className='text-muted-foreground size-4' />;
 }
 
 export default function Tree04() {
-  const tree = useTree<Item>({
-    initialState: { expandedItems: EXPANDED_ITEMS },
-    indent: INDENT,
-    rootItemId: ROOT_ID,
+  const tree = useTree<Branch>({
+    initialState: { expandedItems: OPEN_AT_START },
+    rootItemId: BOOKSHOP.id,
     getItemName: nameOf,
     isItemFolder: hasChildren,
-    dataLoader: { getItem: itemOf, getChildren: childrenOf },
+    dataLoader: SHELF_LOADER,
     features: [syncDataLoaderFeature, hotkeysCoreFeature],
   });
 
   return (
-    <div className='w-full'>
-      <AnimatedSize>
-        <Tree aria-label='Project files' indent={INDENT} tree={tree}>
-          {tree.getItems().map((item) => (
-            <TreeItem key={item.getId()} item={item} className={INDENT_GUIDES}>
-              <TreeItemLabel className='not-in-data-[folder=true]:ps-2'>
-                <span className='-order-1 flex flex-1 items-center gap-2'>
-                  <ItemGlyph isFolder={item.isFolder()} />
-                  {item.getItemName()}
-                </span>
-              </TreeItemLabel>
-            </TreeItem>
-          ))}
-        </Tree>
-      </AnimatedSize>
-    </div>
+    <Tree aria-label={BOOKSHOP.name} tree={tree} className='w-full'>
+      <TreeRows>
+        {tree.getItems().map((item) => (
+          <TreeRow key={item.getId()} item={item} hasGuides>
+            <TreeItemLabel className={CHEVRON_AT_THE_END}>
+              <span className='flex min-w-0 flex-1 items-center gap-1.5'>
+                <ShelfGlyph isSection={item.isFolder()} />
+                <span className='truncate'>{item.getItemName()}</span>
+              </span>
+            </TreeItemLabel>
+          </TreeRow>
+        ))}
+      </TreeRows>
+    </Tree>
   );
 }

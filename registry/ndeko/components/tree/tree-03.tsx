@@ -1,138 +1,90 @@
 'use client';
 
-import {
-  hotkeysCoreFeature,
-  syncDataLoaderFeature,
-  type ItemInstance,
-} from '@headless-tree/core';
+import { hotkeysCoreFeature, syncDataLoaderFeature } from '@headless-tree/core';
+
+import { Tree, TreeItemLabel, useTree } from '@/registry/ndeko/ui/tree';
 
 import {
-  FileIcon,
-  FolderIcon,
-  FolderOpenIcon,
-} from '@/registry/ndeko/lib/icons';
-import { cn } from '@/registry/ndeko/lib/utils';
-import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
-import {
-  Tree,
-  TreeItem,
-  TreeItemLabel,
-  useTree,
-} from '@/registry/ndeko/ui/tree';
+  branchLoaderOf,
+  hasChildren,
+  indexBranches,
+  nameOf,
+  type Branch,
+} from './_parts/tree-data';
+import { EntryGlyph } from './_parts/tree-glyphs';
+import { TreeRow, TreeRows } from './_parts/tree-rows';
 
-type Item = {
-  name: string;
-  children?: string[];
+const SHARED_DRIVE: Branch = {
+  id: 'shared-drive',
+  name: 'Tidewell Studio shared drive',
+  children: [
+    {
+      id: 'clients',
+      name: 'Clients',
+      children: [
+        {
+          id: 'oatfield',
+          name: 'Oatfield',
+          children: [
+            { id: 'packaging-brief', name: 'Packaging brief.pdf' },
+            { id: 'label-artwork', name: 'Label artwork.zip' },
+            { id: 'shoot-selects', name: 'Shoot selects.zip' },
+          ],
+        },
+        {
+          id: 'pinecrest',
+          name: 'Pinecrest',
+          children: [{ id: 'spring-lookbook', name: 'Spring lookbook.pdf' }],
+        },
+      ],
+    },
+    {
+      id: 'studio',
+      name: 'Studio',
+      children: [
+        { id: 'rate-card', name: 'Rate card.pdf' },
+        { id: 'holiday-rota', name: 'Holiday rota.xlsx' },
+      ],
+    },
+    {
+      id: 'templates',
+      name: 'Templates',
+      children: [
+        { id: 'proposal', name: 'Proposal.docx' },
+        { id: 'estimate', name: 'Estimate.xlsx' },
+      ],
+    },
+  ],
 };
 
-const ITEMS: Record<string, Item> = {
-  company: {
-    name: 'Company',
-    children: ['engineering', 'marketing', 'operations'],
-  },
-  engineering: {
-    name: 'Engineering',
-    children: ['frontend', 'backend', 'platform-team'],
-  },
-  frontend: { name: 'Frontend', children: ['design-system', 'web-platform'] },
-  'design-system': {
-    name: 'Design System',
-    children: ['components', 'tokens', 'guidelines'],
-  },
-  components: { name: 'Components' },
-  tokens: { name: 'Tokens' },
-  guidelines: { name: 'Guidelines' },
-  'web-platform': { name: 'Web Platform' },
-  backend: { name: 'Backend', children: ['apis', 'infrastructure'] },
-  apis: { name: 'APIs' },
-  infrastructure: { name: 'Infrastructure' },
-  'platform-team': { name: 'Platform Team' },
-  marketing: { name: 'Marketing', children: ['content', 'seo'] },
-  content: { name: 'Content' },
-  seo: { name: 'SEO' },
-  operations: { name: 'Operations', children: ['hr', 'finance'] },
-  hr: { name: 'HR' },
-  finance: { name: 'Finance' },
-};
+const ENTRIES = indexBranches(SHARED_DRIVE);
 
-const INDENT = 20;
-const ROOT_ID = 'company';
-const EXPANDED_ITEMS = ['engineering', 'frontend', 'design-system'];
+const ENTRY_LOADER = branchLoaderOf(ENTRIES);
 
-const INDENT_GUIDES = [
-  'relative before:pointer-events-none before:absolute before:inset-y-0 before:-start-1 before:w-(--tree-padding)',
-  'before:bg-[repeating-linear-gradient(to_right,transparent_0,transparent_calc(var(--tree-indent)-var(--hairline)),var(--border)_calc(var(--tree-indent)-var(--hairline)),var(--border)_var(--tree-indent))]',
-].join(' ');
-
-const GLYPH =
-  'text-muted-foreground col-start-1 row-start-1 size-4 transition-[opacity,scale,filter] duration-150 ease-out-strong';
-
-const SHOWN_WHEN_CLOSED =
-  'in-aria-expanded:scale-60 in-aria-expanded:opacity-0 in-aria-expanded:blur-[2px]';
-
-const SHOWN_WHEN_OPEN =
-  'scale-60 opacity-0 blur-[2px] in-aria-expanded:scale-100 in-aria-expanded:opacity-100 in-aria-expanded:blur-none';
-
-function FolderGlyph() {
-  return (
-    <span className='grid'>
-      <FolderIcon className={cn(GLYPH, SHOWN_WHEN_CLOSED)} />
-      <FolderOpenIcon className={cn(GLYPH, SHOWN_WHEN_OPEN)} />
-    </span>
-  );
-}
-
-function ItemGlyph({ isFolder }: { isFolder: boolean }) {
-  if (isFolder) {
-    return <FolderGlyph />;
-  }
-  return <FileIcon className='text-muted-foreground size-4' />;
-}
-
-function nameOf(item: ItemInstance<Item>) {
-  return item.getItemData().name;
-}
-
-function hasChildren(item: ItemInstance<Item>) {
-  const children = item.getItemData().children ?? [];
-  return children.length > 0;
-}
-
-function itemOf(itemId: string) {
-  return ITEMS[itemId];
-}
-
-function childrenOf(itemId: string) {
-  return ITEMS[itemId].children ?? [];
-}
+const OPEN_AT_START = ['clients', 'oatfield'];
 
 export default function Tree03() {
-  const tree = useTree<Item>({
-    initialState: { expandedItems: EXPANDED_ITEMS },
-    indent: INDENT,
-    rootItemId: ROOT_ID,
+  const tree = useTree<Branch>({
+    initialState: { expandedItems: OPEN_AT_START },
+    rootItemId: SHARED_DRIVE.id,
     getItemName: nameOf,
     isItemFolder: hasChildren,
-    dataLoader: { getItem: itemOf, getChildren: childrenOf },
+    dataLoader: ENTRY_LOADER,
     features: [syncDataLoaderFeature, hotkeysCoreFeature],
   });
 
   return (
-    <div className='w-full'>
-      <AnimatedSize>
-        <Tree aria-label='Project files' indent={INDENT} tree={tree}>
-          {tree.getItems().map((item) => (
-            <TreeItem key={item.getId()} item={item} className={INDENT_GUIDES}>
-              <TreeItemLabel>
-                <span className='flex items-center gap-2'>
-                  <ItemGlyph isFolder={item.isFolder()} />
-                  {item.getItemName()}
-                </span>
-              </TreeItemLabel>
-            </TreeItem>
-          ))}
-        </Tree>
-      </AnimatedSize>
-    </div>
+    <Tree aria-label={SHARED_DRIVE.name} tree={tree} className='w-full'>
+      <TreeRows>
+        {tree.getItems().map((item) => (
+          <TreeRow key={item.getId()} item={item} hasGuides>
+            <TreeItemLabel>
+              <EntryGlyph isFolder={item.isFolder()} />
+              <span className='truncate'>{item.getItemName()}</span>
+            </TreeItemLabel>
+          </TreeRow>
+        ))}
+      </TreeRows>
+    </Tree>
   );
 }

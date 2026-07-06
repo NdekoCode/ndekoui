@@ -3,46 +3,52 @@ import type { ComponentManifest } from '@/registry/ndeko/components/types';
 export const manifest: ComponentManifest = [
   {
     name: 'tree-01',
-    source: 'comp-565',
+    source: 'ndeko',
     title: 'Basic tree',
-    description: 'Teams in folders that open with the arrow keys or a click.',
+    description:
+      'Help topics in folders that open with a click or the arrow keys, their rows arriving with height and opacity.',
   },
   {
     name: 'tree-02',
-    source: 'comp-566',
+    source: 'ndeko',
     title: 'Tree with guide lines',
-    description: 'Vertical lines show which folder each row belongs to.',
+    description:
+      'Vertical lines show which aisle each rack belongs to, and grow with the rows as a folder opens.',
   },
   {
     name: 'tree-03',
-    source: 'comp-567',
+    source: 'ndeko',
     title: 'Tree with icons',
-    description: 'Folder and file icons, the folder opening with its row.',
+    description:
+      'Folders and files with icons, the folder icon opening with its row.',
   },
   {
     name: 'tree-04',
-    source: 'comp-568',
+    source: 'ndeko',
     title: 'Chevron on the right',
-    description: 'Icons lead each row and the chevron sits at the end.',
+    description:
+      'A book icon leads each shelf and opens with it, while the chevron sits at the end of the row.',
   },
   {
     name: 'tree-05',
-    source: 'comp-569',
+    source: 'ndeko',
     title: 'Drag and drop tree',
-    description: 'Select several rows and drag them to a new place.',
+    description:
+      'Select several rows and drag them, or press Ctrl Shift D: they glide to their new place and the move is spoken.',
   },
   {
     name: 'tree-06',
-    source: 'comp-570',
+    source: 'ndeko',
     title: 'Renamable tree',
     description:
-      'Press F2 to rename the focused row; it moves to its new place.',
+      'Press F2 or Rename to edit the focused row in place, then it glides to its new place in the alphabet.',
   },
   {
     name: 'tree-07',
-    source: 'comp-571',
+    source: 'ndeko',
     title: 'Searchable tree',
-    description: 'Typing opens every folder and highlights the matches.',
+    description:
+      'Typing opens every folder, highlights the matches and counts them; clearing the field brings back the folders you had open.',
   },
   {
     name: 'tree-08',
@@ -52,21 +58,24 @@ export const manifest: ComponentManifest = [
   },
   {
     name: 'tree-09',
-    source: 'comp-573',
+    source: 'ndeko',
     title: 'Double-click to open',
-    description: 'A click selects a row and a double click opens its folder.',
+    description:
+      'A click selects a folder and a double click or Enter opens it, while the highlight glides to the selected row.',
   },
   {
     name: 'tree-10',
-    source: 'comp-574',
+    source: 'ndeko',
     title: 'Expand and collapse all',
-    description: 'Two buttons open or close every folder, with child counts.',
+    description:
+      'Two buttons open or close every folder, with the number of children at the end of each row.',
   },
   {
     name: 'tree-11',
-    source: 'comp-575',
+    source: 'ndeko',
     title: 'File explorer',
-    description: 'Project files by type, sorted again after a drop.',
+    description:
+      'A repository with an icon per file type, sorted again when a file is dropped on a folder.',
   },
   {
     name: 'tree-12',
@@ -76,21 +85,23 @@ export const manifest: ComponentManifest = [
   },
   {
     name: 'tree-13',
-    source: 'comp-597',
+    source: 'ndeko',
     title: 'Checkboxes on the right',
     description:
-      'A checkbox at the end of each row, folders following their items.',
+      'A checkbox at the end of each row, folders following their items, and a count that rolls as boxes change.',
   },
   {
     name: 'tree-14',
-    source: 'comp-598',
+    source: 'ndeko',
     title: 'Checkboxes on the left',
-    description: 'A checkbox before each row, folders following their items.',
+    description:
+      'A checkbox before each row, folders following their items, with Select all and Clear under the tree.',
   },
   {
     name: 'tree-15',
-    source: 'comp-599',
+    source: 'ndeko',
     title: 'Checkable folders',
-    description: 'Checking a folder checks it and everything inside it.',
+    description:
+      'Checking a folder checks it and everything inside it, and the number of documents rolls to the new total.',
   },
 ];

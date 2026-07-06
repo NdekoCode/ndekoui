@@ -7,164 +7,204 @@ import {
   selectionFeature,
   syncDataLoaderFeature,
   type ItemInstance,
-  type TreeState,
 } from '@headless-tree/core';
-import { useState, type ChangeEvent } from 'react';
+import { useState } from 'react';
 
-import {
-  FolderIcon,
-  FolderOpenIcon,
-  SearchIcon,
-} from '@/registry/ndeko/lib/icons';
-import { cn } from '@/registry/ndeko/lib/utils';
-import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
+import { SearchIcon } from '@/registry/ndeko/lib/icons';
+import { Swap } from '@/registry/ndeko/ui/chat-motion';
 import { Input } from '@/registry/ndeko/ui/input';
+import { LiveRegion } from '@/registry/ndeko/ui/live-region';
+import { Tree, TreeItemLabel, useTree } from '@/registry/ndeko/ui/tree';
+
 import {
-  Tree,
-  TreeItem,
-  TreeItemLabel,
-  useTree,
-} from '@/registry/ndeko/ui/tree';
+  branchLoaderOf,
+  folderIdsOf,
+  hasChildren,
+  indexBranches,
+  nameOf,
+  type Branch,
+} from './_parts/tree-data';
+import { FolderGlyph } from './_parts/tree-glyphs';
+import { TreeRow, TreeRows } from './_parts/tree-rows';
 
-type Item = {
-  name: string;
-  children?: string[];
+const SAVED_REPLIES: Branch = {
+  id: 'saved-replies',
+  name: 'Oatfield saved replies',
+  children: [
+    {
+      id: 'orders',
+      name: 'Orders',
+      children: [
+        { id: 'order-status', name: 'Where is my order' },
+        { id: 'delivery-day', name: 'Change the delivery day' },
+        { id: 'late-order', name: 'Late order apology' },
+      ],
+    },
+    {
+      id: 'refunds',
+      name: 'Refunds',
+      children: [
+        { id: 'damaged-bag', name: 'Damaged bag' },
+        { id: 'refund-timing', name: 'Refund timing' },
+        { id: 'refund-to-gift-card', name: 'Refund to a gift card' },
+      ],
+    },
+    {
+      id: 'subscriptions',
+      name: 'Subscriptions',
+      children: [
+        { id: 'skip-a-week', name: 'Skip a week' },
+        { id: 'pause-or-cancel', name: 'Pause or cancel' },
+        { id: 'box-size', name: 'Change the box size' },
+      ],
+    },
+    { id: 'allergens', name: 'Allergens' },
+  ],
 };
 
-const ITEMS: Record<string, Item> = {
-  company: {
-    name: 'Company',
-    children: ['engineering', 'marketing', 'operations'],
-  },
-  engineering: {
-    name: 'Engineering',
-    children: ['frontend', 'backend', 'platform-team'],
-  },
-  frontend: { name: 'Frontend', children: ['design-system', 'web-platform'] },
-  'design-system': {
-    name: 'Design System',
-    children: ['components', 'tokens', 'guidelines'],
-  },
-  components: { name: 'Components' },
-  tokens: { name: 'Tokens' },
-  guidelines: { name: 'Guidelines' },
-  'web-platform': { name: 'Web Platform' },
-  backend: { name: 'Backend', children: ['apis', 'infrastructure'] },
-  apis: { name: 'APIs' },
-  infrastructure: { name: 'Infrastructure' },
-  'platform-team': { name: 'Platform Team' },
-  marketing: { name: 'Marketing', children: ['content', 'seo'] },
-  content: { name: 'Content' },
-  seo: { name: 'SEO' },
-  operations: { name: 'Operations', children: ['hr', 'finance'] },
-  hr: { name: 'HR' },
-  finance: { name: 'Finance' },
-};
+const REPLIES = indexBranches(SAVED_REPLIES);
 
-const INDENT = 20;
-const ROOT_ID = 'company';
-const EXPANDED_ITEMS = ['engineering', 'frontend', 'design-system'];
+const REPLY_LOADER = branchLoaderOf(REPLIES);
 
-const GLYPH =
-  'text-muted-foreground col-start-1 row-start-1 size-4 transition-[opacity,scale,filter] duration-150 ease-out-strong';
+const FOLDER_IDS = folderIdsOf(REPLIES);
 
-const SHOWN_WHEN_CLOSED =
-  'in-aria-expanded:scale-60 in-aria-expanded:opacity-0 in-aria-expanded:blur-[2px]';
+const OPEN_AT_START = ['orders'];
 
-const SHOWN_WHEN_OPEN =
-  'scale-60 opacity-0 blur-[2px] in-aria-expanded:scale-100 in-aria-expanded:opacity-100 in-aria-expanded:blur-none';
+/* The arrow keys walk the matches while the caret stays in the field: the match they are on is the stronger one. */
+const CURRENT_MATCH =
+  '[[data-search-match=true][data-focus=true]_&]:bg-warning/30';
 
-function FolderGlyph() {
-  return (
-    <span className='grid'>
-      <FolderIcon className={cn(GLYPH, SHOWN_WHEN_CLOSED)} />
-      <FolderOpenIcon className={cn(GLYPH, SHOWN_WHEN_OPEN)} />
-    </span>
-  );
+function ancestorIdsOf(row: ItemInstance<Branch>) {
+  const ancestorIds: string[] = [];
+  let parent = row.getParent();
+  while (parent) {
+    ancestorIds.push(parent.getId());
+    parent = parent.getParent();
+  }
+  return ancestorIds;
 }
 
-function nameOf(item: ItemInstance<Item>) {
-  return item.getItemData().name;
+function matchLabelOf(query: string, matchCount: number) {
+  if (query === '') {
+    return '';
+  }
+  if (matchCount === 0) {
+    return 'No match';
+  }
+  if (matchCount === 1) {
+    return '1 match';
+  }
+  return `${matchCount} matches`;
 }
 
-function hasChildren(item: ItemInstance<Item>) {
-  const children = item.getItemData().children ?? [];
-  return children.length > 0;
-}
-
-function itemOf(itemId: string) {
-  return ITEMS[itemId];
-}
-
-function childrenOf(itemId: string) {
-  return ITEMS[itemId].children ?? [];
+function spokenMatchesOf(query: string, matchCount: number) {
+  if (query === '') {
+    return '';
+  }
+  if (matchCount === 0) {
+    return `No reply matches ${query}`;
+  }
+  if (matchCount === 1) {
+    return `1 reply matches ${query}`;
+  }
+  return `${matchCount} replies match ${query}`;
 }
 
 export default function Tree07() {
-  const [state, setState] = useState<Partial<TreeState<Item>>>({});
+  const [openIds, setOpenIds] = useState(OPEN_AT_START);
+  const [openBeforeSearch, setOpenBeforeSearch] = useState<string[] | null>(
+    null
+  );
 
-  const tree = useTree<Item>({
-    state,
-    setState,
-    initialState: { expandedItems: EXPANDED_ITEMS },
-    indent: INDENT,
-    rootItemId: ROOT_ID,
+  function openEveryFolder() {
+    if (!openBeforeSearch) {
+      setOpenBeforeSearch(openIds);
+    }
+    setOpenIds(FOLDER_IDS);
+  }
+
+  const tree = useTree<Branch>({
+    state: { expandedItems: openIds },
+    setExpandedItems: setOpenIds,
+    rootItemId: SAVED_REPLIES.id,
     getItemName: nameOf,
     isItemFolder: hasChildren,
-    dataLoader: { getItem: itemOf, getChildren: childrenOf },
+    onOpenSearch: openEveryFolder,
+    dataLoader: REPLY_LOADER,
     features: [
       syncDataLoaderFeature,
       hotkeysCoreFeature,
       selectionFeature,
-      searchFeature,
       expandAllFeature,
+      searchFeature,
     ],
   });
-  const searchProps = tree.getSearchInputElementProps();
+  const searchField = tree.getSearchInputElementProps();
+  const query = tree.getSearchValue();
+  const matchCount = tree.getSearchMatchingItems().length;
+  const matchLabel = matchLabelOf(query, matchCount);
+  const spokenMatches = spokenMatchesOf(query, matchCount);
 
-  function restoreExpandedItems() {
-    setState((current) => ({ ...current, expandedItems: EXPANDED_ITEMS }));
-  }
-
-  function search(event: ChangeEvent<HTMLInputElement>) {
-    searchProps.onChange?.(event);
-    const hasQuery = event.target.value.length > 0;
-    if (hasQuery) {
-      void tree.expandAll();
+  function restoreFolders() {
+    if (!openBeforeSearch) {
       return;
     }
-    restoreExpandedItems();
+    const focusedRow = tree.getFocusedItem();
+    const pathToFocusedRow = ancestorIdsOf(focusedRow);
+    const restored = new Set([...openBeforeSearch, ...pathToFocusedRow]);
+    setOpenIds([...restored]);
+    setOpenBeforeSearch(null);
+  }
+
+  function typeQuery(event: React.ChangeEvent<HTMLInputElement>) {
+    searchField.onChange(event);
+    const isCleared = event.target.value === '';
+    if (isCleared) {
+      restoreFolders();
+      return;
+    }
+    openEveryFolder();
+  }
+
+  /* Leaving the field keeps every folder open: a click on a match must find its row where it was. */
+  function leaveSearch() {
+    searchField.onBlur();
+    setOpenBeforeSearch(null);
   }
 
   return (
-    <div className='flex w-full flex-col gap-2'>
+    <div className='relative flex w-full flex-col gap-2'>
       <div className='relative'>
         <Input
-          {...searchProps}
-          onChange={search}
+          {...searchField}
+          onChange={typeQuery}
+          onBlur={leaveSearch}
           type='search'
-          placeholder='Search teams'
-          aria-label='Search teams'
-          className='peer ps-8'
+          placeholder='Search replies'
+          aria-label='Search replies'
+          className='ps-8 pe-20'
         />
-        <span className='text-muted-foreground pointer-events-none absolute inset-y-0 start-0 flex w-8 items-center justify-center peer-disabled:opacity-50'>
-          <SearchIcon className='size-4' />
+        <SearchIcon className='text-muted-foreground pointer-events-none absolute start-2.5 top-1/2 size-4 -translate-y-1/2' />
+        <span
+          aria-hidden='true'
+          className='text-muted-foreground pointer-events-none absolute inset-y-0 end-2.5 flex items-center text-xs tabular-nums'
+        >
+          <Swap swapKey={matchLabel}>{matchLabel}</Swap>
         </span>
       </div>
-      <AnimatedSize>
-        <Tree aria-label='Project files' indent={INDENT} tree={tree}>
+      <Tree aria-label={SAVED_REPLIES.name} tree={tree}>
+        <TreeRows>
           {tree.getItems().map((item) => (
-            <TreeItem key={item.getId()} item={item}>
-              <TreeItemLabel>
-                <span className='flex items-center gap-2'>
-                  {item.isFolder() && <FolderGlyph />}
-                  {item.getItemName()}
-                </span>
+            <TreeRow key={item.getId()} item={item}>
+              <TreeItemLabel className={CURRENT_MATCH}>
+                {item.isFolder() && <FolderGlyph />}
+                <span className='truncate'>{item.getItemName()}</span>
               </TreeItemLabel>
-            </TreeItem>
+            </TreeRow>
           ))}
-        </Tree>
-      </AnimatedSize>
+        </TreeRows>
+      </Tree>
+      <LiveRegion message={spokenMatches} />
     </div>
   );
 }

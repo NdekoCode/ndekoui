@@ -1,141 +1,128 @@
 'use client';
 
 import {
-  CheckedState,
   checkboxesFeature,
   hotkeysCoreFeature,
   selectionFeature,
   syncDataLoaderFeature,
-  type ItemInstance,
 } from '@headless-tree/core';
 
-import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
-import { Checkbox } from '@/registry/ndeko/ui/checkbox';
+import { WordRoll } from '@/components/core/word-roll';
+import { LiveRegion } from '@/registry/ndeko/ui/live-region';
+import { Tree, TreeItemLabel, useTree } from '@/registry/ndeko/ui/tree';
+
+import { ItemCheckbox } from './_parts/item-checkbox';
 import {
-  Tree,
-  TreeItem,
-  TreeItemLabel,
-  useTree,
-} from '@/registry/ndeko/ui/tree';
+  branchLoaderOf,
+  countIn,
+  hasChildren,
+  indexBranches,
+  leafIdsOf,
+  nameOf,
+  type Branch,
+} from './_parts/tree-data';
+import { TreeRow, TreeRows } from './_parts/tree-rows';
 
-type Item = {
-  name: string;
-  children?: string[];
+const NOTIFICATIONS: Branch = {
+  id: 'notifications',
+  name: 'Harbor push notifications',
+  children: [
+    {
+      id: 'projects',
+      name: 'Projects',
+      children: [
+        {
+          id: 'tasks',
+          name: 'Tasks',
+          children: [
+            { id: 'assigned-to-me', name: 'Assigned to me' },
+            { id: 'due-tomorrow', name: 'Due tomorrow' },
+            { id: 'marked-done', name: 'Marked done' },
+          ],
+        },
+        { id: 'mentions', name: 'Comments and mentions' },
+        { id: 'weekly-summary', name: 'Weekly summary' },
+      ],
+    },
+    {
+      id: 'billing',
+      name: 'Billing',
+      children: [
+        { id: 'invoice-ready', name: 'Invoice ready' },
+        { id: 'payment-failed', name: 'Payment failed' },
+      ],
+    },
+    {
+      id: 'security',
+      name: 'Security',
+      children: [
+        { id: 'new-sign-in', name: 'New sign-in' },
+        { id: 'password-changed', name: 'Password changed' },
+      ],
+    },
+  ],
 };
 
-const ITEMS: Record<string, Item> = {
-  company: {
-    name: 'Company',
-    children: ['engineering', 'marketing', 'operations'],
-  },
-  engineering: {
-    name: 'Engineering',
-    children: ['frontend', 'backend', 'platform-team'],
-  },
-  frontend: { name: 'Frontend', children: ['design-system', 'web-platform'] },
-  'design-system': {
-    name: 'Design System',
-    children: ['components', 'tokens', 'guidelines'],
-  },
-  components: { name: 'Components' },
-  tokens: { name: 'Tokens' },
-  guidelines: { name: 'Guidelines' },
-  'web-platform': { name: 'Web Platform' },
-  backend: { name: 'Backend', children: ['apis', 'infrastructure'] },
-  apis: { name: 'APIs' },
-  infrastructure: { name: 'Infrastructure' },
-  'platform-team': { name: 'Platform Team' },
-  marketing: { name: 'Marketing', children: ['content', 'seo'] },
-  content: { name: 'Content' },
-  seo: { name: 'SEO' },
-  operations: { name: 'Operations', children: ['hr', 'finance'] },
-  hr: { name: 'HR' },
-  finance: { name: 'Finance' },
-};
+const TOPICS = indexBranches(NOTIFICATIONS);
 
-const INDENT = 20;
-const ROOT_ID = 'company';
-const EXPANDED_ITEMS = ['engineering', 'frontend', 'design-system'];
+const TOPIC_LOADER = branchLoaderOf(TOPICS);
 
-function nameOf(item: ItemInstance<Item>) {
-  return item.getItemData().name;
-}
+const ALERT_IDS = leafIdsOf(TOPICS);
 
-function hasChildren(item: ItemInstance<Item>) {
-  const children = item.getItemData().children ?? [];
-  return children.length > 0;
-}
+const OPEN_AT_START = ['projects', 'tasks'];
 
-function itemOf(itemId: string) {
-  return ITEMS[itemId];
-}
-
-function childrenOf(itemId: string) {
-  return ITEMS[itemId].children ?? [];
-}
-
-function ItemCheckbox({
-  name,
-  checkedState,
-  onToggle,
-}: {
-  name: string;
-  checkedState: CheckedState;
-  onToggle: () => void;
-}) {
-  const isChecked = checkedState === CheckedState.Checked;
-  const isIndeterminate = checkedState === CheckedState.Indeterminate;
-
-  return (
-    <Checkbox
-      checked={isChecked}
-      indeterminate={isIndeterminate}
-      onCheckedChange={onToggle}
-      aria-label={name}
-    />
-  );
-}
+const ON_AT_START = [
+  'assigned-to-me',
+  'due-tomorrow',
+  'payment-failed',
+  'new-sign-in',
+];
 
 export default function Tree13() {
-  const tree = useTree<Item>({
+  const tree = useTree<Branch>({
     initialState: {
-      expandedItems: EXPANDED_ITEMS,
-      checkedItems: ['components', 'tokens'],
+      expandedItems: OPEN_AT_START,
+      checkedItems: ON_AT_START,
     },
-    indent: INDENT,
-    rootItemId: ROOT_ID,
+    rootItemId: NOTIFICATIONS.id,
     getItemName: nameOf,
     isItemFolder: hasChildren,
-    dataLoader: { getItem: itemOf, getChildren: childrenOf },
+    dataLoader: TOPIC_LOADER,
     features: [
       syncDataLoaderFeature,
+      hotkeysCoreFeature,
       selectionFeature,
       checkboxesFeature,
-      hotkeysCoreFeature,
     ],
   });
+  const { checkedItems } = tree.getState();
+  const onCount = countIn(ALERT_IDS, checkedItems);
+  const summary = `${onCount} of ${ALERT_IDS.length} on`;
 
   return (
-    <div className='w-full'>
-      <AnimatedSize>
-        <Tree aria-label='Project files' indent={INDENT} tree={tree}>
+    <div className='relative flex w-full flex-col gap-2'>
+      <div className='flex items-baseline justify-between gap-2'>
+        <h3 className='truncate text-[13px] font-medium'>Push notifications</h3>
+        <WordRoll
+          text={summary}
+          value={onCount}
+          className='text-muted-foreground text-xs tabular-nums'
+        />
+      </div>
+      <Tree aria-label={NOTIFICATIONS.name} tree={tree}>
+        <TreeRows>
           {tree.getItems().map((item) => (
-            <div
+            <TreeRow
               key={item.getId()}
-              className='flex items-center gap-2 not-last:pb-0.5'
+              item={item}
+              trailing={<ItemCheckbox item={item} />}
             >
-              <TreeItem item={item} className='flex-1 not-last:pb-0'>
-                <TreeItemLabel />
-              </TreeItem>
-              <ItemCheckbox
-                name={item.getItemName()}
-                checkedState={item.getCheckedState()}
-                onToggle={() => void item.toggleCheckedState()}
-              />
-            </div>
+              <TreeItemLabel />
+            </TreeRow>
           ))}
-        </Tree>
-      </AnimatedSize>
+        </TreeRows>
+      </Tree>
+      <LiveRegion message={`Push notifications: ${summary}`} />
     </div>
   );
 }

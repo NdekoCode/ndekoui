@@ -1,19 +1,16 @@
 'use client';
 
 import {
-  createOnDropHandler,
   dragAndDropFeature,
   hotkeysCoreFeature,
   keyboardDragAndDropFeature,
   selectionFeature,
   syncDataLoaderFeature,
+  type DragTarget,
   type ItemInstance,
 } from '@headless-tree/core';
-import { AssistiveTreeDescription } from '@headless-tree/react';
-import { motion, type Transition } from 'motion/react';
-import { useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 
-import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   CodeIcon,
   FileIcon,
@@ -21,224 +18,228 @@ import {
   ImageIcon,
   ReactBrandIcon,
   SourceCodeIcon,
+  type Icon,
 } from '@/registry/ndeko/lib/icons';
-import { cn } from '@/registry/ndeko/lib/utils';
-import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
+import { Kbd, KbdGroup } from '@/registry/ndeko/ui/kbd';
+import { LiveRegion } from '@/registry/ndeko/ui/live-region';
+import { Tree, TreeItemLabel, useTree } from '@/registry/ndeko/ui/tree';
+
 import {
-  Tree,
-  TreeItem,
-  TreeItemLabel,
-  useTree,
-} from '@/registry/ndeko/ui/tree';
+  dragStatusOf,
+  moveNoticeOf,
+  spokenStatusOf,
+} from './_parts/drag-status';
+import {
+  flattenBranches,
+  isFlatFolder,
+  moveNodes,
+  nameOf,
+  type Branch,
+  type FlatNode,
+  type FlatNodes,
+} from './_parts/tree-data';
+import { TreeRow, TreeRows } from './_parts/tree-rows';
 
-type Item = {
-  name: string;
-  children?: string[];
-  fileExtension?: string;
+type FileKind = 'component' | 'script' | 'data' | 'image' | 'text' | 'other';
+
+const REPOSITORY: Branch = {
+  id: 'repository',
+  name: 'Kettlebrook storefront',
+  children: [
+    {
+      id: 'src',
+      name: 'src',
+      children: [
+        {
+          id: 'src/checkout',
+          name: 'checkout',
+          children: [
+            { id: 'src/checkout/checkout-form.tsx', name: 'checkout-form.tsx' },
+            { id: 'src/checkout/use-cart.ts', name: 'use-cart.ts' },
+          ],
+        },
+        { id: 'src/storefront.tsx', name: 'storefront.tsx' },
+      ],
+    },
+    {
+      id: 'emails',
+      name: 'emails',
+      children: [
+        { id: 'emails/receipt.tsx', name: 'receipt.tsx' },
+        { id: 'emails/shipping-notice.tsx', name: 'shipping-notice.tsx' },
+      ],
+    },
+    {
+      id: 'assets',
+      name: 'assets',
+      children: [{ id: 'assets/wordmark.svg', name: 'wordmark.svg' }],
+    },
+    { id: 'prices.json', name: 'prices.json' },
+    { id: 'CHANGELOG.md', name: 'CHANGELOG.md' },
+  ],
 };
 
-const INITIAL_ITEMS: Record<string, Item> = {
-  app: {
-    name: 'app',
-    children: ['app/layout.tsx', 'app/page.tsx', 'app/(dashboard)', 'app/api'],
-  },
-  'app/layout.tsx': { name: 'layout.tsx', fileExtension: 'tsx' },
-  'app/page.tsx': { name: 'page.tsx', fileExtension: 'tsx' },
-  'app/(dashboard)': {
-    name: '(dashboard)',
-    children: ['app/(dashboard)/dashboard'],
-  },
-  'app/(dashboard)/dashboard': {
-    name: 'dashboard',
-    children: ['app/(dashboard)/dashboard/page.tsx'],
-  },
-  'app/(dashboard)/dashboard/page.tsx': {
-    name: 'page.tsx',
-    fileExtension: 'tsx',
-  },
-  'app/api': { name: 'api', children: ['app/api/hello'] },
-  'app/api/hello': { name: 'hello', children: ['app/api/hello/route.ts'] },
-  'app/api/hello/route.ts': { name: 'route.ts', fileExtension: 'ts' },
-  components: {
-    name: 'components',
-    children: ['components/button.tsx', 'components/card.tsx'],
-  },
-  'components/button.tsx': { name: 'button.tsx', fileExtension: 'tsx' },
-  'components/card.tsx': { name: 'card.tsx', fileExtension: 'tsx' },
-  lib: { name: 'lib', children: ['lib/utils.ts'] },
-  'lib/utils.ts': { name: 'utils.ts', fileExtension: 'ts' },
-  public: {
-    name: 'public',
-    children: ['public/favicon.ico', 'public/logo.svg'],
-  },
-  'public/favicon.ico': { name: 'favicon.ico', fileExtension: 'ico' },
-  'public/logo.svg': { name: 'logo.svg', fileExtension: 'svg' },
-  'package.json': { name: 'package.json', fileExtension: 'json' },
-  'tailwind.config.ts': { name: 'tailwind.config.ts', fileExtension: 'ts' },
-  'tsconfig.json': { name: 'tsconfig.json', fileExtension: 'json' },
-  'next.config.mjs': { name: 'next.config.mjs', fileExtension: 'mjs' },
-  'README.md': { name: 'README.md', fileExtension: 'md' },
-  root: {
-    name: 'Project root',
-    children: [
-      'app',
-      'components',
-      'lib',
-      'public',
-      'package.json',
-      'tailwind.config.ts',
-      'tsconfig.json',
-      'next.config.mjs',
-      'README.md',
-    ],
-  },
-};
+const FILES_AT_START = flattenBranches(REPOSITORY);
+
+const OPEN_AT_START = ['src', 'src/checkout'];
+
+const SELECTED_AT_START = ['emails'];
 
 const INDENT = 20;
-const ROOT_ID = 'root';
-const EXPANDED_ITEMS = ['app', 'app/(dashboard)', 'app/(dashboard)/dashboard'];
 
-const TREE_INDENT_STYLE = {
-  '--tree-indent': `${INDENT}px`,
-} as React.CSSProperties;
-
-const FILE_GLYPH = 'text-muted-foreground size-4';
-
-const FILE_GLYPHS: Record<string, React.ReactNode> = {
-  tsx: <ReactBrandIcon className={FILE_GLYPH} />,
-  jsx: <ReactBrandIcon className={FILE_GLYPH} />,
-  ts: <SourceCodeIcon className={FILE_GLYPH} />,
-  js: <SourceCodeIcon className={FILE_GLYPH} />,
-  mjs: <SourceCodeIcon className={FILE_GLYPH} />,
-  json: <CodeIcon className={FILE_GLYPH} />,
-  svg: <ImageIcon className={FILE_GLYPH} />,
-  ico: <ImageIcon className={FILE_GLYPH} />,
-  png: <ImageIcon className={FILE_GLYPH} />,
-  jpg: <ImageIcon className={FILE_GLYPH} />,
-  md: <FileTextIcon className={FILE_GLYPH} />,
+const KIND_OF_EXTENSION: Partial<Record<string, FileKind>> = {
+  tsx: 'component',
+  jsx: 'component',
+  ts: 'script',
+  js: 'script',
+  mjs: 'script',
+  json: 'data',
+  svg: 'image',
+  png: 'image',
+  webp: 'image',
+  md: 'text',
 };
 
-const DEFAULT_FILE_GLYPH = <FileIcon className={FILE_GLYPH} />;
+const KIND_ICON: Record<FileKind, Icon> = {
+  component: ReactBrandIcon,
+  script: SourceCodeIcon,
+  data: CodeIcon,
+  image: ImageIcon,
+  text: FileTextIcon,
+  other: FileIcon,
+};
 
-const INDENT_GUIDES = [
-  'relative before:pointer-events-none before:absolute before:inset-y-0 before:-start-1 before:w-(--tree-padding)',
-  'before:bg-[repeating-linear-gradient(to_right,transparent_0,transparent_calc(var(--tree-indent)-var(--hairline)),var(--border)_calc(var(--tree-indent)-var(--hairline)),var(--border)_var(--tree-indent))]',
-].join(' ');
+/* A file takes the column of the chevron, so file names and folder names start on one line. */
+const COMPACT_LABEL = 'py-1 leading-5 not-in-data-[folder=true]:ps-2';
 
-const TRAVEL: Transition = { duration: 0.25, ease: [0.77, 0, 0.175, 1] };
+function kindOf(fileName: string): FileKind {
+  const parts = fileName.split('.');
+  const extension = parts.at(-1) ?? '';
+  return KIND_OF_EXTENSION[extension] ?? 'other';
+}
 
-const INSTANT: Transition = { duration: 0 };
+function idOf(row: ItemInstance<FlatNode>) {
+  return row.getId();
+}
 
-function travelOf(shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return INSTANT;
+function sortKeyOf(node: FlatNode) {
+  if (node.isFolder) {
+    return `0 ${node.name}`;
   }
-  return TRAVEL;
+  return `1 ${node.name}`;
 }
 
-function nameOf(item: ItemInstance<Item>) {
-  return item.getItemData().name;
-}
-
-function isFolderEntry(entry: Item) {
-  const children = entry.children ?? [];
-  return children.length > 0;
-}
-
-function hasChildren(item: ItemInstance<Item>) {
-  return isFolderEntry(item.getItemData());
-}
-
-function folderFirstOrder(items: Record<string, Item>) {
-  return function compare(firstId: string, secondId: string) {
-    const first = items[firstId];
-    const second = items[secondId];
-    const isFirstFolder = isFolderEntry(first);
-    const isSecondFolder = isFolderEntry(second);
-    if (isFirstFolder && !isSecondFolder) {
-      return -1;
-    }
-    if (!isFirstFolder && isSecondFolder) {
-      return 1;
-    }
-    return first.name.localeCompare(second.name);
+function foldersFirstIn(nodes: FlatNodes) {
+  return function compareEntries(firstId: string, secondId: string) {
+    const first = nodes[firstId];
+    const second = nodes[secondId];
+    const firstKey = sortKeyOf(first);
+    const secondKey = sortKeyOf(second);
+    return firstKey.localeCompare(secondKey);
   };
 }
 
-function fileGlyphOf(extension: string | undefined) {
-  if (!extension) {
-    return DEFAULT_FILE_GLYPH;
-  }
-  return FILE_GLYPHS[extension] ?? DEFAULT_FILE_GLYPH;
+type FileGlyphProps = {
+  name: string;
+};
+
+function FileGlyph({ name }: FileGlyphProps) {
+  const kind = kindOf(name);
+  const Glyph = KIND_ICON[kind];
+
+  return <Glyph className='text-muted-foreground size-4' />;
 }
 
 export default function Tree11() {
-  const [items, setItems] = useState(INITIAL_ITEMS);
-  const shouldReduceMotion = usePrefersReducedMotion();
-  const travel = travelOf(shouldReduceMotion);
+  const [nodes, setNodes] = useState(FILES_AT_START);
+  const [moveNotice, setMoveNotice] = useState('');
+  const hintId = useId();
 
-  function replaceChildren(parent: ItemInstance<Item>, childIds: string[]) {
-    const parentId = parent.getId();
-    setItems((current) => {
-      const sortedChildIds = [...childIds];
-      sortedChildIds.sort(folderFirstOrder(current));
-      const updatedParent = { ...current[parentId], children: sortedChildIds };
-      return { ...current, [parentId]: updatedParent };
-    });
+  function nodeOf(nodeId: string) {
+    return nodes[nodeId];
   }
 
-  function itemOf(itemId: string) {
-    return items[itemId];
+  function sortedChildIdsOf(nodeId: string) {
+    const node = nodes[nodeId];
+    const childIds = [...node.childIds];
+    const order = foldersFirstIn(nodes);
+    return childIds.sort(order);
   }
 
-  function childrenOf(itemId: string) {
-    return items[itemId].children ?? [];
+  function dropRows(
+    rows: ItemInstance<FlatNode>[],
+    target: DragTarget<FlatNode>
+  ) {
+    const movedIds = rows.map(idOf);
+    const notice = moveNoticeOf(rows, target);
+    setNodes((current) => moveNodes(current, movedIds, target));
+    setMoveNotice(notice);
   }
 
-  const tree = useTree<Item>({
+  function forgetLastMove() {
+    setMoveNotice('');
+  }
+
+  const tree = useTree<FlatNode>({
     initialState: {
-      expandedItems: EXPANDED_ITEMS,
-      selectedItems: ['components'],
+      expandedItems: OPEN_AT_START,
+      selectedItems: SELECTED_AT_START,
     },
     indent: INDENT,
-    rootItemId: ROOT_ID,
+    rootItemId: REPOSITORY.id,
     getItemName: nameOf,
-    isItemFolder: hasChildren,
+    isItemFolder: isFlatFolder,
     canReorder: false,
-    onDrop: createOnDropHandler(replaceChildren),
-    dataLoader: { getItem: itemOf, getChildren: childrenOf },
+    onDrop: dropRows,
+    onStartKeyboardDrag: forgetLastMove,
+    dataLoader: { getItem: nodeOf, getChildren: sortedChildIdsOf },
     features: [
       syncDataLoaderFeature,
-      selectionFeature,
       hotkeysCoreFeature,
+      selectionFeature,
       dragAndDropFeature,
       keyboardDragAndDropFeature,
     ],
   });
+  const dragStatus = dragStatusOf(tree);
+  const status = spokenStatusOf(dragStatus, moveNotice);
+
+  /* The tree lists its rows once and keeps the list: it reads the files again after every move, to sort them. */
+  useEffect(() => {
+    tree.rebuildTree();
+  }, [nodes, tree]);
 
   return (
-    <div className='w-full' style={TREE_INDENT_STYLE}>
-      <AnimatedSize>
-        <Tree aria-label='Project files' indent={INDENT} tree={tree}>
-          <AssistiveTreeDescription tree={tree} />
+    <div className='relative flex w-full flex-col gap-2'>
+      <Tree
+        aria-label={REPOSITORY.name}
+        aria-describedby={hintId}
+        indent={INDENT}
+        tree={tree}
+      >
+        <TreeRows>
           {tree.getItems().map((item) => (
-            <TreeItem
-              key={item.getId()}
-              item={item}
-              className={cn(INDENT_GUIDES, 'pb-0!')}
-              render={<motion.button layout='position' transition={travel} />}
-            >
-              <TreeItemLabel className='rounded-none py-1 leading-5'>
-                <span className='flex items-center gap-2'>
-                  {!item.isFolder() &&
-                    fileGlyphOf(item.getItemData().fileExtension)}
-                  {item.getItemName()}
-                </span>
+            <TreeRow key={item.getId()} item={item} hasGuides travels>
+              <TreeItemLabel className={COMPACT_LABEL}>
+                {!item.isFolder() && <FileGlyph name={item.getItemName()} />}
+                <span className='truncate'>{item.getItemName()}</span>
               </TreeItemLabel>
-            </TreeItem>
+            </TreeRow>
           ))}
-        </Tree>
-      </AnimatedSize>
+        </TreeRows>
+      </Tree>
+      <p
+        id={hintId}
+        className='text-muted-foreground flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs'
+      >
+        Drop a file on a folder to move it, or press
+        <KbdGroup>
+          <Kbd>Ctrl</Kbd>
+          <Kbd>Shift</Kbd>
+          <Kbd>D</Kbd>
+        </KbdGroup>
+      </p>
+      <LiveRegion message={status} />
     </div>
   );
 }
