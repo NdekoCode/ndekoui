@@ -99,4 +99,11 @@ export const manifest: ComponentManifest = [
     description:
       'A masked field for a key that never enters the thread, whose prefix check answers as you type and turns right, then Save folds the card into where the key went and its last four characters.',
   },
+  {
+    name: 'review-15',
+    source: 'ndeko',
+    title: 'Guardrail check',
+    description:
+      'Checks that run before the agent acts, where the spans of a text mask themselves one after another, a flagged check asks Allow once or Block, and the summary line rolls.',
+  },
 ];
