@@ -80,4 +80,11 @@ export const manifest: ComponentManifest = [
     title: 'Removable tag',
     description: 'A taller outline tag with a roomy remove button.',
   },
+  {
+    name: 'badge-14',
+    source: 'ndeko',
+    title: 'Scan badge',
+    description:
+      'A drawn code whose cells fall like grains into a small badge once it is scanned, the badge filling with the success tint and reading Scanned as the last ones land, then the cells growing back from the top left corner; the cells only fade under reduced motion.',
+  },
 ];
