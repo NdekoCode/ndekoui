@@ -15,4 +15,12 @@ export const manifest: BlockManifest = [
     ],
     previewHeight: 740,
   },
+  {
+    name: 'stats-02',
+    title: 'Results section',
+    description:
+      'A dark section with a mission line, three results that count up once with what each is compared to, and a card set at an angle whose ring closes as its score rolls.',
+    files: ['index.tsx', 'score-card.tsx', 'score-ring.tsx', 'data.ts'],
+    previewHeight: 720,
+  },
 ];
