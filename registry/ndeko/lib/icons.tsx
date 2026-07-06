@@ -253,6 +253,9 @@ import {
   MessageSquareIcon as MessageSquareGlyph,
   LanguageSkillIcon as LanguagesGlyph,
   GridViewIcon as GridGlyph,
+  CookieIcon as CookieGlyph,
+  BanknoteIcon as BanknoteGlyph,
+  RulerIcon as RulerGlyph,
 } from '@hugeicons/core-free-icons';
 import {
   HugeiconsIcon,
@@ -988,3 +991,9 @@ export const LanguagesIcon = /* @__PURE__ */ createIcon(
   'LanguagesIcon'
 );
 export const GridIcon = /* @__PURE__ */ createIcon(GridGlyph, 'GridIcon');
+export const CookieIcon = /* @__PURE__ */ createIcon(CookieGlyph, 'CookieIcon');
+export const BanknoteIcon = /* @__PURE__ */ createIcon(
+  BanknoteGlyph,
+  'BanknoteIcon'
+);
+export const RulerIcon = /* @__PURE__ */ createIcon(RulerGlyph, 'RulerIcon');
