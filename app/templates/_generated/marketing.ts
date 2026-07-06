@@ -4,13 +4,13 @@ import type { ComponentType } from 'react';
 import Marketing03 from '@/registry/ndeko/templates/marketing/marketing-03/index';
 import Marketing04 from '@/registry/ndeko/templates/marketing/marketing-04/index';
 import Marketing05 from '@/registry/ndeko/templates/marketing/marketing-05/index';
+import Marketing06 from '@/registry/ndeko/templates/marketing/marketing-06/index';
 import Marketing07 from '@/registry/ndeko/templates/marketing/marketing-07/index';
-import Marketing14 from '@/registry/ndeko/templates/marketing/marketing-14/index';
 
 export const previews: Record<string, ComponentType> = {
   'marketing-03': Marketing03,
   'marketing-04': Marketing04,
   'marketing-05': Marketing05,
+  'marketing-06': Marketing06,
   'marketing-07': Marketing07,
-  'marketing-14': Marketing14,
 };

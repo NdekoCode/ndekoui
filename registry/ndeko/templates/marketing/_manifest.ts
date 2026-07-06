@@ -62,7 +62,7 @@ export const manifest: BlockManifest = [
     previewHeight: 1900,
   },
   {
-    name: 'marketing-07',
+    name: 'marketing-06',
     title: 'Docs site',
     description:
       'A Wickerline docs site in one component: a home with one search across every page and three category cards, then pages with the sidebar, a page header, install steps whose package manager rolls the command, callouts, a table of events, an On this page rail and previous and next links. A small router keeps the state, and a search for install opens the page while bun rolls into the command.',
@@ -89,7 +89,7 @@ export const manifest: BlockManifest = [
     previewHeight: 760,
   },
   {
-    name: 'marketing-14',
+    name: 'marketing-07',
     title: 'Shared card launch page',
     description:
       'A Tallypot launch page: group cards in a coverflow that follows the hand and keeps its momentum, a large figure that drops in with one burst of confetti, shapes that pop in as sections arrive, a live feed of who paid what in a split, perks whose meters fill with the group spend, a flap countdown to the launch and a share action.',

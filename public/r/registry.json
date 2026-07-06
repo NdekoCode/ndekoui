@@ -45882,7 +45882,7 @@
       ]
     },
     {
-      "name": "marketing-07",
+      "name": "marketing-06",
       "type": "registry:block",
       "title": "Docs site",
       "description": "A Wickerline docs site in one component: a home with one search across every page and three category cards, then pages with the sidebar, a page header, install steps whose package manager rolls the command, callouts, a table of events, an On this page rail and previous and next links. A small router keeps the state, and a search for install opens the page while bun rolls into the command.",
@@ -45920,94 +45920,94 @@
       ],
       "files": [
         {
-          "path": "registry/ndeko/templates/marketing/marketing-07/index.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-06/index.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-07/index.tsx"
+          "target": "components/templates/marketing-06/index.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-07/callout.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-06/callout.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-07/callout.tsx"
+          "target": "components/templates/marketing-06/callout.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-07/code-block.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-06/code-block.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-07/code-block.tsx"
+          "target": "components/templates/marketing-06/code-block.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-07/data.ts",
+          "path": "registry/ndeko/templates/marketing/marketing-06/data.ts",
           "type": "registry:component",
-          "target": "components/templates/marketing-07/data.ts"
+          "target": "components/templates/marketing-06/data.ts"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-07/doc-blocks.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-06/doc-blocks.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-07/doc-blocks.tsx"
+          "target": "components/templates/marketing-06/doc-blocks.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-07/doc-page.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-06/doc-page.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-07/doc-page.tsx"
+          "target": "components/templates/marketing-06/doc-page.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-07/docs-header.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-06/docs-header.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-07/docs-header.tsx"
+          "target": "components/templates/marketing-06/docs-header.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-07/docs-nav.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-06/docs-nav.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-07/docs-nav.tsx"
+          "target": "components/templates/marketing-06/docs-nav.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-07/home-page.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-06/home-page.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-07/home-page.tsx"
+          "target": "components/templates/marketing-06/home-page.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-07/inline-text.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-06/inline-text.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-07/inline-text.tsx"
+          "target": "components/templates/marketing-06/inline-text.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-07/install.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-06/install.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-07/install.tsx"
+          "target": "components/templates/marketing-06/install.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-07/on-this-page.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-06/on-this-page.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-07/on-this-page.tsx"
+          "target": "components/templates/marketing-06/on-this-page.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-07/page-footer.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-06/page-footer.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-07/page-footer.tsx"
+          "target": "components/templates/marketing-06/page-footer.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-07/pages.ts",
+          "path": "registry/ndeko/templates/marketing/marketing-06/pages.ts",
           "type": "registry:component",
-          "target": "components/templates/marketing-07/pages.ts"
+          "target": "components/templates/marketing-06/pages.ts"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-07/search-field.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-06/search-field.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-07/search-field.tsx"
+          "target": "components/templates/marketing-06/search-field.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-07/search-results.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-06/search-results.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-07/search-results.tsx"
+          "target": "components/templates/marketing-06/search-results.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-07/search.ts",
+          "path": "registry/ndeko/templates/marketing/marketing-06/search.ts",
           "type": "registry:component",
-          "target": "components/templates/marketing-07/search.ts"
+          "target": "components/templates/marketing-06/search.ts"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-07/session.ts",
+          "path": "registry/ndeko/templates/marketing/marketing-06/session.ts",
           "type": "registry:component",
-          "target": "components/templates/marketing-07/session.ts"
+          "target": "components/templates/marketing-06/session.ts"
         }
       ],
       "categories": [
@@ -46016,7 +46016,7 @@
       ]
     },
     {
-      "name": "marketing-14",
+      "name": "marketing-07",
       "type": "registry:block",
       "title": "Shared card launch page",
       "description": "A Tallypot launch page: group cards in a coverflow that follows the hand and keeps its momentum, a large figure that drops in with one burst of confetti, shapes that pop in as sections arrive, a live feed of who paid what in a split, perks whose meters fill with the group spend, a flap countdown to the launch and a share action.",
@@ -46056,124 +46056,124 @@
       ],
       "files": [
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/index.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-07/index.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/index.tsx"
+          "target": "components/templates/marketing-07/index.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/brand-mark.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-07/brand-mark.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/brand-mark.tsx"
+          "target": "components/templates/marketing-07/brand-mark.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/countdown.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-07/countdown.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/countdown.tsx"
+          "target": "components/templates/marketing-07/countdown.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/cover-card.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-07/cover-card.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/cover-card.tsx"
+          "target": "components/templates/marketing-07/cover-card.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/cover-math.ts",
+          "path": "registry/ndeko/templates/marketing/marketing-07/cover-math.ts",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/cover-math.ts"
+          "target": "components/templates/marketing-07/cover-math.ts"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/coverflow.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-07/coverflow.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/coverflow.tsx"
+          "target": "components/templates/marketing-07/coverflow.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/data.ts",
+          "path": "registry/ndeko/templates/marketing/marketing-07/data.ts",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/data.ts"
+          "target": "components/templates/marketing-07/data.ts"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/feed-session.ts",
+          "path": "registry/ndeko/templates/marketing/marketing-07/feed-session.ts",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/feed-session.ts"
+          "target": "components/templates/marketing-07/feed-session.ts"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/feed.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-07/feed.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/feed.tsx"
+          "target": "components/templates/marketing-07/feed.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/flap-digit.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-07/flap-digit.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/flap-digit.tsx"
+          "target": "components/templates/marketing-07/flap-digit.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/goal-figure.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-07/goal-figure.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/goal-figure.tsx"
+          "target": "components/templates/marketing-07/goal-figure.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/hero.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-07/hero.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/hero.tsx"
+          "target": "components/templates/marketing-07/hero.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/mobile-sheet.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-07/mobile-sheet.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/mobile-sheet.tsx"
+          "target": "components/templates/marketing-07/mobile-sheet.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/money.ts",
+          "path": "registry/ndeko/templates/marketing/marketing-07/money.ts",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/money.ts"
+          "target": "components/templates/marketing-07/money.ts"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/nav-links.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-07/nav-links.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/nav-links.tsx"
+          "target": "components/templates/marketing-07/nav-links.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/perks-path.ts",
+          "path": "registry/ndeko/templates/marketing/marketing-07/perks-path.ts",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/perks-path.ts"
+          "target": "components/templates/marketing-07/perks-path.ts"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/perks.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-07/perks.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/perks.tsx"
+          "target": "components/templates/marketing-07/perks.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/pop-shape.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-07/pop-shape.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/pop-shape.tsx"
+          "target": "components/templates/marketing-07/pop-shape.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/reveal.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-07/reveal.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/reveal.tsx"
+          "target": "components/templates/marketing-07/reveal.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/section-link.ts",
+          "path": "registry/ndeko/templates/marketing/marketing-07/section-link.ts",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/section-link.ts"
+          "target": "components/templates/marketing-07/section-link.ts"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/share-session.ts",
+          "path": "registry/ndeko/templates/marketing/marketing-07/share-session.ts",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/share-session.ts"
+          "target": "components/templates/marketing-07/share-session.ts"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/share.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-07/share.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/share.tsx"
+          "target": "components/templates/marketing-07/share.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/site-footer.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-07/site-footer.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/site-footer.tsx"
+          "target": "components/templates/marketing-07/site-footer.tsx"
         },
         {
-          "path": "registry/ndeko/templates/marketing/marketing-14/site-header.tsx",
+          "path": "registry/ndeko/templates/marketing/marketing-07/site-header.tsx",
           "type": "registry:component",
-          "target": "components/templates/marketing-14/site-header.tsx"
+          "target": "components/templates/marketing-07/site-header.tsx"
         }
       ],
       "categories": [

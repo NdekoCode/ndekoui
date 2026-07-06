@@ -60,7 +60,7 @@ export function NavLinks({ links }: NavLinksProps) {
                 <AnimatePresence>
                   {isHovered && (
                     <motion.span
-                      layoutId='marketing-14-nav-highlight'
+                      layoutId='marketing-07-nav-highlight'
                       aria-hidden='true'
                       className='bg-foreground/5 absolute inset-0 rounded-full'
                       initial={{ opacity: 0 }}
