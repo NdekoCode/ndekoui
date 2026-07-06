@@ -36,4 +36,11 @@ export const manifest: ComponentManifest = [
     description:
       'A headline that alternates between two or three phrases, each one turning away round an axis behind the line in soft perspective as the next turns in from the other side, and holding still under the pointer.',
   },
+  {
+    name: 'text-effect-06',
+    source: 'ndeko',
+    title: 'Rolling letters',
+    description:
+      'Letters that roll forward like small cubes one after another, a wave that runs through the word and starts again with no seam, paused off screen and still under reduced motion.',
+  },
 ];
