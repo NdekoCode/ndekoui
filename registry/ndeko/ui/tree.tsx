@@ -145,7 +145,7 @@ type TreeItemLabelProps<T> = React.ComponentProps<'span'> & {
 };
 
 const LABEL = [
-  'flex items-center gap-1.5 rounded-md px-2 py-1.5 text-[13px] transition-colors not-in-data-[folder=true]:ps-7.5',
+  'flex items-center gap-1.5 rounded-md px-2 py-1.5 text-start text-[13px] transition-colors not-in-data-[folder=true]:ps-7.5',
   'hover:bg-foreground/5 in-data-[selected=true]:bg-primary/[0.08] in-data-[selected=true]:text-foreground',
   'in-data-[drag-target=true]:bg-primary/10 in-data-[search-match=true]:bg-warning/15',
   'in-focus-visible:ring-[3px] in-focus-visible:ring-ring/25',
