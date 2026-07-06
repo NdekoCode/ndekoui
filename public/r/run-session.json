@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "run-session",
+  "title": "Run session",
+  "description": "Plays the events of an agent run as a scripted session: batches that land together, times stamped as a backend would stream them, and the state a script ends on for reduced motion.",
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/agent-run.json",
+    "https://ui.ndekocode.dev/r/use-session.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/lib/run-session.ts",
+      "content": "import type { SessionStep } from '@/registry/ndeko/hooks/use-session';\nimport {\n  reduceRun,\n  type RunEvent,\n  type RunSnapshot,\n} from '@/registry/ndeko/lib/agent-run';\n\n/** Events that land together, the way a backend sends them in one message: one render for all of them. */\nexport type RunBatch = { events: RunEvent[] };\n\nexport type RunStep = SessionStep<RunSnapshot, RunBatch>;\n\n/** The clock a resting state is built on. Any start works: only the gaps between its times show. */\nconst RESTING_EPOCH_MS = 1000;\n\nexport function batchOf(...events: RunEvent[]): RunBatch {\n  return { events };\n}\n\nexport function batch(after: number, ...events: RunEvent[]): RunStep {\n  return { after, action: { events } };\n}\n\nexport function applyBatchAt(\n  run: RunSnapshot,\n  action: RunBatch,\n  now: number\n): RunSnapshot {\n  let next = run;\n  for (const event of action.events) {\n    next = reduceRun(next, event, now);\n  }\n  return next;\n}\n\n/** Times are stamped when a batch lands, as a backend would stream it. */\nexport function reduceBatch(run: RunSnapshot, action: RunBatch) {\n  return applyBatchAt(run, action, Date.now());\n}\n\n/**\n * The state a script ends on, with its times spread the way the script spreads them. It is what a\n * piece shows under reduced motion, where nothing plays.\n */\nexport function restingOf<State, Action>(\n  initial: State,\n  script: readonly SessionStep<State, Action>[],\n  applyAt: (state: State, action: Action, now: number) => State\n): State {\n  let state = initial;\n  let now = RESTING_EPOCH_MS;\n  for (const step of script) {\n    now += step.after;\n    state = applyAt(state, step.action, now);\n  }\n  return state;\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "categories": [
+    "foundations"
+  ],
+  "type": "registry:lib"
+}

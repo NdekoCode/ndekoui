@@ -426,6 +426,25 @@
       ]
     },
     {
+      "name": "run-session",
+      "type": "registry:lib",
+      "title": "Run session",
+      "description": "Plays the events of an agent run as a scripted session: batches that land together, times stamped as a backend would stream them, and the state a script ends on for reduced motion.",
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/use-session.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/lib/run-session.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "categories": [
+        "foundations"
+      ]
+    },
+    {
       "name": "hatch",
       "type": "registry:lib",
       "title": "Hatch",
@@ -5435,6 +5454,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -5499,6 +5519,7 @@
         "https://ui.ndekocode.dev/r/tooltip.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -5552,6 +5573,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -5614,6 +5636,7 @@
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -5667,6 +5690,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -5749,6 +5773,7 @@
         "https://ui.ndekocode.dev/r/toggle-group.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -5830,6 +5855,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -5907,6 +5933,7 @@
         "https://ui.ndekocode.dev/r/toggle-group.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -5961,6 +5988,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -6003,6 +6031,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -6326,6 +6355,7 @@
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -6494,6 +6524,7 @@
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -6558,6 +6589,7 @@
         "https://ui.ndekocode.dev/r/tabs.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -19649,6 +19681,7 @@
         "https://ui.ndekocode.dev/r/tooltip.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -19710,6 +19743,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -19779,6 +19813,7 @@
         "https://ui.ndekocode.dev/r/switch.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -19841,6 +19876,7 @@
         "https://ui.ndekocode.dev/r/popover.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -19884,6 +19920,7 @@
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -19924,6 +19961,7 @@
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -19969,6 +20007,7 @@
         "https://ui.ndekocode.dev/r/select.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -20015,6 +20054,7 @@
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -20064,6 +20104,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -20107,6 +20148,7 @@
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -20725,6 +20767,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -20872,6 +20915,7 @@
         "https://ui.ndekocode.dev/r/segments.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json"
       ],
@@ -20915,6 +20959,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -20962,6 +21007,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -21006,6 +21052,7 @@
         "https://ui.ndekocode.dev/r/slider.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -21086,6 +21133,7 @@
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/run-session.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -21103,11 +21151,6 @@
           "path": "registry/ndeko/components/run/_parts/collapse.tsx",
           "type": "registry:component",
           "target": "components/run/_parts/collapse.tsx"
-        },
-        {
-          "path": "registry/ndeko/components/run/_parts/run-session.ts",
-          "type": "registry:component",
-          "target": "components/run/_parts/run-session.ts"
         },
         {
           "path": "registry/ndeko/components/run/_parts/scenario.ts",
@@ -21140,6 +21183,7 @@
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/run-session.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
@@ -21151,11 +21195,6 @@
           "path": "registry/ndeko/components/run/run-03.tsx",
           "type": "registry:component",
           "target": "components/run/run-03.tsx"
-        },
-        {
-          "path": "registry/ndeko/components/run/_parts/run-session.ts",
-          "type": "registry:component",
-          "target": "components/run/_parts/run-session.ts"
         },
         {
           "path": "registry/ndeko/components/run/_parts/scenario.ts",
@@ -21189,6 +21228,7 @@
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/run-session.json",
         "https://ui.ndekocode.dev/r/segments.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle.json",
@@ -21202,11 +21242,6 @@
           "path": "registry/ndeko/components/run/run-02.tsx",
           "type": "registry:component",
           "target": "components/run/run-02.tsx"
-        },
-        {
-          "path": "registry/ndeko/components/run/_parts/run-session.ts",
-          "type": "registry:component",
-          "target": "components/run/_parts/run-session.ts"
         },
         {
           "path": "registry/ndeko/components/run/_parts/scenario.ts",
@@ -21370,6 +21405,7 @@
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/run-session.json",
         "https://ui.ndekocode.dev/r/spinner.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-kept-height.json",
@@ -21381,13 +21417,7 @@
       "files": [
         {
           "path": "registry/ndeko/components/run/run-04.tsx",
-          "type": "registry:component",
-          "target": "components/run/run-04.tsx"
-        },
-        {
-          "path": "registry/ndeko/components/run/_parts/run-session.ts",
-          "type": "registry:component",
-          "target": "components/run/_parts/run-session.ts"
+          "type": "registry:component"
         }
       ],
       "categories": [
@@ -27391,6 +27421,7 @@
         "https://ui.ndekocode.dev/r/speech-envelope.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -27424,6 +27455,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -27463,6 +27495,7 @@
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
