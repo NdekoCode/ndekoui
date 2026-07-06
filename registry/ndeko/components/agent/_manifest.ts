@@ -71,4 +71,11 @@ export const manifest: ComponentManifest = [
     description:
       'A mark and a word per agent that change together: the dot of a running agent sends a ring out, and a hand, a cross or a check takes its place when the agent waits, fails or ends, above a legend of all five states.',
   },
+  {
+    name: 'agent-11',
+    source: 'ndeko',
+    title: 'Task checklist',
+    description:
+      'The to-do list of an agent under a header that counts 2 of 5 and carries the ring of the whole: the running step shows a ring that fills with its percentage rolling, and a done step is struck through by a line that draws from left to right.',
+  },
 ];
