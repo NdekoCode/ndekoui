@@ -85,4 +85,11 @@ export const manifest: ComponentManifest = [
     description:
       'The agent stops to ask with the reason why, choices you pick with the number keys or answer in your own words, and the card folds into one line that says what you answered, with Change.',
   },
+  {
+    name: 'review-13',
+    source: 'ndeko',
+    title: 'Staged action',
+    description:
+      'What the agent is about to run as fields you can correct, where a changed field marks itself as edited with Reset, and Approve becomes the result while Discard folds away with Undo.',
+  },
 ];
