@@ -56,7 +56,7 @@ export function FeaturedResult({
   const isWordByWord = isStreamed && !shouldReduceMotion;
 
   return (
-    <div className='bg-card hairline-ring ring-border dark:bg-foreground/[0.04] relative isolate grid gap-8 rounded-2xl p-6 shadow-[0_1px_2px_rgb(0_0_0/0.04)] @2xl:p-8 @3xl:grid-cols-[minmax(0,1fr)_17rem] @3xl:gap-12'>
+    <div className='bg-card hairline-ring ring-border dark:bg-foreground/[0.04] relative isolate grid grid-cols-1 gap-8 rounded-2xl p-6 shadow-[0_1px_2px_rgb(0_0_0/0.04)] @2xl:p-8 @3xl:grid-cols-[minmax(0,1fr)_17rem] @3xl:gap-12'>
       <Wash />
       <figure className='flex flex-col justify-between gap-8'>
         <blockquote className='grid text-lg leading-8 font-medium text-pretty *:col-start-1 *:row-start-1 @3xl:text-xl @3xl:leading-8'>
