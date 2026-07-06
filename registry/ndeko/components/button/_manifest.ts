@@ -411,4 +411,11 @@ export const manifest: ComponentManifest = [
     description:
       'The first press turns the button destructive with a three second countdown, the second removes.',
   },
+  {
+    name: 'button-65',
+    source: 'ndeko',
+    title: 'Theme switch with a reveal',
+    description:
+      'A sun and moon toggle that reveals the other theme from the point you pressed, as a circle, a wipe or a fade.',
+  },
 ];
