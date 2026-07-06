@@ -43,4 +43,11 @@ export const manifest: ComponentManifest = [
     description:
       'Text, profile, list and media skeletons shaped like the content they stand in for, all on the shared sweep.',
   },
+  {
+    name: 'loading-07',
+    source: 'ndeko',
+    title: 'Loading gate',
+    description:
+      'A gate that holds a skeleton the size of the content and crossfades into it without moving the layout, with an error state and Retry that keep the size.',
+  },
 ];
