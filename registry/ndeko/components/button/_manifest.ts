@@ -418,4 +418,11 @@ export const manifest: ComponentManifest = [
     description:
       'A sun and moon toggle that reveals the other theme from the point you pressed, as a circle, a wipe or a fade.',
   },
+  {
+    name: 'button-66',
+    source: 'ndeko',
+    title: 'Buttons with living icons',
+    description:
+      'Secondary, outline, destructive and soft status buttons whose icon acts out its verb when the hand reaches it and when it is pressed: the arrow leaves and comes back, the bin lifts its lid, the bell swings once and the download drops.',
+  },
 ];
