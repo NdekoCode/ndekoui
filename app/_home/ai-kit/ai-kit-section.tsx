@@ -11,7 +11,7 @@ import { Button } from '@/registry/ndeko/ui/button';
 
 import { Reveal } from '../reveal';
 import { SectionHeading } from '../section-heading';
-import { AiStage } from './ai-stage';
+import { AiPieces } from './ai-pieces';
 
 const AI_FAMILY = 'AI';
 
@@ -46,9 +46,9 @@ export function AiKitSection({ className }: { className: string }) {
         id='ai-kit-title'
         icon={BotIcon}
         eyebrow={countLabel(total, 'AI component', 'AI components')}
-        lead='For products with agents in them,'
-        title='one run moves every view'
-        description='Plans, tool calls, approvals, context and cost read the same run. Here one scripted run feeds four of them at once, and it waits for your yes before it sends anything.'
+        lead='For AI products,'
+        title='the parts your users touch'
+        description='A composer with its files and its model, answers that show their sources, a plan the agent waits on, the permission it asks before a command, a reply to listen to. These are the components you install, each playing its own demo.'
         action={
           <Button
             variant='outline'
@@ -61,7 +61,7 @@ export function AiKitSection({ className }: { className: string }) {
         }
       />
       <Reveal isLarge>
-        <AiStage />
+        <AiPieces />
       </Reveal>
       <Reveal>
         <nav aria-label='AI categories' className='flex flex-wrap gap-2'>
