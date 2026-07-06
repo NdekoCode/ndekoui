@@ -345,17 +345,19 @@ function TurnSparkline({
           />
         ))}
       </div>
-      <table className='sr-only'>
-        <caption>Tokens added per turn</caption>
-        <tbody>
-          {turns.map((turn) => (
-            <tr key={turn.id}>
-              <th scope='row'>{turn.label}</th>
-              <td>{formatTokens(turn.tokens)}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className='sr-only'>
+        <table>
+          <caption>Tokens added per turn</caption>
+          <tbody>
+            {turns.map((turn) => (
+              <tr key={turn.id}>
+                <th scope='row'>{turn.label}</th>
+                <td>{formatTokens(turn.tokens)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

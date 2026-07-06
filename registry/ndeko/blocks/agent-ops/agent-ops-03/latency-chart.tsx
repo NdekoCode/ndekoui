@@ -246,25 +246,27 @@ export function LatencyChart({ service }: LatencyChartProps) {
         </div>
       </div>
 
-      <table className='sr-only'>
-        <caption>{title}</caption>
-        <thead>
-          <tr>
-            <th scope='col'>Hour</th>
-            <th scope='col'>p50</th>
-            <th scope='col'>p95</th>
-          </tr>
-        </thead>
-        <tbody>
-          {service.p50.map((p50Ms, hour) => (
-            <tr key={hour}>
-              <th scope='row'>{hourLabelOf(hour, hourCount)}</th>
-              <td>{formatMs(p50Ms)}</td>
-              <td>{formatMs(service.p95[hour])}</td>
+      <div className='sr-only'>
+        <table>
+          <caption>{title}</caption>
+          <thead>
+            <tr>
+              <th scope='col'>Hour</th>
+              <th scope='col'>p50</th>
+              <th scope='col'>p95</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {service.p50.map((p50Ms, hour) => (
+              <tr key={hour}>
+                <th scope='row'>{hourLabelOf(hour, hourCount)}</th>
+                <td>{formatMs(p50Ms)}</td>
+                <td>{formatMs(service.p95[hour])}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </section>
   );
 }

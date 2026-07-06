@@ -339,17 +339,19 @@ function DailyBars({ period }: { period: UsagePeriod }) {
         <span>{dayCountLabelOf(period)}</span>
         <span>Resets on {period.resetsOn}</span>
       </div>
-      <table className='sr-only'>
-        <caption>Spend per day, {period.label}</caption>
-        <tbody>
-          {period.dailyUsd.map((spend, index) => (
-            <tr key={index}>
-              <th scope='row'>Day {index + 1}</th>
-              <td>{USD_TEXT.format(spend)}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className='sr-only'>
+        <table>
+          <caption>Spend per day, {period.label}</caption>
+          <tbody>
+            {period.dailyUsd.map((spend, index) => (
+              <tr key={index}>
+                <th scope='row'>Day {index + 1}</th>
+                <td>{USD_TEXT.format(spend)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

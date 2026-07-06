@@ -260,23 +260,25 @@ export function TrendChart({
       <span aria-live='polite' className='sr-only'>
         {reading.isReadingByKeys && readingText}
       </span>
-      <table className='sr-only'>
-        <caption>{title}</caption>
-        <thead>
-          <tr>
-            <th scope='col'>Period</th>
-            <th scope='col'>{valueHeading}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {points.map((point) => (
-            <tr key={point.label}>
-              <th scope='row'>{point.label}</th>
-              <td>{formatValue(point.value)}</td>
+      <div className='sr-only'>
+        <table>
+          <caption>{title}</caption>
+          <thead>
+            <tr>
+              <th scope='col'>Period</th>
+              <th scope='col'>{valueHeading}</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {points.map((point) => (
+              <tr key={point.label}>
+                <th scope='row'>{point.label}</th>
+                <td>{formatValue(point.value)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

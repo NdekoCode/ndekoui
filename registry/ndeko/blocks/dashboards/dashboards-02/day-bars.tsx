@@ -230,23 +230,25 @@ export function DayBars({ title, bars, emptyState }: DayBarsProps) {
       <span aria-live='polite' className='sr-only'>
         {reading.isReadingByKeys && readingText}
       </span>
-      <table className='sr-only'>
-        <caption>{title}</caption>
-        <thead>
-          <tr>
-            <th scope='col'>Day</th>
-            <th scope='col'>Tracked time</th>
-          </tr>
-        </thead>
-        <tbody>
-          {bars.map((bar) => (
-            <tr key={bar.label}>
-              <th scope='row'>{bubbleLabelOf(bar)}</th>
-              <td>{tableValueOf(bar)}</td>
+      <div className='sr-only'>
+        <table>
+          <caption>{title}</caption>
+          <thead>
+            <tr>
+              <th scope='col'>Day</th>
+              <th scope='col'>Tracked time</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {bars.map((bar) => (
+              <tr key={bar.label}>
+                <th scope='row'>{bubbleLabelOf(bar)}</th>
+                <td>{tableValueOf(bar)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

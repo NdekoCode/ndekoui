@@ -281,23 +281,25 @@ function ReportsPreview() {
           );
         })}
       </svg>
-      <table className='sr-only'>
-        <caption>Hours logged per day this week, illustrative</caption>
-        <thead>
-          <tr>
-            <th scope='col'>Day</th>
-            <th scope='col'>Hours</th>
-          </tr>
-        </thead>
-        <tbody>
-          {HOURS_BY_DAY.map((entry) => (
-            <tr key={entry.day}>
-              <th scope='row'>{entry.day}</th>
-              <td>{hoursLabelOf(entry.hours)}</td>
+      <div className='sr-only'>
+        <table>
+          <caption>Hours logged per day this week, illustrative</caption>
+          <thead>
+            <tr>
+              <th scope='col'>Day</th>
+              <th scope='col'>Hours</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {HOURS_BY_DAY.map((entry) => (
+              <tr key={entry.day}>
+                <th scope='row'>{entry.day}</th>
+                <td>{hoursLabelOf(entry.hours)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
