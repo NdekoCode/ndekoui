@@ -9,4 +9,22 @@ export const manifest: BlockManifest = [
     files: ['index.tsx', 'release-entry.tsx', 'data.ts'],
     previewHeight: 1100,
   },
+  {
+    name: 'changelog-02',
+    title: 'Changelog by month',
+    description:
+      'Entries grouped under sticky month headers inside their own scroll frame, a month jump that follows the scroll, type filters with counts, details that open in place and a link to copy for every entry.',
+    files: [
+      'index.tsx',
+      'entry-row.tsx',
+      'filters.tsx',
+      'month-nav.tsx',
+      'use-month-spy.ts',
+      'groups.ts',
+      'hash.ts',
+      'session.ts',
+      'data.ts',
+    ],
+    previewHeight: 760,
+  },
 ];
