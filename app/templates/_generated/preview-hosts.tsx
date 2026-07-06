@@ -7,6 +7,26 @@ import type { ComponentType } from 'react';
 import { previewHostOf, type PreviewHostProps } from '@/app/_site/preview-host';
 
 export const previewHosts: Record<string, ComponentType<PreviewHostProps>> = {
-  application: dynamic(() => import('./application').then(previewHostOf)),
-  marketing: dynamic(() => import('./marketing').then(previewHostOf)),
+  'agent-operations': dynamic(() =>
+    import('./agent-operations').then(previewHostOf)
+  ),
+  'agent-workspaces': dynamic(() =>
+    import('./agent-workspaces').then(previewHostOf)
+  ),
+  auth: dynamic(() => import('./auth').then(previewHostOf)),
+  changelog: dynamic(() => import('./changelog').then(previewHostOf)),
+  chat: dynamic(() => import('./chat').then(previewHostOf)),
+  contact: dynamic(() => import('./contact').then(previewHostOf)),
+  dashboards: dynamic(() => import('./dashboards').then(previewHostOf)),
+  docs: dynamic(() => import('./docs').then(previewHostOf)),
+  inbox: dynamic(() => import('./inbox').then(previewHostOf)),
+  'landing-pages': dynamic(() => import('./landing-pages').then(previewHostOf)),
+  pricing: dynamic(() => import('./pricing').then(previewHostOf)),
+  settings: dynamic(() => import('./settings').then(previewHostOf)),
+  'team-workspace': dynamic(() =>
+    import('./team-workspace').then(previewHostOf)
+  ),
+  'workflow-builder': dynamic(() =>
+    import('./workflow-builder').then(previewHostOf)
+  ),
 };
