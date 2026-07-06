@@ -11,9 +11,15 @@ import {
 } from './preview-widths';
 import type { CatalogEntry } from './types';
 
+type TitleTag = 'h2' | 'h3';
+
 type ComponentTileProps = {
   entry: CatalogEntry;
   preview: ReactNode;
+  /** Replaces the catalogue's column span, for a tile placed in another grid. */
+  placement?: string;
+  /** `h3` when the tile sits under a section that has its own `h2`. */
+  titleAs?: TitleTag;
 };
 
 const STAGE_CLASSES: Record<PreviewWidth, string> = {
@@ -22,20 +28,28 @@ const STAGE_CLASSES: Record<PreviewWidth, string> = {
   full: 'px-3 py-6 sm:p-6',
 };
 
-export function ComponentTile({ entry, preview }: ComponentTileProps) {
+export function ComponentTile({
+  entry,
+  preview,
+  placement,
+  titleAs: Title = 'h2',
+}: ComponentTileProps) {
   const width = previewWidthOf(entry);
+  const placementClass = placement ?? widthClassOf(width);
 
   return (
     <article
       id={entry.name}
       className={cn(
         'bg-foreground/[0.025] flex min-w-0 scroll-mt-20 flex-col rounded-2xl p-1.5',
-        widthClassOf(width)
+        placementClass
       )}
     >
       <header className='@container/tile-header flex items-center gap-3 py-1.5 ps-3 pe-0.5'>
         <div className='flex min-w-0 flex-1 flex-col'>
-          <h2 className='truncate text-[13px] font-medium'>{entry.title}</h2>
+          <Title className='truncate text-[13px] font-medium'>
+            {entry.title}
+          </Title>
           <p className='text-muted-foreground truncate font-mono text-[11px]'>
             {entry.name}
           </p>
