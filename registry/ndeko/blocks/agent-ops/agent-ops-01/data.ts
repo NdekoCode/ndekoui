@@ -100,7 +100,7 @@ export const AGENTS: Agent[] = [
   },
   {
     id: 'log-reader',
-    name: 'Log reader',
+    name: 'Log scanner',
     model: 'claude-haiku',
     parentId: 'coder',
   },
