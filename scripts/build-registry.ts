@@ -5,6 +5,7 @@ import postcss, { type Container } from 'postcss';
 
 import { sampleAssetItems } from '../registry/asset-items';
 import { registryItems, type RegistryItemDefinition } from '../registry/items';
+import { themeItems } from '../registry/theme-items';
 import {
   bundleItemsOf,
   collectBundles,
@@ -193,7 +194,7 @@ async function buildRegistry() {
     $schema: 'https://ui.shadcn.com/schema/registry.json',
     name: 'ndekoui',
     homepage: 'https://ui.ndekocode.dev',
-    items: [themeItem, ...definitions.map(toRegistryItem)],
+    items: [themeItem, ...themeItems, ...definitions.map(toRegistryItem)],
   };
   const json = JSON.stringify(registry, null, 2);
   fs.writeFileSync(OUTPUT, `${json}\n`);
