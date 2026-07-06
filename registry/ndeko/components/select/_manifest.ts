@@ -327,4 +327,11 @@ export const manifest: ComponentManifest = [
     description:
       'A select whose list opens with the current choice under your finger: slide to another one and let go to pick it, or click to open it as usual.',
   },
+  {
+    name: 'select-53',
+    source: 'ndeko',
+    title: 'Settings as a sentence',
+    description:
+      'A setting written as one sentence where only the changeable words are dark: tap a word to pick another, drag a number sideways to dial it, and the line below rolls to say what it means.',
+  },
 ];
