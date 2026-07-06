@@ -5504,17 +5504,17 @@
       "name": "agent-01",
       "type": "registry:component",
       "title": "Agent plan",
-      "description": "A plan that waits for Approve plan or an inline edit, then checks its steps off live, slides in the step the agent adds, strikes the one it drops and folds into one line.",
+      "description": "A plan that waits for Approve plan or an inline edit, then runs: each step checks itself off while the highlight glides to the next one, the agent slides in a step it adds and strikes the one it drops, and a toggle folds it into one line.",
       "dependencies": [
         "motion"
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/agent-run.json",
-        "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
@@ -5526,7 +5526,7 @@
         "https://ui.ndekocode.dev/r/replay-button.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
-        "https://ui.ndekocode.dev/r/use-demo-run.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
         "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
         "https://ui.ndekocode.dev/r/utils.json"
@@ -5548,9 +5548,19 @@
           "target": "components/agent/_parts/crew.ts"
         },
         {
+          "path": "registry/ndeko/components/agent/_parts/demo.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/demo.ts"
+        },
+        {
           "path": "registry/ndeko/components/agent/_parts/focus-later.ts",
           "type": "registry:component",
           "target": "components/agent/_parts/focus-later.ts"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/keyed-height.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/keyed-height.tsx"
         },
         {
           "path": "registry/ndeko/components/agent/_parts/relative-time.tsx",
@@ -5572,7 +5582,7 @@
       "name": "agent-02",
       "type": "registry:component",
       "title": "Agent lanes",
-      "description": "A lane per agent where tasks grow into a now line while time drifts left, hand-offs curve from lane to lane and an approval waits on its marker.",
+      "description": "A lane per agent that fills from its start on a fixed window of time as one now line advances, with hand-offs curving from lane to lane and an approval waiting on its marker.",
       "dependencies": [
         "motion"
       ],
@@ -5580,6 +5590,7 @@
         "https://ui.ndekocode.dev/r/agent-run.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/hatch.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
@@ -5589,12 +5600,12 @@
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/popover.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/run-session.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
-        "https://ui.ndekocode.dev/r/use-agent-run.json",
-        "https://ui.ndekocode.dev/r/use-demo-run.json",
         "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -5617,6 +5628,11 @@
           "path": "registry/ndeko/components/agent/_parts/crew.ts",
           "type": "registry:component",
           "target": "components/agent/_parts/crew.ts"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/demo.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/demo.ts"
         }
       ],
       "categories": [
@@ -5628,13 +5644,15 @@
       "name": "agent-03",
       "type": "registry:component",
       "title": "Agent graph",
-      "description": "Agents and the tools they call as a live graph whose nodes glide between tree, flow and hub layouts, with a streak of light along the edge of each call.",
+      "description": "Agents and the tools they call as a graph where an edge draws itself when one agent calls another and a dot travels along it for each call, in a tree, flow or hub layout.",
       "dependencies": [
         "motion"
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/agent-run.json",
         "https://ui.ndekocode.dev/r/call-status.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
@@ -5644,12 +5662,12 @@
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/popover.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/run-session.json",
         "https://ui.ndekocode.dev/r/segments.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-agent-run.json",
-        "https://ui.ndekocode.dev/r/use-demo-run.json",
         "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -5693,7 +5711,7 @@
       "name": "agent-04",
       "type": "registry:component",
       "title": "Agent handoff",
-      "description": "A relay of agents where each hand-off sends a light down the rail with its note and context, lost items stay struck through and the next station can be dragged to another agent.",
+      "description": "A relay of agents where the task travels down the rail from one agent tile to the next with its note and context, lost items stay struck through and the next station can be dragged to another agent.",
       "dependencies": [
         "motion"
       ],
@@ -5702,6 +5720,7 @@
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
@@ -5710,10 +5729,11 @@
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/run-session.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -5747,7 +5767,7 @@
       "name": "agent-05",
       "type": "registry:component",
       "title": "Agent tree",
-      "description": "Who started whom as a tree with live clocks and subtree costs that roll, folds that sum what they hide, and Approve or Retry right in the row.",
+      "description": "Who started whom as a tree where a branch unfolds under an agent when it starts a sub-agent, with live clocks, subtree costs that roll, folds that sum what they hide, and Approve or Retry right in the row.",
       "dependencies": [
         "motion"
       ],
@@ -5755,6 +5775,8 @@
         "https://ui.ndekocode.dev/r/agent-run.json",
         "https://ui.ndekocode.dev/r/badge.json",
         "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
@@ -5764,11 +5786,11 @@
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/run-session.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-agent-run.json",
-        "https://ui.ndekocode.dev/r/use-demo-run.json",
         "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -5782,6 +5804,11 @@
           "path": "registry/ndeko/components/agent/_parts/agent-actions.tsx",
           "type": "registry:component",
           "target": "components/agent/_parts/agent-actions.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/agent-clock.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/agent-clock.tsx"
         },
         {
           "path": "registry/ndeko/components/agent/_parts/agent-status.tsx",
@@ -5802,6 +5829,11 @@
           "path": "registry/ndeko/components/agent/_parts/crew.ts",
           "type": "registry:component",
           "target": "components/agent/_parts/crew.ts"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/demo.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/demo.ts"
         },
         {
           "path": "registry/ndeko/components/agent/_parts/focus-later.ts",
@@ -5828,15 +5860,15 @@
       "name": "agent-06",
       "type": "registry:component",
       "title": "Agent fleet",
-      "description": "Every main agent at a glance under rolling totals, with filters, a Rows and Cards switch that re-flows the list, and sub-agents that unfold with Approve and Retry.",
+      "description": "Every main agent at a glance under rolling totals, where the list switches between rows and cards with each agent gliding to its new place, with filters and sub-agents that unfold with Approve and Retry.",
       "dependencies": [
         "motion"
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/agent-run.json",
-        "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/kbd.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
@@ -5846,13 +5878,14 @@
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/run-session.json",
         "https://ui.ndekocode.dev/r/segments.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle-group.json",
         "https://ui.ndekocode.dev/r/use-agent-run.json",
-        "https://ui.ndekocode.dev/r/use-demo-run.json",
         "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -5866,6 +5899,11 @@
           "path": "registry/ndeko/components/agent/_parts/agent-actions.tsx",
           "type": "registry:component",
           "target": "components/agent/_parts/agent-actions.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/agent-clock.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/agent-clock.tsx"
         },
         {
           "path": "registry/ndeko/components/agent/_parts/agent-status.tsx",
@@ -5888,9 +5926,19 @@
           "target": "components/agent/_parts/crew.ts"
         },
         {
+          "path": "registry/ndeko/components/agent/_parts/demo.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/demo.ts"
+        },
+        {
           "path": "registry/ndeko/components/agent/_parts/focus-later.ts",
           "type": "registry:component",
           "target": "components/agent/_parts/focus-later.ts"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/keyed-height.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/keyed-height.tsx"
         },
         {
           "path": "registry/ndeko/components/agent/_parts/use-agent-announcement.ts",
@@ -5912,16 +5960,16 @@
       "name": "agent-07",
       "type": "registry:component",
       "title": "Agent monitor",
-      "description": "One agent at work: its current step with a clock and cost, a time strip that grows, the exact command waiting for Allow or Deny, and a fold into a slim bar.",
+      "description": "One agent at work: the step it is on with its clock, a cost figure that rolls each time a step ends and once more when the run does, a time strip that fills, the exact command waiting for Allow or Deny, and a fold into a slim bar.",
       "dependencies": [
         "motion"
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/agent-run.json",
-        "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
         "https://ui.ndekocode.dev/r/copy-button.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/hatch.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
@@ -5931,11 +5979,12 @@
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/run-session.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/tooltip.json",
-        "https://ui.ndekocode.dev/r/use-agent-run.json",
         "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -5965,9 +6014,19 @@
           "target": "components/agent/_parts/crew.ts"
         },
         {
+          "path": "registry/ndeko/components/agent/_parts/demo.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/demo.ts"
+        },
+        {
           "path": "registry/ndeko/components/agent/_parts/focus-later.ts",
           "type": "registry:component",
           "target": "components/agent/_parts/focus-later.ts"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/keyed-height.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/keyed-height.tsx"
         },
         {
           "path": "registry/ndeko/components/agent/_parts/tool-tile.tsx",
@@ -5989,7 +6048,7 @@
       "name": "agent-08",
       "type": "registry:component",
       "title": "Agent memory",
-      "description": "What an agent remembers, searchable by scope, with edits in place, pins that re-sort the list, forget with Undo, forget by source and why a memory was used.",
+      "description": "What an agent remembers, where a new memory folds into the list when the agent saves it, searchable by scope, with edits in place, pins that re-sort the list, forget with Undo, forget by source and why a memory was used.",
       "dependencies": [
         "motion"
       ],
@@ -5997,6 +6056,7 @@
         "https://ui.ndekocode.dev/r/agent-run.json",
         "https://ui.ndekocode.dev/r/button.json",
         "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/input.json",
@@ -6006,14 +6066,14 @@
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
         "https://ui.ndekocode.dev/r/popover.json",
+        "https://ui.ndekocode.dev/r/run-session.json",
         "https://ui.ndekocode.dev/r/segments.json",
         "https://ui.ndekocode.dev/r/textarea.json",
         "https://ui.ndekocode.dev/r/theme.json",
         "https://ui.ndekocode.dev/r/toggle-group.json",
-        "https://ui.ndekocode.dev/r/use-agent-run.json",
-        "https://ui.ndekocode.dev/r/use-demo-run.json",
         "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -6048,27 +6108,29 @@
       "name": "agent-09",
       "type": "registry:component",
       "title": "Knowledge sources",
-      "description": "The sources an agent searches, with indexing progress and chunk counts that roll, a Re-sync that turns into a spinner then a check, and Retry on the one that failed.",
+      "description": "The sources an agent searches, where a source lights in the colour of the agent when its answer uses it, with indexing progress, a Re-sync that turns into a spinner then a check, and Retry on the one that failed.",
       "dependencies": [
         "motion"
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/agent-run.json",
-        "https://ui.ndekocode.dev/r/animated-size.json",
         "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
         "https://ui.ndekocode.dev/r/dropdown-menu.json",
         "https://ui.ndekocode.dev/r/icons.json",
         "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/morph-button.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
         "https://ui.ndekocode.dev/r/progress.json",
+        "https://ui.ndekocode.dev/r/run-session.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-agent-run.json",
-        "https://ui.ndekocode.dev/r/use-demo-run.json",
         "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/use-timeouts.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
@@ -6077,6 +6139,16 @@
           "path": "registry/ndeko/components/agent/agent-09.tsx",
           "type": "registry:component",
           "target": "components/agent/agent-09.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/agent-tile.tsx",
+          "type": "registry:component",
+          "target": "components/agent/_parts/agent-tile.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/agent/_parts/crew.ts",
+          "type": "registry:component",
+          "target": "components/agent/_parts/crew.ts"
         },
         {
           "path": "registry/ndeko/components/agent/_parts/relative-time.tsx",
@@ -6098,21 +6170,26 @@
       "name": "agent-10",
       "type": "registry:component",
       "title": "Agent status",
-      "description": "A dot and a word per agent where running breathes, waiting blinks slowly and the word rolls on every change, above a legend of all five states.",
+      "description": "A mark and a word per agent that change together: the dot of a running agent sends a ring out, and a hand, a cross or a check takes its place when the agent waits, fails or ends, above a legend of all five states.",
       "dependencies": [
         "motion"
       ],
       "registryDependencies": [
         "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
         "https://ui.ndekocode.dev/r/live-region.json",
         "https://ui.ndekocode.dev/r/mesh-tile.json",
         "https://ui.ndekocode.dev/r/motion-number.json",
         "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/run-session.json",
         "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-agent-run.json",
-        "https://ui.ndekocode.dev/r/use-demo-run.json",
         "https://ui.ndekocode.dev/r/use-kept-height.json",
         "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
         "https://ui.ndekocode.dev/r/utils.json"
       ],
       "files": [
@@ -7641,6 +7718,786 @@
       "categories": [
         "components",
         "avatar"
+      ]
+    },
+    {
+      "name": "background-01",
+      "type": "registry:component",
+      "title": "Drifting fields",
+      "description": "Soft fields of one hue behind a hero or a closing band, each drifting on a path of its own length, so they never move in step.",
+      "dependencies": [
+        "not showing"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/background/background-01.tsx",
+          "type": "registry:component",
+          "target": "components/background/background-01.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/demo-band.tsx",
+          "type": "registry:component",
+          "target": "components/background/_parts/demo-band.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/hue.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/hue.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/loops.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/loops.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/showing.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/showing.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/soft-field.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/soft-field.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "background"
+      ]
+    },
+    {
+      "name": "background-02",
+      "type": "registry:component",
+      "title": "Cube field",
+      "description": "A floor of small isometric cubes behind a hero, where the cubes under the pointer rise on their own springs and take the hue as they lift.",
+      "dependencies": [
+        "not showing"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/background/background-02.tsx",
+          "type": "registry:component",
+          "target": "components/background/background-02.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/demo-band.tsx",
+          "type": "registry:component",
+          "target": "components/background/_parts/demo-band.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/frame-loop.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/frame-loop.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/hue.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/hue.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/math.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/math.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/pointer.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/pointer.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/showing.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/showing.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/stage-canvas.tsx",
+          "type": "registry:component",
+          "target": "components/background/_parts/stage-canvas.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/stage.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/stage.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/surface.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/surface.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "background"
+      ]
+    },
+    {
+      "name": "background-03",
+      "type": "registry:component",
+      "title": "Dither light",
+      "description": "A soft light drawn as crisp ordered dots behind a hero, that follows the pointer, rises as a horizon or flows as noise, dots lighting and going out as it passes.",
+      "dependencies": [
+        "not showing"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/background/background-03.tsx",
+          "type": "registry:component",
+          "target": "components/background/background-03.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/demo-band.tsx",
+          "type": "registry:component",
+          "target": "components/background/_parts/demo-band.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/frame-loop.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/frame-loop.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/hue.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/hue.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/math.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/math.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/pointer.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/pointer.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/showing.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/showing.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/stage-canvas.tsx",
+          "type": "registry:component",
+          "target": "components/background/_parts/stage-canvas.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/stage.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/stage.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/surface.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/surface.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "background"
+      ]
+    },
+    {
+      "name": "background-04",
+      "type": "registry:component",
+      "title": "Dot spotlight",
+      "description": "A quiet dot grid behind a section, where a soft light follows the pointer and lifts the dots under it into the hue.",
+      "dependencies": [
+        "not showing"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/background/background-04.tsx",
+          "type": "registry:component",
+          "target": "components/background/background-04.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/aim.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/aim.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/demo-band.tsx",
+          "type": "registry:component",
+          "target": "components/background/_parts/demo-band.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/hue.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/hue.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/loops.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/loops.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/math.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/math.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/pointer.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/pointer.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/showing.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/showing.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "background"
+      ]
+    },
+    {
+      "name": "background-05",
+      "type": "registry:component",
+      "title": "Flickering grid",
+      "description": "Small squares that flicker under a low ceiling behind a hero, where a new word surfaces from the grid square by square.",
+      "dependencies": [
+        "not showing"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/background/background-05.tsx",
+          "type": "registry:component",
+          "target": "components/background/background-05.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/demo-band.tsx",
+          "type": "registry:component",
+          "target": "components/background/_parts/demo-band.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/frame-loop.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/frame-loop.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/hue.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/hue.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/math.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/math.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/pointer.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/pointer.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/seeded.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/seeded.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/showing.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/showing.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/stage-canvas.tsx",
+          "type": "registry:component",
+          "target": "components/background/_parts/stage-canvas.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/stage.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/stage.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/surface.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/surface.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "background"
+      ]
+    },
+    {
+      "name": "background-06",
+      "type": "registry:component",
+      "title": "Light floor",
+      "description": "A floor of light rising from the foot of a band, drifting and breathing, where a press sends a wave across it from the point it came from.",
+      "dependencies": [
+        "not showing"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/background/background-06.tsx",
+          "type": "registry:component",
+          "target": "components/background/background-06.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/demo-band.tsx",
+          "type": "registry:component",
+          "target": "components/background/_parts/demo-band.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/hue.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/hue.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/loops.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/loops.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/math.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/math.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/showing.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/showing.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/soft-field.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/soft-field.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "background"
+      ]
+    },
+    {
+      "name": "background-07",
+      "type": "registry:component",
+      "title": "Grid pattern",
+      "description": "A crisp hairline grid behind a section, dashed, tilted or faded at will, where four lit cells fade out and land somewhere new in turn.",
+      "dependencies": [
+        "not showing"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/background/background-07.tsx",
+          "type": "registry:component",
+          "target": "components/background/background-07.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/aim.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/aim.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/demo-band.tsx",
+          "type": "registry:component",
+          "target": "components/background/_parts/demo-band.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/hue.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/hue.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/loops.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/loops.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/math.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/math.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/pointer.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/pointer.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/showing.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/showing.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/use-cells.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/use-cells.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "background"
+      ]
+    },
+    {
+      "name": "background-08",
+      "type": "registry:component",
+      "title": "Node field",
+      "description": "Drifting nodes behind a hero that link with hairlines as they come close, where the pointer joins as a node and draws its neighbours to it.",
+      "dependencies": [
+        "not showing"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/background/background-08.tsx",
+          "type": "registry:component",
+          "target": "components/background/background-08.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/demo-band.tsx",
+          "type": "registry:component",
+          "target": "components/background/_parts/demo-band.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/frame-loop.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/frame-loop.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/hue.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/hue.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/math.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/math.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/pointer.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/pointer.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/seeded.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/seeded.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/showing.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/showing.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/stage-canvas.tsx",
+          "type": "registry:component",
+          "target": "components/background/_parts/stage-canvas.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/stage.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/stage.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/surface.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/surface.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "background"
+      ]
+    },
+    {
+      "name": "background-09",
+      "type": "registry:component",
+      "title": "Perspective grid",
+      "description": "A grid floor behind a hero that runs towards the viewer and fades into the horizon, every fourth line in the hue.",
+      "dependencies": [
+        "not showing"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/background/background-09.tsx",
+          "type": "registry:component",
+          "target": "components/background/background-09.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/demo-band.tsx",
+          "type": "registry:component",
+          "target": "components/background/_parts/demo-band.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/hue.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/hue.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/loops.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/loops.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/showing.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/showing.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "background"
+      ]
+    },
+    {
+      "name": "background-10",
+      "type": "registry:component",
+      "title": "Signal lines",
+      "description": "Faint routes drawn from a seed behind a section about agents, where pulses of the hue travel along them like traffic.",
+      "dependencies": [
+        "not showing"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/background/background-10.tsx",
+          "type": "registry:component",
+          "target": "components/background/background-10.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/demo-band.tsx",
+          "type": "registry:component",
+          "target": "components/background/_parts/demo-band.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/hue.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/hue.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/loops.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/loops.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/math.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/math.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/seeded.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/seeded.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/showing.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/showing.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/use-cells.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/use-cells.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "background"
+      ]
+    },
+    {
+      "name": "background-11",
+      "type": "registry:component",
+      "title": "Glass bands",
+      "description": "Concentric bands of one hue behind a headline, each starting its ramp again at its edge so the set reads as glass, its centre leaning towards the pointer.",
+      "dependencies": [
+        "not showing"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/background/background-11.tsx",
+          "type": "registry:component",
+          "target": "components/background/background-11.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/aim.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/aim.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/demo-band.tsx",
+          "type": "registry:component",
+          "target": "components/background/_parts/demo-band.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/hue.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/hue.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/loops.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/loops.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/math.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/math.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/pointer.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/pointer.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/showing.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/showing.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "background"
+      ]
+    },
+    {
+      "name": "background-12",
+      "type": "registry:component",
+      "title": "Threads",
+      "description": "Hairline threads that gather through a call to action, tighten as the pointer nears it and part around the pointer, where a press sends a light out along every one.",
+      "dependencies": [
+        "not showing"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/background/background-12.tsx",
+          "type": "registry:component",
+          "target": "components/background/background-12.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/demo-band.tsx",
+          "type": "registry:component",
+          "target": "components/background/_parts/demo-band.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/frame-loop.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/frame-loop.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/hue.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/hue.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/math.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/math.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/pointer.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/pointer.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/seeded.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/seeded.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/showing.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/showing.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/stage-canvas.tsx",
+          "type": "registry:component",
+          "target": "components/background/_parts/stage-canvas.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/stage.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/stage.ts"
+        },
+        {
+          "path": "registry/ndeko/components/background/_parts/surface.ts",
+          "type": "registry:component",
+          "target": "components/background/_parts/surface.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "background"
       ]
     },
     {
@@ -10872,6 +11729,689 @@
       "categories": [
         "components",
         "calendar-date-picker"
+      ]
+    },
+    {
+      "name": "card-01",
+      "type": "registry:component",
+      "title": "Contact stack",
+      "description": "A stack of contact cards with one action each, where the front card drops away and tucks behind the others on a click or an arrow key.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/recipes.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/card/card-01.tsx",
+          "type": "registry:component",
+          "target": "components/card/card-01.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/deck.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/deck.ts"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/keys.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/keys.ts"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/people.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/people.ts"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/use-card-demo.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/use-card-demo.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "card"
+      ]
+    },
+    {
+      "name": "card-02",
+      "type": "registry:component",
+      "title": "Service receipt",
+      "description": "A receipt drawn as a ticket with notched edges and a scalloped foot, where the total adds up as service lines are ticked and Start project confirms it.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/checkbox.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/card/card-02.tsx",
+          "type": "registry:component",
+          "target": "components/card/card-02.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/sample-note.tsx",
+          "type": "registry:component",
+          "target": "components/card/_parts/sample-note.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/ticket.tsx",
+          "type": "registry:component",
+          "target": "components/card/_parts/ticket.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/use-card-demo.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/use-card-demo.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "card"
+      ]
+    },
+    {
+      "name": "card-03",
+      "type": "registry:component",
+      "title": "Revenue card",
+      "description": "Monthly revenue with its share of the goal, the trend against the month before in words and a hatched bar by channel, where the line draws itself as the figures land.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/card.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/hatch.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/card/card-03.tsx",
+          "type": "registry:component",
+          "target": "components/card/card-03.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/sample-note.tsx",
+          "type": "registry:component",
+          "target": "components/card/_parts/sample-note.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/use-card-demo.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/use-card-demo.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "card"
+      ]
+    },
+    {
+      "name": "card-04",
+      "type": "registry:component",
+      "title": "Post deck",
+      "description": "A deck of posts with a drawn visual, a page index and like, reply, share and bookmark, where the front card swings out to the left as the next steps up.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/recipes.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/card/card-04.tsx",
+          "type": "registry:component",
+          "target": "components/card/card-04.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/deck.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/deck.ts"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/keys.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/keys.ts"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/people.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/people.ts"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/sample-note.tsx",
+          "type": "registry:component",
+          "target": "components/card/_parts/sample-note.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/use-card-demo.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/use-card-demo.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "card"
+      ]
+    },
+    {
+      "name": "card-05",
+      "type": "registry:component",
+      "title": "Story quote",
+      "description": "A quote card that plays like a story, where the segments along the bottom fill one after another before the next quote fades in, a tap on either side steps and Space pauses.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/recipes.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/card/card-05.tsx",
+          "type": "registry:component",
+          "target": "components/card/card-05.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/deck.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/deck.ts"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/keys.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/keys.ts"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/people.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/people.ts"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/sample-note.tsx",
+          "type": "registry:component",
+          "target": "components/card/_parts/sample-note.tsx"
+        }
+      ],
+      "categories": [
+        "components",
+        "card"
+      ]
+    },
+    {
+      "name": "card-06",
+      "type": "registry:component",
+      "title": "Tag rows",
+      "description": "A feature card whose rows of tags drift against each other behind faded edges, above a short headline, and hold still off screen and under the pointer.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/card.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/card/card-06.tsx",
+          "type": "registry:component",
+          "target": "components/card/card-06.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/keys.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/keys.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "card"
+      ]
+    },
+    {
+      "name": "card-07",
+      "type": "registry:component",
+      "title": "Week in figures",
+      "description": "A weekly card whose four figures roll through a vertical loop with no end, where the figure in front changes place with the next.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/card.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/card/card-07.tsx",
+          "type": "registry:component",
+          "target": "components/card/card-07.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/deck.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/deck.ts"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/sample-note.tsx",
+          "type": "registry:component",
+          "target": "components/card/_parts/sample-note.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/use-card-demo.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/use-card-demo.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "card"
+      ]
+    },
+    {
+      "name": "card-08",
+      "type": "registry:component",
+      "title": "Folder",
+      "description": "A folder drawn in CSS whose files fan out on hover or focus, and whose list of files opens under it on Enter or a click.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/card/card-08.tsx",
+          "type": "registry:component",
+          "target": "components/card/card-08.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/pressed-shape.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/pressed-shape.ts"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/use-card-demo.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/use-card-demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/use-peek.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/use-peek.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "card"
+      ]
+    },
+    {
+      "name": "card-09",
+      "type": "registry:component",
+      "title": "Done pile",
+      "description": "Tasks done today, this week or this month as small tiles that pile up on the headline, then drain away before the next range lands.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/card.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/seeded.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/card/card-09.tsx",
+          "type": "registry:component",
+          "target": "components/card/card-09.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/sample-note.tsx",
+          "type": "registry:component",
+          "target": "components/card/_parts/sample-note.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/use-card-demo.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/use-card-demo.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "card"
+      ]
+    },
+    {
+      "name": "card-10",
+      "type": "registry:component",
+      "title": "Paper stack",
+      "description": "A file card whose sheets of paper and two profile cards rise and fan out behind it on hover or focus, and stay out on a click.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/card/card-10.tsx",
+          "type": "registry:component",
+          "target": "components/card/card-10.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/people.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/people.ts"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/pressed-shape.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/pressed-shape.ts"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/use-card-demo.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/use-card-demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/use-peek.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/use-peek.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "card"
+      ]
+    },
+    {
+      "name": "card-11",
+      "type": "registry:component",
+      "title": "Pass",
+      "description": "A ticket-style pass with notched edges and a drawn pattern on its stub, which tilts with the pointer, takes one band of light across and tears its stub at check-in.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/seeded.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/card/card-11.tsx",
+          "type": "registry:component",
+          "target": "components/card/card-11.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/people.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/people.ts"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/pressed-shape.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/pressed-shape.ts"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/sample-note.tsx",
+          "type": "registry:component",
+          "target": "components/card/_parts/sample-note.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/ticket.tsx",
+          "type": "registry:component",
+          "target": "components/card/_parts/ticket.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/use-card-demo.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/use-card-demo.ts"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/use-peek.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/use-peek.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "card"
+      ]
+    },
+    {
+      "name": "card-12",
+      "type": "registry:component",
+      "title": "Globe with routes",
+      "description": "A globe that turns to the city picked in the list or under a drag, where an arc draws from that city to each one it is linked to.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/card.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-globe.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/card/card-12.tsx",
+          "type": "registry:component",
+          "target": "components/card/card-12.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/sample-note.tsx",
+          "type": "registry:component",
+          "target": "components/card/_parts/sample-note.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/use-card-demo.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/use-card-demo.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "card"
+      ]
+    },
+    {
+      "name": "card-13",
+      "type": "registry:component",
+      "title": "Nights",
+      "description": "A week of sleep as columns of lights, one per hour, against a dashed goal line, where the lights of the picked night fill up beside its hours, bedtime and distance from the goal.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/card.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/card/card-13.tsx",
+          "type": "registry:component",
+          "target": "components/card/card-13.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/deck.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/deck.ts"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/keys.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/keys.ts"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/sample-note.tsx",
+          "type": "registry:component",
+          "target": "components/card/_parts/sample-note.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/use-card-demo.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/use-card-demo.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "card"
+      ]
+    },
+    {
+      "name": "card-14",
+      "type": "registry:component",
+      "title": "Range summary",
+      "description": "A reading on a range cut into bands, where the marker slides along the range and the weekly and monthly averages roll when the period changes.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/card.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/card/card-14.tsx",
+          "type": "registry:component",
+          "target": "components/card/card-14.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/sample-note.tsx",
+          "type": "registry:component",
+          "target": "components/card/_parts/sample-note.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/card/_parts/use-card-demo.ts",
+          "type": "registry:component",
+          "target": "components/card/_parts/use-card-demo.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "card"
       ]
     },
     {
@@ -14302,6 +15842,565 @@
       "categories": [
         "components",
         "file-upload"
+      ]
+    },
+    {
+      "name": "illustration-01",
+      "type": "registry:component",
+      "title": "Model orbit",
+      "description": "Model marks turning around an agent, where the link glides to the next model at each hand-over and the label under the agent rolls to its name.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/illustration/illustration-01.tsx",
+          "type": "registry:component",
+          "target": "components/illustration/illustration-01.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/geometry.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/geometry.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/models.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/models.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/use-scene-frames.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/use-scene-frames.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/use-scene-play.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/use-scene-play.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "illustration"
+      ]
+    },
+    {
+      "name": "illustration-02",
+      "type": "registry:component",
+      "title": "Model reel",
+      "description": "Two rows of model marks drifting past each other in opposite directions behind faded edges, holding still under the pointer and while the reel has the focus.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
+        "https://ui.ndekocode.dev/r/motion-marquee.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/illustration/illustration-02.tsx",
+          "type": "registry:component",
+          "target": "components/illustration/illustration-02.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/models.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/models.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/use-scene-play.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/use-scene-play.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "illustration"
+      ]
+    },
+    {
+      "name": "illustration-03",
+      "type": "registry:component",
+      "title": "Run pulse",
+      "description": "A lead, its agents and their tools, where a streak in the colour of the caller crosses the edge of each call and the node it reaches gives a little.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
+        "https://ui.ndekocode.dev/r/speech-envelope.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/illustration/illustration-03.tsx",
+          "type": "registry:component",
+          "target": "components/illustration/illustration-03.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/geometry.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/geometry.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/use-scene-animations.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/use-scene-animations.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/use-scene-play.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/use-scene-play.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "illustration"
+      ]
+    },
+    {
+      "name": "illustration-04",
+      "type": "registry:component",
+      "title": "Prompt to team",
+      "description": "A request that types itself and is sent, then connectors draw down from it and three agent cards branch out, each filling its role, its model and its tools.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
+        "https://ui.ndekocode.dev/r/speech-envelope.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/illustration/illustration-04.tsx",
+          "type": "registry:component",
+          "target": "components/illustration/illustration-04.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/delay.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/delay.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/models.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/models.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/prompt-field.tsx",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/prompt-field.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/typing.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/typing.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/use-scene-frames.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/use-scene-frames.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/use-scene-play.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/use-scene-play.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "illustration"
+      ]
+    },
+    {
+      "name": "illustration-05",
+      "type": "registry:component",
+      "title": "Tab overload",
+      "description": "A pile of five browser windows where one lifts with a hairline in the brand ink: the one under the pointer, or each in turn when nobody points.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/illustration/illustration-05.tsx",
+          "type": "registry:component",
+          "target": "components/illustration/illustration-05.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/use-scene-frames.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/use-scene-frames.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/use-scene-play.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/use-scene-play.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "illustration"
+      ]
+    },
+    {
+      "name": "illustration-06",
+      "type": "registry:component",
+      "title": "Task flow",
+      "description": "A task whose connectors draw down to subtasks that settle a little askew, then a named cursor picks the last one up and drops it into the dashed slot.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/illustration/illustration-06.tsx",
+          "type": "registry:component",
+          "target": "components/illustration/illustration-06.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/delay.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/delay.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/use-scene-frames.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/use-scene-frames.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/use-scene-play.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/use-scene-play.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "illustration"
+      ]
+    },
+    {
+      "name": "illustration-07",
+      "type": "registry:component",
+      "title": "Tool beam",
+      "description": "Your product between the tools it connects, with a light that runs along each curved beam the way the data goes; pointing at a tool dims the others and a click holds the flow.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/illustration/illustration-07.tsx",
+          "type": "registry:component",
+          "target": "components/illustration/illustration-07.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/geometry.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/geometry.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/use-scene-animations.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/use-scene-animations.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/use-scene-play.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/use-scene-play.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "illustration"
+      ]
+    },
+    {
+      "name": "illustration-08",
+      "type": "registry:component",
+      "title": "Vector search",
+      "description": "Retrieval told in five chapters on a step bar that fills as it plays, where chunks fly into topic clusters and a question walks the links to its nearest chunks before the ranked sources slide in.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/illustration/illustration-08.tsx",
+          "type": "registry:component",
+          "target": "components/illustration/illustration-08.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/delay.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/delay.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/geometry.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/geometry.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/use-scene-play.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/use-scene-play.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "illustration"
+      ]
+    },
+    {
+      "name": "illustration-09",
+      "type": "registry:component",
+      "title": "Prompt keyboard",
+      "description": "A prompt typed on a tilted keyboard, QWERTY or AZERTY, where each key lights as it goes down and sends a ripple across the floor under it, then Enter sends the line.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/speech-envelope.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/illustration/illustration-09.tsx",
+          "type": "registry:component",
+          "target": "components/illustration/illustration-09.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/geometry.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/geometry.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/prompt-field.tsx",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/prompt-field.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/typing.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/typing.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/use-scene-frames.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/use-scene-frames.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/use-scene-play.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/use-scene-play.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "illustration"
+      ]
+    },
+    {
+      "name": "illustration-10",
+      "type": "registry:component",
+      "title": "Agent face",
+      "description": "An agent face whose eyes follow the pointer and blink, then take on its state: wide while it listens, up past a trail of dots while it thinks, over a moving mouth while it speaks.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/speech-envelope.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/illustration/illustration-10.tsx",
+          "type": "registry:component",
+          "target": "components/illustration/illustration-10.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/canvas.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/canvas.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/geometry.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/geometry.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/use-scene-play.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/use-scene-play.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "illustration"
+      ]
+    },
+    {
+      "name": "illustration-11",
+      "type": "registry:component",
+      "title": "Region wheel",
+      "description": "A drum of server regions to flick, drag or step with the arrow keys, where the globe turns to the route from the visitor as each region passes and the latency estimate rolls.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-globe.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/illustration/illustration-11.tsx",
+          "type": "registry:component",
+          "target": "components/illustration/illustration-11.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/geometry.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/geometry.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "illustration"
+      ]
+    },
+    {
+      "name": "illustration-12",
+      "type": "registry:component",
+      "title": "Hello in every script",
+      "description": "A dotted globe with greetings standing where they are written, each in its own script: pick a language and the globe turns there, its greeting lights up in the brand ink and comes up large beside it.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-dotted-map-points.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/toggle-group.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/components/illustration/illustration-12.tsx",
+          "type": "registry:component",
+          "target": "components/illustration/illustration-12.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/canvas.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/canvas.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/geometry.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/geometry.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/use-scene-play.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/use-scene-play.ts"
+        }
+      ],
+      "categories": [
+        "components",
+        "illustration"
       ]
     },
     {
@@ -29111,6 +31210,243 @@
       ]
     },
     {
+      "name": "ai-data-01",
+      "type": "registry:block",
+      "title": "Table you can ask",
+      "description": "A customer table you ask in plain words: the question lands as chips you take off one by one while the count rolls, with saved views, sorting, pages, a bulk bar that picks an owner in place and a summary that unfolds under its row word by word.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/checkbox.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/pagination.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/table.json",
+        "https://ui.ndekocode.dev/r/tabs.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-01/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-01/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-01/ask-bar.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-01/ask-bar.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-01/accounts-table.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-01/accounts-table.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-01/bulk-bar.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-01/bulk-bar.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-01/streamed-words.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-01/streamed-words.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-01/ask.ts",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-01/ask.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-01/csv.ts",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-01/csv.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-01/session.ts",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-01/session.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-01/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-01/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "ai-data"
+      ]
+    },
+    {
+      "name": "ai-data-02",
+      "type": "registry:block",
+      "title": "Calendar with an assistant",
+      "description": "A week of three calendars that finds the time: ask for 45 minutes with two people, the busy time of everyone is shaded, three numbered dashed slots land in the gaps with their reason, and Book turns the one you pick solid while the others leave, with five seconds to undo.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/hatch.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/letter-tile.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/toggle-group.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-02/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-02/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-02/week-calendar.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-02/week-calendar.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-02/suggestion-panel.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-02/suggestion-panel.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-02/ask.ts",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-02/ask.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-02/find.ts",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-02/find.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-02/layout.ts",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-02/layout.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-02/session.ts",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-02/session.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-02/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-02/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "ai-data"
+      ]
+    },
+    {
+      "name": "ai-data-03",
+      "type": "registry:block",
+      "title": "Sorted support inbox",
+      "description": "An inbox an agent has already been through: conversations sorted by topic with the reason for each, a drafted reply with its sources that you send, edit or rewrite, and on Send a check draws itself on the row, which dims where it stands and never moves.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/textarea.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-03/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-03/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-03/inbox-list.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-03/inbox-list.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-03/reading-pane.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-03/reading-pane.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-03/streamed-words.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-03/streamed-words.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-03/drawn-check.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-03/drawn-check.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-03/session.ts",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-03/session.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/ai-data/ai-data-03/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/ai-data-03/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "ai-data"
+      ]
+    },
+    {
       "name": "app-shells-01",
       "type": "registry:block",
       "title": "Sidebar and inset panel",
@@ -31714,6 +34050,238 @@
       ]
     },
     {
+      "name": "onboarding-01",
+      "type": "registry:block",
+      "title": "Onboarding checklist",
+      "description": "First-run steps on a card for a corner of the dashboard: pressing the action of the current step draws its check, the ring fills and the next step unlocks and opens, Snooze folds the card into a pill that keeps the count, and the last step turns it into a short message that fades on its own.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-01/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-01/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-01/checklist-card.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-01/checklist-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-01/progress-ring.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-01/progress-ring.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-01/drawn-check.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-01/drawn-check.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-01/session.ts",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-01/session.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-01/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-01/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "onboarding"
+      ]
+    },
+    {
+      "name": "onboarding-02",
+      "type": "registry:block",
+      "title": "Setup wizard",
+      "description": "Four steps on the stepper, each checked before it lets go: a refused entry says why and takes the focus, optional steps can be skipped, the card resizes from one step to the next, the review jumps back to any step with Edit, and Create workspace turns into Creating then into the workspace that now exists.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/animated-size.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/field.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/label.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/radio-group.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/stepper.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-02/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-02/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-02/wizard-steps.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-02/wizard-steps.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-02/review-step.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-02/review-step.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-02/drawn-check.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-02/drawn-check.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-02/validate.ts",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-02/validate.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-02/session.ts",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-02/session.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-02/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-02/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "onboarding"
+      ]
+    },
+    {
+      "name": "onboarding-03",
+      "type": "registry:block",
+      "title": "New workspace with a first agent",
+      "description": "A new workspace in four steps on one card: tools go from Connect to Connecting to Connected, addresses become chips, the agent gets a name, a model and a job, and each finished step folds into one line under a check that draws itself, until the first run ticks through its plan and two tool calls and its result lands.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/call-status.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/field.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/label.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/radio-group.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/run-session.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json",
+        "https://ui.ndekocode.dev/r/wash.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-03/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-03/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-03/phase-row.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-03/phase-row.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-03/phase-forms.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-03/phase-forms.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-03/first-run.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-03/first-run.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-03/drawn-check.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-03/drawn-check.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-03/use-run-clock.ts",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-03/use-run-clock.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-03/run.ts",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-03/run.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-03/invites.ts",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-03/invites.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-03/session.ts",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-03/session.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/onboarding/onboarding-03/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding-03/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "onboarding"
+      ]
+    },
+    {
       "name": "pricing-01",
       "type": "registry:block",
       "title": "Two plans with a billing switch",
@@ -34028,6 +36596,306 @@
           "path": "registry/ndeko/templates/application/application-13/data.ts",
           "type": "registry:component",
           "target": "components/templates/application-13/data.ts"
+        }
+      ],
+      "categories": [
+        "templates",
+        "application"
+      ]
+    },
+    {
+      "name": "application-14",
+      "type": "registry:block",
+      "title": "Workflow builder",
+      "description": "An Alderbank workflow builder: an email triage flow on a canvas that pans and zooms, a palette that adds a step where you point, an inspector that sets up each kind of step, and undo and redo that walk every edit. A test run travels down the flow step by step: the branch it takes fills with the primary colour while the others dim, a carrier call fails once then passes on its second try, the reply streams in the inspector and a refund waits for Allow or Deny on its step. Plug your backend into onRun, onSave, onPublish, onApprove, onDeny and onChange.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/company-mark.json",
+        "https://ui.ndekocode.dev/r/copy-button.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/dropdown-menu.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/input.json",
+        "https://ui.ndekocode.dev/r/json-view.json",
+        "https://ui.ndekocode.dev/r/kbd.json",
+        "https://ui.ndekocode.dev/r/label.json",
+        "https://ui.ndekocode.dev/r/live-duration.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
+        "https://ui.ndekocode.dev/r/morph-button.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/motion-word-roll.json",
+        "https://ui.ndekocode.dev/r/popover.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/run-session.json",
+        "https://ui.ndekocode.dev/r/segments.json",
+        "https://ui.ndekocode.dev/r/select.json",
+        "https://ui.ndekocode.dev/r/switch.json",
+        "https://ui.ndekocode.dev/r/tabs.json",
+        "https://ui.ndekocode.dev/r/textarea.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
+        "https://ui.ndekocode.dev/r/use-timeouts.json",
+        "https://ui.ndekocode.dev/r/utils.json",
+        "https://ui.ndekocode.dev/r/wash.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/templates/application/application-14/index.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/top-bar.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/top-bar.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/name-field.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/name-field.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/palette.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/palette.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/canvas-panel.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/canvas-panel.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/canvas.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/canvas.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/canvas-frame.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/canvas-frame.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/use-viewport.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/use-viewport.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/viewport.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/viewport.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/layout.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/layout.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/flow-step.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/flow-step.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/node-card.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/node-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/node-tile.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/node-tile.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/state-mark.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/state-mark.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/edges.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/edges.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/insert-button.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/insert-button.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/approval-card.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/approval-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/sample-card.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/sample-card.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/tool-bar.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/tool-bar.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/mini-map.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/mini-map.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/inspector.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/inspector.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/inspector-fields.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/inspector-fields.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/inspector-outputs.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/inspector-outputs.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/inspector-variables.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/inspector-variables.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/inspector-run.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/inspector-run.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/field-kit.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/field-kit.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/inline-sheet.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/inline-sheet.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/stream.tsx",
+          "type": "registry:component",
+          "target": "components/templates/application-14/stream.tsx"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/use-is-narrow.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/use-is-narrow.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/use-run-clock.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/use-run-clock.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/use-focus-later.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/use-focus-later.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/use-kept.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/use-kept.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/use-builder-handlers.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/use-builder-handlers.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/keys.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/keys.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/words.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/words.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/session.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/session.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/session-edits.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/session-edits.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/session-history.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/session-history.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/session-setup.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/session-setup.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/script.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/script.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/run.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/run.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/run-beats.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/run-beats.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/flow.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/flow.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/edits.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/edits.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/model.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/model.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/catalog.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/catalog.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/tools.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/tools.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/samples.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/samples.ts"
+        },
+        {
+          "path": "registry/ndeko/templates/application/application-14/data.ts",
+          "type": "registry:component",
+          "target": "components/templates/application-14/data.ts"
         }
       ],
       "categories": [

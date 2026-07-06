@@ -10,6 +10,7 @@ import Application10 from '@/registry/ndeko/templates/application/application-10
 import Application11 from '@/registry/ndeko/templates/application/application-11/index';
 import Application12 from '@/registry/ndeko/templates/application/application-12/index';
 import Application13 from '@/registry/ndeko/templates/application/application-13/index';
+import Application14 from '@/registry/ndeko/templates/application/application-14/index';
 
 export const previews: Record<string, ComponentType> = {
   'application-01': Application01,
@@ -21,4 +22,5 @@ export const previews: Record<string, ComponentType> = {
   'application-11': Application11,
   'application-12': Application12,
   'application-13': Application13,
+  'application-14': Application14,
 };

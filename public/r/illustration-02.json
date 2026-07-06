@@ -1,0 +1,43 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "illustration-02",
+  "title": "Model reel",
+  "description": "Two rows of model marks drifting past each other in opposite directions behind faded edges, holding still under the pointer and while the reel has the focus.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/brand-logos.json",
+    "https://ui.ndekocode.dev/r/brand-tile.json",
+    "https://ui.ndekocode.dev/r/motion-marquee.json",
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/use-agent-run.json",
+    "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+    "https://ui.ndekocode.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/components/illustration/illustration-02.tsx",
+      "content": "'use client';\n\nimport { Marquee } from '@/components/core/marquee';\nimport { cn } from '@/registry/ndeko/lib/utils';\nimport { BrandTile } from '@/registry/ndeko/ui/brand-tile';\n\nimport {\n  CHATGPT,\n  CLAUDE,\n  COMMAND,\n  DEEPSEEK,\n  GEMINI,\n  GROK,\n  LLAMA,\n  MISTRAL,\n  QWEN,\n  SONAR,\n  type SceneModel,\n} from './_parts/models';\nimport { useScenePlay } from './_parts/use-scene-play';\n\nconst FIRST_ROW_SECONDS = 46;\n\n/** Each row is a little slower than the one above, so two rows never drift in step. */\nconst ROW_SLOWDOWN_SECONDS = 8;\n\nconst CHIP_GAP_PX = 10;\n\n/**\n * The rows hold still under the pointer, while the reel has the focus and while nobody can see it.\n * Each rule names the reel and its state, so it outranks the animation of the row it stops.\n */\nconst HELD =\n  'group-hover/reel:*:[animation-play-state:paused] group-focus-visible/reel:*:[animation-play-state:paused] group-data-[held=true]/reel:*:[animation-play-state:paused]';\n\nfunction durationOf(rowIndex: number) {\n  return FIRST_ROW_SECONDS + rowIndex * ROW_SLOWDOWN_SECONDS;\n}\n\nfunction isOddRow(rowIndex: number) {\n  return rowIndex % 2 === 1;\n}\n\nfunction rowKeyOf(row: SceneModel[], rowIndex: number) {\n  const ids = row.map((model) => model.id);\n  const joined = ids.join('-');\n  return `${rowIndex}:${joined}`;\n}\n\nfunction ModelChip({ model }: { model: SceneModel }) {\n  return (\n    <span className='bg-card hairline-ring ring-border flex h-9 shrink-0 items-center gap-2 rounded-full ps-1 pe-3.5 text-[13px] font-medium shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>\n      <BrandTile brand={model.brand} size='lg' className='rounded-full' />\n      {model.name}\n    </span>\n  );\n}\n\nexport type ModelReelProps = {\n  /** One list of models per row. Rows drift in opposite directions. */\n  rows: SceneModel[][];\n  /** What the reel is, for a screen reader. */\n  label?: string;\n  className?: string;\n};\n\nexport function ModelReel({\n  rows,\n  label = 'Models',\n  className,\n}: ModelReelProps) {\n  const { ref, isPlaying } = useScenePlay();\n\n  return (\n    <div\n      ref={ref}\n      role='group'\n      aria-label={`${label}, a moving list that holds still while it has the focus`}\n      tabIndex={0}\n      data-held={!isPlaying}\n      className={cn(\n        'group/reel focus-visible:ring-ring focus-visible:ring-offset-background flex w-full max-w-[34rem] flex-col gap-1 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-offset-2',\n        className\n      )}\n    >\n      {rows.map((row, rowIndex) => (\n        <Marquee\n          key={rowKeyOf(row, rowIndex)}\n          reverse={isOddRow(rowIndex)}\n          duration={durationOf(rowIndex)}\n          gap={CHIP_GAP_PX}\n          className={cn('py-1', HELD)}\n        >\n          {row.map((model) => (\n            <ModelChip key={model.id} model={model} />\n          ))}\n        </Marquee>\n      ))}\n    </div>\n  );\n}\n\nconst ROWS: SceneModel[][] = [\n  [CLAUDE, CHATGPT, GEMINI, MISTRAL, DEEPSEEK],\n  [LLAMA, GROK, QWEN, COMMAND, SONAR],\n];\n\nexport default function Illustration02() {\n  return <ModelReel rows={ROWS} />;\n}\n",
+      "type": "registry:component",
+      "target": "components/illustration/illustration-02.tsx"
+    },
+    {
+      "path": "registry/ndeko/components/illustration/_parts/models.ts",
+      "content": "import type { BrandSlug } from '@/registry/ndeko/lib/brand-logos';\n\nexport type SceneModel = {\n  id: string;\n  /** The name people call the model by, without a version number. */\n  name: string;\n  brand: BrandSlug;\n};\n\nexport const CLAUDE: SceneModel = {\n  id: 'claude',\n  name: 'Claude',\n  brand: 'claude',\n};\n\nexport const CHATGPT: SceneModel = {\n  id: 'chatgpt',\n  name: 'ChatGPT',\n  brand: 'openai',\n};\n\nexport const GEMINI: SceneModel = {\n  id: 'gemini',\n  name: 'Gemini',\n  brand: 'gemini',\n};\n\nexport const MISTRAL: SceneModel = {\n  id: 'mistral',\n  name: 'Mistral',\n  brand: 'mistral',\n};\n\nexport const DEEPSEEK: SceneModel = {\n  id: 'deepseek',\n  name: 'DeepSeek',\n  brand: 'deepseek',\n};\n\nexport const LLAMA: SceneModel = {\n  id: 'llama',\n  name: 'Llama',\n  brand: 'meta',\n};\n\nexport const GROK: SceneModel = {\n  id: 'grok',\n  name: 'Grok',\n  brand: 'grok',\n};\n\nexport const QWEN: SceneModel = {\n  id: 'qwen',\n  name: 'Qwen',\n  brand: 'qwen',\n};\n\nexport const COMMAND: SceneModel = {\n  id: 'command',\n  name: 'Command',\n  brand: 'cohere',\n};\n\nexport const SONAR: SceneModel = {\n  id: 'sonar',\n  name: 'Sonar',\n  brand: 'perplexity',\n};\n",
+      "type": "registry:component",
+      "target": "components/illustration/_parts/models.ts"
+    },
+    {
+      "path": "registry/ndeko/components/illustration/_parts/use-scene-play.ts",
+      "content": "'use client';\n\nimport { useInView } from 'motion/react';\nimport { useRef } from 'react';\n\nimport { useDocumentVisible } from '@/registry/ndeko/hooks/use-agent-run';\nimport { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';\n\nconst IN_VIEW_SHARE = 0.3;\n\nexport type ScenePlay = {\n  /** True while a visitor can see the scene move: on screen, in a visible tab, without reduced motion. */\n  isPlaying: boolean;\n  /** True under reduced motion: the scene rests on its still frame. */\n  isStill: boolean;\n};\n\n/**\n * An illustration moves only while someone can see it. Everything that loops in a scene hangs on\n * `isPlaying`, so nothing runs off screen, in a hidden tab or under reduced motion.\n */\nexport function useScenePlay<Element extends HTMLElement = HTMLDivElement>() {\n  const ref = useRef<Element>(null);\n  const isInView = useInView(ref, { amount: IN_VIEW_SHARE });\n  const isTabVisible = useDocumentVisible();\n  const isStill = usePrefersReducedMotion();\n  const isOnScreen = isInView && isTabVisible;\n  const isPlaying = isOnScreen && !isStill;\n\n  return { ref, isPlaying, isStill };\n}\n",
+      "type": "registry:component",
+      "target": "components/illustration/_parts/use-scene-play.ts"
+    }
+  ],
+  "categories": [
+    "components",
+    "illustration"
+  ],
+  "type": "registry:component"
+}

@@ -279,6 +279,66 @@ export const groups: BundleGroup[] = [
     ],
   },
   {
+    slug: 'ai-data',
+    name: 'AI data',
+    entries: [
+      {
+        name: 'ai-data-01',
+        title: 'Table you can ask',
+        description:
+          'A customer table you ask in plain words: the question lands as chips you take off one by one while the count rolls, with saved views, sorting, pages, a bulk bar that picks an owner in place and a summary that unfolds under its row word by word.',
+        files: [
+          'index.tsx',
+          'ask-bar.tsx',
+          'accounts-table.tsx',
+          'bulk-bar.tsx',
+          'streamed-words.tsx',
+          'ask.ts',
+          'csv.ts',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 900,
+        group: 'ai-data',
+      },
+      {
+        name: 'ai-data-02',
+        title: 'Calendar with an assistant',
+        description:
+          'A week of three calendars that finds the time: ask for 45 minutes with two people, the busy time of everyone is shaded, three numbered dashed slots land in the gaps with their reason, and Book turns the one you pick solid while the others leave, with five seconds to undo.',
+        files: [
+          'index.tsx',
+          'week-calendar.tsx',
+          'suggestion-panel.tsx',
+          'ask.ts',
+          'find.ts',
+          'layout.ts',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 720,
+        group: 'ai-data',
+      },
+      {
+        name: 'ai-data-03',
+        title: 'Sorted support inbox',
+        description:
+          'An inbox an agent has already been through: conversations sorted by topic with the reason for each, a drafted reply with its sources that you send, edit or rewrite, and on Send a check draws itself on the row, which dims where it stands and never moves.',
+        files: [
+          'index.tsx',
+          'inbox-list.tsx',
+          'reading-pane.tsx',
+          'streamed-words.tsx',
+          'drawn-check.tsx',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 880,
+        group: 'ai-data',
+      },
+    ],
+  },
+  {
     slug: 'app-shells',
     name: 'App shells',
     entries: [
@@ -1027,6 +1087,65 @@ export const groups: BundleGroup[] = [
         ],
         previewHeight: 680,
         group: 'notifications',
+      },
+    ],
+  },
+  {
+    slug: 'onboarding',
+    name: 'Onboarding',
+    entries: [
+      {
+        name: 'onboarding-01',
+        title: 'Onboarding checklist',
+        description:
+          'First-run steps on a card for a corner of the dashboard: pressing the action of the current step draws its check, the ring fills and the next step unlocks and opens, Snooze folds the card into a pill that keeps the count, and the last step turns it into a short message that fades on its own.',
+        files: [
+          'index.tsx',
+          'checklist-card.tsx',
+          'progress-ring.tsx',
+          'drawn-check.tsx',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 720,
+        group: 'onboarding',
+      },
+      {
+        name: 'onboarding-02',
+        title: 'Setup wizard',
+        description:
+          'Four steps on the stepper, each checked before it lets go: a refused entry says why and takes the focus, optional steps can be skipped, the card resizes from one step to the next, the review jumps back to any step with Edit, and Create workspace turns into Creating then into the workspace that now exists.',
+        files: [
+          'index.tsx',
+          'wizard-steps.tsx',
+          'review-step.tsx',
+          'drawn-check.tsx',
+          'validate.ts',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 660,
+        group: 'onboarding',
+      },
+      {
+        name: 'onboarding-03',
+        title: 'New workspace with a first agent',
+        description:
+          'A new workspace in four steps on one card: tools go from Connect to Connecting to Connected, addresses become chips, the agent gets a name, a model and a job, and each finished step folds into one line under a check that draws itself, until the first run ticks through its plan and two tool calls and its result lands.',
+        files: [
+          'index.tsx',
+          'phase-row.tsx',
+          'phase-forms.tsx',
+          'first-run.tsx',
+          'drawn-check.tsx',
+          'use-run-clock.ts',
+          'run.ts',
+          'invites.ts',
+          'session.ts',
+          'data.ts',
+        ],
+        previewHeight: 840,
+        group: 'onboarding',
       },
     ],
   },

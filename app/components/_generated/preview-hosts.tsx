@@ -14,6 +14,7 @@ export const previewHosts: Record<string, ComponentType<PreviewHostProps>> = {
   answer: dynamic(() => import('./answer').then(previewHostOf)),
   aside: dynamic(() => import('./aside').then(previewHostOf)),
   avatar: dynamic(() => import('./avatar').then(previewHostOf)),
+  background: dynamic(() => import('./background').then(previewHostOf)),
   badge: dynamic(() => import('./badge').then(previewHostOf)),
   banner: dynamic(() => import('./banner').then(previewHostOf)),
   breadcrumb: dynamic(() => import('./breadcrumb').then(previewHostOf)),
@@ -21,6 +22,7 @@ export const previewHosts: Record<string, ComponentType<PreviewHostProps>> = {
   'calendar-date-picker': dynamic(() =>
     import('./calendar-date-picker').then(previewHostOf)
   ),
+  card: dynamic(() => import('./card').then(previewHostOf)),
   checkbox: dynamic(() => import('./checkbox').then(previewHostOf)),
   comment: dynamic(() => import('./comment').then(previewHostOf)),
   dialog: dynamic(() => import('./dialog').then(previewHostOf)),
@@ -29,6 +31,7 @@ export const previewHosts: Record<string, ComponentType<PreviewHostProps>> = {
     import('./event-calendar').then(previewHostOf)
   ),
   'file-upload': dynamic(() => import('./file-upload').then(previewHostOf)),
+  illustration: dynamic(() => import('./illustration').then(previewHostOf)),
   'image-cropper': dynamic(() => import('./image-cropper').then(previewHostOf)),
   input: dynamic(() => import('./input').then(previewHostOf)),
   modal: dynamic(() => import('./modal').then(previewHostOf)),

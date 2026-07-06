@@ -236,7 +236,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Agent plan',
         description:
-          'A plan that waits for Approve plan or an inline edit, then checks its steps off live, slides in the step the agent adds, strikes the one it drops and folds into one line.',
+          'A plan that waits for Approve plan or an inline edit, then runs: each step checks itself off while the highlight glides to the next one, the agent slides in a step it adds and strikes the one it drops, and a toggle folds it into one line.',
         category: 'agent',
       },
       {
@@ -244,7 +244,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Agent lanes',
         description:
-          'A lane per agent where tasks grow into a now line while time drifts left, hand-offs curve from lane to lane and an approval waits on its marker.',
+          'A lane per agent that fills from its start on a fixed window of time as one now line advances, with hand-offs curving from lane to lane and an approval waiting on its marker.',
         category: 'agent',
       },
       {
@@ -252,7 +252,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Agent graph',
         description:
-          'Agents and the tools they call as a live graph whose nodes glide between tree, flow and hub layouts, with a streak of light along the edge of each call.',
+          'Agents and the tools they call as a graph where an edge draws itself when one agent calls another and a dot travels along it for each call, in a tree, flow or hub layout.',
         category: 'agent',
       },
       {
@@ -260,7 +260,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Agent handoff',
         description:
-          'A relay of agents where each hand-off sends a light down the rail with its note and context, lost items stay struck through and the next station can be dragged to another agent.',
+          'A relay of agents where the task travels down the rail from one agent tile to the next with its note and context, lost items stay struck through and the next station can be dragged to another agent.',
         category: 'agent',
       },
       {
@@ -268,7 +268,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Agent tree',
         description:
-          'Who started whom as a tree with live clocks and subtree costs that roll, folds that sum what they hide, and Approve or Retry right in the row.',
+          'Who started whom as a tree where a branch unfolds under an agent when it starts a sub-agent, with live clocks, subtree costs that roll, folds that sum what they hide, and Approve or Retry right in the row.',
         category: 'agent',
       },
       {
@@ -276,7 +276,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Agent fleet',
         description:
-          'Every main agent at a glance under rolling totals, with filters, a Rows and Cards switch that re-flows the list, and sub-agents that unfold with Approve and Retry.',
+          'Every main agent at a glance under rolling totals, where the list switches between rows and cards with each agent gliding to its new place, with filters and sub-agents that unfold with Approve and Retry.',
         category: 'agent',
       },
       {
@@ -284,7 +284,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Agent monitor',
         description:
-          'One agent at work: its current step with a clock and cost, a time strip that grows, the exact command waiting for Allow or Deny, and a fold into a slim bar.',
+          'One agent at work: the step it is on with its clock, a cost figure that rolls each time a step ends and once more when the run does, a time strip that fills, the exact command waiting for Allow or Deny, and a fold into a slim bar.',
         category: 'agent',
       },
       {
@@ -292,7 +292,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Agent memory',
         description:
-          'What an agent remembers, searchable by scope, with edits in place, pins that re-sort the list, forget with Undo, forget by source and why a memory was used.',
+          'What an agent remembers, where a new memory folds into the list when the agent saves it, searchable by scope, with edits in place, pins that re-sort the list, forget with Undo, forget by source and why a memory was used.',
         category: 'agent',
       },
       {
@@ -300,7 +300,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Knowledge sources',
         description:
-          'The sources an agent searches, with indexing progress and chunk counts that roll, a Re-sync that turns into a spinner then a check, and Retry on the one that failed.',
+          'The sources an agent searches, where a source lights in the colour of the agent when its answer uses it, with indexing progress, a Re-sync that turns into a spinner then a check, and Retry on the one that failed.',
         category: 'agent',
       },
       {
@@ -308,7 +308,7 @@ export const catalog: CatalogCategory[] = [
         source: 'ndeko',
         title: 'Agent status',
         description:
-          'A dot and a word per agent where running breathes, waiting blinks slowly and the word rolls on every change, above a legend of all five states.',
+          'A mark and a word per agent that change together: the dot of a running agent sends a ring out, and a hand, a cross or a check takes its place when the agent waits, fails or ends, above a legend of all five states.',
         category: 'agent',
       },
     ],
@@ -691,6 +691,108 @@ export const catalog: CatalogCategory[] = [
         description:
           'Small overlapping avatars with a line that says who joined.',
         category: 'avatar',
+      },
+    ],
+  },
+  {
+    slug: 'background',
+    name: 'Background',
+    entries: [
+      {
+        name: 'background-01',
+        source: 'ndeko',
+        title: 'Drifting fields',
+        description:
+          'Soft fields of one hue behind a hero or a closing band, each drifting on a path of its own length, so they never move in step.',
+        category: 'background',
+      },
+      {
+        name: 'background-02',
+        source: 'ndeko',
+        title: 'Cube field',
+        description:
+          'A floor of small isometric cubes behind a hero, where the cubes under the pointer rise on their own springs and take the hue as they lift.',
+        category: 'background',
+      },
+      {
+        name: 'background-03',
+        source: 'ndeko',
+        title: 'Dither light',
+        description:
+          'A soft light drawn as crisp ordered dots behind a hero, that follows the pointer, rises as a horizon or flows as noise, dots lighting and going out as it passes.',
+        category: 'background',
+      },
+      {
+        name: 'background-04',
+        source: 'ndeko',
+        title: 'Dot spotlight',
+        description:
+          'A quiet dot grid behind a section, where a soft light follows the pointer and lifts the dots under it into the hue.',
+        category: 'background',
+      },
+      {
+        name: 'background-05',
+        source: 'ndeko',
+        title: 'Flickering grid',
+        description:
+          'Small squares that flicker under a low ceiling behind a hero, where a new word surfaces from the grid square by square.',
+        category: 'background',
+      },
+      {
+        name: 'background-06',
+        source: 'ndeko',
+        title: 'Light floor',
+        description:
+          'A floor of light rising from the foot of a band, drifting and breathing, where a press sends a wave across it from the point it came from.',
+        category: 'background',
+      },
+      {
+        name: 'background-07',
+        source: 'ndeko',
+        title: 'Grid pattern',
+        description:
+          'A crisp hairline grid behind a section, dashed, tilted or faded at will, where four lit cells fade out and land somewhere new in turn.',
+        category: 'background',
+      },
+      {
+        name: 'background-08',
+        source: 'ndeko',
+        title: 'Node field',
+        description:
+          'Drifting nodes behind a hero that link with hairlines as they come close, where the pointer joins as a node and draws its neighbours to it.',
+        category: 'background',
+      },
+      {
+        name: 'background-09',
+        source: 'ndeko',
+        title: 'Perspective grid',
+        description:
+          'A grid floor behind a hero that runs towards the viewer and fades into the horizon, every fourth line in the hue.',
+        category: 'background',
+      },
+      {
+        name: 'background-10',
+        source: 'ndeko',
+        title: 'Signal lines',
+        description:
+          'Faint routes drawn from a seed behind a section about agents, where pulses of the hue travel along them like traffic.',
+        category: 'background',
+      },
+      {
+        name: 'background-11',
+        source: 'ndeko',
+        title: 'Glass bands',
+        description:
+          'Concentric bands of one hue behind a headline, each starting its ramp again at its edge so the set reads as glass, its centre leaning towards the pointer.',
+        category: 'background',
+      },
+      {
+        name: 'background-12',
+        source: 'ndeko',
+        title: 'Threads',
+        description:
+          'Hairline threads that gather through a call to action, tighten as the pointer nears it and part around the pointer, where a press sends a light out along every one.',
+        category: 'background',
       },
     ],
   },
@@ -1649,6 +1751,124 @@ export const catalog: CatalogCategory[] = [
     ],
   },
   {
+    slug: 'card',
+    name: 'Card',
+    entries: [
+      {
+        name: 'card-01',
+        source: 'ndeko',
+        title: 'Contact stack',
+        description:
+          'A stack of contact cards with one action each, where the front card drops away and tucks behind the others on a click or an arrow key.',
+        category: 'card',
+      },
+      {
+        name: 'card-02',
+        source: 'ndeko',
+        title: 'Service receipt',
+        description:
+          'A receipt drawn as a ticket with notched edges and a scalloped foot, where the total adds up as service lines are ticked and Start project confirms it.',
+        category: 'card',
+      },
+      {
+        name: 'card-03',
+        source: 'ndeko',
+        title: 'Revenue card',
+        description:
+          'Monthly revenue with its share of the goal, the trend against the month before in words and a hatched bar by channel, where the line draws itself as the figures land.',
+        category: 'card',
+      },
+      {
+        name: 'card-04',
+        source: 'ndeko',
+        title: 'Post deck',
+        description:
+          'A deck of posts with a drawn visual, a page index and like, reply, share and bookmark, where the front card swings out to the left as the next steps up.',
+        category: 'card',
+      },
+      {
+        name: 'card-05',
+        source: 'ndeko',
+        title: 'Story quote',
+        description:
+          'A quote card that plays like a story, where the segments along the bottom fill one after another before the next quote fades in, a tap on either side steps and Space pauses.',
+        category: 'card',
+      },
+      {
+        name: 'card-06',
+        source: 'ndeko',
+        title: 'Tag rows',
+        description:
+          'A feature card whose rows of tags drift against each other behind faded edges, above a short headline, and hold still off screen and under the pointer.',
+        category: 'card',
+      },
+      {
+        name: 'card-07',
+        source: 'ndeko',
+        title: 'Week in figures',
+        description:
+          'A weekly card whose four figures roll through a vertical loop with no end, where the figure in front changes place with the next.',
+        category: 'card',
+      },
+      {
+        name: 'card-08',
+        source: 'ndeko',
+        title: 'Folder',
+        description:
+          'A folder drawn in CSS whose files fan out on hover or focus, and whose list of files opens under it on Enter or a click.',
+        category: 'card',
+      },
+      {
+        name: 'card-09',
+        source: 'ndeko',
+        title: 'Done pile',
+        description:
+          'Tasks done today, this week or this month as small tiles that pile up on the headline, then drain away before the next range lands.',
+        category: 'card',
+      },
+      {
+        name: 'card-10',
+        source: 'ndeko',
+        title: 'Paper stack',
+        description:
+          'A file card whose sheets of paper and two profile cards rise and fan out behind it on hover or focus, and stay out on a click.',
+        category: 'card',
+      },
+      {
+        name: 'card-11',
+        source: 'ndeko',
+        title: 'Pass',
+        description:
+          'A ticket-style pass with notched edges and a drawn pattern on its stub, which tilts with the pointer, takes one band of light across and tears its stub at check-in.',
+        category: 'card',
+      },
+      {
+        name: 'card-12',
+        source: 'ndeko',
+        title: 'Globe with routes',
+        description:
+          'A globe that turns to the city picked in the list or under a drag, where an arc draws from that city to each one it is linked to.',
+        category: 'card',
+      },
+      {
+        name: 'card-13',
+        source: 'ndeko',
+        title: 'Nights',
+        description:
+          'A week of sleep as columns of lights, one per hour, against a dashed goal line, where the lights of the picked night fill up beside its hours, bedtime and distance from the goal.',
+        category: 'card',
+      },
+      {
+        name: 'card-14',
+        source: 'ndeko',
+        title: 'Range summary',
+        description:
+          'A reading on a range cut into bands, where the marker slides along the range and the weekly and monthly averages roll when the period changes.',
+        category: 'card',
+      },
+    ],
+  },
+  {
     slug: 'checkbox',
     name: 'Checkbox',
     entries: [
@@ -2330,6 +2550,108 @@ export const catalog: CatalogCategory[] = [
         description:
           'Picks an image, opens a dialog to crop and zoom it, then sets it as the avatar.',
         category: 'file-upload',
+      },
+    ],
+  },
+  {
+    slug: 'illustration',
+    name: 'Illustration',
+    entries: [
+      {
+        name: 'illustration-01',
+        source: 'ndeko',
+        title: 'Model orbit',
+        description:
+          'Model marks turning around an agent, where the link glides to the next model at each hand-over and the label under the agent rolls to its name.',
+        category: 'illustration',
+      },
+      {
+        name: 'illustration-02',
+        source: 'ndeko',
+        title: 'Model reel',
+        description:
+          'Two rows of model marks drifting past each other in opposite directions behind faded edges, holding still under the pointer and while the reel has the focus.',
+        category: 'illustration',
+      },
+      {
+        name: 'illustration-03',
+        source: 'ndeko',
+        title: 'Run pulse',
+        description:
+          'A lead, its agents and their tools, where a streak in the colour of the caller crosses the edge of each call and the node it reaches gives a little.',
+        category: 'illustration',
+      },
+      {
+        name: 'illustration-04',
+        source: 'ndeko',
+        title: 'Prompt to team',
+        description:
+          'A request that types itself and is sent, then connectors draw down from it and three agent cards branch out, each filling its role, its model and its tools.',
+        category: 'illustration',
+      },
+      {
+        name: 'illustration-05',
+        source: 'ndeko',
+        title: 'Tab overload',
+        description:
+          'A pile of five browser windows where one lifts with a hairline in the brand ink: the one under the pointer, or each in turn when nobody points.',
+        category: 'illustration',
+      },
+      {
+        name: 'illustration-06',
+        source: 'ndeko',
+        title: 'Task flow',
+        description:
+          'A task whose connectors draw down to subtasks that settle a little askew, then a named cursor picks the last one up and drops it into the dashed slot.',
+        category: 'illustration',
+      },
+      {
+        name: 'illustration-07',
+        source: 'ndeko',
+        title: 'Tool beam',
+        description:
+          'Your product between the tools it connects, with a light that runs along each curved beam the way the data goes; pointing at a tool dims the others and a click holds the flow.',
+        category: 'illustration',
+      },
+      {
+        name: 'illustration-08',
+        source: 'ndeko',
+        title: 'Vector search',
+        description:
+          'Retrieval told in five chapters on a step bar that fills as it plays, where chunks fly into topic clusters and a question walks the links to its nearest chunks before the ranked sources slide in.',
+        category: 'illustration',
+      },
+      {
+        name: 'illustration-09',
+        source: 'ndeko',
+        title: 'Prompt keyboard',
+        description:
+          'A prompt typed on a tilted keyboard, QWERTY or AZERTY, where each key lights as it goes down and sends a ripple across the floor under it, then Enter sends the line.',
+        category: 'illustration',
+      },
+      {
+        name: 'illustration-10',
+        source: 'ndeko',
+        title: 'Agent face',
+        description:
+          'An agent face whose eyes follow the pointer and blink, then take on its state: wide while it listens, up past a trail of dots while it thinks, over a moving mouth while it speaks.',
+        category: 'illustration',
+      },
+      {
+        name: 'illustration-11',
+        source: 'ndeko',
+        title: 'Region wheel',
+        description:
+          'A drum of server regions to flick, drag or step with the arrow keys, where the globe turns to the route from the visitor as each region passes and the latency estimate rolls.',
+        category: 'illustration',
+      },
+      {
+        name: 'illustration-12',
+        source: 'ndeko',
+        title: 'Hello in every script',
+        description:
+          'A dotted globe with greetings standing where they are written, each in its own script: pick a language and the globe turns there, its greeting lights up in the brand ink and comes up large beside it.',
+        category: 'illustration',
       },
     ],
   },
