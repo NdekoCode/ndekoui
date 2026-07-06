@@ -92,7 +92,7 @@ export function Marquee({
         className={cn(
           'flex',
           TRACK_CLASS[direction],
-          reverse && '[animation-direction:reverse]',
+          reverse && '[animation-direction:reverse]!',
           pauseOnHover && PAUSE_CLASS
         )}
       >
