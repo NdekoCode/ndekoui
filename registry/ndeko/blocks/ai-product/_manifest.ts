@@ -70,4 +70,12 @@ export const manifest: BlockManifest = [
     files: ['index.tsx', 'work-split.tsx', 'data.ts'],
     previewHeight: 620,
   },
+  {
+    name: 'ai-product-06',
+    title: 'App shelf',
+    description:
+      'A row of app tiles that walks along itself: the tile in focus lifts a preview card out of itself with a Connect button while its neighbours dim, with arrows to move and Enter to connect.',
+    files: ['index.tsx', 'app-tile.tsx', 'data.ts'],
+    previewHeight: 640,
+  },
 ];
