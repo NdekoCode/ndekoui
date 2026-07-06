@@ -176,4 +176,11 @@ export const manifest: ComponentManifest = [
     description:
       'A field-like trigger that opens a range calendar in a popover.',
   },
+  {
+    name: 'calendar-date-picker-29',
+    source: 'ndeko',
+    title: 'Typed date',
+    description:
+      'A date field that reads typed words such as "next fri 3pm" or "in 3 days", rolls the date it understood under the field, and opens a calendar from its button.',
+  },
 ];
