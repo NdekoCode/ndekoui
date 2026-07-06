@@ -5,11 +5,7 @@ import { useId } from 'react';
 import { useCharacterLimit } from '@/registry/ndeko/hooks/use-character-limit';
 import { useFileUpload } from '@/registry/ndeko/hooks/use-file-upload';
 import { CheckIcon, ImagePlusIcon, XIcon } from '@/registry/ndeko/lib/icons';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar, AvatarImage } from '@/registry/ndeko/ui/avatar';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
   Dialog,
@@ -107,9 +103,8 @@ function ProfilePicture() {
 
   return (
     <div className='relative -mt-10 size-20'>
-      <Avatar className='ring-card size-20 text-base ring-4'>
+      <Avatar seed='Amara Okafor' className='ring-card size-20 ring-4'>
         <AvatarImage src={preview} alt='Profile picture' />
-        <AvatarFallback>AO</AvatarFallback>
       </Avatar>
       <Button
         type='button'

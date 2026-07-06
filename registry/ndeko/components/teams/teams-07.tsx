@@ -212,11 +212,7 @@ function BackFace({ onFlip, flipButtonRef }: FaceProps) {
           <dd className='flex items-center gap-1'>
             {MEMBER_TEAMS.map((team) => (
               <span key={team.id} title={team.name} className='flex'>
-                <TeamTile
-                  initials={team.initials}
-                  color={team.color}
-                  size='sm'
-                />
+                <TeamTile name={team.name} color={team.color} size='sm' />
                 <span className='sr-only'>{team.name}</span>
               </span>
             ))}

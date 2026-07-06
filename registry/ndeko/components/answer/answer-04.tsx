@@ -32,14 +32,14 @@ import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
 import { CallStatusMark } from '@/registry/ndeko/ui/call-status';
 import { Fold, Swap } from '@/registry/ndeko/ui/chat-motion';
-import { LetterTile } from '@/registry/ndeko/ui/letter-tile';
+import { CompanyMark } from '@/registry/ndeko/ui/company-mark';
 import { ClockGate, LiveDuration } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
 
 import { LabTile } from './_parts/lab-tile';
 import { StreamedWords } from './_parts/streamed-words';
-import { nounOf, siteInitialOf, wordsOf } from './_parts/words';
+import { nounOf, wordsOf } from './_parts/words';
 
 export type ThinkingSite = {
   id: string;
@@ -144,7 +144,7 @@ function SearchRow({ calls, sites }: SearchRowProps) {
             }
             return (
               <motion.li key={call.id} className='flex' {...tileMotion}>
-                <LetterTile initial={siteInitialOf(site.site)} size='sm' />
+                <CompanyMark seed={site.site} size='sm' />
                 <span className='sr-only'>{site.site}</span>
               </motion.li>
             );

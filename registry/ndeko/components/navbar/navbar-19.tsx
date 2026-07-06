@@ -5,30 +5,20 @@ import {
   UserRoundPlusIcon,
 } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Button } from '@/registry/ndeko/ui/button';
 
 const COLLABORATORS = [
   {
     name: 'Kelly King',
-    initials: 'KK',
-    image: '/avatars/avatar-07.svg',
     isOnline: true,
   },
   {
     name: 'Martha Johnson',
-    initials: 'MJ',
-    image: '/avatars/avatar-06.svg',
     isOnline: false,
   },
   {
     name: 'Linda Green',
-    initials: 'LG',
-    image: '/avatars/avatar-05.svg',
     isOnline: false,
   },
 ];
@@ -93,13 +83,11 @@ export default function Navbar19() {
           <ul className='ml-2 flex items-center gap-2 max-sm:hidden'>
             {COLLABORATORS.map((collaborator) => (
               <li key={collaborator.name} className='relative flex'>
-                <Avatar>
-                  <AvatarImage
-                    src={collaborator.image}
-                    alt={collaborator.name}
-                  />
-                  <AvatarFallback>{collaborator.initials}</AvatarFallback>
-                </Avatar>
+                <Avatar
+                  seed={collaborator.name}
+                  role='img'
+                  aria-label={collaborator.name}
+                />
                 <span
                   className={cn(
                     'ring-background absolute -end-0.5 -bottom-0.5 size-2.5 rounded-full ring-2',

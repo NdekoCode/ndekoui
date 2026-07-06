@@ -33,17 +33,19 @@ function Message({ className, ...props }: MessageProps) {
 }
 
 type MessageAvatarProps = {
+  /** The name of the sender. Without a picture the avatar is a gradient drawn from it. */
   alt: string;
-  fallback: string;
+  /** Initials to show in place of the gradient. */
+  fallback?: string;
   src?: string;
   className?: string;
 };
 
 function MessageAvatar({ src, alt, fallback, className }: MessageAvatarProps) {
   return (
-    <Avatar className={cn('size-8 shrink-0', className)}>
+    <Avatar seed={alt} className={cn('size-8 shrink-0', className)}>
       {src && <AvatarImage src={src} alt={alt} />}
-      <AvatarFallback>{fallback}</AvatarFallback>
+      {fallback && <AvatarFallback>{fallback}</AvatarFallback>}
     </Avatar>
   );
 }

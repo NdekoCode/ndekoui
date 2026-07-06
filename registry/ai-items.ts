@@ -167,7 +167,7 @@ export const aiItems: RegistryItemDefinition[] = [
   primitive(
     'letter-tile',
     'Letter Tile',
-    'A drawn initial for a model lab or a site, tinted by a series colour or left neutral.',
+    'A letter on a tile for a lettered choice or a product whose mark cannot be shown, tinted by a series colour or left neutral.',
     { registryDependencies: ['agent-run'], categories: AI }
   ),
 ];

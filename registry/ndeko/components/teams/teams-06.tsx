@@ -125,15 +125,6 @@ function saveLabelOf(state: SaveState) {
   return 'Save';
 }
 
-function initialsOfName(name: string) {
-  const parts = name.split(' ');
-  const words = parts.filter((word) => word.length > 0);
-  const firstWords = words.slice(0, 2);
-  const firstLetters = firstWords.map((word) => word.charAt(0));
-  const initials = firstLetters.join('');
-  return initials.toUpperCase();
-}
-
 function HoldLabel() {
   return (
     <>
@@ -499,11 +490,7 @@ export default function Teams06() {
     >
       <div className='flex items-center gap-3'>
         <Swap swapKey={`${swatch.id}-${name}`}>
-          <TeamTile
-            initials={initialsOfName(name)}
-            color={swatch.color}
-            size='lg'
-          />
+          <TeamTile name={name} color={swatch.color} size='lg' />
         </Swap>
         <div className='min-w-0'>
           <h3 className='truncate text-sm font-medium'>{name}</h3>

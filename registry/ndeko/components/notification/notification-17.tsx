@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { XIcon } from '@/registry/ndeko/lib/icons';
 import { FOCUS_RING } from '@/registry/ndeko/lib/recipes';
-import { Avatar, AvatarFallback } from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Button } from '@/registry/ndeko/ui/button';
 
 import { surfaceCollapseOf } from './_parts/collapse';
@@ -37,9 +37,7 @@ export default function Notification17() {
           animate='shown'
           exit='hidden'
         >
-          <Avatar className='size-9'>
-            <AvatarFallback>AO</AvatarFallback>
-          </Avatar>
+          <Avatar className='size-9' seed='Amara Okafor' />
           <div className='flex grow flex-col gap-3'>
             <div className='flex flex-col gap-1 text-[13px] leading-5'>
               <p className='text-muted-foreground'>

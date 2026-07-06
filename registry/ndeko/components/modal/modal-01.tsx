@@ -322,7 +322,7 @@ function InvitationRow({
 
   return (
     <div className='flex min-h-14 items-center gap-3 py-2 pr-1.5 pl-3'>
-      <PendingAvatar email={invitation.email} />
+      <PendingAvatar />
       <div className='flex min-w-0 flex-1 flex-col gap-0.5'>
         <p className='truncate text-[13px] leading-tight font-medium'>
           {invitation.email}

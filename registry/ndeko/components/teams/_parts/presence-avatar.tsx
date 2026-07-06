@@ -1,16 +1,12 @@
 import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 
 import { PRESENCE_META, type Member } from './people';
 
 const SIZE_CLASS = {
-  sm: { avatar: 'size-7 text-[10px]', badge: 'size-3.5', glyph: 'size-2' },
-  md: { avatar: 'size-9 text-xs', badge: 'size-4', glyph: 'size-2.5' },
-  lg: { avatar: 'size-12 text-sm', badge: 'size-5', glyph: 'size-3' },
+  sm: { avatar: 'size-7', badge: 'size-3.5', glyph: 'size-2' },
+  md: { avatar: 'size-9', badge: 'size-4', glyph: 'size-2.5' },
+  lg: { avatar: 'size-12', badge: 'size-5', glyph: 'size-3' },
 } as const;
 
 type PresenceAvatarProps = {
@@ -35,10 +31,7 @@ export function PresenceAvatar({
 
   return (
     <span className={cn('relative inline-flex shrink-0', className)}>
-      <Avatar className={sizes.avatar}>
-        {member.avatar && <AvatarImage src={member.avatar} alt='' />}
-        <AvatarFallback>{member.initials}</AvatarFallback>
-      </Avatar>
+      <Avatar className={sizes.avatar} seed={member.name} />
       <span
         aria-hidden='true'
         className={cn(

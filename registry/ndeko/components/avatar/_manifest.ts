@@ -6,13 +6,14 @@ export const manifest: ComponentManifest = [
     source: 'comp-390',
     title: 'Avatar',
     description:
-      'A round photo that shows initials while it loads or if it fails.',
+      'A round avatar: a gradient drawn from the name, covered by the photo when there is one.',
   },
   {
     name: 'avatar-02',
     source: 'comp-391',
     title: 'Initials avatar',
-    description: 'Initials on the muted fill for someone without a photo.',
+    description:
+      'Initials on the muted fill, for a product that prefers letters to the gradient.',
   },
   {
     name: 'avatar-03',
@@ -24,19 +25,19 @@ export const manifest: ComponentManifest = [
     name: 'avatar-04',
     source: 'comp-393',
     title: 'Square avatar',
-    description: 'A photo avatar with rounded corners.',
+    description: 'An avatar with rounded corners.',
   },
   {
     name: 'avatar-05',
     source: 'comp-394',
     title: 'Online avatar',
-    description: 'A photo avatar with a success dot for someone online.',
+    description: 'An avatar with a success dot for someone online.',
   },
   {
     name: 'avatar-06',
     source: 'comp-395',
     title: 'Offline avatar',
-    description: 'A photo avatar with a grey dot for someone offline.',
+    description: 'An avatar with a grey dot for someone offline.',
   },
   {
     name: 'avatar-07',
@@ -49,13 +50,13 @@ export const manifest: ComponentManifest = [
     name: 'avatar-08',
     source: 'comp-397',
     title: 'Verified avatar',
-    description: 'A photo avatar with a verified seal on its top corner.',
+    description: 'An avatar with a verified seal on its top corner.',
   },
   {
     name: 'avatar-09',
     source: 'comp-398',
     title: 'Avatar with count',
-    description: 'A photo avatar with an unread count.',
+    description: 'An avatar with an unread count.',
   },
   {
     name: 'avatar-10',

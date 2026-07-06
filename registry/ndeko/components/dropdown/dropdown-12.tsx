@@ -7,7 +7,7 @@ import {
   PinIcon,
   UserPenIcon,
 } from '@/registry/ndeko/lib/icons';
-import { Avatar, AvatarFallback } from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
   DropdownMenu,
@@ -31,9 +31,7 @@ export default function Dropdown12() {
           />
         }
       >
-        <Avatar>
-          <AvatarFallback>KK</AvatarFallback>
-        </Avatar>
+        <Avatar seed='Keith Kennedy' />
         <ChevronDownIcon className='opacity-60' />
       </DropdownMenuTrigger>
       <DropdownMenuContent className='max-w-64'>

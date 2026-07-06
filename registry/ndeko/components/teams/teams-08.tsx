@@ -3,11 +3,7 @@
 import { useId, useState } from 'react';
 
 import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 
 import { memberById, type Member } from './_parts/people';
 import { Segments, type Segment } from './_parts/segments';
@@ -82,10 +78,7 @@ function LoadRow({ load, week }: { load: Load; week: Week }) {
   return (
     <li className='grid grid-cols-[minmax(0,9rem)_minmax(0,1fr)_4.5rem] items-center gap-3 py-2'>
       <span className='flex min-w-0 items-center gap-2.5'>
-        <Avatar className='size-7 text-[10px]'>
-          {member.avatar && <AvatarImage src={member.avatar} alt='' />}
-          <AvatarFallback>{member.initials}</AvatarFallback>
-        </Avatar>
+        <Avatar className='size-7' seed={member.name} />
         <span className='min-w-0'>
           <span className='block truncate text-[13px] leading-5 font-medium'>
             {member.name}

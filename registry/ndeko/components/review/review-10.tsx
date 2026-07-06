@@ -36,13 +36,14 @@ import {
   risePresenceOf,
 } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
 import { Button } from '@/registry/ndeko/ui/button';
 import { CallStatusMark } from '@/registry/ndeko/ui/call-status';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
 import { Chip } from '@/registry/ndeko/ui/chip';
-import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
-import { LetterTile } from '@/registry/ndeko/ui/letter-tile';
+import { CompanyMark } from '@/registry/ndeko/ui/company-mark';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 import { Slider } from '@/registry/ndeko/ui/slider';
 
 export type Screen =
@@ -453,7 +454,11 @@ function BrowserFrame({
         <Target id='address' frame={frame} className='min-w-0 flex-1'>
           <span className='bg-card hairline-ring ring-foreground/10 flex h-6 w-full min-w-0 items-center gap-1.5 rounded-full px-2 text-[11px]'>
             <LockIcon className='text-muted-foreground size-3 shrink-0' />
-            <LetterTile initial='L' size='sm' className='rounded-full' />
+            <CompanyMark
+              seed='Lakeline Stays'
+              size='sm'
+              className='rounded-full'
+            />
             <span className='text-muted-foreground min-w-0 truncate'>
               {ADDRESS[page.screen]}
             </span>
@@ -1083,7 +1088,7 @@ export default function Review10() {
           className='bg-foreground/[0.02] dark:bg-foreground/[0.035] flex min-w-0 flex-col gap-1 rounded-lg p-1.5'
         >
           <header className='flex items-center gap-2 px-2 pt-1 pb-1.5'>
-            <LetterTile initial='R' series={AGENT_SERIES} />
+            <MeshTile seed={AGENT_NAME} color={seriesColorOf(AGENT_SERIES)} />
             <span className='min-w-0 flex-1 truncate text-[13px] font-medium'>
               {AGENT_NAME}
             </span>

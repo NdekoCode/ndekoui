@@ -11,11 +11,7 @@ import {
   VideoIcon,
   XIcon,
 } from '@/registry/ndeko/lib/icons';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import {
   DropdownMenu,
@@ -171,10 +167,7 @@ function AttendeeChip({
         variant='secondary'
         className='h-7 gap-1.5 rounded-full pr-0.5 pl-0.5 text-[13px]'
       >
-        <Avatar className='size-5 text-[9px]'>
-          {person.avatar && <AvatarImage src={person.avatar} alt='' />}
-          <AvatarFallback>{person.initials}</AvatarFallback>
-        </Avatar>
+        <Avatar className='size-5' seed={person.name} />
         {firstName}
         <button
           type='button'

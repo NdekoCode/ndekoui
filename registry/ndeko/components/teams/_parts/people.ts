@@ -13,8 +13,6 @@ export type Role = 'manager' | 'member' | 'viewer';
 export type Member = {
   id: string;
   name: string;
-  initials: string;
-  avatar?: string;
   email: string;
   title: string;
   role: Role;
@@ -69,8 +67,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'amara',
     name: 'Amara Okafor',
-    initials: 'AO',
-    avatar: '/avatars/avatar-03.svg',
     email: 'amara@example.com',
     title: 'Product designer',
     role: 'manager',
@@ -80,8 +76,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'leo',
     name: 'Léo Martin',
-    initials: 'LM',
-    avatar: '/avatars/avatar-04.svg',
     email: 'leo@example.com',
     title: 'Frontend engineer',
     role: 'member',
@@ -91,8 +85,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'sana',
     name: 'Sana Iqbal',
-    initials: 'SI',
-    avatar: '/avatars/avatar-05.svg',
     email: 'sana@example.com',
     title: 'Backend engineer',
     role: 'member',
@@ -102,8 +94,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'tomas',
     name: 'Tomás Rivera',
-    initials: 'TR',
-    avatar: '/avatars/avatar-06.svg',
     email: 'tomas@example.com',
     title: 'QA engineer',
     role: 'member',
@@ -113,8 +103,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'mei',
     name: 'Mei Lin',
-    initials: 'ML',
-    avatar: '/avatars/avatar-07.svg',
     email: 'mei@example.com',
     title: 'Content designer',
     role: 'viewer',
@@ -124,7 +112,6 @@ export const MEMBERS: Member[] = [
   {
     id: 'jonas',
     name: 'Jonas Weber',
-    initials: 'JW',
     email: 'jonas@example.com',
     title: 'Data analyst',
     role: 'member',

@@ -27,8 +27,8 @@ import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Fold, Swap } from '@/registry/ndeko/ui/chat-motion';
-import { LetterTile } from '@/registry/ndeko/ui/letter-tile';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 import { MorphButton, type MorphState } from '@/registry/ndeko/ui/morph-button';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
 
@@ -37,7 +37,6 @@ import { countOf, pathPartsOf } from './_parts/words';
 export type MatrixAgent = {
   id: string;
   name: string;
-  initial: string;
   series: SeriesSlot;
 };
 
@@ -208,7 +207,7 @@ function ApproachCard({ agent, approach, where, onUse }: ApproachCardProps) {
   return (
     <div className='bg-foreground/[0.03] dark:bg-foreground/[0.05] flex min-w-0 flex-col gap-2 rounded-lg p-3'>
       <div className='flex items-center gap-2'>
-        <LetterTile initial={agent.initial} series={agent.series} />
+        <MeshTile seed={agent.name} color={seriesColorOf(agent.series)} />
         <span className='min-w-0 flex-1 truncate text-[13px] font-medium'>
           {agent.name}&rsquo;s approach
         </span>
@@ -508,7 +507,10 @@ export function ConflictMatrix({
           {agents.map((agent) => (
             <th key={agent.id} scope='col' className='h-8 font-normal'>
               <span className='flex items-center justify-center gap-1.5'>
-                <LetterTile initial={agent.initial} series={agent.series} />
+                <MeshTile
+                  seed={agent.name}
+                  color={seriesColorOf(agent.series)}
+                />
                 <span className='hidden truncate @md:inline'>{agent.name}</span>
                 <span className='sr-only @md:hidden'>{agent.name}</span>
               </span>
@@ -651,9 +653,9 @@ function isKeptBy(settlement: Settlement | undefined, agentId: string) {
 }
 
 const AGENTS: MatrixAgent[] = [
-  { id: 'coder', name: 'Coder', initial: 'C', series: 5 },
-  { id: 'reviewer', name: 'Reviewer', initial: 'R', series: 4 },
-  { id: 'writer', name: 'Writer', initial: 'W', series: 3 },
+  { id: 'coder', name: 'Coder', series: 5 },
+  { id: 'reviewer', name: 'Reviewer', series: 4 },
+  { id: 'writer', name: 'Writer', series: 3 },
 ];
 
 const FILES: MatrixFile[] = [

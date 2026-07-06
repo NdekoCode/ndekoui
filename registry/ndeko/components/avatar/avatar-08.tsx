@@ -1,16 +1,9 @@
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 
 export default function Avatar08() {
   return (
     <div className='relative inline-flex'>
-      <Avatar>
-        <AvatarImage src='/avatars/avatar-07.svg' alt='Kelly King' />
-        <AvatarFallback>KK</AvatarFallback>
-      </Avatar>
+      <Avatar seed='Kelly King' role='img' aria-label='Kelly King' />
       <span className='absolute -end-1.5 -top-1.5'>
         <span className='sr-only'>Verified</span>
         <svg

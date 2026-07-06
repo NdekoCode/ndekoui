@@ -1,7 +1,6 @@
 export type Team = {
   id: string;
   name: string;
-  initials: string;
   /** The colour the team picked for its tile. */
   color: string;
   memberIds: string[];
@@ -12,7 +11,6 @@ export const TEAMS: Team[] = [
   {
     id: 'atlas',
     name: 'Atlas Redesign',
-    initials: 'AR',
     color: 'var(--info)',
     memberIds: ['amara', 'leo', 'sana', 'tomas', 'mei', 'jonas'],
     memberCount: 6,
@@ -20,7 +18,6 @@ export const TEAMS: Team[] = [
   {
     id: 'field',
     name: 'Field App',
-    initials: 'FA',
     color: 'var(--success)',
     memberIds: ['leo', 'sana', 'jonas'],
     memberCount: 5,
@@ -28,7 +25,6 @@ export const TEAMS: Team[] = [
   {
     id: 'growth',
     name: 'Growth',
-    initials: 'GR',
     color: 'var(--warning)',
     memberIds: ['mei', 'amara'],
     memberCount: 4,
@@ -36,7 +32,6 @@ export const TEAMS: Team[] = [
   {
     id: 'platform',
     name: 'Platform',
-    initials: 'PL',
     color: 'var(--primary)',
     memberIds: ['sana', 'tomas', 'jonas'],
     memberCount: 7,
@@ -44,7 +39,6 @@ export const TEAMS: Team[] = [
   {
     id: 'research',
     name: 'Research',
-    initials: 'RE',
     color: 'var(--muted-foreground)',
     memberIds: ['mei'],
     memberCount: 1,

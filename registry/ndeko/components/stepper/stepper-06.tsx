@@ -1,9 +1,5 @@
 import { ShuffleIcon } from '@/registry/ndeko/lib/icons';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import {
   Stepper,
   StepperIndicator,
@@ -24,10 +20,12 @@ export default function Stepper06() {
       <StepperItem step={1} className='not-last:flex-1'>
         <StepperTrigger>
           <StepperIndicator>
-            <Avatar className='size-6 text-[10px]'>
-              <AvatarImage src='/avatars/avatar-05.svg' alt='Mike Palmer' />
-              <AvatarFallback>MP</AvatarFallback>
-            </Avatar>
+            <Avatar
+              className='size-6'
+              seed='Mike Palmer'
+              role='img'
+              aria-label='Mike Palmer'
+            />
           </StepperIndicator>
         </StepperTrigger>
         <StepperSeparator className={CONNECTOR} />

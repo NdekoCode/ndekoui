@@ -10,12 +10,9 @@ import {
   RotateCcwIcon,
 } from '@/registry/ndeko/lib/icons';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Button } from '@/registry/ndeko/ui/button';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 import { StatusOrb } from '@/registry/ndeko/ui/status-orb';
 
 import { PEOPLE, type Person } from './_parts/people';
@@ -68,10 +65,11 @@ function MemberStack({ members }: { members: Person[] }) {
   return (
     <span className='flex -space-x-1.5'>
       {members.map((member) => (
-        <Avatar key={member.id} className='ring-card size-5 text-[9px] ring-2'>
-          {member.avatar && <AvatarImage src={member.avatar} alt='' />}
-          <AvatarFallback>{member.initials}</AvatarFallback>
-        </Avatar>
+        <Avatar
+          key={member.id}
+          className='ring-card size-5 ring-2'
+          seed={member.name}
+        />
       ))}
     </span>
   );
@@ -80,9 +78,11 @@ function MemberStack({ members }: { members: Person[] }) {
 function TeamChip() {
   return (
     <span className='bg-foreground/[0.03] hairline-ring ring-border inline-flex items-center gap-2 rounded-lg py-1.5 ps-1.5 pe-2.5'>
-      <span className='gem-plate flex size-6 shrink-0 items-center justify-center rounded-md text-[10px] font-semibold [--gem:var(--info)]'>
-        AR
-      </span>
+      <MeshTile
+        seed='Atlas Redesign'
+        color='var(--info)'
+        className='size-6 rounded-md'
+      />
       <span className='flex flex-col'>
         <span className='text-[13px] leading-4 font-medium'>
           Atlas Redesign

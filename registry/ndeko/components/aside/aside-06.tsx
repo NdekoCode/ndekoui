@@ -23,6 +23,7 @@ import {
 import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
+import { CompanyMark } from '@/registry/ndeko/ui/company-mark';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,6 +35,7 @@ import {
   DropdownMenuTrigger,
 } from '@/registry/ndeko/ui/dropdown-menu';
 import { Kbd } from '@/registry/ndeko/ui/kbd';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 
 import {
   AsideCloseButton,
@@ -113,26 +115,12 @@ const ACCOUNT = PEOPLE[0];
 const ROW =
   'relative flex h-8 w-full cursor-pointer items-center gap-2.5 rounded-md px-2 text-left text-[13px] outline-none transition-colors duration-150 hover:bg-foreground/[0.04] focus-visible:ring-[3px] focus-visible:ring-ring/25';
 
-function initialOf(name: string) {
-  return name.charAt(0);
-}
-
 function isWorkspaceId(value: unknown): value is string {
   return WORKSPACES.some((workspace) => workspace.id === value);
 }
 
 function WorkspaceTile({ workspace }: { workspace: Workspace }) {
-  const tileStyle = { '--gem': workspace.color } as React.CSSProperties;
-
-  return (
-    <span
-      style={tileStyle}
-      aria-hidden='true'
-      className='gem-plate flex size-7 shrink-0 items-center justify-center rounded-md text-xs font-semibold'
-    >
-      {initialOf(workspace.name)}
-    </span>
-  );
+  return <CompanyMark seed={workspace.name} size='lg' />;
 }
 
 function ActiveIndicator({ layoutId }: { layoutId: string }) {
@@ -355,9 +343,6 @@ function WorkspaceSidebar() {
             <ul id={projectsListId} className='isolate flex flex-col gap-px'>
               {PROJECTS.map((project) => {
                 const isActive = activeId === project.id;
-                const tileStyle = {
-                  '--gem': project.color,
-                } as React.CSSProperties;
 
                 function select() {
                   setActiveId(project.id);
@@ -370,13 +355,11 @@ function WorkspaceSidebar() {
                       indicatorId={indicatorId}
                       onSelect={select}
                     >
-                      <span
-                        style={tileStyle}
-                        aria-hidden='true'
-                        className='gem-plate flex size-4 shrink-0 items-center justify-center rounded-[4px] text-[9px] font-semibold'
-                      >
-                        {initialOf(project.name)}
-                      </span>
+                      <MeshTile
+                        seed={project.name}
+                        color={project.color}
+                        size='sm'
+                      />
                       <span className='min-w-0 flex-1 truncate'>
                         {project.name}
                       </span>

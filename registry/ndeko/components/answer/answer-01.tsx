@@ -42,7 +42,7 @@ import {
   MessageActions,
 } from '@/registry/ndeko/ui/chat-message';
 import { Fold, Swap } from '@/registry/ndeko/ui/chat-motion';
-import { LetterTile } from '@/registry/ndeko/ui/letter-tile';
+import { CompanyMark } from '@/registry/ndeko/ui/company-mark';
 import { LiveDuration } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { POPOVER_GLIDE } from '@/registry/ndeko/ui/popover';
@@ -50,7 +50,7 @@ import { Textarea } from '@/registry/ndeko/ui/textarea';
 
 import { CopyAction } from './_parts/copy-action';
 import { LabTile } from './_parts/lab-tile';
-import { nounOf, siteInitialOf, wordsOf } from './_parts/words';
+import { nounOf, wordsOf } from './_parts/words';
 
 export type AnswerSource = {
   id: string;
@@ -253,12 +253,11 @@ function CitationMark({
 
 function CitationBody({ payload }: { payload: CitationPayload }) {
   const { source, number } = payload;
-  const initial = siteInitialOf(source.site);
 
   return (
     <div className='flex flex-col gap-2'>
       <span className='flex items-center gap-1.5'>
-        <LetterTile initial={initial} size='sm' />
+        <CompanyMark seed={source.site} size='sm' />
         <span className='text-primary-ink min-w-0 flex-1 truncate text-xs'>
           {source.site}
         </span>
@@ -343,8 +342,8 @@ function SourcePills({
                     litOverlayOf(isLit)
                   )}
                 />
-                <LetterTile
-                  initial={siteInitialOf(source.site)}
+                <CompanyMark
+                  seed={source.site}
                   size='sm'
                   className='relative rounded-full'
                 />
@@ -741,10 +740,7 @@ export function AnswerSteps({
                             {...rowPresence}
                           >
                             <span className='flex h-6 items-center gap-1.5 text-xs'>
-                              <LetterTile
-                                initial={siteInitialOf(source.site)}
-                                size='sm'
-                              />
+                              <CompanyMark seed={source.site} size='sm' />
                               <span className='min-w-0 truncate'>
                                 {source.title}
                               </span>

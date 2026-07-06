@@ -2,11 +2,7 @@
 
 import { CheckIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 
 import { Swap } from './motion-parts';
 import type { Person } from './people';
@@ -123,10 +119,7 @@ export function PersonAvatar({
   className?: string;
 }) {
   return (
-    <Avatar className={cn('size-5 text-[9px]', className)}>
-      {person.avatar && <AvatarImage src={person.avatar} alt='' />}
-      <AvatarFallback>{person.initials}</AvatarFallback>
-    </Avatar>
+    <Avatar className={cn('size-5 text-[9px]', className)} seed={person.name} />
   );
 }
 

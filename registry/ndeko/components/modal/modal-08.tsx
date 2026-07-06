@@ -47,7 +47,6 @@ const OUTSIDE_THE_TEAM: Person[] = [
   {
     id: 'nia',
     name: 'Nia Adeyemi',
-    initials: 'NA',
     email: 'nia@lattice.example',
     title: 'Sales engineer',
     presence: 'online',
@@ -55,7 +54,6 @@ const OUTSIDE_THE_TEAM: Person[] = [
   {
     id: 'ravi',
     name: 'Ravi Menon',
-    initials: 'RM',
     email: 'ravi@lattice.example',
     title: 'Security engineer',
     presence: 'tracking',
@@ -63,7 +61,6 @@ const OUTSIDE_THE_TEAM: Person[] = [
   {
     id: 'elif',
     name: 'Elif Demir',
-    initials: 'ED',
     email: 'elif@lattice.example',
     title: 'Finance lead',
     presence: 'away',

@@ -154,7 +154,7 @@ function RecentRow({ invite }: { invite: RecentInvite }) {
   return (
     <div className='flex min-h-12 items-center gap-3 px-3 py-2'>
       {person && <PersonAvatar person={person} />}
-      {!person && <PendingAvatar email={invite.email} />}
+      {!person && <PendingAvatar />}
       <p className='min-w-0 flex-1 truncate text-[13px]'>{invite.email}</p>
       <Chip color={look.color}>
         {look.hasCheck && <CheckIcon strokeWidth={2.5} />}

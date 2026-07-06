@@ -53,7 +53,7 @@ function teamById(teamId: string) {
 function TeamRow({ team }: { team: Team }) {
   return (
     <>
-      <TeamTile initials={team.initials} color={team.color} />
+      <TeamTile name={team.name} color={team.color} />
       <span className='min-w-0 flex-1 truncate'>{team.name}</span>
       <span className='text-muted-foreground text-xs tabular-nums'>
         {team.memberCount}
@@ -78,7 +78,7 @@ export default function Teams02() {
     <DropdownMenu>
       <DropdownMenuTrigger aria-label={triggerLabel} className={TRIGGER}>
         <Swap swapKey={current.id}>
-          <TeamTile initials={current.initials} color={current.color} />
+          <TeamTile name={current.name} color={current.color} />
         </Swap>
         <MorphLabel value={current.id}>{current.name}</MorphLabel>
         <SlidingCount

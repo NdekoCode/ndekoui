@@ -34,7 +34,7 @@ function plateStyleOf(series: SeriesSlot | undefined) {
   return style;
 }
 
-/** A drawn initial for a model lab or a site, never a real logo. */
+/** A letter on a tile for what a letter names: a lettered choice, a product whose mark cannot be shown. A person, an agent or a company wears a picture instead. */
 export function LetterTile({
   initial,
   series,

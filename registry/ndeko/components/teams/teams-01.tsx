@@ -129,7 +129,7 @@ export default function Teams01() {
       className='bg-card hairline-ring ring-border flex w-full max-w-[24rem] flex-col gap-4 rounded-xl p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
     >
       <div className='flex items-start gap-3'>
-        <TeamTile initials={TEAM.initials} color={TEAM.color} size='lg' />
+        <TeamTile name={TEAM.name} color={TEAM.color} size='lg' />
         <div className='min-w-0 flex-1'>
           <h3 id={nameId} className='text-sm font-medium'>
             {TEAM.name}

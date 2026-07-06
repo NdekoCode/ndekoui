@@ -7,11 +7,7 @@ import {
 } from '@/registry/ndeko/lib/icons';
 import { FOCUS_RING } from '@/registry/ndeko/lib/recipes';
 import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import {
   Timeline,
   TimelineContent,
@@ -23,8 +19,6 @@ type ActionType = 'post' | 'reply' | 'edit' | 'create';
 type Activity = {
   id: number;
   user: string;
-  initials: string;
-  image: string;
   action: ActionType;
   secondsAgo: number;
 };
@@ -40,32 +34,24 @@ const ITEMS: Activity[] = [
   {
     id: 1,
     user: 'Matt',
-    initials: 'M',
-    image: '/avatars/avatar-04.svg',
     action: 'post',
     secondsAgo: 59,
   },
   {
     id: 2,
     user: 'Matt',
-    initials: 'M',
-    image: '/avatars/avatar-04.svg',
     action: 'reply',
     secondsAgo: 180,
   },
   {
     id: 3,
     user: 'Matt',
-    initials: 'M',
-    image: '/avatars/avatar-04.svg',
     action: 'edit',
     secondsAgo: 300,
   },
   {
     id: 4,
     user: 'Matt',
-    initials: 'M',
-    image: '/avatars/avatar-04.svg',
     action: 'create',
     secondsAgo: 600,
   },
@@ -114,10 +100,7 @@ export default function Timeline10() {
               className='m-0! flex-row items-center gap-3 py-2.5!'
             >
               <action.icon className='text-muted-foreground size-4' />
-              <Avatar className='size-6 text-[10px]'>
-                <AvatarImage src={item.image} alt={item.user} />
-                <AvatarFallback>{item.initials}</AvatarFallback>
-              </Avatar>
+              <Avatar className='size-6' seed={item.user} />
               <TimelineContent className='text-foreground'>
                 <a href='#' className={cn(LINK, 'font-medium')}>
                   {item.user}

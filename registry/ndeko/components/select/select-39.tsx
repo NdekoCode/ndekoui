@@ -1,3 +1,4 @@
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Field, FieldLabel } from '@/registry/ndeko/ui/field';
 import {
   Select,
@@ -12,31 +13,18 @@ import {
 type Member = {
   value: string;
   name: string;
-  gem: string;
 };
 
 const MEMBERS: Member[] = [
-  { value: 'frank', name: 'Frank Morris', gem: 'var(--primary)' },
-  { value: 'xavier', name: 'Xavier Guerra', gem: 'var(--info)' },
-  { value: 'anne', name: 'Anne Kelley', gem: 'var(--success)' },
+  { value: 'frank', name: 'Frank Morris' },
+  { value: 'xavier', name: 'Xavier Guerra' },
+  { value: 'anne', name: 'Anne Kelley' },
 ];
 
-function initialOf(name: string) {
-  return name.charAt(0);
-}
-
 function MemberName({ member }: { member: Member }) {
-  const gemStyle = { '--gem': member.gem } as React.CSSProperties;
-
   return (
     <span className='flex min-w-0 items-center gap-2'>
-      <span
-        aria-hidden='true'
-        style={gemStyle}
-        className='gem-plate inline-flex size-5 shrink-0 items-center justify-center rounded-[5px] text-[10px] font-semibold'
-      >
-        {initialOf(member.name)}
-      </span>
+      <Avatar seed={member.name} className='size-5' />
       <span className='truncate'>{member.name}</span>
     </span>
   );

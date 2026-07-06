@@ -1,6 +1,6 @@
 import { FOCUS_RING } from '@/registry/ndeko/lib/recipes';
 import { cn } from '@/registry/ndeko/lib/utils';
-import { Avatar, AvatarFallback } from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import {
   HoverCard,
   HoverCardContent,
@@ -8,9 +8,9 @@ import {
 } from '@/registry/ndeko/ui/hover-card';
 
 const MUTUAL_FRIENDS = [
-  { name: 'Ada Brooks', initials: 'AB' },
-  { name: 'Leo Martin', initials: 'LM' },
-  { name: 'Zoe Hart', initials: 'ZH' },
+  { name: 'Ada Brooks' },
+  { name: 'Leo Martin' },
+  { name: 'Zoe Hart' },
 ];
 
 function mutualFriendsLabelOf(count: number) {
@@ -23,9 +23,7 @@ function mutualFriendsLabelOf(count: number) {
 export default function Tooltip11() {
   return (
     <div className='flex items-center gap-3'>
-      <Avatar className='size-10' aria-hidden='true'>
-        <AvatarFallback>KK</AvatarFallback>
-      </Avatar>
+      <Avatar className='size-10' aria-hidden='true' seed='Keith Kennedy' />
       <div className='flex flex-col gap-0.5'>
         <HoverCard>
           <HoverCardTrigger
@@ -39,9 +37,11 @@ export default function Tooltip11() {
           </HoverCardTrigger>
           <HoverCardContent className='flex flex-col gap-3'>
             <div className='flex items-center gap-3'>
-              <Avatar className='size-10' aria-hidden='true'>
-                <AvatarFallback>KK</AvatarFallback>
-              </Avatar>
+              <Avatar
+                className='size-10'
+                aria-hidden='true'
+                seed='Keith Kennedy'
+              />
               <div className='flex flex-col gap-0.5'>
                 <p className='text-sm font-medium'>Keith Kennedy</p>
                 <p className='text-muted-foreground text-xs'>@k.kennedy</p>
@@ -59,10 +59,9 @@ export default function Tooltip11() {
                 {MUTUAL_FRIENDS.map((friend) => (
                   <Avatar
                     key={friend.name}
-                    className='ring-popover size-5 text-[9px] ring-2'
-                  >
-                    <AvatarFallback>{friend.initials}</AvatarFallback>
-                  </Avatar>
+                    className='ring-popover size-5 ring-2'
+                    seed={friend.name}
+                  />
                 ))}
               </div>
               <span className='text-muted-foreground text-xs'>

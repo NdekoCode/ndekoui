@@ -4,11 +4,7 @@ import { AnimatePresence, motion, type Transition } from 'motion/react';
 
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 
 import type { Member } from './people';
 
@@ -75,10 +71,7 @@ export function AvatarStack({
             }}
             className='-ms-1.5 flex'
           >
-            <Avatar className='ring-card size-6 text-[10px] ring-2'>
-              {member.avatar && <AvatarImage src={member.avatar} alt='' />}
-              <AvatarFallback>{member.initials}</AvatarFallback>
-            </Avatar>
+            <Avatar className='ring-card size-6 ring-2' seed={member.name} />
           </motion.span>
         ))}
       </AnimatePresence>

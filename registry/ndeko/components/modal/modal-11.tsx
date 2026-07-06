@@ -54,7 +54,6 @@ const GUESTS: Person[] = [
   {
     id: 'malia',
     name: 'Malia Fonoti',
-    initials: 'MF',
     email: 'malia@fernwick.example',
     title: 'Client, Fernwick Studio',
     presence: 'offline',
@@ -62,7 +61,6 @@ const GUESTS: Person[] = [
   {
     id: 'andres',
     name: 'Andrés Molina',
-    initials: 'AM',
     email: 'andres@fernwick.example',
     title: 'Client, Fernwick Studio',
     presence: 'online',
@@ -194,7 +192,7 @@ function ResultAvatar({ result }: { result: SearchResult }) {
       />
     );
   }
-  return <PendingAvatar email={result.email} size='sm' />;
+  return <PendingAvatar size='sm' />;
 }
 
 function ResultRow({

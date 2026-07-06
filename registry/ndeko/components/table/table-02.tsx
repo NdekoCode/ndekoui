@@ -1,8 +1,4 @@
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import {
   Table,
@@ -18,9 +14,7 @@ type Status = 'Active' | 'Inactive' | 'Pending';
 type Member = {
   id: string;
   name: string;
-  initials: string;
   username: string;
-  image: string;
   email: string;
   location: string;
   status: Status;
@@ -37,9 +31,7 @@ const MEMBERS: Member[] = [
   {
     id: '1',
     name: 'Jordan Hayes',
-    initials: 'JH',
     username: '@jordanhayes',
-    image: '/avatars/avatar-03.svg',
     email: 'jordan.hayes@example.com',
     location: 'Toronto, Canada',
     status: 'Active',
@@ -48,9 +40,7 @@ const MEMBERS: Member[] = [
   {
     id: '2',
     name: 'Anna Novak',
-    initials: 'AN',
     username: '@annanovak',
-    image: '/avatars/avatar-04.svg',
     email: 'anna.novak@example.com',
     location: 'Prague, Czechia',
     status: 'Active',
@@ -59,9 +49,7 @@ const MEMBERS: Member[] = [
   {
     id: '3',
     name: 'Lina Haddad',
-    initials: 'LH',
     username: '@linahaddad',
-    image: '/avatars/avatar-05.svg',
     email: 'lina.haddad@example.com',
     location: 'Lyon, France',
     status: 'Active',
@@ -70,9 +58,7 @@ const MEMBERS: Member[] = [
   {
     id: '4',
     name: 'Ama Mensah',
-    initials: 'AM',
     username: '@amamensah',
-    image: '/avatars/avatar-06.svg',
     email: 'ama.mensah@example.com',
     location: 'Accra, Ghana',
     status: 'Pending',
@@ -103,10 +89,12 @@ export default function Table02() {
             <TableRow key={member.id}>
               <TableCell>
                 <div className='flex items-center gap-3'>
-                  <Avatar className='size-9 text-[13px]'>
-                    <AvatarImage src={member.image} alt={member.name} />
-                    <AvatarFallback>{member.initials}</AvatarFallback>
-                  </Avatar>
+                  <Avatar
+                    className='size-9'
+                    seed={member.name}
+                    role='img'
+                    aria-label={member.name}
+                  />
                   <div className='flex flex-col gap-0.5'>
                     <span className='font-medium'>{member.name}</span>
                     <span className='text-muted-foreground text-xs'>

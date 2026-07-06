@@ -4,6 +4,7 @@
 import { createContext, useContext } from 'react';
 
 import { cn } from '@/registry/ndeko/lib/utils';
+import { CompanyMark } from '@/registry/ndeko/ui/company-mark';
 import {
   HoverCard,
   HoverCardContent,
@@ -41,11 +42,6 @@ function domainOf(href: string) {
   return host.replace(WWW_PREFIX, '');
 }
 
-function initialOf(domain: string) {
-  const first = domain.charAt(0);
-  return first.toUpperCase();
-}
-
 const OPEN_DELAY_MS = 150;
 
 type SourceProps = {
@@ -64,21 +60,15 @@ function Source({ href, children }: SourceProps) {
   );
 }
 
-/** The first letter of the site on a key cap. Drawn locally, so citing a page never loads anything from it. */
+/** A mark drawn from the name of the site, so citing a page never loads anything from it. */
 function SourceMark({ className }: { className?: string }) {
   const { domain } = useSourceContext();
-  const initial = initialOf(domain);
 
   return (
-    <span
-      aria-hidden='true'
-      className={cn(
-        'keycap-3d text-muted-foreground inline-flex size-3.5 shrink-0 items-center justify-center rounded-[4px] text-[9px] leading-none font-semibold',
-        className
-      )}
-    >
-      {initial}
-    </span>
+    <CompanyMark
+      seed={domain}
+      className={cn('size-3.5 rounded-[4px]', className)}
+    />
   );
 }
 

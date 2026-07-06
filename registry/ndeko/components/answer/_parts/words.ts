@@ -17,9 +17,3 @@ export function wordsOf(phrase: string) {
   }
   return trimmed.split(/\s+/);
 }
-
-/** The initial of a site, drawn on a tile: "harbourline-freight.example" gives H. */
-export function siteInitialOf(site: string) {
-  const first = site.charAt(0);
-  return first.toUpperCase();
-}

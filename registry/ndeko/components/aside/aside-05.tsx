@@ -21,6 +21,7 @@ import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 
 import {
   AsideCloseButton,
@@ -243,19 +244,16 @@ function ProjectMembers() {
 
 function ProjectDetails() {
   const statusStyle = { '--chip': 'var(--success)' } as React.CSSProperties;
-  const tileStyle = { '--gem': 'var(--primary)' } as React.CSSProperties;
 
   return (
     <div className='flex flex-col gap-6 p-5'>
       <div className='flex flex-col gap-4'>
         <div className='flex items-start gap-3'>
-          <span
-            style={tileStyle}
-            aria-hidden='true'
-            className='gem-plate flex size-10 shrink-0 items-center justify-center rounded-lg text-base font-semibold'
-          >
-            A
-          </span>
+          <MeshTile
+            seed='Atlas redesign'
+            color='var(--primary)'
+            className='size-10 rounded-lg'
+          />
           <div className='flex min-w-0 flex-1 flex-col gap-1'>
             <AsideTitle>Atlas redesign</AsideTitle>
             <p className='text-muted-foreground flex items-center gap-1.5 text-xs'>

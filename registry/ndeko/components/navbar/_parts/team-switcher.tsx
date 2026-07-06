@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { MorphingLabel } from '@/registry/ndeko/components/navbar/_parts/morphing-label';
 import { ChevronsUpDownIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
+import { CompanyMark } from '@/registry/ndeko/ui/company-mark';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,23 +14,8 @@ import {
   DropdownMenuTrigger,
 } from '@/registry/ndeko/ui/dropdown-menu';
 
-const GEM_STYLE = { '--gem': 'var(--primary)' } as React.CSSProperties;
-
-function initialOf(team: string) {
-  const firstLetter = team.charAt(0);
-  return firstLetter.toUpperCase();
-}
-
 function TeamMark({ team }: { team: string }) {
-  return (
-    <span
-      aria-hidden='true'
-      style={GEM_STYLE}
-      className='gem-plate flex size-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold'
-    >
-      {initialOf(team)}
-    </span>
-  );
+  return <CompanyMark seed={team} className='size-6 rounded-md' />;
 }
 
 type TeamSwitcherProps = {

@@ -95,7 +95,7 @@ export default function Teams09() {
                   aria-current={isCurrent}
                   className='h-9'
                 >
-                  <TeamTile initials={team.initials} color={team.color} />
+                  <TeamTile name={team.name} color={team.color} />
                   <span className='min-w-0 flex-1 truncate'>{team.name}</span>
                   <span className='text-muted-foreground text-xs tabular-nums'>
                     {memberCountLabelOf(team.memberCount)}

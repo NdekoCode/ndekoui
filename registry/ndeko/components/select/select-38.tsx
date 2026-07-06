@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback } from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Field, FieldLabel } from '@/registry/ndeko/ui/field';
 import {
   Select,
@@ -13,21 +13,18 @@ import {
 type Member = {
   value: string;
   name: string;
-  initials: string;
 };
 
 const MEMBERS: Member[] = [
-  { value: 'jenny', name: 'Jenny Hamilton', initials: 'JH' },
-  { value: 'paul', name: 'Paul Smith', initials: 'PS' },
-  { value: 'luna', name: 'Luna Wyen', initials: 'LW' },
+  { value: 'jenny', name: 'Jenny Hamilton' },
+  { value: 'paul', name: 'Paul Smith' },
+  { value: 'luna', name: 'Luna Wyen' },
 ];
 
 function MemberName({ member }: { member: Member }) {
   return (
     <span className='flex min-w-0 items-center gap-2'>
-      <Avatar aria-hidden='true' className='size-5 text-[9px]'>
-        <AvatarFallback>{member.initials}</AvatarFallback>
-      </Avatar>
+      <Avatar aria-hidden='true' className='size-5' seed={member.name} />
       <span className='truncate'>{member.name}</span>
     </span>
   );

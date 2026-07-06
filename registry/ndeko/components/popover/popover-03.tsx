@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { MotionNumber } from '@/components/core/motion-number';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { BellIcon } from '@/registry/ndeko/lib/icons';
-import { Avatar, AvatarFallback } from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
@@ -125,12 +125,6 @@ function overflowMarkOf(unreadCount: number) {
   return undefined;
 }
 
-function initialsOf(name: string) {
-  const words = name.split(' ');
-  const letters = words.map((word) => word.charAt(0));
-  return letters.join('');
-}
-
 function markAsRead(notification: Notification) {
   return { ...notification, isUnread: false };
 }
@@ -211,9 +205,11 @@ export default function Popover03() {
               key={notification.id}
               className='has-focus-visible:bg-foreground/5 hover:bg-foreground/5 relative flex items-start gap-3 rounded-md px-3 py-2 transition-colors duration-150'
             >
-              <Avatar className='size-9' aria-hidden='true'>
-                <AvatarFallback>{initialsOf(notification.user)}</AvatarFallback>
-              </Avatar>
+              <Avatar
+                className='size-9'
+                aria-hidden='true'
+                seed={notification.user}
+              />
               <div className='flex min-w-0 flex-1 flex-col gap-1'>
                 <button
                   type='button'

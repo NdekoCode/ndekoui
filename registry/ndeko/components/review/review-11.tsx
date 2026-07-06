@@ -6,13 +6,14 @@ import { useEffect, useId, useRef, useState } from 'react';
 import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll, type WordRollWord } from '@/components/core/word-roll';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { seriesColorOf } from '@/registry/ndeko/lib/agent-run';
 import { CheckIcon, RotateCcwIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { springOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Kbd } from '@/registry/ndeko/ui/kbd';
-import { LetterTile } from '@/registry/ndeko/ui/letter-tile';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 
 import { isShortcutKey } from './_parts/keys';
 import { countOf } from './_parts/words';
@@ -650,7 +651,7 @@ export default function Review11() {
   return (
     <div className='bg-card hairline-ring ring-border @container w-full max-w-[38rem] rounded-xl p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'>
       <p className='text-muted-foreground mb-3 flex items-center gap-2 text-xs'>
-        <LetterTile initial='W' series={3} />
+        <MeshTile seed='Writer' color={seriesColorOf(3)} />
         <span>
           <span className='text-foreground font-medium'>Writer</span> suggests
           five edits to the customer notice

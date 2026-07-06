@@ -7,11 +7,7 @@ import {
   type Icon,
 } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 
 import type { Person } from './people';
 
@@ -61,10 +57,7 @@ export function SenderAvatar({
 
   return (
     <span className={cn('relative inline-flex shrink-0', className)}>
-      <Avatar className='size-8 text-[11px]'>
-        {person.avatar && <AvatarImage src={person.avatar} alt='' />}
-        <AvatarFallback>{person.initials}</AvatarFallback>
-      </Avatar>
+      <Avatar className='size-8' seed={person.name} />
       <span
         aria-hidden='true'
         className={cn(

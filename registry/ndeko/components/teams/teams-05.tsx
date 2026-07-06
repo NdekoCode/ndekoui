@@ -11,7 +11,7 @@ import {
   SendIcon,
   XIcon,
 } from '@/registry/ndeko/lib/icons';
-import { Avatar, AvatarFallback } from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Input } from '@/registry/ndeko/ui/input';
 
@@ -131,11 +131,10 @@ function Seats({ invites }: { invites: Invite[] }) {
             exit={{ opacity: 0, scale: seatScale }}
             transition={SEAT}
           >
-            <Avatar className='hairline-border border-foreground/30 size-9 border-dashed bg-transparent text-xs ring-0'>
-              <AvatarFallback className='bg-foreground/[0.03]'>
-                {invite.initials}
-              </AvatarFallback>
-            </Avatar>
+            <Avatar
+              className='hairline-border border-foreground/30 size-9 border-dashed bg-transparent ring-0'
+              seed={invite.email}
+            />
             <span className='sr-only'>{invite.email}, invited</span>
           </motion.li>
         ))}
@@ -249,7 +248,7 @@ export default function Teams05() {
       className='bg-card hairline-ring ring-border flex w-full max-w-[26rem] flex-col gap-4 rounded-xl p-5 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
     >
       <div className='flex items-center gap-3'>
-        <TeamTile initials='DG' color='var(--primary)' size='lg' />
+        <TeamTile name='Design guild' color='var(--primary)' size='lg' />
         <div className='min-w-0'>
           <h3 id={titleId} className='text-sm font-medium'>
             Design guild

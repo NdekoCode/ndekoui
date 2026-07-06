@@ -16,6 +16,7 @@ import {
   type RunSnapshot,
   type SeriesSlot,
 } from '@/registry/ndeko/lib/agent-run';
+import type { BrandSlug } from '@/registry/ndeko/lib/brand-logos';
 import {
   GitBranchIcon,
   HistoryIcon,
@@ -26,12 +27,11 @@ import {
   slowSpringOf,
 } from '@/registry/ndeko/lib/motion-presets';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
+import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Chip } from '@/registry/ndeko/ui/chip';
-import type { BrandSlug } from '@/registry/ndeko/lib/brand-logos';
-import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
-import { LetterTile } from '@/registry/ndeko/ui/letter-tile';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
+import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 import { MorphButton, type MorphState } from '@/registry/ndeko/ui/morph-button';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
 import { Segments, type Segment } from '@/registry/ndeko/ui/segments';
@@ -42,7 +42,6 @@ export type Strategy = 'current' | 'merge' | 'rebase' | 'squash';
 
 export type GraphAgent = {
   name: string;
-  initial: string;
   series: SeriesSlot;
 };
 
@@ -82,9 +81,9 @@ const LANE_PAD = 12;
 
 const DOT_RADIUS = 4.5;
 
-const CODER: GraphAgent = { name: 'Coder', initial: 'C', series: 5 };
+const CODER: GraphAgent = { name: 'Coder', series: 5 };
 
-const WRITER: GraphAgent = { name: 'Writer', initial: 'W', series: 3 };
+const WRITER: GraphAgent = { name: 'Writer', series: 3 };
 
 const LANES: GraphLane[] = [
   { index: 0, branch: 'main', color: 'var(--muted-foreground)' },
@@ -461,9 +460,7 @@ function timeLabelOf(minutesAgo: number) {
 function AuthorMark({ commit }: { commit: GraphCommit }) {
   const agent = commit.agent;
   if (agent) {
-    return (
-      <LetterTile initial={agent.initial} series={agent.series} size='md' />
-    );
+    return <MeshTile seed={agent.name} color={seriesColorOf(agent.series)} />;
   }
   return (
     <span className='keycap-3d text-muted-foreground inline-flex size-5 shrink-0 items-center justify-center rounded-[5px]'>

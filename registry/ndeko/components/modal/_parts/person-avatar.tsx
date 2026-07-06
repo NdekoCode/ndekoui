@@ -1,16 +1,13 @@
 import {
   CheckIcon,
   ClockIcon,
+  type Icon,
+  MailIcon,
   MinusIcon,
   MoonIcon,
-  type Icon,
 } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/registry/ndeko/ui/avatar';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 
 import type { Person, Presence } from './people';
 
@@ -34,9 +31,9 @@ export const PRESENCE_META: Record<Presence, PresenceMeta> = {
 type AvatarSize = 'sm' | 'md' | 'lg';
 
 const AVATAR_SIZE: Record<AvatarSize, string> = {
-  sm: 'size-6 text-[10px]',
-  md: 'size-8 text-xs',
-  lg: 'size-10 text-[13px]',
+  sm: 'size-6',
+  md: 'size-8',
+  lg: 'size-10',
 };
 
 const BADGE_SIZE: Record<AvatarSize, string> = {
@@ -46,7 +43,7 @@ const BADGE_SIZE: Record<AvatarSize, string> = {
 };
 
 type PersonAvatarProps = {
-  person: Pick<Person, 'name' | 'initials' | 'avatar'>;
+  person: Pick<Person, 'name'>;
   size?: AvatarSize;
   /** Drawn as a small glyph on the avatar; its label is read by screen readers. */
   presence?: Presence;
@@ -61,10 +58,7 @@ export function PersonAvatar({
 }: PersonAvatarProps) {
   return (
     <span className={cn('relative inline-flex shrink-0', className)}>
-      <Avatar className={AVATAR_SIZE[size]}>
-        {person.avatar && <AvatarImage src={person.avatar} alt='' />}
-        <AvatarFallback>{person.initials}</AvatarFallback>
-      </Avatar>
+      <Avatar className={AVATAR_SIZE[size]} seed={person.name} />
       {presence && <PresenceBadge presence={presence} size={size} />}
     </span>
   );
@@ -99,23 +93,13 @@ function PresenceBadge({
   );
 }
 
-function initialOf(email: string) {
-  const first = email.charAt(0);
-  return first.toUpperCase();
-}
-
 type PendingAvatarProps = {
-  email: string;
   size?: AvatarSize;
   className?: string;
 };
 
-/** Someone invited who has not joined yet: an empty dashed slot with the first letter of the address and a clock. */
-export function PendingAvatar({
-  email,
-  size = 'md',
-  className,
-}: PendingAvatarProps) {
+/** Someone invited who has not joined yet: an empty dashed slot with an envelope and a clock. */
+export function PendingAvatar({ size = 'md', className }: PendingAvatarProps) {
   const clockStyle = { '--chip': 'var(--warning)' } as React.CSSProperties;
 
   return (
@@ -125,11 +109,11 @@ export function PendingAvatar({
     >
       <span
         className={cn(
-          'hairline-border border-foreground/25 text-muted-foreground flex items-center justify-center rounded-full border-dashed font-medium',
+          'hairline-border border-foreground/25 text-muted-foreground flex items-center justify-center rounded-full border-dashed',
           AVATAR_SIZE[size]
         )}
       >
-        {initialOf(email)}
+        <MailIcon className='size-[45%]' />
       </span>
       <span className='bg-popover absolute -right-0.5 -bottom-0.5 flex rounded-full p-px'>
         <span
