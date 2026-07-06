@@ -78,4 +78,11 @@ export const manifest: ComponentManifest = [
     description:
       'Suggested prompts as a stack of cards: the front one is dragged or sent away with Left and Right and the next lifts into place, and pressing a card types its prompt into the composer.',
   },
+  {
+    name: 'prompt-12',
+    source: 'ndeko',
+    title: 'Mention picker',
+    description:
+      'Typing @ opens files, symbols, diffs, docs and pages that filter with marks and move with the arrows and Tab, and the picked item flies into the composer as a chip while the token total rolls.',
+  },
 ];
