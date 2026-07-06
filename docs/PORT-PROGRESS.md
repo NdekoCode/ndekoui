@@ -64,8 +64,7 @@ Statuses: `todo`, `in progress`, `ported` (files written, typecheck and lint cle
 | Chat primitives (`chat-*`, adapted from prompt-kit) | 20              | written                                           |
 | Application blocks                                  | 30 in 11 groups | written                                           |
 | Marketing blocks                                    | 20 in 10 groups | written                                           |
-| Marketing templates                                 | 5               | written                                           |
-| Application templates                               | 5               | written                                           |
+| Templates                                           | 21 in 14 kinds  | written                                           |
 | Micro-interaction pass, primitives                  | 22 files        | done                                              |
 | Micro-interaction pass, wave 1 compositions         | 79 files        | done                                              |
 
