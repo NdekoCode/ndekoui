@@ -1,6 +1,6 @@
 # ndekoui
 
-Open-source React components that animate every change of state. 842 components in 49 categories, 148 blocks, 33 templates and 87 primitives, built on [Base UI](https://base-ui.com), [motion](https://motion.dev) and [Tailwind CSS 4](https://tailwindcss.com), installed with the [shadcn CLI](https://ui.shadcn.com/docs/cli) or through an MCP server.
+Open-source React components that animate every change of state. 842 components in 49 categories, 150 blocks, 21 templates and 87 primitives, built on [Base UI](https://base-ui.com), [motion](https://motion.dev) and [Tailwind CSS 4](https://tailwindcss.com), installed with the [shadcn CLI](https://ui.shadcn.com/docs/cli) or through an MCP server.
 
 **Site and catalogue:** [ui.ndekocode.dev](https://ui.ndekocode.dev)
 
@@ -8,8 +8,8 @@ Open-source React components that animate every change of state. 842 components 
 
 - **Primitives**: 87 accessible building blocks on Base UI (button, field, select, menu, dialog, sheet, tabs, slider, chat input...). Try them at [/kit](https://ui.ndekocode.dev/kit).
 - **Components**: 842 compositions in 49 categories, from inputs and date pickers to charts, text effects, notifications, comments and team lists. Browse them at [/components](https://ui.ndekocode.dev/components).
-- **Blocks**: 148 whole sections of a product (app shells, boards, task lists, dashboards, billing, settings, pricing, heroes, testimonials, team sections, blog, docs, help center, error pages, agent chats, agent reviews, agent operations, workflows, maps...). See them at [/blocks](https://ui.ndekocode.dev/blocks).
-- **Templates**: 33 complete pages for applications and marketing sites, at [/templates](https://ui.ndekocode.dev/templates).
+- **Blocks**: 150 whole sections of a product (app shells, boards, task lists, dashboards, billing, settings, pricing, heroes, testimonials, team sections, blog, docs, help center, error pages, agent chats, agent reviews, agent operations, workflows, maps...). See them at [/blocks](https://ui.ndekocode.dev/blocks).
+- **Templates**: 21 complete pages for applications and marketing sites, at [/templates](https://ui.ndekocode.dev/templates).
 - **Motion**: text effects, scroll animations, marquees, device frames and more, documented at [/docs](https://ui.ndekocode.dev/docs).
 - **Theme**: light and dark tokens, ink colours that pass AA, one-pixel hairlines and a few 3D materials, installed with every item.
 
