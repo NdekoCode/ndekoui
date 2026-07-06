@@ -24,6 +24,7 @@ import {
 import { FileTextIcon, SearchIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { springOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { countOf } from '@/registry/ndeko/lib/words';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
 import { CopyButton } from '@/registry/ndeko/ui/copy-button';
@@ -39,7 +40,6 @@ import {
 } from '@/registry/ndeko/ui/select';
 
 import { includesQuery, Marked } from './_parts/marked';
-import { countOf } from './_parts/words';
 
 export type TemplateField =
   | { kind: 'text'; id: string; label: string }

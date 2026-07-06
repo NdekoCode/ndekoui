@@ -36,6 +36,7 @@ import {
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { applyBatchAt, restingOf } from '@/registry/ndeko/lib/run-session';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { countOf } from '@/registry/ndeko/lib/words';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
 import { Chip } from '@/registry/ndeko/ui/chip';
@@ -62,8 +63,6 @@ import {
   RUN_TITLE,
   WRITER,
 } from './_parts/crew';
-
-import { countOf } from './_parts/words';
 
 export type HandoffItem = {
   id: string;

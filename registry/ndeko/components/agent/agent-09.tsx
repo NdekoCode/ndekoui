@@ -41,6 +41,7 @@ import {
 } from '@/registry/ndeko/lib/motion-presets';
 import { applyBatchAt, restingOf } from '@/registry/ndeko/lib/run-session';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { countOf } from '@/registry/ndeko/lib/words';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
   DropdownMenu,
@@ -57,7 +58,6 @@ import { AgentTile } from './_parts/agent-tile';
 import { RESEARCHER } from './_parts/crew';
 
 import { RelativeTime } from './_parts/relative-time';
-import { countOf } from './_parts/words';
 
 export type SourceKind = 'file' | 'site' | 'drive' | 'helpdesk';
 

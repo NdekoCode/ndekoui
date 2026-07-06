@@ -28,6 +28,7 @@ import {
   CircleDashedIcon,
 } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { nounOf, wordsOf } from '@/registry/ndeko/lib/words';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
 import { CallStatusMark } from '@/registry/ndeko/ui/call-status';
@@ -36,10 +37,9 @@ import { CompanyMark } from '@/registry/ndeko/ui/company-mark';
 import { ClockGate, LiveDuration } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
+import { StreamedWords } from '@/registry/ndeko/ui/streamed-text';
 
 import { LabTile } from './_parts/lab-tile';
-import { StreamedWords } from './_parts/streamed-words';
-import { nounOf, wordsOf } from './_parts/words';
 
 export type ThinkingSite = {
   id: string;
@@ -218,6 +218,7 @@ function ReasoningRow({ words, shown, isStreaming }: ReasoningRowProps) {
             words={words}
             shown={shown}
             isStreaming={isStreaming}
+            keepsPlace={false}
           />
         </p>
       </div>
@@ -631,6 +632,7 @@ export default function Answer04() {
                   words={ANSWER_WORDS}
                   shown={answerShown}
                   isStreaming={isAnswering}
+                  keepsPlace={false}
                 />
               </p>
             )}

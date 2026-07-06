@@ -54,6 +54,7 @@ import {
   springOf,
 } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { countOf, nounOf } from '@/registry/ndeko/lib/words';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Fold, Swap } from '@/registry/ndeko/ui/chat-motion';
@@ -70,7 +71,6 @@ import { DECIDE_AFTER_MS } from './_parts/demo';
 import { focusLater } from './_parts/focus-later';
 import { KeyedHeight } from './_parts/keyed-height';
 import { RelativeTime } from './_parts/relative-time';
-import { countOf, nounOf } from './_parts/words';
 
 export type PlanChange = {
   stepId: string;

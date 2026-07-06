@@ -10,13 +10,13 @@ import { seriesColorOf } from '@/registry/ndeko/lib/agent-run';
 import { CheckIcon, RotateCcwIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { springOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { countOf } from '@/registry/ndeko/lib/words';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Kbd } from '@/registry/ndeko/ui/kbd';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 
 import { isShortcutKey } from './_parts/keys';
-import { countOf } from './_parts/words';
 
 export type Suggestion = {
   id: string;

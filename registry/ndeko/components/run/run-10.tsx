@@ -27,6 +27,7 @@ import {
   RotateCcwIcon,
 } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { wordsOf } from '@/registry/ndeko/lib/words';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -338,10 +339,6 @@ function signalStatusWordOf(signal: HealthSignal) {
     return 'out of range';
   }
   return 'in range';
-}
-
-function wordsOf(text: string) {
-  return text.split(' ');
 }
 
 /**

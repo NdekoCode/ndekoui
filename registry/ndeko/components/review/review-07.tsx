@@ -26,6 +26,7 @@ import {
   rowPresenceOf,
   slowSpringOf,
 } from '@/registry/ndeko/lib/motion-presets';
+import { countOf } from '@/registry/ndeko/lib/words';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -35,8 +36,6 @@ import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 import { MorphButton, type MorphState } from '@/registry/ndeko/ui/morph-button';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
 import { Segments, type Segment } from '@/registry/ndeko/ui/segments';
-
-import { countOf } from './_parts/words';
 
 export type Strategy = 'current' | 'merge' | 'rebase' | 'squash';
 

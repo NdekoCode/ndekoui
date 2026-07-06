@@ -38,6 +38,7 @@ import {
 } from '@/registry/ndeko/lib/icons';
 import { EASE_OUT_STRONG, springOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { nounOf, wordsOf } from '@/registry/ndeko/lib/words';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -55,7 +56,6 @@ import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
 import { Textarea } from '@/registry/ndeko/ui/textarea';
 
 import { isOwnKey, isSendKey, useAutosize } from './_parts/use-autosize';
-import { nounOf, wordsOf } from './_parts/words';
 
 export type QueuedPrompt = {
   id: string;

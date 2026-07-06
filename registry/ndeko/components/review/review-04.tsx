@@ -23,6 +23,7 @@ import {
 } from '@/registry/ndeko/lib/icons';
 import { EASE_OUT_STRONG } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { countOf } from '@/registry/ndeko/lib/words';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Fold } from '@/registry/ndeko/ui/chat-motion';
@@ -34,8 +35,8 @@ import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
 import { Segments, type Segment } from '@/registry/ndeko/ui/segments';
 
 import { isShortcutKey } from './_parts/keys';
+import { pathPartsOf } from './_parts/path-parts';
 import { useContainerWidth } from './_parts/use-container-width';
-import { countOf, pathPartsOf } from './_parts/words';
 
 export type HunkLineKind = 'context' | 'removed' | 'added';
 

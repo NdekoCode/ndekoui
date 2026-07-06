@@ -26,6 +26,7 @@ import {
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { noiseAt } from '@/registry/ndeko/lib/speech-envelope';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { countOf, wordsOf } from '@/registry/ndeko/lib/words';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Chip } from '@/registry/ndeko/ui/chip';
@@ -34,14 +35,13 @@ import { LetterTile } from '@/registry/ndeko/ui/letter-tile';
 import { ClockGate, LiveDuration } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { Segments, type Segment } from '@/registry/ndeko/ui/segments';
+import { StreamedWords } from '@/registry/ndeko/ui/streamed-text';
 import { Switch } from '@/registry/ndeko/ui/switch';
 import { Tabs, TabsList, TabsPanel, TabsTab } from '@/registry/ndeko/ui/tabs';
 
 import { LabTile } from './_parts/lab-tile';
 import type { LabId } from './_parts/labs';
-import { StreamedWords } from './_parts/streamed-words';
 import { useContainerWidth } from './_parts/use-container-width';
-import { countOf, wordsOf } from './_parts/words';
 
 export type ArenaModel = {
   id: string;
@@ -332,6 +332,7 @@ export function ArenaColumn({
           words={answerWords}
           shown={words}
           isStreaming={isStreaming}
+          keepsPlace={false}
         />
       </p>
       <AnimatePresence initial={false}>

@@ -38,6 +38,7 @@ import {
 import { rowPresenceOf, springOf } from '@/registry/ndeko/lib/motion-presets';
 import { applyBatchAt, restingOf } from '@/registry/ndeko/lib/run-session';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { countOf, nounOf } from '@/registry/ndeko/lib/words';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
 import {
@@ -62,7 +63,6 @@ import { ToggleGroup, ToggleGroupItem } from '@/registry/ndeko/ui/toggle-group';
 
 import { focusLater } from './_parts/focus-later';
 import { RelativeTime } from './_parts/relative-time';
-import { countOf, nounOf } from './_parts/words';
 
 export type MemoryScope = 'project' | 'everywhere';
 

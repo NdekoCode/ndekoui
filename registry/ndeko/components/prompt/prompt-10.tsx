@@ -26,6 +26,7 @@ import {
 } from '@/registry/ndeko/lib/icons';
 import { rowPresenceOf, springOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { countOf } from '@/registry/ndeko/lib/words';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
   DropdownMenu,
@@ -39,7 +40,6 @@ import { Input } from '@/registry/ndeko/ui/input';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 
 import { Marked, includesQuery } from './_parts/marked';
-import { countOf } from './_parts/words';
 
 export type Conversation = {
   id: string;

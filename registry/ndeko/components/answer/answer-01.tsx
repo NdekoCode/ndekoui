@@ -34,6 +34,12 @@ import {
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { POPUP_TRANSITION } from '@/registry/ndeko/lib/recipes';
 import { cn } from '@/registry/ndeko/lib/utils';
+import {
+  appendWord,
+  leadingSpaceOf,
+  nounOf,
+  wordsOf,
+} from '@/registry/ndeko/lib/words';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
 import { CallStatusMark } from '@/registry/ndeko/ui/call-status';
@@ -50,7 +56,6 @@ import { Textarea } from '@/registry/ndeko/ui/textarea';
 
 import { CopyAction } from './_parts/copy-action';
 import { LabTile } from './_parts/lab-tile';
-import { nounOf, wordsOf } from './_parts/words';
 
 export type AnswerSource = {
   id: string;
@@ -168,13 +173,6 @@ function copyTextOf(tokens: AnswerToken[], sources: AnswerSource[]) {
   const lines = sources.map(sourceLineOf);
   const list = lines.join('\n');
   return `${body}\n\nSources\n${list}`;
-}
-
-function leadingSpaceOf(position: number) {
-  if (position === 0) {
-    return '';
-  }
-  return ' ';
 }
 
 function litOverlayOf(isLit: boolean) {
@@ -1197,13 +1195,6 @@ function isAnsweringStage(stage: AnswerStage) {
   const isStopped = stage === 'stopped';
   const isSettled = isDone || isStopped;
   return !isSettled;
-}
-
-function appendWord(text: string, word: string) {
-  if (text === '') {
-    return word;
-  }
-  return `${text} ${word}`;
 }
 
 function isSendKey(event: React.KeyboardEvent<HTMLTextAreaElement>) {

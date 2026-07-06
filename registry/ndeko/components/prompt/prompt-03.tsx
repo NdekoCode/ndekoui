@@ -32,6 +32,7 @@ import {
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { MENU_LABEL } from '@/registry/ndeko/lib/recipes';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { countOf } from '@/registry/ndeko/lib/words';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -42,6 +43,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/registry/ndeko/ui/dialog';
+import { DrawnCheck } from '@/registry/ndeko/ui/drawn-check';
 import { Input } from '@/registry/ndeko/ui/input';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import {
@@ -53,7 +55,6 @@ import {
 import { Segments, type Segment } from '@/registry/ndeko/ui/segments';
 import { Switch } from '@/registry/ndeko/ui/switch';
 
-import { DrawnCheck } from './_parts/drawn-check';
 import { LabTile } from './_parts/lab-tile';
 import {
   CAPABILITIES,
@@ -70,7 +71,6 @@ import {
   type Tier,
 } from './_parts/labs';
 import { includesQuery, Marked } from './_parts/marked';
-import { countOf } from './_parts/words';
 
 /** `inline` draws the panel in the page under its trigger, with no layer to open. */
 export type PickerSurface = 'popover' | 'dialog' | 'inline';

@@ -29,6 +29,7 @@ import { ChevronDownIcon } from '@/registry/ndeko/lib/icons';
 import { risePresenceOf, springOf } from '@/registry/ndeko/lib/motion-presets';
 import { applyBatchAt, restingOf } from '@/registry/ndeko/lib/run-session';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { countOf } from '@/registry/ndeko/lib/words';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Fold } from '@/registry/ndeko/ui/chat-motion';
 import { ClockGate } from '@/registry/ndeko/ui/live-duration';
@@ -51,7 +52,6 @@ import { DECIDE_AFTER_MS, pressedIdOf } from './_parts/demo';
 import { focusLater } from './_parts/focus-later';
 import { KeyedHeight } from './_parts/keyed-height';
 import { useAgentAnnouncement } from './_parts/use-agent-announcement';
-import { countOf } from './_parts/words';
 
 export type FleetView = 'rows' | 'cards';
 

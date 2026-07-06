@@ -40,13 +40,13 @@ import {
   springOf,
 } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { nounOf } from '@/registry/ndeko/lib/words';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 
 import { useAutosize } from './_parts/use-autosize';
-import { nounOf } from './_parts/words';
 
 export type OrderStatus =
   'paid' | 'pending' | 'shipped' | 'refunded' | 'cancelled';

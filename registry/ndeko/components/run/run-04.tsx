@@ -1,8 +1,9 @@
 'use client';
 
 import { AnimatePresence, motion } from 'motion/react';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 
+import { useFollowBottom } from '@/registry/ndeko/hooks/use-follow-bottom';
 import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
@@ -51,8 +52,6 @@ export type TerminalCommand = {
 const FOLD_AFTER_LINES = 8;
 
 const FOLDED_LINES = 6;
-
-const PINNED_SLACK_PX = 24;
 
 function isFinishedStatus(status: TerminalStatus) {
   const isDone = status === 'done';
@@ -340,52 +339,6 @@ function foldToggleLabelOf(isExpanded: boolean, hiddenCount: number) {
   return hiddenCountLabelOf(hiddenCount);
 }
 
-function distanceFromBottomOf(element: HTMLElement) {
-  const bottom = element.scrollTop + element.clientHeight;
-  return element.scrollHeight - bottom;
-}
-
-function useFollowBottom() {
-  const scrollerRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const isPinnedRef = useRef(true);
-  const [isPinned, setIsPinned] = useState(true);
-
-  useEffect(() => {
-    const scroller = scrollerRef.current;
-    const content = contentRef.current;
-    if (!scroller || !content) {
-      return;
-    }
-    const observer = new ResizeObserver(() => {
-      if (isPinnedRef.current) {
-        scroller.scrollTop = scroller.scrollHeight;
-      }
-    });
-    observer.observe(content);
-    return () => observer.disconnect();
-  }, []);
-
-  function updatePinned(event: React.UIEvent<HTMLDivElement>) {
-    const distance = distanceFromBottomOf(event.currentTarget);
-    const nextPinned = distance <= PINNED_SLACK_PX;
-    isPinnedRef.current = nextPinned;
-    setIsPinned(nextPinned);
-  }
-
-  function jumpToBottom() {
-    const scroller = scrollerRef.current;
-    if (!scroller) {
-      return;
-    }
-    isPinnedRef.current = true;
-    setIsPinned(true);
-    scroller.scrollTo({ top: scroller.scrollHeight, behavior: 'smooth' });
-  }
-
-  return { scrollerRef, contentRef, isPinned, updatePinned, jumpToBottom };
-}
-
 export type AgentTerminalProps = {
   commands: TerminalCommand[];
   agent: Pick<RunAgent, 'name' | 'series'>;
@@ -409,7 +362,7 @@ export function AgentTerminal({
   className,
 }: AgentTerminalProps) {
   const { scrollerRef, contentRef, isPinned, updatePinned, jumpToBottom } =
-    useFollowBottom();
+    useFollowBottom({ tracksPinned: true });
   const hasCommands = commands.length > 0;
   const chipColor = seriesColorOf(agent.series);
 

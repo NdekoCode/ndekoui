@@ -52,6 +52,7 @@ import {
 } from '@/registry/ndeko/lib/icons';
 import { EASE_OUT_STRONG, SPRING } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { appendWord, countOf, wordsOf } from '@/registry/ndeko/lib/words';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
@@ -81,7 +82,6 @@ import {
   isSendKey,
   useAutosize,
 } from './_parts/use-autosize';
-import { appendWord, countOf, wordsOf } from './_parts/words';
 
 export type TrayLine =
   | { kind: 'listening'; since: number }

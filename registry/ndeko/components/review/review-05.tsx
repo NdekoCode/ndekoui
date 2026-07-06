@@ -14,6 +14,7 @@ import {
   XIcon,
 } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { countOf } from '@/registry/ndeko/lib/words';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Fold, Swap } from '@/registry/ndeko/ui/chat-motion';
@@ -32,8 +33,8 @@ import {
   type DiffLine,
   type WordPiece,
 } from './_parts/diff';
+import { pathPartsOf } from './_parts/path-parts';
 import { useContainerWidth } from './_parts/use-container-width';
-import { countOf, pathPartsOf } from './_parts/words';
 
 export type HunkDecision = 'accepted' | 'rejected';
 

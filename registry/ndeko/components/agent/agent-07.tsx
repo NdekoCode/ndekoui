@@ -43,6 +43,7 @@ import {
 } from '@/registry/ndeko/lib/motion-presets';
 import { applyBatchAt, restingOf } from '@/registry/ndeko/lib/run-session';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { countOf } from '@/registry/ndeko/lib/words';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
 import { CopyButton } from '@/registry/ndeko/ui/copy-button';
@@ -67,7 +68,6 @@ import { DECIDE_AFTER_MS } from './_parts/demo';
 import { focusLater } from './_parts/focus-later';
 import { KeyedHeight } from './_parts/keyed-height';
 import { ToolTile } from './_parts/tool-tile';
-import { countOf } from './_parts/words';
 
 export type MonitorMode =
   'idle' | 'running' | 'waiting' | 'paused' | 'stopped' | 'done' | 'failed';

@@ -28,6 +28,7 @@ import {
   type RunStep,
 } from '@/registry/ndeko/lib/run-session';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { nounOf } from '@/registry/ndeko/lib/words';
 import {
   CALL_STATUS_WORD,
   CallStatusMark,
@@ -51,7 +52,6 @@ import {
 import { AgentTile } from './_parts/agent-tile';
 import { CODER, PLANNER, RESEARCHER, RUN_TITLE, WRITER } from './_parts/crew';
 import { ToolTile } from './_parts/tool-tile';
-import { nounOf } from './_parts/words';
 
 export type GraphLayout = 'tree' | 'flow' | 'hub';
 

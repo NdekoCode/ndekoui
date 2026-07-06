@@ -13,6 +13,7 @@ import {
 } from '@/registry/ndeko/lib/icons';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { countOf, nounOf } from '@/registry/ndeko/lib/words';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Fold, Swap } from '@/registry/ndeko/ui/chat-motion';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
@@ -25,7 +26,7 @@ import {
   type DiffBlock,
   type DiffLine,
 } from './_parts/diff';
-import { countOf, nounOf, pathPartsOf } from './_parts/words';
+import { pathPartsOf } from './_parts/path-parts';
 
 export type FileStatus = 'added' | 'modified' | 'deleted' | 'renamed';
 

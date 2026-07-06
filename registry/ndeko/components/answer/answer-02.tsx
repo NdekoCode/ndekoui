@@ -11,11 +11,11 @@ import {
   type Icon,
 } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { countOf, leadingSpaceOf, nounOf } from '@/registry/ndeko/lib/words';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 
 import { LabTile } from './_parts/lab-tile';
-import { countOf, nounOf } from './_parts/words';
 
 export type GroundingSourceKind = 'pdf' | 'email' | 'notes';
 
@@ -519,13 +519,6 @@ export function GroundedAnswer({
       <LiveRegion message={announcement} />
     </div>
   );
-}
-
-function leadingSpaceOf(index: number) {
-  if (index === 0) {
-    return '';
-  }
-  return ' ';
 }
 
 const SOURCES: GroundingSource[] = [

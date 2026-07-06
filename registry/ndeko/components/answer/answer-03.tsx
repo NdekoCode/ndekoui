@@ -22,6 +22,7 @@ import {
 } from '@/registry/ndeko/lib/icons';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { countOf, leadingSpaceOf, wordsOf } from '@/registry/ndeko/lib/words';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
 import {
@@ -50,7 +51,6 @@ import { Toggle } from '@/registry/ndeko/ui/toggle';
 
 import { CopyAction } from './_parts/copy-action';
 import { LabTile } from './_parts/lab-tile';
-import { countOf, wordsOf } from './_parts/words';
 
 export type Feedback = 'up' | 'down';
 
@@ -536,13 +536,6 @@ function versionOf(index: number): Version {
 function versionLineOf(index: number, count: number) {
   const number = index + 1;
   return `Version ${number} of ${count}`;
-}
-
-function leadingSpaceOf(index: number) {
-  if (index === 0) {
-    return '';
-  }
-  return ' ';
 }
 
 function textOf(version: Version) {

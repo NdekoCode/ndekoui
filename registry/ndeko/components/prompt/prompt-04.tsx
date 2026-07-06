@@ -23,6 +23,7 @@ import { ChevronDownIcon } from '@/registry/ndeko/lib/icons';
 import { springOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
+import { DrawnCheck } from '@/registry/ndeko/ui/drawn-check';
 import { Input } from '@/registry/ndeko/ui/input';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import {
@@ -32,7 +33,6 @@ import {
   PopoverTrigger,
 } from '@/registry/ndeko/ui/popover';
 
-import { DrawnCheck } from './_parts/drawn-check';
 import { LabTile } from './_parts/lab-tile';
 import type { LabId } from './_parts/labs';
 
