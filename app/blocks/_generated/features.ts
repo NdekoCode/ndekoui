@@ -5,10 +5,12 @@ import Features01 from '@/registry/ndeko/blocks/features/features-01/index';
 import Features02 from '@/registry/ndeko/blocks/features/features-02/index';
 import Features03 from '@/registry/ndeko/blocks/features/features-03/index';
 import Features04 from '@/registry/ndeko/blocks/features/features-04/index';
+import Features05 from '@/registry/ndeko/blocks/features/features-05/index';
 
 export const previews: Record<string, ComponentType> = {
   'features-01': Features01,
   'features-02': Features02,
   'features-03': Features03,
   'features-04': Features04,
+  'features-05': Features05,
 };

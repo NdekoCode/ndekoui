@@ -13,6 +13,7 @@ import Heroes09 from '@/registry/ndeko/blocks/heroes/heroes-09/index';
 import Heroes10 from '@/registry/ndeko/blocks/heroes/heroes-10/index';
 import Heroes11 from '@/registry/ndeko/blocks/heroes/heroes-11/index';
 import Heroes12 from '@/registry/ndeko/blocks/heroes/heroes-12/index';
+import Heroes13 from '@/registry/ndeko/blocks/heroes/heroes-13/index';
 
 export const previews: Record<string, ComponentType> = {
   'heroes-01': Heroes01,
@@ -27,4 +28,5 @@ export const previews: Record<string, ComponentType> = {
   'heroes-10': Heroes10,
   'heroes-11': Heroes11,
   'heroes-12': Heroes12,
+  'heroes-13': Heroes13,
 };

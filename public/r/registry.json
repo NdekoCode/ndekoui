@@ -38879,6 +38879,58 @@
       ]
     },
     {
+      "name": "features-05",
+      "type": "registry:block",
+      "title": "A planner that hands work to agents",
+      "description": "A section where one planner reads the checklist of a month-end close and hands each part to an agent: three duties with the mark of each agent beside a pulse that runs from the planner to the agents and out to the tools each one was given.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
+        "https://ui.ndekocode.dev/r/speech-envelope.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/features/features-05/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/features-05/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/geometry.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/geometry.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/use-scene-animations.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/use-scene-animations.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/_parts/use-scene-play.ts",
+          "type": "registry:component",
+          "target": "components/illustration/_parts/use-scene-play.ts"
+        },
+        {
+          "path": "registry/ndeko/components/illustration/illustration-03.tsx",
+          "type": "registry:component",
+          "target": "components/illustration/illustration-03.tsx"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "features"
+      ]
+    },
+    {
       "name": "filters-01",
       "type": "registry:block",
       "title": "Amount filter over a histogram",
@@ -39889,6 +39941,132 @@
           "path": "registry/ndeko/blocks/heroes/heroes-12/data.ts",
           "type": "registry:component",
           "target": "components/blocks/heroes-12/data.ts"
+        }
+      ],
+      "categories": [
+        "blocks",
+        "heroes"
+      ]
+    },
+    {
+      "name": "heroes-13",
+      "type": "registry:block",
+      "title": "Cloud of points that follows the page",
+      "description": "A hero, a chat that plays a sample exchange with its tool lines and three abilities that each run on sample data, over one cloud of points that follows the scroll: a sphere behind the hero, a ring around the chat and a wave under the abilities.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://ui.ndekocode.dev/r/agent-run.json",
+        "https://ui.ndekocode.dev/r/avatar.json",
+        "https://ui.ndekocode.dev/r/badge.json",
+        "https://ui.ndekocode.dev/r/brand-logos.json",
+        "https://ui.ndekocode.dev/r/brand-tile.json",
+        "https://ui.ndekocode.dev/r/button.json",
+        "https://ui.ndekocode.dev/r/call-status.json",
+        "https://ui.ndekocode.dev/r/chat-motion.json",
+        "https://ui.ndekocode.dev/r/chip.json",
+        "https://ui.ndekocode.dev/r/demonstration.json",
+        "https://ui.ndekocode.dev/r/drawn-check.json",
+        "https://ui.ndekocode.dev/r/icons.json",
+        "https://ui.ndekocode.dev/r/live-region.json",
+        "https://ui.ndekocode.dev/r/mesh-tile.json",
+        "https://ui.ndekocode.dev/r/motion-number.json",
+        "https://ui.ndekocode.dev/r/motion-presets.json",
+        "https://ui.ndekocode.dev/r/replay-button.json",
+        "https://ui.ndekocode.dev/r/settle.json",
+        "https://ui.ndekocode.dev/r/status-orb.json",
+        "https://ui.ndekocode.dev/r/streamed-text.json",
+        "https://ui.ndekocode.dev/r/theme.json",
+        "https://ui.ndekocode.dev/r/use-agent-run.json",
+        "https://ui.ndekocode.dev/r/use-autoplay.json",
+        "https://ui.ndekocode.dev/r/use-follow-bottom.json",
+        "https://ui.ndekocode.dev/r/use-kept-height.json",
+        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
+        "https://ui.ndekocode.dev/r/use-session.json",
+        "https://ui.ndekocode.dev/r/utils.json",
+        "https://ui.ndekocode.dev/r/words.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ndeko/blocks/heroes/heroes-13/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/heroes-13/index.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/heroes/heroes-13/abilities.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/heroes-13/abilities.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/heroes/heroes-13/ability-draft.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/heroes-13/ability-draft.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/heroes/heroes-13/ability-notes.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/heroes-13/ability-notes.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/heroes/heroes-13/ability-plan.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/heroes-13/ability-plan.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/heroes/heroes-13/canvas-stage.ts",
+          "type": "registry:component",
+          "target": "components/blocks/heroes-13/canvas-stage.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/heroes/heroes-13/chat-parts.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/heroes-13/chat-parts.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/heroes/heroes-13/chat-session.ts",
+          "type": "registry:component",
+          "target": "components/blocks/heroes-13/chat-session.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/heroes/heroes-13/chat.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/heroes-13/chat.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/heroes/heroes-13/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/heroes-13/data.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/heroes/heroes-13/hero.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/heroes-13/hero.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/heroes/heroes-13/point-backdrop.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/heroes-13/point-backdrop.tsx"
+        },
+        {
+          "path": "registry/ndeko/blocks/heroes/heroes-13/point-field.ts",
+          "type": "registry:component",
+          "target": "components/blocks/heroes-13/point-field.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/heroes/heroes-13/point-shapes.ts",
+          "type": "registry:component",
+          "target": "components/blocks/heroes-13/point-shapes.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/heroes/heroes-13/point-stops.ts",
+          "type": "registry:component",
+          "target": "components/blocks/heroes-13/point-stops.ts"
+        },
+        {
+          "path": "registry/ndeko/blocks/heroes/heroes-13/use-resting-state.ts",
+          "type": "registry:component",
+          "target": "components/blocks/heroes-13/use-resting-state.ts"
         }
       ],
       "categories": [
@@ -45447,263 +45625,6 @@
       ]
     },
     {
-      "name": "marketing-01",
-      "type": "registry:block",
-      "title": "Planning board landing page",
-      "description": "A Loomboard home page: a navbar with sliding menu panels, a hero with a working board whose cards drag between lanes by pointer or keyboard, a marquee of placeholder marks, four views beside a live preview, a call to action and a footer with a newsletter field.",
-      "dependencies": [
-        "@base-ui/react",
-        "@dnd-kit/core",
-        "@dnd-kit/sortable",
-        "@dnd-kit/utilities",
-        "motion"
-      ],
-      "registryDependencies": [
-        "https://ui.ndekocode.dev/r/accordion.json",
-        "https://ui.ndekocode.dev/r/animated-size.json",
-        "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/badge.json",
-        "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/chip.json",
-        "https://ui.ndekocode.dev/r/collapsible.json",
-        "https://ui.ndekocode.dev/r/field.json",
-        "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/input.json",
-        "https://ui.ndekocode.dev/r/kbd.json",
-        "https://ui.ndekocode.dev/r/motion-number.json",
-        "https://ui.ndekocode.dev/r/navigation-menu.json",
-        "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/switch.json",
-        "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
-        "https://ui.ndekocode.dev/r/utils.json",
-        "https://ui.ndekocode.dev/r/wash.json"
-      ],
-      "files": [
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-01/index.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-01/index.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-01/site-header.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-01/site-header.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-01/desktop-nav.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-01/desktop-nav.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-01/mobile-menu.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-01/mobile-menu.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-01/section-link.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-01/section-link.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-01/brand-mark.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-01/brand-mark.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-01/hero.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-01/hero.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-01/board-stage.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-01/board-stage.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-01/board-lane.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-01/board-lane.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-01/board-card.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-01/board-card.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-01/board-moves.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-01/board-moves.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-01/logo-cloud.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-01/logo-cloud.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-01/mark-shape.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-01/mark-shape.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-01/features.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-01/features.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-01/feature-previews.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-01/feature-previews.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-01/call-to-action.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-01/call-to-action.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-01/site-footer.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-01/site-footer.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-01/newsletter-form.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-01/newsletter-form.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-01/data.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-01/data.ts"
-        }
-      ],
-      "categories": [
-        "templates",
-        "marketing"
-      ]
-    },
-    {
-      "name": "marketing-02",
-      "type": "registry:block",
-      "title": "Newsletter landing page",
-      "description": "A Fernpost home page: a floating navbar, a waitlist hero that morphs into its confirmation, alternating feature rows, two plans with a Monthly and Yearly switch, questions on one card, an SDK install card and a compact footer.",
-      "dependencies": [
-        "motion"
-      ],
-      "registryDependencies": [
-        "https://ui.ndekocode.dev/r/accordion.json",
-        "https://ui.ndekocode.dev/r/animated-size.json",
-        "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/badge.json",
-        "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/chip.json",
-        "https://ui.ndekocode.dev/r/field.json",
-        "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/input.json",
-        "https://ui.ndekocode.dev/r/motion-number.json",
-        "https://ui.ndekocode.dev/r/motion-word-roll.json",
-        "https://ui.ndekocode.dev/r/selected-mark.json",
-        "https://ui.ndekocode.dev/r/sheet.json",
-        "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/tabs.json",
-        "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/tooltip.json",
-        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
-        "https://ui.ndekocode.dev/r/utils.json",
-        "https://ui.ndekocode.dev/r/wash.json"
-      ],
-      "files": [
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-02/index.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-02/index.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-02/site-header.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-02/site-header.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-02/nav-links.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-02/nav-links.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-02/mobile-sheet.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-02/mobile-sheet.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-02/section-link.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-02/section-link.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-02/brand-mark.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-02/brand-mark.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-02/hero.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-02/hero.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-02/waitlist-form.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-02/waitlist-form.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-02/issue-preview.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-02/issue-preview.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-02/features.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-02/features.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-02/feature-media.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-02/feature-media.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-02/pricing.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-02/pricing.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-02/faq.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-02/faq.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-02/sdk-card.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-02/sdk-card.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-02/command-row.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-02/command-row.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-02/site-footer.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-02/site-footer.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-02/data.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-02/data.ts"
-        }
-      ],
-      "categories": [
-        "templates",
-        "marketing"
-      ]
-    },
-    {
       "name": "marketing-03",
       "type": "registry:block",
       "title": "Per-seat pricing page",
@@ -45961,296 +45882,6 @@
       ]
     },
     {
-      "name": "marketing-06",
-      "type": "registry:block",
-      "title": "AI product landing page",
-      "description": "A Tallyhand landing page, section by section: a floating navbar, a hero whose last word turns over beside an agent run that ticks through a month-end close, a band where a planner hands work to three agents, five feature tiles that play in turn, figures under a period switch, pricing in one sentence whose number you type or drag, quotes with their results, searchable questions with copyable links and a closing call to action beside a queue that clears, over one footer.",
-      "dependencies": [
-        "motion"
-      ],
-      "registryDependencies": [
-        "https://ui.ndekocode.dev/r/accordion.json",
-        "https://ui.ndekocode.dev/r/agent-run.json",
-        "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/badge.json",
-        "https://ui.ndekocode.dev/r/brand-logos.json",
-        "https://ui.ndekocode.dev/r/brand-tile.json",
-        "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/call-status.json",
-        "https://ui.ndekocode.dev/r/chat-motion.json",
-        "https://ui.ndekocode.dev/r/chip.json",
-        "https://ui.ndekocode.dev/r/company-mark.json",
-        "https://ui.ndekocode.dev/r/copy-button.json",
-        "https://ui.ndekocode.dev/r/demonstration.json",
-        "https://ui.ndekocode.dev/r/drawn-check.json",
-        "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/input.json",
-        "https://ui.ndekocode.dev/r/live-duration.json",
-        "https://ui.ndekocode.dev/r/live-region.json",
-        "https://ui.ndekocode.dev/r/mesh-tile.json",
-        "https://ui.ndekocode.dev/r/morph-button.json",
-        "https://ui.ndekocode.dev/r/motion-number.json",
-        "https://ui.ndekocode.dev/r/motion-presets.json",
-        "https://ui.ndekocode.dev/r/motion-word-roll.json",
-        "https://ui.ndekocode.dev/r/motion-word-rotate.json",
-        "https://ui.ndekocode.dev/r/recipes.json",
-        "https://ui.ndekocode.dev/r/replay-button.json",
-        "https://ui.ndekocode.dev/r/run-session.json",
-        "https://ui.ndekocode.dev/r/selected-mark.json",
-        "https://ui.ndekocode.dev/r/sheet.json",
-        "https://ui.ndekocode.dev/r/slider.json",
-        "https://ui.ndekocode.dev/r/speech-envelope.json",
-        "https://ui.ndekocode.dev/r/streamed-text.json",
-        "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/toggle-group.json",
-        "https://ui.ndekocode.dev/r/use-agent-run.json",
-        "https://ui.ndekocode.dev/r/use-autoplay.json",
-        "https://ui.ndekocode.dev/r/use-kept-height.json",
-        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
-        "https://ui.ndekocode.dev/r/use-session.json",
-        "https://ui.ndekocode.dev/r/use-timeouts.json",
-        "https://ui.ndekocode.dev/r/utils.json",
-        "https://ui.ndekocode.dev/r/wash.json",
-        "https://ui.ndekocode.dev/r/words.json"
-      ],
-      "files": [
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/index.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/index.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/cta-data.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/cta-data.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/cta-session.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/cta-session.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/cta.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/cta.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/data.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/data.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/email-form.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/email-form.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/faq-controls.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/faq-controls.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/faq-data.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/faq-data.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/faq-item.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/faq-item.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/faq-model.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/faq-model.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/faq.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/faq.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/feature-tiles.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/feature-tiles.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/featured-result.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/featured-result.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/features-session.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/features-session.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/features.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/features.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/figure-cell.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/figure-cell.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/figures-data.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/figures-data.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/figures.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/figures.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/hero.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/hero.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/live-run.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/live-run.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/mobile-sheet.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/mobile-sheet.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/nav-links.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/nav-links.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/period-switch.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/period-switch.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/plan-card.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/plan-card.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/pricing-data.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/pricing-data.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/pricing.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/pricing.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/proofs.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/proofs.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/pulse-band.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/pulse-band.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/queue-card.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/queue-card.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/run-data.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/run-data.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/run-script.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/run-script.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/section-frame.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/section-frame.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/section-link.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/section-link.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/site-footer.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/site-footer.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/site-header.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/site-header.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/testimonials-data.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/testimonials-data.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/testimonials.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/testimonials.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/volume-model.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/volume-model.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/volume-sentence.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/volume-sentence.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/volume-track.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/volume-track.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/wall-card.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/wall-card.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-06/works-with.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-06/works-with.tsx"
-        },
-        {
-          "path": "registry/ndeko/components/illustration/_parts/geometry.ts",
-          "type": "registry:component",
-          "target": "components/illustration/_parts/geometry.ts"
-        },
-        {
-          "path": "registry/ndeko/components/illustration/_parts/use-scene-animations.ts",
-          "type": "registry:component",
-          "target": "components/illustration/_parts/use-scene-animations.ts"
-        },
-        {
-          "path": "registry/ndeko/components/illustration/_parts/use-scene-play.ts",
-          "type": "registry:component",
-          "target": "components/illustration/_parts/use-scene-play.ts"
-        },
-        {
-          "path": "registry/ndeko/components/illustration/illustration-03.tsx",
-          "type": "registry:component",
-          "target": "components/illustration/illustration-03.tsx"
-        }
-      ],
-      "categories": [
-        "templates",
-        "marketing"
-      ]
-    },
-    {
       "name": "marketing-07",
       "type": "registry:block",
       "title": "Docs site",
@@ -46377,887 +46008,6 @@
           "path": "registry/ndeko/templates/marketing/marketing-07/session.ts",
           "type": "registry:component",
           "target": "components/templates/marketing-07/session.ts"
-        }
-      ],
-      "categories": [
-        "templates",
-        "marketing"
-      ]
-    },
-    {
-      "name": "marketing-08",
-      "type": "registry:block",
-      "title": "Assistant landing page with a cloud of points",
-      "description": "A Murmura home page where one cloud of points follows the scroll, forming a sphere behind the hero, a ring around a chat that plays, a wave under the features, a scatter and a sphere again for the closing call to action, with three abilities that each run on sample data, one plan and questions on one card.",
-      "dependencies": [
-        "motion"
-      ],
-      "registryDependencies": [
-        "https://ui.ndekocode.dev/r/accordion.json",
-        "https://ui.ndekocode.dev/r/agent-run.json",
-        "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/badge.json",
-        "https://ui.ndekocode.dev/r/brand-logos.json",
-        "https://ui.ndekocode.dev/r/brand-tile.json",
-        "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/call-status.json",
-        "https://ui.ndekocode.dev/r/chat-motion.json",
-        "https://ui.ndekocode.dev/r/chip.json",
-        "https://ui.ndekocode.dev/r/demonstration.json",
-        "https://ui.ndekocode.dev/r/drawn-check.json",
-        "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/live-region.json",
-        "https://ui.ndekocode.dev/r/mesh-tile.json",
-        "https://ui.ndekocode.dev/r/motion-number.json",
-        "https://ui.ndekocode.dev/r/motion-presets.json",
-        "https://ui.ndekocode.dev/r/replay-button.json",
-        "https://ui.ndekocode.dev/r/selected-mark.json",
-        "https://ui.ndekocode.dev/r/settle.json",
-        "https://ui.ndekocode.dev/r/sheet.json",
-        "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/streamed-text.json",
-        "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-agent-run.json",
-        "https://ui.ndekocode.dev/r/use-autoplay.json",
-        "https://ui.ndekocode.dev/r/use-follow-bottom.json",
-        "https://ui.ndekocode.dev/r/use-kept-height.json",
-        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
-        "https://ui.ndekocode.dev/r/use-session.json",
-        "https://ui.ndekocode.dev/r/utils.json",
-        "https://ui.ndekocode.dev/r/words.json"
-      ],
-      "files": [
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/index.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/index.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/abilities.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/abilities.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/ability-draft.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/ability-draft.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/ability-notes.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/ability-notes.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/ability-plan.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/ability-plan.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/brand-mark.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/brand-mark.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/canvas-stage.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/canvas-stage.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/chat-parts.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/chat-parts.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/chat-session.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/chat-session.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/chat.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/chat.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/closing.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/closing.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/data.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/data.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/faq.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/faq.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/hero.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/hero.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/mobile-sheet.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/mobile-sheet.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/nav-links.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/nav-links.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/point-backdrop.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/point-backdrop.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/point-field.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/point-field.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/point-shapes.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/point-shapes.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/point-stops.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/point-stops.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/pricing.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/pricing.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/section-link.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/section-link.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/site-footer.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/site-footer.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/site-header.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/site-header.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-08/use-resting-state.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-08/use-resting-state.ts"
-        }
-      ],
-      "categories": [
-        "templates",
-        "marketing"
-      ]
-    },
-    {
-      "name": "marketing-09",
-      "type": "registry:block",
-      "title": "Story told by the scroll",
-      "description": "A Tidewell page told as five pinned chapters whose captions light word by word as each one holds, while a memo types itself out of redaction bars, hours tick up, a bar of busywork flips into judgment, roles step forward and a folder unfolds into a live checklist, and each chapter carries on by itself once the reader stops scrolling.",
-      "dependencies": [
-        "motion"
-      ],
-      "registryDependencies": [
-        "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/badge.json",
-        "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/chip.json",
-        "https://ui.ndekocode.dev/r/drawn-check.json",
-        "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/settle.json",
-        "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-agent-run.json",
-        "https://ui.ndekocode.dev/r/use-autoplay.json",
-        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
-        "https://ui.ndekocode.dev/r/utils.json",
-        "https://ui.ndekocode.dev/r/words.json"
-      ],
-      "files": [
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-09/index.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-09/index.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-09/brand-mark.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-09/brand-mark.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-09/chapter.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-09/chapter.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-09/chapters.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-09/chapters.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-09/closing.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-09/closing.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-09/cost-visual.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-09/cost-visual.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-09/data.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-09/data.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-09/folder-visual.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-09/folder-visual.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-09/lit-caption.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-09/lit-caption.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-09/memo-visual.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-09/memo-visual.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-09/roles-visual.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-09/roles-visual.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-09/site-footer.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-09/site-footer.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-09/site-header.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-09/site-header.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-09/story-hero.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-09/story-hero.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-09/swap-visual.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-09/swap-visual.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-09/use-chapter-progress.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-09/use-chapter-progress.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-09/use-steps.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-09/use-steps.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-09/visual-props.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-09/visual-props.ts"
-        }
-      ],
-      "categories": [
-        "templates",
-        "marketing"
-      ]
-    },
-    {
-      "name": "marketing-10",
-      "type": "registry:block",
-      "title": "Developer portfolio",
-      "description": "A one-page portfolio for Patience Mbuyi: a hero on a quiet grid with a drawn avatar that waves once, cards of different sizes around a terminal that plays a session and takes commands, a projects grid that arrives in order beside a globe that turns to each project, talks, a subscribe field and a footer with the handle set very large.",
-      "dependencies": [
-        "motion"
-      ],
-      "registryDependencies": [
-        "https://ui.ndekocode.dev/r/animated-size.json",
-        "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/badge.json",
-        "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/company-mark.json",
-        "https://ui.ndekocode.dev/r/demonstration.json",
-        "https://ui.ndekocode.dev/r/field.json",
-        "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/input.json",
-        "https://ui.ndekocode.dev/r/kbd.json",
-        "https://ui.ndekocode.dev/r/live-region.json",
-        "https://ui.ndekocode.dev/r/motion-dotted-map.json",
-        "https://ui.ndekocode.dev/r/motion-globe.json",
-        "https://ui.ndekocode.dev/r/settle.json",
-        "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-autoplay.json",
-        "https://ui.ndekocode.dev/r/use-follow-bottom.json",
-        "https://ui.ndekocode.dev/r/use-kept-height.json",
-        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
-        "https://ui.ndekocode.dev/r/use-session.json",
-        "https://ui.ndekocode.dev/r/utils.json"
-      ],
-      "files": [
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-10/index.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-10/index.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-10/about.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-10/about.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-10/bento-card.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-10/bento-card.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-10/bento.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-10/bento.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-10/data.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-10/data.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-10/drawn-avatar.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-10/drawn-avatar.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-10/experience-card.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-10/experience-card.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-10/hero.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-10/hero.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-10/method-card.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-10/method-card.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-10/newsletter-form.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-10/newsletter-form.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-10/place-card.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-10/place-card.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-10/project-card.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-10/project-card.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-10/projects.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-10/projects.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-10/quiet-grid.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-10/quiet-grid.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-10/reading-card.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-10/reading-card.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-10/site-footer.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-10/site-footer.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-10/site-header.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-10/site-header.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-10/subscribe.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-10/subscribe.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-10/talks.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-10/talks.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-10/terminal-card.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-10/terminal-card.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-10/terminal-session.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-10/terminal-session.ts"
-        }
-      ],
-      "categories": [
-        "templates",
-        "marketing"
-      ]
-    },
-    {
-      "name": "marketing-11",
-      "type": "registry:block",
-      "title": "Studio landing page with shapes made of points",
-      "description": "A Lisanga Studio page where one canvas of points breaks apart and rebuilds a planet with a ring, a phone, a laptop, a monitor, a globe, a network and a dial as each section reaches the middle of the window, with an editorial header, a rail of dots that jumps to the sections and a full footer.",
-      "dependencies": [
-        "motion"
-      ],
-      "registryDependencies": [
-        "https://ui.ndekocode.dev/r/animated-size.json",
-        "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/field.json",
-        "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/input.json",
-        "https://ui.ndekocode.dev/r/settle.json",
-        "https://ui.ndekocode.dev/r/status-orb.json",
-        "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
-        "https://ui.ndekocode.dev/r/utils.json"
-      ],
-      "files": [
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-11/index.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-11/index.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-11/brand-mark.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-11/brand-mark.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-11/canvas-stage.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-11/canvas-stage.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-11/contact.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-11/contact.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-11/data.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-11/data.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-11/newsletter-form.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-11/newsletter-form.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-11/outline-shapes.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-11/outline-shapes.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-11/point-backdrop.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-11/point-backdrop.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-11/point-field.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-11/point-field.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-11/point-stops.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-11/point-stops.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-11/section-copy.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-11/section-copy.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-11/section-rail.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-11/section-rail.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-11/sections.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-11/sections.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-11/site-footer.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-11/site-footer.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-11/site-header.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-11/site-header.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-11/use-active-section.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-11/use-active-section.ts"
-        }
-      ],
-      "categories": [
-        "templates",
-        "marketing"
-      ]
-    },
-    {
-      "name": "marketing-12",
-      "type": "registry:block",
-      "title": "Statement converter landing page",
-      "description": "A Rowmill home page: a floating navbar, a hero where the lines of a bank statement are read one by one into the rows of a table that copies as CSV, a manifesto that lights word by word with the scroll, three steps as rows, a grid of banks with a region filter, a comparison table whose figures roll with the length of the statement, reviews to drag through and a footer with a local clock.",
-      "dependencies": [
-        "motion"
-      ],
-      "registryDependencies": [
-        "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/badge.json",
-        "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/chat-motion.json",
-        "https://ui.ndekocode.dev/r/company-mark.json",
-        "https://ui.ndekocode.dev/r/demonstration.json",
-        "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/live-region.json",
-        "https://ui.ndekocode.dev/r/motion-number.json",
-        "https://ui.ndekocode.dev/r/motion-scroll-text.json",
-        "https://ui.ndekocode.dev/r/segments.json",
-        "https://ui.ndekocode.dev/r/settle.json",
-        "https://ui.ndekocode.dev/r/sheet.json",
-        "https://ui.ndekocode.dev/r/table.json",
-        "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-agent-run.json",
-        "https://ui.ndekocode.dev/r/use-autoplay.json",
-        "https://ui.ndekocode.dev/r/use-kept-height.json",
-        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
-        "https://ui.ndekocode.dev/r/use-session.json",
-        "https://ui.ndekocode.dev/r/use-timeouts.json",
-        "https://ui.ndekocode.dev/r/utils.json",
-        "https://ui.ndekocode.dev/r/words.json"
-      ],
-      "files": [
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/index.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/index.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/banks.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/banks.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/brand-mark.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/brand-mark.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/closing.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/closing.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/comparison.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/comparison.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/data.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/data.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/hero.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/hero.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/local-clock.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/local-clock.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/manifesto.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/manifesto.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/mobile-sheet.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/mobile-sheet.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/nav-links.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/nav-links.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/reader-actions.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/reader-actions.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/reader-session.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/reader-session.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/reveal.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/reveal.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/review-scroll.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/review-scroll.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/reviews.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/reviews.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/rows-panel.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/rows-panel.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/section-link.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/section-link.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/site-footer.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/site-footer.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/site-header.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/site-header.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/statement-paper.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/statement-paper.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/statement-reader.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/statement-reader.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/statement.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/statement.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/step-visuals.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/step-visuals.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/steps.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/steps.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-12/use-drag-scroll.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-12/use-drag-scroll.ts"
-        }
-      ],
-      "categories": [
-        "templates",
-        "marketing"
-      ]
-    },
-    {
-      "name": "marketing-13",
-      "type": "registry:block",
-      "title": "Photo studio landing page",
-      "description": "An Aperline home page: a brief that types itself above four takes that sharpen out of their blur as they finish, notes pinned on a take, takes sorting themselves into Keep, Maybe and Drop, a lighting row that relights a sample beside a seed lock and the call that reproduces it, sample reviews, one offer and questions.",
-      "dependencies": [
-        "motion"
-      ],
-      "registryDependencies": [
-        "https://ui.ndekocode.dev/r/accordion.json",
-        "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/badge.json",
-        "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/chat-motion.json",
-        "https://ui.ndekocode.dev/r/checkbox.json",
-        "https://ui.ndekocode.dev/r/collapsible.json",
-        "https://ui.ndekocode.dev/r/company-mark.json",
-        "https://ui.ndekocode.dev/r/copy-button.json",
-        "https://ui.ndekocode.dev/r/demonstration.json",
-        "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/kbd.json",
-        "https://ui.ndekocode.dev/r/label.json",
-        "https://ui.ndekocode.dev/r/live-region.json",
-        "https://ui.ndekocode.dev/r/motion-number.json",
-        "https://ui.ndekocode.dev/r/settle.json",
-        "https://ui.ndekocode.dev/r/switch.json",
-        "https://ui.ndekocode.dev/r/textarea.json",
-        "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/toggle-group.json",
-        "https://ui.ndekocode.dev/r/use-kept-height.json",
-        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
-        "https://ui.ndekocode.dev/r/use-session.json",
-        "https://ui.ndekocode.dev/r/utils.json"
-      ],
-      "files": [
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/index.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/index.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/brand-mark.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/brand-mark.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/data.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/data.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/faq.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/faq.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/figures.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/figures.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/hero.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/hero.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/light-and-seed.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/light-and-seed.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/light-chips.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/light-chips.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/light-session.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/light-session.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/mobile-menu.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/mobile-menu.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/offer.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/offer.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/pins-session.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/pins-session.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/pins.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/pins.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/reveal.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/reveal.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/reviews.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/reviews.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/scenes.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/scenes.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/section-link.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/section-link.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/seed-call.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/seed-call.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/seed-card.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/seed-card.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/site-footer.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/site-footer.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/site-header.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/site-header.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/studio-card.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/studio-card.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/studio-session.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/studio-session.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/triage-session.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/triage-session.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-13/triage.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-13/triage.tsx"
         }
       ],
       "categories": [
@@ -47424,413 +46174,6 @@
           "path": "registry/ndeko/templates/marketing/marketing-14/site-header.tsx",
           "type": "registry:component",
           "target": "components/templates/marketing-14/site-header.tsx"
-        }
-      ],
-      "categories": [
-        "templates",
-        "marketing"
-      ]
-    },
-    {
-      "name": "marketing-15",
-      "type": "registry:block",
-      "title": "Team workspace landing page",
-      "description": "A Hearthwork home page: a hero with a leads table to sort and filter, three working demonstrations of what the product does, a sprint checklist that an agent ticks through, a conveyor of task cards that keeps its momentum when flicked, one offer priced by seat and questions.",
-      "dependencies": [
-        "motion"
-      ],
-      "registryDependencies": [
-        "https://ui.ndekocode.dev/r/accordion.json",
-        "https://ui.ndekocode.dev/r/agent-run.json",
-        "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/badge.json",
-        "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/chat-motion.json",
-        "https://ui.ndekocode.dev/r/checkbox.json",
-        "https://ui.ndekocode.dev/r/company-mark.json",
-        "https://ui.ndekocode.dev/r/demonstration.json",
-        "https://ui.ndekocode.dev/r/drawn-check.json",
-        "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/live-region.json",
-        "https://ui.ndekocode.dev/r/mesh-tile.json",
-        "https://ui.ndekocode.dev/r/motion-number.json",
-        "https://ui.ndekocode.dev/r/progress.json",
-        "https://ui.ndekocode.dev/r/segments.json",
-        "https://ui.ndekocode.dev/r/settle.json",
-        "https://ui.ndekocode.dev/r/sheet.json",
-        "https://ui.ndekocode.dev/r/textarea.json",
-        "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-autoplay.json",
-        "https://ui.ndekocode.dev/r/use-kept-height.json",
-        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
-        "https://ui.ndekocode.dev/r/use-session.json",
-        "https://ui.ndekocode.dev/r/utils.json"
-      ],
-      "files": [
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/index.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/index.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/brand-mark.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/brand-mark.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/capabilities.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/capabilities.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/conveyor.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/conveyor.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/data.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/data.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/deal-flow.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/deal-flow.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/faq.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/faq.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/hero.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/hero.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/lead-row.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/lead-row.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/leads-session.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/leads-session.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/leads-stage.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/leads-stage.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/leads.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/leads.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/mobile-sheet.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/mobile-sheet.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/offer.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/offer.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/reply-draft.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/reply-draft.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/reveal.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/reveal.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/section-link.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/section-link.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/site-footer.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/site-footer.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/site-header.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/site-header.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/sprint-session.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/sprint-session.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/sprint.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/sprint.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/task-capture.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/task-capture.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-15/task-card.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-15/task-card.tsx"
-        }
-      ],
-      "categories": [
-        "templates",
-        "marketing"
-      ]
-    },
-    {
-      "name": "marketing-16",
-      "type": "registry:block",
-      "title": "Media group landing page",
-      "description": "A dark Quillfield page: condensed headlines that slide with the scroll, a globe that turns to each office when its name is picked, an index of divisions, a map of offices with their local time, a planner whose budget slider changes the reach it estimates and a newsroom list.",
-      "dependencies": [
-        "motion"
-      ],
-      "registryDependencies": [
-        "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/chat-motion.json",
-        "https://ui.ndekocode.dev/r/collapsible.json",
-        "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/motion-dotted-map.json",
-        "https://ui.ndekocode.dev/r/motion-globe.json",
-        "https://ui.ndekocode.dev/r/settle.json",
-        "https://ui.ndekocode.dev/r/slider.json",
-        "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/toggle-group.json",
-        "https://ui.ndekocode.dev/r/use-autoplay.json",
-        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
-        "https://ui.ndekocode.dev/r/utils.json"
-      ],
-      "files": [
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-16/index.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-16/index.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-16/brand-mark.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-16/brand-mark.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-16/condensed.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-16/condensed.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-16/data.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-16/data.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-16/divisions.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-16/divisions.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-16/hero.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-16/hero.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-16/mobile-menu.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-16/mobile-menu.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-16/newsroom.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-16/newsroom.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-16/office-map.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-16/office-map.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-16/office-time.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-16/office-time.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-16/offices.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-16/offices.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-16/planner-model.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-16/planner-model.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-16/planner-path.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-16/planner-path.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-16/planner.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-16/planner.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-16/reveal.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-16/reveal.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-16/section-link.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-16/section-link.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-16/site-footer.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-16/site-footer.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-16/site-header.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-16/site-header.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-16/use-minute-now.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-16/use-minute-now.ts"
-        }
-      ],
-      "categories": [
-        "templates",
-        "marketing"
-      ]
-    },
-    {
-      "name": "marketing-17",
-      "type": "registry:block",
-      "title": "Partner studio landing page",
-      "description": "A dark Pinemarsh page: a condensed poster headline on a hairline grid over slowly drifting points, a line of text that moves with the scroll, a hexagon plate that turns to the picked pillar and draws leader lines to each of its capabilities, three steps that stick while their visuals change and a closing call to action.",
-      "dependencies": [
-        "motion"
-      ],
-      "registryDependencies": [
-        "https://ui.ndekocode.dev/r/avatar.json",
-        "https://ui.ndekocode.dev/r/button.json",
-        "https://ui.ndekocode.dev/r/chat-motion.json",
-        "https://ui.ndekocode.dev/r/collapsible.json",
-        "https://ui.ndekocode.dev/r/demonstration.json",
-        "https://ui.ndekocode.dev/r/icons.json",
-        "https://ui.ndekocode.dev/r/live-region.json",
-        "https://ui.ndekocode.dev/r/motion-sticky-scroll.json",
-        "https://ui.ndekocode.dev/r/settle.json",
-        "https://ui.ndekocode.dev/r/theme.json",
-        "https://ui.ndekocode.dev/r/use-autoplay.json",
-        "https://ui.ndekocode.dev/r/use-prefers-reduced-motion.json",
-        "https://ui.ndekocode.dev/r/utils.json"
-      ],
-      "files": [
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-17/index.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-17/index.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-17/brand-mark.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-17/brand-mark.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-17/closing.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-17/closing.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-17/condensed.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-17/condensed.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-17/data.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-17/data.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-17/drift-field.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-17/drift-field.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-17/hero.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-17/hero.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-17/leaders.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-17/leaders.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-17/mobile-menu.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-17/mobile-menu.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-17/pillars.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-17/pillars.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-17/plate-geometry.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-17/plate-geometry.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-17/plate.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-17/plate.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-17/process-visuals.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-17/process-visuals.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-17/process.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-17/process.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-17/reveal.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-17/reveal.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-17/scroll-line.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-17/scroll-line.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-17/section-link.ts",
-          "type": "registry:component",
-          "target": "components/templates/marketing-17/section-link.ts"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-17/site-footer.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-17/site-footer.tsx"
-        },
-        {
-          "path": "registry/ndeko/templates/marketing/marketing-17/site-header.tsx",
-          "type": "registry:component",
-          "target": "components/templates/marketing-17/site-header.tsx"
         }
       ],
       "categories": [
