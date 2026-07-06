@@ -79,4 +79,18 @@ export const manifest: BlockManifest = [
     files: ['index.tsx', 'agent-row.tsx', 'word-pill.tsx', 'data.ts'],
     previewHeight: 620,
   },
+  {
+    name: 'heroes-10',
+    title: 'Waitlist hero',
+    description:
+      'A waitlist hero with an email field that checks the address and morphs into You are on the list, above a stack of avatars where each new member slides in while the oldest tucks under a rolling counter.',
+    files: [
+      'index.tsx',
+      'email-form.tsx',
+      'avatar-stack.tsx',
+      'stack.ts',
+      'data.ts',
+    ],
+    previewHeight: 640,
+  },
 ];
