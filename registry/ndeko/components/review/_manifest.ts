@@ -92,4 +92,11 @@ export const manifest: ComponentManifest = [
     description:
       'What the agent is about to run as fields you can correct, where a changed field marks itself as edited with Reset, and Approve becomes the result while Discard folds away with Undo.',
   },
+  {
+    name: 'review-14',
+    source: 'ndeko',
+    title: 'Secret request',
+    description:
+      'A masked field for a key that never enters the thread, whose prefix check answers as you type and turns right, then Save folds the card into where the key went and its last four characters.',
+  },
 ];
