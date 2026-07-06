@@ -6,6 +6,8 @@ import { ToggleGroup, ToggleGroupItem } from '@/registry/ndeko/ui/toggle-group';
 export type Segment<Value extends string> = {
   value: Value;
   label: string;
+  /** An option that cannot be picked yet stays in its place, dimmed. */
+  isDisabled?: boolean;
 };
 
 const THUMB =
@@ -52,7 +54,11 @@ export function Segments<Value extends string>({
         <ToggleGroupItem
           key={segment.value}
           value={segment.value}
-          className={cn('h-6 flex-auto rounded-md px-2.5 text-xs', itemClassName)}
+          disabled={segment.isDisabled}
+          className={cn(
+            'h-6 flex-auto rounded-md px-2.5 text-xs',
+            itemClassName
+          )}
         >
           {segment.label}
         </ToggleGroupItem>
