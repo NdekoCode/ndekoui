@@ -10,6 +10,7 @@ import {
   XIcon,
 } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
+import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 
 const LINE = 'block h-1.5 rounded-full bg-foreground/10';
@@ -923,6 +924,22 @@ function VoiceThumb() {
 
 const CHART_BARS = ['h-5', 'h-8', 'h-6', 'h-10', 'h-7', 'h-12', 'h-9'];
 
+function CardThumb() {
+  return (
+    <div className='relative h-20 w-36'>
+      <span className='bg-card hairline-ring ring-foreground/10 absolute inset-x-6 top-0 block h-14 rounded-lg' />
+      <span className='bg-card hairline-ring ring-foreground/12 absolute inset-x-3 top-2 block h-14 rounded-lg shadow-[0_1px_2px_rgb(0_0_0/0.05)]' />
+      <span className='bg-card hairline-ring ring-foreground/12 absolute inset-x-0 top-4 flex h-14 items-center gap-2 rounded-lg px-3 shadow-[0_1px_2px_rgb(0_0_0/0.05)]'>
+        <Avatar seed='Ines Laurent' className='size-7' />
+        <span className='flex flex-col gap-1.5'>
+          <StrongLine className='w-14' />
+          <Line className='w-9' />
+        </span>
+      </span>
+    </div>
+  );
+}
+
 function ChartThumb() {
   return (
     <div className='relative flex h-16 w-44 items-end gap-1.5'>
@@ -1021,6 +1038,7 @@ const THUMBNAILS: Record<string, () => React.ReactNode> = {
   breadcrumb: BreadcrumbThumb,
   button: ButtonThumb,
   'calendar-date-picker': DatePickerThumb,
+  card: CardThumb,
   chart: ChartThumb,
   checkbox: CheckboxThumb,
   comment: CommentThumb,

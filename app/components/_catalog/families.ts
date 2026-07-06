@@ -46,11 +46,12 @@ export const FAMILIES: CatalogFamily[] = [
   },
   {
     name: 'Data display',
-    description: 'Lists, tables, trees and the people in them.',
+    description: 'Lists, tables, trees, cards and the people in them.',
     slugs: [
       'table',
       'tree',
       'timeline',
+      'card',
       'accordion',
       'avatar',
       'badge',

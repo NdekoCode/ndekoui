@@ -13,6 +13,7 @@ const CATEGORY_INTROS: Record<string, string> = {
     'What an agent asks a person to decide: approvals, permissions with their scope, how much it may do alone, diffs reviewed hunk by hunk, branches, extracted fields and the screen it drives.',
   voice:
     'Voice agents: an orb that listens, thinks and speaks, a voice note whose transcript follows the voice, and dictation into any field.',
+  card: 'Cards that show what they hold: stacks and decks that turn, a ticket that adds up, figures that roll, a folder that fans out and a globe that draws its routes. Each one plays itself while it is on screen.',
   chart:
     'Charts that read themselves: a sentence that says what the chart shows, a hover that answers, a table behind every chart for screen readers, and data changes drawn as motion rather than a redraw.',
   illustration:
