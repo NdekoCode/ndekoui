@@ -71,4 +71,12 @@ export const manifest: BlockManifest = [
     files: ['index.tsx', 'grid-layer.tsx', 'data.ts'],
     previewHeight: 640,
   },
+  {
+    name: 'heroes-09',
+    title: 'Hero with a word pill',
+    description:
+      'A centred hero whose headline ends in a pill that rolls to the next agent word while its colour sweeps in from the left, with the row of agent tiles above lighting the one the word belongs to.',
+    files: ['index.tsx', 'agent-row.tsx', 'word-pill.tsx', 'data.ts'],
+    previewHeight: 620,
+  },
 ];
