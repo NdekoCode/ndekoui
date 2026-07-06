@@ -33,4 +33,12 @@ export const manifest: BlockManifest = [
     ],
     previewHeight: 640,
   },
+  {
+    name: 'empty-states-04',
+    title: 'Empty states with a scene',
+    description:
+      'Four calm scenes for no runs, an empty inbox, no tools and no agents, drawn with dashed slots and key caps and looping on opacity and transform while on screen, each with a title, a line and one action that morphs from idle to done.',
+    files: ['index.tsx', 'scenes.tsx', 'use-scene-loops.ts', 'data.ts'],
+    previewHeight: 640,
+  },
 ];
