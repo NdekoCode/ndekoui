@@ -1,18 +1,22 @@
 import { BrandLogo, type BrandSlug } from '@/registry/ndeko/lib/brand-logos';
 import { cn } from '@/registry/ndeko/lib/utils';
 
-export type BrandTileSize = 'sm' | 'md' | 'lg';
+export type BrandTileSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
 const TILE_CLASS: Record<BrandTileSize, string> = {
   sm: 'size-4 rounded-[4px]',
   md: 'size-5 rounded-[5px]',
   lg: 'size-7 rounded-md',
+  xl: 'size-8 rounded-lg',
+  '2xl': 'size-10 rounded-[10px]',
 };
 
 const MARK_CLASS: Record<BrandTileSize, string> = {
   sm: 'size-2.5',
   md: 'size-3',
   lg: 'size-4',
+  xl: 'size-4',
+  '2xl': 'size-5',
 };
 
 type BrandTileProps = {
