@@ -42,6 +42,7 @@ const PRIORITIES = [
 
 const TIME_ZONES = [
   { label: 'Berlin', value: 'europe-berlin' },
+  { label: 'Kinshasa', value: 'africa-kinshasa' },
   { label: 'Lagos', value: 'africa-lagos' },
   { label: 'New York', value: 'america-new-york' },
   { label: 'São Paulo', value: 'america-sao-paulo' },

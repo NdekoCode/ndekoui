@@ -401,6 +401,7 @@ export const INITIAL_ROLES: Record<string, MemberRole> = {
 };
 
 export const TIME_ZONES = [
+  { value: 'Africa/Kinshasa', label: 'Kinshasa (GMT+1)' },
   { value: 'Africa/Lagos', label: 'Lagos (GMT+1)' },
   { value: 'Europe/Paris', label: 'Paris (GMT+1)' },
   { value: 'Europe/London', label: 'London (GMT+0)' },

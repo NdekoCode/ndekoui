@@ -39,6 +39,7 @@ const CONTINENTS: Continent[] = [
   {
     continent: 'Africa',
     items: [
+      { value: 'CD', label: 'DR Congo' },
       { value: 'ZA', label: 'South Africa' },
       { value: 'NG', label: 'Nigeria' },
       { value: 'MA', label: 'Morocco' },

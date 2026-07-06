@@ -230,9 +230,9 @@ const ACCOUNTS: Account[] = [
   },
   {
     id: '20',
-    name: 'Samuel Adeyemi',
-    email: 'samuel.adeyemi@example.com',
-    location: 'Ibadan, Nigeria',
+    name: 'Samuel Mukendi',
+    email: 'samuel.mukendi@example.com',
+    location: 'Kinshasa, DR Congo',
     status: 'Active',
     balance: 700,
   },

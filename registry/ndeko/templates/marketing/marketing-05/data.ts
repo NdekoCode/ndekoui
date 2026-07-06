@@ -58,7 +58,7 @@ export const CONTACT_DETAILS: ContactDetail[] = [
   {
     icon: GlobeIcon,
     label: 'Team',
-    value: 'Lisbon and Nairobi',
+    value: 'Kinshasa, Lisbon and Nairobi',
   },
 ];
 

@@ -7,7 +7,7 @@ import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-redu
 import { PauseIcon, PlayIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 
-const CITIES = ['Lisbon', 'Nairobi', 'Osaka', 'Toronto'];
+const CITIES = ['Kinshasa', 'Lisbon', 'Nairobi', 'Osaka', 'Toronto'];
 
 const SWAP_EASE: [number, number, number, number] = [0.2, 0, 0, 1];
 

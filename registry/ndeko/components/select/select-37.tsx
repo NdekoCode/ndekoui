@@ -26,6 +26,7 @@ const CONTINENTS: { name: string; countries: Country[] }[] = [
   {
     name: 'Africa',
     countries: [
+      { value: 'CD', name: 'DR Congo' },
       { value: 'ZA', name: 'South Africa' },
       { value: 'NG', name: 'Nigeria' },
       { value: 'MA', name: 'Morocco' },
