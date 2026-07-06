@@ -132,6 +132,11 @@ export const primitiveItems: RegistryItemDefinition[] = [
     'The picture of an agent, a team or a project with no logo: a gradient drawn from its name, in its own colour when it has one.'
   ),
   primitive(
+    'wash',
+    'Wash',
+    'Ink with grain behind the content of the one featured surface, or of what is live right now in the hue of its state.'
+  ),
+  primitive(
     'company-mark',
     'Company Mark',
     'The mark of a company with no logo to show: a shape and a colour drawn from its name, in the square a real logo would fill.'

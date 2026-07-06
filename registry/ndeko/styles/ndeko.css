@@ -277,7 +277,7 @@
 /*
  * Materials. Each one says something: a chip is an assigned value, a key cap is a key or an icon tile,
  * a gem is a kind (an issue type, an entity), a mesh is the picture of someone or something that has
- * none, a raised surface floats above the page.
+ * none, a grain wash marks the featured surface or what is live, a raised surface floats above the page.
  */
 
 /* An assigned label in the hue of `--chip`: a tint deepening downwards, a hairline of the hue, a lower edge, a one-pixel drop. */
@@ -378,6 +378,43 @@
       color-mix(in oklch, var(--mesh-body) 48%, oklch(0.82 0.14 18)),
       transparent 50%
     );
+}
+
+/*
+ * A grain wash: ink in the hue of `--wash` poured from one edge of a surface and fading out, with the grain of paper
+ * in it. It says one of two things: this is the one featured surface of the view, or this is live right now, in the
+ * hue of its state. Never decoration, never two in one view. The grain is a small tile used as a mask, drawn once and
+ * repeated, so the wash costs nothing once it is painted. `--wash-a` and `--wash-b` place the two pools of ink,
+ * `--wash-fade` says which way it fades and `--wash-strength` how much of it shows.
+ */
+@utility grain-wash {
+  --wash-ink: var(--wash, var(--primary));
+  background-image:
+    radial-gradient(
+      75% 130% at var(--wash-a, 10% 0%),
+      color-mix(in oklab, var(--wash-ink) 62%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      60% 110% at var(--wash-b, 92% 0%),
+      color-mix(in oklab, var(--wash-ink) 34%, transparent),
+      transparent 70%
+    );
+  mask-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2.4 0 0 0 -0.45'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
+    linear-gradient(var(--wash-fade, to bottom), #000, transparent);
+  mask-size:
+    180px 180px,
+    100% 100%;
+  mask-composite: intersect;
+  opacity: var(--wash-strength, 0.6);
+  transition: opacity 300ms ease-out;
+  &:where(.dark, .dark *) {
+    opacity: var(--wash-strength, 0.9);
+  }
+  &:where([data-hidden]) {
+    opacity: 0;
+  }
 }
 
 /* A floating layer: menus, popovers, selects, dialogs. A hairline and a soft two-step shadow. */

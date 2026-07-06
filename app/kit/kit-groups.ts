@@ -101,6 +101,7 @@ import {
   SheetDemo,
 } from './_demos/overlays-demos';
 import { CommandDemo, DialogDemo, TooltipDemo } from './_demos/overlays-live';
+import { WashDemo } from './_demos/wash-demo';
 import type { KitGroup } from './kit-types';
 
 export const KIT_GROUPS: KitGroup[] = [
@@ -201,6 +202,7 @@ export const KIT_GROUPS: KitGroup[] = [
     description: 'Surfaces, lines and panels that hold the rest.',
     units: [
       { name: 'card', width: 'compact', Demo: CardDemo },
+      { name: 'wash', width: 'compact', Demo: WashDemo },
       { name: 'separator', width: 'compact', Demo: SeparatorDemo },
       { name: 'scroll-area', width: 'compact', Demo: ScrollAreaDemo },
       { name: 'collapsible', width: 'compact', Demo: CollapsibleDemo },
