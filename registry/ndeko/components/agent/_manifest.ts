@@ -85,4 +85,11 @@ export const manifest: ComponentManifest = [
     description:
       'An agent that runs on a schedule, in words and as a cron badge, with the time to the next run, Pause that greys it out, and its last seven runs as marks, where Run now adds a new one that joins the row.',
   },
+  {
+    name: 'agent-13',
+    source: 'ndeko',
+    title: 'Tool servers',
+    description:
+      'The servers that give an agent its tools, each with its status and a drawer of tools on switches with their call counts that opens under it, Reconnect running a short sign-in sequence, and a failed server that says why.',
+  },
 ];
