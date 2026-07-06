@@ -22,4 +22,11 @@ export const manifest: ComponentManifest = [
     description:
       'A thinking status with a small diamond that snaps a quarter turn on a light spring while the point reaching the top glints by lengthening, beside a label a soft light passes over.',
   },
+  {
+    name: 'loading-04',
+    source: 'ndeko',
+    title: 'Thinking visor',
+    description:
+      'A thinking status with a small drawn helmet whose visor shows a voice meter of five bouncing bars; when the work is done the meter settles and the visor holds a check.',
+  },
 ];
