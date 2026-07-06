@@ -247,7 +247,7 @@ function PieceCard({ group }: { group: Piece[] }) {
 /** Shorter than the shortest column at every width, so all of them run past the same line. */
 const STAGE_HEIGHT = 'h-[36rem] md:h-[52rem]';
 
-/** The stage dissolves into the page, as the board does under the marketing-01 hero. */
+/** The stage fades and blurs out into the page at its bottom edge. */
 const STAGE_FADE =
   '[mask-image:linear-gradient(to_bottom,black_62%,transparent_98%)]';
 
