@@ -1,7 +1,11 @@
 import { clsx, type ClassValue } from 'clsx';
 import { extendTailwindMerge } from 'tailwind-merge';
 
-const twMerge = extendTailwindMerge({
+/**
+ * The hairline utilities of the theme set the same properties as the border, divide and ring
+ * widths of Tailwind, so a later one replaces an earlier one when classes are merged.
+ */
+const mergeClasses = extendTailwindMerge({
   extend: {
     classGroups: {
       'border-w': ['hairline-border'],
@@ -19,5 +23,6 @@ const twMerge = extendTailwindMerge({
 });
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+  const classes = clsx(inputs);
+  return mergeClasses(classes);
 }
