@@ -3,7 +3,9 @@ import type { ReactNode } from 'react';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 import { CodeDialog } from '@/app/_site/code-dialog';
+import { FullPageButton } from '@/app/_site/full-page-button';
 import { PreviewStage } from '@/app/_site/preview-stage';
+import { fullPagePathOf } from './component-paths';
 import {
   previewWidthOf,
   widthClassOf,
@@ -22,6 +24,9 @@ type ComponentTileProps = {
   titleAs?: TitleTag;
 };
 
+/** Sits on the line of the item name, where there is room, and leaves that line as tall as it was. */
+const FULL_PAGE_BUTTON = 'text-muted-foreground -my-1 size-6';
+
 const STAGE_CLASSES: Record<PreviewWidth, string> = {
   compact: 'px-4 py-10',
   wide: 'px-3 py-8 sm:p-8',
@@ -36,6 +41,7 @@ export function ComponentTile({
 }: ComponentTileProps) {
   const width = previewWidthOf(entry);
   const placementClass = placement ?? widthClassOf(width);
+  const fullPagePath = fullPagePathOf(entry.category, entry.name);
 
   return (
     <article
@@ -50,9 +56,16 @@ export function ComponentTile({
           <Title className='truncate text-[13px] font-medium'>
             {entry.title}
           </Title>
-          <p className='text-muted-foreground truncate font-mono text-[11px]'>
-            {entry.name}
-          </p>
+          <div className='flex min-w-0 items-center gap-0.5'>
+            <p className='text-muted-foreground truncate font-mono text-[11px]'>
+              {entry.name}
+            </p>
+            <FullPageButton
+              href={fullPagePath}
+              title={entry.title}
+              className={FULL_PAGE_BUTTON}
+            />
+          </div>
         </div>
         <CodeDialog
           title={entry.title}
