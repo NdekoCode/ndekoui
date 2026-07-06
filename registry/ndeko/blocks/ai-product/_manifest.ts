@@ -62,4 +62,12 @@ export const manifest: BlockManifest = [
     ],
     previewHeight: 700,
   },
+  {
+    name: 'ai-product-05',
+    title: 'Before and after in one bar',
+    description:
+      'One bar that shows how a week splits between busywork and judgment: the caption lights word by word and the blocks flip one after another while two percentages tick across, on its own when it enters the screen or following a progress value.',
+    files: ['index.tsx', 'work-split.tsx', 'data.ts'],
+    previewHeight: 620,
+  },
 ];
