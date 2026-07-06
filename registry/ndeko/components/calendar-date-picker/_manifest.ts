@@ -183,4 +183,11 @@ export const manifest: ComponentManifest = [
     description:
       'A date field that reads typed words such as "next fri 3pm" or "in 3 days", rolls the date it understood under the field, and opens a calendar from its button.',
   },
+  {
+    name: 'calendar-date-picker-30',
+    source: 'ndeko',
+    title: 'Period picker',
+    description:
+      'A popover that reads "since sep 3" or "last 2 weeks", lists periods with their dates, steps to a two-month range calendar, and shows the previous period when you compare.',
+  },
 ];
