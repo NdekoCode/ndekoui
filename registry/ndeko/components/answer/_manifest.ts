@@ -50,4 +50,11 @@ export const manifest: ComponentManifest = [
     description:
       'The passages an answer was built from, with similarity bars and the shared words marked, each on a switch: leaving one out writes the answer again word by word, and the count of passages used rolls.',
   },
+  {
+    name: 'answer-08',
+    source: 'ndeko',
+    title: 'Query result',
+    description:
+      'A query an agent ran, in Result and Query tabs under a travelling indicator: rows arrive under the header with the row count and run time, the SQL is highlighted, and an error names the line it points at.',
+  },
 ];
