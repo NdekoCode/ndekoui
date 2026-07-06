@@ -1,9 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import type { ReactNode } from 'react';
+import { Fragment, useState, type ReactNode } from 'react';
 
 import { PreviewStage } from '@/app/_site/preview-stage';
+import { ReplayButton } from '@/app/_site/replay-button';
 import { ThemeToggle } from '@/app/_site/theme-toggle';
 import { InstallCommand } from '@/app/blocks/_shared/install-command';
 import type { PreviewWidth } from '@/app/components/_catalog/preview-widths';
@@ -36,6 +37,8 @@ type ItemPresentationProps = {
   backLabel: string;
   backHref: string;
   width: PreviewWidth;
+  /** Adds an icon that plays the item again from its first frame. */
+  isReplayable?: boolean;
   children: ReactNode;
 };
 
@@ -49,10 +52,16 @@ export function ItemPresentation({
   backLabel,
   backHref,
   width,
+  isReplayable = false,
   children,
 }: ItemPresentationProps) {
+  const [replayCount, setReplayCount] = useState(0);
   const maxWidthClass = CONTENT_WIDTH[width];
   const contentClassName = cn('flex w-full justify-center', maxWidthClass);
+
+  function replay() {
+    setReplayCount((count) => count + 1);
+  }
 
   return (
     <div className='bg-foreground/[0.025] flex h-dvh flex-col'>
@@ -69,6 +78,7 @@ export function ItemPresentation({
         </span>
         <h1 className='min-w-0 truncate text-[13px] font-medium'>{title}</h1>
         <div className='ms-auto flex shrink-0 items-center gap-1'>
+          {isReplayable && <ReplayButton onReplay={replay} />}
           <Button
             variant='ghost'
             size='sm'
@@ -85,7 +95,9 @@ export function ItemPresentation({
       </header>
       <main className='flex min-h-0 flex-1 px-3 sm:px-6'>
         <PreviewStage className={STAGE} recentresOnHeight settleMs={SETTLE_MS}>
-          <div className={contentClassName}>{children}</div>
+          <div className={contentClassName}>
+            <Fragment key={replayCount}>{children}</Fragment>
+          </div>
         </PreviewStage>
       </main>
       <footer className={BAR}>
