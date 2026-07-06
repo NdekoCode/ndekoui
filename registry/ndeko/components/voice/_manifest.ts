@@ -29,4 +29,11 @@ export const manifest: ComponentManifest = [
     description:
       'A sphere of a few hundred particles that turns slowly and surges outward with the voice, then falls back on springs: it breathes when idle, tightens and spins while thinking, pulses while speaking, and one key starts and ends the call.',
   },
+  {
+    name: 'voice-05',
+    source: 'ndeko',
+    title: 'Sound ring',
+    description:
+      'A ring of rounded bars in three sizes where a peak travels round the ring and turns faster with the sound, quiet when idle, sitting beside a label, inside a button or alone.',
+  },
 ];
