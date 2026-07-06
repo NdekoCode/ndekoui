@@ -4,6 +4,7 @@ import { pressedQuietOf } from '@/registry/ndeko/lib/demonstration';
 import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
 import { Button } from '@/registry/ndeko/ui/button';
 
+import { CalmCheck } from './calm-check';
 import {
   roleLabelOf,
   sourceOf,
@@ -12,7 +13,6 @@ import {
   type Fields,
   type StepId,
 } from './data';
-import { CalmCheck } from './drawn-check';
 
 /** The source the workspace starts with: none when the step was skipped. */
 function keptSourceOf(fields: Fields, skipped: StepId[]) {

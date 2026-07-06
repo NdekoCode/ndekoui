@@ -11,9 +11,10 @@ import { ChevronDownIcon, LockIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Fold, Swap } from '@/registry/ndeko/ui/chat-motion';
+import { DrawnCheck } from '@/registry/ndeko/ui/drawn-check';
 
+import { CalmCheck } from './calm-check';
 import { STEPS, WORKSPACE, type SetupStep, type StepId } from './data';
-import { CalmCheck, DrawnCheck } from './drawn-check';
 import { ProgressRing } from './progress-ring';
 import { statusOf, TOTAL, type StepStatus } from './session';
 
@@ -59,7 +60,9 @@ type StepMarkProps = {
 function StepMark({ status, number }: StepMarkProps) {
   return (
     <Swap swapKey={status} className='size-[18px] shrink-0 justify-center'>
-      {status === 'done' && <DrawnCheck />}
+      {status === 'done' && (
+        <DrawnCheck tone='success' entrance='draw' pace='calm' />
+      )}
       {status === 'current' && (
         <span className={cn(NUMBER, 'bg-primary text-primary-foreground')}>
           {number}

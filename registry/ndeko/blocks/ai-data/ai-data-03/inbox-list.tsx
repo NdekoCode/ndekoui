@@ -5,9 +5,9 @@ import { memo } from 'react';
 import { pressedQuietOf } from '@/registry/ndeko/lib/demonstration';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Avatar } from '@/registry/ndeko/ui/avatar';
+import { DrawnCheck } from '@/registry/ndeko/ui/drawn-check';
 
 import { CONVERSATIONS, TOPICS, type Conversation, type TopicId } from './data';
-import { DrawnCheck } from './drawn-check';
 import type { ConversationLive } from './session';
 
 const ROW =
@@ -95,7 +95,9 @@ const ConversationRow = memo(function ConversationRow({
           </span>
         </span>
         <span className='flex size-[18px] shrink-0 items-center justify-center self-center'>
-          {isHandled && <DrawnCheck />}
+          {isHandled && (
+            <DrawnCheck tone='success' entrance='draw-in-view' pace='calm' />
+          )}
         </span>
         {isHandled && <span className='sr-only'>Handled</span>}
       </button>

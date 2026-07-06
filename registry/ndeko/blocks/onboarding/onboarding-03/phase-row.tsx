@@ -7,9 +7,9 @@ import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
+import { DrawnCheck } from '@/registry/ndeko/ui/drawn-check';
 
 import type { Phase, PhaseId } from './data';
-import { DrawnCheck } from './drawn-check';
 
 export type PhaseStatus = 'done' | 'current' | 'upcoming';
 
@@ -39,7 +39,9 @@ type MarkerProps = {
 function Marker({ status, number }: MarkerProps) {
   return (
     <Swap swapKey={status} className='size-[18px] shrink-0 justify-center'>
-      {status === 'done' && <DrawnCheck />}
+      {status === 'done' && (
+        <DrawnCheck tone='success' entrance='draw' pace='calm' />
+      )}
       {status === 'current' && (
         <span className={cn(NUMBER, 'bg-primary text-primary-foreground')}>
           {number}

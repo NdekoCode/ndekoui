@@ -28,6 +28,7 @@ import { Swap } from '@/registry/ndeko/ui/chat-motion';
 import { CompanyMark } from '@/registry/ndeko/ui/company-mark';
 import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 import { MorphButton, type MorphState } from '@/registry/ndeko/ui/morph-button';
+import { StreamedInk } from '@/registry/ndeko/ui/streamed-text';
 import { Textarea } from '@/registry/ndeko/ui/textarea';
 
 import {
@@ -39,7 +40,6 @@ import {
   type TopicId,
 } from './data';
 import { draftOf, type ConversationLive, type SendStatus } from './session';
-import { StreamedWords } from './streamed-words';
 
 /** How long one word of a rewritten draft takes to follow the one before it. */
 const WORD_MS = 40;
@@ -126,7 +126,7 @@ function DraftCard({
           key={live.rewrites}
           className='text-[13px] leading-relaxed whitespace-pre-line'
         >
-          <StreamedWords
+          <StreamedInk
             text={draftOf(conversation, live)}
             isStreaming={isStreaming}
             wordMs={WORD_MS}

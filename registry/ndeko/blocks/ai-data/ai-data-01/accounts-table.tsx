@@ -12,6 +12,7 @@ import { Button } from '@/registry/ndeko/ui/button';
 import { Fold, Swap } from '@/registry/ndeko/ui/chat-motion';
 import { Checkbox } from '@/registry/ndeko/ui/checkbox';
 import { CompanyMark } from '@/registry/ndeko/ui/company-mark';
+import { StreamedInk } from '@/registry/ndeko/ui/streamed-text';
 import {
   Table,
   TableBody,
@@ -41,7 +42,6 @@ import {
   type SortColumn,
   type SortDirection,
 } from './session';
-import { StreamedWords } from './streamed-words';
 
 const COLUMN_COUNT = 9;
 
@@ -262,7 +262,7 @@ function AccountRow({
               {isSummaryWritten && (
                 <div className='bg-foreground/[0.03] my-1 flex flex-col gap-1.5 rounded-md px-3 py-2.5 @3xl:ps-[3.25rem]'>
                   <p className='max-w-prose text-[13px] leading-relaxed'>
-                    <StreamedWords
+                    <StreamedInk
                       text={summaryOf(account)}
                       isStreaming={isSummaryStreaming}
                       wordMs={WORD_MS}

@@ -12,6 +12,7 @@ import {
 } from '@/registry/ndeko/lib/demonstration';
 import { PlusIcon } from '@/registry/ndeko/lib/icons';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
+import { countOf } from '@/registry/ndeko/lib/words';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -75,13 +76,6 @@ function reachOf(state: McpState): Reach {
     }
   }
   return reach;
-}
-
-function countOf(count: number, singular: string) {
-  if (count === 1) {
-    return `1 ${singular}`;
-  }
-  return `${count} ${singular}s`;
 }
 
 function reachLineOf(reach: Reach, total: number) {

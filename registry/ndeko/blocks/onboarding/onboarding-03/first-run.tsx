@@ -20,12 +20,12 @@ import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
 import { Button } from '@/registry/ndeko/ui/button';
 import { CallStatusMark } from '@/registry/ndeko/ui/call-status';
 import { Fold, Swap } from '@/registry/ndeko/ui/chat-motion';
+import { DrawnCheck } from '@/registry/ndeko/ui/drawn-check';
 import { LiveDuration } from '@/registry/ndeko/ui/live-duration';
 import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 import { Wash } from '@/registry/ndeko/ui/wash';
 
 import { AGENT_SEED, AGENT_SERIES, modelOf, type ModelId } from './data';
-import { DrawnCheck } from './drawn-check';
 import {
   callsOf,
   isRunDone,
@@ -90,7 +90,7 @@ function stepInkOf(status: StepStatus) {
 
 function StepGlyph({ status }: { status: StepStatus }) {
   if (status === 'done') {
-    return <DrawnCheck />;
+    return <DrawnCheck tone='success' entrance='draw' pace='calm' />;
   }
   if (status === 'running') {
     return <LoaderIcon className='text-primary-ink size-4 animate-spin' />;

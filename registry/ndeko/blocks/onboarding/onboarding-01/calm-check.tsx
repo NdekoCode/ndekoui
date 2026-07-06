@@ -20,21 +20,18 @@ function strokeStartOf(shouldReduceMotion: boolean) {
   return NOT_DRAWN;
 }
 
-/**
- * The mark of a step that is done. Its stroke draws itself when it mounts; inside a `Swap`, what is
- * already done when the page loads shows its check at once. Reduced motion shows it drawn.
- */
-export function DrawnCheck() {
+/** The larger mark of the message that says every step is done. Reduced motion shows it drawn. */
+export function CalmCheck() {
   const shouldReduceMotion = usePrefersReducedMotion();
 
   return (
-    <span className='chip-3d inline-flex size-[18px] shrink-0 items-center justify-center rounded-full [--chip:var(--success)]'>
-      <svg aria-hidden='true' viewBox='0 0 12 12' className='size-3'>
+    <span className='bg-success/10 text-success-foreground flex size-10 shrink-0 items-center justify-center rounded-full'>
+      <svg aria-hidden='true' viewBox='0 0 12 12' className='size-5'>
         <motion.path
           d={CHECK_PATH}
           fill='none'
           stroke='currentColor'
-          strokeWidth={1.9}
+          strokeWidth={1.4}
           strokeLinecap='round'
           strokeLinejoin='round'
           initial={strokeStartOf(shouldReduceMotion)}

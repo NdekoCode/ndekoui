@@ -8,6 +8,7 @@ import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
+import { InlineSheet } from '@/registry/ndeko/ui/inline-sheet';
 import { Input } from '@/registry/ndeko/ui/input';
 import { Label } from '@/registry/ndeko/ui/label';
 import { MorphButton, type MorphState } from '@/registry/ndeko/ui/morph-button';
@@ -44,27 +45,6 @@ const TEST_LABELS: Record<MorphState, string> = {
   busy: 'Testing',
   done: 'Connected',
 };
-
-function layerOf(isOpen: boolean) {
-  if (isOpen) {
-    return undefined;
-  }
-  return 'pointer-events-none';
-}
-
-function backdropOf(isOpen: boolean) {
-  if (isOpen) {
-    return 'opacity-100';
-  }
-  return 'opacity-0';
-}
-
-function panelOf(isOpen: boolean) {
-  if (isOpen) {
-    return 'scale-100 opacity-100';
-  }
-  return 'scale-95 opacity-0 duration-150';
-}
 
 function pressedQuietOf(isPressed: boolean) {
   if (isPressed) {
@@ -151,12 +131,6 @@ export function AddServerDialog({
   const canAdd = dialog.test === 'connected';
   const addressLabel = ADDRESS_LABEL[dialog.transport];
 
-  function closeOnEscape(event: React.KeyboardEvent<HTMLDivElement>) {
-    if (event.key === 'Escape') {
-      onClose();
-    }
-  }
-
   function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (canAdd) {
@@ -165,132 +139,113 @@ export function AddServerDialog({
   }
 
   return (
-    <div
-      inert={!isOpen}
-      onKeyDown={closeOnEscape}
-      className={cn('absolute inset-0 z-20', layerOf(isOpen))}
+    <InlineSheet
+      labelledBy={titleId}
+      closeLabel='Close the dialog'
+      side='center'
+      closer='none'
+      isOpen={isOpen}
+      panelClassName='text-card-foreground p-6'
+      onClose={onClose}
     >
-      <button
+      <form noValidate onSubmit={submit}>
+        <AnimatedSize contentClassName='flex flex-col gap-4'>
+          <div className='flex flex-col gap-1.5 pe-8'>
+            <h2 id={titleId} className='text-lg leading-tight font-semibold'>
+              Add a server
+            </h2>
+            <p className='text-muted-foreground text-[13px]'>
+              Test the connection first. The agent only gets the tools the
+              server lists.
+            </p>
+          </div>
+
+          <div className='flex flex-col gap-1.5'>
+            <Label htmlFor={nameId}>Name</Label>
+            <Input
+              id={nameId}
+              data-dialog-first
+              autoComplete='off'
+              placeholder={DEMO_NAME}
+              value={dialog.name}
+              disabled={isTesting}
+              onChange={(event) =>
+                onAction({ type: 'named', text: event.target.value })
+              }
+            />
+          </div>
+
+          <div className='flex flex-col gap-1.5'>
+            <span className='text-[13px] leading-none font-medium'>
+              Transport
+            </span>
+            <Segments
+              value={dialog.transport}
+              segments={TRANSPORTS}
+              onValueChange={(transport) =>
+                onAction({ type: 'transport', transport })
+              }
+              label='Transport'
+              className='w-44'
+            />
+          </div>
+
+          <div className='flex flex-col gap-1.5'>
+            <Label htmlFor={addressId}>
+              <Swap swapKey={addressLabel}>{addressLabel}</Swap>
+            </Label>
+            <Input
+              id={addressId}
+              autoComplete='off'
+              autoCapitalize='off'
+              spellCheck={false}
+              placeholder={ADDRESS_HINT[dialog.transport]}
+              value={dialog.address}
+              disabled={isTesting}
+              aria-invalid={dialog.test === 'failed'}
+              onChange={(event) =>
+                onAction({ type: 'addressed', text: event.target.value })
+              }
+              className='font-mono'
+            />
+          </div>
+
+          <div aria-live='polite' className='empty:hidden'>
+            <TestResult dialog={dialog} />
+          </div>
+
+          <div className='flex flex-col-reverse gap-2 @sm:flex-row @sm:items-center @sm:justify-end'>
+            <MorphButton
+              type='button'
+              variant='outline'
+              state={TEST_STATE[dialog.test]}
+              labels={TEST_LABELS}
+              onClick={onTest}
+              className={cn('@sm:me-auto', pressedQuietOf(pressed === 'test'))}
+            />
+            <Button type='button' variant='ghost' onClick={onClose}>
+              Cancel
+            </Button>
+            <Button
+              type='submit'
+              disabled={!canAdd}
+              className={pressedSolidOf(pressed === 'confirm')}
+            >
+              Add server
+            </Button>
+          </div>
+        </AnimatedSize>
+      </form>
+      <Button
         type='button'
-        tabIndex={-1}
-        aria-label='Close the dialog'
+        variant='ghost'
+        size='icon-sm'
+        aria-label='Close'
         onClick={onClose}
-        className={cn(
-          'absolute inset-0 cursor-default bg-black/40 backdrop-blur-xs transition-opacity duration-200',
-          backdropOf(isOpen)
-        )}
-      />
-      <div
-        role='dialog'
-        aria-modal='true'
-        aria-labelledby={titleId}
-        className={cn(
-          'bg-card text-card-foreground hairline-ring ring-border absolute top-1/2 left-1/2 max-h-[calc(100%-2rem)] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 overflow-x-hidden overflow-y-auto rounded-2xl p-6 shadow-xl shadow-black/8 transition-[opacity,scale] duration-200 ease-(--ease-out-strong)',
-          panelOf(isOpen)
-        )}
+        className='text-muted-foreground absolute top-3 right-3'
       >
-        <form noValidate onSubmit={submit}>
-          <AnimatedSize contentClassName='flex flex-col gap-4'>
-            <div className='flex flex-col gap-1.5 pe-8'>
-              <h2 id={titleId} className='text-lg leading-tight font-semibold'>
-                Add a server
-              </h2>
-              <p className='text-muted-foreground text-[13px]'>
-                Test the connection first. The agent only gets the tools the
-                server lists.
-              </p>
-            </div>
-
-            <div className='flex flex-col gap-1.5'>
-              <Label htmlFor={nameId}>Name</Label>
-              <Input
-                id={nameId}
-                data-dialog-first
-                autoComplete='off'
-                placeholder={DEMO_NAME}
-                value={dialog.name}
-                disabled={isTesting}
-                onChange={(event) =>
-                  onAction({ type: 'named', text: event.target.value })
-                }
-              />
-            </div>
-
-            <div className='flex flex-col gap-1.5'>
-              <span className='text-[13px] leading-none font-medium'>
-                Transport
-              </span>
-              <Segments
-                value={dialog.transport}
-                segments={TRANSPORTS}
-                onValueChange={(transport) =>
-                  onAction({ type: 'transport', transport })
-                }
-                label='Transport'
-                className='w-44'
-              />
-            </div>
-
-            <div className='flex flex-col gap-1.5'>
-              <Label htmlFor={addressId}>
-                <Swap swapKey={addressLabel}>{addressLabel}</Swap>
-              </Label>
-              <Input
-                id={addressId}
-                autoComplete='off'
-                autoCapitalize='off'
-                spellCheck={false}
-                placeholder={ADDRESS_HINT[dialog.transport]}
-                value={dialog.address}
-                disabled={isTesting}
-                aria-invalid={dialog.test === 'failed'}
-                onChange={(event) =>
-                  onAction({ type: 'addressed', text: event.target.value })
-                }
-                className='font-mono'
-              />
-            </div>
-
-            <div aria-live='polite' className='empty:hidden'>
-              <TestResult dialog={dialog} />
-            </div>
-
-            <div className='flex flex-col-reverse gap-2 @sm:flex-row @sm:items-center @sm:justify-end'>
-              <MorphButton
-                type='button'
-                variant='outline'
-                state={TEST_STATE[dialog.test]}
-                labels={TEST_LABELS}
-                onClick={onTest}
-                className={cn(
-                  '@sm:me-auto',
-                  pressedQuietOf(pressed === 'test')
-                )}
-              />
-              <Button type='button' variant='ghost' onClick={onClose}>
-                Cancel
-              </Button>
-              <Button
-                type='submit'
-                disabled={!canAdd}
-                className={pressedSolidOf(pressed === 'confirm')}
-              >
-                Add server
-              </Button>
-            </div>
-          </AnimatedSize>
-        </form>
-        <Button
-          type='button'
-          variant='ghost'
-          size='icon-sm'
-          aria-label='Close'
-          onClick={onClose}
-          className='text-muted-foreground absolute top-3 right-3'
-        >
-          <XIcon />
-        </Button>
-      </div>
-    </div>
+        <XIcon />
+      </Button>
+    </InlineSheet>
   );
 }

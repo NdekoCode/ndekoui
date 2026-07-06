@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
 import { pressedSolidOf } from '@/registry/ndeko/lib/demonstration';
 import { CodeIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -9,6 +7,7 @@ import { Swap } from '@/registry/ndeko/ui/chat-motion';
 import { CopyButton } from '@/registry/ndeko/ui/copy-button';
 import { MorphButton, type MorphState } from '@/registry/ndeko/ui/morph-button';
 import { Segments, type Segment } from '@/registry/ndeko/ui/segments';
+import { useRevealedCount } from '@/registry/ndeko/ui/streamed-text';
 
 import {
   CHANGES,
@@ -74,22 +73,6 @@ function versionOf(value: 'v1' | 'v2'): Version {
   return 1;
 }
 
-function useRevealedCount(total: number, isStreaming: boolean) {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!isStreaming) {
-      return;
-    }
-    const timer = setInterval(() => {
-      setCount((current) => Math.min(total, current + 1));
-    }, LINE_MS);
-    return () => clearInterval(timer);
-  }, [isStreaming, total]);
-
-  return count;
-}
-
 function lineNumberOf(index: number) {
   return index + 1;
 }
@@ -133,7 +116,7 @@ function CodeRows({
 /** Only this list re-renders while the first version is written. */
 function StreamedCode({ isActive }: { isActive: boolean }) {
   const total = VERSIONS[1].length;
-  const count = useRevealedCount(total, isActive);
+  const count = useRevealedCount(total, isActive, LINE_MS);
   const lines = VERSIONS[1].slice(0, count);
 
   return <CodeRows lines={lines} marksRevision={false} />;

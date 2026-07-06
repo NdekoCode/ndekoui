@@ -12,14 +12,19 @@ import { useSession } from '@/registry/ndeko/hooks/use-session';
 import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
 import { FeatherIcon, ListChecksIcon, XIcon } from '@/registry/ndeko/lib/icons';
 import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
-import { cn } from '@/registry/ndeko/lib/utils';
 import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
+import { InlineSheet } from '@/registry/ndeko/ui/inline-sheet';
 import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
+import {
+  shownCountOf,
+  StreamedWords,
+  useRevealedCount,
+} from '@/registry/ndeko/ui/streamed-text';
 
 import { Composer, type EmailPreview } from './composer';
 import {
@@ -97,29 +102,6 @@ function announcementOf(phase: Phase) {
   return closingLineOf(phase) ?? '';
 }
 
-function useRevealedCount(total: number, isStreaming: boolean) {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!isStreaming) {
-      return;
-    }
-    const timer = setInterval(() => {
-      setCount((current) => Math.min(total, current + 1));
-    }, WORD_MS);
-    return () => clearInterval(timer);
-  }, [isStreaming, total]);
-
-  return count;
-}
-
-function shownWordsOf(isComplete: boolean, count: number, total: number) {
-  if (isComplete) {
-    return total;
-  }
-  return count;
-}
-
 /** Only this text re-renders while the answer streams. */
 function StreamedAnswer({
   phase,
@@ -129,20 +111,14 @@ function StreamedAnswer({
   isActive: boolean;
 }) {
   const isStreaming = phase === 'streaming';
-  const count = useRevealedCount(ANSWER_WORDS.length, isStreaming && isActive);
-  const shown = shownWordsOf(!isStreaming, count, ANSWER_WORDS.length);
-  const words = ANSWER_WORDS.slice(0, shown);
+  const isRunning = isStreaming && isActive;
+  const total = ANSWER_WORDS.length;
+  const count = useRevealedCount(total, isRunning, WORD_MS);
+  const shown = shownCountOf(isStreaming, count, total);
 
   return (
     <p className='text-sm leading-relaxed'>
-      {words.map((word, index) => (
-        <span
-          key={index}
-          className='transition-opacity duration-300 ease-(--ease-out-strong) starting:opacity-0'
-        >
-          {word}{' '}
-        </span>
-      ))}
+      <StreamedWords words={ANSWER_WORDS} shown={shown} keepsPlace={false} />
     </p>
   );
 }
@@ -207,80 +183,40 @@ function PersonMessage({ text }: { text: string }) {
   );
 }
 
-function sheetBackdropOf(isOpen: boolean) {
-  if (isOpen) {
-    return 'opacity-100';
-  }
-  return 'opacity-0';
-}
-
-function sheetPanelOf(isOpen: boolean) {
-  if (isOpen) {
-    return 'translate-y-0';
-  }
-  return 'translate-y-[calc(100%+1rem)]';
-}
-
-function sheetLayerOf(isOpen: boolean) {
-  if (isOpen) {
-    return undefined;
-  }
-  return 'pointer-events-none';
-}
-
 type RunSheetProps = {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
 };
 
-/** Drawn inside the block, so the run never opens a layer over the rest of the page. */
 function RunSheet({ isOpen, onClose, children }: RunSheetProps) {
-  function closeOnEscape(event: React.KeyboardEvent<HTMLDivElement>) {
-    if (event.key === 'Escape') {
-      onClose();
-    }
-  }
-
   return (
-    <div
-      inert={!isOpen}
-      onKeyDown={closeOnEscape}
-      className={cn('absolute inset-0 z-10 @3xl:hidden', sheetLayerOf(isOpen))}
+    <InlineSheet
+      label='Run'
+      closeLabel='Close the run'
+      side='bottom'
+      closer='none'
+      isModal={false}
+      isOpen={isOpen}
+      className='z-10 @3xl:hidden'
+      panelClassName='max-h-[80%] gap-3 overflow-y-auto p-4'
+      onClose={onClose}
     >
-      <button
-        type='button'
-        aria-label='Close the run'
-        onClick={onClose}
-        className={cn(
-          'absolute inset-0 cursor-default bg-black/40 transition-opacity duration-200',
-          sheetBackdropOf(isOpen)
-        )}
-      />
-      <div
-        role='dialog'
-        aria-label='Run'
-        className={cn(
-          'bg-card hairline-ring ring-border absolute inset-x-2 bottom-2 flex max-h-[80%] flex-col gap-3 overflow-y-auto rounded-2xl p-4 shadow-xl shadow-black/8 transition-[translate] duration-300 ease-(--ease-drawer)',
-          sheetPanelOf(isOpen)
-        )}
-      >
-        <div className='flex items-center justify-between'>
-          <h2 className='text-sm font-medium'>Run</h2>
-          <Button
-            type='button'
-            variant='ghost'
-            size='icon-sm'
-            aria-label='Close the run'
-            onClick={onClose}
-            className='text-muted-foreground'
-          >
-            <XIcon />
-          </Button>
-        </div>
-        {children}
+      <div className='flex items-center justify-between'>
+        <h2 className='text-sm font-medium'>Run</h2>
+        <Button
+          type='button'
+          variant='ghost'
+          size='icon-sm'
+          aria-label='Close the run'
+          onClick={onClose}
+          className='text-muted-foreground'
+        >
+          <XIcon />
+        </Button>
       </div>
-    </div>
+      {children}
+    </InlineSheet>
   );
 }
 

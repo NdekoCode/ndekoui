@@ -11,6 +11,7 @@ import {
 import { ArrowUpIcon, CodeIcon, FeatherIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
+import { InlineSheet } from '@/registry/ndeko/ui/inline-sheet';
 import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
@@ -29,7 +30,7 @@ import {
   type Stage,
   type Version,
 } from './session';
-import { BottomSheet, DEFAULT_SPLIT, ResizeHandle } from './split';
+import { DEFAULT_SPLIT, ResizeHandle } from './split';
 
 const SESSION = {
   reducer,
@@ -337,13 +338,19 @@ export default function AgentChat02() {
           </aside>
         </div>
 
-        <BottomSheet
-          isOpen={state.isSheetOpen}
+        <InlineSheet
           label='Artifact'
+          closeLabel='Close the artifact'
+          side='bottom'
+          closer='grip'
+          isModal={false}
+          isOpen={state.isSheetOpen}
+          className='z-10 @3xl:hidden'
+          panelClassName='h-[78%] px-4 pb-4'
           onClose={closeSheet}
         >
           <ArtifactPanel {...panel} className='flex-1' />
-        </BottomSheet>
+        </InlineSheet>
         <LiveRegion message={message} />
       </div>
     </ClockGate>

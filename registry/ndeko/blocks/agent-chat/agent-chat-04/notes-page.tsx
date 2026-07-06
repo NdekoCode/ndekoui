@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from 'motion/react';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { CalendarIcon, FeatherIcon } from '@/registry/ndeko/lib/icons';
 import {
-  EASE_OUT_STRONG,
   risePresenceOf,
   rowPresenceOf,
 } from '@/registry/ndeko/lib/motion-presets';
@@ -13,50 +12,17 @@ import { cn } from '@/registry/ndeko/lib/utils';
 import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Fold, Swap } from '@/registry/ndeko/ui/chat-motion';
 import { CopyButton } from '@/registry/ndeko/ui/copy-button';
+import { DrawnCheck } from '@/registry/ndeko/ui/drawn-check';
 import { MorphButton, type MorphState } from '@/registry/ndeko/ui/morph-button';
 
 import { summaryTextOf, type Note, type Owner, type Todo } from './data';
 import type { DoneBy } from './session';
-
-const CHECK_PATH = 'M2.6 6.4 4.9 8.7 9.5 3.6';
-
-const DRAW = { duration: 0.28, ease: EASE_OUT_STRONG, delay: 0.08 };
 
 const SHARE_LABELS: Record<MorphState, string> = {
   idle: 'Share with the team',
   busy: 'Sharing',
   done: 'Shared',
 };
-
-function strokeStartOf(shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return { pathLength: 1 };
-  }
-  return { pathLength: 0 };
-}
-
-/** The tick of a finished to-do draws itself, whoever finished it. */
-function DrawnCheck() {
-  const shouldReduceMotion = usePrefersReducedMotion();
-
-  return (
-    <span className='chip-3d inline-flex size-[18px] items-center justify-center rounded-full [--chip:var(--primary)]'>
-      <svg aria-hidden='true' viewBox='0 0 12 12' className='size-3'>
-        <motion.path
-          d={CHECK_PATH}
-          fill='none'
-          stroke='currentColor'
-          strokeWidth='1.9'
-          strokeLinecap='round'
-          strokeLinejoin='round'
-          initial={strokeStartOf(shouldReduceMotion)}
-          animate={{ pathLength: 1 }}
-          transition={DRAW}
-        />
-      </svg>
-    </span>
-  );
-}
 
 function OwnerMark({ owner }: { owner: Owner }) {
   if (owner.isAssistant) {
@@ -102,7 +68,7 @@ function TodoRow({ todo, doneBy, onToggle }: TodoRowProps) {
         onClick={() => onToggle(todo.id)}
         className='focus-visible:ring-ring/40 mt-0.5 flex size-[18px] shrink-0 cursor-pointer items-center justify-center rounded-full outline-none focus-visible:ring-[3px] active:scale-[0.97]'
       >
-        {isDone && <DrawnCheck />}
+        {isDone && <DrawnCheck entrance='draw' />}
         {!isDone && (
           <span className='hairline-ring ring-foreground/30 hover:ring-foreground/60 size-[18px] rounded-full transition-shadow duration-150' />
         )}

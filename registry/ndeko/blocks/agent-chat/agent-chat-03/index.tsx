@@ -15,14 +15,12 @@ import {
   LoaderIcon,
   PlayIcon,
 } from '@/registry/ndeko/lib/icons';
-import {
-  EASE_OUT_STRONG,
-  rowPresenceOf,
-} from '@/registry/ndeko/lib/motion-presets';
+import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
+import { DrawnCheck } from '@/registry/ndeko/ui/drawn-check';
 import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import { MorphButton, type MorphState } from '@/registry/ndeko/ui/morph-button';
@@ -62,42 +60,9 @@ const RUN_LABELS: Record<MorphState, string> = {
   done: 'Live',
 };
 
-const CHECK_PATH = 'M2.6 6.4 4.9 8.7 9.5 3.6';
-
-const DRAW = { duration: 0.28, ease: EASE_OUT_STRONG, delay: 0.08 };
-
-function strokeStartOf(shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return { pathLength: 1 };
-  }
-  return { pathLength: 0 };
-}
-
-function DrawnCheck() {
-  const shouldReduceMotion = usePrefersReducedMotion();
-
-  return (
-    <span className='chip-3d inline-flex size-[18px] items-center justify-center rounded-full [--chip:var(--primary)]'>
-      <svg aria-hidden='true' viewBox='0 0 12 12' className='size-3'>
-        <motion.path
-          d={CHECK_PATH}
-          fill='none'
-          stroke='currentColor'
-          strokeWidth='1.9'
-          strokeLinecap='round'
-          strokeLinejoin='round'
-          initial={strokeStartOf(shouldReduceMotion)}
-          animate={{ pathLength: 1 }}
-          transition={DRAW}
-        />
-      </svg>
-    </span>
-  );
-}
-
 function CheckGlyph({ status }: { status: CheckStatus }) {
   if (status === 'done') {
-    return <DrawnCheck />;
+    return <DrawnCheck entrance='draw' />;
   }
   return <LoaderIcon className='text-primary-ink size-4 animate-spin' />;
 }

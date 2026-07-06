@@ -1,33 +1,20 @@
 'use client';
 
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useRef } from 'react';
 
 import { pressedSolidOf } from '@/registry/ndeko/lib/demonstration';
 import { ArrowUpIcon, BotIcon, CheckIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Input } from '@/registry/ndeko/ui/input';
+import {
+  StreamedWords,
+  useRevealedCount,
+} from '@/registry/ndeko/ui/streamed-text';
 
 import type { ChatTurn } from './session';
 
 const WORD_MS = 48;
-
-function useRevealedCount(total: number, isActive: boolean) {
-  const [count, setCount] = useState(0);
-  const isStreaming = isActive && count < total;
-
-  useEffect(() => {
-    if (!isStreaming) {
-      return;
-    }
-    const timer = setInterval(() => {
-      setCount((current) => Math.min(total, current + 1));
-    }, WORD_MS);
-    return () => clearInterval(timer);
-  }, [isStreaming, total]);
-
-  return count;
-}
 
 type StreamedReplyProps = {
   text: string;
@@ -37,21 +24,13 @@ type StreamedReplyProps = {
 /** Only this text re-renders while the reply streams, word by word. */
 function StreamedReply({ text, isActive }: StreamedReplyProps) {
   const words = text.split(' ');
-  const count = useRevealedCount(words.length, isActive);
-  const shown = words.slice(0, count);
+  const count = useRevealedCount(words.length, isActive, WORD_MS);
 
   return (
     <p className='text-sm leading-relaxed'>
       <span className='sr-only'>{text}</span>
       <span aria-hidden='true'>
-        {shown.map((word, index) => (
-          <span
-            key={index}
-            className='transition-opacity duration-300 ease-(--ease-out-strong) starting:opacity-0'
-          >
-            {word}{' '}
-          </span>
-        ))}
+        <StreamedWords words={words} shown={count} keepsPlace={false} />
       </span>
     </p>
   );

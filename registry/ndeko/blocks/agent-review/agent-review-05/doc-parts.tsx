@@ -1,7 +1,6 @@
 'use client';
 
 import { AnimatePresence, motion } from 'motion/react';
-import { useEffect, useState } from 'react';
 
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { formatCost, seriesColorOf } from '@/registry/ndeko/lib/agent-run';
@@ -10,6 +9,7 @@ import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
 import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
+import { useRevealedCount } from '@/registry/ndeko/ui/streamed-text';
 
 import {
   AGENTS,
@@ -50,22 +50,6 @@ export function AgentTile({ agent }: { agent: DocAgent }) {
   );
 }
 
-function useTypedCount(total: number, isTyping: boolean) {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!isTyping) {
-      return;
-    }
-    const timer = setInterval(() => {
-      setCount((current) => Math.min(total, current + 1));
-    }, TYPE_TICK_MS);
-    return () => clearInterval(timer);
-  }, [isTyping, total]);
-
-  return count;
-}
-
 const INSERT_CLASS =
   'rounded-[3px] underline decoration-2 underline-offset-[3px]';
 
@@ -79,7 +63,7 @@ function TypedInsert({
   agent: DocAgent;
   isActive: boolean;
 }) {
-  const count = useTypedCount(text.length, isActive);
+  const count = useRevealedCount(text.length, isActive, TYPE_TICK_MS);
   const typed = text.slice(0, count);
 
   return (

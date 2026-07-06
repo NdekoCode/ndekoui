@@ -1,13 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
 import { ZapIcon } from '@/registry/ndeko/lib/icons';
 import { Badge } from '@/registry/ndeko/ui/badge';
 import { BrandTile } from '@/registry/ndeko/ui/brand-tile';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
 import { Chip } from '@/registry/ndeko/ui/chip';
 import { CompanyMark } from '@/registry/ndeko/ui/company-mark';
+import { useRevealedCount } from '@/registry/ndeko/ui/streamed-text';
 
 import {
   CARD_FIELDS,
@@ -36,22 +35,6 @@ function badgeVariantOf(status: CardStatus) {
     return 'success';
   }
   return 'secondary';
-}
-
-function useTypedCount(total: number, isTyping: boolean) {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!isTyping) {
-      return;
-    }
-    const timer = setInterval(() => {
-      setCount((current) => Math.min(total, current + CHARS_PER_TICK));
-    }, TYPE_TICK_MS);
-    return () => clearInterval(timer);
-  }, [isTyping, total]);
-
-  return count;
 }
 
 type TypedPart = {
@@ -97,7 +80,7 @@ function FieldLabel({ label }: { label: string }) {
 /** Only this list re-renders while a card writes itself. */
 function TypingFields({ card, isActive }: { card: CardId; isActive: boolean }) {
   const total = typedLengthOf(card);
-  const count = useTypedCount(total, isActive);
+  const count = useRevealedCount(total, isActive, TYPE_TICK_MS, CHARS_PER_TICK);
   const parts = typedPartsOf(card, count);
 
   return (

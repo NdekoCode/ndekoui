@@ -16,6 +16,7 @@ import { cn } from '@/registry/ndeko/lib/utils';
 import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Fold, Swap } from '@/registry/ndeko/ui/chat-motion';
+import { InlineSheet } from '@/registry/ndeko/ui/inline-sheet';
 import { MorphButton, type MorphState } from '@/registry/ndeko/ui/morph-button';
 
 import { SAMPLES, type Sample } from './data';
@@ -53,27 +54,6 @@ const CHECK_PATH = 'M5 10.4 8.6 14 15 6.6';
 const DRAW = { duration: 0.5, ease: EASE_OUT_STRONG, delay: 0.12 };
 
 const SETTLE = { duration: 0.3, ease: EASE_OUT_STRONG };
-
-function layerOf(isOpen: boolean) {
-  if (isOpen) {
-    return undefined;
-  }
-  return 'pointer-events-none';
-}
-
-function backdropOf(isOpen: boolean) {
-  if (isOpen) {
-    return 'opacity-100';
-  }
-  return 'opacity-0';
-}
-
-function panelOf(isOpen: boolean) {
-  if (isOpen) {
-    return 'scale-100 opacity-100';
-  }
-  return 'scale-95 opacity-0 duration-150';
-}
 
 function idleLabelOf(publish: PublishStatus, version: number) {
   if (publish === 'failed') {
@@ -202,163 +182,133 @@ export function ReviewPanel({
     done: 'Published',
   };
 
-  function closeOnEscape(event: React.KeyboardEvent<HTMLDivElement>) {
-    if (event.key === 'Escape') {
-      onClose();
-    }
-  }
-
   return (
-    <div
-      inert={!isOpen}
-      onKeyDown={closeOnEscape}
-      className={cn('absolute inset-0 z-20', layerOf(isOpen))}
+    <InlineSheet
+      labelledBy={titleId}
+      closeLabel='Close the review'
+      side='center'
+      closer='none'
+      isOpen={isOpen}
+      panelClassName='text-card-foreground p-6'
+      onClose={onClose}
     >
-      <button
-        type='button'
-        tabIndex={-1}
-        aria-label='Close the review'
-        onClick={onClose}
-        className={cn(
-          'absolute inset-0 cursor-default bg-black/40 backdrop-blur-xs transition-opacity duration-200',
-          backdropOf(isOpen)
+      <AnimatedSize contentClassName='flex flex-col gap-4'>
+        {isLive && (
+          <div className='flex flex-col items-start gap-3'>
+            <LiveMark />
+            <div className='flex flex-col gap-1'>
+              <h2 id={titleId} className='text-lg leading-tight font-semibold'>
+                Version {state.liveVersion} is live
+              </h2>
+              <p className='text-muted-foreground text-[13px]'>
+                Every new conversation uses it. The version before it is kept
+                for a rollback.
+              </p>
+            </div>
+            <Button
+              type='button'
+              data-review-first
+              onClick={onClose}
+              className='self-end'
+            >
+              Done
+            </Button>
+          </div>
         )}
-      />
-      <div
-        role='dialog'
-        aria-modal='true'
-        aria-labelledby={titleId}
-        className={cn(
-          'bg-card text-card-foreground hairline-ring ring-border absolute top-1/2 left-1/2 max-h-[calc(100%-2rem)] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 overflow-x-hidden overflow-y-auto rounded-2xl p-6 shadow-xl shadow-black/8 transition-[opacity,scale] duration-200 ease-(--ease-out-strong)',
-          panelOf(isOpen)
-        )}
-      >
-        <AnimatedSize contentClassName='flex flex-col gap-4'>
-          {isLive && (
-            <div className='flex flex-col items-start gap-3'>
-              <LiveMark />
-              <div className='flex flex-col gap-1'>
-                <h2
-                  id={titleId}
-                  className='text-lg leading-tight font-semibold'
-                >
-                  Version {state.liveVersion} is live
-                </h2>
-                <p className='text-muted-foreground text-[13px]'>
-                  Every new conversation uses it. The version before it is kept
-                  for a rollback.
+        {!isLive && (
+          <>
+            <div className='flex flex-col gap-1.5 pe-8'>
+              <h2 id={titleId} className='text-lg leading-tight font-semibold'>
+                Publish version {nextVersion}
+              </h2>
+              <p className='text-muted-foreground text-[13px]'>
+                Version {state.liveVersion} keeps answering until this one is
+                live.
+              </p>
+            </div>
+
+            <div className='flex flex-col gap-1.5'>
+              <h3 className='text-muted-foreground text-xs'>
+                Changed since version {state.liveVersion}
+              </h3>
+              {!hasChanges && (
+                <p className='text-[13px]'>
+                  Nothing changed, so there is nothing to publish
                 </p>
-              </div>
+              )}
+              <ul className='flex flex-col gap-1'>
+                {changes.map((change) => (
+                  <li key={change} className='flex gap-2 text-[13px]'>
+                    <span
+                      aria-hidden='true'
+                      className='bg-foreground/30 mt-2 size-1 shrink-0 rounded-full'
+                    />
+                    {change}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className='flex flex-col gap-1'>
+              <h3 className='text-muted-foreground text-xs'>Sample prompts</h3>
+              <ul className='flex flex-col'>
+                {SAMPLES.map((sample, index) => (
+                  <SampleRow
+                    key={sample.id}
+                    sample={sample}
+                    status={state.samples[index]}
+                  />
+                ))}
+              </ul>
+            </div>
+
+            <div aria-live='polite'>
+              <Fold open={hasFailed}>
+                <p className='bg-destructive/10 rounded-lg p-3 text-[13px] leading-relaxed'>
+                  <span className='text-destructive-ink font-medium'>
+                    Publishing failed.
+                  </span>{' '}
+                  The service did not answer in time. Version{' '}
+                  {state.liveVersion} is still live and nothing changed.
+                </p>
+              </Fold>
+            </div>
+
+            <div className='flex flex-col-reverse gap-2 @sm:flex-row @sm:justify-end'>
               <Button
                 type='button'
-                data-review-first
+                variant='ghost'
+                disabled={isPending}
                 onClick={onClose}
-                className='self-end'
               >
-                Done
+                Cancel
               </Button>
+              <MorphButton
+                type='button'
+                data-review-first
+                state={PUBLISH_STATE[state.publish]}
+                labels={labels}
+                disabled={!canPublish(state)}
+                onClick={onPublish}
+                className={pressedSolidOf(pressed === 'publish')}
+              />
             </div>
-          )}
-          {!isLive && (
-            <>
-              <div className='flex flex-col gap-1.5 pe-8'>
-                <h2
-                  id={titleId}
-                  className='text-lg leading-tight font-semibold'
-                >
-                  Publish version {nextVersion}
-                </h2>
-                <p className='text-muted-foreground text-[13px]'>
-                  Version {state.liveVersion} keeps answering until this one is
-                  live.
-                </p>
-              </div>
-
-              <div className='flex flex-col gap-1.5'>
-                <h3 className='text-muted-foreground text-xs'>
-                  Changed since version {state.liveVersion}
-                </h3>
-                {!hasChanges && (
-                  <p className='text-[13px]'>
-                    Nothing changed, so there is nothing to publish
-                  </p>
-                )}
-                <ul className='flex flex-col gap-1'>
-                  {changes.map((change) => (
-                    <li key={change} className='flex gap-2 text-[13px]'>
-                      <span
-                        aria-hidden='true'
-                        className='bg-foreground/30 mt-2 size-1 shrink-0 rounded-full'
-                      />
-                      {change}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className='flex flex-col gap-1'>
-                <h3 className='text-muted-foreground text-xs'>
-                  Sample prompts
-                </h3>
-                <ul className='flex flex-col'>
-                  {SAMPLES.map((sample, index) => (
-                    <SampleRow
-                      key={sample.id}
-                      sample={sample}
-                      status={state.samples[index]}
-                    />
-                  ))}
-                </ul>
-              </div>
-
-              <div aria-live='polite'>
-                <Fold open={hasFailed}>
-                  <p className='bg-destructive/10 rounded-lg p-3 text-[13px] leading-relaxed'>
-                    <span className='text-destructive-ink font-medium'>
-                      Publishing failed.
-                    </span>{' '}
-                    The service did not answer in time. Version{' '}
-                    {state.liveVersion} is still live and nothing changed.
-                  </p>
-                </Fold>
-              </div>
-
-              <div className='flex flex-col-reverse gap-2 @sm:flex-row @sm:justify-end'>
-                <Button
-                  type='button'
-                  variant='ghost'
-                  disabled={isPending}
-                  onClick={onClose}
-                >
-                  Cancel
-                </Button>
-                <MorphButton
-                  type='button'
-                  data-review-first
-                  state={PUBLISH_STATE[state.publish]}
-                  labels={labels}
-                  disabled={!canPublish(state)}
-                  onClick={onPublish}
-                  className={pressedSolidOf(pressed === 'publish')}
-                />
-              </div>
-            </>
-          )}
-        </AnimatedSize>
-        {!isLive && (
-          <Button
-            type='button'
-            variant='ghost'
-            size='icon-sm'
-            aria-label='Close'
-            disabled={isPending}
-            onClick={onClose}
-            className='text-muted-foreground absolute top-3 right-3'
-          >
-            <XIcon />
-          </Button>
+          </>
         )}
-      </div>
-    </div>
+      </AnimatedSize>
+      {!isLive && (
+        <Button
+          type='button'
+          variant='ghost'
+          size='icon-sm'
+          aria-label='Close'
+          disabled={isPending}
+          onClick={onClose}
+          className='text-muted-foreground absolute top-3 right-3'
+        >
+          <XIcon />
+        </Button>
+      )}
+    </InlineSheet>
   );
 }

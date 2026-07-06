@@ -1,16 +1,13 @@
 'use client';
 
-import { motion } from 'motion/react';
-
-import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { seriesColorOf } from '@/registry/ndeko/lib/agent-run';
 import { pressedSolidOf } from '@/registry/ndeko/lib/demonstration';
 import { ChevronDownIcon, CircleCheckIcon } from '@/registry/ndeko/lib/icons';
-import { EASE_OUT_STRONG } from '@/registry/ndeko/lib/motion-presets';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Avatar } from '@/registry/ndeko/ui/avatar';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Fold, Swap } from '@/registry/ndeko/ui/chat-motion';
+import { DrawnCheck } from '@/registry/ndeko/ui/drawn-check';
 import { MeshTile } from '@/registry/ndeko/ui/mesh-tile';
 import { MorphButton, type MorphState } from '@/registry/ndeko/ui/morph-button';
 
@@ -33,10 +30,6 @@ const APPLY_LABELS: Record<MorphState, string> = {
   done: 'Applied',
 };
 
-const CHECK_PATH = 'M2.6 6.4 4.9 8.7 9.5 3.6';
-
-const DRAW = { duration: 0.28, ease: EASE_OUT_STRONG, delay: 0.08 };
-
 const SIGN: Record<LineKind, string> = { same: ' ', added: '+', removed: '-' };
 
 const LINE_TINT: Record<LineKind, string> = {
@@ -44,35 +37,6 @@ const LINE_TINT: Record<LineKind, string> = {
   added: 'bg-success/10',
   removed: 'bg-destructive/10',
 };
-
-function strokeStartOf(shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return { pathLength: 1 };
-  }
-  return { pathLength: 0 };
-}
-
-function DrawnCheck() {
-  const shouldReduceMotion = usePrefersReducedMotion();
-
-  return (
-    <span className='chip-3d inline-flex size-[18px] items-center justify-center rounded-full [--chip:var(--success)]'>
-      <svg aria-hidden='true' viewBox='0 0 12 12' className='size-3'>
-        <motion.path
-          d={CHECK_PATH}
-          fill='none'
-          stroke='currentColor'
-          strokeWidth='1.9'
-          strokeLinecap='round'
-          strokeLinejoin='round'
-          initial={strokeStartOf(shouldReduceMotion)}
-          animate={{ pathLength: 1 }}
-          transition={DRAW}
-        />
-      </svg>
-    </span>
-  );
-}
 
 function CoderTile() {
   const color = seriesColorOf(CODER.series);
@@ -151,7 +115,7 @@ function SuggestionBlock({ apply, isPressed, onApply }: SuggestionBlockProps) {
           )}
           {isApplied && (
             <span className='text-success-foreground flex items-center gap-1.5 text-xs font-medium'>
-              <DrawnCheck />
+              <DrawnCheck tone='success' entrance='draw' />
               Applied in
               <code className='font-mono'>{PULL_REQUEST.commit}</code>
             </span>
