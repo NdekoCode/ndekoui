@@ -4,22 +4,32 @@ import { AnimatePresence, motion } from 'motion/react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll, type WordRollWord } from '@/components/core/word-roll';
-import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
 import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { useSession } from '@/registry/ndeko/hooks/use-session';
 import {
   emptyRun,
   type AgentStatus as AgentState,
   type RunAgent,
 } from '@/registry/ndeko/lib/agent-run';
+import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
+import {
+  applyBatchAt,
+  batch,
+  reduceBatch,
+  restingOf,
+  type RunStep,
+} from '@/registry/ndeko/lib/run-session';
 import { cn } from '@/registry/ndeko/lib/utils';
-
+import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
-import { useDemoRun } from '@/registry/ndeko/hooks/use-demo-run';
+import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
+
 import {
   AGENT_STATES,
   AGENT_STATUS_WORD,
   AgentStatus,
+  pulsingIdsOf,
 } from './_parts/agent-status';
 import { AgentTile } from './_parts/agent-tile';
 import { CODER, PLANNER, RESEARCHER, REVIEWER, WRITER } from './_parts/crew';
@@ -29,6 +39,7 @@ export {
   AGENT_STATUS_WORD,
   AgentStatus,
   AgentStatusDot,
+  AgentStatusMark,
   type AgentStatusProps,
 } from './_parts/agent-status';
 
@@ -148,6 +159,7 @@ export type AgentRosterProps = {
 
 export function AgentRoster({ title, agents, className }: AgentRosterProps) {
   const summaryWords = summaryWordsOf(agents);
+  const pulsingIds = pulsingIdsOf(agents);
 
   return (
     <section
@@ -177,6 +189,7 @@ export function AgentRoster({ title, agents, className }: AgentRosterProps) {
             <AgentStatus
               status={agent.status}
               reserveWidth
+              isStill={!pulsingIds.has(agent.id)}
               className='shrink-0'
             />
           </li>
@@ -186,6 +199,7 @@ export function AgentRoster({ title, agents, className }: AgentRosterProps) {
   );
 }
 
+/** A legend names the states, it runs nothing: its running mark holds still. */
 export function AgentStatusLegend({ className }: { className?: string }) {
   return (
     <ul
@@ -194,7 +208,7 @@ export function AgentStatusLegend({ className }: { className?: string }) {
     >
       {AGENT_STATES.map((state) => (
         <li key={state}>
-          <AgentStatus status={state} />
+          <AgentStatus status={state} isStill />
         </li>
       ))}
     </ul>
@@ -202,11 +216,12 @@ export function AgentStatusLegend({ className }: { className?: string }) {
 }
 
 function update(
+  after: number,
   id: string,
   status: AgentState,
   task: string
-): RunScriptStep['event'] {
-  return { type: 'agent.updated', id, patch: { status, task } };
+): RunStep {
+  return batch(after, { type: 'agent.updated', id, patch: { status, task } });
 }
 
 const ROSTER: RunAgent[] = [
@@ -219,54 +234,28 @@ const ROSTER: RunAgent[] = [
 
 const INITIAL_RUN = emptyRun({ id: 'crew-status', agents: ROSTER });
 
-const SCRIPT: RunScriptStep[] = [
-  {
-    after: 1400,
-    event: update('researcher', 'running', 'Collecting vendor price lists'),
-  },
-  {
-    after: 1400,
-    event: update('planner', 'waiting', 'Asks to raise the budget to $40'),
-  },
-  {
-    after: 2800,
-    event: update('planner', 'running', 'Budget raised, tracking progress'),
-  },
-  {
-    after: 1200,
-    event: update('researcher', 'done', 'Found 14 vendors with prices'),
-  },
-  {
-    after: 200,
-    event: update('coder', 'running', 'Comparing invoices with list prices'),
-  },
-  {
-    after: 1800,
-    event: update('coder', 'failed', 'The invoice sheet lacks a SKU column'),
-  },
-  {
-    after: 1800,
-    event: update('coder', 'running', 'Second try, matching items by name'),
-  },
-  {
-    after: 1600,
-    event: update('coder', 'done', 'Six lines above the list price'),
-  },
-  {
-    after: 200,
-    event: update('writer', 'running', 'Drafting the credit request'),
-  },
-  { after: 2000, event: update('writer', 'done', 'Draft ready, 186 words') },
-  {
-    after: 200,
-    event: update('reviewer', 'running', 'Checking the figures in the draft'),
-  },
-  {
-    after: 1800,
-    event: update('reviewer', 'done', 'Figures match the invoices'),
-  },
-  { after: 400, event: update('planner', 'done', 'Review ready for you') },
+/**
+ * The round stops while the review is still under way, with one agent in each of the five states:
+ * that is the picture the crew rests on, under reduced motion too.
+ */
+const SCRIPT: RunStep[] = [
+  update(1400, 'researcher', 'running', 'Collecting vendor price lists'),
+  update(1400, 'planner', 'waiting', 'Asks to raise the budget to $40'),
+  update(2600, 'planner', 'running', 'Budget raised, tracking progress'),
+  update(1200, 'researcher', 'done', 'Found 14 vendors with prices'),
+  update(200, 'coder', 'running', 'Comparing invoices with list prices'),
+  update(1600, 'writer', 'running', 'Drafting the credit request'),
+  update(1600, 'coder', 'failed', 'The invoice sheet lacks a SKU column'),
+  update(1400, 'planner', 'waiting', 'Asks if items may be matched by name'),
 ];
+
+const SESSION = {
+  reducer: reduceBatch,
+  initial: INITIAL_RUN,
+  resting: restingOf(INITIAL_RUN, SCRIPT, applyBatchAt),
+  script: SCRIPT,
+  loopAfter: 3200,
+};
 
 function announcementOf(agent: RunAgent) {
   const word = AGENT_STATUS_WORD[agent.status];
@@ -274,20 +263,31 @@ function announcementOf(agent: RunAgent) {
 }
 
 export default function Agent10() {
-  const { ref, snapshot } = useDemoRun(SCRIPT, {
-    initial: INITIAL_RUN,
-    loopAfter: 3000,
-  });
-  const agents = snapshot.agents;
+  const { ref, isInView, isAutoplaying, state, isFinished, restart } =
+    useSession(SESSION);
+  const agents = state.agents;
   const message = useAgentAnnouncement(agents, announcementOf);
+  const canReplay = isFinished && !isAutoplaying;
 
   useKeptHeight(ref);
 
   return (
-    <div ref={ref} className='flex w-full max-w-[26rem] flex-col gap-3'>
-      <AgentRoster title='Brightmoor review crew' agents={agents} />
+    <div
+      ref={ref}
+      className='flex min-h-[23.5rem] w-full max-w-[26rem] flex-col gap-3'
+    >
+      <ClockGate isActive={isInView}>
+        <AgentRoster title='Brightmoor review crew' agents={agents} />
+      </ClockGate>
       <AgentStatusLegend className='px-2' />
-      <LiveRegion message={message} />
+      <div className='flex h-7 items-center justify-end'>
+        <ReplayButton
+          isShown={canReplay}
+          onReplay={restart}
+          label='Replay the crew'
+        />
+      </div>
+      <LiveRegion message={spokenUnless(isAutoplaying, message)} />
     </div>
   );
 }

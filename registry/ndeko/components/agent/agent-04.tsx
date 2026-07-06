@@ -4,32 +4,37 @@ import {
   AnimatePresence,
   motion,
   useDragControls,
-  useInView,
-  type MotionProps,
   type PanInfo,
 } from 'motion/react';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 import { WordRoll } from '@/components/core/word-roll';
-import {
-  useRunScript,
-  type RunScriptStep,
-} from '@/registry/ndeko/hooks/use-agent-run';
 import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import {
+  useSession,
+  type SessionStep,
+} from '@/registry/ndeko/hooks/use-session';
 import {
   emptyRun,
   seriesColorOf,
   type RunAgent,
+  type RunEvent,
   type RunSnapshot,
   type ToolCall,
 } from '@/registry/ndeko/lib/agent-run';
+import {
+  pressedQuietOf,
+  spokenUnless,
+} from '@/registry/ndeko/lib/demonstration';
 import {
   CheckIcon,
   GripVerticalIcon,
   LoaderIcon,
   ShuffleIcon,
 } from '@/registry/ndeko/lib/icons';
+import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
+import { applyBatchAt, restingOf } from '@/registry/ndeko/lib/run-session';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
@@ -37,29 +42,27 @@ import { Chip } from '@/registry/ndeko/ui/chip';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuGroupLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
-  DropdownMenuGroup,
   DropdownMenuTrigger,
 } from '@/registry/ndeko/ui/dropdown-menu';
-
 import { ClockGate, LiveDuration } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
-import {
-  EASE_IN_OUT_STRONG,
-  rowPresenceOf,
-} from '@/registry/ndeko/lib/motion-presets';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
+
 import { AgentTile } from './_parts/agent-tile';
 import {
   CODER,
   CREW,
   PLANNER,
   RESEARCHER,
+  REVIEWER,
   RUN_TITLE,
   WRITER,
 } from './_parts/crew';
+
 import { countOf } from './_parts/words';
 
 export type HandoffItem = {
@@ -94,25 +97,37 @@ const STATE_WORD: Record<StationState, string> = {
 
 const STATE_WORDS = Object.values(STATE_WORD);
 
-type LightMotion = Pick<MotionProps, 'initial' | 'animate' | 'transition'>;
+/**
+ * The task goes down the rail from one tile to the next: a box as tall as the rail slides in from
+ * above with the task at its foot. One transition on `translate`, played once when the hand-off starts.
+ */
+const TASK_TRAVEL =
+  'absolute inset-0 transition-[translate] duration-[1100ms] ease-(--ease-in-out-strong) starting:-translate-y-full';
 
-const LIGHT_TRAVEL: LightMotion = {
-  initial: { y: '-100%' },
-  animate: { y: '100%' },
-  transition: { duration: 1.1, ease: EASE_IN_OUT_STRONG },
-};
+/** The tile that receives the task settles from a little larger, once. */
+const TILE_LANDING = 'starting:scale-110 starting:opacity-55';
 
-const LIGHT_FLASH: LightMotion = {
-  initial: { opacity: 0 },
-  animate: { opacity: [0, 1, 0] },
-  transition: { duration: 1.1 },
-};
+function tailStyleOf(color: string): React.CSSProperties {
+  return {
+    backgroundImage: `linear-gradient(to bottom, transparent, ${color})`,
+  };
+}
 
-function lightOf(shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return LIGHT_FLASH;
-  }
-  return LIGHT_TRAVEL;
+function TravellingTask({ color }: { color: string }) {
+  return (
+    <span className='absolute -inset-x-1.5 inset-y-0 overflow-hidden'>
+      <span className={TASK_TRAVEL}>
+        <span
+          className='absolute bottom-[9px] left-1/2 h-8 w-px -translate-x-1/2'
+          style={tailStyleOf(color)}
+        />
+        <span
+          className='absolute bottom-0 left-1/2 size-[9px] -translate-x-1/2 rounded-[3px]'
+          style={{ backgroundColor: color }}
+        />
+      </span>
+    </span>
+  );
 }
 
 function incomingOf(handoffs: HandoffEntry[], stationId: string) {
@@ -276,6 +291,7 @@ type NextStationProps = {
   station: RelayStation;
   giver: RunAgent | undefined;
   candidates: RunAgent[];
+  isReassignPressed: boolean;
   onReassign?: (stationId: string, agentId: string) => void;
   onInteractionChange?: (isInteracting: boolean) => void;
 };
@@ -284,6 +300,7 @@ function NextStation({
   station,
   giver,
   candidates,
+  isReassignPressed,
   onReassign,
   onInteractionChange,
 }: NextStationProps) {
@@ -371,7 +388,10 @@ function NextStation({
                 type='button'
                 variant='ghost'
                 size='sm'
-                className='text-muted-foreground -me-1'
+                className={cn(
+                  'text-muted-foreground -me-1',
+                  pressedQuietOf(isReassignPressed)
+                )}
                 onPointerDown={(event) => event.stopPropagation()}
               />
             }
@@ -451,17 +471,19 @@ function dragLookOf(shouldReduceMotion: boolean | null) {
   return DRAG_LOOK;
 }
 
+/** The last station holds the work until the run ends: its time stops there, not at the clock of the page. */
 function timingOf(
   isReceived: boolean,
   incoming: HandoffEntry | undefined,
   outgoing: HandoffEntry | undefined,
-  startedAt: number | undefined
+  startedAt: number | undefined,
+  endedAt: number | undefined
 ) {
   if (!isReceived) {
     return null;
   }
   const receivedAt = incoming?.call.endedAt ?? startedAt;
-  const handedAt = outgoing?.call.startedAt;
+  const handedAt = outgoing?.call.startedAt ?? endedAt;
   return { startedAt: receivedAt, endedAt: handedAt };
 }
 
@@ -476,16 +498,47 @@ function railToneOf(state: StationState) {
   return 'opacity-100';
 }
 
+function receivedKeyOf(isReceived: boolean) {
+  if (isReceived) {
+    return 'received';
+  }
+  return 'upcoming';
+}
+
+function receivedIdsOf(
+  stations: RelayStation[],
+  handoffs: HandoffEntry[],
+  hasStarted: boolean
+) {
+  const received = stations.filter((station, index) =>
+    hasReceived(handoffs, station, index, hasStarted)
+  );
+  const ids = received.map((station) => station.id);
+  return new Set(ids);
+}
+
+/** A tile lands only when the task reaches it under the eyes of the person, not when the relay is first shown. */
+function landingOf(isReceived: boolean, wasReceivedAtFirst: boolean) {
+  if (isReceived && !wasReceivedAtFirst) {
+    return TILE_LANDING;
+  }
+  return undefined;
+}
+
 export type AgentHandoffProps = {
   stations: RelayStation[];
   handoffs: HandoffEntry[];
   /** Agents who can take the next station. */
   agents: RunAgent[];
   startedAt?: number;
+  /** When the run ended, so the station that kept the work stops counting there. */
+  endedAt?: number;
   isLive?: boolean;
   onReassign?: (stationId: string, agentId: string) => void;
   /** True while a person drags the next station or has its menu open. */
   onInteractionChange?: (isInteracting: boolean) => void;
+  /** Shows Reassign held down, for a demonstration that presses it. */
+  isReassignPressed?: boolean;
   className?: string;
 };
 
@@ -494,15 +547,19 @@ export function AgentHandoff({
   handoffs,
   agents,
   startedAt,
+  endedAt,
   isLive = false,
   onReassign,
   onInteractionChange,
+  isReassignPressed = false,
   className,
 }: AgentHandoffProps) {
   const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
-  const light = lightOf(shouldReduceMotion);
   const hasStarted = startedAt !== undefined;
+  const [firstReceivedIds] = useState(() =>
+    receivedIdsOf(stations, handoffs, hasStarted)
+  );
   const nextIndex = nextStationIndexOf(stations, handoffs);
 
   return (
@@ -517,13 +574,20 @@ export function AgentHandoff({
         const receiver = stations[index + 1]?.agent;
         const giver = stations[index - 1]?.agent;
         const showsHandoff = outgoing !== undefined && receiver !== undefined;
-        const timing = timingOf(isReceived, incoming, outgoing, startedAt);
+        const timing = timingOf(
+          isReceived,
+          incoming,
+          outgoing,
+          startedAt,
+          endedAt
+        );
         const isHolding = state === 'holding';
         const isTicking = isHolding && isLive;
         const series = seriesColorOf(station.agent.series);
         const outgoingKey = outgoing?.call.id ?? 'none';
         const isOutgoingLive = outgoing?.call.status === 'running';
         const candidates = candidatesFor(agents, giver, station.agent);
+        const wasReceivedAtFirst = firstReceivedIds.has(station.id);
 
         return (
           <li key={station.id} className='relative flex gap-3 pb-5 last:pb-0'>
@@ -532,23 +596,19 @@ export function AgentHandoff({
                 aria-hidden='true'
                 className='bg-border absolute start-[11.5px] top-7 bottom-1 w-px'
               >
-                <span className='absolute -inset-x-px inset-y-0 overflow-hidden'>
-                  <AnimatePresence initial={false}>
-                    {isOutgoingLive && (
-                      <motion.span
-                        key={outgoingKey}
-                        className='absolute inset-x-0 h-full'
-                        style={{
-                          backgroundImage: `linear-gradient(to bottom, transparent, ${series} 45%, ${series} 55%, transparent)`,
-                        }}
-                        {...light}
-                      />
-                    )}
-                  </AnimatePresence>
-                </span>
+                {isOutgoingLive && (
+                  <TravellingTask key={outgoingKey} color={series} />
+                )}
               </span>
             )}
-            <span className={cn('relative z-10 pt-0.5', railToneOf(state))}>
+            <span
+              key={receivedKeyOf(isReceived)}
+              className={cn(
+                'relative z-10 pt-0.5 transition-[opacity,scale] duration-300 ease-(--ease-out-strong)',
+                railToneOf(state),
+                landingOf(isReceived, wasReceivedAtFirst)
+              )}
+            >
               <AgentTile
                 name={station.agent.name}
                 series={station.agent.series}
@@ -560,6 +620,7 @@ export function AgentHandoff({
                   station={station}
                   giver={giver}
                   candidates={candidates}
+                  isReassignPressed={isReassignPressed}
                   onReassign={onReassign}
                   onInteractionChange={onInteractionChange}
                 />
@@ -580,7 +641,7 @@ export function AgentHandoff({
                       <LiveDuration
                         item={timing}
                         isRunning={isTicking}
-                        className='tabular-nums'
+                        className='inline-block min-w-8 text-end'
                       />
                     )}
                   </p>
@@ -665,7 +726,7 @@ const HANDOFFS: HandoffPlan[] = [
   },
 ];
 
-function handoffStarted(plan: HandoffPlan): RunScriptStep['event'] {
+function handoffStarted(plan: HandoffPlan): RunEvent {
   return {
     type: 'call.started',
     call: {
@@ -678,24 +739,111 @@ function handoffStarted(plan: HandoffPlan): RunScriptStep['event'] {
   };
 }
 
-function handoffDone(plan: HandoffPlan): RunScriptStep['event'] {
+function handoffDone(plan: HandoffPlan): RunEvent {
   return { type: 'call.updated', id: plan.id, patch: { status: 'done' } };
 }
 
 const [TO_PRICES, TO_COMPARE, TO_DRAFT] = HANDOFFS;
 
-const SCRIPT: RunScriptStep[] = [
-  { after: 500, event: { type: 'run.started' } },
-  { after: 1800, event: handoffStarted(TO_PRICES) },
-  { after: 1300, event: handoffDone(TO_PRICES) },
-  { after: 3200, event: handoffStarted(TO_COMPARE) },
-  { after: 1300, event: handoffDone(TO_COMPARE) },
-  { after: 3600, event: handoffStarted(TO_DRAFT) },
-  { after: 1300, event: handoffDone(TO_DRAFT) },
-  { after: 3200, event: { type: 'run.finished', status: 'done' } },
-];
+type RelayState = {
+  run: RunSnapshot;
+  stations: RelayStation[];
+  /** True while a person drags the next station or has its menu open: the relay waits for them. */
+  isInteracting: boolean;
+};
+
+type RelayAction =
+  | { type: 'events'; events: RunEvent[] }
+  | { type: 'reassign'; stationId: string; agentId: string }
+  | { type: 'interact'; isInteracting: boolean };
+
+type RelayStep = SessionStep<RelayState, RelayAction>;
 
 const INITIAL_RUN = emptyRun({ id: 'relay', title: RUN_TITLE, agents: CREW });
+
+const INITIAL: RelayState = {
+  run: INITIAL_RUN,
+  stations: STATIONS,
+  isInteracting: false,
+};
+
+/** A station given back to its first agent forgets that it was ever moved. */
+function reassignedStation(station: RelayStation, agent: RunAgent) {
+  const original = station.reassignedFrom ?? station.agent;
+  const isBack = original.id === agent.id;
+  if (isBack) {
+    return { id: station.id, agent };
+  }
+  return { id: station.id, agent, reassignedFrom: original };
+}
+
+function withReassign(state: RelayState, stationId: string, agentId: string) {
+  const agent = CREW.find((candidate) => candidate.id === agentId);
+  if (!agent) {
+    return state;
+  }
+  const stations = state.stations.map((station) => {
+    if (station.id !== stationId) {
+      return station;
+    }
+    return reassignedStation(station, agent);
+  });
+  return { ...state, stations };
+}
+
+function applyAt(
+  state: RelayState,
+  action: RelayAction,
+  now: number
+): RelayState {
+  if (action.type === 'reassign') {
+    return withReassign(state, action.stationId, action.agentId);
+  }
+  if (action.type === 'interact') {
+    return { ...state, isInteracting: action.isInteracting };
+  }
+  const run = applyBatchAt(state.run, action, now);
+  return { ...state, run };
+}
+
+/** Times are stamped when an action lands, as a backend would stream it. */
+function reducer(state: RelayState, action: RelayAction) {
+  return applyAt(state, action, Date.now());
+}
+
+function landing(after: number, ...events: RunEvent[]): RelayStep {
+  return { after, action: { type: 'events', events } };
+}
+
+function isHeldByPerson(state: RelayState) {
+  return state.isInteracting;
+}
+
+const SCRIPT: RelayStep[] = [
+  landing(500, { type: 'run.started' }),
+  landing(1800, handoffStarted(TO_PRICES)),
+  landing(1300, handoffDone(TO_PRICES)),
+  landing(3200, handoffStarted(TO_COMPARE)),
+  landing(1300, handoffDone(TO_COMPARE)),
+  {
+    after: 1500,
+    by: 'demo',
+    press: 'reassign',
+    action: { type: 'reassign', stationId: 'draft', agentId: REVIEWER.id },
+  },
+  landing(2100, handoffStarted(TO_DRAFT)),
+  landing(1300, handoffDone(TO_DRAFT)),
+  landing(3200, { type: 'run.finished', status: 'done' }),
+];
+
+const SESSION = {
+  reducer,
+  initial: INITIAL,
+  resting: restingOf(INITIAL, SCRIPT, applyAt),
+  script: SCRIPT,
+  loopAfter: 3000,
+  holdWhile: isHeldByPerson,
+};
 
 function entriesOf(calls: ToolCall[]): HandoffEntry[] {
   const entries: HandoffEntry[] = [];
@@ -741,45 +889,30 @@ function lostNoteOf(lostCount: number) {
 }
 
 export default function Agent04() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { amount: 0.3 });
-  const [isInteracting, setIsInteracting] = useState(false);
-  const [stations, setStations] = useState(STATIONS);
   const [message, setMessage] = useState('');
-  const isFree = !isInteracting;
-  const isActive = isInView && isFree;
-  const { snapshot, restart } = useRunScript(SCRIPT, {
-    initial: INITIAL_RUN,
-    isActive,
-  });
-  const handoffs = entriesOf(snapshot.calls);
-  const isEnded = snapshot.endedAt !== undefined;
-  const isLive = snapshot.status === 'running';
-  const runMessage = announcementOf(snapshot, stations, handoffs);
+  const { ref, isInView, isAutoplaying, state, act, pressed, restart } =
+    useSession(SESSION);
+  const { run, stations } = state;
+  const handoffs = entriesOf(run.calls);
+  const isEnded = run.endedAt !== undefined;
+  const canReplay = isEnded && !isAutoplaying;
+  const isLive = run.status === 'running';
+  const runMessage = announcementOf(run, stations, handoffs);
 
   function reassign(stationId: string, agentId: string) {
     const agent = CREW.find((candidate) => candidate.id === agentId);
     if (!agent) {
       return;
     }
-    setStations((current) =>
-      current.map((station) => {
-        if (station.id !== stationId) {
-          return station;
-        }
-        const original = station.reassignedFrom ?? station.agent;
-        const isBack = original.id === agent.id;
-        if (isBack) {
-          return { id: station.id, agent };
-        }
-        return { id: station.id, agent, reassignedFrom: original };
-      })
-    );
+    act({ type: 'reassign', stationId, agentId });
     setMessage(`The next station goes to ${agent.name}`);
   }
 
+  function changeInteraction(isInteracting: boolean) {
+    act({ type: 'interact', isInteracting });
+  }
+
   function replay() {
-    setStations(STATIONS);
     setMessage('');
     restart();
   }
@@ -787,13 +920,16 @@ export default function Agent04() {
   useKeptHeight(ref);
 
   return (
-    <div ref={ref} className='flex w-full max-w-[30rem] flex-col gap-2'>
+    <div
+      ref={ref}
+      className='flex min-h-[47rem] w-full max-w-[30rem] flex-col gap-2'
+    >
       <section
         aria-label='Hand-offs'
         className='bg-card hairline-ring ring-border flex flex-col gap-4 rounded-xl p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
       >
         <header>
-          <h3 className='text-sm font-medium'>{snapshot.title}</h3>
+          <h3 className='text-sm font-medium'>{run.title}</h3>
           <p className='text-muted-foreground text-xs'>
             Who handed what to whom
           </p>
@@ -803,17 +939,19 @@ export default function Agent04() {
             stations={stations}
             handoffs={handoffs}
             agents={CREW}
-            startedAt={snapshot.startedAt}
+            startedAt={run.startedAt}
+            endedAt={run.endedAt}
             isLive={isLive}
             onReassign={reassign}
-            onInteractionChange={setIsInteracting}
+            onInteractionChange={changeInteraction}
+            isReassignPressed={pressed === 'reassign'}
           />
         </ClockGate>
       </section>
       <div className='flex h-7 items-center justify-end'>
-        <ReplayButton isShown={isEnded} onReplay={replay} />
+        <ReplayButton isShown={canReplay} onReplay={replay} />
       </div>
-      <LiveRegion message={runMessage} />
+      <LiveRegion message={spokenUnless(isAutoplaying, runMessage)} />
       <LiveRegion message={message} />
     </div>
   );

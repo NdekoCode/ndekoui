@@ -1,25 +1,46 @@
 'use client';
 
 import { AnimatePresence, motion } from 'motion/react';
-import { useSyncExternalStore } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
-import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
 import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { useSession } from '@/registry/ndeko/hooks/use-session';
 import {
   emptyRun,
   pendingApprovalsOf,
   seriesColorOf,
   type ApprovalRequest,
   type RunAgent,
+  type RunEvent,
   type RunSnapshot,
   type SeriesSlot,
   type ToolCall,
 } from '@/registry/ndeko/lib/agent-run';
+import {
+  pressedQuietOf,
+  spokenUnless,
+} from '@/registry/ndeko/lib/demonstration';
+import { hatchOf } from '@/registry/ndeko/lib/hatch';
 import { CheckIcon, HandIcon } from '@/registry/ndeko/lib/icons';
+import { fadePresence } from '@/registry/ndeko/lib/motion-presets';
+import {
+  applyBatchAt,
+  batch,
+  batchOf,
+  reduceBatch,
+  restingOf,
+  type RunStep,
+} from '@/registry/ndeko/lib/run-session';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
+import {
+  ClockGate,
+  LiveDuration,
+  useLiveNow,
+} from '@/registry/ndeko/ui/live-duration';
+import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import {
   Popover,
   PopoverContent,
@@ -27,23 +48,18 @@ import {
   PopoverTitle,
   PopoverTrigger,
 } from '@/registry/ndeko/ui/popover';
+import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '@/registry/ndeko/ui/tooltip';
 
-import { hatchOf } from '@/registry/ndeko/lib/hatch';
 import {
-  ClockGate,
-  LiveDuration,
-  useLiveNow,
-} from '@/registry/ndeko/ui/live-duration';
-import { LiveRegion } from '@/registry/ndeko/ui/live-region';
-import { fadePresence } from '@/registry/ndeko/lib/motion-presets';
-import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
-import { useDemoRun } from '@/registry/ndeko/hooks/use-demo-run';
-import { AGENT_STATUS_WORD, AgentStatusDot } from './_parts/agent-status';
+  AGENT_STATUS_WORD,
+  AgentStatusDot,
+  pulsingIdsOf,
+} from './_parts/agent-status';
 import { AgentTile } from './_parts/agent-tile';
 import {
   CODER,
@@ -53,10 +69,12 @@ import {
   RUN_TITLE,
   WRITER,
 } from './_parts/crew';
+import { DECIDE_AFTER_MS } from './_parts/demo';
 
 type Orientation = 'across' | 'down';
 
-const WIDE_QUERY = '(min-width: 640px)';
+/** Under this width the lanes stand side by side and time runs down. */
+const WIDE_PX = 560;
 
 const LANE_PX = 44;
 
@@ -64,40 +82,72 @@ const DOWN_HEIGHT_PX = 300;
 
 const DEFAULT_WINDOW_MS = 24_000;
 
-const DEMO_WINDOW_MS = 12_000;
+/** The demonstration takes about sixteen seconds with its approval: the whole run fits, so no lane ever moves. */
+const DEMO_WINDOW_MS = 18_000;
 
 /** Tasks that left the window a moment ago stay mounted while the lagging track carries them out. */
 const KEEP_MS = 2500;
+
+/**
+ * The now line is drawn one step ahead and travels there at a constant speed, so one transition
+ * plays per step. `GROW` below lasts exactly as long.
+ */
+const GROW_STEP_MS = 1000;
+
+const GROW =
+  'transition-transform duration-1000 ease-linear motion-reduce:transition-none';
+
+const GLIDE =
+  'transition-transform duration-300 ease-(--ease-in-out-strong) motion-reduce:transition-none';
 
 const HATCH_WAITING: React.CSSProperties = {
   backgroundColor: 'color-mix(in oklab, var(--warning) 16%, transparent)',
   backgroundImage: hatchOf('var(--warning)', 60),
 };
 
-function subscribeToWidth(listener: () => void) {
-  const query = window.matchMedia(WIDE_QUERY);
-  query.addEventListener('change', listener);
-  return () => query.removeEventListener('change', listener);
-}
-
-function isWideNow() {
-  return window.matchMedia(WIDE_QUERY).matches;
-}
-
-function wideOnServer() {
-  return true;
-}
-
-function useOrientation(): Orientation {
-  const isWide = useSyncExternalStore(
-    subscribeToWidth,
-    isWideNow,
-    wideOnServer
-  );
+function orientationOf(isWide: boolean): Orientation {
   if (isWide) {
     return 'across';
   }
   return 'down';
+}
+
+/** The lanes turn with their own width, never with the window: a narrow tile on a wide screen runs down too. */
+function useOrientation() {
+  const [element, setElement] = useState<HTMLDivElement | null>(null);
+  const [isWide, setIsWide] = useState(true);
+
+  useLayoutEffect(() => {
+    if (!element) {
+      return;
+    }
+    const observer = new ResizeObserver(([entry]) => {
+      const isWideEnough = entry.contentRect.width >= WIDE_PX;
+      setIsWide(isWideEnough);
+    });
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [element]);
+
+  return { setElement, orientation: orientationOf(isWide) };
+}
+
+/** Without motion nothing travels, so nothing is drawn ahead of the present. */
+function leadOf(isLive: boolean, shouldReduceMotion: boolean | null) {
+  if (shouldReduceMotion) {
+    return 0;
+  }
+  if (isLive) {
+    return GROW_STEP_MS;
+  }
+  return 0;
+}
+
+function travelOf(isLive: boolean) {
+  if (isLive) {
+    return GROW;
+  }
+  return GLIDE;
 }
 
 type Frame = {
@@ -106,7 +156,7 @@ type Frame = {
   windowMs: number;
 };
 
-/** Where a moment sits on the track, in percent of the visible window from the start of the run. */
+/** Where a moment sits on the track, in percent of the window from the start of the run. */
 function alongOf(frame: Frame, time: number) {
   const offset = time - frame.origin;
   const ratio = offset / frame.windowMs;
@@ -119,20 +169,47 @@ function spanOf(frame: Frame, from: number, to: number) {
   return ratio * 100;
 }
 
-function shiftOf(frame: Frame) {
-  const visibleStart = frame.time - frame.windowMs;
-  return alongOf(frame, visibleStart);
+function livedOf(frame: Frame) {
+  const lived = frame.time - frame.origin;
+  return Math.max(0, lived);
+}
+
+/** How far the run has outgrown the window, in percent of it. While the run fits, nothing drifts. */
+function driftOf(frame: Frame) {
+  const lived = livedOf(frame);
+  const overflow = Math.max(0, lived - frame.windowMs);
+  const ratio = overflow / frame.windowMs;
+  return ratio * 100;
+}
+
+/** Where the now line stands in the window, in percent. It stops at the far edge once the lanes drift. */
+function nowShareOf(frame: Frame) {
+  const lived = livedOf(frame);
+  const shown = Math.min(lived, frame.windowMs);
+  const ratio = shown / frame.windowMs;
+  return ratio * 100;
 }
 
 function trackStyleOf(
   frame: Frame,
   orientation: Orientation
 ): React.CSSProperties {
-  const shift = shiftOf(frame);
+  const drift = driftOf(frame);
   if (orientation === 'down') {
-    return { transform: `translateY(${-shift}%)` };
+    return { transform: `translateY(${-drift}%)` };
   }
-  return { transform: `translateX(${-shift}%)` };
+  return { transform: `translateX(${-drift}%)` };
+}
+
+function coverStyleOf(
+  frame: Frame,
+  orientation: Orientation
+): React.CSSProperties {
+  const share = nowShareOf(frame);
+  if (orientation === 'down') {
+    return { transform: `translateY(${share}%)` };
+  }
+  return { transform: `translateX(${share}%)` };
 }
 
 function placeOf(
@@ -146,12 +223,23 @@ function placeOf(
   return { left: `${start}%`, width: `${size}%` };
 }
 
-/** A running task runs past the now edge, which clips it: its growing end is the edge itself. */
+/**
+ * What is still open (a running task, a request that waits) is drawn to the end of the window after
+ * the one being filled. The cover ahead of the now line hides the part not lived yet, so its growing
+ * end is the now line itself, and its own box changes once per window instead of once per tick.
+ */
+function openEndOf(frame: Frame) {
+  const lived = livedOf(frame);
+  const windowsLived = Math.floor(lived / frame.windowMs);
+  const windowsDrawn = windowsLived + 2;
+  return frame.origin + windowsDrawn * frame.windowMs;
+}
+
 function endOf(task: ToolCall, frame: Frame) {
   if (task.endedAt !== undefined) {
     return task.endedAt;
   }
-  return frame.time + frame.windowMs;
+  return openEndOf(frame);
 }
 
 function isInWindow(task: ToolCall, frame: Frame) {
@@ -272,7 +360,7 @@ function WaitingHatch({
   orientation: Orientation;
 }) {
   const start = approval.requestedAt ?? frame.time;
-  const openEnd = frame.time + frame.windowMs;
+  const openEnd = openEndOf(frame);
   const end = approval.resolvedAt ?? openEnd;
   const along = alongOf(frame, start);
   const size = spanOf(frame, start, end);
@@ -305,12 +393,14 @@ function ApprovalMarker({
   agent,
   frame,
   orientation,
+  isPressed,
   onApprove,
 }: {
   approval: ApprovalRequest;
   agent: RunAgent;
   frame: Frame;
   orientation: Orientation;
+  isPressed: boolean;
   onApprove?: (approvalId: string) => void;
 }) {
   const fade = fadePresence();
@@ -327,9 +417,10 @@ function ApprovalMarker({
             type='button'
             aria-label={label}
             className={cn(
-              'surface-raised focus-visible:ring-ring absolute z-10 flex size-5 cursor-pointer items-center justify-center rounded-md outline-none focus-visible:ring-2 focus-visible:ring-offset-1 [&_svg]:size-3',
+              'surface-raised focus-visible:ring-ring absolute z-20 flex size-5 cursor-pointer items-center justify-center rounded-md transition-[scale,background-color] duration-150 ease-(--ease-out-strong) outline-none focus-visible:ring-2 focus-visible:ring-offset-1 active:scale-[0.97] [&_svg]:size-3',
               isPending && 'text-warning-foreground',
-              !isPending && 'text-success-foreground'
+              !isPending && 'text-success-foreground',
+              pressedQuietOf(isPressed)
             )}
             style={markerPlaceOf(orientation, along)}
           />
@@ -489,9 +580,11 @@ function Connectors({
 function LaneLabel({
   agent,
   orientation,
+  isStill,
 }: {
   agent: RunAgent;
   orientation: Orientation;
+  isStill: boolean;
 }) {
   if (orientation === 'down') {
     return (
@@ -501,6 +594,7 @@ function LaneLabel({
           <AgentStatusDot
             status={agent.status}
             size='sm'
+            isStill={isStill}
             className='ring-card absolute -end-0.5 -bottom-0.5 rounded-full ring-2'
           />
         </span>
@@ -517,15 +611,71 @@ function LaneLabel({
     >
       <AgentTile name={agent.name} series={agent.series} size='sm' />
       <span className='min-w-0 flex-1 truncate text-xs'>{agent.name}</span>
-      <AgentStatusDot status={agent.status} size='sm' />
+      <AgentStatusDot status={agent.status} size='sm' isStill={isStill} />
     </span>
   );
 }
 
-function tickWordOf(windowMs: number, share: number) {
+function secondsOf(windowMs: number, share: number) {
   const milliseconds = windowMs * share;
-  const seconds = Math.round(milliseconds / 1000);
+  return Math.round(milliseconds / 1000);
+}
+
+/** While the run fits in the window the marks count from its start. */
+function sinceStartWordOf(windowMs: number, share: number) {
+  const seconds = secondsOf(windowMs, share);
+  return `${seconds}s`;
+}
+
+/** Once the lanes drift, the far edge is now and the marks count back from it. */
+function agoWordOf(windowMs: number, share: number) {
+  const seconds = secondsOf(windowMs, share);
   return `${seconds}s ago`;
+}
+
+function startWordOf(windowMs: number, isDrifting: boolean) {
+  if (isDrifting) {
+    return agoWordOf(windowMs, 1);
+  }
+  return sinceStartWordOf(windowMs, 0);
+}
+
+const NOW_LINE: Record<Orientation, string> = {
+  across: 'inset-y-0 left-0 w-px',
+  down: 'inset-x-0 top-0 h-px',
+};
+
+/**
+ * What lies ahead of now, drawn as the surface of the lanes: it hides the part of an open task that
+ * has not been lived yet and its edge is the now line. Moving this one cover fills every lane, so
+ * no bar is resized while it grows.
+ */
+function NowCover({
+  frame,
+  orientation,
+  isLive,
+}: {
+  frame: Frame;
+  orientation: Orientation;
+  isLive: boolean;
+}) {
+  return (
+    <span
+      aria-hidden='true'
+      className={cn('bg-card absolute inset-0 z-10', travelOf(isLive))}
+      style={coverStyleOf(frame, orientation)}
+    >
+      <span className='bg-foreground/[0.025] dark:bg-foreground/[0.04] absolute inset-0' />
+      <span
+        className={cn('bg-foreground/45 absolute', NOW_LINE[orientation])}
+      />
+      {isLive && (
+        <span className='text-foreground absolute top-1 left-1.5 text-[10px] leading-3 font-medium'>
+          Now
+        </span>
+      )}
+    </span>
+  );
 }
 
 function viewportStyleOf(
@@ -551,9 +701,14 @@ export type AgentLanesProps = {
   startedAt?: number;
   endedAt?: number;
   isLive: boolean;
-  /** How much time the lanes show, from the now line back. */
+  /**
+   * How much time the lanes show. While the run fits in it the lanes fill from the start and no task
+   * moves; once the run outgrows it, the far edge is now and time drifts back.
+   */
   windowMs?: number;
   onApprove?: (approvalId: string) => void;
+  /** The request whose marker a demonstration holds down. */
+  pressedApprovalId?: string | null;
   className?: string;
 };
 
@@ -566,25 +721,34 @@ export function AgentLanes({
   isLive,
   windowMs = DEFAULT_WINDOW_MS,
   onApprove,
+  pressedApprovalId = null,
   className,
 }: AgentLanesProps) {
-  const orientation = useOrientation();
+  const { setElement, orientation } = useOrientation();
   const shouldReduceMotion = usePrefersReducedMotion();
-  const now = useLiveNow(1000, isLive);
-  const time = endedAt ?? now;
+  const now = useLiveNow(GROW_STEP_MS, isLive);
+  const lead = leadOf(isLive, shouldReduceMotion);
+  const reach = now + lead;
+  const time = endedAt ?? reach;
   const origin = startedAt ?? time;
   const frame: Frame = { origin, time, windowMs };
   const laneCount = agents.length;
   const visibleTasks = tasks.filter((task) => isInWindow(task, frame));
   const connectors = connectorsOf(visibleTasks, agents, frame);
+  const pulsingIds = pulsingIdsOf(agents);
   const isAcross = orientation === 'across';
   const isDown = orientation === 'down';
+  const drift = driftOf(frame);
+  const isDrifting = drift > 0;
+  const showsCover = !isDrifting;
+  const showsNowAtFoot = isDown && isDrifting;
+  const showsTicksFromStart = isAcross && showsCover;
+  const showsTicksBack = isAcross && isDrifting;
   const trackKey = `${startedAt ?? 'idle'}-${orientation}`;
-  const glides = isLive && !shouldReduceMotion;
   const viewportStyle = viewportStyleOf(orientation, laneCount);
 
   return (
-    <div className={cn('flex flex-col gap-1.5', className)}>
+    <div ref={setElement} className={cn('flex flex-col gap-1.5', className)}>
       {isDown && (
         <div
           aria-hidden='true'
@@ -594,7 +758,12 @@ export function AgentLanes({
           }}
         >
           {agents.map((agent) => (
-            <LaneLabel key={agent.id} agent={agent} orientation={orientation} />
+            <LaneLabel
+              key={agent.id}
+              agent={agent}
+              orientation={orientation}
+              isStill={!pulsingIds.has(agent.id)}
+            />
           ))}
         </div>
       )}
@@ -606,6 +775,7 @@ export function AgentLanes({
                 key={agent.id}
                 agent={agent}
                 orientation={orientation}
+                isStill={!pulsingIds.has(agent.id)}
               />
             ))}
           </div>
@@ -616,10 +786,7 @@ export function AgentLanes({
         >
           <div
             key={trackKey}
-            className={cn(
-              'absolute inset-0',
-              glides && 'transition-transform duration-1000 ease-linear'
-            )}
+            className={cn('absolute inset-0', travelOf(isLive))}
             style={trackStyleOf(frame, orientation)}
           >
             <Connectors
@@ -674,6 +841,7 @@ export function AgentLanes({
                         agent={agent}
                         frame={frame}
                         orientation={orientation}
+                        isPressed={pressedApprovalId === approval.id}
                         onApprove={onApprove}
                       />
                     ))}
@@ -681,41 +849,61 @@ export function AgentLanes({
                 );
               })}
             </ul>
-          </div>
-          <span
-            aria-hidden='true'
-            className={cn(
-              'bg-foreground/45 absolute',
-              isAcross && 'inset-y-0 end-0 w-px',
-              isDown && 'inset-x-0 bottom-0 h-px'
+            {showsCover && (
+              <NowCover
+                frame={frame}
+                orientation={orientation}
+                isLive={isLive}
+              />
             )}
-          />
-          {isDown && (
+          </div>
+          {isDrifting && (
             <span
               aria-hidden='true'
-              className='text-muted-foreground pointer-events-none absolute start-1.5 top-1 text-[10px] tabular-nums'
-            >
-              {tickWordOf(windowMs, 1)}
-            </span>
+              className={cn(
+                'bg-foreground/45 absolute',
+                isAcross && 'inset-y-0 right-0 w-px',
+                isDown && 'inset-x-0 bottom-0 h-px'
+              )}
+            />
           )}
           {isDown && (
             <span
               aria-hidden='true'
-              className='text-foreground pointer-events-none absolute end-1.5 bottom-1 text-[10px] font-medium'
+              className='text-muted-foreground pointer-events-none absolute end-1.5 top-1 z-20 text-[10px] leading-3 tabular-nums'
+            >
+              {startWordOf(windowMs, isDrifting)}
+            </span>
+          )}
+          {showsNowAtFoot && (
+            <span
+              aria-hidden='true'
+              className='text-foreground pointer-events-none absolute end-1.5 bottom-1 text-[10px] leading-3 font-medium'
             >
               Now
             </span>
           )}
         </div>
       </div>
-      {isAcross && (
+      {showsTicksFromStart && (
         <div
           aria-hidden='true'
           className='text-muted-foreground ms-28 flex justify-between text-[11px] tabular-nums'
         >
-          <span>{tickWordOf(windowMs, 1)}</span>
-          <span>{tickWordOf(windowMs, 2 / 3)}</span>
-          <span>{tickWordOf(windowMs, 1 / 3)}</span>
+          <span>{sinceStartWordOf(windowMs, 0)}</span>
+          <span>{sinceStartWordOf(windowMs, 1 / 3)}</span>
+          <span>{sinceStartWordOf(windowMs, 2 / 3)}</span>
+          <span>{sinceStartWordOf(windowMs, 1)}</span>
+        </div>
+      )}
+      {showsTicksBack && (
+        <div
+          aria-hidden='true'
+          className='text-muted-foreground ms-28 flex justify-between text-[11px] tabular-nums'
+        >
+          <span>{agoWordOf(windowMs, 1)}</span>
+          <span>{agoWordOf(windowMs, 2 / 3)}</span>
+          <span>{agoWordOf(windowMs, 1 / 3)}</span>
           <span className='text-foreground font-medium'>Now</span>
         </div>
       )}
@@ -745,84 +933,95 @@ function begin(
   agentId: string,
   label: string,
   parentId?: string
-): RunScriptStep['event'] {
+): RunEvent {
   return {
     type: 'call.started',
     call: { id, tool: 'task', label, status: 'running', agentId, parentId },
   };
 }
 
-function finish(id: string): RunScriptStep['event'] {
+function finish(id: string): RunEvent {
   return { type: 'call.updated', id, patch: { status: 'done' } };
 }
 
-function agentTo(
-  id: string,
-  status: RunAgent['status']
-): RunScriptStep['event'] {
+function agentTo(id: string, status: RunAgent['status']): RunEvent {
   return { type: 'agent.updated', id, patch: { status } };
 }
 
-const SCRIPT: RunScriptStep[] = [
-  { after: 500, event: { type: 'run.started' } },
-  { after: 0, event: agentTo(PLANNER.id, 'running') },
+function approvedBatchOf(approvalId: string) {
+  return batchOf(
+    { type: 'approval.resolved', id: approvalId, decision: 'approved' },
+    agentTo(WRITER.id, 'running')
+  );
+}
+
+function hasDecided(run: RunSnapshot) {
+  const pending = pendingApprovalsOf(run);
+  return pending.length === 0;
+}
+
+const SCRIPT: RunStep[] = [
+  batch(
+    500,
+    { type: 'run.started' },
+    agentTo(PLANNER.id, 'running'),
+    begin('split', PLANNER.id, 'Split the review into tasks')
+  ),
+  batch(1700, finish('split')),
+  batch(
+    250,
+    begin('collect', RESEARCHER.id, 'Collect 14 price lists', 'split'),
+    agentTo(RESEARCHER.id, 'running')
+  ),
+  batch(350, begin('track', PLANNER.id, 'Track the agents')),
+  batch(3200, finish('collect')),
+  batch(
+    250,
+    begin('compare', CODER.id, 'Compare invoices with prices', 'collect'),
+    agentTo(CODER.id, 'running')
+  ),
+  batch(450, begin('terms', RESEARCHER.id, 'Read the contract terms')),
+  batch(1700, finish('terms'), agentTo(RESEARCHER.id, 'done')),
+  batch(1100, finish('compare'), agentTo(CODER.id, 'done')),
+  batch(
+    250,
+    begin('draft', WRITER.id, 'Draft the credit request', 'compare'),
+    agentTo(WRITER.id, 'running')
+  ),
+  batch(1900, finish('draft')),
+  batch(
+    250,
+    begin('check', REVIEWER.id, 'Check the figures', 'draft'),
+    agentTo(REVIEWER.id, 'running')
+  ),
+  batch(
+    250,
+    begin('send', WRITER.id, 'Send the email'),
+    agentTo(WRITER.id, 'waiting'),
+    { type: 'approval.requested', approval: SEND_APPROVAL }
+  ),
   {
-    after: 0,
-    event: begin('split', PLANNER.id, 'Split the review into tasks'),
+    after: DECIDE_AFTER_MS,
+    by: 'person',
+    press: SEND_APPROVAL.id,
+    action: approvedBatchOf(SEND_APPROVAL.id),
+    isAnswered: hasDecided,
   },
-  { after: 2600, event: finish('split') },
-  {
-    after: 300,
-    event: begin('collect', RESEARCHER.id, 'Collect 14 price lists', 'split'),
-  },
-  { after: 0, event: agentTo(RESEARCHER.id, 'running') },
-  { after: 400, event: begin('track', PLANNER.id, 'Track the agents') },
-  { after: 6200, event: finish('collect') },
-  {
-    after: 300,
-    event: begin(
-      'compare',
-      CODER.id,
-      'Compare invoices with prices',
-      'collect'
-    ),
-  },
-  { after: 0, event: agentTo(CODER.id, 'running') },
-  {
-    after: 600,
-    event: begin('terms', RESEARCHER.id, 'Read the contract terms'),
-  },
-  { after: 3000, event: finish('terms') },
-  { after: 0, event: agentTo(RESEARCHER.id, 'done') },
-  { after: 2400, event: finish('compare') },
-  { after: 0, event: agentTo(CODER.id, 'done') },
-  {
-    after: 300,
-    event: begin('draft', WRITER.id, 'Draft the credit request', 'compare'),
-  },
-  { after: 0, event: agentTo(WRITER.id, 'running') },
-  { after: 2600, event: finish('draft') },
-  {
-    after: 300,
-    event: begin('check', REVIEWER.id, 'Check the figures', 'draft'),
-  },
-  { after: 0, event: agentTo(REVIEWER.id, 'running') },
-  { after: 300, event: begin('send', WRITER.id, 'Send the email') },
-  { after: 0, event: agentTo(WRITER.id, 'waiting') },
-  { after: 0, event: { type: 'approval.requested', approval: SEND_APPROVAL } },
-  { after: 1600, event: finish('send') },
-  { after: 0, event: agentTo(WRITER.id, 'done') },
-  { after: 1200, event: finish('check') },
-  { after: 0, event: agentTo(REVIEWER.id, 'done') },
-  { after: 600, event: finish('track') },
-  { after: 0, event: agentTo(PLANNER.id, 'done') },
-  { after: 0, event: { type: 'run.finished', status: 'done' } },
+  batch(900, finish('send'), agentTo(WRITER.id, 'done')),
+  batch(700, finish('check'), agentTo(REVIEWER.id, 'done')),
+  batch(500, finish('track'), agentTo(PLANNER.id, 'done'), {
+    type: 'run.finished',
+    status: 'done',
+  }),
 ];
 
-function isWaitingOnPerson(run: RunSnapshot) {
-  const pending = pendingApprovalsOf(run);
-  return pending.length > 0;
-}
+const SESSION = {
+  reducer: reduceBatch,
+  initial: INITIAL_RUN,
+  resting: restingOf(INITIAL_RUN, SCRIPT, applyBatchAt),
+  script: SCRIPT,
+  loopAfter: 3000,
+};
 
 function isLiveRun(run: RunSnapshot) {
   const isRunning = run.status === 'running';
@@ -848,56 +1047,53 @@ function announcementOf(run: RunSnapshot) {
 }
 
 export default function Agent02() {
-  const { ref, isInView, snapshot, store, restart } = useDemoRun(SCRIPT, {
-    initial: INITIAL_RUN,
-    holdWhile: isWaitingOnPerson,
-  });
-  const isEnded = snapshot.endedAt !== undefined;
-  const isLive = isLiveRun(snapshot);
-  const announcement = announcementOf(snapshot);
+  const { ref, isInView, isAutoplaying, state, act, pressed, restart } =
+    useSession(SESSION);
+  const isEnded = state.endedAt !== undefined;
+  const hasStarted = state.startedAt !== undefined;
+  const canReplay = isEnded && !isAutoplaying;
+  const isLive = isLiveRun(state);
+  const announcement = announcementOf(state);
 
   function approve(approvalId: string) {
-    store.dispatch({
-      type: 'approval.resolved',
-      id: approvalId,
-      decision: 'approved',
-    });
-    store.dispatch(agentTo(WRITER.id, 'running'));
+    act(approvedBatchOf(approvalId));
   }
 
   useKeptHeight(ref);
 
   return (
-    <div ref={ref} className='flex w-full max-w-[44rem] flex-col gap-2'>
-      <section
-        aria-label='Agent lanes'
-        className='bg-card hairline-ring ring-border flex flex-col gap-3 rounded-xl p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
-      >
-        <header className='flex items-baseline justify-between gap-3'>
-          <h3 className='truncate text-sm font-medium'>{snapshot.title}</h3>
-          <span className='text-muted-foreground shrink-0 text-xs tabular-nums'>
-            {snapshot.startedAt !== undefined && (
-              <LiveDuration item={snapshot} isRunning={isLive} />
-            )}
-          </span>
-        </header>
-        <ClockGate isActive={isInView}>
+    <div
+      ref={ref}
+      className='flex min-h-[21.5rem] w-full max-w-[44rem] flex-col gap-2'
+    >
+      <ClockGate isActive={isInView}>
+        <section
+          aria-label='Agent lanes'
+          className='bg-card hairline-ring ring-border flex flex-col gap-3 rounded-xl p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
+        >
+          <header className='flex items-baseline justify-between gap-3'>
+            <h3 className='truncate text-sm font-medium'>{state.title}</h3>
+            <span className='text-muted-foreground min-w-8 shrink-0 text-end text-xs'>
+              {hasStarted && <LiveDuration item={state} isRunning={isLive} />}
+            </span>
+          </header>
           <AgentLanes
-            agents={snapshot.agents}
-            tasks={snapshot.calls}
-            approvals={snapshot.approvals}
-            startedAt={snapshot.startedAt}
-            endedAt={snapshot.endedAt}
+            agents={state.agents}
+            tasks={state.calls}
+            approvals={state.approvals}
+            startedAt={state.startedAt}
+            endedAt={state.endedAt}
             isLive={isLive}
             windowMs={DEMO_WINDOW_MS}
             onApprove={approve}
+            pressedApprovalId={pressed}
           />
-        </ClockGate>
-      </section>
+        </section>
+      </ClockGate>
       <div className='flex h-7 items-center justify-end'>
-        <ReplayButton isShown={isEnded} onReplay={restart} />
+        <ReplayButton isShown={canReplay} onReplay={restart} />
       </div>
-      <LiveRegion message={announcement} />
+      <LiveRegion message={spokenUnless(isAutoplaying, announcement)} />
     </div>
   );
 }

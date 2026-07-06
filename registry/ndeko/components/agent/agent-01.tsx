@@ -4,7 +4,14 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useId, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
-import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
+import {
+  useRunScript,
+  type RunScriptStep,
+} from '@/registry/ndeko/hooks/use-agent-run';
+import {
+  useAutoplay,
+  type AutoplayStep,
+} from '@/registry/ndeko/hooks/use-autoplay';
 import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
@@ -18,6 +25,13 @@ import {
   type RunStatus,
   type StepStatus,
 } from '@/registry/ndeko/lib/agent-run';
+import {
+  hold,
+  PRESS_LEAD_MS,
+  pressedSolidOf,
+  spokenUnless,
+  usePress,
+} from '@/registry/ndeko/lib/demonstration';
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -34,27 +48,27 @@ import {
   PlusIcon,
   XIcon,
 } from '@/registry/ndeko/lib/icons';
-import { cn } from '@/registry/ndeko/lib/utils';
-import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
-import { Badge } from '@/registry/ndeko/ui/badge';
-import { Button } from '@/registry/ndeko/ui/button';
-import { Fold, Swap } from '@/registry/ndeko/ui/chat-motion';
-import { Chip } from '@/registry/ndeko/ui/chip';
-import { Input } from '@/registry/ndeko/ui/input';
-import { Progress, ProgressLabel } from '@/registry/ndeko/ui/progress';
-
-import { ClockGate, LiveDuration } from '@/registry/ndeko/ui/live-duration';
-import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import {
   fadePresence,
   rowPresenceOf,
   springOf,
 } from '@/registry/ndeko/lib/motion-presets';
+import { cn } from '@/registry/ndeko/lib/utils';
+import { Badge } from '@/registry/ndeko/ui/badge';
+import { Button } from '@/registry/ndeko/ui/button';
+import { Fold, Swap } from '@/registry/ndeko/ui/chat-motion';
+import { Chip } from '@/registry/ndeko/ui/chip';
+import { Input } from '@/registry/ndeko/ui/input';
+import { ClockGate, LiveDuration } from '@/registry/ndeko/ui/live-duration';
+import { LiveRegion } from '@/registry/ndeko/ui/live-region';
+import { Progress, ProgressLabel } from '@/registry/ndeko/ui/progress';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
-import { useDemoRun } from '@/registry/ndeko/hooks/use-demo-run';
+
 import { AgentTile } from './_parts/agent-tile';
-import { focusLater } from './_parts/focus-later';
 import { PAGE_ERROR, PLANNER, RUN_TITLE } from './_parts/crew';
+import { DECIDE_AFTER_MS } from './_parts/demo';
+import { focusLater } from './_parts/focus-later';
+import { KeyedHeight } from './_parts/keyed-height';
 import { RelativeTime } from './_parts/relative-time';
 import { countOf, nounOf } from './_parts/words';
 
@@ -225,6 +239,7 @@ function StepMark({
   );
 }
 
+/** A duration that ticks keeps its width, so the title beside it never shifts. */
 function StepTime({ step }: { step: PlanStep }) {
   const isRunning = step.status === 'running';
   const hasStarted = step.startedAt !== undefined;
@@ -235,7 +250,7 @@ function StepTime({ step }: { step: PlanStep }) {
     <LiveDuration
       item={step}
       isRunning={isRunning}
-      className='text-muted-foreground shrink-0 text-xs leading-5'
+      className='text-muted-foreground min-w-8 shrink-0 text-end text-xs leading-5'
     />
   );
 }
@@ -267,6 +282,8 @@ type StepContentProps = {
   agent: Pick<RunAgent, 'name' | 'series'>;
   hasSubsteps: boolean;
   isOpen: boolean;
+  /** The step the agent is on: the one that runs, or the next one in the breath between two steps. */
+  isCurrent: boolean;
   highlightId: string;
 };
 
@@ -276,12 +293,12 @@ function StepContent({
   agent,
   hasSubsteps,
   isOpen,
+  isCurrent,
   highlightId,
 }: StepContentProps) {
   const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const spring = springOf(shouldReduceMotion);
-  const isRunning = step.status === 'running';
   const isFailed = step.status === 'failed';
   const failure = step.detail ?? '';
   const hasFailure = failure !== '';
@@ -290,9 +307,10 @@ function StepContent({
 
   return (
     <>
-      {isRunning && (
+      {isCurrent && (
         <motion.span
           layoutId={highlightId}
+          layoutDependency={step.id}
           transition={spring}
           aria-hidden='true'
           className='bg-foreground/[0.04] dark:bg-foreground/[0.06] absolute inset-0 -z-10 rounded-lg'
@@ -356,6 +374,7 @@ type StepRowProps = {
   change: PlanChange | undefined;
   agent: Pick<RunAgent, 'name' | 'series'>;
   isOpen: boolean;
+  isCurrent: boolean;
   onToggle: (stepId: string, isOpen: boolean) => void;
   highlightId: string;
 };
@@ -365,6 +384,7 @@ function StepRow({
   change,
   agent,
   isOpen,
+  isCurrent,
   onToggle,
   highlightId,
 }: StepRowProps) {
@@ -383,6 +403,7 @@ function StepRow({
       agent={agent}
       hasSubsteps={hasSubsteps}
       isOpen={isOpen}
+      isCurrent={isCurrent}
       highlightId={highlightId}
     />
   );
@@ -417,9 +438,10 @@ type StepListProps = {
   steps: PlanStep[];
   changes: PlanChange[];
   agent: Pick<RunAgent, 'name' | 'series'>;
+  currentId: string | null;
 };
 
-function StepList({ steps, changes, agent }: StepListProps) {
+function StepList({ steps, changes, agent, currentId }: StepListProps) {
   const [toggled, setToggled] = useState<Record<string, boolean>>({});
   const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
@@ -444,6 +466,7 @@ function StepList({ steps, changes, agent }: StepListProps) {
               change={changeOf(changes, step.id)}
               agent={agent}
               isOpen={isOpenOf(step)}
+              isCurrent={step.id === currentId}
               onToggle={setOpen}
               highlightId={highlightId}
             />
@@ -526,6 +549,8 @@ function PlanEditor({ steps, onCancel, onSave }: PlanEditorProps) {
   const rowPresence = rowPresenceOf(shouldReduceMotion);
   const spring = springOf(shouldReduceMotion);
   const rowTransition = { ...rowPresence.transition, layout: spring };
+  const draftIds = draft.map((step) => step.id);
+  const orderKey = draftIds.join(' ');
   const blankStep = draft.find(isBlank);
   const showsBlankError = showsErrors && blankStep !== undefined;
   const isLastStep = draft.length === 1;
@@ -615,6 +640,7 @@ function PlanEditor({ steps, onCancel, onSave }: PlanEditorProps) {
               <motion.li
                 key={step.id}
                 layout='position'
+                layoutDependency={orderKey}
                 className='overflow-hidden'
                 {...rowPresence}
                 transition={rowTransition}
@@ -752,7 +778,7 @@ function PlanProgress({
           <LiveDuration
             item={{ startedAt, endedAt }}
             isRunning={isLive}
-            className='text-muted-foreground text-xs'
+            className='text-muted-foreground min-w-8 text-end text-xs'
           />
         )}
       </div>
@@ -832,6 +858,20 @@ function isLiveStatus(status: RunStatus) {
   return isRunning || isWaiting;
 }
 
+/**
+ * The row the agent is on. While the run is live it is the step that runs or, between two steps, the
+ * next one: the mark of the step that just ended and the highlight of the one that starts then move
+ * in the same instant.
+ */
+function currentIdOf(steps: PlanStep[], isLive: boolean) {
+  if (isLive) {
+    const current = currentStepOf(steps);
+    return current?.step.id ?? null;
+  }
+  const running = steps.find((step) => step.status === 'running');
+  return running?.id ?? null;
+}
+
 export type AgentPlanProps = {
   goal: string;
   agent: Pick<RunAgent, 'name' | 'series'>;
@@ -845,6 +885,8 @@ export type AgentPlanProps = {
   endedAt?: number;
   onApprove?: () => void;
   onSave?: (steps: PlanStep[]) => void;
+  /** Shows Approve plan held down, for a demonstration that presses it. */
+  isApprovePressed?: boolean;
   defaultFolded?: boolean;
   className?: string;
 };
@@ -860,6 +902,7 @@ export function AgentPlan({
   endedAt,
   onApprove,
   onSave,
+  isApprovePressed = false,
   defaultFolded = false,
   className,
 }: AgentPlanProps) {
@@ -875,8 +918,10 @@ export function AgentPlan({
   const resolvedAt = approval?.resolvedAt ?? 0;
   const showsTrace = wasApproved && !isEditing;
   const isLive = isLiveStatus(status);
+  const currentId = currentIdOf(steps, isLive);
   const foldedKey = foldedKeyOf(phase, steps);
   const toggleLabel = toggleLabelOf(isFolded);
+  const shapeKey = `${isFolded}-${isEditing}`;
 
   function toggleFolded() {
     setIsFolded((current) => !current);
@@ -929,7 +974,7 @@ export function AgentPlan({
           </Swap>
         </Button>
       )}
-      <AnimatedSize>
+      <KeyedHeight changeKey={shapeKey}>
         <div className='relative'>
           <AnimatePresence mode='popLayout' initial={false}>
             {isFolded && (
@@ -1007,6 +1052,7 @@ export function AgentPlan({
                           steps={steps}
                           changes={changes}
                           agent={agent}
+                          currentId={currentId}
                         />
                       </motion.div>
                     )}
@@ -1016,7 +1062,7 @@ export function AgentPlan({
                   {isWaiting && (
                     <motion.div
                       key='ask'
-                      className='flex flex-wrap items-center justify-between gap-x-3 gap-y-2'
+                      className='flex min-h-8 flex-wrap items-center justify-between gap-x-3 gap-y-2'
                       {...fade}
                     >
                       <p className='text-muted-foreground text-xs'>
@@ -1038,6 +1084,7 @@ export function AgentPlan({
                           size='sm'
                           onClick={approve}
                           data-plan-action='approve'
+                          className={pressedSolidOf(isApprovePressed)}
                         >
                           <CheckIcon />
                           Approve plan
@@ -1048,7 +1095,7 @@ export function AgentPlan({
                   {showsTrace && (
                     <motion.p
                       key='trace'
-                      className='text-muted-foreground flex items-center gap-1.5 text-xs'
+                      className='text-muted-foreground flex min-h-8 items-center gap-1.5 text-xs'
                       {...fade}
                     >
                       <CheckIcon className='text-success-foreground size-3.5 shrink-0' />
@@ -1062,7 +1109,7 @@ export function AgentPlan({
             )}
           </AnimatePresence>
         </div>
-      </AnimatedSize>
+      </KeyedHeight>
     </section>
   );
 }
@@ -1282,15 +1329,56 @@ function announcementOf(
   return position;
 }
 
+function durationOf(script: RunScriptStep[]) {
+  let total = 0;
+  for (const step of script) {
+    total += step.after;
+  }
+  return total;
+}
+
+const DEMO_PLAN = withRevisionSlot(PLAN);
+
+const DEMO_SCRIPT = scriptOf(DEMO_PLAN);
+
+const LAST_CHECK_MS = 600;
+
+/**
+ * The demonstration approves the plan as it was proposed, so it knows how long that run takes: it
+ * holds for as long, then a moment more so the last check is seen landing, before the next round.
+ */
+const DEMO_RUN_MS = durationOf(DEMO_SCRIPT) + LAST_CHECK_MS;
+
+type PressKey = 'approve';
+
+/**
+ * The run is built from the plan a person approves, edits included, so its script is not known
+ * ahead: it plays into the run store, and the demonstration only presses Approve plan and waits.
+ */
 export default function Agent01() {
   const [script, setScript] = useState(NO_SCRIPT);
-  const { ref, isInView, snapshot, store, restart } = useDemoRun(script, {
-    initial: INITIAL_RUN,
-  });
+  const { pressed, press } = usePress<PressKey>();
+  const demoSteps: AutoplayStep[] = [
+    { after: DECIDE_AFTER_MS, run: () => press('approve') },
+    { after: PRESS_LEAD_MS, run: () => approve() },
+    { after: DEMO_RUN_MS, run: hold },
+  ];
+  const {
+    ref,
+    isInView,
+    isAutoplaying,
+    restart: replay,
+  } = useAutoplay(demoSteps, { loopAfter: 3000, onReset: () => resetRun() });
+  const {
+    snapshot,
+    store,
+    restart: restartRun,
+  } = useRunScript(script, { initial: INITIAL_RUN, isActive: isInView });
   const steps = visibleStepsOf(snapshot.plan);
   const changes = changesOf(snapshot.plan);
   const [approval] = snapshot.approvals;
   const isEnded = snapshot.endedAt !== undefined;
+  const canReplay = isEnded && !isAutoplaying;
   const announcement = announcementOf(snapshot, steps, changes);
 
   function approve() {
@@ -1308,15 +1396,18 @@ export default function Agent01() {
     store.dispatch({ type: 'plan.set', steps: nextSteps });
   }
 
-  function replay() {
+  function resetRun() {
     setScript(NO_SCRIPT);
-    restart();
+    restartRun();
   }
 
   useKeptHeight(ref);
 
   return (
-    <div ref={ref} className='flex w-full max-w-[34rem] flex-col gap-2'>
+    <div
+      ref={ref}
+      className='flex min-h-[38.5rem] w-full max-w-[34rem] flex-col gap-2'
+    >
       <ClockGate isActive={isInView}>
         <AgentPlan
           goal={GOAL}
@@ -1329,16 +1420,17 @@ export default function Agent01() {
           endedAt={snapshot.endedAt}
           onApprove={approve}
           onSave={save}
+          isApprovePressed={pressed === 'approve'}
         />
       </ClockGate>
       <div className='flex h-7 items-center justify-end'>
         <ReplayButton
-          isShown={isEnded}
+          isShown={canReplay}
           onReplay={replay}
           label='Replay the plan'
         />
       </div>
-      <LiveRegion message={announcement} />
+      <LiveRegion message={spokenUnless(isAutoplaying, announcement)} />
     </div>
   );
 }

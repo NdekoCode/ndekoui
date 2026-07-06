@@ -1,30 +1,33 @@
 'use client';
 
-import { AnimatePresence, motion, type MotionProps } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useLayoutEffect, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
-import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
 import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
+import { useSession } from '@/registry/ndeko/hooks/use-session';
 import {
   emptyRun,
   seriesColorOf,
   type AgentStatus as AgentState,
   type CallStatus,
   type RunAgent,
+  type RunEvent,
   type RunSnapshot,
   type SeriesSlot,
   type ToolCall,
 } from '@/registry/ndeko/lib/agent-run';
-import { cn } from '@/registry/ndeko/lib/utils';
+import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
+import { slowSpringOf } from '@/registry/ndeko/lib/motion-presets';
 import {
-  Popover,
-  PopoverContent,
-  PopoverTitle,
-  PopoverTrigger,
-} from '@/registry/ndeko/ui/popover';
-
+  applyBatchAt,
+  batch,
+  reduceBatch,
+  restingOf,
+  type RunStep,
+} from '@/registry/ndeko/lib/run-session';
+import { cn } from '@/registry/ndeko/lib/utils';
 import {
   CALL_STATUS_WORD,
   CallStatusMark,
@@ -32,19 +35,31 @@ import {
 import { ClockGate, LiveDuration } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import {
-  EASE_IN_OUT_STRONG,
-  slowSpringOf,
-} from '@/registry/ndeko/lib/motion-presets';
+  Popover,
+  PopoverContent,
+  PopoverTitle,
+  PopoverTrigger,
+} from '@/registry/ndeko/ui/popover';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
 import { Segments, type Segment } from '@/registry/ndeko/ui/segments';
-import { useDemoRun } from '@/registry/ndeko/hooks/use-demo-run';
-import { AGENT_STATUS_WORD, AgentStatus } from './_parts/agent-status';
+
+import {
+  AGENT_STATUS_WORD,
+  AgentStatus,
+  pulsingIdsOf,
+} from './_parts/agent-status';
 import { AgentTile } from './_parts/agent-tile';
 import { CODER, PLANNER, RESEARCHER, RUN_TITLE, WRITER } from './_parts/crew';
 import { ToolTile } from './_parts/tool-tile';
 import { nounOf } from './_parts/words';
 
 export type GraphLayout = 'tree' | 'flow' | 'hub';
+
+/** The agents and the calls a run is expected to involve, when they are known before it starts. */
+export type ExpectedGraph = {
+  agents: RunAgent[];
+  calls: ToolCall[];
+};
 
 type GraphNode = {
   id: string;
@@ -343,7 +358,7 @@ function NodeDetails({ node }: { node: GraphNode }) {
             {isTool && `Called by ${node.owner?.name ?? 'an agent'}`}
           </p>
         </div>
-        {node.agent && <AgentStatus status={node.agent.status} />}
+        {node.agent && <AgentStatus status={node.agent.status} isStill />}
       </div>
       <div className='flex flex-col gap-1'>
         <p className='text-muted-foreground text-xs font-medium'>Last calls</p>
@@ -385,10 +400,13 @@ function GraphNodeButton({
   node,
   point,
   label,
+  isPulsing,
 }: {
   node: GraphNode;
   point: Point;
   label: string;
+  /** Only the halo of a running agent breathes, and three at most in the graph. */
+  isPulsing: boolean;
 }) {
   const shouldReduceMotion = usePrefersReducedMotion();
   const glide = slowSpringOf(shouldReduceMotion);
@@ -432,7 +450,8 @@ function GraphNodeButton({
             <span
               aria-hidden='true'
               className={cn(
-                'absolute -inset-1 animate-pulse',
+                'absolute -inset-1',
+                isPulsing && 'animate-pulse',
                 isAgent && 'rounded-[14px]',
                 isTool && 'rounded-xl'
               )}
@@ -473,29 +492,136 @@ type Edge = {
   series: SeriesSlot;
 };
 
-type StreakMotion = Pick<MotionProps, 'initial' | 'animate' | 'transition'>;
+/**
+ * An edge draws itself once, when one agent calls another or reaches for a tool, then holds still:
+ * its length is normalised to 1. The edges the graph is first shown with are there, they do not arrive.
+ */
+const EDGE_DRAW =
+  'transition-[stroke-dashoffset] duration-500 ease-(--ease-out-strong) [stroke-dasharray:1] [stroke-dashoffset:0] starting:[stroke-dashoffset:1]';
 
-const STREAK_TRAVEL: StreakMotion = {
-  initial: { pathLength: 0.2, pathOffset: 0, opacity: 0 },
-  animate: { pathOffset: 0.85, opacity: [0, 1, 1, 0] },
-  transition: { duration: 0.85, ease: EASE_IN_OUT_STRONG },
-};
-
-const STREAK_FLASH: StreakMotion = {
-  initial: { opacity: 0 },
-  animate: { opacity: [0, 0.8, 0] },
-  transition: { duration: 0.9 },
-};
-
-function streakOf(shouldReduceMotion: boolean | null) {
-  if (shouldReduceMotion) {
-    return STREAK_FLASH;
+function edgeDrawOf(edgeId: string, firstNodeIds: Set<string>) {
+  const wasThereAtFirst = firstNodeIds.has(edgeId);
+  if (wasThereAtFirst) {
+    return undefined;
   }
-  return STREAK_TRAVEL;
+  return EDGE_DRAW;
 }
 
-function streakKeyOf(call: ToolCall) {
+const QUICK_EXIT = { duration: 0.14 };
+
+/**
+ * A call sends a dot from the agent to its tool. Each axis travels on its own curve, and the two
+ * curves below are the ones that trace the edge itself: a cubic whose handles sit halfway along one
+ * axis moves like a smooth step on the other. Both are transitions on `translate`, so the dot costs
+ * no script and no layout.
+ */
+const HOP_TRAVEL = 'transition-[translate] duration-700';
+
+const SMOOTH_STEP = 'cubic-bezier(0.3333, 0, 0.6667, 1)';
+
+const HALFWAY_HANDLES = 'cubic-bezier(0.3333, 0.5, 0.6667, 0.5)';
+
+type HopEasing = { across: string; down: string };
+
+const HOP_EASING: Record<GraphLayout, HopEasing> = {
+  tree: { across: SMOOTH_STEP, down: HALFWAY_HANDLES },
+  flow: { across: HALFWAY_HANDLES, down: SMOOTH_STEP },
+  hub: { across: 'linear', down: 'linear' },
+};
+
+type Hop = {
+  key: string;
+  from: Point;
+  to: Point;
+  series: SeriesSlot;
+};
+
+type HopStyle = React.CSSProperties & {
+  '--hop-from': string;
+  '--hop-to': string;
+};
+
+function hopStyleOf(from: number, to: number, easing: string): HopStyle {
+  return {
+    '--hop-from': `${round(from)}px`,
+    '--hop-to': `${round(to)}px`,
+    transitionTimingFunction: easing,
+  };
+}
+
+function CallHop({ hop, layout }: { hop: Hop; layout: GraphLayout }) {
+  const easing = HOP_EASING[layout];
+  const acrossStyle = hopStyleOf(hop.from.x, hop.to.x, easing.across);
+  const downStyle = hopStyleOf(hop.from.y, hop.to.y, easing.down);
+
+  return (
+    <span
+      className={cn(
+        'absolute top-0 left-0 translate-x-(--hop-to) starting:translate-x-(--hop-from)',
+        HOP_TRAVEL
+      )}
+      style={acrossStyle}
+    >
+      <span
+        className={cn(
+          'block translate-y-(--hop-to) starting:translate-y-(--hop-from)',
+          HOP_TRAVEL
+        )}
+        style={downStyle}
+      >
+        <span
+          className='block size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-0 transition-opacity delay-500 duration-200 starting:opacity-100'
+          style={{ backgroundColor: seriesColorOf(hop.series) }}
+        />
+      </span>
+    </span>
+  );
+}
+
+function hopKeyOf(call: ToolCall) {
   return `${call.id}-${call.startedAt ?? 0}`;
+}
+
+function isRunningCall(call: ToolCall) {
+  return call.status === 'running';
+}
+
+/** A dot belongs to a call in flight and leaves when the call returns, so a long run keeps no trail of them. */
+function hopsOf(
+  calls: ToolCall[],
+  agents: RunAgent[],
+  points: Map<string, Point>,
+  seenKeys: Set<string>
+) {
+  const hops: Hop[] = [];
+  const runningCalls = calls.filter(isRunningCall);
+  for (const call of runningCalls) {
+    const key = hopKeyOf(call);
+    const ownerId = call.agentId ?? '';
+    const owner = agents.find((agent) => agent.id === ownerId);
+    const from = points.get(ownerId);
+    const to = points.get(`${ownerId}:${call.tool}`);
+    const isSeen = seenKeys.has(key);
+    if (isSeen || !owner) {
+      continue;
+    }
+    if (!from || !to) {
+      continue;
+    }
+    hops.push({ key, from, to, series: owner.series });
+  }
+  return hops;
+}
+
+/** What was planned keeps its order, so a node that joins later takes the place kept for it. */
+function mergedById<Item extends { id: string }>(
+  planned: Item[],
+  present: Item[]
+) {
+  const plannedIds = planned.map((item) => item.id);
+  const known = new Set(plannedIds);
+  const extras = present.filter((item) => !known.has(item.id));
+  return [...planned, ...extras];
 }
 
 function edgesOf(
@@ -518,16 +644,30 @@ function edgesOf(
   return edges;
 }
 
-function initialStreakKeys(calls: ToolCall[]) {
-  const keys = calls.map(streakKeyOf);
+function initialHopKeys(calls: ToolCall[]) {
+  const keys = calls.map(hopKeyOf);
   return new Set(keys);
+}
+
+function initialNodeIds(agents: RunAgent[], calls: ToolCall[]) {
+  const nodes = nodesOf(agents, calls);
+  const ids = nodes.map((node) => node.id);
+  return new Set(ids);
 }
 
 const NO_CALLS: ToolCall[] = [];
 
+const NOTHING_EXPECTED: ExpectedGraph = { agents: [], calls: [] };
+
 export type AgentGraphProps = {
   agents: RunAgent[];
   calls?: ToolCall[];
+  /**
+   * What the run is expected to involve. Every node then has its place from the start and appears
+   * there when it joins, so the rest of the graph holds still. Without it the graph is laid out
+   * again each time a node joins.
+   */
+  expected?: ExpectedGraph;
   defaultLayout?: GraphLayout;
   className?: string;
 };
@@ -535,20 +675,24 @@ export type AgentGraphProps = {
 export function AgentGraph({
   agents,
   calls = NO_CALLS,
+  expected = NOTHING_EXPECTED,
   defaultLayout = 'tree',
   className,
 }: AgentGraphProps) {
   const [layout, setLayout] = useState<GraphLayout>(defaultLayout);
-  const [playedKeys, setPlayedKeys] = useState(() => initialStreakKeys(calls));
+  const [seenHopKeys] = useState(() => initialHopKeys(calls));
+  const [firstNodeIds] = useState(() => initialNodeIds(agents, calls));
   const { setStage, size } = useStageSize();
   const shouldReduceMotion = usePrefersReducedMotion();
   const glide = slowSpringOf(shouldReduceMotion);
-  const streak = streakOf(shouldReduceMotion);
   const nodes = nodesOf(agents, calls);
-  const plan = planOf(nodes);
+  const placedAgents = mergedById(expected.agents, agents);
+  const placedCalls = mergedById(expected.calls, calls);
+  const placedNodes = nodesOf(placedAgents, placedCalls);
+  const plan = planOf(placedNodes);
   const points = new Map<string, Point>();
   if (size) {
-    for (const node of nodes) {
+    for (const node of placedNodes) {
       const placement = plan.placements.get(node.id);
       if (placement) {
         const point = pointOf(layout, placement, plan, size);
@@ -557,21 +701,11 @@ export function AgentGraph({
     }
   }
   const edges = edgesOf(nodes, points, layout);
-  const freshCalls = calls.filter((call) => {
-    const key = streakKeyOf(call);
-    return !playedKeys.has(key);
-  });
+  const hops = hopsOf(calls, agents, points, seenHopKeys);
+  const pulsingIds = pulsingIdsOf(agents);
   const agentCount = agents.length;
   const toolCount = nodes.length - agentCount;
   const callCount = calls.length;
-
-  function markPlayed(key: string) {
-    setPlayedKeys((current) => {
-      const next = new Set(current);
-      next.add(key);
-      return next;
-    });
-  }
 
   return (
     <div className={cn('flex flex-col gap-3', className)}>
@@ -605,43 +739,29 @@ export function AgentGraph({
               {edges.map((edge) => (
                 <motion.path
                   key={edge.id}
+                  pathLength={1}
                   fill='none'
                   strokeWidth={1.25}
                   strokeOpacity={0.5}
+                  className={edgeDrawOf(edge.id, firstNodeIds)}
                   style={{ stroke: seriesColorOf(edge.series) }}
-                  initial={{ opacity: 0, d: edge.path }}
-                  animate={{ opacity: 1, d: edge.path }}
-                  exit={{ opacity: 0 }}
+                  initial={{ d: edge.path }}
+                  animate={{ d: edge.path }}
+                  exit={{ opacity: 0, transition: QUICK_EXIT }}
                   transition={glide}
                 />
               ))}
             </AnimatePresence>
-            {freshCalls.map((call) => {
-              const ownerId = call.agentId ?? '';
-              const from = points.get(ownerId);
-              const to = points.get(`${ownerId}:${call.tool}`);
-              const owner = agents.find((agent) => agent.id === ownerId);
-              const key = streakKeyOf(call);
-              const canDraw = from !== undefined && to !== undefined;
-              const hasOwner = owner !== undefined;
-              if (!canDraw || !hasOwner) {
-                return null;
-              }
-              return (
-                <motion.path
-                  key={key}
-                  d={edgePathOf(layout, from, to)}
-                  fill='none'
-                  strokeWidth={2.5}
-                  strokeLinecap='round'
-                  style={{ stroke: seriesColorOf(owner.series) }}
-                  onAnimationComplete={() => markPlayed(key)}
-                  {...streak}
-                />
-              );
-            })}
           </svg>
         )}
+        <div
+          aria-hidden='true'
+          className='pointer-events-none absolute inset-0'
+        >
+          {hops.map((hop) => (
+            <CallHop key={hop.key} hop={hop} layout={layout} />
+          ))}
+        </div>
         {size && (
           <ul aria-label='Agents and tools' className='absolute inset-0'>
             <AnimatePresence initial={false}>
@@ -656,6 +776,7 @@ export function AgentGraph({
                       node={node}
                       point={point}
                       label={nodeLabelOf(node, nodes)}
+                      isPulsing={pulsingIds.has(node.id)}
                     />
                   </li>
                 );
@@ -683,14 +804,11 @@ const PAGE_READER: RunAgent = {
   parentId: RESEARCHER.id,
 };
 
-function spawned(agent: RunAgent): RunScriptStep['event'] {
+function spawned(agent: RunAgent): RunEvent {
   return { type: 'agent.added', agent: { ...agent, status: 'running' } };
 }
 
-function settled(
-  id: string,
-  status: RunAgent['status']
-): RunScriptStep['event'] {
+function settled(id: string, status: RunAgent['status']): RunEvent {
   return { type: 'agent.updated', id, patch: { status } };
 }
 
@@ -699,103 +817,114 @@ function called(
   agentId: string,
   tool: string,
   label: string
-): RunScriptStep['event'] {
+): RunEvent {
   return {
     type: 'call.started',
     call: { id, agentId, tool, label, status: 'running' },
   };
 }
 
-function returned(
-  id: string,
-  status: CallStatus = 'done'
-): RunScriptStep['event'] {
+function returned(id: string, status: CallStatus = 'done'): RunEvent {
   return { type: 'call.updated', id, patch: { status } };
 }
 
-const SCRIPT: RunScriptStep[] = [
-  { after: 500, event: { type: 'run.started' } },
-  { after: 400, event: spawned(RESEARCHER) },
-  {
-    after: 500,
-    event: called(
+const SCRIPT: RunStep[] = [
+  batch(500, { type: 'run.started' }),
+  batch(400, spawned(RESEARCHER)),
+  batch(
+    500,
+    called(
       'search-1',
       RESEARCHER.id,
       'web_search',
       'Searched for Brightmoor prices'
-    ),
-  },
-  { after: 900, event: returned('search-1') },
-  { after: 300, event: spawned(CODER) },
-  {
-    after: 400,
-    event: called('sheet-1', CODER.id, 'read_sheet', 'Read q3-invoices.xlsx'),
-  },
-  {
-    after: 400,
-    event: called(
-      'fetch-1',
-      RESEARCHER.id,
-      'fetch_page',
-      'Read the pricing page'
-    ),
-  },
-  { after: 700, event: returned('sheet-1') },
-  { after: 300, event: returned('fetch-1', 'failed') },
-  { after: 400, event: spawned(PAGE_READER) },
-  {
-    after: 500,
-    event: called(
+    )
+  ),
+  batch(900, returned('search-1')),
+  batch(300, spawned(CODER)),
+  batch(
+    400,
+    called('sheet-1', CODER.id, 'read_sheet', 'Read q3-invoices.xlsx')
+  ),
+  batch(
+    400,
+    called('fetch-1', RESEARCHER.id, 'fetch_page', 'Read the pricing page')
+  ),
+  batch(700, returned('sheet-1')),
+  batch(300, returned('fetch-1', 'failed')),
+  batch(400, spawned(PAGE_READER)),
+  batch(
+    500,
+    called(
       'fetch-2',
       PAGE_READER.id,
       'fetch_page',
       'Read the cached pricing page'
-    ),
-  },
-  {
-    after: 600,
-    event: called('python-1', CODER.id, 'run_python', 'Ran compare_prices.py'),
-  },
-  { after: 800, event: returned('fetch-2') },
-  { after: 300, event: settled(PAGE_READER.id, 'done') },
-  {
-    after: 400,
-    event: called(
+    )
+  ),
+  batch(
+    600,
+    called('python-1', CODER.id, 'run_python', 'Ran compare_prices.py')
+  ),
+  batch(800, returned('fetch-2')),
+  batch(300, settled(PAGE_READER.id, 'done')),
+  batch(
+    400,
+    called(
       'search-2',
       RESEARCHER.id,
       'web_search',
       'Searched for the contract terms'
-    ),
-  },
-  { after: 700, event: returned('python-1') },
-  { after: 300, event: returned('search-2') },
-  { after: 200, event: settled(RESEARCHER.id, 'done') },
-  {
-    after: 400,
-    event: called(
-      'python-2',
-      CODER.id,
-      'run_python',
-      'Summed what was overpaid'
-    ),
-  },
-  { after: 900, event: returned('python-2') },
-  { after: 200, event: settled(CODER.id, 'done') },
-  { after: 300, event: spawned(WRITER) },
-  {
-    after: 500,
-    event: called(
-      'draft-1',
-      WRITER.id,
-      'draft_email',
-      'Drafted the credit request'
-    ),
-  },
-  { after: 1400, event: returned('draft-1') },
-  { after: 200, event: settled(WRITER.id, 'done') },
-  { after: 300, event: settled(PLANNER.id, 'done') },
-  { after: 0, event: { type: 'run.finished', status: 'done' } },
+    )
+  ),
+  batch(700, returned('python-1')),
+  batch(300, returned('search-2')),
+  batch(200, settled(RESEARCHER.id, 'done')),
+  batch(
+    400,
+    called('python-2', CODER.id, 'run_python', 'Summed what was overpaid')
+  ),
+  batch(900, returned('python-2')),
+  batch(200, settled(CODER.id, 'done')),
+  batch(300, spawned(WRITER)),
+  batch(
+    500,
+    called('draft-1', WRITER.id, 'draft_email', 'Drafted the credit request')
+  ),
+  batch(1400, returned('draft-1')),
+  batch(200, settled(WRITER.id, 'done')),
+  batch(300, settled(PLANNER.id, 'done'), {
+    type: 'run.finished',
+    status: 'done',
+  }),
 ];
+
+/** The script is known ahead, so every agent and every tool has its place before it joins. */
+function expectedOf(initial: RunSnapshot, script: RunStep[]): ExpectedGraph {
+  const agents = [...initial.agents];
+  const calls: ToolCall[] = [];
+  for (const step of script) {
+    for (const event of step.action.events) {
+      if (event.type === 'agent.added') {
+        agents.push(event.agent);
+      }
+      if (event.type === 'call.started') {
+        calls.push(event.call);
+      }
+    }
+  }
+  return { agents, calls };
+}
+
+const EXPECTED = expectedOf(INITIAL_RUN, SCRIPT);
+
+const SESSION = {
+  reducer: reduceBatch,
+  initial: INITIAL_RUN,
+  resting: restingOf(INITIAL_RUN, SCRIPT, applyBatchAt),
+  script: SCRIPT,
+  loopAfter: 3000,
+};
 
 function announcementOf(run: RunSnapshot) {
   const latest = run.calls.at(-1);
@@ -820,34 +949,40 @@ function crewWordOf(run: RunSnapshot) {
 }
 
 export default function Agent03() {
-  const { ref, isInView, snapshot, restart } = useDemoRun(SCRIPT, {
-    initial: INITIAL_RUN,
-  });
-  const isEnded = snapshot.endedAt !== undefined;
-  const announcement = announcementOf(snapshot);
+  const { ref, isInView, isAutoplaying, state, restart } = useSession(SESSION);
+  const isEnded = state.endedAt !== undefined;
+  const canReplay = isEnded && !isAutoplaying;
+  const announcement = announcementOf(state);
 
   useKeptHeight(ref);
 
   return (
-    <div ref={ref} className='flex w-full max-w-[44rem] flex-col gap-2'>
-      <section
-        aria-label='Agent graph'
-        className='bg-card hairline-ring ring-border flex flex-col gap-3 rounded-xl p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
-      >
-        <header className='flex items-baseline justify-between gap-3'>
-          <h3 className='truncate text-sm font-medium'>{snapshot.title}</h3>
-          <span className='text-muted-foreground shrink-0 text-xs'>
-            {crewWordOf(snapshot)}
-          </span>
-        </header>
-        <ClockGate isActive={isInView}>
-          <AgentGraph agents={snapshot.agents} calls={snapshot.calls} />
-        </ClockGate>
-      </section>
+    <div
+      ref={ref}
+      className='flex min-h-[28.75rem] w-full max-w-[44rem] flex-col gap-2'
+    >
+      <ClockGate isActive={isInView}>
+        <section
+          aria-label='Agent graph'
+          className='bg-card hairline-ring ring-border flex flex-col gap-3 rounded-xl p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)]'
+        >
+          <header className='flex items-baseline justify-between gap-3'>
+            <h3 className='truncate text-sm font-medium'>{state.title}</h3>
+            <span className='text-muted-foreground shrink-0 text-xs'>
+              {crewWordOf(state)}
+            </span>
+          </header>
+          <AgentGraph
+            agents={state.agents}
+            calls={state.calls}
+            expected={EXPECTED}
+          />
+        </section>
+      </ClockGate>
       <div className='flex h-7 items-center justify-end'>
-        <ReplayButton isShown={isEnded} onReplay={restart} />
+        <ReplayButton isShown={canReplay} onReplay={restart} />
       </div>
-      <LiveRegion message={announcement} />
+      <LiveRegion message={spokenUnless(isAutoplaying, announcement)} />
     </div>
   );
 }

@@ -1,38 +1,55 @@
 'use client';
 
 import { AnimatePresence, motion } from 'motion/react';
-import { useId, useRef, useState } from 'react';
+import { useContext, useId, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
-import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
+import { ClockGateContext } from '@/registry/ndeko/hooks/use-agent-run';
 import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
+  useSession,
+  type SessionStep,
+} from '@/registry/ndeko/hooks/use-session';
+import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
+import {
   emptyRun,
+  reduceRun,
   type AgentStatus as AgentState,
   type ApprovalRequest,
   type RunAgent,
+  type RunEvent,
+  type RunSnapshot,
 } from '@/registry/ndeko/lib/agent-run';
+import {
+  pressedQuietOf,
+  spokenUnless,
+} from '@/registry/ndeko/lib/demonstration';
 import { ChevronDownIcon } from '@/registry/ndeko/lib/icons';
+import { risePresenceOf, springOf } from '@/registry/ndeko/lib/motion-presets';
+import { applyBatchAt, restingOf } from '@/registry/ndeko/lib/run-session';
 import { cn } from '@/registry/ndeko/lib/utils';
-import { AnimatedSize } from '@/registry/ndeko/ui/animated-size';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Fold } from '@/registry/ndeko/ui/chat-motion';
-import { ToggleGroup, ToggleGroupItem } from '@/registry/ndeko/ui/toggle-group';
-
-import { ClockGate, LiveDuration } from '@/registry/ndeko/ui/live-duration';
+import { ClockGate } from '@/registry/ndeko/ui/live-duration';
 import { LiveRegion } from '@/registry/ndeko/ui/live-region';
-import { risePresenceOf, springOf } from '@/registry/ndeko/lib/motion-presets';
 import { ReplayButton } from '@/registry/ndeko/ui/replay-button';
 import { Segments, type Segment } from '@/registry/ndeko/ui/segments';
-import { useDemoRun } from '@/registry/ndeko/hooks/use-demo-run';
-import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
+import { ToggleGroup, ToggleGroupItem } from '@/registry/ndeko/ui/toggle-group';
+
 import { AgentActions, pendingApprovalOf } from './_parts/agent-actions';
-import { AGENT_STATUS_WORD, AgentStatus } from './_parts/agent-status';
+import { AgentClock } from './_parts/agent-clock';
+import {
+  AGENT_STATUS_WORD,
+  AgentStatus,
+  pulsingIdsOf,
+} from './_parts/agent-status';
 import { AgentTile } from './_parts/agent-tile';
 import { CostFigure } from './_parts/cost-figure';
-import { focusLater } from './_parts/focus-later';
 import { CODER, PLANNER, RESEARCHER, REVIEWER, WRITER } from './_parts/crew';
+import { DECIDE_AFTER_MS, pressedIdOf } from './_parts/demo';
+import { focusLater } from './_parts/focus-later';
+import { KeyedHeight } from './_parts/keyed-height';
 import { useAgentAnnouncement } from './_parts/use-agent-announcement';
 import { countOf } from './_parts/words';
 
@@ -214,12 +231,6 @@ function attentionOf(entry: FleetEntry, approvals: ApprovalRequest[]) {
   return null;
 }
 
-function isLiveAgent(agent: RunAgent) {
-  const isRunning = agent.status === 'running';
-  const isWaiting = agent.status === 'waiting';
-  return isRunning || isWaiting;
-}
-
 function chevronTurnOf(isOpen: boolean) {
   if (isOpen) {
     return 'rotate-180';
@@ -235,18 +246,12 @@ function toggleLabelOf(entry: FleetEntry, isOpen: boolean) {
   return `Show the ${subAgents} of ${entry.agent.name}`;
 }
 
-function AgentClock({ agent }: { agent: RunAgent }) {
-  const hasStarted = agent.startedAt !== undefined;
-  if (!hasStarted) {
-    return <span>Not started</span>;
-  }
-  return <LiveDuration item={agent} isRunning={isLiveAgent(agent)} />;
-}
-
 type SubAgentListProps = {
   owner: RunAgent;
   subAgents: RunAgent[];
   approvals: ApprovalRequest[];
+  pressedApproveId: string | null;
+  pressedRetryId: string | null;
   onApprove?: (approvalId: string) => void;
   onRetry?: (agentId: string) => void;
 };
@@ -255,6 +260,8 @@ function SubAgentList({
   owner,
   subAgents,
   approvals,
+  pressedApproveId,
+  pressedRetryId,
   onApprove,
   onRetry,
 }: SubAgentListProps) {
@@ -288,7 +295,7 @@ function SubAgentList({
               <span className='text-[13px] leading-5 font-medium'>
                 {subAgent.name}
               </span>
-              <AgentStatus status={subAgent.status} size='sm' />
+              <AgentStatus status={subAgent.status} size='sm' isStill />
             </p>
             <p className='text-muted-foreground truncate text-xs leading-5'>
               {subAgent.task}
@@ -299,13 +306,15 @@ function SubAgentList({
               onApprove={onApprove}
               onRetry={onRetry}
               onDecided={focusRow}
+              isApprovePressed={pressedApproveId === subAgent.id}
+              isRetryPressed={pressedRetryId === subAgent.id}
             />
           </div>
           <div className='shrink-0 text-end text-xs leading-5'>
             <p>
               <CostFigure usd={costOf(subAgent)} />
             </p>
-            <p className='text-muted-foreground tabular-nums'>
+            <p className='text-muted-foreground'>
               <AgentClock agent={subAgent} />
             </p>
           </div>
@@ -318,8 +327,14 @@ function SubAgentList({
 type FleetItemProps = {
   entry: FleetEntry;
   view: FleetView;
+  /** What the places of the items depend on: an item is measured again only when it changes. */
+  layoutKey: string;
   approvals: ApprovalRequest[];
   isOpen: boolean;
+  isStill: boolean;
+  isTogglePressed: boolean;
+  pressedApproveId: string | null;
+  pressedRetryId: string | null;
   onToggle: (agentId: string) => void;
   onApprove?: (approvalId: string) => void;
   onRetry?: (agentId: string) => void;
@@ -335,19 +350,27 @@ function gridOf(view: FleetView) {
 function FleetItem({
   entry,
   view,
+  layoutKey,
   approvals,
   isOpen,
+  isStill,
+  isTogglePressed,
+  pressedApproveId,
+  pressedRetryId,
   onToggle,
   onApprove,
   onRetry,
 }: FleetItemProps) {
   const panelId = useId();
+  const isGateOpen = useContext(ClockGateContext);
   const shouldReduceMotion = usePrefersReducedMotion();
   const spring = springOf(shouldReduceMotion);
   const presence = itemPresenceOf(shouldReduceMotion);
   const { agent, subAgents } = entry;
   const hasSubAgents = subAgents.length > 0;
   const attention = attentionOf(entry, approvals);
+  // A closed fold keeps its rows in the page, so their clocks hold still until it opens.
+  const areSubClocksLive = isOpen && isGateOpen;
 
   function toggle() {
     onToggle(agent.id);
@@ -356,6 +379,7 @@ function FleetItem({
   return (
     <motion.li
       layout
+      layoutDependency={layoutKey}
       transition={{ layout: spring }}
       {...presence}
       className={cn(
@@ -366,6 +390,7 @@ function FleetItem({
       <div className='grid items-start gap-x-3 gap-y-1' style={gridOf(view)}>
         <motion.span
           layout='position'
+          layoutDependency={view}
           transition={spring}
           className='[grid-area:tile]'
         >
@@ -373,6 +398,7 @@ function FleetItem({
         </motion.span>
         <motion.p
           layout='position'
+          layoutDependency={view}
           transition={spring}
           className='flex min-w-0 items-baseline gap-2 [grid-area:title]'
         >
@@ -385,6 +411,7 @@ function FleetItem({
         </motion.p>
         <motion.div
           layout='position'
+          layoutDependency={view}
           transition={spring}
           className='flex min-w-0 flex-col gap-0.5 [grid-area:meta]'
         >
@@ -392,7 +419,7 @@ function FleetItem({
             {agent.task}
           </p>
           <p className='flex flex-wrap items-center gap-x-3 gap-y-0.5'>
-            <AgentStatus status={agent.status} />
+            <AgentStatus status={agent.status} isStill={isStill} />
             {attention && (
               <span className={cn('text-xs', attention.tone)}>
                 {attention.text}
@@ -402,13 +429,14 @@ function FleetItem({
         </motion.div>
         <motion.div
           layout='position'
+          layoutDependency={view}
           transition={spring}
           className={cn('text-[13px] [grid-area:figures]', FIGURES_CLASS[view])}
         >
           <span className='leading-6 font-medium'>
             <CostFigure usd={entry.spend} />
           </span>
-          <span className='text-muted-foreground text-xs leading-5 tabular-nums'>
+          <span className='text-muted-foreground text-xs leading-5'>
             <AgentClock agent={agent} />
           </span>
         </motion.div>
@@ -422,7 +450,10 @@ function FleetItem({
               aria-controls={panelId}
               aria-label={toggleLabelOf(entry, isOpen)}
               onClick={toggle}
-              className='text-muted-foreground'
+              className={cn(
+                'text-muted-foreground',
+                pressedQuietOf(isTogglePressed)
+              )}
             >
               <ChevronDownIcon
                 className={cn(
@@ -435,15 +466,23 @@ function FleetItem({
         </div>
       </div>
       {hasSubAgents && (
-        <motion.div layout='position' transition={spring}>
+        <motion.div
+          layout='position'
+          layoutDependency={view}
+          transition={spring}
+        >
           <Fold open={isOpen} id={panelId} className={SUB_LIST_CLASS[view]}>
-            <SubAgentList
-              owner={agent}
-              subAgents={subAgents}
-              approvals={approvals}
-              onApprove={onApprove}
-              onRetry={onRetry}
-            />
+            <ClockGate isActive={areSubClocksLive}>
+              <SubAgentList
+                owner={agent}
+                subAgents={subAgents}
+                approvals={approvals}
+                pressedApproveId={pressedApproveId}
+                pressedRetryId={pressedRetryId}
+                onApprove={onApprove}
+                onRetry={onRetry}
+              />
+            </ClockGate>
           </Fold>
         </motion.div>
       )}
@@ -482,6 +521,22 @@ function changeFilter(
 
 const NO_APPROVALS: ApprovalRequest[] = [];
 
+const NO_OPEN_IDS: string[] = [];
+
+function withOpen(openIds: string[], agentId: string, isOpen: boolean) {
+  const others = openIds.filter((openId) => openId !== agentId);
+  if (isOpen) {
+    return [...others, agentId];
+  }
+  return others;
+}
+
+/** What decides where each item sits: the layout and which agents show. An item travels only when it changes. */
+function layoutKeyOf(view: FleetView, entries: FleetEntry[]) {
+  const ids = entries.map((entry) => entry.agent.id);
+  return `${view}|${ids.join(' ')}`;
+}
+
 export type AgentFleetProps = {
   agents: RunAgent[];
   approvals?: ApprovalRequest[];
@@ -490,6 +545,18 @@ export type AgentFleetProps = {
   onApprove?: (approvalId: string) => void;
   onRetry?: (agentId: string) => void;
   defaultView?: FleetView;
+  /** The layout, when it is held outside: a demonstration or a control beside the fleet switches it. */
+  view?: FleetView;
+  onViewChange?: (view: FleetView) => void;
+  /** The main agents whose sub-agents show, when that is held outside. */
+  openIds?: string[];
+  onOpenChange?: (agentId: string, isOpen: boolean) => void;
+  /** The sub-agent whose Approve a demonstration holds down. */
+  pressedApproveId?: string | null;
+  /** The sub-agent whose Retry a demonstration holds down. */
+  pressedRetryId?: string | null;
+  /** The main agent whose fold a demonstration holds down. */
+  pressedToggleId?: string | null;
   className?: string;
 };
 
@@ -500,17 +567,29 @@ export function AgentFleet({
   onApprove,
   onRetry,
   defaultView = 'rows',
+  view,
+  onViewChange,
+  openIds,
+  onOpenChange,
+  pressedApproveId = null,
+  pressedRetryId = null,
+  pressedToggleId = null,
   className,
 }: AgentFleetProps) {
-  const [view, setView] = useState<FleetView>(defaultView);
+  const [ownView, setOwnView] = useState<FleetView>(defaultView);
   const [filter, setFilter] = useState<FleetFilter>('all');
-  const [openIds, setOpenIds] = useState<Record<string, boolean>>({});
+  const [ownOpenIds, setOwnOpenIds] = useState(NO_OPEN_IDS);
   const shouldReduceMotion = usePrefersReducedMotion();
   const risePresence = risePresenceOf(shouldReduceMotion);
+  const shownView = view ?? ownView;
+  const shownOpenIds = openIds ?? ownOpenIds;
   const entries = entriesOf(agents);
   const visibleEntries = entries.filter((entry) =>
     matchesFilter(entry, filter, approvals)
   );
+  const mainAgents = entries.map((entry) => entry.agent);
+  const pulsingIds = pulsingIdsOf(mainAgents);
+  const layoutKey = layoutKeyOf(shownView, visibleEntries);
   const isEmpty = visibleEntries.length === 0;
   const runningCount = countWithStatus(agents, 'running');
   const waitingCount = pendingCountOf(approvals);
@@ -525,8 +604,15 @@ export function AgentFleet({
     return matching.length;
   }
 
+  function changeView(next: FleetView) {
+    setOwnView(next);
+    onViewChange?.(next);
+  }
+
   function toggle(agentId: string) {
-    setOpenIds((current) => ({ ...current, [agentId]: !current[agentId] }));
+    const isOpen = !shownOpenIds.includes(agentId);
+    setOwnOpenIds((current) => withOpen(current, agentId, isOpen));
+    onOpenChange?.(agentId, isOpen);
   }
 
   function showAll() {
@@ -575,32 +661,38 @@ export function AgentFleet({
           ))}
         </ToggleGroup>
         <Segments
-          value={view}
+          value={shownView}
           segments={VIEWS}
-          onValueChange={setView}
+          onValueChange={changeView}
           label='Layout'
           className='w-32'
         />
       </div>
-      <AnimatedSize
+      <KeyedHeight
+        changeKey={layoutKey}
         className={cn(
           'transition-[background-color,box-shadow] duration-300 ease-(--ease-out-strong)',
-          LIST_SURFACE[view],
+          LIST_SURFACE[shownView],
           isEmpty && 'hidden'
         )}
       >
         <ul
           aria-label='Main agents'
-          className={cn('relative', LIST_LAYOUT[view])}
+          className={cn('relative', LIST_LAYOUT[shownView])}
         >
           <AnimatePresence mode='popLayout' initial={false}>
             {visibleEntries.map((entry) => (
               <FleetItem
                 key={entry.agent.id}
                 entry={entry}
-                view={view}
+                view={shownView}
+                layoutKey={layoutKey}
                 approvals={approvals}
-                isOpen={openIds[entry.agent.id] === true}
+                isOpen={shownOpenIds.includes(entry.agent.id)}
+                isStill={!pulsingIds.has(entry.agent.id)}
+                isTogglePressed={pressedToggleId === entry.agent.id}
+                pressedApproveId={pressedApproveId}
+                pressedRetryId={pressedRetryId}
                 onToggle={toggle}
                 onApprove={onApprove}
                 onRetry={onRetry}
@@ -608,7 +700,7 @@ export function AgentFleet({
             ))}
           </AnimatePresence>
         </ul>
-      </AnimatedSize>
+      </KeyedHeight>
       <AnimatePresence initial={false}>
         {isEmpty && (
           <motion.div
@@ -749,75 +841,280 @@ const INITIAL_RUN = emptyRun({ id: 'fleet', agents: FLEET });
 
 const EARLIER_SPEND = 9.42;
 
-function patch(id: string, changes: Partial<RunAgent>): RunScriptStep['event'] {
+function patch(id: string, changes: Partial<RunAgent>): RunEvent {
   return { type: 'agent.updated', id, patch: changes };
 }
 
-const SCRIPT: RunScriptStep[] = [
-  { after: 1600, event: patch('price-reader', { costUsd: 0.083 }) },
-  {
-    after: 1400,
-    event: patch('test-runner', {
-      status: 'failed',
-      task: 'Run 7 of 20 timed out on the payment step',
-      costUsd: 0.118,
-    }),
-  },
-  {
-    after: 1200,
-    event: patch(CODER.id, {
-      task: 'Waits for the test runner',
-      costUsd: 1.231,
-    }),
-  },
-  {
-    after: 1500,
-    event: patch(WRITER.id, {
-      status: 'done',
-      task: 'Release notes ready: 12 changes, 3 fixes',
-      costUsd: 0.214,
-    }),
-  },
-  {
-    after: 1600,
-    event: patch('clause-finder', {
-      status: 'waiting',
-      task: 'Wants to share its summary with legal',
-      costUsd: 0.091,
-    }),
-  },
-  {
-    after: 0,
-    event: { type: 'approval.requested', approval: SHARE_APPROVAL },
-  },
-  {
-    after: 300,
-    event: patch(REVIEWER.id, {
-      status: 'waiting',
-      task: 'Waits on the clause finder',
-    }),
-  },
-  {
-    after: 1800,
-    event: patch('price-reader', {
-      status: 'done',
-      task: 'Read 6 product pages, 2 prices changed',
-      costUsd: 0.104,
-    }),
-  },
-  {
-    after: 600,
-    event: patch(RESEARCHER.id, {
-      status: 'done',
-      task: 'Found 2 price changes on Larkfield Goods',
-      costUsd: 0.437,
-    }),
-  },
-];
+const TEST_RUNNER_ID = 'test-runner';
+
+const CLAUSE_FINDER_ID = 'clause-finder';
+
+type FleetState = {
+  run: RunSnapshot;
+  view: FleetView;
+  openIds: string[];
+  /** The agents a person or the demonstration sent for a second try. */
+  retriedIds: string[];
+};
+
+type FleetAction =
+  | { type: 'events'; events: RunEvent[] }
+  | { type: 'approve'; approvalId: string }
+  | { type: 'shared' }
+  | { type: 'retry'; agentId: string }
+  | { type: 'retried'; agentId: string }
+  | { type: 'view'; view: FleetView }
+  | { type: 'open'; agentId: string; isOpen: boolean };
+
+type FleetStep = SessionStep<FleetState, FleetAction>;
+
+const INITIAL: FleetState = {
+  run: INITIAL_RUN,
+  view: 'rows',
+  openIds: [],
+  retriedIds: [],
+};
+
+function agentOf(state: FleetState, agentId: string) {
+  return state.run.agents.find((agent) => agent.id === agentId);
+}
+
+function patchedRun(run: RunSnapshot, events: RunEvent[], now: number) {
+  return applyBatchAt(run, { events }, now);
+}
+
+function withApproval(state: FleetState, approvalId: string, now: number) {
+  const run = patchedRun(
+    state.run,
+    [
+      { type: 'approval.resolved', id: approvalId, decision: 'approved' },
+      patch(CLAUSE_FINDER_ID, {
+        status: 'running',
+        task: 'Sharing the summary with legal',
+      }),
+      patch(REVIEWER.id, {
+        status: 'running',
+        task: 'Checking the Fernhill Foods supply contract',
+      }),
+    ],
+    now
+  );
+  return { ...state, run };
+}
+
+function hasApprovedShare(state: FleetState) {
+  return state.run.approvals.some((approval) => {
+    const isShare = approval.id === SHARE_APPROVAL.id;
+    const isApproved = approval.status === 'approved';
+    return isShare && isApproved;
+  });
+}
+
+/** The script and the hand of a person may both land the same share: only the first one counts. */
+function withShareLanded(state: FleetState, now: number) {
+  const finder = agentOf(state, CLAUSE_FINDER_ID);
+  const isRunning = finder?.status === 'running';
+  const isSharing = isRunning && hasApprovedShare(state);
+  if (!isSharing) {
+    return state;
+  }
+  const landed = patch(CLAUSE_FINDER_ID, {
+    status: 'done',
+    task: 'Shared the summary with legal',
+    costUsd: 0.097,
+  });
+  const run = reduceRun(state.run, landed, now);
+  return { ...state, run };
+}
+
+function withRetry(state: FleetState, agentId: string, now: number) {
+  const agent = agentOf(state, agentId);
+  const isFailed = agent?.status === 'failed';
+  if (!isFailed) {
+    return state;
+  }
+  const run = patchedRun(
+    state.run,
+    [
+      patch(agentId, {
+        status: 'running',
+        task: 'Second try with a longer payment timeout',
+        startedAt: undefined,
+        endedAt: undefined,
+      }),
+      patch(CODER.id, { task: 'Fixing the flaky checkout test' }),
+    ],
+    now
+  );
+  const retriedIds = [...state.retriedIds, agentId];
+  return { ...state, run, retriedIds };
+}
+
+/** The same for a retry: the script lands it, and so does the timer a person's click starts. */
+function withRetryLanded(state: FleetState, agentId: string, now: number) {
+  const agent = agentOf(state, agentId);
+  const isRunning = agent?.status === 'running';
+  const wasRetried = state.retriedIds.includes(agentId);
+  const isRetrying = isRunning && wasRetried;
+  if (!isRetrying) {
+    return state;
+  }
+  const landed = patch(agentId, {
+    status: 'done',
+    task: 'checkout.spec.ts passed 20 times in a row',
+    costUsd: 0.141,
+  });
+  const run = reduceRun(state.run, landed, now);
+  return { ...state, run };
+}
+
+function applyAt(
+  state: FleetState,
+  action: FleetAction,
+  now: number
+): FleetState {
+  if (action.type === 'approve') {
+    return withApproval(state, action.approvalId, now);
+  }
+  if (action.type === 'shared') {
+    return withShareLanded(state, now);
+  }
+  if (action.type === 'retry') {
+    return withRetry(state, action.agentId, now);
+  }
+  if (action.type === 'retried') {
+    return withRetryLanded(state, action.agentId, now);
+  }
+  if (action.type === 'view') {
+    return { ...state, view: action.view };
+  }
+  if (action.type === 'open') {
+    const openIds = withOpen(state.openIds, action.agentId, action.isOpen);
+    return { ...state, openIds };
+  }
+  const run = applyBatchAt(state.run, action, now);
+  return { ...state, run };
+}
+
+/** Times are stamped when an action lands, as a backend would stream it. */
+function reducer(state: FleetState, action: FleetAction) {
+  return applyAt(state, action, Date.now());
+}
+
+/** The fleet started minutes ago, so its resting state is stamped on the same clock as its agents. */
+function applyAfterLoading(
+  state: FleetState,
+  action: FleetAction,
+  sinceStart: number
+) {
+  return applyAt(state, action, LOADED_AT + sinceStart);
+}
+
+function landing(after: number, ...events: RunEvent[]): FleetStep {
+  return { after, action: { type: 'events', events } };
+}
+
+const TOGGLE_PREFIX = 'toggle:';
+
+/** What the demonstration does on its own: a person who takes over finds the same controls, and the fleet goes on. */
+function demo(after: number, action: FleetAction, press?: string): FleetStep {
+  return { after, by: 'demo', action, press };
+}
+
+function fold(after: number, agentId: string, isOpen: boolean) {
+  const action: FleetAction = { type: 'open', agentId, isOpen };
+  return demo(after, action, `${TOGGLE_PREFIX}${agentId}`);
+}
 
 const RETRY_MS = 1800;
 
 const SHARE_MS = 1400;
+
+const SCRIPT: FleetStep[] = [
+  landing(1600, patch('price-reader', { costUsd: 0.083 })),
+  landing(
+    1400,
+    patch(TEST_RUNNER_ID, {
+      status: 'failed',
+      task: 'Run 7 of 20 timed out on the payment step',
+      costUsd: 0.118,
+    })
+  ),
+  landing(
+    1200,
+    patch(CODER.id, { task: 'Waits for the test runner', costUsd: 1.231 })
+  ),
+  fold(900, CODER.id, true),
+  demo(DECIDE_AFTER_MS, { type: 'retry', agentId: TEST_RUNNER_ID }, 'retry'),
+  landing(
+    1500,
+    patch(WRITER.id, {
+      status: 'done',
+      task: 'Release notes ready: 12 changes, 3 fixes',
+      costUsd: 0.214,
+    })
+  ),
+  { after: 300, action: { type: 'retried', agentId: TEST_RUNNER_ID } },
+  fold(1400, CODER.id, false),
+  landing(
+    900,
+    patch(CLAUSE_FINDER_ID, {
+      status: 'waiting',
+      task: 'Wants to share its summary with legal',
+      costUsd: 0.091,
+    }),
+    { type: 'approval.requested', approval: SHARE_APPROVAL }
+  ),
+  landing(
+    300,
+    patch(REVIEWER.id, {
+      status: 'waiting',
+      task: 'Waits on the clause finder',
+    })
+  ),
+  fold(900, REVIEWER.id, true),
+  demo(
+    DECIDE_AFTER_MS,
+    { type: 'approve', approvalId: SHARE_APPROVAL.id },
+    'approve'
+  ),
+  { after: SHARE_MS, action: { type: 'shared' } },
+  fold(1400, REVIEWER.id, false),
+  demo(1100, { type: 'view', view: 'cards' }),
+  landing(
+    1800,
+    patch('price-reader', {
+      status: 'done',
+      task: 'Read 6 product pages, 2 prices changed',
+      costUsd: 0.104,
+    })
+  ),
+  landing(
+    600,
+    patch(RESEARCHER.id, {
+      status: 'done',
+      task: 'Found 2 price changes on Larkfield Goods',
+      costUsd: 0.437,
+    })
+  ),
+  demo(2000, { type: 'view', view: 'rows' }),
+];
+
+const SESSION = {
+  reducer,
+  initial: INITIAL,
+  resting: restingOf(INITIAL, SCRIPT, applyAfterLoading),
+  script: SCRIPT,
+  loopAfter: 3000,
+};
+
+function pressedToggleOf(pressed: string | null) {
+  const isToggle = pressed?.startsWith(TOGGLE_PREFIX) ?? false;
+  if (!pressed || !isToggle) {
+    return null;
+  }
+  return pressed.slice(TOGGLE_PREFIX.length);
+}
 
 function announcementOf(agent: RunAgent) {
   const word = AGENT_STATUS_WORD[agent.status];
@@ -826,61 +1123,36 @@ function announcementOf(agent: RunAgent) {
 
 export default function Agent06() {
   const { schedule, clearAll } = useTimeouts();
-  const { ref, isInView, snapshot, store, restart, isFinished } = useDemoRun(
-    SCRIPT,
-    { initial: INITIAL_RUN }
-  );
-  const agents = snapshot.agents;
+  const {
+    ref,
+    isInView,
+    isAutoplaying,
+    state,
+    act,
+    pressed,
+    isFinished,
+    restart,
+  } = useSession(SESSION);
+  const agents = state.run.agents;
   const message = useAgentAnnouncement(agents, announcementOf);
+  const canReplay = isFinished && !isAutoplaying;
 
   function approve(approvalId: string) {
-    store.dispatch({
-      type: 'approval.resolved',
-      id: approvalId,
-      decision: 'approved',
-    });
-    store.dispatch(
-      patch('clause-finder', {
-        status: 'running',
-        task: 'Sharing the summary with legal',
-      })
-    );
-    store.dispatch(
-      patch(REVIEWER.id, {
-        status: 'running',
-        task: 'Checking the Fernhill Foods supply contract',
-      })
-    );
-    schedule(() => {
-      store.dispatch(
-        patch('clause-finder', {
-          status: 'done',
-          task: 'Shared the summary with legal',
-          costUsd: 0.097,
-        })
-      );
-    }, SHARE_MS);
+    act({ type: 'approve', approvalId });
+    schedule(() => act({ type: 'shared' }), SHARE_MS);
   }
 
   function retry(agentId: string) {
-    store.dispatch(
-      patch(agentId, {
-        status: 'running',
-        task: 'Second try with a longer payment timeout',
-        startedAt: undefined,
-        endedAt: undefined,
-      })
-    );
-    store.dispatch(patch(CODER.id, { task: 'Fixing the flaky checkout test' }));
-    schedule(() => {
-      store.dispatch(
-        patch(agentId, {
-          status: 'done',
-          task: 'checkout.spec.ts passed 20 times in a row',
-          costUsd: 0.141,
-        })
-      );
-    }, RETRY_MS);
+    act({ type: 'retry', agentId });
+    schedule(() => act({ type: 'retried', agentId }), RETRY_MS);
+  }
+
+  function changeView(view: FleetView) {
+    act({ type: 'view', view });
+  }
+
+  function changeOpen(agentId: string, isOpen: boolean) {
+    act({ type: 'open', agentId, isOpen });
   }
 
   function replay() {
@@ -891,20 +1163,30 @@ export default function Agent06() {
   useKeptHeight(ref);
 
   return (
-    <div ref={ref} className='flex w-full max-w-[44rem] flex-col gap-2'>
+    <div
+      ref={ref}
+      className='flex min-h-[48.5rem] w-full max-w-[44rem] flex-col gap-2'
+    >
       <ClockGate isActive={isInView}>
         <AgentFleet
           agents={agents}
-          approvals={snapshot.approvals}
+          approvals={state.run.approvals}
           earlierSpend={EARLIER_SPEND}
           onApprove={approve}
           onRetry={retry}
+          view={state.view}
+          onViewChange={changeView}
+          openIds={state.openIds}
+          onOpenChange={changeOpen}
+          pressedApproveId={pressedIdOf(pressed, 'approve', CLAUSE_FINDER_ID)}
+          pressedRetryId={pressedIdOf(pressed, 'retry', TEST_RUNNER_ID)}
+          pressedToggleId={pressedToggleOf(pressed)}
         />
       </ClockGate>
       <div className='flex h-7 items-center justify-end'>
-        <ReplayButton isShown={isFinished} onReplay={replay} />
+        <ReplayButton isShown={canReplay} onReplay={replay} />
       </div>
-      <LiveRegion message={message} />
+      <LiveRegion message={spokenUnless(isAutoplaying, message)} />
     </div>
   );
 }

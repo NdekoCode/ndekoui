@@ -4,11 +4,14 @@ import { AnimatePresence, motion } from 'motion/react';
 
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import type { ApprovalRequest, RunAgent } from '@/registry/ndeko/lib/agent-run';
+import {
+  pressedQuietOf,
+  pressedSolidOf,
+} from '@/registry/ndeko/lib/demonstration';
 import { CheckIcon, RotateCcwIcon } from '@/registry/ndeko/lib/icons';
+import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Kbd } from '@/registry/ndeko/ui/kbd';
-
-import { rowPresenceOf } from '@/registry/ndeko/lib/motion-presets';
 
 export function pendingApprovalOf(
   approvals: ApprovalRequest[],
@@ -53,6 +56,10 @@ type AgentActionsProps = {
   hasKeyHints?: boolean;
   /** Called after Approve or Retry, once the pressed button is about to leave. */
   onDecided?: (agentId: string) => void;
+  /** Shows Approve held down, for a demonstration that presses it. */
+  isApprovePressed?: boolean;
+  /** Shows Retry held down, for a demonstration that presses it. */
+  isRetryPressed?: boolean;
 };
 
 export function AgentActions({
@@ -62,6 +69,8 @@ export function AgentActions({
   onRetry,
   hasKeyHints = false,
   onDecided,
+  isApprovePressed = false,
+  isRetryPressed = false,
 }: AgentActionsProps) {
   const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
@@ -101,6 +110,7 @@ export function AgentActions({
               tabIndex={buttonTabIndex}
               onClick={approve}
               aria-label={`Approve: ${pending.title}`}
+              className={pressedSolidOf(isApprovePressed)}
             >
               <CheckIcon />
               Approve
@@ -119,6 +129,7 @@ export function AgentActions({
               tabIndex={buttonTabIndex}
               onClick={retry}
               aria-label={`Retry ${agent.name}`}
+              className={pressedQuietOf(isRetryPressed)}
             >
               <RotateCcwIcon />
               Retry

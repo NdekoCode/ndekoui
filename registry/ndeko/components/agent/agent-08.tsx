@@ -4,10 +4,23 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useId, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
-import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
 import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
-import { emptyRun, type ToolCall } from '@/registry/ndeko/lib/agent-run';
+import {
+  useSession,
+  type SessionStep,
+} from '@/registry/ndeko/hooks/use-session';
+import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
+import {
+  emptyRun,
+  type RunEvent,
+  type RunSnapshot,
+  type ToolCall,
+} from '@/registry/ndeko/lib/agent-run';
+import {
+  pressedQuietOf,
+  spokenUnless,
+} from '@/registry/ndeko/lib/demonstration';
 import {
   CheckIcon,
   EraserIcon,
@@ -22,6 +35,8 @@ import {
   TrashIcon,
   XIcon,
 } from '@/registry/ndeko/lib/icons';
+import { rowPresenceOf, springOf } from '@/registry/ndeko/lib/motion-presets';
+import { applyBatchAt, restingOf } from '@/registry/ndeko/lib/run-session';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Swap } from '@/registry/ndeko/ui/chat-motion';
@@ -33,21 +48,18 @@ import {
 } from '@/registry/ndeko/ui/dropdown-menu';
 import { Input } from '@/registry/ndeko/ui/input';
 import { Kbd } from '@/registry/ndeko/ui/kbd';
+import { ClockGate } from '@/registry/ndeko/ui/live-duration';
+import { LiveRegion } from '@/registry/ndeko/ui/live-region';
 import {
   Popover,
   PopoverContent,
   PopoverTitle,
   PopoverTrigger,
 } from '@/registry/ndeko/ui/popover';
+import { Segments, type Segment } from '@/registry/ndeko/ui/segments';
 import { Textarea } from '@/registry/ndeko/ui/textarea';
 import { ToggleGroup, ToggleGroupItem } from '@/registry/ndeko/ui/toggle-group';
 
-import { ClockGate } from '@/registry/ndeko/ui/live-duration';
-import { LiveRegion } from '@/registry/ndeko/ui/live-region';
-import { rowPresenceOf, springOf } from '@/registry/ndeko/lib/motion-presets';
-import { Segments, type Segment } from '@/registry/ndeko/ui/segments';
-import { useDemoRun } from '@/registry/ndeko/hooks/use-demo-run';
-import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import { focusLater } from './_parts/focus-later';
 import { RelativeTime } from './_parts/relative-time';
 import { countOf, nounOf } from './_parts/words';
@@ -319,12 +331,26 @@ function WhyUsed({ memory }: { memory: AgentMemoryItem }) {
   );
 }
 
+function usedKeyOf(memory: AgentMemoryItem) {
+  return memory.usedBy?.id ?? 'never';
+}
+
+/**
+ * A memory lights for a moment when a turn uses it, then the tint leaves: one transition on its
+ * colour, started by the row being keyed on the turn. Nothing lights when the list is first shown.
+ */
+const USED_FLASH =
+  'bg-primary/0 pointer-events-none absolute inset-x-0 inset-y-0.5 -z-10 rounded-lg transition-colors duration-[1600ms] ease-linear starting:bg-primary/[0.09]';
+
 type MemoryRowProps = {
   memory: AgentMemoryItem;
   query: string;
   sourceCount: number;
   isEditing: boolean;
   isConfirmingSource: boolean;
+  /** True once a turn used the memory after the list was shown: the row lights for that turn. */
+  showsUse: boolean;
+  isPinPressed: boolean;
   onStartEdit: (memoryId: string) => void;
   onEndEdit: (memoryId: string, text: string | null) => void;
   onPin: (memoryId: string, isPinned: boolean) => void;
@@ -340,6 +366,8 @@ function MemoryRow({
   sourceCount,
   isEditing,
   isConfirmingSource,
+  showsUse,
+  isPinPressed,
   onStartEdit,
   onEndEdit,
   onPin,
@@ -353,7 +381,7 @@ function MemoryRow({
   const fieldId = useId();
   const shouldReduceMotion = usePrefersReducedMotion();
   const rowPresence = rowPresenceOf(shouldReduceMotion);
-  const usedKey = memory.usedBy?.id ?? 'never';
+  const usedKey = usedKeyOf(memory);
   const sourceWord = countOf(sourceCount, 'memory', 'memories');
   const isBlank = draft.trim() === '';
 
@@ -389,17 +417,9 @@ function MemoryRow({
 
   return (
     <div data-memory={memory.id} className='relative isolate px-2 py-2.5'>
-      <AnimatePresence initial={false}>
-        <motion.span
-          key={usedKey}
-          aria-hidden='true'
-          initial={{ opacity: 1 }}
-          animate={{ opacity: 0 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1.6, ease: 'linear' }}
-          className='bg-primary/[0.07] pointer-events-none absolute inset-x-0 inset-y-0.5 -z-10 rounded-lg'
-        />
-      </AnimatePresence>
+      {showsUse && (
+        <span key={usedKey} aria-hidden='true' className={USED_FLASH} />
+      )}
       {memory.isPinned && <span className='sr-only'>Pinned. </span>}
       {isEditing && (
         <div className='flex flex-col gap-2'>
@@ -429,7 +449,7 @@ function MemoryRow({
             <Button type='button' variant='ghost' size='sm' onClick={cancel}>
               Cancel
             </Button>
-            <span className='text-muted-foreground ms-auto hidden items-center gap-1 text-xs sm:flex'>
+            <span className='text-muted-foreground ms-auto hidden items-center gap-1 text-xs @sm:flex'>
               <Kbd>Ctrl</Kbd>
               <Kbd>Enter</Kbd> saves
             </span>
@@ -484,7 +504,10 @@ function MemoryRow({
               aria-label={pinLabelOf(memory.isPinned)}
               onClick={() => onPin(memory.id, !memory.isPinned)}
               data-action='pin'
-              className='text-muted-foreground'
+              className={cn(
+                'text-muted-foreground',
+                pressedQuietOf(isPinPressed)
+              )}
             >
               <Swap swapKey={String(memory.isPinned)}>
                 {memory.isPinned && <PinOffIcon />}
@@ -628,8 +651,21 @@ export type AgentMemoryProps = {
   onPinChange?: (memoryId: string, isPinned: boolean) => void;
   /** Called once the Undo window has closed. */
   onForget?: (memoryIds: string[]) => void;
+  /** The memory whose pin a demonstration holds down. */
+  pressedPinId?: string | null;
   className?: string;
 };
+
+function usedKeysOf(memories: AgentMemoryItem[]) {
+  const keys = memories.map(usedKeyOf);
+  return new Set(keys);
+}
+
+/** The order of the rows: a row travels to a new place only when it changes. */
+function orderKeyOf(entries: ListEntry[]) {
+  const keys = entries.map((entry) => entry.key);
+  return keys.join(' ');
+}
 
 export function AgentMemory({
   memories,
@@ -638,6 +674,7 @@ export function AgentMemory({
   onEdit,
   onPinChange,
   onForget,
+  pressedPinId = null,
   className,
 }: AgentMemoryProps) {
   const [query, setQuery] = useState('');
@@ -645,6 +682,7 @@ export function AgentMemory({
   const [editingId, setEditingId] = useState<string | null>(null);
   const [confirmingId, setConfirmingId] = useState<string | null>(null);
   const [pending, setPending] = useState<PendingForget[]>(NO_PENDING);
+  const [quietUseKeys] = useState(() => usedKeysOf(memories));
   const rootRef = useRef<HTMLElement>(null);
   const undoneKeys = useRef(new Set<string>());
   const searchId = useId();
@@ -660,6 +698,7 @@ export function AgentMemory({
   const shown = compactOrAll(isCompact, sorted, matching);
   const otherLabel = otherLabelOf(isCompact);
   const entries = entriesOf(shown, pending, otherLabel);
+  const orderKey = orderKeyOf(entries);
   const hiddenIds = hiddenIdsOf(pending);
   const visibleMemories = shown.filter((memory) => !hiddenIds.has(memory.id));
   const isEmpty = visibleMemories.length === 0;
@@ -763,7 +802,7 @@ export function AgentMemory({
       ref={rootRef}
       aria-label={`What ${agentName} remembers`}
       className={cn(
-        'bg-card hairline-ring ring-border flex flex-col gap-3 rounded-xl p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)]',
+        'bg-card hairline-ring ring-border @container flex flex-col gap-3 rounded-xl p-4 shadow-[0_1px_2px_rgb(0_0_0/0.04)]',
         className
       )}
     >
@@ -832,6 +871,7 @@ export function AgentMemory({
             <motion.li
               key={entry.key}
               layout='position'
+              layoutDependency={orderKey}
               className='overflow-hidden'
               {...rowPresence}
               transition={rowTransition}
@@ -854,6 +894,8 @@ export function AgentMemory({
                   sourceCount={sourceCountOf(entry.memory)}
                   isEditing={editingId === entry.memory.id}
                   isConfirmingSource={confirmingId === entry.memory.id}
+                  showsUse={!quietUseKeys.has(usedKeyOf(entry.memory))}
+                  isPinPressed={pressedPinId === entry.memory.id}
                   onStartEdit={startEdit}
                   onEndEdit={endEdit}
                   onPin={pin}
@@ -1019,7 +1061,7 @@ function recall(
   question: string,
   query: string,
   memoryIds: string[]
-): RunScriptStep['event'] {
+): RunEvent {
   return {
     type: 'call.started',
     call: {
@@ -1033,34 +1075,161 @@ function recall(
   };
 }
 
-function recalled(id: string): RunScriptStep['event'] {
+function recalled(id: string): RunEvent {
   return { type: 'call.updated', id, patch: { status: 'done' } };
 }
 
-const SCRIPT: RunScriptStep[] = [
-  {
-    after: 1800,
-    event: recall(
+const CREDIT_THREAD: MemorySource = {
+  id: 'credit-thread',
+  kind: 'conversation',
+  title: 'Credit request, today',
+};
+
+const SAVED_ID = 'credit-on-invoice';
+
+const SAVED_TEXT =
+  'Brightmoor settles a credit on the next invoice, never as a refund.';
+
+type MemoryState = {
+  run: RunSnapshot;
+  memories: AgentMemoryItem[];
+  /** What the agent last did with its memory, for the live region. */
+  note: string;
+};
+
+type MemoryAction =
+  | { type: 'events'; events: RunEvent[] }
+  | { type: 'save' }
+  | { type: 'edit'; memoryId: string; text: string }
+  | { type: 'pin'; memoryId: string; isPinned: boolean }
+  | { type: 'forget'; memoryIds: string[] };
+
+type MemoryStep = SessionStep<MemoryState, MemoryAction>;
+
+const INITIAL_RUN = emptyRun({ id: 'memory' });
+
+const INITIAL: MemoryState = { run: INITIAL_RUN, memories: MEMORIES, note: '' };
+
+function withChange(
+  state: MemoryState,
+  memoryId: string,
+  change: Partial<AgentMemoryItem>
+) {
+  const memories = state.memories.map((memory) => {
+    if (memory.id !== memoryId) {
+      return memory;
+    }
+    return { ...memory, ...change };
+  });
+  return { ...state, memories };
+}
+
+/** The agent keeps what it just learned: the memory joins the list, used a moment ago. */
+function withSaved(state: MemoryState, now: number) {
+  const isKnown = state.memories.some((memory) => memory.id === SAVED_ID);
+  if (isKnown) {
+    return state;
+  }
+  const saved: AgentMemoryItem = {
+    id: SAVED_ID,
+    text: SAVED_TEXT,
+    scope: 'project',
+    source: CREDIT_THREAD,
+    isPinned: false,
+    lastUsedAt: now,
+  };
+  const memories = [...state.memories, saved];
+  const note = `Writer saved a memory: ${SAVED_TEXT}`;
+  return { ...state, memories, note };
+}
+
+function applyAt(
+  state: MemoryState,
+  action: MemoryAction,
+  now: number
+): MemoryState {
+  if (action.type === 'save') {
+    return withSaved(state, now);
+  }
+  if (action.type === 'edit') {
+    return withChange(state, action.memoryId, { text: action.text });
+  }
+  if (action.type === 'pin') {
+    return withChange(state, action.memoryId, { isPinned: action.isPinned });
+  }
+  if (action.type === 'forget') {
+    const memories = state.memories.filter(
+      (memory) => !action.memoryIds.includes(memory.id)
+    );
+    return { ...state, memories };
+  }
+  const run = applyBatchAt(state.run, action, now);
+  const note = announcementOf(run.calls);
+  return { ...state, run, note };
+}
+
+/** Times are stamped when an action lands, as a backend would stream it. */
+function reducer(state: MemoryState, action: MemoryAction) {
+  return applyAt(state, action, Date.now());
+}
+
+/** The memories were used days ago, so the resting state is stamped on the same clock as they are. */
+function applyAfterLoading(
+  state: MemoryState,
+  action: MemoryAction,
+  sinceStart: number
+) {
+  return applyAt(state, action, LOADED_AT + sinceStart);
+}
+
+function landing(after: number, ...events: RunEvent[]): MemoryStep {
+  return { after, action: { type: 'events', events } };
+}
+
+const SCRIPT: MemoryStep[] = [
+  landing(
+    1800,
+    recall(
       'turn-1',
       'Draft the credit request to Brightmoor',
       'Brightmoor payment terms and contacts',
       ['terms', 'contact']
-    ),
-  },
-  { after: 500, event: recalled('turn-1') },
+    )
+  ),
+  landing(500, recalled('turn-1')),
+  { after: 2600, action: { type: 'save' } },
   {
-    after: 5200,
-    event: recall(
+    after: 2400,
+    by: 'demo',
+    press: 'pin',
+    action: { type: 'pin', memoryId: SAVED_ID, isPinned: true },
+  },
+  landing(
+    2600,
+    recall(
       'turn-2',
       'Which vendors changed their prices in Q3?',
       'vendors we still order from',
       ['ostrava', 'money']
-    ),
-  },
-  { after: 500, event: recalled('turn-2') },
+    )
+  ),
+  landing(500, recalled('turn-2')),
 ];
 
-const INITIAL_RUN = emptyRun({ id: 'memory' });
+const SESSION = {
+  reducer,
+  initial: INITIAL,
+  resting: restingOf(INITIAL, SCRIPT, applyAfterLoading),
+  script: SCRIPT,
+  loopAfter: 3400,
+};
+
+function pressedPinOf(pressed: string | null) {
+  if (pressed === 'pin') {
+    return SAVED_ID;
+  }
+  return null;
+}
 
 function memoryIdsOf(call: ToolCall) {
   const memoryIds = call.input?.memoryIds;
@@ -1104,50 +1273,30 @@ function announcementOf(calls: ToolCall[]) {
 }
 
 export default function Agent08() {
-  const [memories, setMemories] = useState(MEMORIES);
   const [variant, setVariant] = useState<MemoryVariant>('full');
   const [message, setMessage] = useState('');
   const [round, setRound] = useState(0);
-  const { ref, isInView, snapshot, restart } = useDemoRun(SCRIPT, {
-    initial: INITIAL_RUN,
-  });
-  const shown = withRecalls(memories, snapshot.calls);
-  const recallMessage = announcementOf(snapshot.calls);
+  const { ref, isInView, isAutoplaying, state, act, pressed, restart } =
+    useSession(SESSION);
+  const shown = withRecalls(state.memories, state.run.calls);
 
   function edit(memoryId: string, text: string) {
-    setMemories((current) =>
-      current.map((memory) => {
-        if (memory.id !== memoryId) {
-          return memory;
-        }
-        return { ...memory, text };
-      })
-    );
+    act({ type: 'edit', memoryId, text });
     setMessage('Memory saved');
   }
 
   function changePin(memoryId: string, isPinned: boolean) {
-    setMemories((current) =>
-      current.map((memory) => {
-        if (memory.id !== memoryId) {
-          return memory;
-        }
-        return { ...memory, isPinned };
-      })
-    );
+    act({ type: 'pin', memoryId, isPinned });
     setMessage(pinMessageOf(isPinned));
   }
 
   function forget(memoryIds: string[]) {
-    setMemories((current) =>
-      current.filter((memory) => !memoryIds.includes(memory.id))
-    );
+    act({ type: 'forget', memoryIds });
     const word = countOf(memoryIds.length, 'memory', 'memories');
     setMessage(`Forgot ${word} for good`);
   }
 
   function startOver() {
-    setMemories(MEMORIES);
     setMessage('Every memory is back');
     setRound((current) => current + 1);
     restart();
@@ -1156,7 +1305,10 @@ export default function Agent08() {
   useKeptHeight(ref);
 
   return (
-    <div ref={ref} className='flex w-full max-w-[32rem] flex-col gap-3'>
+    <div
+      ref={ref}
+      className='flex min-h-[50.5rem] w-full max-w-[32rem] flex-col gap-3'
+    >
       <Segments
         value={variant}
         segments={VARIANTS}
@@ -1173,6 +1325,7 @@ export default function Agent08() {
           onEdit={edit}
           onPinChange={changePin}
           onForget={forget}
+          pressedPinId={pressedPinOf(pressed)}
         />
       </ClockGate>
       <div className='flex h-7 items-center justify-end'>
@@ -1188,7 +1341,7 @@ export default function Agent08() {
         </Button>
       </div>
       <LiveRegion message={message} />
-      <LiveRegion message={recallMessage} />
+      <LiveRegion message={spokenUnless(isAutoplaying, state.note)} />
     </div>
   );
 }
