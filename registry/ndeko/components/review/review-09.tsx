@@ -7,6 +7,7 @@ import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll, type WordRollWord } from '@/components/core/word-roll';
 import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
 import { useDemoRun } from '@/registry/ndeko/hooks/use-demo-run';
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import {
@@ -922,6 +923,8 @@ export default function Review09() {
     const next = tabFrom(value);
     setTab(next);
   }
+
+  useKeptHeight(ref);
 
   return (
     <div

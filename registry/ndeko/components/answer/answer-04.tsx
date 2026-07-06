@@ -9,6 +9,7 @@ import {
   useRunScript,
   type RunScriptStep,
 } from '@/registry/ndeko/hooks/use-agent-run';
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   elapsedOf,
@@ -599,6 +600,8 @@ export default function Answer04() {
     thinking.restart();
     answer.restart();
   }
+
+  useKeptHeight(rootRef);
 
   return (
     <div

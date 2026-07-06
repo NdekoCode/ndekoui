@@ -8,6 +8,7 @@ import {
   useAutoplay,
   type AutoplayStep,
 } from '@/registry/ndeko/hooks/use-autoplay';
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { spokenUnless } from '@/registry/ndeko/lib/demonstration';
 import {
@@ -762,6 +763,8 @@ export default function Voice01() {
     loopAfter: STATE_HOLD_MS,
     onReset: () => setState(START_STATE),
   });
+
+  useKeptHeight(ref);
 
   return (
     <div

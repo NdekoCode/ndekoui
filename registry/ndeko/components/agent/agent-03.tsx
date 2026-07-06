@@ -5,6 +5,7 @@ import { useLayoutEffect, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   emptyRun,
@@ -824,6 +825,8 @@ export default function Agent03() {
   });
   const isEnded = snapshot.endedAt !== undefined;
   const announcement = announcementOf(snapshot);
+
+  useKeptHeight(ref);
 
   return (
     <div ref={ref} className='flex w-full max-w-[44rem] flex-col gap-2'>

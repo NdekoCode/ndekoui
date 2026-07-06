@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { useEffect, useId, useImperativeHandle, useRef, useState } from 'react';
 
 import { typingSteps, useAutoplay } from '@/registry/ndeko/hooks/use-autoplay';
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -646,6 +647,8 @@ export default function Prompt05() {
     loopAfter: 2600,
     onReset: resetFields,
   });
+
+  useKeptHeight(ref);
 
   return (
     <div ref={ref} className='w-full max-w-[32rem]'>

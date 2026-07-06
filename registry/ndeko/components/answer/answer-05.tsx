@@ -9,6 +9,7 @@ import {
   useRunScript,
   type RunScriptStep,
 } from '@/registry/ndeko/hooks/use-agent-run';
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   emptyRun,
@@ -921,6 +922,8 @@ export default function Answer05() {
     setActiveTabId(null);
     restart();
   }
+
+  useKeptHeight(rootRef);
 
   return (
     <div

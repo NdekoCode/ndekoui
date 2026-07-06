@@ -14,6 +14,7 @@ import {
   useAutoplay,
   type AutoplayStep,
 } from '@/registry/ndeko/hooks/use-autoplay';
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import {
@@ -1035,6 +1036,8 @@ export default function Prompt01() {
     loopAfter: 2200,
     onReset: resetDemo,
   });
+
+  useKeptHeight(ref);
 
   return (
     <div

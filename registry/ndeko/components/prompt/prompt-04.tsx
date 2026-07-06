@@ -16,6 +16,7 @@ import {
   useAutoplay,
   type AutoplayStep,
 } from '@/registry/ndeko/hooks/use-autoplay';
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { hold, spokenUnless } from '@/registry/ndeko/lib/demonstration';
 import { ChevronDownIcon } from '@/registry/ndeko/lib/icons';
@@ -762,6 +763,8 @@ export default function Prompt04() {
     loopAfter: 2400,
     onReset: resetDemo,
   });
+
+  useKeptHeight(ref);
 
   return (
     <div ref={ref} className='flex w-full max-w-[26rem] flex-col gap-3'>

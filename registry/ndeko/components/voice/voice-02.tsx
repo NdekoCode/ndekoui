@@ -15,6 +15,7 @@ import {
   useAutoplay,
   type AutoplayStep,
 } from '@/registry/ndeko/hooks/use-autoplay';
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   hold,
@@ -748,6 +749,8 @@ export default function Voice02() {
     loopAfter: 2600,
     onReset: () => note.current?.reset(START_POSITION),
   });
+
+  useKeptHeight(ref);
 
   return (
     <div ref={ref} className='flex w-full max-w-[26rem] flex-col gap-2'>

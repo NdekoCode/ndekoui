@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { MotionNumber } from '@/components/core/motion-number';
 import { WordRoll, type WordRollWord } from '@/components/core/word-roll';
 import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   emptyRun,
@@ -279,6 +280,8 @@ export default function Agent10() {
   });
   const agents = snapshot.agents;
   const message = useAgentAnnouncement(agents, announcementOf);
+
+  useKeptHeight(ref);
 
   return (
     <div ref={ref} className='flex w-full max-w-[26rem] flex-col gap-3'>

@@ -15,6 +15,7 @@ import {
   useAutoplay,
   type AutoplayStep,
 } from '@/registry/ndeko/hooks/use-autoplay';
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import {
   hold,
@@ -1074,6 +1075,8 @@ export default function Prompt08() {
     loopAfter: 2400,
     onReset: resetDemo,
   });
+
+  useKeptHeight(ref);
 
   return (
     <div ref={ref} className='flex w-full max-w-[40rem] flex-col gap-3'>

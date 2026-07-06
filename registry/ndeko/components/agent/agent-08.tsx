@@ -5,6 +5,7 @@ import { useId, useRef, useState } from 'react';
 
 import { MotionNumber } from '@/components/core/motion-number';
 import type { RunScriptStep } from '@/registry/ndeko/hooks/use-agent-run';
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { emptyRun, type ToolCall } from '@/registry/ndeko/lib/agent-run';
 import {
@@ -1151,6 +1152,8 @@ export default function Agent08() {
     setRound((current) => current + 1);
     restart();
   }
+
+  useKeptHeight(ref);
 
   return (
     <div ref={ref} className='flex w-full max-w-[32rem] flex-col gap-3'>

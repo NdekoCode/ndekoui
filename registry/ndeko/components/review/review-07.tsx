@@ -7,6 +7,7 @@ import {
   useRunScript,
   type RunScriptStep,
 } from '@/registry/ndeko/hooks/use-agent-run';
+import { useKeptHeight } from '@/registry/ndeko/hooks/use-kept-height';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { useTimeouts } from '@/registry/ndeko/hooks/use-timeouts';
 import {
@@ -789,6 +790,8 @@ export default function Review07() {
     setNotice('');
     restart();
   }
+
+  useKeptHeight(rootRef);
 
   return (
     <div
