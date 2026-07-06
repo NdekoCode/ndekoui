@@ -25,4 +25,22 @@ export const manifest: BlockManifest = [
     files: ['index.tsx', 'feature-previews.tsx', 'data.ts'],
     previewHeight: 700,
   },
+  {
+    name: 'features-04',
+    title: 'Live features',
+    description:
+      'Five tiles of one agent run, each the working control: a prompt with a status tray, a plan that ticks, an approval that waits for you, a context ring that fills and a cost that rolls.',
+    files: [
+      'index.tsx',
+      'approval-tile.tsx',
+      'context-tile.tsx',
+      'cost-tile.tsx',
+      'plan-tile.tsx',
+      'prompt-tile.tsx',
+      'tile.tsx',
+      'session.ts',
+      'data.ts',
+    ],
+    previewHeight: 1040,
+  },
 ];
