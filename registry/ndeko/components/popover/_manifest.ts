@@ -58,4 +58,11 @@ export const manifest: ComponentManifest = [
     description:
       'A popover that moves from one spot to the next with its arrow.',
   },
+  {
+    name: 'popover-10',
+    source: 'ndeko',
+    title: 'Emoji field',
+    description:
+      'Emoji packed in a round field that keeps gliding after a fling and swells under the middle; a tapped one flies into the message where the caret is.',
+  },
 ];
