@@ -1,15 +1,15 @@
 # ndekoui
 
-Open-source React components that animate every change of state. 735 components in 42 categories, 84 blocks, 10 templates and 84 primitives, built on [Base UI](https://base-ui.com), [motion](https://motion.dev) and [Tailwind CSS 4](https://tailwindcss.com), installed with the [shadcn CLI](https://ui.shadcn.com/docs/cli) or through an MCP server.
+Open-source React components that animate every change of state. 735 components in 42 categories, 84 blocks, 14 templates and 86 primitives, built on [Base UI](https://base-ui.com), [motion](https://motion.dev) and [Tailwind CSS 4](https://tailwindcss.com), installed with the [shadcn CLI](https://ui.shadcn.com/docs/cli) or through an MCP server.
 
 **Site and catalogue:** [ui.ndekocode.dev](https://ui.ndekocode.dev)
 
 ## What is in it
 
-- **Primitives**: 84 accessible building blocks on Base UI (button, field, select, menu, dialog, sheet, tabs, slider, chat input...). Try them at [/kit](https://ui.ndekocode.dev/kit).
+- **Primitives**: 86 accessible building blocks on Base UI (button, field, select, menu, dialog, sheet, tabs, slider, chat input...). Try them at [/kit](https://ui.ndekocode.dev/kit).
 - **Components**: 735 compositions in 42 categories, from inputs and date pickers to notifications, comments and team lists. Browse them at [/components](https://ui.ndekocode.dev/components).
 - **Blocks**: 84 whole sections of a product (app shells, boards, task lists, dashboards, billing, settings, pricing, heroes, agent chats, agent reviews, agent operations...). See them at [/blocks](https://ui.ndekocode.dev/blocks).
-- **Templates**: 10 complete pages for applications and marketing sites, at [/templates](https://ui.ndekocode.dev/templates).
+- **Templates**: 14 complete pages for applications and marketing sites, at [/templates](https://ui.ndekocode.dev/templates).
 - **Motion**: text effects, scroll animations, marquees, device frames and more, documented at [/docs](https://ui.ndekocode.dev/docs).
 - **Theme**: light and dark tokens, ink colours that pass AA, one-pixel hairlines and a few 3D materials, installed with every item.
 
