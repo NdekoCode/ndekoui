@@ -223,6 +223,7 @@ export function useSession<State, Action>({
       const wasPressing = pressTimer !== undefined;
       if (wasPressing) {
         clearTimeout(pressTimer);
+        setPressed(null);
         pending.current = { key: waitKey, remaining: 0, scheduledAt: 0 };
         return;
       }
