@@ -10,7 +10,7 @@
   "files": [
     {
       "path": "registry/ndeko/lib/utils.ts",
-      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { extendTailwindMerge } from 'tailwind-merge';\n\nconst twMerge = extendTailwindMerge({\n  extend: {\n    classGroups: {\n      'border-w': ['hairline-border'],\n      'border-w-b': ['hairline-b'],\n      'border-w-t': ['hairline-t'],\n      'border-w-l': ['hairline-l'],\n      'border-w-r': ['hairline-r'],\n      'border-w-x': ['hairline-x'],\n      'border-w-y': ['hairline-y'],\n      'divide-y': ['hairline-divide-y'],\n      'divide-x': ['hairline-divide-x'],\n      'ring-w': ['hairline-ring'],\n    },\n  },\n});\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { extendTailwindMerge } from 'tailwind-merge';\n\n/**\n * The hairline utilities of the theme set the same properties as the border, divide and ring\n * widths of Tailwind, so a later one replaces an earlier one when classes are merged.\n */\nconst mergeClasses = extendTailwindMerge({\n  extend: {\n    classGroups: {\n      'border-w': ['hairline-border'],\n      'border-w-b': ['hairline-b'],\n      'border-w-t': ['hairline-t'],\n      'border-w-l': ['hairline-l'],\n      'border-w-r': ['hairline-r'],\n      'border-w-x': ['hairline-x'],\n      'border-w-y': ['hairline-y'],\n      'divide-y': ['hairline-divide-y'],\n      'divide-x': ['hairline-divide-x'],\n      'ring-w': ['hairline-ring'],\n    },\n  },\n});\n\nexport function cn(...inputs: ClassValue[]) {\n  const classes = clsx(inputs);\n  return mergeClasses(classes);\n}\n",
       "type": "registry:lib"
     }
   ],

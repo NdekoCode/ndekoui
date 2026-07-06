@@ -7,12 +7,13 @@
   "registryDependencies": [
     "https://ui.ndekocode.dev/r/button.json",
     "https://ui.ndekocode.dev/r/icons.json",
-    "https://ui.ndekocode.dev/r/theme.json"
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/wash.json"
   ],
   "files": [
     {
       "path": "registry/ndeko/blocks/ctas/ctas-01/index.tsx",
-      "content": "import { ArrowRightIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\n\nimport { BAND } from './data';\n\nexport default function Ctas01() {\n  return (\n    <section className='px-4 py-12 sm:px-6 sm:py-16 lg:px-8'>\n      <div className='surface-brand mx-auto flex max-w-6xl flex-col items-start gap-6 rounded-2xl p-6 sm:p-10 md:flex-row md:items-center md:justify-between md:gap-10'>\n        <div className='flex max-w-xl flex-col gap-2'>\n          <h2 className='text-2xl font-semibold text-balance sm:text-3xl'>\n            {BAND.title}\n          </h2>\n          <p className='text-muted-foreground text-base text-pretty'>\n            {BAND.description}\n          </p>\n        </div>\n        <Button\n          size='lg'\n          className='shrink-0'\n          nativeButton={false}\n          render={<a href='#' />}\n        >\n          {BAND.action}\n          <ArrowRightIcon />\n        </Button>\n      </div>\n    </section>\n  );\n}\n",
+      "content": "import { ArrowRightIcon } from '@/registry/ndeko/lib/icons';\nimport { Button } from '@/registry/ndeko/ui/button';\nimport { Wash } from '@/registry/ndeko/ui/wash';\n\nimport { BAND } from './data';\n\nexport default function Ctas01() {\n  return (\n    <section className='px-4 py-12 sm:px-6 sm:py-16 lg:px-8'>\n      <div className='surface-brand relative isolate mx-auto flex max-w-6xl flex-col items-start gap-6 rounded-2xl p-6 sm:p-10 md:flex-row md:items-center md:justify-between md:gap-10'>\n        <Wash />\n        <div className='flex max-w-xl flex-col gap-2'>\n          <h2 className='text-2xl font-semibold text-balance sm:text-3xl'>\n            {BAND.title}\n          </h2>\n          <p className='text-muted-foreground text-base text-pretty'>\n            {BAND.description}\n          </p>\n        </div>\n        <Button\n          size='lg'\n          className='shrink-0'\n          nativeButton={false}\n          render={<a href='#' />}\n        >\n          {BAND.action}\n          <ArrowRightIcon />\n        </Button>\n      </div>\n    </section>\n  );\n}\n",
       "type": "registry:component",
       "target": "components/blocks/ctas-01/index.tsx"
     },

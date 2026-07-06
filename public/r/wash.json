@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "wash",
+  "title": "Wash",
+  "description": "Ink with grain behind the content of the one featured surface, or of what is live right now in the hue of its state.",
+  "registryDependencies": [
+    "https://ui.ndekocode.dev/r/theme.json",
+    "https://ui.ndekocode.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ndeko/ui/wash.tsx",
+      "content": "import type { CSSProperties } from 'react';\n\nimport { cn } from '@/registry/ndeko/lib/utils';\n\nexport type WashShape = 'top' | 'cover' | 'bar';\n\n/** Where the ink sits and which way it fades, for each place a wash can take. */\nconst SHAPE_CLASS: Record<WashShape, string> = {\n  top: 'inset-x-0 top-0 h-44 max-h-full',\n  cover: 'inset-0',\n  bar: 'inset-0 [--wash-a:0%_50%] [--wash-b:24%_100%] [--wash-fade:to_right]',\n};\n\ntype WashStyle = CSSProperties & { '--wash': string };\n\ntype WashProps = {\n  /** The hue of the ink: a token or any CSS colour. The primary colour when left out. */\n  color?: string;\n  /** `top` pours from the top edge of a card, `cover` fills a surface, `bar` runs from the start of a bar. */\n  shape?: WashShape;\n  /** A wash that says \"live right now\" follows a state: it fades out when this is false. */\n  isShown?: boolean;\n  className?: string;\n};\n\nfunction styleOf(color: string | undefined) {\n  if (color === undefined) {\n    return undefined;\n  }\n  const style: WashStyle = { '--wash': color };\n  return style;\n}\n\n/** The attribute is present only while the wash is hidden; the material fades on it. */\nfunction hiddenOf(isShown: boolean) {\n  if (isShown) {\n    return undefined;\n  }\n  return '';\n}\n\n/**\n * Ink with grain behind the content of a surface. The surface is `relative isolate` and the wash\n * is its first child: the ink stays under the text and takes the corners of the surface, so\n * nothing has to be clipped.\n * One per view: the featured surface, or what is live right now in the hue of its state.\n */\nexport function Wash({\n  color,\n  shape = 'top',\n  isShown = true,\n  className,\n}: WashProps) {\n  return (\n    <span\n      aria-hidden='true'\n      data-hidden={hiddenOf(isShown)}\n      style={styleOf(color)}\n      className={cn(\n        'grain-wash pointer-events-none absolute -z-10 rounded-[inherit]',\n        SHAPE_CLASS[shape],\n        className\n      )}\n    />\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "primitives"
+  ],
+  "type": "registry:ui"
+}
