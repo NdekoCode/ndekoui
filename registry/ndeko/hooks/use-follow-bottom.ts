@@ -28,6 +28,7 @@ export function useFollowBottom({
   const scrollerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const isPinnedRef = useRef(true);
+  const lastTopRef = useRef(0);
   const [isPinned, setIsPinned] = useState(true);
 
   useEffect(() => {
@@ -52,10 +53,23 @@ export function useFollowBottom({
     }
   }
 
+  /**
+   * Only a move upward unpins. Content that grows between our own scroll to the bottom and the
+   * event it raises would otherwise read as a person leaving the last line.
+   */
   function updatePinned(event: React.UIEvent<HTMLDivElement>) {
-    const distance = distanceFromBottomOf(event.currentTarget);
-    const nextPinned = distance <= PINNED_SLACK_PX;
-    pin(nextPinned);
+    const scroller = event.currentTarget;
+    const distance = distanceFromBottomOf(scroller);
+    const isNearBottom = distance <= PINNED_SLACK_PX;
+    const movedUp = scroller.scrollTop < lastTopRef.current;
+    lastTopRef.current = scroller.scrollTop;
+    if (isNearBottom) {
+      pin(true);
+      return;
+    }
+    if (movedUp) {
+      pin(false);
+    }
   }
 
   function jumpToBottom() {
