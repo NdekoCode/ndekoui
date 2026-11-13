@@ -5,26 +5,19 @@ import { notFound } from 'next/navigation';
 import { BundleTileGrid } from '@/app/_site/bundle-tiles';
 import { JsonLd } from '@/app/_site/json-ld';
 import { breadcrumbOf, itemListOf, pageMetadataOf } from '@/app/_site/seo';
-import { CATALOG_STATS } from '@/lib/catalog-stats';
 import { countLabel } from '@/lib/site';
 
 import { BundleCard } from './bundle-card';
 import { BUNDLE_COPY as COPY } from './bundle-copy';
+import { bundleTotalOf } from './bundle-share';
 import { groupOf, groupsOf, tilesOf } from './bundles';
 import type { BundleKind } from './types';
-
-function totalOf(kind: BundleKind) {
-  if (kind === 'blocks') {
-    return CATALOG_STATS.blocks;
-  }
-  return CATALOG_STATS.templates;
-}
 
 export function BundleIndexPage({ kind }: { kind: BundleKind }) {
   const copy = COPY[kind];
   const groups = groupsOf(kind);
   const hasGroups = groups.length > 0;
-  const total = totalOf(kind);
+  const total = bundleTotalOf(kind);
 
   return (
     <div className='flex flex-col gap-12'>
