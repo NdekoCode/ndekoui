@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { previewMetadataOf } from '@/app/_site/seo';
 import { kitItemOf, kitUnitOf } from '@/app/kit/kit-catalog';
 import { kitAnchorPathOf } from '@/app/kit/kit-paths';
 import { ItemPresentation } from '@/app/view/_present/item-presentation';
@@ -21,10 +22,11 @@ export async function generateMetadata({
   if (!item) {
     return {};
   }
-  return {
+  return previewMetadataOf({
     title: `${item.title} - ndekoui`,
     description: item.description,
-  };
+    path: `/view/kit/${name}`,
+  });
 }
 
 export default async function KitViewPage({ params }: KitViewPageProps) {

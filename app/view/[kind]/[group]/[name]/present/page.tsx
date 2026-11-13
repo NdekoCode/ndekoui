@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { previewMetadataOf } from '@/app/_site/seo';
 import {
   bundleEntryOf,
   entryAnchorPathOf,
   isBundleKind,
+  presentPathOf,
   viewParamsOf,
   viewPathOf,
 } from '@/app/blocks/_shared/bundles';
@@ -38,10 +40,12 @@ export async function generateMetadata({
   if (!presented) {
     return {};
   }
-  return {
-    title: `${presented.entry.title} - ndekoui`,
-    description: presented.entry.description,
-  };
+  const { kind, group, entry } = presented;
+  return previewMetadataOf({
+    title: `${entry.title} - ndekoui`,
+    description: entry.description,
+    path: presentPathOf(kind, group.slug, entry.name),
+  });
 }
 
 export default async function PresentPage({ params }: PresentPageProps) {

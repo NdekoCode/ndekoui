@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { previewMetadataOf } from '@/app/_site/seo';
 import { catalogAnchorPathOf } from '@/app/components/_catalog/component-paths';
 import { ComponentPreview } from '@/app/components/_catalog/component-preview';
 import { previewWidthOf } from '@/app/components/_catalog/preview-widths';
@@ -35,10 +36,11 @@ export async function generateMetadata({
   if (!found) {
     return {};
   }
-  return {
+  return previewMetadataOf({
     title: `${found.entry.title} - ndekoui`,
     description: found.entry.description,
-  };
+    path: `/view/components/${category}/${name}`,
+  });
 }
 
 export default async function ComponentViewPage({
