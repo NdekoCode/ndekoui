@@ -1,5 +1,6 @@
 import './globals.css';
 
+import { MotionProvider } from '@/components/website/motion-provider';
 import { ThemeProvider } from '@/components/website/theme-provider';
 
 import type { Metadata } from 'next';
@@ -36,7 +37,9 @@ export default function RootLayout({
     <html lang='en' suppressHydrationWarning>
       <body className='font-sans antialiased'>
         <ThemeProvider attribute='class' disableTransitionOnChange>
-          <div className='isolate min-h-screen'>{children}</div>
+          <MotionProvider>
+            <div className='isolate min-h-screen'>{children}</div>
+          </MotionProvider>
         </ThemeProvider>
         {isProduction && <Analytics />}
       </body>
