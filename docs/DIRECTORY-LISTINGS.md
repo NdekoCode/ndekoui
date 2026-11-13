@@ -6,7 +6,7 @@ Where ndekoui is listed, so search engines, developers and AI tools can find it.
 
 | Directory                                          | How                                                                                                                                          | Status                                                             |
 | -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| shadcn registry directory (`@ndeko`)               | [shadcn-ui/ui#12625](https://github.com/shadcn-ui/ui/pull/12625)                                                                             | Open, commit signed                                                |
+| shadcn registry directory (`@ndeko`)               | [shadcn-ui/ui#12629](https://github.com/shadcn-ui/ui/pull/12629), which replaced #12625                                                      | Merged 2026-11-11                                                  |
 | awesome-shadcn-ui                                  | [birobirobiro/awesome-shadcn-ui#742](https://github.com/birobirobiro/awesome-shadcn-ui/pull/742)                                             | Open                                                               |
 | Official MCP Registry (`dev.ndekocode.ui/ndekoui`) | `mcp-publisher` with the HTTP key at `/.well-known/mcp-registry-auth`                                                                        | Published 2026-11-06, version 1.0.0                                |
 | Glama                                              | Picked up from the official registry                                                                                                         | [Listed](https://glama.ai/mcp/connectors/dev.ndekocode.ui/ndekoui) |
@@ -31,7 +31,7 @@ Entry added at the end of `apps/v4/registry/directory.json`. It follows the sche
 }
 ```
 
-Once merged, `npx shadcn@latest add @ndeko/<item>` works without a `components.json` entry.
+Since the merge, `npx shadcn@latest add @ndeko/<item>` works without a `components.json` entry, and the CLI writes the entry on the first install. Checked on 2026-11-14 with shadcn 4.23.0 in a fresh Next.js app, with `button-01` and `application-09`.
 
 ## Official MCP Registry
 

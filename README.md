@@ -15,26 +15,18 @@ Open-source React components that animate every change of state. <!-- count:comp
 
 ## Install a component
 
-Every item is a shadcn registry item. In a project set up with the shadcn CLI, React 19 and Tailwind CSS 4:
-
-```bash
-npx shadcn@latest add https://ui.ndekocode.dev/r/notification-28.json
-```
-
-The theme, the `cn` helper and every primitive the item uses come with it, and imports are rewritten to your own aliases.
-
-To use the short form, declare the registry in `components.json`:
-
-```json
-{
-  "registries": {
-    "@ndeko": "https://ui.ndekocode.dev/r/{name}.json"
-  }
-}
-```
+Every item is a shadcn registry item, listed in the shadcn registry directory as `@ndeko`. In a project set up with the shadcn CLI, React 19 and Tailwind CSS 4:
 
 ```bash
 npx shadcn@latest add @ndeko/notification-28
+```
+
+The theme, the `cn` helper and every primitive the item uses come with it, and imports are rewritten to your own aliases. There is nothing to declare in `components.json`: the CLI adds the `@ndeko` entry itself the first time.
+
+With an older shadcn CLI that does not read the registry directory, give it the full address of the item:
+
+```bash
+npx shadcn@latest add https://ui.ndekocode.dev/r/notification-28.json
 ```
 
 ## Use it from your editor

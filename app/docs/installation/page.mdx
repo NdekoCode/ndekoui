@@ -8,7 +8,7 @@ import CodeBlock from '@/components/website/code-block';
 
 # Installation
 
-ndekoui is a shadcn registry. Every primitive, component, block and template installs with the shadcn CLI, and the pieces it uses come with it. It works with React 19 and Tailwind CSS 4.
+ndekoui is a shadcn registry, listed in the shadcn registry directory as `@ndeko`. Every primitive, component, block and template installs with the shadcn CLI, and the pieces it uses come with it. It works with React 19 and Tailwind CSS 4.
 
 <Steps>
 
@@ -23,7 +23,7 @@ Once per project. It creates the `components.json` file the CLI reads, and the `
 Tokens for light and dark, the hairline utilities, the 3D materials and the reduced-motion switch.
 
 <CodeBlock
-  code={`npx shadcn@latest add https://ui.ndekocode.dev/r/theme.json`}
+  code={`npx shadcn@latest add @ndeko/theme`}
   lang='bash'
   className='h-[52px]'
 />
@@ -37,6 +37,18 @@ The command above adds the Text Effect component to `components/core`, with Moti
 You can also copy the code by hand from the component's page.
 
 </Steps>
+
+## The @ndeko name
+
+The shadcn CLI finds `@ndeko` in its registry directory, so there is nothing to declare in `components.json`: the CLI adds the entry itself the first time you install an item.
+
+With an older shadcn CLI that does not read the directory, give it the full address of the item instead:
+
+<CodeBlock
+  code={`npx shadcn@latest add https://ui.ndekocode.dev/r/text-effect.json`}
+  lang='bash'
+  className='h-[52px]'
+/>
 
 ## In an AI app builder
 
