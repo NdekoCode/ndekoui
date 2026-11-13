@@ -9,26 +9,9 @@ import { CATALOG_STATS } from '@/lib/catalog-stats';
 import { countLabel } from '@/lib/site';
 
 import { BundleCard } from './bundle-card';
+import { BUNDLE_COPY as COPY } from './bundle-copy';
 import { groupOf, groupsOf, tilesOf } from './bundles';
 import type { BundleKind } from './types';
-
-const COPY: Record<
-  BundleKind,
-  { title: string; lead: string; singular: string; plural: string }
-> = {
-  blocks: {
-    title: 'Blocks for whole sections of a product',
-    lead: 'App shells, lists, boards, settings and marketing sections, built from the components with fictional data. Resize each one to check it on a phone.',
-    singular: 'block',
-    plural: 'blocks',
-  },
-  templates: {
-    title: 'Templates to start a product from',
-    lead: 'Complete pages assembled from the blocks. Open one, install it and replace the fictional data with yours.',
-    singular: 'template',
-    plural: 'templates',
-  },
-};
 
 function totalOf(kind: BundleKind) {
   if (kind === 'blocks') {
