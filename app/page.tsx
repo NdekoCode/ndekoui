@@ -7,7 +7,7 @@ import { fetchStarCount } from '@/app/_site/repository';
 import { pageMetadataOf } from '@/app/_site/seo';
 import { SiteFooter } from '@/app/_site/site-footer';
 import { SiteHeader } from '@/app/_site/site-header';
-import { CATALOG_STATS } from '@/lib/catalog-stats';
+import { CATALOG_STATS, componentCountPhraseOf } from '@/lib/catalog-stats';
 import { countLabel, SYSTEM_FONT_CLASS } from '@/lib/site';
 import { CpuIcon, LayersIcon, PlayIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
@@ -30,12 +30,12 @@ import { SectionHeading } from './_home/section-heading';
 import { StatesSection } from './_home/states/states-section';
 import { Statement } from './_home/statement';
 
-const COMPONENT_TOTAL = CATALOG_STATS.componentVariants;
+const COMPONENT_PHRASE = componentCountPhraseOf(CATALOG_STATS);
 
 /* The title names the kind of thing ndekoui is, for people who do not know the name yet. */
 const HOME_TITLE = 'ndekoui - Animated React UI component library';
 
-const HOME_DESCRIPTION = `${COMPONENT_TOTAL} free, open-source React components, plus blocks and templates, built on Base UI, motion and Tailwind CSS 4. Install them with the shadcn CLI or through MCP.`;
+const HOME_DESCRIPTION = `Free, open-source React components: ${COMPONENT_PHRASE}, plus blocks and templates, built on Base UI, motion and Tailwind CSS 4. Install them with the shadcn CLI or through MCP.`;
 
 export const metadata: Metadata = pageMetadataOf({
   title: HOME_TITLE,
@@ -67,7 +67,6 @@ function LinkButton({ href, children }: { href: string; children: string }) {
 
 export default async function HomePage() {
   const starCount = await fetchStarCount();
-  const componentTotal = COMPONENT_TOTAL;
   const primitiveTotal = CATALOG_STATS.primitives;
   const blockTotal = CATALOG_STATS.blocks;
   const templateTotal = CATALOG_STATS.templates;
@@ -84,14 +83,14 @@ export default async function HomePage() {
         <AnnouncementBar />
         <SiteHeader isWide />
         <main className={PAGE_RHYTHM}>
-          <HomeHero componentTotal={componentTotal} starCount={starCount}>
+          <HomeHero componentPhrase={COMPONENT_PHRASE} starCount={starCount}>
             <PauseOffscreen>
               <HeroShowcase />
             </PauseOffscreen>
           </HomeHero>
           <div className={SECTION}>
             <Statement
-              componentTotal={componentTotal}
+              componentPhrase={COMPONENT_PHRASE}
               blockTotal={blockTotal}
               templateTotal={templateTotal}
             />

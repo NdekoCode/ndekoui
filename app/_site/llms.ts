@@ -3,7 +3,7 @@ import type { BundleKind } from '@/app/blocks/_shared/types';
 import { catalog } from '@/app/components/_generated/catalog';
 import { NAVIGATION } from '@/app/docs/navigation';
 import { MCP_PAGE_PATH, MCP_URL } from '@/app/mcp/_shared/mcp-config';
-import { CATALOG_STATS } from '@/lib/catalog-stats';
+import { CATALOG_STATS, componentCountPhraseOf } from '@/lib/catalog-stats';
 import { countLabel, installCommandOf, REGISTRY_URL } from '@/lib/site';
 import { aiItems } from '@/registry/ai-items';
 import { chatItems } from '@/registry/chat-items';
@@ -28,16 +28,7 @@ function primitiveTotal() {
 }
 
 function summaryOf() {
-  const components = countLabel(
-    CATALOG_STATS.componentVariants,
-    'component',
-    'components'
-  );
-  const categories = countLabel(
-    CATALOG_STATS.componentFamilies,
-    'category',
-    'categories'
-  );
+  const components = componentCountPhraseOf(CATALOG_STATS);
   const blocks = countLabel(CATALOG_STATS.blocks, 'block', 'blocks');
   const templates = countLabel(
     CATALOG_STATS.templates,
@@ -45,7 +36,7 @@ function summaryOf() {
     'templates'
   );
   const primitives = countLabel(primitiveTotal(), 'primitive', 'primitives');
-  return `${SITE_NAME} is an open-source React library under the MIT licence: ${components} in ${categories}, ${blocks}, ${templates} and ${primitives}, built on Base UI, motion and Tailwind CSS 4. Every item animates its changes of state and installs with the shadcn CLI, with the theme and the primitives it uses.`;
+  return `${SITE_NAME} is an open-source React library under the MIT licence: ${components}, ${blocks}, ${templates} and ${primitives}, built on Base UI, motion and Tailwind CSS 4. Every item animates its changes of state and installs with the shadcn CLI, with the theme and the primitives it uses.`;
 }
 
 function installSection() {
