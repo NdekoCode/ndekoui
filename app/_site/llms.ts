@@ -4,7 +4,12 @@ import { catalog } from '@/app/components/_generated/catalog';
 import { NAVIGATION } from '@/app/docs/navigation';
 import { MCP_PAGE_PATH, MCP_URL } from '@/app/mcp/_shared/mcp-config';
 import { CATALOG_STATS, componentCountPhraseOf } from '@/lib/catalog-stats';
-import { countLabel, installCommandOf, REGISTRY_URL } from '@/lib/site';
+import {
+  countLabel,
+  installCommandOf,
+  REGISTRY_URL,
+  urlInstallCommandOf,
+} from '@/lib/site';
 import { aiItems } from '@/registry/ai-items';
 import { chatItems } from '@/registry/chat-items';
 import { primitiveItems } from '@/registry/items';
@@ -41,10 +46,12 @@ function summaryOf() {
 
 function installSection() {
   const example = installCommandOf('notification-28');
+  const urlExample = urlInstallCommandOf('notification-28');
   return [
     '## Install',
     '',
-    `Each item is a shadcn registry item at ${REGISTRY_URL}/<name>.json. For example: \`${example}\`.`,
+    `Each item is a shadcn registry item at ${REGISTRY_URL}/<name>.json, listed in the shadcn registry directory as @ndeko. For example: \`${example}\`.`,
+    `A shadcn CLI that does not know @ndeko takes the full address instead: \`${urlExample}\`.`,
     `Editors and assistants can also connect to the MCP server at ${MCP_URL} to search the catalogue, read the source of an item and get its install command.`,
   ];
 }

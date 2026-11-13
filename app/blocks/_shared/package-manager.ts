@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from 'react';
 
-import { itemUrlOf } from '@/lib/site';
+import { namespacedItemOf } from '@/lib/site';
 
 export type PackageManager = 'pnpm' | 'npm' | 'yarn' | 'bun';
 
@@ -41,8 +41,8 @@ export function runnerOf(manager: PackageManager) {
 
 export function installCommandFor(manager: PackageManager, itemName: string) {
   const runner = runnerOf(manager);
-  const itemUrl = itemUrlOf(itemName);
-  return `${runner} ${SHADCN_ADD} ${itemUrl}`;
+  const namespacedItem = namespacedItemOf(itemName);
+  return `${runner} ${SHADCN_ADD} ${namespacedItem}`;
 }
 
 function readStoredPackageManager() {
