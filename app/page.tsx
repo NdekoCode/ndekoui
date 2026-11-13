@@ -7,9 +7,6 @@ import { fetchStarCount } from '@/app/_site/repository';
 import { pageMetadataOf } from '@/app/_site/seo';
 import { SiteFooter } from '@/app/_site/site-footer';
 import { SiteHeader } from '@/app/_site/site-header';
-import { groupsOf } from '@/app/blocks/_shared/bundles';
-import { countComponents } from '@/app/components/_catalog/families';
-import { catalog } from '@/app/components/_generated/catalog';
 import { CATALOG_STATS } from '@/lib/catalog-stats';
 import { countLabel, SYSTEM_FONT_CLASS } from '@/lib/site';
 import { CpuIcon, LayersIcon, PlayIcon } from '@/registry/ndeko/lib/icons';
@@ -33,7 +30,7 @@ import { SectionHeading } from './_home/section-heading';
 import { StatesSection } from './_home/states/states-section';
 import { Statement } from './_home/statement';
 
-const COMPONENT_TOTAL = countComponents(catalog);
+const COMPONENT_TOTAL = CATALOG_STATS.componentVariants;
 
 /* The title names the kind of thing ndekoui is, for people who do not know the name yet. */
 const HOME_TITLE = 'ndekoui - Animated React UI component library';
@@ -55,14 +52,6 @@ const SECTION_STACK = 'flex flex-col gap-10 lg:gap-12';
 const NO_SCRIPT_STYLE =
   '.reveal,.reveal-plain{opacity:1;translate:none;filter:none}';
 
-function entryTotal(kind: 'blocks' | 'templates') {
-  let total = 0;
-  for (const group of groupsOf(kind)) {
-    total += group.entries.length;
-  }
-  return total;
-}
-
 function LinkButton({ href, children }: { href: string; children: string }) {
   return (
     <Button
@@ -80,8 +69,8 @@ export default async function HomePage() {
   const starCount = await fetchStarCount();
   const componentTotal = COMPONENT_TOTAL;
   const primitiveTotal = CATALOG_STATS.primitives;
-  const blockTotal = entryTotal('blocks');
-  const templateTotal = entryTotal('templates');
+  const blockTotal = CATALOG_STATS.blocks;
+  const templateTotal = CATALOG_STATS.templates;
 
   return (
     <TooltipProvider>

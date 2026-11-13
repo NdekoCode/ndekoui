@@ -1,6 +1,5 @@
 import { groupsOf } from '@/app/blocks/_shared/bundles';
 import type { BundleKind } from '@/app/blocks/_shared/types';
-import { countComponents } from '@/app/components/_catalog/families';
 import { catalog } from '@/app/components/_generated/catalog';
 import { NAVIGATION } from '@/app/docs/navigation';
 import { MCP_PAGE_PATH, MCP_URL } from '@/app/mcp/_shared/mcp-config';
@@ -24,28 +23,24 @@ function linkLineOf(name: string, path: string, note: string) {
   return `- [${name}](${url}): ${note}`;
 }
 
-function entryTotalOf(kind: BundleKind) {
-  let total = 0;
-  for (const group of groupsOf(kind)) {
-    total += group.entries.length;
-  }
-  return total;
-}
-
 function primitiveTotal() {
   return CATALOG_STATS.primitives;
 }
 
 function summaryOf() {
   const components = countLabel(
-    countComponents(catalog),
+    CATALOG_STATS.componentVariants,
     'component',
     'components'
   );
-  const categories = countLabel(catalog.length, 'category', 'categories');
-  const blocks = countLabel(entryTotalOf('blocks'), 'block', 'blocks');
+  const categories = countLabel(
+    CATALOG_STATS.componentFamilies,
+    'category',
+    'categories'
+  );
+  const blocks = countLabel(CATALOG_STATS.blocks, 'block', 'blocks');
   const templates = countLabel(
-    entryTotalOf('templates'),
+    CATALOG_STATS.templates,
     'template',
     'templates'
   );

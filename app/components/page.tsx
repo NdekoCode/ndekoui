@@ -2,14 +2,11 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { pageMetadataOf } from '@/app/_site/seo';
+import { CATALOG_STATS } from '@/lib/catalog-stats';
 import { countLabel } from '@/lib/site';
 
 import { CategoryThumbnail } from './_catalog/category-thumbnail';
-import {
-  countComponents,
-  familyAnchorOf,
-  publishedFamilies,
-} from './_catalog/families';
+import { familyAnchorOf, publishedFamilies } from './_catalog/families';
 import { catalog } from './_generated/catalog';
 
 export const metadata: Metadata = pageMetadataOf({
@@ -28,7 +25,7 @@ export const metadata: Metadata = pageMetadataOf({
 export default function ComponentsIndexPage() {
   const families = publishedFamilies(catalog);
   const hasFamilies = families.length > 0;
-  const total = countComponents(catalog);
+  const total = CATALOG_STATS.componentVariants;
 
   return (
     <div className='flex flex-col gap-14'>

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 import { pageMetadataOf } from '@/app/_site/seo';
+import { CATALOG_STATS } from '@/lib/catalog-stats';
 import { countLabel } from '@/lib/site';
 import type { RegistryItemDefinition } from '@/registry/items';
 
@@ -32,7 +33,7 @@ function itemsByNameOf(items: RegistryItemDefinition[]) {
 
 export default function KitPage() {
   const itemsByName = itemsByNameOf(KIT_ITEMS);
-  const count = countLabel(KIT_ITEMS.length, 'primitive', 'primitives');
+  const count = countLabel(CATALOG_STATS.primitives, 'primitive', 'primitives');
 
   return (
     <div className='flex flex-col gap-14'>

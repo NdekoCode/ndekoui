@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { BundleTileGrid } from '@/app/_site/bundle-tiles';
 import { JsonLd } from '@/app/_site/json-ld';
 import { breadcrumbOf, itemListOf, pageMetadataOf } from '@/app/_site/seo';
+import { CATALOG_STATS } from '@/lib/catalog-stats';
 import { countLabel } from '@/lib/site';
 
 import { BundleCard } from './bundle-card';
@@ -30,11 +31,10 @@ const COPY: Record<
 };
 
 function totalOf(kind: BundleKind) {
-  let total = 0;
-  for (const group of groupsOf(kind)) {
-    total += group.entries.length;
+  if (kind === 'blocks') {
+    return CATALOG_STATS.blocks;
   }
-  return total;
+  return CATALOG_STATS.templates;
 }
 
 export function BundleIndexPage({ kind }: { kind: BundleKind }) {
