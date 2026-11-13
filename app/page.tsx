@@ -10,9 +10,8 @@ import { SiteHeader } from '@/app/_site/site-header';
 import { groupsOf } from '@/app/blocks/_shared/bundles';
 import { countComponents } from '@/app/components/_catalog/families';
 import { catalog } from '@/app/components/_generated/catalog';
+import { CATALOG_STATS } from '@/lib/catalog-stats';
 import { countLabel, SYSTEM_FONT_CLASS } from '@/lib/site';
-import { chatItems } from '@/registry/chat-items';
-import { primitiveItems } from '@/registry/items';
 import { CpuIcon, LayersIcon, PlayIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Toaster } from '@/registry/ndeko/ui/sonner';
@@ -80,7 +79,7 @@ function LinkButton({ href, children }: { href: string; children: string }) {
 export default async function HomePage() {
   const starCount = await fetchStarCount();
   const componentTotal = COMPONENT_TOTAL;
-  const primitiveTotal = primitiveItems.length + chatItems.length;
+  const primitiveTotal = CATALOG_STATS.primitives;
   const blockTotal = entryTotal('blocks');
   const templateTotal = entryTotal('templates');
 

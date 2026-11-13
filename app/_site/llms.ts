@@ -4,7 +4,9 @@ import { countComponents } from '@/app/components/_catalog/families';
 import { catalog } from '@/app/components/_generated/catalog';
 import { NAVIGATION } from '@/app/docs/navigation';
 import { MCP_PAGE_PATH, MCP_URL } from '@/app/mcp/_shared/mcp-config';
+import { CATALOG_STATS } from '@/lib/catalog-stats';
 import { countLabel, installCommandOf, REGISTRY_URL } from '@/lib/site';
+import { aiItems } from '@/registry/ai-items';
 import { chatItems } from '@/registry/chat-items';
 import { primitiveItems } from '@/registry/items';
 
@@ -31,7 +33,7 @@ function entryTotalOf(kind: BundleKind) {
 }
 
 function primitiveTotal() {
-  return primitiveItems.length + chatItems.length;
+  return CATALOG_STATS.primitives;
 }
 
 function summaryOf() {
@@ -199,7 +201,7 @@ function fullBundleSection(kind: BundleKind) {
 
 /** Every installable item, one line each, grouped as on the site. */
 export function llmsFullText() {
-  const primitives = [...primitiveItems, ...chatItems];
+  const primitives = [...primitiveItems, ...chatItems, ...aiItems];
   const lines = [
     `# ${SITE_NAME}: full catalogue`,
     '',
