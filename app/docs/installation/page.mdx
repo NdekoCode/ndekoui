@@ -5,6 +5,7 @@ export const metadata = {
 };
 
 import CodeBlock from '@/components/website/code-block';
+import { MOTION_PROVIDER_CODE } from './motion-provider-code';
 
 # Installation
 
@@ -54,16 +55,7 @@ With an older shadcn CLI that does not read the directory, give it the full addr
 
 The theme drops movement when the system asks for reduced motion, and every ndekoui component reads the same setting before it moves. The motion library does not read the CSS rule, so wrap your app in `MotionConfig` once: any other motion animation in the app then keeps its fades and drops its movement too.
 
-<CodeBlock
-  code={`'use client';
-
-import { MotionConfig } from 'motion/react';
-
-export function MotionProvider({ children }: { children: React.ReactNode }) {
-  return <MotionConfig reducedMotion='user'>{children}</MotionConfig>;
-}`}
-  lang='tsx'
-/>
+<CodeBlock code={MOTION_PROVIDER_CODE} lang='tsx' />
 
 Then render `<MotionProvider>` around the content of your root layout. A spinner keeps turning, as people expect a loader to.
 
