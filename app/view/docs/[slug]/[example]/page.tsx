@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { previewMetadataOf } from '@/app/_site/seo';
 import { docsExampleOf } from '@/app/docs/docs-catalog';
 import { DocsExamplePreview } from '@/app/docs/docs-example-preview';
 import { docsAnchorPathOf } from '@/app/docs/docs-paths';
 import { ItemPresentation } from '@/app/view/_present/item-presentation';
+import { registrySummaryOf } from '@/lib/registry-summary';
 import { motionItemNameOf } from '@/lib/site';
 
 type DocsViewPageProps = {
@@ -23,7 +25,15 @@ export async function generateMetadata({
   if (!entry) {
     return {};
   }
-  return { title: `${entry.title} - ${entry.pageTitle} - ndekoui` };
+  const itemName = motionItemNameOf(entry.slug);
+  const summary = registrySummaryOf(itemName);
+  const fallback = `${entry.title}, an example of ${entry.pageTitle} from ndekoui.`;
+  const description = summary?.description ?? fallback;
+  return previewMetadataOf({
+    title: `${entry.title} - ${entry.pageTitle} - ndekoui`,
+    description,
+    path: `/view/docs/${slug}/${example}`,
+  });
 }
 
 export default async function DocsViewPage({ params }: DocsViewPageProps) {

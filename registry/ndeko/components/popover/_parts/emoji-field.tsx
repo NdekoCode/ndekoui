@@ -13,6 +13,7 @@ import {
   type Ref,
 } from 'react';
 
+import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { cn } from '@/registry/ndeko/lib/utils';
 
 import {
@@ -127,6 +128,7 @@ export function EmojiField({
   );
   const [activeChar, setActiveChar] = useState('');
   const focusableChar = focusableCharOf(items, activeChar);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const paint = useCallback(() => {
     const placed = cellsRef.current;
@@ -246,13 +248,34 @@ export function EmojiField({
     return { x: state.x + x * landing - x, y: state.y + y * landing - y };
   }
 
+  /** With reduced motion the field lands where it was going at once, instead of gliding there. */
+  function landAt(target: Cell) {
+    const state = motion.current;
+    const reach = reachOf(cellsRef.current);
+    const kept = withinReach(target.x, target.y, reach);
+    state.x = kept.x;
+    state.y = kept.y;
+    state.vx = 0;
+    state.vy = 0;
+    state.target = null;
+    paint();
+  }
+
+  function travelTo(target: Cell) {
+    if (prefersReducedMotion) {
+      landAt(target);
+      return;
+    }
+    motion.current.target = target;
+    startLoop();
+  }
+
   function glideTo(index: number) {
     const target = offsetToLand(index);
     if (target === null) {
       return;
     }
-    motion.current.target = target;
-    startLoop();
+    travelTo(target);
   }
 
   function pickAt(index: number) {
@@ -271,8 +294,7 @@ export function EmojiField({
         return;
       }
       const cell = cellsRef.current[index];
-      motion.current.target = { x: -cell.x * 0.7, y: -cell.y * 0.7 };
-      startLoop();
+      travelTo({ x: -cell.x * 0.7, y: -cell.y * 0.7 });
     },
     pick(char: string) {
       const index = items.findIndex((item) => item.char === char);
@@ -339,9 +361,13 @@ export function EmojiField({
       return;
     }
     const idleMs = event.timeStamp - current.lastTime;
-    if (idleMs > 90) {
+    const isResting = idleMs > 90;
+    if (isResting || prefersReducedMotion) {
       motion.current.vx = 0;
       motion.current.vy = 0;
+    }
+    if (prefersReducedMotion) {
+      return;
     }
     startLoop();
   }

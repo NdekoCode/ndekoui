@@ -2,20 +2,18 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { pageMetadataOf } from '@/app/_site/seo';
+import { CATALOG_STATS, componentCountPhraseOf } from '@/lib/catalog-stats';
 import { countLabel } from '@/lib/site';
 
 import { CategoryThumbnail } from './_catalog/category-thumbnail';
-import {
-  countComponents,
-  familyAnchorOf,
-  publishedFamilies,
-} from './_catalog/families';
+import { familyAnchorOf, publishedFamilies } from './_catalog/families';
 import { catalog } from './_generated/catalog';
+
+const COMPONENT_PHRASE = componentCountPhraseOf(CATALOG_STATS);
 
 export const metadata: Metadata = pageMetadataOf({
   title: 'React components for Tailwind CSS and shadcn - ndekoui',
-  description:
-    'Ready-made components built on ndekoui primitives, grouped by family, each installable with the shadcn CLI.',
+  description: `${COMPONENT_PHRASE}, built on the ndekoui primitives and each installable with the shadcn CLI.`,
   keywords: [
     'React UI components',
     'Tailwind CSS UI kit',
@@ -28,14 +26,13 @@ export const metadata: Metadata = pageMetadataOf({
 export default function ComponentsIndexPage() {
   const families = publishedFamilies(catalog);
   const hasFamilies = families.length > 0;
-  const total = countComponents(catalog);
 
   return (
     <div className='flex flex-col gap-14'>
       <header className='grid gap-6 md:grid-cols-2 md:items-end'>
         <div className='flex flex-col gap-2'>
           <p className='text-primary-ink text-xs font-medium'>
-            {countLabel(total, 'component', 'components')}
+            {COMPONENT_PHRASE}
           </p>
           <h1 className='text-3xl font-semibold text-balance sm:text-4xl'>
             Components for the screens you build every week

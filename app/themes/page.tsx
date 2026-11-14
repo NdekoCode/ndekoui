@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 import { pageMetadataOf } from '@/app/_site/seo';
 import CodeBlock from '@/components/website/code-block';
+import { CATALOG_STATS } from '@/lib/catalog-stats';
 import { countLabel } from '@/lib/site';
 import { cssTextOf } from '@/lib/theme-css';
 import { THEMES, type ThemeDefinition } from '@/lib/themes';
@@ -9,10 +10,11 @@ import { THEMES, type ThemeDefinition } from '@/lib/themes';
 import { scopeCssOf } from './theme-scope';
 import { ThemesWorkbench, type ThemeCodeBlock } from './themes-workbench';
 
+const THEME_COUNT = countLabel(CATALOG_STATS.themes, 'theme', 'themes');
+
 export const metadata: Metadata = pageMetadataOf({
   title: 'Themes for React and Tailwind CSS - ndekoui',
-  description:
-    'Nine themes that recolour every ndekoui piece with one command, each measured for contrast in light and dark, and a generator that writes a theme from a hue.',
+  description: `${THEME_COUNT} that recolour every ndekoui piece with one command, each measured for contrast in light and dark, and a generator that writes a theme from a hue.`,
   keywords: [
     'React themes',
     'shadcn themes',
@@ -35,7 +37,7 @@ function codeBlockOf(theme: ThemeDefinition): ThemeCodeBlock {
 export default function ThemesPage() {
   const codeBlocks = THEMES.map(codeBlockOf);
   const scopeRules = THEMES.map(scopeRulesOf).join('\n');
-  const count = countLabel(THEMES.length, 'theme', 'themes');
+  const count = THEME_COUNT;
 
   return (
     <div className='flex flex-col gap-14'>

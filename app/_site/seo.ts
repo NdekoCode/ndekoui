@@ -75,6 +75,33 @@ export function pageMetadataOf({
   };
 }
 
+type PreviewSeo = {
+  title: string;
+  description: string;
+  path: string;
+};
+
+/** Title, description and sharing card of a full-page preview. These pages are not indexed, so they get no canonical address or keywords. */
+export function previewMetadataOf({
+  title,
+  description,
+  path,
+}: PreviewSeo): Metadata {
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: path,
+      siteName: SITE_NAME,
+      type: 'website',
+      locale: 'en_US',
+    },
+    twitter: { card: 'summary_large_image', title, description },
+  };
+}
+
 type Crumb = {
   name: string;
   path: string;

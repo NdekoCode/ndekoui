@@ -29,7 +29,7 @@ type Token =
   | { kind: 'icons'; key: string };
 
 type StatementProps = {
-  componentTotal: number;
+  componentPhrase: string;
   blockTotal: number;
   templateTotal: number;
 };
@@ -38,7 +38,7 @@ const SCROLL_OFFSET = ['start 0.85', 'end 0.6'] as const;
 const DIM_OPACITY = 0.14;
 
 function partsOf({
-  componentTotal,
+  componentPhrase,
   blockTotal,
   templateTotal,
 }: StatementProps): StatementPart[] {
@@ -46,7 +46,7 @@ function partsOf({
     { kind: 'text', text: 'ndekoui is', tone: 'soft' },
     {
       kind: 'text',
-      text: `a library of ${componentTotal} components, ${blockTotal} blocks and ${templateTotal} templates`,
+      text: `a library of ${componentPhrase}, ${blockTotal} blocks and ${templateTotal} templates`,
       tone: 'strong',
     },
     { kind: 'icons' },

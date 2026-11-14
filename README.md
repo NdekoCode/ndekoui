@@ -1,40 +1,34 @@
 # ndekoui
 
-Open-source React components that animate every change of state. 842 components in 49 categories, 150 blocks, 21 templates and 87 primitives, built on [Base UI](https://base-ui.com), [motion](https://motion.dev) and [Tailwind CSS 4](https://tailwindcss.com), installed with the [shadcn CLI](https://ui.shadcn.com/docs/cli) or through an MCP server.
+Open-source React components that animate every change of state. <!-- count:components -->842 component variants across 49 families<!-- /count -->, <!-- count:motion -->75<!-- /count --> motion effects, <!-- count:blocks -->150<!-- /count --> blocks, <!-- count:templates -->21<!-- /count --> templates and <!-- count:primitives -->90<!-- /count --> primitives, built on [Base UI](https://base-ui.com), [motion](https://motion.dev) and [Tailwind CSS 4](https://tailwindcss.com), installed with the [shadcn CLI](https://ui.shadcn.com/docs/cli) or through an MCP server.
 
 **Site and catalogue:** [ui.ndekocode.dev](https://ui.ndekocode.dev)
 
 ## What is in it
 
-- **Primitives**: 87 accessible building blocks on Base UI (button, field, select, menu, dialog, sheet, tabs, slider, chat input...). Try them at [/kit](https://ui.ndekocode.dev/kit).
-- **Components**: 842 compositions in 49 categories, from inputs and date pickers to charts, text effects, notifications, comments and team lists. Browse them at [/components](https://ui.ndekocode.dev/components).
-- **Blocks**: 150 whole sections of a product (app shells, boards, task lists, dashboards, billing, settings, pricing, heroes, testimonials, team sections, blog, docs, help center, error pages, agent chats, agent reviews, agent operations, workflows, maps...). See them at [/blocks](https://ui.ndekocode.dev/blocks).
-- **Templates**: 21 complete pages in 14 kinds, from sign in and settings to dashboards, agent workspaces and docs, at [/templates](https://ui.ndekocode.dev/templates).
-- **Motion**: text effects, scroll animations, marquees, device frames and more, documented at [/docs](https://ui.ndekocode.dev/docs).
-- **Theme**: light and dark tokens, ink colours that pass AA, one-pixel hairlines and a few 3D materials, installed with every item.
+- **Primitives**: <!-- count:primitives -->90<!-- /count --> accessible building blocks on Base UI (button, field, select, menu, dialog, sheet, tabs, slider, chat input...). Try them at [/kit](https://ui.ndekocode.dev/kit).
+- **Components**: <!-- count:components -->842 component variants across 49 families<!-- /count -->, from inputs and date pickers to charts, text effects, notifications, comments and team lists. Browse them at [/components](https://ui.ndekocode.dev/components).
+- **Blocks**: <!-- count:blocks -->150<!-- /count --> whole sections of a product (app shells, boards, task lists, dashboards, billing, settings, pricing, heroes, testimonials, team sections, blog, docs, help center, error pages, agent chats, agent reviews, agent operations, workflows, maps...). See them at [/blocks](https://ui.ndekocode.dev/blocks).
+- **Templates**: <!-- count:templates -->21<!-- /count --> complete pages in <!-- count:template-kinds -->14<!-- /count --> kinds, from sign in and settings to dashboards, agent workspaces and docs, at [/templates](https://ui.ndekocode.dev/templates).
+- **Motion**: <!-- count:motion -->75<!-- /count --> effects, from text effects and scroll animations to marquees, device frames and more, documented at [/docs](https://ui.ndekocode.dev/docs).
+- **Theme**: light and dark tokens, ink colours that pass AA, one-pixel hairlines and a few 3D materials, installed with every item, plus <!-- count:themes -->9<!-- /count --> colour themes to pick from at [/themes](https://ui.ndekocode.dev/themes).
 
 ## Install a component
 
-Every item is a shadcn registry item. In a project set up with the shadcn CLI, React 19 and Tailwind CSS 4:
-
-```bash
-npx shadcn@latest add https://ui.ndekocode.dev/r/notification-28.json
-```
-
-The theme, the `cn` helper and every primitive the item uses come with it, and imports are rewritten to your own aliases.
-
-To use the short form, declare the registry in `components.json`:
-
-```json
-{
-  "registries": {
-    "@ndeko": "https://ui.ndekocode.dev/r/{name}.json"
-  }
-}
-```
+Every item is a shadcn registry item, listed in the shadcn registry directory as `@ndeko`. In a project set up with the shadcn CLI, React 19 and Tailwind CSS 4:
 
 ```bash
 npx shadcn@latest add @ndeko/notification-28
+```
+
+The theme, the `cn` helper and every primitive the item uses come with it, and imports are rewritten to your own aliases. There is nothing to declare in `components.json`: the CLI adds the `@ndeko` entry itself the first time.
+
+In a project fresh from `shadcn init`, the CLI asks whether to replace `lib/utils.ts` and `components/ui/button.tsx`: answer yes, or add `--overwrite` to the command. The items are built on the ndekoui button and on a `cn` helper that knows the hairline classes of the theme. If you have edited those two files, keep your copy and check that the item still looks right.
+
+With an older shadcn CLI that does not read the registry directory, give it the full address of the item:
+
+```bash
+npx shadcn@latest add https://ui.ndekocode.dev/r/notification-28.json
 ```
 
 ## Use it from your editor
@@ -51,6 +45,7 @@ pnpm dev              # the site on http://localhost:3000
 pnpm typecheck
 pnpm lint
 pnpm registry:build   # registry.json, preview indexes and public/r
+pnpm stats:readme     # the counts in this README, from registry.json
 ```
 
 Node.js 24 and pnpm are required.
@@ -65,4 +60,4 @@ Read the [contributing guide](CONTRIBUTING.md) and the port checklist in [docs/R
 
 ## Credits and licence
 
-ndekoui is MIT licensed, see [LICENCE.md](LICENCE.md). It started from [Motion Primitives](https://github.com/ibelick/motion-primitives) by ibelick; the notices of the code and of the brand marks it carries are in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+ndekoui is MIT licensed, see [LICENCE.md](LICENCE.md). Inspired by [Motion Primitives](https://github.com/ibelick/motion-primitives) by ibelick; the notices of the code and of the brand marks it carries are in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

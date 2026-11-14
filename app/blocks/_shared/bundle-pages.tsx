@@ -8,40 +8,16 @@ import { breadcrumbOf, itemListOf, pageMetadataOf } from '@/app/_site/seo';
 import { countLabel } from '@/lib/site';
 
 import { BundleCard } from './bundle-card';
+import { BUNDLE_COPY as COPY } from './bundle-copy';
+import { bundleTotalOf } from './bundle-share';
 import { groupOf, groupsOf, tilesOf } from './bundles';
 import type { BundleKind } from './types';
-
-const COPY: Record<
-  BundleKind,
-  { title: string; lead: string; singular: string; plural: string }
-> = {
-  blocks: {
-    title: 'Blocks for whole sections of a product',
-    lead: 'App shells, lists, boards, settings and marketing sections, built from the components with fictional data. Resize each one to check it on a phone.',
-    singular: 'block',
-    plural: 'blocks',
-  },
-  templates: {
-    title: 'Templates to start a product from',
-    lead: 'Complete pages assembled from the blocks. Open one, install it and replace the fictional data with yours.',
-    singular: 'template',
-    plural: 'templates',
-  },
-};
-
-function totalOf(kind: BundleKind) {
-  let total = 0;
-  for (const group of groupsOf(kind)) {
-    total += group.entries.length;
-  }
-  return total;
-}
 
 export function BundleIndexPage({ kind }: { kind: BundleKind }) {
   const copy = COPY[kind];
   const groups = groupsOf(kind);
   const hasGroups = groups.length > 0;
-  const total = totalOf(kind);
+  const total = bundleTotalOf(kind);
 
   return (
     <div className='flex flex-col gap-12'>

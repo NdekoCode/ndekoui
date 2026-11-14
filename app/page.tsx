@@ -7,12 +7,8 @@ import { fetchStarCount } from '@/app/_site/repository';
 import { pageMetadataOf } from '@/app/_site/seo';
 import { SiteFooter } from '@/app/_site/site-footer';
 import { SiteHeader } from '@/app/_site/site-header';
-import { groupsOf } from '@/app/blocks/_shared/bundles';
-import { countComponents } from '@/app/components/_catalog/families';
-import { catalog } from '@/app/components/_generated/catalog';
+import { CATALOG_STATS, componentCountPhraseOf } from '@/lib/catalog-stats';
 import { countLabel, SYSTEM_FONT_CLASS } from '@/lib/site';
-import { chatItems } from '@/registry/chat-items';
-import { primitiveItems } from '@/registry/items';
 import { CpuIcon, LayersIcon, PlayIcon } from '@/registry/ndeko/lib/icons';
 import { Button } from '@/registry/ndeko/ui/button';
 import { Toaster } from '@/registry/ndeko/ui/sonner';
@@ -34,12 +30,12 @@ import { SectionHeading } from './_home/section-heading';
 import { StatesSection } from './_home/states/states-section';
 import { Statement } from './_home/statement';
 
-const COMPONENT_TOTAL = countComponents(catalog);
+const COMPONENT_PHRASE = componentCountPhraseOf(CATALOG_STATS);
 
 /* The title names the kind of thing ndekoui is, for people who do not know the name yet. */
 const HOME_TITLE = 'ndekoui - Animated React UI component library';
 
-const HOME_DESCRIPTION = `${COMPONENT_TOTAL} free, open-source React components, plus blocks and templates, built on Base UI, motion and Tailwind CSS 4. Install them with the shadcn CLI or through MCP.`;
+const HOME_DESCRIPTION = `Free, open-source React components: ${COMPONENT_PHRASE}, plus blocks and templates, built on Base UI, motion and Tailwind CSS 4. Install them with the shadcn CLI or through MCP.`;
 
 export const metadata: Metadata = pageMetadataOf({
   title: HOME_TITLE,
@@ -56,14 +52,6 @@ const SECTION_STACK = 'flex flex-col gap-10 lg:gap-12';
 const NO_SCRIPT_STYLE =
   '.reveal,.reveal-plain{opacity:1;translate:none;filter:none}';
 
-function entryTotal(kind: 'blocks' | 'templates') {
-  let total = 0;
-  for (const group of groupsOf(kind)) {
-    total += group.entries.length;
-  }
-  return total;
-}
-
 function LinkButton({ href, children }: { href: string; children: string }) {
   return (
     <Button
@@ -79,10 +67,9 @@ function LinkButton({ href, children }: { href: string; children: string }) {
 
 export default async function HomePage() {
   const starCount = await fetchStarCount();
-  const componentTotal = COMPONENT_TOTAL;
-  const primitiveTotal = primitiveItems.length + chatItems.length;
-  const blockTotal = entryTotal('blocks');
-  const templateTotal = entryTotal('templates');
+  const primitiveTotal = CATALOG_STATS.primitives;
+  const blockTotal = CATALOG_STATS.blocks;
+  const templateTotal = CATALOG_STATS.templates;
 
   return (
     <TooltipProvider>
@@ -96,14 +83,14 @@ export default async function HomePage() {
         <AnnouncementBar />
         <SiteHeader isWide />
         <main className={PAGE_RHYTHM}>
-          <HomeHero componentTotal={componentTotal} starCount={starCount}>
+          <HomeHero componentPhrase={COMPONENT_PHRASE} starCount={starCount}>
             <PauseOffscreen>
               <HeroShowcase />
             </PauseOffscreen>
           </HomeHero>
           <div className={SECTION}>
             <Statement
-              componentTotal={componentTotal}
+              componentPhrase={COMPONENT_PHRASE}
               blockTotal={blockTotal}
               templateTotal={templateTotal}
             />
