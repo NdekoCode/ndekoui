@@ -3,7 +3,12 @@ import Link from 'next/link';
 import { groupsOf } from '@/app/blocks/_shared/bundles';
 import { catalog } from '@/app/components/_generated/catalog';
 import { NdekoUILLogo } from '@/components/website/icons/ndekoui-logo';
-import { ArrowUpRightIcon, GithubIcon } from '@/registry/ndeko/lib/icons';
+import {
+  ArrowUpRightIcon,
+  GithubIcon,
+  LinkedinBrandIcon,
+  TwitterXIcon,
+} from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
 import { Button } from '@/registry/ndeko/ui/button';
 
@@ -11,9 +16,35 @@ import { REPOSITORY_URL } from './repository';
 
 const COLUMN_SIZE = 6;
 
+const AUTHOR_NAME = 'Arick Bulakali';
+
 const AUTHOR_URL = 'https://ndekocode.dev';
 
 type FooterLink = { href: string; label: string };
+
+type ProfileLink = {
+  href: string;
+  label: string;
+  Icon: typeof GithubIcon;
+};
+
+const AUTHOR_PROFILES: ProfileLink[] = [
+  {
+    href: 'https://github.com/NdekoCode',
+    label: `${AUTHOR_NAME} on GitHub`,
+    Icon: GithubIcon,
+  },
+  {
+    href: 'https://www.linkedin.com/in/ndekocode',
+    label: `${AUTHOR_NAME} on LinkedIn`,
+    Icon: LinkedinBrandIcon,
+  },
+  {
+    href: 'https://x.com/ndekocode',
+    label: `${AUTHOR_NAME} on X`,
+    Icon: TwitterXIcon,
+  },
+];
 
 const LIBRARY_LINKS: FooterLink[] = [
   { href: '/kit', label: 'Primitives' },
@@ -45,6 +76,10 @@ const PROJECT_LINKS: FooterLink[] = [
 
 const FOOTER_LINK =
   'rounded-sm text-[13px] text-muted-foreground outline-none transition-colors hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50';
+
+/** The negative margin gives each icon a 24px target without making the line taller than its text. */
+const PROFILE_LINK =
+  '-m-1 flex rounded-sm p-1 text-muted-foreground outline-none transition-colors hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50';
 
 /** Where each mark sits around the wordmark: its place, its size and its turn. */
 const WORDMARK_TILES = [
@@ -139,20 +174,37 @@ export function SiteFooter() {
         </div>
         <div className='text-muted-foreground flex flex-wrap items-center justify-between gap-x-6 gap-y-2 text-[13px]'>
           <p>{`© ${currentYear()} ndekoui, open source under the MIT licence`}</p>
-          <p>
-            {'Built by '}
-            <a
-              href={AUTHOR_URL}
-              className='text-foreground focus-visible:ring-ring/50 inline-flex items-center gap-0.5 rounded-sm font-medium underline-offset-4 outline-none hover:underline focus-visible:ring-[3px]'
-            >
-              ndekocode
-              <ArrowUpRightIcon className='size-3.5' />
-            </a>
-          </p>
+          <div className='flex flex-wrap items-center gap-x-4 gap-y-2'>
+            <p>
+              {'Built by '}
+              <a
+                href={AUTHOR_URL}
+                className='text-foreground focus-visible:ring-ring/50 inline-flex items-center gap-0.5 rounded-sm font-medium underline-offset-4 outline-none hover:underline focus-visible:ring-[3px]'
+              >
+                {AUTHOR_NAME}
+                <ArrowUpRightIcon className='size-3.5' />
+              </a>
+            </p>
+            <AuthorProfiles />
+          </div>
         </div>
       </div>
       <Wordmark />
     </footer>
+  );
+}
+
+function AuthorProfiles() {
+  return (
+    <ul className='flex items-center gap-3'>
+      {AUTHOR_PROFILES.map(({ href, label, Icon }) => (
+        <li key={href} className='flex'>
+          <a href={href} aria-label={label} className={PROFILE_LINK}>
+            <Icon aria-hidden className='size-4' />
+          </a>
+        </li>
+      ))}
+    </ul>
   );
 }
 

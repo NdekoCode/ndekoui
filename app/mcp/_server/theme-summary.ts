@@ -1,4 +1,4 @@
-import { installCommandOf } from '@/lib/site';
+import { urlInstallCommandOf } from '@/lib/site';
 
 import { loadRegistryItem } from './registry-store';
 
@@ -114,7 +114,7 @@ export async function themeSummary() {
   return {
     name: theme.name,
     description: theme.description ?? '',
-    install: installCommandOf(THEME_ITEM),
+    install: urlInstallCommandOf(THEME_ITEM),
     tokens: tokensOf(light, dark),
     tailwindColours: colourNames,
     radius: scales.radius,

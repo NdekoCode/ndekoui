@@ -1,6 +1,6 @@
 {
   "name": "ndekoui",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "private": true,
   "packageManager": "pnpm@12.16.1",
   "scripts": {
@@ -11,6 +11,8 @@
     "typecheck": "tsc --noEmit",
     "build:registry": "tsx scripts/registry-build.ts",
     "registry:build": "node --import tsx scripts/build-registry.ts && prettier --write app/components/_generated app/blocks/_generated app/templates/_generated app/docs/_generated && shadcn build",
+    "stats:readme": "node --import tsx scripts/catalog-stats.ts readme",
+    "stats:about": "node --import tsx scripts/catalog-stats.ts about",
     "indexnow": "node --import tsx scripts/indexnow.ts"
   },
   "dependencies": {

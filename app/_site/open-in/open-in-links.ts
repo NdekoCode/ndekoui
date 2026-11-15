@@ -1,12 +1,14 @@
-import { installCommandOf, itemUrlOf } from '@/lib/site';
+import { installCommandOf, itemUrlOf, urlInstallCommandOf } from '@/lib/site';
 
 /** The request an AI builder receives: the exact install command, then what the project needs so nothing breaks. */
 export function promptOf(title: string, itemName: string) {
   const installCommand = installCommandOf(itemName);
+  const urlInstallCommand = urlInstallCommandOf(itemName);
   const lines = [
     `Add "${title}" from ndekoui to this project.`,
     '',
     `Run: ${installCommand}`,
+    `If the shadcn CLI does not know @ndeko, run: ${urlInstallCommand}`,
     '',
     'The project needs React 19 and Tailwind CSS 4. If it has no components.json yet, run npx shadcn@latest init first and keep the defaults.',
     'The command installs the files, the ndekoui theme, the sample images and every piece they depend on. Keep the installed files as they are.',

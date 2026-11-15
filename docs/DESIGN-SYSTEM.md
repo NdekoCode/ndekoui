@@ -128,7 +128,7 @@ Movement answers the user, shows a state change, keeps space consistent, or expl
 
 ### Reduced motion
 
-The theme keeps fades and colour changes and drops movement when the system asks for reduced motion. JavaScript motion reads `usePrefersReducedMotion()` (`hooks/use-prefers-reduced-motion`) and falls back to an opacity change or an instant one. The hook of the animation library is not used: it answers during the first render, so the server and the browser disagree and the page fails to hydrate for the people who set the preference. A spinner keeps turning.
+The theme keeps fades and colour changes and drops movement when the system asks for reduced motion. JavaScript motion reads `usePrefersReducedMotion()` (`hooks/use-prefers-reduced-motion`) and falls back to an opacity change or an instant one. The hook of the animation library is not used: it answers during the first render, so the server and the browser disagree and the page fails to hydrate for the people who set the preference. A spinner keeps turning, so it spins with `animate-spin`, never with motion. The site wraps every page in `MotionConfig reducedMotion='user'` (`components/website/motion-provider.tsx`) as a net for a motion animation that does not read the preference itself; it acts after mount, so it does not break hydration.
 
 ## 8. Icons
 

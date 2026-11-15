@@ -1,3 +1,5 @@
+import { REGISTRY_NAMESPACE } from '@/app/mcp/_shared/mcp-config';
+
 export const SYSTEM_FONT_CLASS =
   "font-[system-ui,-apple-system,'Segoe_UI',Roboto,'Helvetica_Neue',Arial,sans-serif]";
 
@@ -7,7 +9,18 @@ export function itemUrlOf(itemName: string) {
   return `${REGISTRY_URL}/${itemName}.json`;
 }
 
+/** `@ndeko/<name>`: the shadcn CLI finds @ndeko in its registry directory, with no entry in components.json. */
+export function namespacedItemOf(itemName: string) {
+  return `${REGISTRY_NAMESPACE}/${itemName}`;
+}
+
 export function installCommandOf(itemName: string) {
+  const namespacedItem = namespacedItemOf(itemName);
+  return `npx shadcn@latest add ${namespacedItem}`;
+}
+
+/** The same install for a shadcn CLI too old to read the registry directory. */
+export function urlInstallCommandOf(itemName: string) {
   const itemUrl = itemUrlOf(itemName);
   return `npx shadcn@latest add ${itemUrl}`;
 }

@@ -5,7 +5,6 @@ import { PauseOffscreen } from '@/app/_site/pause-offscreen';
 import { REPOSITORY_URL } from '@/app/_site/repository';
 import { ShadcnMark } from '@/app/mcp/_components/client-marks';
 import { CLIENTS } from '@/app/mcp/_components/clients';
-import { countLabel } from '@/lib/site';
 import {
   ArrowRightIcon,
   GithubIcon,
@@ -30,7 +29,7 @@ const SETTLE_STEP_MS = 70;
 const NUMBER_FORMAT = new Intl.NumberFormat('en-US');
 
 type HomeHeroProps = {
-  componentTotal: number;
+  componentPhrase: string;
   starCount: number | null;
   children: ReactNode;
 };
@@ -155,12 +154,10 @@ function WorksWith() {
 
 /** The first screen. Its children are the product view, which settles last. */
 export function HomeHero({
-  componentTotal,
+  componentPhrase,
   starCount,
   children,
 }: HomeHeroProps) {
-  const componentCount = countLabel(componentTotal, 'component', 'components');
-
   return (
     <section
       aria-labelledby='home-title'
@@ -169,7 +166,8 @@ export function HomeHero({
       <div className='flex flex-col items-center gap-5'>
         <Settle step={0}>
           <p className='bg-card/80 text-primary-ink hairline-ring ring-border rounded-full px-3 py-1 text-xs font-medium shadow-[0_1px_2px_rgb(0_0_0/0.04)] backdrop-blur-sm'>
-            {`${componentCount}, free and open source`}
+            {componentPhrase}
+            <span className='max-sm:hidden'>, free and open source</span>
           </p>
         </Settle>
         <Settle step={1} isShownAtOnce>

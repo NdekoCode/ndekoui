@@ -5,10 +5,11 @@ export const metadata = {
 };
 
 import CodeBlock from '@/components/website/code-block';
+import { MOTION_PROVIDER_CODE } from './motion-provider-code';
 
 # Installation
 
-ndekoui is a shadcn registry. Every primitive, component, block and template installs with the shadcn CLI, and the pieces it uses come with it. It works with React 19 and Tailwind CSS 4.
+ndekoui is a shadcn registry, listed in the shadcn registry directory as `@ndeko`. Every primitive, component, block and template installs with the shadcn CLI, and the pieces it uses come with it. It works with React 19 and Tailwind CSS 4.
 
 <Steps>
 
@@ -23,7 +24,7 @@ Once per project. It creates the `components.json` file the CLI reads, and the `
 Tokens for light and dark, the hairline utilities, the 3D materials and the reduced-motion switch.
 
 <CodeBlock
-  code={`npx shadcn@latest add https://ui.ndekocode.dev/r/theme.json`}
+  code={`npx shadcn@latest add @ndeko/theme`}
   lang='bash'
   className='h-[52px]'
 />
@@ -34,9 +35,31 @@ Tokens for light and dark, the hairline utilities, the 3D materials and the redu
 
 The command above adds the Text Effect component to `components/core`, with Motion and the helpers it uses. Icons come with the components that need them, from the `icons` item, so there is no icon package to install by hand.
 
+In a project fresh from `shadcn init`, the CLI asks whether to replace `lib/utils.ts` and `components/ui/button.tsx`: answer yes, or add `--overwrite` to the command. The items are built on the ndekoui button and on a `cn` helper that knows the hairline classes of the theme. If you have edited those two files, keep your copy and check that the item still looks right.
+
 You can also copy the code by hand from the component's page.
 
 </Steps>
+
+## The @ndeko name
+
+The shadcn CLI finds `@ndeko` in its registry directory, so there is nothing to declare in `components.json`: the CLI adds the entry itself the first time you install an item.
+
+With an older shadcn CLI that does not read the directory, give it the full address of the item instead:
+
+<CodeBlock
+  code={`npx shadcn@latest add https://ui.ndekocode.dev/r/text-effect.json`}
+  lang='bash'
+  className='h-[52px]'
+/>
+
+## Reduced motion
+
+The theme drops movement when the system asks for reduced motion, and every ndekoui component reads the same setting before it moves. The motion library does not read the CSS rule, so wrap your app in `MotionConfig` once: any other motion animation in the app then keeps its fades and drops its movement too.
+
+<CodeBlock code={MOTION_PROVIDER_CODE} lang='tsx' />
+
+Then render `<MotionProvider>` around the content of your root layout. A spinner keeps turning, as people expect a loader to.
 
 ## In an AI app builder
 

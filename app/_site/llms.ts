@@ -1,10 +1,16 @@
 import { groupsOf } from '@/app/blocks/_shared/bundles';
 import type { BundleKind } from '@/app/blocks/_shared/types';
-import { countComponents } from '@/app/components/_catalog/families';
 import { catalog } from '@/app/components/_generated/catalog';
 import { NAVIGATION } from '@/app/docs/navigation';
 import { MCP_PAGE_PATH, MCP_URL } from '@/app/mcp/_shared/mcp-config';
-import { countLabel, installCommandOf, REGISTRY_URL } from '@/lib/site';
+import { CATALOG_STATS, componentCountPhraseOf } from '@/lib/catalog-stats';
+import {
+  countLabel,
+  installCommandOf,
+  REGISTRY_URL,
+  urlInstallCommandOf,
+} from '@/lib/site';
+import { aiItems } from '@/registry/ai-items';
 import { chatItems } from '@/registry/chat-items';
 import { primitiveItems } from '@/registry/items';
 
@@ -22,41 +28,30 @@ function linkLineOf(name: string, path: string, note: string) {
   return `- [${name}](${url}): ${note}`;
 }
 
-function entryTotalOf(kind: BundleKind) {
-  let total = 0;
-  for (const group of groupsOf(kind)) {
-    total += group.entries.length;
-  }
-  return total;
-}
-
 function primitiveTotal() {
-  return primitiveItems.length + chatItems.length;
+  return CATALOG_STATS.primitives;
 }
 
 function summaryOf() {
-  const components = countLabel(
-    countComponents(catalog),
-    'component',
-    'components'
-  );
-  const categories = countLabel(catalog.length, 'category', 'categories');
-  const blocks = countLabel(entryTotalOf('blocks'), 'block', 'blocks');
+  const components = componentCountPhraseOf(CATALOG_STATS);
+  const blocks = countLabel(CATALOG_STATS.blocks, 'block', 'blocks');
   const templates = countLabel(
-    entryTotalOf('templates'),
+    CATALOG_STATS.templates,
     'template',
     'templates'
   );
   const primitives = countLabel(primitiveTotal(), 'primitive', 'primitives');
-  return `${SITE_NAME} is an open-source React library under the MIT licence: ${components} in ${categories}, ${blocks}, ${templates} and ${primitives}, built on Base UI, motion and Tailwind CSS 4. Every item animates its changes of state and installs with the shadcn CLI, with the theme and the primitives it uses.`;
+  return `${SITE_NAME} is an open-source React library under the MIT licence: ${components}, ${blocks}, ${templates} and ${primitives}, built on Base UI, motion and Tailwind CSS 4. Every item animates its changes of state and installs with the shadcn CLI, with the theme and the primitives it uses.`;
 }
 
 function installSection() {
   const example = installCommandOf('notification-28');
+  const urlExample = urlInstallCommandOf('notification-28');
   return [
     '## Install',
     '',
-    `Each item is a shadcn registry item at ${REGISTRY_URL}/<name>.json. For example: \`${example}\`.`,
+    `Each item is a shadcn registry item at ${REGISTRY_URL}/<name>.json, listed in the shadcn registry directory as @ndeko. For example: \`${example}\`.`,
+    `A shadcn CLI that does not know @ndeko takes the full address instead: \`${urlExample}\`.`,
     `Editors and assistants can also connect to the MCP server at ${MCP_URL} to search the catalogue, read the source of an item and get its install command.`,
   ];
 }
@@ -199,7 +194,7 @@ function fullBundleSection(kind: BundleKind) {
 
 /** Every installable item, one line each, grouped as on the site. */
 export function llmsFullText() {
-  const primitives = [...primitiveItems, ...chatItems];
+  const primitives = [...primitiveItems, ...chatItems, ...aiItems];
   const lines = [
     `# ${SITE_NAME}: full catalogue`,
     '',

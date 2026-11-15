@@ -5,7 +5,7 @@ import { useState, type ComponentType } from 'react';
 
 import { BunMark, NpmMark, PnpmMark, YarnMark } from '@/app/_site/brand-marks';
 import { CopyButton } from '@/app/_site/copy-button';
-import { REGISTRY_URL } from '@/lib/site';
+import { REGISTRY_NAMESPACE } from '@/app/mcp/_shared/mcp-config';
 import { usePrefersReducedMotion } from '@/registry/ndeko/hooks/use-prefers-reduced-motion';
 import { ChevronDownIcon } from '@/registry/ndeko/lib/icons';
 import { cn } from '@/registry/ndeko/lib/utils';
@@ -32,7 +32,7 @@ import {
 } from './package-manager';
 import { useElementWidth } from './use-element-width';
 
-const REGISTRY_BASE = `${REGISTRY_URL}/`;
+const NAMESPACE_PREFIX = `${REGISTRY_NAMESPACE}/`;
 
 const SHOWN = {
   opacity: 1,
@@ -224,13 +224,12 @@ type InstallCommandProps = {
 };
 
 /**
- * The command shows what the copy button copies. When room runs out, the registry address
- * gives way first and the item's file name stays readable.
+ * The command shows what the copy button copies. When room runs out, the namespace gives way
+ * first and the item's name stays readable.
  */
 export function InstallCommand({ itemName, className }: InstallCommandProps) {
   const manager = usePackageManager();
   const command = installCommandFor(manager, itemName);
-  const fileName = `${itemName}.json`;
 
   return (
     <div
@@ -242,8 +241,10 @@ export function InstallCommand({ itemName, className }: InstallCommandProps) {
       <PackageManagerMenu manager={manager} />
       <code className='text-muted-foreground flex min-w-0 items-center pe-1 font-mono text-xs whitespace-nowrap'>
         <span className='me-[1ch] min-w-0 truncate'>{SHADCN_ADD}</span>
-        <span className='min-w-0 shrink-[100] truncate'>{REGISTRY_BASE}</span>
-        <span className='text-foreground shrink-0'>{fileName}</span>
+        <span className='min-w-0 shrink-[100] truncate'>
+          {NAMESPACE_PREFIX}
+        </span>
+        <span className='text-foreground shrink-0'>{itemName}</span>
       </code>
       <CopyButton value={command} label='Copy install command' />
     </div>

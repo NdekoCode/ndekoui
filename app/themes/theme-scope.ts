@@ -1,7 +1,7 @@
 import type { ThemeTokens } from '@/lib/theme-colours';
 import { blockTextOf, cssVarsOf, orderedTokensOf } from '@/lib/theme-css';
 
-/** The scope of the theme the generator draws. The nine themes are scoped by their own names. */
+/** The scope of the theme the generator draws. The themes are scoped by their own names. */
 export const CUSTOM_SCOPE = 'custom';
 
 /**

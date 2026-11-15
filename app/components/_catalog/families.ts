@@ -125,11 +125,3 @@ export function familyAnchorOf(name: string) {
   const lowered = name.toLowerCase();
   return lowered.split(' ').join('-');
 }
-
-export function countComponents(categories: CatalogCategory[]) {
-  let total = 0;
-  for (const category of categories) {
-    total += category.entries.length;
-  }
-  return total;
-}
