@@ -2,7 +2,7 @@
 
 Every release of ndekoui. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the version follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html). The counts of a release are the ones it shipped with; the current counts are in the [README](README.md).
 
-## [1.0.0] - 2026-11-17
+## [1.0.0] - 2026-11-16
 
 The first public release.
 
