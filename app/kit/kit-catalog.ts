@@ -20,3 +20,14 @@ export function kitUnitOf(name: string): KitUnit | undefined {
   }
   return undefined;
 }
+
+function hasFullPage(name: string) {
+  const unit = kitUnitOf(name);
+  return unit !== undefined;
+}
+
+/** Every primitive that has a full page, built ahead with its share card. */
+export function kitViewParamsOf() {
+  const shown = KIT_ITEMS.filter((item) => hasFullPage(item.name));
+  return shown.map((item) => ({ name: item.name }));
+}

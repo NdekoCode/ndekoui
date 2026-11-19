@@ -3,6 +3,7 @@ import {
   SHARE_CARD_TYPE,
   shareCardOf,
 } from '@/app/_site/share-card';
+import { kitViewParamsOf } from '@/app/kit/kit-catalog';
 import { registrySummaryOf } from '@/lib/registry-summary';
 
 type PrimitiveShareImageProps = {
@@ -14,6 +15,12 @@ export const alt = 'An ndekoui primitive: its name and what it does.';
 export const size = SHARE_CARD_SIZE;
 
 export const contentType = SHARE_CARD_TYPE;
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return kitViewParamsOf();
+}
 
 function missingCard() {
   return new Response(null, { status: 404 });
