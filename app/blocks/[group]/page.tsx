@@ -10,6 +10,8 @@ type BlockGroupPageProps = {
   params: Promise<{ group: string }>;
 };
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return groupsOf('blocks').map((group) => ({ group: group.slug }));
 }

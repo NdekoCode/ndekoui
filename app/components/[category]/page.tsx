@@ -23,6 +23,8 @@ function categoryOf(slug: string) {
   return catalog.find((category) => category.slug === slug);
 }
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return catalog.map((category) => ({ category: category.slug }));
 }

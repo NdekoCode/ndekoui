@@ -14,6 +14,8 @@ type ViewPageProps = {
   params: Promise<{ kind: string; group: string; name: string }>;
 };
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return viewParamsOf();
 }
