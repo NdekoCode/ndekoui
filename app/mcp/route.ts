@@ -2,6 +2,10 @@ import { createMcpHandler } from 'mcp-handler';
 
 import packageJson from '@/package.json';
 
+import {
+  boundedRequestOf,
+  payloadTooLargeResponse,
+} from './_server/body-limit';
 import { registerPrompts } from './_server/register-prompts';
 import { registerTools } from './_server/register-tools';
 import { MCP_PAGE_PATH, SERVER_NAME } from './_shared/mcp-config';
@@ -56,7 +60,11 @@ function isBrowserVisit(request: Request) {
 }
 
 async function handle(request: Request) {
-  const response = await mcpHandler(request);
+  const bounded = await boundedRequestOf(request);
+  if (!bounded) {
+    return withCors(payloadTooLargeResponse());
+  }
+  const response = await mcpHandler(bounded);
   return withCors(response);
 }
 
