@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { previewMetadataOf } from '@/app/_site/seo';
 import { catalogAnchorPathOf } from '@/app/components/_catalog/component-paths';
 import { ComponentPreview } from '@/app/components/_catalog/component-preview';
+import { componentViewParamsOf } from '@/app/components/_catalog/component-view-params';
 import { previewWidthOf } from '@/app/components/_catalog/preview-widths';
 import { catalog } from '@/app/components/_generated/catalog';
 import { ItemPresentation } from '@/app/view/_present/item-presentation';
@@ -24,8 +25,10 @@ function entryOf(categorySlug: string, name: string) {
   return { category, entry };
 }
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
-  return [];
+  return componentViewParamsOf();
 }
 
 export async function generateMetadata({

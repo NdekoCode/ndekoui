@@ -3,6 +3,7 @@ import {
   SHARE_CARD_TYPE,
   shareCardOf,
 } from '@/app/_site/share-card';
+import { componentViewParamsOf } from '@/app/components/_catalog/component-view-params';
 import { catalog } from '@/app/components/_generated/catalog';
 
 type ComponentShareImageProps = {
@@ -15,6 +16,12 @@ export const alt =
 export const size = SHARE_CARD_SIZE;
 
 export const contentType = SHARE_CARD_TYPE;
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return componentViewParamsOf();
+}
 
 function missingCard() {
   return new Response(null, { status: 404 });
