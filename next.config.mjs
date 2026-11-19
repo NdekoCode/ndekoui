@@ -62,6 +62,20 @@ function movedTemplateRedirects() {
   return redirects;
 }
 
+/*
+ * Sent with every response, static files included. Framing stays allowed for the site itself, because
+ * block previews and the presentation view load their pages in an iframe of the same origin.
+ */
+const SECURITY_HEADERS = [
+  { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+  { key: 'X-Content-Type-Options', value: 'nosniff' },
+  { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+  {
+    key: 'Strict-Transport-Security',
+    value: 'max-age=63072000; includeSubDomains',
+  },
+];
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -72,6 +86,9 @@ const nextConfig = {
   },
   async redirects() {
     return movedTemplateRedirects();
+  },
+  async headers() {
+    return [{ source: '/:path*', headers: SECURITY_HEADERS }];
   },
 };
 
