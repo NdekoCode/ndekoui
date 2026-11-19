@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { previewMetadataOf } from '@/app/_site/seo';
-import { docsExampleOf } from '@/app/docs/docs-catalog';
+import { docsExampleOf, docsViewParamsOf } from '@/app/docs/docs-catalog';
 import { DocsExamplePreview } from '@/app/docs/docs-example-preview';
 import { docsAnchorPathOf } from '@/app/docs/docs-paths';
 import { ItemPresentation } from '@/app/view/_present/item-presentation';
@@ -13,8 +13,10 @@ type DocsViewPageProps = {
   params: Promise<{ slug: string; example: string }>;
 };
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
-  return [];
+  return docsViewParamsOf();
 }
 
 export async function generateMetadata({
