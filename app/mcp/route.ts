@@ -39,6 +39,8 @@ const mcpHandler = createMcpHandler(
   {
     serverInfo: { name: SERVER_NAME, version: packageJson.version },
     instructions: SERVER_INSTRUCTIONS,
+    // The server only answers calls and never pushes events, so no subscription stream is held open.
+    maxSubscriptions: 0,
   }
 );
 
