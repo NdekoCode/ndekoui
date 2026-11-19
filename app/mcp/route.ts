@@ -6,6 +6,7 @@ import {
   boundedRequestOf,
   payloadTooLargeResponse,
 } from './_server/body-limit';
+import { rateLimitedResponseOf } from './_server/rate-limit';
 import { registerPrompts } from './_server/register-prompts';
 import { registerTools } from './_server/register-tools';
 import { MCP_PAGE_PATH, SERVER_NAME } from './_shared/mcp-config';
@@ -60,6 +61,10 @@ function isBrowserVisit(request: Request) {
 }
 
 async function handle(request: Request) {
+  const limited = rateLimitedResponseOf(request);
+  if (limited) {
+    return withCors(limited);
+  }
   const bounded = await boundedRequestOf(request);
   if (!bounded) {
     return withCors(payloadTooLargeResponse());
