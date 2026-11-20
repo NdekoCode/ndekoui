@@ -2,7 +2,11 @@ export const REPOSITORY_URL = 'https://github.com/NdekoCode/ndekoui';
 
 const REPOSITORY_API_URL = 'https://api.github.com/repos/NdekoCode/ndekoui';
 
-const STARS_REFRESH_SECONDS = 3600;
+/*
+ * The home page is rebuilt each time this count expires, and a rebuild renders every showcase on it.
+ * Once a day keeps the count close enough without paying for 24 rebuilds.
+ */
+const STARS_REFRESH_SECONDS = 86400;
 
 type RepositorySummary = { stargazers_count?: unknown };
 

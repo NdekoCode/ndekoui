@@ -10,6 +10,8 @@ type TemplateGroupPageProps = {
   params: Promise<{ group: string }>;
 };
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return groupsOf('templates').map((group) => ({ group: group.slug }));
 }

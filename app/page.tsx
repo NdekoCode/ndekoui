@@ -30,6 +30,9 @@ import { SectionHeading } from './_home/section-heading';
 import { StatesSection } from './_home/states/states-section';
 import { Statement } from './_home/statement';
 
+/* Request-time APIs added later read as empty here instead of turning the page dynamic. */
+export const dynamic = 'force-static';
+
 const COMPONENT_PHRASE = componentCountPhraseOf(CATALOG_STATS);
 
 /* The title names the kind of thing ndekoui is, for people who do not know the name yet. */

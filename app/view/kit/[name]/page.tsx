@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { previewMetadataOf } from '@/app/_site/seo';
-import { kitItemOf, kitUnitOf } from '@/app/kit/kit-catalog';
+import { kitItemOf, kitUnitOf, kitViewParamsOf } from '@/app/kit/kit-catalog';
 import { kitAnchorPathOf } from '@/app/kit/kit-paths';
 import { ItemPresentation } from '@/app/view/_present/item-presentation';
 
@@ -10,8 +10,10 @@ type KitViewPageProps = {
   params: Promise<{ name: string }>;
 };
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
-  return [];
+  return kitViewParamsOf();
 }
 
 export async function generateMetadata({

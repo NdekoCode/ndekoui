@@ -3,7 +3,7 @@ import {
   SHARE_CARD_TYPE,
   shareCardOf,
 } from '@/app/_site/share-card';
-import { docsExampleOf } from '@/app/docs/docs-catalog';
+import { docsExampleOf, docsViewParamsOf } from '@/app/docs/docs-catalog';
 import { registrySummaryOf } from '@/lib/registry-summary';
 import { motionItemNameOf } from '@/lib/site';
 
@@ -17,6 +17,12 @@ export const alt =
 export const size = SHARE_CARD_SIZE;
 
 export const contentType = SHARE_CARD_TYPE;
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return docsViewParamsOf();
+}
 
 function missingCard() {
   return new Response(null, { status: 404 });
