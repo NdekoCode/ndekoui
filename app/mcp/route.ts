@@ -2,6 +2,11 @@ import { createMcpHandler } from 'mcp-handler';
 
 import packageJson from '@/package.json';
 
+import {
+  boundedRequestOf,
+  payloadTooLargeResponse,
+} from './_server/body-limit';
+import { rateLimitedResponseOf } from './_server/rate-limit';
 import { registerPrompts } from './_server/register-prompts';
 import { registerTools } from './_server/register-tools';
 import { MCP_PAGE_PATH, SERVER_NAME } from './_shared/mcp-config';
@@ -34,6 +39,8 @@ const mcpHandler = createMcpHandler(
   {
     serverInfo: { name: SERVER_NAME, version: packageJson.version },
     instructions: SERVER_INSTRUCTIONS,
+    // The server only answers calls and never pushes events, so no subscription stream is held open.
+    maxSubscriptions: 0,
   }
 );
 
@@ -56,7 +63,15 @@ function isBrowserVisit(request: Request) {
 }
 
 async function handle(request: Request) {
-  const response = await mcpHandler(request);
+  const limited = rateLimitedResponseOf(request);
+  if (limited) {
+    return withCors(limited);
+  }
+  const bounded = await boundedRequestOf(request);
+  if (!bounded) {
+    return withCors(payloadTooLargeResponse());
+  }
+  const response = await mcpHandler(bounded);
   return withCors(response);
 }
 
