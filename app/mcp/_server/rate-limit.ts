@@ -1,3 +1,4 @@
+import { isCloudflareAddress } from './cloudflare-addresses';
 import { jsonRpcRefusalOf } from './json-rpc-error';
 
 /*
@@ -25,17 +26,38 @@ type CallWindow = { startedAt: number; count: number };
 const windowsByClient = new Map<string, CallWindow>();
 
 /** Vercel overwrites `x-forwarded-for` with the address the request came from, so a client cannot pick its own. */
-function clientKeyOf(request: Request) {
+function connectingAddressOf(request: Request) {
   const forwarded = request.headers.get('x-forwarded-for');
   if (!forwarded) {
-    return UNKNOWN_CLIENT;
+    return null;
   }
   const [firstAddress] = forwarded.split(',');
   const address = firstAddress.trim();
   if (!address) {
-    return UNKNOWN_CLIENT;
+    return null;
   }
   return address;
+}
+
+/**
+ * Behind Cloudflare the connecting address is Cloudflare's, shared by every visitor it serves, so the
+ * visitor is told apart by `cf-connecting-ip`. That header is believed only when the connecting address
+ * is a Cloudflare one: sent straight to the deployment, it could be anything.
+ */
+function clientKeyOf(request: Request) {
+  const connectingAddress = connectingAddressOf(request);
+  if (connectingAddress === null) {
+    return UNKNOWN_CLIENT;
+  }
+  const cameThroughCloudflare = isCloudflareAddress(connectingAddress);
+  if (!cameThroughCloudflare) {
+    return connectingAddress;
+  }
+  const visitorAddress = request.headers.get('cf-connecting-ip')?.trim();
+  if (!visitorAddress) {
+    return connectingAddress;
+  }
+  return visitorAddress;
 }
 
 function isOver(window: CallWindow, now: number) {
